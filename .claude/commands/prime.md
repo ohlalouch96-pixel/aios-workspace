@@ -5,6 +5,8 @@
 ## Read
 
 ./context
+- `HISTORY.md` — Workspace-logboek (wat er gebouwd is, wanneer)
+- `docs/_index.md` — Documentatie-index (waar docs te vinden zijn)
 
 ## Summary
 
