@@ -1,0 +1,58 @@
+# ─── SECRETS & CREDENTIALS ──────────────────────────────────────────────────
+.env
+*.key
+*.pem
+credentials.json
+token.json
+service-account.json
+*service-account*.json
+client_secret*.json
+
+# ─── PYTHON ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ─── NODE ────────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+
+# ─── DATABASES & DATA ────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+.tmp/
+tmp/
+temp/
+
+# ─── OS FILES ────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# ─── IDE & EDITORS ───────────────────────────────────────────────────────────
+.idea/
+.vscode/settings.json
+*.sublime-workspace
+
+# ─── LOGS ────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── AIOS SPECIFIC ───────────────────────────────────────────────────────────
+# Temporary processing files — regenerated as needed
+.tmp/
