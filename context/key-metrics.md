@@ -6,7 +6,7 @@
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
-| Totaal benaderd | 1 |
+| Totaal benaderd | 2 |
 | Gereageerd | 0 |
 | Deals gesloten | 0 |
 | Afgewezen | 0 |

@@ -99,13 +99,17 @@ These are how you know your AIOS is working:
 │   └── import/              # Drop documents here for Claude to analyze
 ├── data/
 │   └── data.db              # SQLite database — alle metrics, dagelijkse snapshots
-├── scripts/                 # Automation scripts (DataOS collectors)
-│   ├── collect.py           # Collectie-orchestrator — draai dit dagelijks
+├── scripts/                 # Automation scripts
+│   ├── collect.py           # DataOS orchestrator — dagelijkse data collectie
 │   ├── collect_outreach.py  # Outreach tracker (Google Sheets)
-│   ├── collect_fx_rates.py  # Wisselkoersen (gratis, geen API-sleutel)
-│   ├── generate_metrics.py  # Genereert key-metrics.md vanuit database
+│   ├── collect_fx_rates.py  # Wisselkoersen
+│   ├── generate_metrics.py  # Genereert key-metrics.md
 │   ├── db.py                # Database framework
-│   └── config.py            # Configuratie-loader (.env)
+│   ├── config.py            # Configuratie-loader (.env)
+│   └── intel/               # IntelOS — meeting intelligence
+│       ├── collect_all.py   # Verzamelt alle meetings (draai na elk gesprek)
+│       ├── collect_fathom.py # Fathom meeting collector
+│       └── db.py            # IntelOS database helpers
 ├── credentials/             # Google service account JSON (gitignored)
 ├── docs/                    # Technische documentatie (auto-bijgehouden door /commit)
 │   ├── _index.md            # Documentatie-index
@@ -131,6 +135,12 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 |------|-----------|-----------------|
 | Google Sheets | `collect_outreach.py` | Outreach-prospects, deals, conversie |
 | Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
+| Fathom | `intel/collect_fathom.py` | Meeting-opnames en transcripts |
+
+**IntelOS — Meeting Intelligence:**
+- Database tabel: `meetings` (in `data/data.db`)
+- Verzamelen na een gesprek: `python scripts/intel/collect_all.py`
+- Claude kan zoeken in transcripts: *"Wat hebben we besproken met [naam]?"*
 
 **Key directories:**
 
