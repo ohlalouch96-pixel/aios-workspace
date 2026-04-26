@@ -6,7 +6,17 @@
       "Bash(git -C \"c:/Users/oussa/Downloads/aios-starter-kit/aios-starter-kit\" status)",
       "Bash(gh --version)",
       "Bash(git config *)",
-      "Bash(git init *)"
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(py --version)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(\"C:/Users/oussa/AppData/Local/Microsoft/WindowsApps/python.exe\" --version)",
+      "PowerShell(Get-Command python -ErrorAction SilentlyContinue)",
+      "PowerShell(python --version 2>&1)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python --version)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); Set-Location \"c:\\\\Users\\\\oussa\\\\Downloads\\\\aios-starter-kit\\\\aios-starter-kit\"; python -m venv .venv; if \\($?\\) { Write-Host \"VENV_OK\" } else { Write-Host \"VENV_FAILED\" })"
     ]
   }
 }

@@ -81,10 +81,12 @@ These are how you know your AIOS is working:
 .
 ├── CLAUDE.md                # This file — core context, always loaded
 ├── .env                     # API keys and credentials (gitignored, never commit)
+├── HISTORY.md               # Chronologisch logboek van alles wat gebouwd is
 ├── .claude/
 │   └── commands/            # Slash commands Claude can execute
 │       ├── prime.md         # /prime — session initialization
 │       ├── install.md       # /install — install an AIOS module
+│       ├── commit.md        # /commit — opslaan, documenteren, changelog bijwerken
 │       ├── create-plan.md   # /create-plan — create implementation plans
 │       ├── implement.md     # /implement — execute plans
 │       └── share.md         # /share — package systems for sharing
@@ -92,15 +94,43 @@ These are how you know your AIOS is working:
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
 │   ├── strategy.md          # Current priorities and goals
-│   ├── current-data.md      # Key metrics and current state
+│   ├── current-data.md      # Kwalitatieve notities en projectstatus
+│   ├── key-metrics.md       # Auto-gegenereerde metrics vanuit database (DataOS)
 │   └── import/              # Drop documents here for Claude to analyze
+├── data/
+│   └── data.db              # SQLite database — alle metrics, dagelijkse snapshots
+├── scripts/                 # Automation scripts (DataOS collectors)
+│   ├── collect.py           # Collectie-orchestrator — draai dit dagelijks
+│   ├── collect_outreach.py  # Outreach tracker (Google Sheets)
+│   ├── collect_fx_rates.py  # Wisselkoersen (gratis, geen API-sleutel)
+│   ├── generate_metrics.py  # Genereert key-metrics.md vanuit database
+│   ├── db.py                # Database framework
+│   └── config.py            # Configuratie-loader (.env)
+├── credentials/             # Google service account JSON (gitignored)
+├── docs/                    # Technische documentatie (auto-bijgehouden door /commit)
+│   ├── _index.md            # Documentatie-index
+│   └── _templates/          # Sjablonen voor nieuwe docs
 ├── module-installs/         # AIOS modules — drop module folders here, install with /install
 ├── plans/                   # Implementation plans created by /create-plan
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
-├── scripts/                 # Automation scripts (added by modules)
 └── shares/                  # Packaged systems for sharing (created by /share)
 ```
+
+## Data Warehouse
+
+Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
+
+- **Vernieuwen:** `python scripts/collect.py` — haalt data op van alle bronnen
+- **Metrics bekijken:** `context/key-metrics.md` — wordt geladen door `/prime`
+- **Diepere analyse:** Claude kan directe SQL-queries draaien op `data/data.db`
+- **Schema's en voorbeelden:** Laad `reference/data-access.md` on-demand
+
+**Verbonden bronnen:**
+| Bron | Collector | Wat het bijhoudt |
+|------|-----------|-----------------|
+| Google Sheets | `collect_outreach.py` | Outreach-prospects, deals, conversie |
+| Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
 
 **Key directories:**
 
