@@ -89,20 +89,20 @@ def build_telegram_messages(brief_text, date):
     sections = extract_sections(brief_text)
     messages = []
 
-    # Message 1: Executive summary + key signals
+    # Message 1: Samenvatting + signalen
     parts = []
 
-    summary = sections.get("The Day in Brief", "")
+    summary = sections.get("De Dag in het Kort", sections.get("The Day in Brief", ""))
     if summary:
-        parts.append(f"<b>📋 THE DAY IN BRIEF — {date}</b>\n")
+        parts.append(f"<b>📋 DE DAG IN HET KORT — {date}</b>\n")
         html_summary = _md_to_telegram_html(summary)
         if len(html_summary) > 1800:
             html_summary = _truncate_at_sentence(html_summary, 1800)
         parts.append(html_summary)
 
-    signals = sections.get("Key Signals", "")
+    signals = sections.get("Belangrijkste Signalen", sections.get("Key Signals", ""))
     if signals:
-        parts.append(f"\n\n<b>🔥 KEY SIGNALS</b>\n")
+        parts.append(f"\n\n<b>🔥 BELANGRIJKSTE SIGNALEN</b>\n")
         html_signals = _md_to_telegram_html(signals)
         if len(html_signals) > 1200:
             html_signals = _truncate_at_sentence(html_signals, 1200)
@@ -114,20 +114,20 @@ def build_telegram_messages(brief_text, date):
             msg1 = _truncate_at_sentence(msg1, TELEGRAM_MESSAGE_LIMIT - 10)
         messages.append((msg1, "HTML"))
 
-    # Message 2: Strategic content (recommendations + action items)
+    # Message 2: Metrics + actielijst
     strat_parts = []
 
-    recs = sections.get("Strategic Recommendations", "")
-    if recs:
-        strat_parts.append("<b>⚡ STRATEGIC RECOMMENDATIONS</b>\n")
-        html_recs = _md_to_telegram_html(recs)
-        if len(html_recs) > 2000:
-            html_recs = _truncate_at_sentence(html_recs, 2000)
-        strat_parts.append(html_recs)
+    metrics = sections.get("Metrics Analyse", sections.get("Strategic Recommendations", ""))
+    if metrics:
+        strat_parts.append("<b>📊 METRICS ANALYSE</b>\n")
+        html_metrics = _md_to_telegram_html(metrics)
+        if len(html_metrics) > 2000:
+            html_metrics = _truncate_at_sentence(html_metrics, 2000)
+        strat_parts.append(html_metrics)
 
-    actions = sections.get("Action Items", "")
+    actions = sections.get("Actielijst", sections.get("Action Items", ""))
     if actions:
-        strat_parts.append("\n\n<b>📋 ACTION ITEMS</b>\n")
+        strat_parts.append("\n\n<b>✅ ACTIELIJST</b>\n")
         html_actions = _md_to_telegram_html(actions)
         if len(html_actions) > 1500:
             html_actions = _truncate_at_sentence(html_actions, 1500)
