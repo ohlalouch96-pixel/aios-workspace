@@ -89,7 +89,9 @@ These are how you know your AIOS is working:
 │       ├── commit.md        # /commit — opslaan, documenteren, changelog bijwerken
 │       ├── create-plan.md   # /create-plan — create implementation plans
 │       ├── implement.md     # /implement — execute plans
-│       └── share.md         # /share — package systems for sharing
+│       ├── share.md         # /share — package systems for sharing
+│       ├── explore.md       # /explore — idee uitwerken naar concreet concept
+│       └── brainstorm.md    # /brainstorm — workspace scannen voor automatiseer-kansen
 ├── context/                 # Background context about the user and business
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
@@ -200,6 +202,18 @@ Example: `/implement plans/2026-01-28-competitor-analysis-command.md`
 Deep-dives the code first to fully understand it, then produces a self-contained, beginner-friendly package with a Claude-guided installer (INSTALL.md + README.md + scripts). The recipient gives the folder to Claude Code and says "read INSTALL.md and set this up" — Claude walks them through everything step by step. Runs a 6-stage interactive flow: Research → Scope → Frame → Write → Validate → Deliver. Outputs to `shares/`.
 
 Example: `/share the daily brief system`
+
+### /explore [idea]
+
+**Purpose:** Interactive feature discovery. Takes an idea and walks you through shaping it into a clear, scoped concept through 5 stages: Discovery (understand the vision) → Research (explore what's possible) → Shape (define the feature) → Scope (break it down) → Output (write the exploration doc). Produces a feature doc in `plans/` ready for `/implement`.
+
+Example: `/explore een automatisch opvolgbericht na een kapper-demo`
+
+### /brainstorm [topic]
+
+**Purpose:** Workspace scanner and opportunity finder. Scans your tasks, processes, and current setup to find manual work that could be automated. Ranks opportunities by impact and feasibility, deep-dives the top picks, and points you to `/explore` or `/implement` for the next step. Run without arguments to scan everything, or with a topic to focus on a specific area.
+
+Example: `/brainstorm outreach` of gewoon `/brainstorm`
 
 ---
 
