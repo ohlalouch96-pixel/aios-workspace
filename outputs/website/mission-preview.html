@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Missie — Opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1C1C1C;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            padding: 60px 80px 32px;
+        }
+
+        /* OPTIE A — Grote centrale statement + stats op een rij */
+        .option-a {
+            padding: 80px;
+            border-top: 1px solid #2E2E2E;
+            border-bottom: 1px solid #2E2E2E;
+            text-align: center;
+        }
+
+        .a-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 24px;
+        }
+
+        .a-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #E8C97A 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .a-sub {
+            font-size: 17px;
+            color: #AAAAAA;
+            line-height: 1.8;
+            max-width: 560px;
+            margin: 0 auto 64px;
+            font-weight: 300;
+        }
+
+        .a-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: #2E2E2E;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .a-stat {
+            background: #242424;
+            padding: 36px 24px;
+        }
+
+        .a-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: #C9A84C;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .a-stat-label {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* OPTIE B — Manifesto stijl met grote bold uitspraken */
+        .option-b {
+            padding: 80px;
+            border-bottom: 1px solid #2E2E2E;
+        }
+
+        .b-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 60px;
+        }
+
+        .b-statements {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .b-statement {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid #2A2A2A;
+            align-items: start;
+        }
+
+        .b-statement:first-child { border-top: 1px solid #2A2A2A; }
+
+        .b-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            font-weight: 600;
+            color: rgba(201,168,76,0.15);
+            line-height: 1;
+            padding-top: 4px;
+        }
+
+        .b-content {}
+
+        .b-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .b-text {
+            font-size: 15px;
+            color: #AAAAAA;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        /* OPTIE C — Split met quote links en stats rechts */
+        .option-c {
+            padding: 80px;
+            border-bottom: 1px solid #2E2E2E;
+        }
+
+        .c-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .c-left {}
+
+        .c-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 24px;
+        }
+
+        .c-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        .c-quote span {
+            color: #C9A84C;
+            font-style: italic;
+        }
+
+        .c-text {
+            font-size: 16px;
+            color: #AAAAAA;
+            line-height: 1.85;
+        }
+
+        .c-gold-line {
+            width: 56px;
+            height: 1px;
+            background: #C9A84C;
+            margin: 28px 0;
+        }
+
+        .c-right {
+            padding-top: 60px;
+        }
+
+        .c-stat {
+            padding: 28px 0;
+            border-bottom: 1px solid #2A2A2A;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .c-stat:first-child { border-top: 1px solid #2A2A2A; }
+
+        .c-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 600;
+            color: #C9A84C;
+            line-height: 1;
+        }
+
+        .c-stat-label {
+            font-size: 14px;
+            color: #AAAAAA;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OPTIE A -->
+    <p class="option-label">Optie A — Centrale statement + stats op een rij</p>
+    <div class="option-a">
+        <p class="a-label">Onze missie</p>
+        <h2 class="a-title">Minder handmatig werk.<br>Meer ruimte om te groeien.</h2>
+        <p class="a-sub">De meeste ondernemers besteden 60 tot 80 procent van hun tijd aan terugkerende, handmatige taken. Insightance vervangt die taken door slimme AI-systemen — gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+        <div class="a-stats">
+            <div class="a-stat">
+                <div class="a-stat-number">80%</div>
+                <div class="a-stat-label">van de handmatige taken is automatiseerbaar</div>
+            </div>
+            <div class="a-stat">
+                <div class="a-stat-number">24/7</div>
+                <div class="a-stat-label">draait uw AI-systeem — ook als u slaapt</div>
+            </div>
+            <div class="a-stat">
+                <div class="a-stat-number">€0</div>
+                <div class="a-stat-label">extra personeelskosten voor geautomatiseerde taken</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE B -->
+    <p class="option-label">Optie B — Manifesto stijl</p>
+    <div class="option-b">
+        <p class="b-label">Onze missie</p>
+        <div class="b-statements">
+            <div class="b-statement">
+                <div class="b-number">80%</div>
+                <div class="b-content">
+                    <h3 class="b-headline">Van uw tijd gaat op aan taken die geautomatiseerd kunnen worden.</h3>
+                    <p class="b-text">Administratie, opvolging, rapportages, planning — de meeste ondernemers doen dit nog handmatig. Elke dag opnieuw. Insightance lost dat op.</p>
+                </div>
+            </div>
+            <div class="b-statement">
+                <div class="b-number">24/7</div>
+                <div class="b-content">
+                    <h3 class="b-headline">Uw AI-systeem werkt door — ook als u dat niet doet.</h3>
+                    <p class="b-text">Geen pauzes, geen vergissingen, geen ziekteverlof. Een AI-systeem van Insightance draait continu op de achtergrond terwijl u zich richt op wat echt telt.</p>
+                </div>
+            </div>
+            <div class="b-statement">
+                <div class="b-number">€0</div>
+                <div class="b-content">
+                    <h3 class="b-headline">Extra personeelskosten voor geautomatiseerde taken.</h3>
+                    <p class="b-text">Processen die vroeger mensen vereisten, draaien nu automatisch. Groei zonder dat de loonkosten evenredig meestijgen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE C -->
+    <p class="option-label">Optie C — Quote links, stats rechts</p>
+    <div class="option-c">
+        <div class="c-grid">
+            <div class="c-left">
+                <p class="c-label">Onze missie</p>
+                <h2 class="c-quote">Minder handmatig werk.<br><span>Meer ruimte</span><br>om te groeien.</h2>
+                <div class="c-gold-line"></div>
+                <p class="c-text">De meeste ondernemers besteden 60 tot 80 procent van hun tijd aan terugkerende, handmatige taken. Taken die geen waarde toevoegen, maar dagelijks worden uitgevoerd. Insightance vervangt die taken door slimme AI-systemen — gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+            </div>
+            <div class="c-right">
+                <div class="c-stat">
+                    <div class="c-stat-number">80%</div>
+                    <div class="c-stat-label">van de handmatige taken is automatiseerbaar</div>
+                </div>
+                <div class="c-stat">
+                    <div class="c-stat-number">24/7</div>
+                    <div class="c-stat-label">draait uw AI-systeem — ook als u slaapt</div>
+                </div>
+                <div class="c-stat">
+                    <div class="c-stat-number">€0</div>
+                    <div class="c-stat-label">extra personeelskosten voor geautomatiseerde taken</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Hero — Opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1C1C1C;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            padding: 48px 80px 24px;
+        }
+
+        /* OPTIE A — Ultra minimaal. Eén krachtige zin. Niets meer. */
+        .hero-a {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 80px;
+            position: relative;
+            background-image:
+                linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+            border-bottom: 1px solid #2E2E2E;
+        }
+
+        .hero-a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 45%, rgba(201,168,76,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .a-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 32px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .a-eyebrow::before,
+        .a-eyebrow::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(201,168,76,0.4);
+        }
+
+        .a-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 5.5vw, 72px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #fff 0%, #E8C97A 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .a-sub {
+            font-size: 18px;
+            color: #AAAAAA;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 520px;
+            position: relative;
+        }
+
+        /* OPTIE B — Gouden woorden als accent in de headline */
+        .hero-b {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 80px;
+            position: relative;
+            border-bottom: 1px solid #2E2E2E;
+            background: #1C1C1C;
+        }
+
+        .hero-b::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 65%);
+        }
+
+        .b-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 100px;
+            padding: 8px 20px;
+            font-size: 12px;
+            color: #C9A84C;
+            letter-spacing: 0.1em;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .b-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #C9A84C;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .b-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(44px, 6vw, 84px);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: #fff;
+            position: relative;
+        }
+
+        .b-title .gold { color: #C9A84C; font-style: italic; }
+
+        .b-sub {
+            font-size: 17px;
+            color: #AAAAAA;
+            font-weight: 300;
+            line-height: 1.85;
+            max-width: 540px;
+            position: relative;
+        }
+
+        /* OPTIE C — Vraag die de bezoeker herkent */
+        .hero-c {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 80px;
+            position: relative;
+            border-bottom: 1px solid #2E2E2E;
+            background-image:
+                linear-gradient(rgba(201,168,76,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.02) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        .hero-c::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 40%, rgba(201,168,76,0.09) 0%, transparent 60%);
+        }
+
+        .c-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .c-question {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 400;
+            font-style: italic;
+            color: #888;
+            margin-bottom: 24px;
+            position: relative;
+            max-width: 760px;
+        }
+
+        .c-answer {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(44px, 6.5vw, 90px);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #fff 0%, #E8C97A 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .c-sub {
+            font-size: 17px;
+            color: #AAAAAA;
+            font-weight: 300;
+            line-height: 1.85;
+            max-width: 520px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OPTIE A — BIJGEWERKT -->
+    <p class="option-label">Optie A — Bijgewerkt</p>
+    <div class="hero-a">
+        <div class="a-eyebrow">AI-automatisering voor ondernemers</div>
+        <h1 class="a-title">Inzicht in uw bedrijf.<br><span style="background: none; -webkit-text-fill-color: #C9A84C; font-style: italic;">Grip op uw groei.</span></h1>
+        <p class="a-sub"><strong style="color: #fff; font-weight: 600;">Insightance</strong> automatiseert processen binnen uw bedrijf met behulp van AI. Van administratie en communicatie tot sales en planning — wij pakken het aan. Zo heeft u meer tijd voor wat echt telt: strategie en groei.</p>
+    </div>
+
+    <!-- OPTIE B -->
+    <p class="option-label">Optie B — Gouden accent + pill-tag bovenaan</p>
+    <div class="hero-b">
+        <div class="b-tag">
+            <div class="b-dot"></div>
+            AI-automatisering voor ondernemers
+        </div>
+        <h1 class="b-title">Uw bedrijf verdient<br>meer dan <span class="gold">handmatig</span> werk.</h1>
+        <p class="b-sub">Insightance neemt de repetitieve processen van u over. Van administratie en planning tot sales en communicatie — gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    </div>
+
+    <!-- OPTIE C -->
+    <p class="option-label">Optie C — Vraag die de bezoeker herkent</p>
+    <div class="hero-c">
+        <p class="c-label">AI-automatisering voor ondernemers</p>
+        <p class="c-question">"Hoeveel uur besteedt u wekelijks aan taken die geautomatiseerd kunnen worden?"</p>
+        <h1 class="c-answer">Te veel.<br>Dat verandert nu.</h1>
+        <p class="c-sub">Insightance automatiseert processen binnen uw bedrijf — van administratie en planning tot sales en communicatie. Zodat u zich kunt richten op wat echt telt.</p>
+    </div>
+
+</body>
+</html>

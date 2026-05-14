@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Over Insightance — Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1E1E1E;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            padding: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 60px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* FOTO PLACEHOLDER */
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #242424;
+            border: 1px solid #333;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%);
+        }
+
+        .photo-icon {
+            width: 56px;
+            height: 56px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-label {
+            font-size: 12px;
+            color: #555;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* TEKST */
+        .about-content {}
+
+        .about-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .about-role {
+            font-size: 13px;
+            color: #C9A84C;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+        }
+
+        .gold-line {
+            width: 56px;
+            height: 1px;
+            background: #C9A84C;
+            margin-bottom: 32px;
+        }
+
+        .about-text {
+            font-size: 16px;
+            color: #AAAAAA;
+            line-height: 1.9;
+            margin-bottom: 24px;
+        }
+
+        .about-text strong {
+            color: #fff;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="section-label">Over Insightance</p>
+    <h2 class="section-title">Van zorgverlener naar AI-ondernemer.</h2>
+
+    <div class="about-grid">
+
+        <!-- FOTO PLACEHOLDER -->
+        <div class="photo-placeholder">
+            <div class="photo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <p class="photo-label">Profielfoto</p>
+        </div>
+
+        <!-- TEKST -->
+        <div class="about-content">
+            <h3 class="about-name">Oussama Hlalouch</h3>
+            <p class="about-role">Oprichter van Insightance</p>
+            <div class="gold-line"></div>
+            <p class="about-text">Als zorgverlener heb ik jarenlang gewerkt op specialistische afdelingen, zoals de intensive care en de spoedeisende hulp. Een omgeving waar precisie, snelheid en doelgerichtheid geen keuze zijn, maar een vereiste. Die mindset neem ik mee.</p>
+            <p class="about-text">De vaardigheid om snel te schakelen, processen te analyseren onder druk en doelgericht te handelen, dat vormt de basis van hoe Insightance werkt.</p>
+            <p class="about-text">Mijn doel met Insightance is simpel: ondernemers weer ondernemer laten zijn. Te veel ondernemers zitten gevangen in hun eigen bedrijf. Ze doen het werk dat gedaan moet worden, in plaats van het werk dat gedaan zou moeten worden. Door de mogelijkheden van AI kunnen repetitieve, tijdrovende taken uit handen worden genomen. Insightance zorgt ervoor dat u geen werknemer meer bent van uw eigen bedrijf.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

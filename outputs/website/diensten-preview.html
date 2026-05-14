@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Diensten — Opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1C1C1C;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            padding: 48px 80px 24px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 56px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .wrap {
+            padding: 80px;
+            border-bottom: 1px solid #2E2E2E;
+        }
+
+        /* OPTIE A — Twee kolommen: dienst links, uitleg + voorbeeld rechts */
+        .a-list { display: flex; flex-direction: column; gap: 1px; background: #2E2E2E; }
+
+        .a-item {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            background: #1E1E1E;
+        }
+
+        .a-left {
+            padding: 44px 40px;
+            border-right: 1px solid #2E2E2E;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .a-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .a-tag {
+            font-size: 11px;
+            color: #C9A84C;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .a-right {
+            padding: 44px 48px;
+        }
+
+        .a-text {
+            font-size: 15px;
+            color: #AAAAAA;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .a-example {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            padding-left: 16px;
+            border-left: 2px solid rgba(201,168,76,0.3);
+            line-height: 1.7;
+        }
+
+        /* OPTIE B — Drie grote kaarten met icoon bovenaan */
+        .b-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .b-card {
+            background: #242424;
+            border: 1px solid #2E2E2E;
+            border-radius: 4px;
+            padding: 44px 36px;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .b-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, #C9A84C, transparent);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .b-icon {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .b-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .b-text {
+            font-size: 15px;
+            color: #AAAAAA;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .b-example {
+            font-size: 13px;
+            color: #C9A84C;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.6;
+        }
+
+        .b-example::before { content: '→'; flex-shrink: 0; }
+
+        /* OPTIE C — Volledig breedte items met nummer en horizontale lijn */
+        .c-list { display: flex; flex-direction: column; }
+
+        .c-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 1fr;
+            gap: 48px;
+            padding: 48px 0;
+            border-bottom: 1px solid #2A2A2A;
+            align-items: start;
+        }
+
+        .c-item:first-child { border-top: 1px solid #2A2A2A; }
+
+        .c-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 600;
+            color: rgba(201,168,76,0.2);
+            line-height: 1;
+            padding-top: 4px;
+        }
+
+        .c-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .c-tag {
+            font-size: 11px;
+            color: #C9A84C;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .c-right {}
+
+        .c-text {
+            font-size: 15px;
+            color: #AAAAAA;
+            line-height: 1.85;
+            margin-bottom: 16px;
+            padding-top: 8px;
+        }
+
+        .c-example {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            padding-left: 14px;
+            border-left: 2px solid rgba(201,168,76,0.25);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OPTIE A -->
+    <p class="option-label">Optie A — Twee kolommen: dienst links, uitleg rechts</p>
+    <div class="wrap">
+        <p class="section-label">Diensten</p>
+        <h2 class="section-title">Wat Insightance voor u doet.</h2>
+        <div class="a-list">
+            <div class="a-item">
+                <div class="a-left">
+                    <h3 class="a-title">Procesautomatisering</h3>
+                    <span class="a-tag">Kern dienst</span>
+                </div>
+                <div class="a-right">
+                    <p class="a-text">Repetitieve, handmatige taken kosten u dagelijks tijd en energie. Insightance brengt deze processen in kaart en vervangt ze door slimme AI-systemen. Het resultaat: minder fouten, minder tijdsverspilling en meer ruimte voor wat uw bedrijf echt vooruithelpt.</p>
+                    <p class="a-example">Voorbeeld: automatische verwerking van inkomende aanvragen zonder menselijke tussenkomst</p>
+                </div>
+            </div>
+            <div class="a-item">
+                <div class="a-left">
+                    <h3 class="a-title">AI-systemen op maat</h3>
+                    <span class="a-tag">Maatwerk</span>
+                </div>
+                <div class="a-right">
+                    <p class="a-text">Geen kant-en-klare software die u moet leren gebruiken. Elk systeem wordt van de grond af opgebouwd rondom uw bedrijf, uw processen en uw doelen. U krijgt een oplossing die precies past.</p>
+                    <p class="a-example">Voorbeeld: een systeem dat leads automatisch opvolgt op basis van uw eigen criteria</p>
+                </div>
+            </div>
+            <div class="a-item">
+                <div class="a-left">
+                    <h3 class="a-title">Oplevering & Nazorg</h3>
+                    <span class="a-tag">Afronding</span>
+                </div>
+                <div class="a-right">
+                    <p class="a-text">Een systeem is pas klaar als het volledig draait. Na oplevering zorgt Insightance dat alles correct werkt en dat u weet hoe u ermee omgaat. Zodra het systeem staat en u er mee uit de voeten kunt, is het project afgerond.</p>
+                    <p class="a-example">Voorbeeld: volledige implementatie inclusief uitleg en testperiode</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE B -->
+    <p class="option-label">Optie B — Drie kaarten met icoon en voorbeeld</p>
+    <div class="wrap">
+        <p class="section-label">Diensten</p>
+        <h2 class="section-title">Wat Insightance voor u doet.</h2>
+        <div class="b-grid">
+            <div class="b-card">
+                <div class="b-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="b-title">Procesautomatisering</h3>
+                <p class="b-text">Repetitieve taken vervangen door slimme AI-systemen. Minder fouten, minder tijdsverspilling, meer ruimte voor groei.</p>
+                <p class="b-example">Automatische verwerking van inkomende aanvragen</p>
+            </div>
+            <div class="b-card">
+                <div class="b-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                        <path d="M9 9h6M9 12h6M9 15h4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="b-title">AI-systemen op maat</h3>
+                <p class="b-text">Geen standaardoplossing. Elk systeem gebouwd rondom uw bedrijf, uw processen en uw doelen.</p>
+                <p class="b-example">Leads automatisch opvolgen op basis van uw criteria</p>
+            </div>
+            <div class="b-card">
+                <div class="b-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="b-title">Oplevering & Nazorg</h3>
+                <p class="b-text">Na oplevering zorgt Insightance dat alles correct werkt en dat u weet hoe u ermee omgaat. Zodra het systeem staat en u er mee uit de voeten kunt, is het project afgerond.</p>
+                <p class="b-example">Volledige implementatie inclusief uitleg</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE C -->
+    <p class="option-label">Optie C — Horizontaal met nummer, titel en uitleg naast elkaar</p>
+    <div class="wrap">
+        <p class="section-label">Diensten</p>
+        <h2 class="section-title">Wat Insightance voor u doet.</h2>
+        <div class="c-list">
+            <div class="c-item">
+                <div class="c-number">01</div>
+                <div>
+                    <h3 class="c-title">Procesautomatisering</h3>
+                    <span class="c-tag">Kern dienst</span>
+                </div>
+                <div class="c-right">
+                    <p class="c-text">Repetitieve, handmatige taken kosten u dagelijks tijd en energie. Insightance brengt deze processen in kaart en vervangt ze door slimme AI-systemen.</p>
+                    <p class="c-example">Voorbeeld: automatische verwerking van inkomende aanvragen</p>
+                </div>
+            </div>
+            <div class="c-item">
+                <div class="c-number">02</div>
+                <div>
+                    <h3 class="c-title">AI-systemen op maat</h3>
+                    <span class="c-tag">Maatwerk</span>
+                </div>
+                <div class="c-right">
+                    <p class="c-text">Geen kant-en-klare software. Elk systeem wordt gebouwd rondom uw bedrijf, uw processen en uw doelen.</p>
+                    <p class="c-example">Voorbeeld: leads automatisch opvolgen op basis van uw criteria</p>
+                </div>
+            </div>
+            <div class="c-item">
+                <div class="c-number">03</div>
+                <div>
+                    <h3 class="c-title">Oplevering & Nazorg</h3>
+                    <span class="c-tag">Afronding</span>
+                </div>
+                <div class="c-right">
+                    <p class="c-text">Een systeem is pas klaar als het volledig draait. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat.</p>
+                    <p class="c-example">Voorbeeld: volledige implementatie inclusief uitleg en testperiode</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

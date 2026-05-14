@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoe Insightance werkt — Opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1C1C1C;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            padding: 48px 80px 24px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 64px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .wrap {
+            padding: 80px;
+            border-bottom: 1px solid #2E2E2E;
+        }
+
+        /* OPTIE A — Horizontale stappen met verbindingslijn */
+        .a-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            position: relative;
+        }
+
+        .a-steps::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #C9A84C, #C9A84C, #C9A84C, transparent);
+        }
+
+        .a-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .a-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 1px solid #C9A84C;
+            background: #1C1C1C;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #C9A84C;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .a-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .a-text {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.7;
+        }
+
+        /* OPTIE B — Grote nummers met tekst naast elkaar, afwisselend */
+        .b-list { display: flex; flex-direction: column; gap: 0; }
+
+        .b-item {
+            display: grid;
+            grid-template-columns: 1fr 120px 1fr;
+            gap: 0;
+            align-items: center;
+            padding: 48px 0;
+            border-bottom: 1px solid #242424;
+        }
+
+        .b-item:first-child { border-top: 1px solid #242424; }
+
+        .b-left { padding-right: 60px; text-align: right; }
+        .b-right { padding-left: 60px; }
+
+        .b-left.empty, .b-right.empty {}
+
+        .b-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .b-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: rgba(201,168,76,0.15);
+            line-height: 1;
+        }
+
+        .b-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #C9A84C;
+            background: #1C1C1C;
+        }
+
+        .b-title {
+            font-size: 19px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .b-text {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.75;
+        }
+
+        /* OPTIE C — Strak tabel-achtig overzicht */
+        .c-list { display: flex; flex-direction: column; }
+
+        .c-item {
+            display: grid;
+            grid-template-columns: 48px 220px 1fr;
+            gap: 48px;
+            padding: 36px 0;
+            border-bottom: 1px solid #242424;
+            align-items: start;
+        }
+
+        .c-item:first-child { border-top: 1px solid #242424; }
+
+        .c-num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.1em;
+            padding-top: 3px;
+        }
+
+        .c-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            padding-top: 2px;
+        }
+
+        .c-text {
+            font-size: 15px;
+            color: #AAAAAA;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OPTIE A -->
+    <p class="option-label">Optie A — Horizontale stappen met verbindingslijn</p>
+    <div class="wrap">
+        <p class="section-label">Hoe Insightance werkt</p>
+        <h2 class="section-title">Van eerste contact tot<br>werkend systeem.</h2>
+        <div class="a-steps">
+            <div class="a-step">
+                <div class="a-circle">1</div>
+                <h3 class="a-title">Eerste contact</h3>
+                <p class="a-text">U neemt contact op via het contactformulier, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p>
+            </div>
+            <div class="a-step">
+                <div class="a-circle">2</div>
+                <h3 class="a-title">Discovery call</h3>
+                <p class="a-text">We plannen een gesprek van 30 minuten — geheel vrijblijvend. Een eerlijk gesprek over uw bedrijf, uw processen en wat er mogelijk is.</p>
+            </div>
+            <div class="a-step">
+                <div class="a-circle">3</div>
+                <h3 class="a-title">Voorstel</h3>
+                <p class="a-text">Een helder voorstel met wat er gebouwd wordt, de tijdlijn en de prijs. Geen verrassingen.</p>
+            </div>
+            <div class="a-step">
+                <div class="a-circle">4</div>
+                <h3 class="a-title">Bouw</h3>
+                <p class="a-text">Insightance bouwt op maat. U wordt doorlopend op de hoogte gehouden.</p>
+            </div>
+            <div class="a-step">
+                <div class="a-circle">5</div>
+                <h3 class="a-title">Oplevering</h3>
+                <p class="a-text">Het systeem gaat live. Alles correct ingericht en uitgelegd.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE B -->
+    <p class="option-label">Optie B — Afwisselend links/rechts met groot nummer</p>
+    <div class="wrap">
+        <p class="section-label">Hoe Insightance werkt</p>
+        <h2 class="section-title">Van eerste contact tot<br>werkend systeem.</h2>
+        <div class="b-list">
+            <div class="b-item">
+                <div class="b-left">
+                    <h3 class="b-title">Eerste contact</h3>
+                    <p class="b-text">Neem contact op via de website, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p>
+                </div>
+                <div class="b-center">
+                    <div class="b-number">1</div>
+                    <div class="b-dot"></div>
+                </div>
+                <div class="b-right empty"></div>
+            </div>
+            <div class="b-item">
+                <div class="b-left empty"></div>
+                <div class="b-center">
+                    <div class="b-number">2</div>
+                    <div class="b-dot"></div>
+                </div>
+                <div class="b-right">
+                    <h3 class="b-title">Discovery call</h3>
+                    <p class="b-text">Een gesprek van 30 minuten — geheel vrijblijvend. Uw bedrijf, uw processen en wat er mogelijk is.</p>
+                </div>
+            </div>
+            <div class="b-item">
+                <div class="b-left">
+                    <h3 class="b-title">Voorstel</h3>
+                    <p class="b-text">U ontvangt een helder voorstel met scope, tijdlijn en prijs. Geen verrassingen achteraf.</p>
+                </div>
+                <div class="b-center">
+                    <div class="b-number">3</div>
+                    <div class="b-dot"></div>
+                </div>
+                <div class="b-right empty"></div>
+            </div>
+            <div class="b-item">
+                <div class="b-left empty"></div>
+                <div class="b-center">
+                    <div class="b-number">4</div>
+                    <div class="b-dot"></div>
+                </div>
+                <div class="b-right">
+                    <h3 class="b-title">Bouw</h3>
+                    <p class="b-text">Insightance bouwt het systeem op maat. U wordt gedurende het hele proces op de hoogte gehouden.</p>
+                </div>
+            </div>
+            <div class="b-item">
+                <div class="b-left">
+                    <h3 class="b-title">Oplevering</h3>
+                    <p class="b-text">Het systeem gaat live. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat.</p>
+                </div>
+                <div class="b-center">
+                    <div class="b-number">5</div>
+                    <div class="b-dot"></div>
+                </div>
+                <div class="b-right empty"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE C -->
+    <p class="option-label">Optie C — Strak tabel-overzicht</p>
+    <div class="wrap">
+        <p class="section-label">Hoe Insightance werkt</p>
+        <h2 class="section-title">Van eerste contact tot<br>werkend systeem.</h2>
+        <div class="c-list">
+            <div class="c-item">
+                <div class="c-num">01</div>
+                <div class="c-title">Eerste contact</div>
+                <p class="c-text">Neem contact op via de website, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p>
+            </div>
+            <div class="c-item">
+                <div class="c-num">02</div>
+                <div class="c-title">Discovery call</div>
+                <p class="c-text">Een gesprek van 30 minuten — geheel vrijblijvend. Geen verplichtingen, gewoon een eerlijk gesprek over uw bedrijf, uw processen en wat er mogelijk is.</p>
+            </div>
+            <div class="c-item">
+                <div class="c-num">03</div>
+                <div class="c-title">Voorstel</div>
+                <p class="c-text">U ontvangt een helder voorstel met scope, tijdlijn en prijs. Geen verrassingen achteraf.</p>
+            </div>
+            <div class="c-item">
+                <div class="c-num">04</div>
+                <div class="c-title">Bouw</div>
+                <p class="c-text">Insightance bouwt het systeem op maat. U wordt gedurende het hele proces op de hoogte gehouden.</p>
+            </div>
+            <div class="c-item">
+                <div class="c-num">05</div>
+                <div class="c-title">Oplevering</div>
+                <p class="c-text">Het systeem gaat live. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact — Opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #1C1C1C;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #C9A84C;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            padding: 48px 80px 24px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.15;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .section-sub {
+            font-size: 16px;
+            color: #888;
+            text-align: center;
+            margin-bottom: 64px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wrap { padding: 80px; border-bottom: 1px solid #2E2E2E; }
+
+        /* GEDEELDE FORM STIJLEN */
+        .form-group { margin-bottom: 18px; }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-label { display: block; font-size: 12px; font-weight: 500; color: #AAAAAA; margin-bottom: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+        .form-input, .form-select, .form-textarea {
+            width: 100%; background: #262626; border: 1px solid #333; border-radius: 3px;
+            padding: 14px 16px; color: #fff; font-family: 'Inter', sans-serif; font-size: 15px;
+            transition: border-color 0.2s; outline: none;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #C9A84C; }
+        .form-input::placeholder, .form-textarea::placeholder { color: #555; }
+        .form-select { appearance: none; cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 16px center; padding-right: 44px; }
+        .form-select option { background: #262626; }
+        .form-textarea { resize: vertical; min-height: 130px; }
+
+        /* OPTIE A — Formulier links, info rechts */
+        .a-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+        .btn-gold {
+            width: 100%; background: #C9A84C; color: #000; border: none; padding: 17px;
+            border-radius: 3px; font-family: 'Inter', sans-serif; font-weight: 600;
+            font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+            transition: all 0.2s; margin-top: 8px;
+        }
+        .btn-gold:hover { background: #E8C97A; }
+
+        .info-block { padding-top: 8px; }
+
+        .info-intro {
+            font-size: 16px;
+            color: #AAAAAA;
+            line-height: 1.85;
+            margin-bottom: 48px;
+        }
+
+        .info-icons { display: flex; flex-direction: column; gap: 24px; }
+
+        .info-icon-item { display: flex; align-items: center; gap: 16px; }
+
+        .info-icon-circle {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-icon-text { font-size: 15px; color: #AAAAAA; }
+        .info-icon-text a { color: #fff; text-decoration: none; transition: color 0.2s; }
+        .info-icon-text a:hover { color: #C9A84C; }
+
+        /* OPTIE B — Formulier gecentreerd, breed */
+        .b-form { max-width: 680px; margin: 0 auto; }
+
+        /* OPTIE C — Split: grote quote links, compact formulier rechts */
+        .c-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+        .c-left { padding-top: 16px; }
+
+        .c-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        .c-quote span { color: #C9A84C; font-style: italic; }
+
+        .c-text { font-size: 15px; color: #888; line-height: 1.85; margin-bottom: 40px; }
+
+        .c-icons { display: flex; flex-direction: column; gap: 20px; }
+
+        .c-icon-item { display: flex; align-items: center; gap: 14px; }
+
+        .c-icon-box {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .c-icon-value { font-size: 14px; color: #AAAAAA; }
+        .c-icon-value a { color: #AAAAAA; text-decoration: none; }
+        .c-icon-value a:hover { color: #C9A84C; }
+    </style>
+</head>
+<body>
+
+    <!-- OPTIE A -->
+    <p class="option-label">Optie A — Formulier links, contactinfo rechts</p>
+    <div class="wrap">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Laten we praten.</h2>
+        <p class="section-sub">Klaar om uw bedrijf slimmer te laten werken? Vul het formulier in en Insightance neemt binnen 24 uur contact op.</p>
+        <div class="a-grid">
+            <form>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Naam *</label>
+                        <input class="form-input" type="text" placeholder="Jan de Vries">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bedrijfsnaam *</label>
+                        <input class="form-input" type="text" placeholder="Uw bedrijfsnaam">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Aantal medewerkers *</label>
+                    <select class="form-select">
+                        <option value="" disabled selected>Selecteer...</option>
+                        <option>0</option>
+                        <option>0 tot 15</option>
+                        <option>15 tot 50</option>
+                        <option>50 tot 150</option>
+                        <option>150+</option>
+                    </select>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">E-mailadres *</label>
+                        <input class="form-input" type="email" placeholder="jan@bedrijf.nl">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telefoonnummer *</label>
+                        <input class="form-input" type="tel" placeholder="+31 6 00 000 000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Uw vraag of bericht *</label>
+                    <textarea class="form-textarea" placeholder="Vertel ons over uw bedrijf..."></textarea>
+                </div>
+                <button class="btn-gold">Verstuur bericht</button>
+            </form>
+            <div class="info-block">
+                <p class="info-intro">Heeft u een vraag of wilt u meer informatie? Neem gerust contact op. Insightance reageert binnen 24 uur.</p>
+                <div class="info-icons">
+                    <div class="info-icon-item">
+                        <div class="info-icon-circle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="info-icon-text"><a href="mailto:oussama@insightance.ai">oussama@insightance.ai</a></div>
+                    </div>
+                    <div class="info-icon-item">
+                        <div class="info-icon-circle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#C9A84C" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="info-icon-text"><a href="#">insightance.ai</a></div>
+                    </div>
+                    <div class="info-icon-item">
+                        <div class="info-icon-circle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="2" width="20" height="20" rx="4" stroke="#C9A84C" stroke-width="1.5"/>
+                                <circle cx="7.5" cy="7.5" r="1.2" fill="#C9A84C"/>
+                                <line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="info-icon-text">LinkedIn — volgt binnenkort</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIE B -->
+    <p class="option-label">Optie B — Formulier gecentreerd, breed</p>
+    <div class="wrap">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Laten we praten.</h2>
+        <p class="section-sub">Klaar om uw bedrijf slimmer te laten werken? Vul het formulier in en Insightance neemt binnen 24 uur contact op.</p>
+        <form class="b-form">
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Naam *</label>
+                    <input class="form-input" type="text" placeholder="Jan de Vries">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bedrijfsnaam *</label>
+                    <input class="form-input" type="text" placeholder="Uw bedrijfsnaam">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Aantal medewerkers *</label>
+                <select class="form-select">
+                    <option value="" disabled selected>Selecteer...</option>
+                    <option>0</option>
+                    <option>0 tot 15</option>
+                    <option>15 tot 50</option>
+                    <option>50 tot 150</option>
+                    <option>150+</option>
+                </select>
+            </div>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">E-mailadres *</label>
+                    <input class="form-input" type="email" placeholder="jan@bedrijf.nl">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Telefoonnummer *</label>
+                    <input class="form-input" type="tel" placeholder="+31 6 00 000 000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Uw vraag of bericht *</label>
+                <textarea class="form-textarea" placeholder="Vertel ons over uw bedrijf..."></textarea>
+            </div>
+            <button class="btn-gold">Verstuur bericht</button>
+            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 40px; padding-top: 32px; border-top: 1px solid #2A2A2A;">
+                <div class="info-icon-item">
+                    <div class="info-icon-circle">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/>
+                            <path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="info-icon-text"><a href="mailto:oussama@insightance.ai">oussama@insightance.ai</a></div>
+                </div>
+                <div class="info-icon-item">
+                    <div class="info-icon-circle">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+                            <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#C9A84C" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="info-icon-text"><a href="#">insightance.ai</a></div>
+                </div>
+                <div class="info-icon-item">
+                    <div class="info-icon-circle">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="2" width="20" height="20" rx="4" stroke="#C9A84C" stroke-width="1.5"/>
+                            <circle cx="7.5" cy="7.5" r="1.2" fill="#C9A84C"/>
+                            <line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="info-icon-text">LinkedIn</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- OPTIE C -->
+    <p class="option-label">Optie C — Quote links, compact formulier rechts</p>
+    <div class="wrap">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Laten we praten.</h2>
+        <p class="section-sub" style="margin-bottom: 64px;"></p>
+        <div class="c-grid">
+            <div class="c-left">
+                <h3 class="c-quote">"Aan iedere verandering gaat een keuze vooraf.<br><span>De eerste stap naar een slimmer bedrijf begint hier."</span></h3>
+                <p class="c-text">Klaar om de volgende stap te zetten? Vul het formulier in of neem direct contact op. Insightance reageert binnen 24 uur.</p>
+                <div class="c-icons">
+                    <div class="c-icon-item">
+                        <div class="c-icon-box">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="c-icon-value"><a href="mailto:oussama@insightance.ai">oussama@insightance.ai</a></div>
+                    </div>
+                    <div class="c-icon-item">
+                        <div class="c-icon-box">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#C9A84C" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="c-icon-value"><a href="#">insightance.ai</a></div>
+                    </div>
+                    <div class="c-icon-item">
+                        <div class="c-icon-box">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="2" width="20" height="20" rx="4" stroke="#C9A84C" stroke-width="1.5"/>
+                                <circle cx="7.5" cy="7.5" r="1.2" fill="#C9A84C"/>
+                                <line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="c-icon-value">LinkedIn — volgt binnenkort</div>
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Naam *</label>
+                    <input class="form-input" type="text" placeholder="Jan de Vries">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bedrijfsnaam *</label>
+                    <input class="form-input" type="text" placeholder="Uw bedrijfsnaam">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Aantal medewerkers *</label>
+                    <select class="form-select">
+                        <option value="" disabled selected>Selecteer...</option>
+                        <option>0</option>
+                        <option>0 tot 15</option>
+                        <option>15 tot 50</option>
+                        <option>50 tot 150</option>
+                        <option>150+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">E-mailadres *</label>
+                    <input class="form-input" type="email" placeholder="jan@bedrijf.nl">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Telefoonnummer *</label>
+                    <input class="form-input" type="tel" placeholder="+31 6 00 000 000">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Uw vraag of bericht *</label>
+                    <textarea class="form-textarea" placeholder="Vertel ons over uw bedrijf..."></textarea>
+                </div>
+                <button class="btn-gold">Verstuur bericht</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
