@@ -141,10 +141,24 @@
         }
 
         .hero h1 .hero-gold {
-            -webkit-text-fill-color: var(--gold);
-            font-style: italic;
+            color: var(--white);
+            font-style: normal;
+            font-weight: 300;
             background: none;
             display: block;
+        }
+
+        .hero-side {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            font-size: 10px;
+            color: rgba(201,168,76,0.25);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            z-index: 1;
         }
 
         .hero-intro {
@@ -191,8 +205,14 @@
         .section-title { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 52px); font-weight: 600; line-height: 1.15; margin-bottom: 28px; color: var(--white); text-align: center; }
         .section-text { font-size: 17px; color: var(--gray-light); line-height: 1.85; }
         .gold-line { width: 56px; height: 1px; background: var(--gold); margin: 28px auto; }
-        .strip { border-top: 1px solid var(--border); }
-        .strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+        .strip::after { content: 'Insightance'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); font-size: 10px; color: rgba(201,168,76,0.06); letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap; pointer-events: none; font-family: var(--font-body); font-weight: 600; }
+
+        .hero-ctas { display: flex; gap: 20px; align-items: center; position: relative; z-index: 1; margin-top: 16px; }
+        .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
+        .hero-cta-primary:hover { background: var(--gold-light); }
+        .hero-cta-secondary { font-size: 13px; color: var(--gray); letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid #2A2A2A; padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+        .hero-cta-secondary:hover { color: var(--gold); border-color: rgba(201,168,76,0.4); }
 
         /* MISSION */
         .mission-text { text-align: center; max-width: 600px; margin: 0 auto 64px; font-size: 17px; color: var(--gray-light); line-height: 1.85; }
@@ -377,7 +397,12 @@
         <p data-nl="Opgericht door een voormalig zorgverlener met een passie voor precisie en automatisering." data-en="Founded by a former healthcare professional with a passion for precision and automation."></p>
         <p data-nl="Dezelfde drive. Een andere missie." data-en="Same drive. Different mission."></p>
     </div>
+    <div class="hero-ctas">
+        <a href="#contact" class="hero-cta-primary" data-nl="Kom in contact" data-en="Get in touch">Kom in contact</a>
+        <a href="#services" class="hero-cta-secondary" data-nl="Bekijk onze diensten" data-en="View our services">Bekijk onze diensten</a>
+    </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
+    <span class="hero-side">Insightance · 2026</span>
 </div>
 
 <!-- MISSION -->
@@ -841,6 +866,7 @@
         <span class="footer-logo">Insightance</span>
     </div>
     <span data-nl="© 2026 Insightance. Alle rechten voorbehouden." data-en="© 2026 Insightance. All rights reserved."></span>
+    <span style="font-size:11px; color: #333; letter-spacing: 0.2em; text-transform: uppercase;">Amsterdam · 2026</span>
     <div class="footer-linkedin">
         <a href="#" title="LinkedIn" target="_blank">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
