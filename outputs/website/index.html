@@ -70,6 +70,8 @@
 
         .lang-toggle { background: none; border: 1px solid var(--border); color: var(--gray); padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; }
         .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
+        .nav-cta { background: var(--gold); color: #000; padding: 10px 22px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.2s; white-space: nowrap; }
+        .nav-cta:hover { background: var(--gold-light); }
 
         /* HERO */
         .hero {
@@ -133,10 +135,7 @@
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 32px;
-            background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, #fff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--white);
             position: relative;
             z-index: 1;
         }
@@ -193,42 +192,50 @@
         .section-text { font-size: 17px; color: var(--gray-light); line-height: 1.85; }
         .gold-line { width: 56px; height: 1px; background: var(--gold); margin: 28px auto; }
         .strip { border-top: 1px solid var(--border); }
-        .strip-dark { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
         /* MISSION */
         .mission-text { text-align: center; max-width: 600px; margin: 0 auto 64px; font-size: 17px; color: var(--gray-light); line-height: 1.85; }
-        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); max-width: 800px; margin: 0 auto; }
-        .mission-stat { background: var(--surface-2); padding: 40px 24px; text-align: center; }
+        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); max-width: 800px; margin: 0 auto; }
+        .mission-stat { background: var(--surface); padding: 40px 24px; text-align: center; position: relative; overflow: hidden; }
+        .mission-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
         .mission-stat-number { font-family: var(--font-heading); font-size: 48px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 12px; }
         .mission-stat-label { font-size: 14px; color: var(--gray); line-height: 1.6; }
 
         /* FOR WHO */
-        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
-        .forwho-col { background: var(--surface-2); padding: 40px 36px; position: relative; }
-        .forwho-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold), transparent); }
-        .forwho-col-title { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
-        .forwho-col-text { font-size: 15px; color: var(--gray); line-height: 1.8; }
+        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
+        .forwho-col { background: var(--surface); position: relative; transition: background 0.3s; }
+        .forwho-col:hover { background: var(--surface-2); }
+        .forwho-col-top { height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .forwho-col-inner { padding: 44px 44px 52px; }
+        .forwho-col-title { font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
+        .forwho-col-text { font-size: 15px; color: var(--gray); line-height: 1.85; }
 
-        .results-strip { margin-top: 1px; background: var(--surface-3); }
-        .results-inner { padding: 48px 40px; }
-        .results-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
-        .results-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
-        .result-item { }
-        .result-icon { width: 40px; height: 40px; border: 1px solid rgba(201,168,76,0.3); border-radius: 3px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+        .results-strip { margin-top: 0; background: var(--surface); border-top: 1px solid var(--border); }
+        .results-inner { padding: 48px 0; }
+        .results-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 36px; }
+        .results-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+        .result-item { padding: 0 32px 0 0; border-right: 1px solid var(--border); }
+        .result-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
+        .result-item:not(:first-child):not(:last-child) { padding: 0 32px; }
+        .result-item:first-child { padding-left: 0; }
+        .result-icon { width: 44px; height: 44px; border: 1px solid rgba(201,168,76,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
         .result-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-        .result-text { font-size: 13px; color: var(--gray); line-height: 1.65; }
+        .result-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* SERVICES */
-        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
-        .service-card-new { background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 40px 36px; position: relative; transition: border-color 0.3s; }
-        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold), transparent); border-radius: 3px 3px 0 0; opacity: 0; transition: opacity 0.3s; }
-        .service-card-new:hover { border-color: rgba(201,168,76,0.3); }
-        .service-card-new:hover::before { opacity: 1; }
-        .service-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.3); border-radius: 3px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); margin-top: 56px; }
+        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
+        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .service-card-new:hover { background: var(--surface-2); }
+        .service-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; margin-top: 8px; }
         .service-card-title { font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
-        .service-card-text { font-size: 15px; color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
-        .service-card-example { font-size: 13px; color: var(--gold); display: flex; align-items: flex-start; gap: 8px; line-height: 1.6; }
-        .service-card-example::before { content: '→'; flex-shrink: 0; }
+        .service-card-text { font-size: 15px; color: var(--gray); line-height: 1.8; margin-bottom: 28px; }
+        .service-card-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 24px; }
+        .service-card-bullets-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+        .service-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .service-card-bullets li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--gray); line-height: 1.5; }
+        .service-card-bullets li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
 
         /* HOW WE WORK - Horizontal */
         .steps-wrap { position: relative; margin-top: 64px; }
@@ -240,9 +247,10 @@
         .step-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* WHY INSIGHTANCE */
-        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-        .why-item { background: var(--surface); padding: 48px; position: relative; }
-        .why-item::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), transparent); }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+        .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; }
+        .why-item:hover { background: var(--surface-2); }
+        .why-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
         .why-title { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
         .why-tag { font-size: 11px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 18px; display: block; }
         .why-text { font-size: 15px; color: var(--gray-light); line-height: 1.8; }
@@ -271,6 +279,10 @@
         .faq-answer-inner { padding: 0 40px 24px 0; font-size: 16px; color: var(--gray-light); line-height: 1.85; }
         .faq-link { display: inline-block; margin-top: 14px; color: var(--gold); font-size: 15px; cursor: pointer; border: none; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 2px; background: none; font-family: var(--font-body); transition: all 0.2s; }
         .faq-link:hover { border-color: var(--gold); color: var(--gold-light); }
+
+        .phone-wrap { display: flex; flex-direction: row; gap: 8px; }
+        .phone-wrap .form-input { flex: 1; min-width: 0; }
+        .phone-code { flex-shrink: 0; width: 82px !important; padding-left: 10px !important; padding-right: 24px !important; }
 
         /* CONTACT - Option C */
         .contact-c-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
@@ -350,7 +362,10 @@
         <li><a href="#faq" data-nl="FAQ" data-en="FAQ">FAQ</a></li>
         <li><a href="#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
     </ul>
-    <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+        <a href="#contact" class="nav-cta" data-nl="Kom in contact" data-en="Get in touch">Kom in contact</a>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -389,26 +404,35 @@
 </div>
 
 <!-- VOOR WIE -->
-<div class="strip-dark" id="forwho">
+<div class="strip" id="forwho">
     <div class="section fade-in">
         <p class="section-label" data-nl="Voor wie" data-en="For who"></p>
         <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken." data-en="For business owners ready to work smarter."></h2>
         <div class="forwho-cols">
             <div class="forwho-col">
-                <h3 class="forwho-col-title" data-nl="De zelfstandige ondernemer" data-en="The solo entrepreneur"></h3>
-                <p class="forwho-col-text" data-nl="Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei." data-en="Does everything alone. Every hour lost to admin and routine tasks is an hour less for clients and growth."></p>
+                <div class="forwho-col-top"></div>
+                <div class="forwho-col-inner">
+                    <h3 class="forwho-col-title" data-nl="De zelfstandige ondernemer" data-en="The solo entrepreneur"></h3>
+                    <p class="forwho-col-text" data-nl="Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei." data-en="Does everything alone. Every hour lost to admin and routine tasks is an hour less for clients and growth."></p>
+                </div>
             </div>
             <div class="forwho-col">
-                <h3 class="forwho-col-title" data-nl="De groeiende onderneming" data-en="The growing business"></h3>
-                <p class="forwho-col-text" data-nl="Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken." data-en="The team is growing, but processes lag behind. Manual work piles up and slows the scale the business wants to make."></p>
+                <div class="forwho-col-top"></div>
+                <div class="forwho-col-inner">
+                    <h3 class="forwho-col-title" data-nl="De groeiende onderneming" data-en="The growing business"></h3>
+                    <p class="forwho-col-text" data-nl="Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken." data-en="The team is growing, but processes lag behind. Manual work piles up and slows the scale the business wants to make."></p>
+                </div>
             </div>
             <div class="forwho-col">
-                <h3 class="forwho-col-title" data-nl="De gevestigde organisatie" data-en="The established organisation"></h3>
-                <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap — maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step — but internal capacity to implement it is lacking."></p>
+                <div class="forwho-col-top"></div>
+                <div class="forwho-col-inner">
+                    <h3 class="forwho-col-title" data-nl="De gevestigde organisatie" data-en="The established organisation"></h3>
+                    <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap — maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step — but internal capacity to implement it is lacking."></p>
+                </div>
             </div>
         </div>
         <div class="results-strip">
-            <div class="results-inner">
+            <div class="results-inner section" style="padding-top:48px;padding-bottom:56px;">
                 <p class="results-label" data-nl="Wat het u oplevert" data-en="What you gain"></p>
                 <div class="results-grid">
                     <div class="result-item">
@@ -483,7 +507,13 @@
                 </div>
                 <h3 class="service-card-title" data-nl="Procesautomatisering" data-en="Process Automation"></h3>
                 <p class="service-card-text" data-nl="Repetitieve taken vervangen door slimme AI-systemen. Minder fouten, minder tijdsverspilling, meer ruimte voor groei." data-en="Repetitive tasks replaced by smart AI systems. Fewer errors, less time wasted, more room for growth."></p>
-                <p class="service-card-example" data-nl="Automatische verwerking van inkomende aanvragen" data-en="Automatic processing of incoming requests"></p>
+                <div class="service-card-divider"></div>
+                <p class="service-card-bullets-label" data-nl="Toepassingen" data-en="Applications"></p>
+                <ul class="service-card-bullets">
+                    <li data-nl="Inkomende aanvragen automatisch verwerken en doorsturen" data-en="Automatically process and route incoming requests"></li>
+                    <li data-nl="Afspraken- en boekingsplanner — klanten plannen zelf, zonder handmatig contact" data-en="Appointment & booking planner — clients schedule themselves, no manual contact needed"></li>
+                    <li data-nl="Offertes en rapporten automatisch aanmaken" data-en="Automatically generate quotes and reports"></li>
+                </ul>
             </div>
             <div class="service-card-new">
                 <div class="service-icon">
@@ -494,7 +524,13 @@
                 </div>
                 <h3 class="service-card-title" data-nl="AI-systemen op maat" data-en="Custom AI Systems"></h3>
                 <p class="service-card-text" data-nl="Geen standaardoplossing. Elk systeem gebouwd rondom uw bedrijf, uw processen en uw doelen." data-en="No standard solution. Every system built around your business, your processes, and your goals."></p>
-                <p class="service-card-example" data-nl="Leads automatisch opvolgen op basis van uw criteria" data-en="Automatically follow up leads based on your criteria"></p>
+                <div class="service-card-divider"></div>
+                <p class="service-card-bullets-label" data-nl="Toepassingen" data-en="Applications"></p>
+                <ul class="service-card-bullets">
+                    <li data-nl="Leads automatisch opvolgen via e-mail of WhatsApp" data-en="Automatically follow up leads via email or WhatsApp"></li>
+                    <li data-nl="Klantcommunicatie afhandelen zonder handmatig werk" data-en="Handle client communication without manual effort"></li>
+                    <li data-nl="Data uit meerdere bronnen samenvoegen in één overzicht" data-en="Consolidate data from multiple sources into one overview"></li>
+                </ul>
             </div>
             <div class="service-card-new">
                 <div class="service-icon">
@@ -505,14 +541,20 @@
                 </div>
                 <h3 class="service-card-title" data-nl="Oplevering & Nazorg" data-en="Delivery & Aftercare"></h3>
                 <p class="service-card-text" data-nl="Na oplevering zorgt Insightance dat alles correct werkt en dat u weet hoe u ermee omgaat. Zodra het systeem staat en u er mee uit de voeten kunt, is het project afgerond." data-en="After delivery, Insightance ensures everything works correctly and that you know how to use it. Once the system is in place and you're confident with it, the project is complete."></p>
-                <p class="service-card-example" data-nl="Volledige implementatie inclusief uitleg" data-en="Full implementation including explanation"></p>
+                <div class="service-card-divider"></div>
+                <p class="service-card-bullets-label" data-nl="Inbegrepen" data-en="Included"></p>
+                <ul class="service-card-bullets">
+                    <li data-nl="Persoonlijke uitleg na implementatie — geen technische kennis vereist" data-en="Personal walkthrough after implementation — no technical knowledge required"></li>
+                    <li data-nl="Testen en fijnafstelling voordat het systeem live gaat" data-en="Testing and fine-tuning before the system goes live"></li>
+                    <li data-nl="Vragen achteraf worden altijd beantwoord" data-en="Any questions after delivery are always answered"></li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 
 <!-- HOE INSIGHTANCE WERKT -->
-<div class="strip-dark" id="howwework">
+<div class="strip" id="howwework">
     <div class="section fade-in">
         <p class="section-label" data-nl="Hoe Insightance werkt" data-en="How Insightance works"></p>
         <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem." data-en="From first contact to working system."></h2>
@@ -580,7 +622,7 @@
 </div>
 
 <!-- OVER INSIGHTANCE -->
-<div class="strip-dark" id="about">
+<div class="strip" id="about">
     <div class="section fade-in">
         <p class="section-label" data-nl="Over Insightance" data-en="About Insightance"></p>
         <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer." data-en="From healthcare worker to AI founder."></h2>
@@ -674,7 +716,7 @@
 </div>
 
 <!-- CONTACT -->
-<div class="strip-dark" id="contact">
+<div class="strip" id="contact">
     <div class="section fade-in">
         <p class="section-label" data-nl="Contact" data-en="Contact"></p>
         <h2 class="section-title" data-nl="Laten we praten." data-en="Let's talk."></h2>
@@ -722,37 +764,64 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label" data-nl="Naam *" data-en="Name *"></label>
-                        <input class="form-input" type="text" name="naam" required placeholder="Jan de Vries">
+                        <input class="form-input" type="text" name="naam" required
+                            data-placeholder-nl="Jan de Vries" data-placeholder-en="John Smith"
+                            placeholder="Jan de Vries">
                     </div>
                     <div class="form-group">
                         <label class="form-label" data-nl="Bedrijfsnaam *" data-en="Company name *"></label>
-                        <input class="form-input" type="text" name="bedrijf" required placeholder="Uw bedrijfsnaam">
+                        <input class="form-input" type="text" name="bedrijf" required
+                            data-placeholder-nl="Uw bedrijfsnaam" data-placeholder-en="Your company name"
+                            placeholder="Uw bedrijfsnaam">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" data-nl="Aantal medewerkers *" data-en="Number of employees *"></label>
                     <select class="form-select" name="medewerkers" required>
-                        <option value="" disabled selected>Selecteer...</option>
+                        <option value="" disabled selected data-nl="Selecteer..." data-en="Select...">Selecteer...</option>
                         <option value="0">0</option>
-                        <option value="0-15">0 tot 15</option>
-                        <option value="15-50">15 tot 50</option>
-                        <option value="50-150">50 tot 150</option>
+                        <option value="1-15">1 - 15</option>
+                        <option value="15-50">15 - 50</option>
+                        <option value="50-150">50 - 150</option>
                         <option value="150+">150+</option>
                     </select>
                 </div>
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label" data-nl="E-mailadres *" data-en="Email address *"></label>
-                        <input class="form-input" type="email" name="email" required placeholder="jan@bedrijf.nl">
+                        <input class="form-input" type="email" name="email" required
+                            data-placeholder-nl="jan@bedrijf.nl" data-placeholder-en="john@company.com"
+                            placeholder="jan@bedrijf.nl">
                     </div>
                     <div class="form-group">
                         <label class="form-label" data-nl="Telefoonnummer *" data-en="Phone number *"></label>
-                        <input class="form-input" type="tel" name="telefoon" required placeholder="+31 6 00 000 000">
+                        <div class="phone-wrap">
+                            <select class="form-select phone-code" name="landcode">
+                                <option value="+31" selected>+31</option>
+                                <option value="+32">+32</option>
+                                <option value="+49">+49</option>
+                                <option value="+44">+44</option>
+                                <option value="+1">+1</option>
+                                <option value="+33">+33</option>
+                                <option value="+34">+34</option>
+                                <option value="+39">+39</option>
+                                <option value="+351">+351</option>
+                                <option value="+62">+62</option>
+                                <option value="+61">+61</option>
+                                <option value="+64">+64</option>
+                            </select>
+                            <input class="form-input" type="tel" name="telefoon" required
+                                data-placeholder-nl="6 00 000 000" data-placeholder-en="6 00 000 000"
+                                placeholder="6 00 000 000">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" data-nl="Uw vraag of bericht *" data-en="Your question or message *"></label>
-                    <textarea class="form-textarea" name="bericht" required placeholder="Vertel ons over uw bedrijf en waar u mee geholpen wilt worden..."></textarea>
+                    <textarea class="form-textarea" name="bericht" required
+                        data-placeholder-nl="Vertel ons over uw bedrijf en waar u mee geholpen wilt worden..."
+                        data-placeholder-en="Tell us about your business and how we can help you..."
+                        placeholder="Vertel ons over uw bedrijf en waar u mee geholpen wilt worden..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit" data-nl="Verstuur bericht" data-en="Send message"></button>
             </form>
@@ -762,7 +831,15 @@
 
 <!-- FOOTER -->
 <footer>
-    <span class="footer-logo">Insightance</span>
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+        </svg>
+        <span class="footer-logo">Insightance</span>
+    </div>
     <span data-nl="© 2026 Insightance. Alle rechten voorbehouden." data-en="© 2026 Insightance. All rights reserved."></span>
     <div class="footer-linkedin">
         <a href="#" title="LinkedIn" target="_blank">
@@ -782,6 +859,9 @@
     function applyLang() {
         document.querySelectorAll('[data-' + lang + ']').forEach(el => {
             el.innerHTML = el.getAttribute('data-' + lang);
+        });
+        document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(el => {
+            el.placeholder = el.getAttribute('data-placeholder-' + lang);
         });
         document.documentElement.lang = lang;
         document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
