@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Voor wie — Optie A Variaties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #1C1C1C; color: #fff; font-family: 'Inter', sans-serif; }
+
+        .option-label {
+            font-size: 11px; font-weight: 600; color: #C9A84C;
+            letter-spacing: 0.35em; text-transform: uppercase;
+            padding: 56px 80px 20px;
+        }
+
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; line-height: 1.15; margin-bottom: 56px; color: #fff; text-align: center; }
+        .wrap { padding: 72px 80px 0; border-bottom: 1px solid #2A2A2A; }
+
+        /* RESULTATEN (gedeeld) */
+        .results-block { padding: 48px 80px; background: #202020; border-bottom: 1px solid #2A2A2A; }
+        .results-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 36px; }
+        .results-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
+        .result-icon { width: 40px; height: 40px; border: 1px solid rgba(201,168,76,0.3); border-radius: 3px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+        .result-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .result-text { font-size: 13px; color: #666; line-height: 1.7; }
+
+
+        /* ─── VARIATIE 1 — Gold border glow + grote italic serif titel ─── */
+
+        .v1-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 72px; }
+
+        .v1-card {
+            position: relative;
+            padding: 52px 44px 48px;
+            background: #1A1A1A;
+            border: 1px solid #2A2A2A;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+
+        .v1-card:hover {
+            border-color: rgba(201,168,76,0.5);
+            box-shadow: 0 0 40px rgba(201,168,76,0.07), inset 0 0 60px rgba(201,168,76,0.03);
+        }
+
+        .v1-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 4px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .v1-card:hover::before { opacity: 1; }
+
+        .v1-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            color: #C9A84C;
+            letter-spacing: 0.2em;
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .v1-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 600;
+            font-style: italic;
+            color: #fff;
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .v1-line {
+            width: 28px;
+            height: 1px;
+            background: #C9A84C;
+            margin-bottom: 20px;
+        }
+
+        .v1-text { font-size: 15px; color: #888; line-height: 1.85; }
+
+        .v1-ghost {
+            position: absolute;
+            bottom: -16px;
+            right: 24px;
+            font-family: 'Playfair Display', serif;
+            font-size: 110px;
+            font-weight: 700;
+            color: rgba(201,168,76,0.035);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+
+        /* ─── VARIATIE 2 — Horizontale kaart met goud nummer-blok links ─── */
+
+        .v2-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 72px; }
+
+        .v2-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            border: 1px solid #242424;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .v2-card:hover { border-color: rgba(201,168,76,0.35); }
+
+        .v2-left {
+            background: linear-gradient(160deg, #222 0%, #1E1E1E 100%);
+            border-right: 1px solid #2A2A2A;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .v2-left::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+        }
+
+        .v2-num-label {
+            font-size: 10px;
+            color: #C9A84C;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .v2-num-big {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #C9A84C;
+            line-height: 1;
+        }
+
+        .v2-right { padding: 40px 48px; background: #1A1A1A; display: flex; flex-direction: column; justify-content: center; }
+
+        .v2-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .v2-text { font-size: 15px; color: #888; line-height: 1.85; }
+
+
+        /* ─── VARIATIE 3 — Grote kaarten met goud top-accent vlak + content ─── */
+
+        .v3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #2A2A2A; margin-bottom: 72px; }
+
+        .v3-card {
+            background: #191919;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .v3-card:hover { background: #1E1E1E; }
+
+        .v3-top {
+            height: 6px;
+            background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C);
+        }
+
+        .v3-inner { padding: 48px 44px 52px; position: relative; }
+
+        .v3-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: rgba(201,168,76,0.08);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .v3-title {
+            font-size: 21px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            margin-top: -8px;
+        }
+
+        .v3-text { font-size: 15px; color: #888; line-height: 1.85; }
+
+        .v3-arrow {
+            display: inline-block;
+            margin-top: 28px;
+            font-size: 12px;
+            color: rgba(201,168,76,0.5);
+            letter-spacing: 0.1em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- VARIATIE 1 -->
+    <p class="option-label">Variatie 1 — Glow border + italic serif titel + goud accent streep</p>
+    <div class="wrap">
+        <p class="section-label">Voor wie</p>
+        <h2 class="section-title">Voor ondernemers die klaar zijn<br>om slimmer te werken.</h2>
+        <div class="v1-grid">
+            <div class="v1-card">
+                <span class="v1-num">01</span>
+                <h3 class="v1-title">De zelfstandige ondernemer</h3>
+                <div class="v1-line"></div>
+                <p class="v1-text">Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei.</p>
+                <div class="v1-ghost">1</div>
+            </div>
+            <div class="v1-card">
+                <span class="v1-num">02</span>
+                <h3 class="v1-title">De groeiende onderneming</h3>
+                <div class="v1-line"></div>
+                <p class="v1-text">Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken.</p>
+                <div class="v1-ghost">2</div>
+            </div>
+            <div class="v1-card">
+                <span class="v1-num">03</span>
+                <h3 class="v1-title">De gevestigde organisatie</h3>
+                <div class="v1-line"></div>
+                <p class="v1-text">De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit.</p>
+                <div class="v1-ghost">3</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTATEN 1 -->
+    <div class="results-block">
+        <p class="results-label">Wat het u oplevert</p>
+        <div class="results-grid">
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Meer tijd</div>
+                <div class="result-text">Uren per week die u terugkrijgt voor wat echt telt</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Minder personeel nodig</div>
+                <div class="result-text">Routinetaken worden overgenomen zonder extra mensen</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Lagere kosten</div>
+                <div class="result-text">Minder operationele kosten door slimme automatisering</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Minder fouten</div>
+                <div class="result-text">AI maakt geen menselijke fouten bij routinewerk</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Altijd actief</div>
+                <div class="result-text">Uw bedrijf draait door — ook als u er niet bent</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- VARIATIE 2 -->
+    <p class="option-label">Variatie 2 — Horizontale kaarten met goud nummer-blok links</p>
+    <div class="wrap">
+        <p class="section-label">Voor wie</p>
+        <h2 class="section-title">Voor ondernemers die klaar zijn<br>om slimmer te werken.</h2>
+        <div class="v2-grid">
+            <div class="v2-card">
+                <div class="v2-left">
+                    <div class="v2-num-label">Nr</div>
+                    <div class="v2-num-big">01</div>
+                </div>
+                <div class="v2-right">
+                    <h3 class="v2-title">De zelfstandige ondernemer</h3>
+                    <p class="v2-text">Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei.</p>
+                </div>
+            </div>
+            <div class="v2-card">
+                <div class="v2-left">
+                    <div class="v2-num-label">Nr</div>
+                    <div class="v2-num-big">02</div>
+                </div>
+                <div class="v2-right">
+                    <h3 class="v2-title">De groeiende onderneming</h3>
+                    <p class="v2-text">Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken.</p>
+                </div>
+            </div>
+            <div class="v2-card">
+                <div class="v2-left">
+                    <div class="v2-num-label">Nr</div>
+                    <div class="v2-num-big">03</div>
+                </div>
+                <div class="v2-right">
+                    <h3 class="v2-title">De gevestigde organisatie</h3>
+                    <p class="v2-text">De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTATEN 2 -->
+    <div class="results-block">
+        <p class="results-label">Wat het u oplevert</p>
+        <div class="results-grid">
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Meer tijd</div>
+                <div class="result-text">Uren per week die u terugkrijgt voor wat echt telt</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Minder personeel nodig</div>
+                <div class="result-text">Routinetaken worden overgenomen zonder extra mensen</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Lagere kosten</div>
+                <div class="result-text">Minder operationele kosten door slimme automatisering</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Minder fouten</div>
+                <div class="result-text">AI maakt geen menselijke fouten bij routinewerk</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Altijd actief</div>
+                <div class="result-text">Uw bedrijf draait door — ook als u er niet bent</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- VARIATIE 3 -->
+    <p class="option-label">Variatie 3 — Goud top-balk per kaart + groot ghost nummer</p>
+    <div class="wrap">
+        <p class="section-label">Voor wie</p>
+        <h2 class="section-title">Voor ondernemers die klaar zijn<br>om slimmer te werken.</h2>
+        <div class="v3-grid">
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <div class="v3-num">01</div>
+                    <h3 class="v3-title">De zelfstandige ondernemer</h3>
+                    <p class="v3-text">Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei.</p>
+                </div>
+            </div>
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <div class="v3-num">02</div>
+                    <h3 class="v3-title">De groeiende onderneming</h3>
+                    <p class="v3-text">Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken.</p>
+                </div>
+            </div>
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <div class="v3-num">03</div>
+                    <h3 class="v3-title">De gevestigde organisatie</h3>
+                    <p class="v3-text">De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTATEN 3 -->
+    <div class="results-block">
+        <p class="results-label">Wat het u oplevert</p>
+        <div class="results-grid">
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Meer tijd</div>
+                <div class="result-text">Uren per week die u terugkrijgt voor wat echt telt</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Minder personeel nodig</div>
+                <div class="result-text">Routinetaken worden overgenomen zonder extra mensen</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Lagere kosten</div>
+                <div class="result-text">Minder operationele kosten door slimme automatisering</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="result-title">Minder fouten</div>
+                <div class="result-text">AI maakt geen menselijke fouten bij routinewerk</div>
+            </div>
+            <div class="result-item">
+                <div class="result-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <div class="result-title">Altijd actief</div>
+                <div class="result-text">Uw bedrijf draait door — ook als u er niet bent</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Diensten — Uitgebreid voorbeeld</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #1C1C1C; color: #fff; font-family: 'Inter', sans-serif; padding: 80px; }
+
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; line-height: 1.15; margin-bottom: 56px; color: #fff; text-align: center; }
+
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #2E2E2E; }
+
+        .card {
+            background: #1E1E1E;
+            padding: 44px 40px 48px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .card:hover { background: #242424; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C);
+        }
+
+        .icon {
+            width: 48px; height: 48px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+            margin-top: 8px;
+        }
+
+        .title { font-size: 19px; font-weight: 600; color: #fff; margin-bottom: 14px; }
+
+        .text { font-size: 15px; color: #AAAAAA; line-height: 1.8; margin-bottom: 28px; }
+
+        .divider { width: 100%; height: 1px; background: #2A2A2A; margin-bottom: 24px; }
+
+        .bullets-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 16px;
+        }
+
+        .bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+        .bullets li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        .bullets li::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #C9A84C;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="section-label">Diensten</p>
+    <h2 class="section-title">Wat Insightance voor u doet.</h2>
+
+    <div class="cards">
+
+        <!-- DIENST 1 -->
+        <div class="card">
+            <div class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3 class="title">Procesautomatisering</h3>
+            <p class="text">Repetitieve taken vervangen door slimme AI-systemen. Minder fouten, minder tijdsverspilling, meer ruimte voor groei.</p>
+            <div class="divider"></div>
+            <p class="bullets-label">Toepassingen</p>
+            <ul class="bullets">
+                <li>Inkomende aanvragen automatisch verwerken en doorsturen</li>
+                <li>Booking- en afsprakenplanner — klanten plannen zelf, zonder handmatig contact</li>
+                <li>Offertes en rapporten automatisch aanmaken</li>
+            </ul>
+        </div>
+
+        <!-- DIENST 2 -->
+        <div class="card">
+            <div class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                    <path d="M9 9h6M9 12h6M9 15h4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h3 class="title">AI-systemen op maat</h3>
+            <p class="text">Geen standaardoplossing. Elk systeem gebouwd rondom uw bedrijf, uw processen en uw doelen.</p>
+            <div class="divider"></div>
+            <p class="bullets-label">Toepassingen</p>
+            <ul class="bullets">
+                <li>Leads automatisch opvolgen via e-mail of WhatsApp</li>
+                <li>Klantcommunicatie afhandelen zonder handmatig werk</li>
+                <li>Data uit meerdere bronnen samenvoegen in één overzicht</li>
+            </ul>
+        </div>
+
+        <!-- DIENST 3 -->
+        <div class="card">
+            <div class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3 class="title">Oplevering & Nazorg</h3>
+            <p class="text">Na oplevering zorgt Insightance dat alles correct werkt en dat u precies weet hoe u ermee omgaat.</p>
+            <div class="divider"></div>
+            <p class="bullets-label">Inbegrepen</p>
+            <ul class="bullets">
+                <li>Persoonlijke uitleg na implementatie — geen technische kennis vereist</li>
+                <li>Testen en fijnafstelling voordat het systeem live gaat</li>
+                <li>Vragen achteraf worden altijd beantwoord</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>

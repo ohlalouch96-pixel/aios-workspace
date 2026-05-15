@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Voor wie — Finale opties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #1C1C1C; color: #fff; font-family: 'Inter', sans-serif; }
+
+        .option-label {
+            font-size: 11px; font-weight: 600; color: #C9A84C;
+            letter-spacing: 0.35em; text-transform: uppercase;
+            padding: 56px 80px 20px;
+        }
+
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; line-height: 1.15; margin-bottom: 56px; color: #fff; text-align: center; }
+
+        /* VOOR WIE KAARTEN (Variatie 3, zonder getallen) */
+        .forwho-wrap { padding: 72px 80px 0; }
+
+        .v3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #2A2A2A; }
+
+        .v3-card { background: #191919; position: relative; overflow: hidden; transition: background 0.3s; }
+        .v3-card:hover { background: #1E1E1E; }
+
+        .v3-top { height: 6px; background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+
+        .v3-inner { padding: 44px 44px 52px; }
+
+        .v3-title { font-size: 21px; font-weight: 600; color: #fff; margin-bottom: 16px; }
+        .v3-text { font-size: 15px; color: #888; line-height: 1.85; }
+
+
+        /* ─── RESULTATEN STIJL A — Horizontale blokken met grote tekst, geen icoontjes ─── */
+        .ra-wrap { padding: 56px 80px; background: #1E1E1E; border-top: 1px solid #252525; border-bottom: 1px solid #252525; }
+        .ra-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 40px; }
+
+        .ra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+
+        .ra-item {
+            padding: 0 32px 0 0;
+            border-right: 1px solid #2A2A2A;
+        }
+        .ra-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
+        .ra-item:not(:first-child):not(:last-child) { padding: 0 32px; }
+        .ra-item:first-child { padding-left: 0; }
+
+        .ra-icon {
+            width: 44px; height: 44px;
+            border: 1px solid rgba(201,168,76,0.35);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .ra-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .ra-text { font-size: 13px; color: #666; line-height: 1.75; }
+
+
+        /* ─── RESULTATEN STIJL B — Twee kolommen, statement-stijl met grote vette tekst ─── */
+        .rb-wrap { padding: 56px 80px; background: #1A1A1A; border-bottom: 1px solid #252525; }
+        .rb-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 40px; }
+
+        .rb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #242424; }
+
+        .rb-item {
+            background: #1A1A1A;
+            padding: 36px 40px;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            transition: background 0.3s;
+        }
+        .rb-item:hover { background: #1E1E1E; }
+
+        .rb-check {
+            width: 28px; height: 28px;
+            border: 1px solid rgba(201,168,76,0.4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .rb-title { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .rb-text { font-size: 14px; color: #666; line-height: 1.75; }
+
+
+        /* ─── RESULTATEN STIJL C — Statistieken met groot goud getal ─── */
+        .rc-wrap { padding: 56px 80px; background: #1C1C1C; border-bottom: 1px solid #252525; }
+        .rc-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 40px; }
+
+        .rc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+
+        .rc-item {
+            padding: 0 36px 0 0;
+            border-right: 1px solid #252525;
+        }
+        .rc-item:last-child { border-right: none; }
+        .rc-item:not(:first-child) { padding-left: 36px; }
+
+        .rc-stat {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #C9A84C;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .rc-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .rc-text { font-size: 13px; color: #555; line-height: 1.7; }
+
+    </style>
+</head>
+<body>
+
+    <!-- VOOR WIE (gedeeld, zonder getallen) -->
+    <div class="forwho-wrap">
+        <p class="section-label">Voor wie</p>
+        <h2 class="section-title">Voor ondernemers die klaar zijn<br>om slimmer te werken.</h2>
+        <div class="v3-grid">
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <h3 class="v3-title">De zelfstandige ondernemer</h3>
+                    <p class="v3-text">Doet alles zelf. Elk uur dat verloren gaat aan administratie en routinetaken is een uur minder voor klanten en groei.</p>
+                </div>
+            </div>
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <h3 class="v3-title">De groeiende onderneming</h3>
+                    <p class="v3-text">Het team groeit, maar de processen lopen achter. Handmatig werk stapelt op en remt de schaalslag die het bedrijf wil maken.</p>
+                </div>
+            </div>
+            <div class="v3-card">
+                <div class="v3-top"></div>
+                <div class="v3-inner">
+                    <h3 class="v3-title">De gevestigde organisatie</h3>
+                    <p class="v3-text">De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- RESULTATEN STIJL A -->
+    <p class="option-label">Resultaten Stijl A — Icoontjes in cirkels, minimale layout</p>
+    <div class="ra-wrap">
+        <p class="ra-label">Wat het u oplevert</p>
+        <div class="ra-grid">
+            <div class="ra-item">
+                <div class="ra-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="ra-title">Meer tijd</div>
+                <div class="ra-text">Uren per week die u terugkrijgt voor wat echt telt</div>
+            </div>
+            <div class="ra-item">
+                <div class="ra-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="ra-title">Minder personeel nodig</div>
+                <div class="ra-text">Routinetaken worden overgenomen zonder extra mensen</div>
+            </div>
+            <div class="ra-item">
+                <div class="ra-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ra-title">Lagere kosten</div>
+                <div class="ra-text">Minder operationele kosten door slimme automatisering</div>
+            </div>
+            <div class="ra-item">
+                <div class="ra-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="ra-title">Minder fouten</div>
+                <div class="ra-text">AI maakt geen menselijke fouten bij routinewerk</div>
+            </div>
+            <div class="ra-item">
+                <div class="ra-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="ra-title">Altijd actief</div>
+                <div class="ra-text">Uw bedrijf draait door — ook als u er niet bent</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- RESULTATEN STIJL B -->
+    <p class="option-label">Resultaten Stijl B — Twee kolommen met goud rondje checkmark</p>
+    <div class="rb-wrap">
+        <p class="rb-label">Wat het u oplevert</p>
+        <div class="rb-grid">
+            <div class="rb-item">
+                <div class="rb-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="rb-title">Meer tijd</div>
+                    <div class="rb-text">Uren per week die u terugkrijgt voor wat echt telt</div>
+                </div>
+            </div>
+            <div class="rb-item">
+                <div class="rb-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="rb-title">Minder personeel nodig</div>
+                    <div class="rb-text">Routinetaken worden overgenomen zonder extra mensen</div>
+                </div>
+            </div>
+            <div class="rb-item">
+                <div class="rb-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="rb-title">Lagere kosten</div>
+                    <div class="rb-text">Minder operationele kosten door slimme automatisering</div>
+                </div>
+            </div>
+            <div class="rb-item">
+                <div class="rb-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="rb-title">Minder fouten</div>
+                    <div class="rb-text">AI maakt geen menselijke fouten bij routinewerk</div>
+                </div>
+            </div>
+            <div class="rb-item" style="grid-column: 1 / -1;">
+                <div class="rb-check">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="rb-title">Altijd actief</div>
+                    <div class="rb-text">Uw bedrijf draait door — ook als u er niet bent</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- RESULTATEN STIJL C -->
+    <p class="option-label">Resultaten Stijl C — Groot goud getal als statistiek</p>
+    <div class="rc-wrap">
+        <p class="rc-label">Wat het u oplevert</p>
+        <div class="rc-grid">
+            <div class="rc-item">
+                <div class="rc-stat">+20u</div>
+                <div class="rc-title">Meer tijd</div>
+                <div class="rc-text">Per week terug voor wat echt telt</div>
+            </div>
+            <div class="rc-item">
+                <div class="rc-stat">−40%</div>
+                <div class="rc-title">Minder kosten</div>
+                <div class="rc-text">Operationele lasten door slimme automatisering</div>
+            </div>
+            <div class="rc-item">
+                <div class="rc-stat">0</div>
+                <div class="rc-title">Menselijke fouten</div>
+                <div class="rc-text">AI voert routinewerk foutloos uit</div>
+            </div>
+            <div class="rc-item">
+                <div class="rc-stat">24/7</div>
+                <div class="rc-title">Altijd actief</div>
+                <div class="rc-text">Uw bedrijf draait door, ook als u er niet bent</div>
+            </div>
+            <div class="rc-item">
+                <div class="rc-stat">1×</div>
+                <div class="rc-title">Instellen, klaar</div>
+                <div class="rc-text">Geen onderhoud, geen handmatig werk daarna</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
