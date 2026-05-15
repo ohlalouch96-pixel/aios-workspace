@@ -342,10 +342,73 @@
         .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+        /* HAMBURGER + DRAWER */
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 201; }
+        .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--gray-light); transition: all 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: 0; bottom: 0;
+            width: 280px;
+            background: #141414;
+            border-left: 1px solid var(--border);
+            z-index: 199;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 88px 36px 48px;
+            gap: 0;
+        }
+
+        .mobile-drawer.open { transform: translateX(0); }
+
+        .mobile-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 198;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s;
+        }
+
+        .mobile-drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+        .mobile-drawer a {
+            display: block;
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid #1E1E1E;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .mobile-drawer a:hover { color: var(--gold); }
+        .mobile-drawer a:last-of-type { border-bottom: none; }
+
+        .mobile-drawer-cta {
+            margin-top: 32px;
+            background: var(--gold);
+            color: #000 !important;
+            text-align: center;
+            padding: 14px 24px !important;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            border-bottom: none !important;
+        }
+
         /* MOBILE */
         @media (max-width: 768px) {
             nav { padding: 18px 24px; }
             .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-cta { display: none; }
             .section { padding: 64px 24px; }
             .mission-stats { grid-template-columns: 1fr; }
             .forwho-cols { grid-template-columns: 1fr; }
@@ -385,8 +448,23 @@
     <div style="display: flex; align-items: center; gap: 12px;">
         <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
         <a href="#contact" class="nav-cta" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
+        <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </nav>
+
+<div class="mobile-drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+    <a href="#mission" onclick="toggleDrawer()" data-nl="Missie" data-en="Mission">Missie</a>
+    <a href="#forwho" onclick="toggleDrawer()" data-nl="Voor wie" data-en="For who">Voor wie</a>
+    <a href="#services" onclick="toggleDrawer()" data-nl="Diensten" data-en="Services">Diensten</a>
+    <a href="#howwework" onclick="toggleDrawer()" data-nl="Hoe we werken" data-en="How we work">Hoe we werken</a>
+    <a href="#about" onclick="toggleDrawer()" data-nl="Over Insightance" data-en="About">Over Insightance</a>
+    <a href="#faq" onclick="toggleDrawer()">FAQ</a>
+    <a href="#contact" onclick="toggleDrawer()" data-nl="Contact" data-en="Contact">Contact</a>
+    <a href="#contact" class="mobile-drawer-cta" onclick="toggleDrawer()" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -901,6 +979,15 @@
     }
 
     applyLang();
+
+    function toggleDrawer() {
+        const drawer = document.getElementById('mobileDrawer');
+        const overlay = document.getElementById('drawerOverlay');
+        const hamburger = document.getElementById('hamburger');
+        drawer.classList.toggle('open');
+        overlay.classList.toggle('open');
+        hamburger.classList.toggle('open');
+    }
 
     function toggleFaq(el) {
         const item = el.parentElement;
