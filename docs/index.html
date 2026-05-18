@@ -370,6 +370,32 @@
         .fade-item:nth-child(4) { transition-delay: 0.4s; }
         .fade-item:nth-child(5) { transition-delay: 0.5s; }
 
+        /* COOKIE BANNER */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #0F0F12;
+            border-top: 1px solid rgba(201,168,76,0.2);
+            padding: 18px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            z-index: 500;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .cookie-banner.visible { transform: translateY(0); }
+        .cookie-banner p { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
+        .cookie-banner a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        .cookie-banner a:hover { border-color: var(--gold); }
+        .cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+        .cookie-accept { background: var(--gold); color: #000; border: none; padding: 9px 24px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: background 0.2s; white-space: nowrap; }
+        .cookie-accept:hover { background: var(--gold-light); }
+        .cookie-decline { background: none; border: 1px solid var(--border); color: var(--gray); padding: 9px 20px; font-family: var(--font-body); font-size: 12px; cursor: pointer; border-radius: 3px; transition: all 0.2s; white-space: nowrap; }
+        .cookie-decline:hover { border-color: var(--gray); color: var(--gray-light); }
+        @media (max-width: 768px) { .cookie-banner { padding: 16px 20px; flex-direction: column; align-items: flex-start; } }
+
         /* HAMBURGER + DRAWER */
         .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 201; }
         .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--gray-light); transition: all 0.3s; }
@@ -982,6 +1008,15 @@
     </div>
 </div>
 
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+    <p>Insightance gebruikt functionele cookies om de website goed te laten werken. <a href="privacybeleid.html">Meer informatie</a></p>
+    <div class="cookie-actions">
+        <button class="cookie-decline" onclick="dismissCookie()">Sluiten</button>
+        <button class="cookie-accept" onclick="acceptCookie()">Akkoord</button>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
     <div style="display: flex; align-items: center; gap: 12px;">
@@ -994,7 +1029,7 @@
         <span class="footer-logo">Insightance</span>
     </div>
     <span data-nl="© 2026 Insightance. Alle rechten voorbehouden." data-en="© 2026 Insightance. All rights reserved."></span>
-    <span style="font-size:11px; color: #333; letter-spacing: 0.2em; text-transform: uppercase;">Amsterdam · 2026</span>
+    <span style="font-size:11px; color: #333; letter-spacing: 0.2em; text-transform: uppercase;">Amsterdam · 2026 · <a href="privacybeleid.html" style="color:#444; text-decoration:none; border-bottom:1px solid #2A2A2A;" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a></span>
     <div class="footer-linkedin" style="display:flex; gap:16px; align-items:center;">
         <a href="https://wa.me/31653340362" title="WhatsApp" target="_blank">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#C9A84C">
@@ -1019,6 +1054,20 @@
 </footer>
 
 <script>
+    // COOKIE BANNER
+    (function() {
+        if (!localStorage.getItem('cookie_consent')) {
+            setTimeout(() => document.getElementById('cookieBanner').classList.add('visible'), 800);
+        }
+    })();
+    function acceptCookie() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').classList.remove('visible');
+    }
+    function dismissCookie() {
+        document.getElementById('cookieBanner').classList.remove('visible');
+    }
+
     let lang = 'nl';
 
     function applyLang() {

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacybeleid | Insightance</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #131316; --surface: #181819; --gold: #C9A84C; --gold-light: #E8C97A;
+            --white: #FFFFFF; --gray: #888; --gray-light: #C0C0C0; --border: #252528;
+            --font-heading: 'Playfair Display', serif; --font-body: 'Inter', sans-serif;
+        }
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); line-height: 1.7; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent); z-index: 200; }
+
+        nav { position: sticky; top: 2px; background: rgba(19,19,22,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo-text { font-size: 15px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+        .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
+        .nav-back:hover { color: var(--gold); }
+
+        .hero { padding: 80px 60px 56px; border-bottom: 1px solid var(--border); }
+        .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+        .hero-title { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 16px; }
+        .hero-sub { font-size: 14px; color: var(--gray); }
+
+        .content { max-width: 760px; margin: 0 auto; padding: 72px 60px; }
+        .content h2 { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin: 48px 0 16px; padding-top: 48px; border-top: 1px solid var(--border); }
+        .content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .content p { font-size: 15px; color: var(--gray-light); line-height: 1.85; margin-bottom: 16px; }
+        .content ul { margin: 12px 0 16px 20px; display: flex; flex-direction: column; gap: 8px; }
+        .content ul li { font-size: 15px; color: var(--gray-light); line-height: 1.7; }
+        .content ul li::marker { color: var(--gold); }
+        .content a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        .content a:hover { border-color: var(--gold); }
+        .content strong { color: var(--white); font-weight: 600; }
+
+        footer { border-top: 1px solid var(--border); padding: 32px 60px; text-align: center; font-size: 13px; color: var(--gray); }
+        footer a { color: var(--gold); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .hero { padding: 56px 24px 40px; }
+            .content { padding: 48px 24px; }
+            footer { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+        </svg>
+        <span class="nav-logo-text">Insightance</span>
+    </a>
+    <a href="index.html" class="nav-back">← Terug naar Insightance</a>
+</nav>
+
+<div class="hero">
+    <p class="hero-label">Juridisch</p>
+    <h1 class="hero-title">Privacybeleid</h1>
+    <p class="hero-sub">Laatst bijgewerkt: mei 2026</p>
+</div>
+
+<div class="content">
+
+    <h2>1. Wie zijn wij</h2>
+    <p>Insightance is een eenmanszaak gespecialiseerd in AI-automatiseringsoplossingen voor het midden- en kleinbedrijf. Insightance is gevestigd in Amsterdam, Nederland.</p>
+    <p><strong>Contactgegevens:</strong><br>
+    Insightance<br>
+    Amsterdam, Nederland<br>
+    E-mail: <a href="mailto:oussama@insightance.ai">oussama@insightance.ai</a><br>
+    WhatsApp: <a href="https://wa.me/31653340362">+31 6 53340362</a></p>
+
+    <h2>2. Welke gegevens verzamelen wij</h2>
+    <p>Wij verzamelen uitsluitend persoonsgegevens die u zelf aan ons verstrekt via het contactformulier op onze website. Dit betreft:</p>
+    <ul>
+        <li>Voor- en achternaam</li>
+        <li>Bedrijfsnaam</li>
+        <li>E-mailadres</li>
+        <li>Telefoonnummer</li>
+        <li>Aantal medewerkers</li>
+        <li>Uw bericht of vraag</li>
+    </ul>
+    <p>Wij verzamelen geen bijzondere persoonsgegevens zoals gegevens over gezondheid, politieke opvattingen of religie.</p>
+
+    <h2>3. Waarvoor gebruiken wij uw gegevens</h2>
+    <p>Uw gegevens worden uitsluitend gebruikt om:</p>
+    <ul>
+        <li>Contact met u op te nemen naar aanleiding van uw aanvraag</li>
+        <li>Een kennismakingsgesprek in te plannen</li>
+        <li>U te informeren over onze diensten, indien u hier toestemming voor heeft gegeven</li>
+    </ul>
+    <p>Wij verkopen uw gegevens nooit aan derden en delen deze niet met externe partijen, tenzij dit wettelijk verplicht is.</p>
+
+    <h2>4. Grondslag voor verwerking</h2>
+    <p>Wij verwerken uw persoonsgegevens op basis van uw toestemming (artikel 6 lid 1 sub a AVG) of ter uitvoering van een overeenkomst waarbij u partij bent (artikel 6 lid 1 sub b AVG).</p>
+
+    <h2>5. Hoe lang bewaren wij uw gegevens</h2>
+    <p>Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk voor het doel waarvoor ze zijn verstrekt. In de praktijk betekent dit dat wij gegevens van niet-klanten maximaal 12 maanden bewaren na uw laatste contact. Gegevens van klanten bewaren wij gedurende de looptijd van onze samenwerking en maximaal 7 jaar daarna, conform de wettelijke bewaarplicht.</p>
+
+    <h2>6. Beveiliging</h2>
+    <p>Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen tegen verlies, misbruik en ongeautoriseerde toegang. Communicatie via onze website verloopt via een beveiligde HTTPS-verbinding.</p>
+
+    <h2>7. Cookies</h2>
+    <p>Onze website maakt gebruik van functionele cookies. Deze cookies zijn noodzakelijk voor het correct functioneren van de website en vereisen geen toestemming. Wij gebruiken geen tracking- of advertentiecookies van derden.</p>
+    <p>U kunt cookies uitschakelen via de instellingen van uw browser. Houd er rekening mee dat sommige functies van de website dan mogelijk niet naar behoren werken.</p>
+
+    <h2>8. Uw rechten</h2>
+    <p>Op grond van de Algemene Verordening Gegevensbescherming (AVG) heeft u de volgende rechten:</p>
+    <ul>
+        <li><strong>Recht op inzage</strong> — U heeft het recht te weten welke gegevens wij van u verwerken.</li>
+        <li><strong>Recht op rectificatie</strong> — U kunt ons verzoeken onjuiste gegevens te corrigeren.</li>
+        <li><strong>Recht op verwijdering</strong> — U kunt ons verzoeken uw gegevens te verwijderen.</li>
+        <li><strong>Recht op bezwaar</strong> — U kunt bezwaar maken tegen de verwerking van uw gegevens.</li>
+        <li><strong>Recht op dataportabiliteit</strong> — U kunt uw gegevens opvragen in een gestructureerd, gangbaar formaat.</li>
+    </ul>
+    <p>Om gebruik te maken van uw rechten kunt u contact opnemen via <a href="mailto:oussama@insightance.ai">oussama@insightance.ai</a>. Wij reageren binnen 30 dagen op uw verzoek.</p>
+
+    <h2>9. Klacht indienen</h2>
+    <p>Indien u van mening bent dat wij uw gegevens niet correct verwerken, heeft u het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens via <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank">autoriteitpersoonsgegevens.nl</a>.</p>
+
+    <h2>10. Wijzigingen</h2>
+    <p>Wij behouden ons het recht voor dit privacybeleid te wijzigen. De meest actuele versie is altijd te vinden op deze pagina. Wij raden u aan deze pagina periodiek te raadplegen.</p>
+
+</div>
+
+<footer>
+    <span>© 2026 Insightance · Amsterdam · <a href="privacybeleid.html">Privacybeleid</a></span>
+</footer>
+
+</body>
+</html>
