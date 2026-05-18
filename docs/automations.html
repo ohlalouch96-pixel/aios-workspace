@@ -43,50 +43,54 @@
         .info-box { margin: 28px 60px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 32px; text-align: center; }
         .info-box p { font-size: 14px; color: var(--gray-light); line-height: 1.8; max-width: 700px; margin: 0 auto; }
 
+        /* LICHTE SECTIE */
+        .light-section { background: #F5F0E8; }
+
         /* FILTERS */
-        .filters-wrap { padding: 0 60px; margin-bottom: 32px; }
+        .filters-wrap { padding: 40px 60px 28px; }
         .filters { display: flex; flex-wrap: wrap; gap: 10px; }
         .filter-btn {
             display: flex; align-items: center; gap: 8px;
             padding: 9px 18px; border-radius: 100px;
-            border: 1px solid var(--border);
-            background: none; color: var(--gray-light);
+            border: 1px solid #DDD8CF;
+            background: white; color: #666;
             font-family: var(--font-body); font-size: 13px; cursor: pointer;
             transition: all 0.2s; white-space: nowrap;
         }
-        .filter-btn:hover { border-color: var(--gold); color: var(--white); }
-        .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
-        .filter-count { font-size: 11px; color: var(--gray); background: var(--surface-2); border-radius: 100px; padding: 1px 7px; }
-        .filter-btn.active .filter-count { color: var(--gold); }
+        .filter-btn:hover { border-color: var(--gold); color: #333; }
+        .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); box-shadow: 0 0 12px rgba(201,168,76,0.15); }
+        .filter-count { font-size: 11px; color: #999; background: #EEE9DF; border-radius: 100px; padding: 1px 7px; }
+        .filter-btn.active .filter-count { color: var(--gold); background: rgba(201,168,76,0.1); }
         .filter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
         /* GRID */
         .grid-wrap { padding: 0 60px 80px; }
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
-        .card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
+        .card { background: #fff; border: 1px solid #E5DFD5; border-radius: 10px; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+        .card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
         .card.hidden { display: none; }
 
         /* CARD TOP */
         .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-        .card-icon-wrap { width: 44px; height: 44px; border-radius: 8px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .card-icon-wrap { width: 44px; height: 44px; border-radius: 8px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .card-badge { display: flex; align-items: center; gap: 5px; }
         .card-badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-        .card-badge-label { font-size: 10px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; }
+        .card-badge-label { font-size: 10px; color: #AAA; letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .card-title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-        .card-desc { font-size: 13px; color: var(--gray); line-height: 1.7; margin-bottom: 18px; }
-        .card-divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+        .card-title { font-size: 17px; font-weight: 600; color: #1A1A1A; margin-bottom: 8px; }
+        .card-desc { font-size: 13px; color: #777; line-height: 1.7; margin-bottom: 18px; }
+        .card-divider { height: 1px; background: #EEE9DF; margin-bottom: 14px; }
         .card-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .card-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--gray-light); line-height: 1.4; }
+        .card-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: #555; line-height: 1.4; }
         .card-check { color: var(--gold); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
 
-        /* CTA */
-        .cta { margin: 0 60px 80px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
+        /* CTA — terug naar donker */
+        .cta-wrap { background: #141414; padding: 80px 60px; }
+        .cta { max-width: 800px; margin: 0 auto; background: #1E1E1E; border: 1px solid #2A2A2A; border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
         .cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .cta-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
-        .cta-title { font-family: var(--font-heading); font-size: 30px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
-        .cta-text { font-size: 14px; color: var(--gray); max-width: 560px; margin: 0 auto 32px; line-height: 1.9; }
+        .cta-title { font-family: var(--font-heading); font-size: 30px; font-weight: 600; color: #fff; margin-bottom: 16px; }
+        .cta-text { font-size: 14px; color: #777; max-width: 560px; margin: 0 auto 32px; line-height: 1.9; }
         .cta-btn { display: inline-block; background: var(--gold); color: #000; padding: 13px 40px; border-radius: 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; transition: background 0.2s; }
         .cta-btn:hover { background: var(--gold-light); }
 
@@ -174,6 +178,7 @@
     <p>Alle systemen zijn beschikbaar als losse automatisering of als onderdeel van een groter AI-systeem. Elk wordt volledig op maat gebouwd voor uw bedrijf. Plan een vrijblijvend kennismaking om te ontdekken wat het beste past.</p>
 </div>
 
+<div class="light-section">
 <!-- FILTERS -->
 <div class="filters-wrap">
     <div class="filters">
@@ -552,12 +557,16 @@
 </div>
 </div>
 
+</div><!-- einde light-section -->
+
 <!-- CTA -->
+<div class="cta-wrap">
 <div class="cta">
     <p class="cta-label">Op maat gebouwd</p>
     <h2 class="cta-title">Staat uw situatie er niet bij?</h2>
     <p class="cta-text">Elk bedrijf is anders. Misschien heeft u een specifiek proces dat u wilt automatiseren, een uitdaging die uniek is voor uw branche, of een combinatie van meerdere systemen. Insightance bouwt volledig op maat. Plan een vrijblijvende kennismaking en ontdek samen wat AI voor uw bedrijf kan betekenen.</p>
     <a href="index.html#contact" class="cta-btn">Plan een kennismaking</a>
+</div>
 </div>
 
 <!-- STICKY CTA -->
