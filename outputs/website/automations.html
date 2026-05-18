@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automations & Agents | Insightance</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #1C1C1C; --surface: #1E1E1E; --surface-2: #242424;
+            --gold: #C9A84C; --gold-light: #E8C97A; --white: #fff;
+            --gray: #888; --gray-light: #C0C0C0; --border: #2E2E2E;
+            --font-heading: 'Playfair Display', serif; --font-body: 'Inter', sans-serif;
+            --c1: #5B8AF0; --c2: #4ECDC4; --c3: #52C17A;
+            --c4: #9B7FD4; --c5: #F0A35B; --c6: #E87878;
+        }
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); line-height: 1.6; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 0%, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent 100%); z-index: 200; }
+
+        nav { position: sticky; top: 2px; background: rgba(28,28,28,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+        .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+        .nav-back:hover { color: var(--gold); }
+
+        /* HERO */
+        .page-hero { padding: 80px 60px 56px; border-bottom: 1px solid var(--border); text-align: center; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 60%); }
+        .page-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; position: relative; z-index: 1; }
+        .page-title { font-family: var(--font-heading); font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.08; color: var(--white); margin-bottom: 20px; position: relative; z-index: 1; }
+        .page-sub { font-size: 16px; color: var(--gray); max-width: 560px; margin: 0 auto 48px; line-height: 1.85; position: relative; z-index: 1; }
+
+        /* LEGENDA */
+        .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; position: relative; z-index: 1; }
+        .legend-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--gray); letter-spacing: 0.06em; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+        /* GRID */
+        .content { padding: 56px 60px 80px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
+
+        /* CARD */
+        .card { background: var(--surface); padding: 36px 32px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
+        .card:hover { background: var(--surface-2); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+
+        /* BADGE rechts boven */
+        .card-badge { position: absolute; top: 18px; right: 20px; display: flex; align-items: center; gap: 5px; }
+        .card-badge-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .card-badge-label { font-size: 9px; color: #444; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+
+        .card-icon { width: 44px; height: 44px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; margin-top: 8px; }
+        .card-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+        .card-title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 10px; padding-right: 80px; }
+        .card-desc { font-size: 13px; color: var(--gray); line-height: 1.75; margin-bottom: 18px; }
+        .card-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 14px; }
+        .card-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+        .card-bullets li { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--gray-light); }
+        .card-bullets li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+        /* CTA */
+        .cta-banner { margin-top: 64px; background: var(--surface); border: 1px solid var(--border); padding: 64px 80px; text-align: center; position: relative; overflow: hidden; }
+        .cta-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
+        .cta-banner-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+        .cta-banner-title { font-family: var(--font-heading); font-size: 34px; font-weight: 600; color: var(--white); margin-bottom: 20px; }
+        .cta-banner-text { font-size: 15px; color: var(--gray); max-width: 600px; margin: 0 auto 36px; line-height: 1.9; }
+        .cta-btn { display: inline-block; background: var(--gold); color: #000; padding: 14px 44px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; transition: background 0.2s; }
+        .cta-btn:hover { background: var(--gold-light); }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .page-hero { padding: 56px 24px 40px; }
+            .content { padding: 40px 24px 64px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .cta-banner { padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.7"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.7"/>
+        </svg>
+        <span class="nav-logo-text">Insightance</span>
+    </a>
+    <a href="index.html" class="nav-back">← Terug naar de website</a>
+</nav>
+
+<div class="page-hero">
+    <p class="page-eyebrow">Automations & Agents</p>
+    <h1 class="page-title">Wat AI kan betekenen voor uw bedrijf.</h1>
+    <p class="page-sub">Een overzicht van de AI-systemen en agents die Insightance op maat bouwt. Elk systeem wordt afgestemd op uw situatie, uw processen en uw doelen.</p>
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c1)"></div>Sales & Marketing</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c2)"></div>Klantcontact</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c3)"></div>Finance & Administratie</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c4)"></div>HR & Personeel</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c5)"></div>Data & Analyse</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--c6)"></div>Interne Processen</div>
+    </div>
+</div>
+
+<div class="content">
+<div class="cards-grid">
+
+    <!-- SALES & MARKETING -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c1)"></div><span class="card-badge-label">Sales & Marketing</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Sales Agent</h3>
+        <p class="card-desc">Volgt leads automatisch op via e-mail of WhatsApp, kwalificeert ze en stuurt ze door naar de juiste stap.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Leads automatisch opvolgen</li><li>Kwalificeren & scoren</li><li>CRM-integratie</li><li>24/7 actief</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c1)"></div><span class="card-badge-label">Sales & Marketing</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#C9A84C" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Lead Kwalificatie Agent</h3>
+        <p class="card-desc">Analyseert binnenkomende leads en bepaalt automatisch welke prioriteit verdienen.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Leads scoren</li><li>Prioriteit bepalen</li><li>Doorsturen naar sales</li><li>Rapportage genereren</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c1)"></div><span class="card-badge-label">Sales & Marketing</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Offerte Generator</h3>
+        <p class="card-desc">Genereert gepersonaliseerde offertes op basis van klantinformatie en verstuurt ze automatisch.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Offertes genereren</li><li>Gepersonaliseerd opstellen</li><li>Direct verzenden</li><li>Opvolging automatiseren</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c1)"></div><span class="card-badge-label">Sales & Marketing</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M9 22V12h6v10" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI SEO Specialist</h3>
+        <p class="card-desc">Analyseert zoekwoorden, genereert SEO-content en monitort uw rankings automatisch.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Zoekwoorden analyseren</li><li>Content genereren</li><li>Rankings monitoren</li><li>Rapportage bijhouden</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c1)"></div><span class="card-badge-label">Sales & Marketing</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Social Media Manager</h3>
+        <p class="card-desc">Plant, schrijft en publiceert social media content automatisch op basis van uw strategie.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Content schrijven</li><li>Posts inplannen</li><li>Reacties monitoren</li><li>Prestaties analyseren</li></ul>
+    </div>
+
+    <!-- KLANTCONTACT -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c2)"></div><span class="card-badge-label">Klantcontact</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Klantenservice 24/7</h3>
+        <p class="card-desc">Beantwoordt klantvragen automatisch, dag en nacht, zonder dat u iets hoeft te doen.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Vragen beantwoorden</li><li>Tickets aanmaken</li><li>Doorschakelen naar mens</li><li>Meertalig</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c2)"></div><span class="card-badge-label">Klantcontact</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI WhatsApp Bot</h3>
+        <p class="card-desc">Verwerkt binnenkomende WhatsApp-berichten automatisch en reageert direct op klanten.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Berichten beantwoorden</li><li>Afspraken inplannen</li><li>Leads kwalificeren</li><li>24/7 actief</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c2)"></div><span class="card-badge-label">Klantcontact</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Appointment Setter</h3>
+        <p class="card-desc">Plant automatisch afspraken in, stuurt herinneringen en verwerkt annuleringen.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Afspraken inplannen</li><li>Herinneringen sturen</li><li>Annuleringen verwerken</li><li>Agenda synchroniseren</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c2)"></div><span class="card-badge-label">Klantcontact</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16.92z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Telefoniste</h3>
+        <p class="card-desc">Neemt inkomende gesprekken aan, beantwoordt vragen en plant afspraken automatisch in.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Gesprekken afhandelen</li><li>Afspraken inplannen</li><li>Doorverbinden</li><li>Notulen genereren</li></ul>
+    </div>
+
+    <!-- FINANCE & ADMINISTRATIE -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c3)"></div><span class="card-badge-label">Finance & Administratie</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M2 10h20" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Boekhouder</h3>
+        <p class="card-desc">Verwerkt transacties, categoriseert uitgaven en houdt de boekhouding automatisch bij.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Transacties verwerken</li><li>Uitgaven categoriseren</li><li>Rapporten genereren</li><li>Boekhoudintegratie</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c3)"></div><span class="card-badge-label">Finance & Administratie</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#C9A84C" stroke-width="1.5"/><path d="M14 2v6h6M12 18v-6M9 15h6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Facturatie Systeem</h3>
+        <p class="card-desc">Verstuurt facturen automatisch, stuurt betalingsherinneringen en registreert betalingen.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Facturen genereren</li><li>Automatisch verzenden</li><li>Betalingen tracken</li><li>Herinneringen sturen</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c3)"></div><span class="card-badge-label">Finance & Administratie</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI E-mail Automatisering</h3>
+        <p class="card-desc">Sorteert, beantwoordt en routeert inkomende e-mails automatisch op basis van inhoud.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>E-mails sorteren</li><li>Automatisch beantwoorden</li><li>Doorsturen & labelen</li><li>Opvolging inplannen</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c3)"></div><span class="card-badge-label">Finance & Administratie</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="#C9A84C" stroke-width="1.5"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Document Verwerker</h3>
+        <p class="card-desc">Leest, verwerkt en slaat documenten automatisch op in de juiste systemen.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Documenten lezen</li><li>Data extraheren</li><li>Systemen bijwerken</li><li>Fouten minimaliseren</li></ul>
+    </div>
+
+    <!-- HR & PERSONEEL -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c4)"></div><span class="card-badge-label">HR & Personeel</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI HR Assistent</h3>
+        <p class="card-desc">Schrijft vacatures, screent cv's en coördineert het sollicitatieproces automatisch.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Vacatures schrijven</li><li>CV's screenen</li><li>Sollicitanten inplannen</li><li>Onboarding begeleiden</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c4)"></div><span class="card-badge-label">HR & Personeel</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Roosterplanning</h3>
+        <p class="card-desc">Plant diensten automatisch in op basis van beschikbaarheid, regels en voorkeuren.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Diensten inplannen</li><li>Beschikbaarheid checken</li><li>Wijzigingen verwerken</li><li>Medewerkers notificeren</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c4)"></div><span class="card-badge-label">HR & Personeel</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Training Agent</h3>
+        <p class="card-desc">Traint medewerkers via AI-gestuurde modules en houdt voortgang automatisch bij.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Trainingen aanbieden</li><li>Voortgang bijhouden</li><li>Kennisquizzen genereren</li><li>Certificaten uitgeven</li></ul>
+    </div>
+
+    <!-- DATA & ANALYSE -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c5)"></div><span class="card-badge-label">Data & Analyse</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="6" y1="20" x2="6" y2="14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Rapportage Tool</h3>
+        <p class="card-desc">Verzamelt data uit uw systemen en genereert automatisch overzichtelijke rapporten.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Data verzamelen</li><li>Rapporten genereren</li><li>Trends signaleren</li><li>Dashboard bijhouden</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c5)"></div><span class="card-badge-label">Data & Analyse</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#C9A84C" stroke-width="1.5"/><path d="M21 21l-4.35-4.35M11 8v3l2 2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Agent</p>
+        <h3 class="card-title">AI Marktonderzoek Agent</h3>
+        <p class="card-desc">Monitort concurrenten, analyseert trends en levert periodiek een marktrapport.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Concurrenten monitoren</li><li>Trends analyseren</li><li>Rapporten genereren</li><li>Inzichten delen</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c5)"></div><span class="card-badge-label">Data & Analyse</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Data Integratie</h3>
+        <p class="card-desc">Koppelt uw systemen aan elkaar zodat data automatisch op de juiste plek terechtkomt.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Systemen koppelen</li><li>Data synchroniseren</li><li>Fouten opsporen</li><li>Realtime bijwerken</li></ul>
+    </div>
+
+    <!-- INTERNE PROCESSEN -->
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c6)"></div><span class="card-badge-label">Interne Processen</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 11l-4 4-2-2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Notulist</h3>
+        <p class="card-desc">Transcribeert vergaderingen automatisch en genereert een samenvatting met actiepunten.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Meetings transcriberen</li><li>Samenvatting genereren</li><li>Actiepunten vastleggen</li><li>Automatisch verzenden</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c6)"></div><span class="card-badge-label">Interne Processen</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Kennisbank</h3>
+        <p class="card-desc">Maakt interne documenten en procedures doorzoekbaar en altijd direct beschikbaar.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Documenten indexeren</li><li>Snel doorzoeken</li><li>Antwoorden genereren</li><li>Altijd up-to-date</li></ul>
+    </div>
+
+    <div class="card">
+        <div class="card-badge"><div class="card-badge-dot" style="background:var(--c6)"></div><span class="card-badge-label">Interne Processen</span></div>
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#C9A84C" stroke-width="1.5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <p class="card-tag">Automatisering</p>
+        <h3 class="card-title">AI Workflow Automatisering</h3>
+        <p class="card-desc">Verbindt uw apps en tools zodat terugkerende taken automatisch worden afgehandeld.</p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets"><li>Apps verbinden</li><li>Triggers instellen</li><li>Taken automatiseren</li><li>Fouten elimineren</li></ul>
+    </div>
+
+</div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+        <p class="cta-banner-label">Op maat gebouwd</p>
+        <h2 class="cta-banner-title">Staat uw situatie er niet bij?</h2>
+        <p class="cta-banner-text">Elk bedrijf is anders. Misschien heeft u een specifiek proces dat u wilt automatiseren, een uitdaging die uniek is voor uw branche, of een combinatie van meerdere systemen. Insightance bouwt volledig op maat — er is geen standaardoplossing. Plan een vrijblijvend kennismaking en ontdek samen wat AI voor uw bedrijf kan betekenen.</p>
+        <a href="index.html#contact" class="cta-btn">Plan een kennismaking</a>
+    </div>
+
+</div>
+</body>
+</html>
