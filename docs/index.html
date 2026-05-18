@@ -13,16 +13,16 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #1C1C1C;
-            --surface: #1E1E1E;
-            --surface-2: #242424;
-            --surface-3: #2C2C2C;
+            --bg: #0A0A0A;
+            --surface: #111111;
+            --surface-2: #191919;
+            --surface-3: #242424;
             --gold: #C9A84C;
             --gold-light: #E8C97A;
             --white: #FFFFFF;
             --gray: #888888;
             --gray-light: #C0C0C0;
-            --border: #2E2E2E;
+            --border: #252525;
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -56,7 +56,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(28, 28, 28, 0.95);
+            background: rgba(10, 10, 10, 0.96);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(201, 168, 76, 0.12);
             transition: border-color 0.3s;
@@ -202,12 +202,31 @@
 
         /* SHARED */
         .section { padding: 100px 60px; max-width: 1160px; margin: 0 auto; }
-        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; text-align: center; }
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0; text-align: center; display: block; }
+        .section-label::after { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); margin: 10px auto 20px; opacity: 0.7; }
         .section-title { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 52px); font-weight: 600; line-height: 1.15; margin-bottom: 28px; color: var(--white); text-align: center; }
         .section-text { font-size: 17px; color: var(--gray-light); line-height: 1.85; }
         .gold-line { width: 56px; height: 1px; background: var(--gold); margin: 28px auto; }
-        .strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .strip::after { content: 'Insightance'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); font-size: 10px; color: rgba(201,168,76,0.06); letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap; pointer-events: none; font-family: var(--font-body); font-weight: 600; }
+        .strip { background: var(--surface); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+        .strip::after { content: 'Insightance'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); font-size: 10px; color: rgba(201,168,76,0.05); letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap; pointer-events: none; font-family: var(--font-body); font-weight: 600; }
+
+        /* SECTION DEPTH SYSTEM */
+        .depth-0 { background: #060608 !important; }
+        .depth-1 { background: #0D0D10 !important; }
+        .depth-2 { background: #141418 !important; }
+
+        /* LIGHT SECTION */
+        .depth-light {
+            background: #EDE8DC !important;
+            --white: #1A1A1A;
+            --gray: #5A5A5A;
+            --gray-light: #333333;
+            --surface: #FDFBF8;
+            --surface-2: #F5F0E8;
+            --surface-3: #EDE9E0;
+            --border: #CEC6B8;
+        }
+        .depth-light .strip::after { display: none; }
 
         .hero-ctas { display: flex; gap: 20px; align-items: center; position: relative; z-index: 1; margin-top: 16px; }
         .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
@@ -217,17 +236,17 @@
 
         /* MISSION */
         .mission-text { text-align: center; max-width: 600px; margin: 0 auto 64px; font-size: 17px; color: var(--gray-light); line-height: 1.85; }
-        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); max-width: 800px; margin: 0 auto; }
-        .mission-stat { background: var(--surface); padding: 40px 24px; text-align: center; position: relative; overflow: hidden; }
-        .mission-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; max-width: 800px; margin: 0 auto; }
+        .mission-stat { background: var(--surface); padding: 40px 24px; text-align: center; position: relative; overflow: hidden; border-radius: 10px; border: 1px solid rgba(201,168,76,0.12); }
+        .mission-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .mission-stat-number { font-family: var(--font-heading); font-size: 48px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 12px; }
         .mission-stat-label { font-size: 14px; color: var(--white); line-height: 1.6; }
 
         /* FOR WHO */
-        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
-        .forwho-col { background: var(--surface); position: relative; transition: background 0.3s; }
+        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; }
+        .forwho-col { background: var(--surface); position: relative; transition: background 0.3s; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,168,76,0.1); }
         .forwho-col:hover { background: var(--surface-2); }
-        .forwho-col-top { height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .forwho-col-top { height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
         .forwho-col-inner { padding: 44px 44px 52px; }
         .forwho-col-title { font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
         .forwho-col-text { font-size: 15px; color: var(--gray); line-height: 1.85; }
@@ -245,9 +264,9 @@
         .result-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* SERVICES */
-        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); margin-top: 56px; }
-        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
-        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; margin-top: 56px; }
+        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
+        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .service-card-new:hover { background: var(--surface-2); }
         .service-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; margin-top: 8px; }
         .service-card-title { font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
@@ -268,10 +287,10 @@
         .step-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* WHY INSIGHTANCE */
-        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
-        .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: transparent; }
+        .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
         .why-item:hover { background: var(--surface-2); }
-        .why-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .why-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .why-title { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
         .why-tag { font-size: 11px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 18px; display: block; }
         .why-text { font-size: 15px; color: var(--gray-light); line-height: 1.8; }
@@ -362,7 +381,7 @@
             position: fixed;
             top: 0; right: 0; bottom: 0;
             width: 280px;
-            background: #141414;
+            background: #0D0D10;
             border-left: 1px solid var(--border);
             z-index: 199;
             transform: translateX(100%);
@@ -498,7 +517,7 @@
 </div>
 
 <!-- MISSION -->
-<div id="mission" class="strip">
+<div id="mission" class="strip depth-1">
     <div class="section fade-in">
         <p class="section-label" data-nl="Onze missie" data-en="Our mission"></p>
         <h2 class="section-title" data-nl="Minder handmatig werk.<br>Meer ruimte om te groeien." data-en="Less manual work.<br>More room to grow."></h2>
@@ -525,7 +544,7 @@
 </div>
 
 <!-- VOOR WIE -->
-<div class="strip" id="forwho">
+<div class="strip depth-light" id="forwho">
     <div class="section fade-in">
         <p class="section-label" data-nl="Voor wie" data-en="For who"></p>
         <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken." data-en="For business owners ready to work smarter."></h2>
@@ -614,7 +633,7 @@
 </div>
 
 <!-- DIENSTEN -->
-<div class="strip" id="services">
+<div class="strip depth-0" id="services">
     <div class="section fade-in">
         <p class="section-label" data-nl="Diensten" data-en="Services"></p>
         <h2 class="section-title" data-nl="Wat Insightance voor u doet." data-en="What Insightance does for you."></h2>
@@ -679,7 +698,7 @@
 </div>
 
 <!-- HOE INSIGHTANCE WERKT -->
-<div class="strip" id="howwework">
+<div class="strip depth-2" id="howwework">
     <div class="section fade-in">
         <p class="section-label" data-nl="Hoe Insightance werkt" data-en="How Insightance works"></p>
         <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem." data-en="From first contact to working system."></h2>
@@ -716,7 +735,7 @@
 </div>
 
 <!-- WAAROM INSIGHTANCE -->
-<div class="strip" id="why">
+<div class="strip depth-0" id="why">
     <div class="section fade-in">
         <p class="section-label" data-nl="Waarom Insightance" data-en="Why Insightance"></p>
         <h2 class="section-title" data-nl="Wat ons onderscheidt." data-en="What sets us apart."></h2>
@@ -747,7 +766,7 @@
 </div>
 
 <!-- OVER INSIGHTANCE -->
-<div class="strip" id="about">
+<div class="strip depth-1" id="about">
     <div class="section fade-in">
         <p class="section-label" data-nl="Over Insightance" data-en="About Insightance"></p>
         <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer." data-en="From healthcare worker to AI founder."></h2>
@@ -774,7 +793,7 @@
 </div>
 
 <!-- FAQ -->
-<div class="strip" id="faq">
+<div class="strip depth-2" id="faq">
     <div class="section fade-in">
         <p class="section-label" data-nl="FAQ" data-en="FAQ"></p>
         <h2 class="section-title" data-nl="Uw vragen beantwoord." data-en="Your questions answered."></h2>
@@ -841,7 +860,7 @@
 </div>
 
 <!-- CONTACT -->
-<div class="strip" id="contact">
+<div class="strip depth-0" id="contact">
     <div class="section fade-in">
         <p class="section-label" data-nl="Contact" data-en="Contact"></p>
         <h2 class="section-title" data-nl="Laten we praten." data-en="Let's talk."></h2>
