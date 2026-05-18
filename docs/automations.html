@@ -9,9 +9,9 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg: #0A0A0A; --surface: #111111; --surface-2: #191919;
+            --bg: #131316; --surface: #181819; --surface-2: #202023;
             --gold: #C9A84C; --gold-light: #E8C97A; --white: #fff;
-            --gray: #777; --gray-light: #AAA; --border: #252525;
+            --gray: #777; --gray-light: #AAA; --border: #252528;
             --font-heading: 'Playfair Display', serif; --font-body: 'Inter', sans-serif;
             --c1: #5B8AF0; --c2: #4ECDC4; --c3: #52C17A;
             --c4: #9B7FD4; --c5: #F0A35B; --c6: #E87878;
@@ -20,31 +20,40 @@
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent); z-index: 200; }
 
         /* NAV */
-        nav { position: sticky; top: 2px; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        nav { position: sticky; top: 2px; background: rgba(19,19,22,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
         .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
         .nav-back:hover { color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-toggle { background: none; border: 1px solid var(--border); color: var(--gray); padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; }
+        .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
+        .nav-cta { background: var(--gold); color: #000; padding: 9px 20px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: background 0.2s; white-space: nowrap; }
+        .nav-cta:hover { background: var(--gold-light); }
 
         /* HERO */
-        .hero { padding: 64px 60px 0; text-align: center; }
+        .hero { padding: 64px 60px 0; text-align: center; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 60%); padding-bottom: 16px; }
         .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
         .hero-title { font-family: var(--font-heading); font-size: clamp(32px, 4.5vw, 58px); font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
         .hero-sub { font-size: 15px; color: var(--gray); max-width: 500px; margin: 0 auto; line-height: 1.85; }
 
         /* STATS */
-        .stats { display: flex; justify-content: center; gap: 0; margin: 48px 60px 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .stats { display: flex; justify-content: center; gap: 0; margin: 48px 60px 0; border: 1px solid rgba(201,168,76,0.1); border-radius: 8px; overflow: hidden; background: linear-gradient(135deg, #0F0F12 0%, #131316 100%); }
         .stat { flex: 1; padding: 28px 24px; text-align: center; border-right: 1px solid var(--border); }
         .stat:last-child { border-right: none; }
-        .stat-num { font-family: var(--font-heading); font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+        .stat-num { font-family: var(--font-heading); font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; text-shadow: 0 0 24px rgba(201,168,76,0.25); }
         .stat-label { font-size: 12px; color: #fff; letter-spacing: 0.05em; }
 
         /* INFO BOX */
-        .info-box { margin: 28px 60px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 32px; text-align: center; }
+        .info-box { margin: 28px 60px; background: linear-gradient(135deg, #0F0F12, #131316); border: 1px solid rgba(201,168,76,0.1); border-radius: 8px; padding: 24px 32px; text-align: center; }
         .info-box p { font-size: 14px; color: var(--gray-light); line-height: 1.8; max-width: 700px; margin: 0 auto; }
 
         /* LICHTE SECTIE */
-        .light-section { background: #F5F0E8; }
+        .light-section {
+            background: #EDE8DC;
+            background-image: radial-gradient(circle at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(201,168,76,0.03) 0%, transparent 50%);
+        }
 
         /* FILTERS */
         .filters-wrap { padding: 40px 60px 28px; }
@@ -66,9 +75,11 @@
         /* GRID */
         .grid-wrap { padding: 0 60px 80px; }
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .card { background: #fff; border: 1px solid #E5DFD5; border-radius: 10px; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-        .card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+        .card { background: #fff; border: 1px solid #E5DFD5; border-radius: 10px; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(201,168,76,0.2); }
         .card.hidden { display: none; }
+        .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); opacity: 0; transition: opacity 0.3s; }
+        .card:hover::after { opacity: 1; }
 
         /* CARD TOP */
         .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
@@ -84,52 +95,27 @@
         .card-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: #555; line-height: 1.4; }
         .card-check { color: var(--gold); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
 
-        /* CTA — terug naar donker */
-        .cta-wrap { background: #060608; padding: 80px 60px; }
-        .cta { max-width: 800px; margin: 0 auto; background: #0D0D10; border: 1px solid rgba(201,168,76,0.12); border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
+        /* CTA */
+        .cta-wrap { background: #0F0F12; padding: 80px 60px; }
+        .cta { max-width: 800px; margin: 0 auto; background: #161619; border: 1px solid rgba(201,168,76,0.12); border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
         .cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .cta-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
         .cta-title { font-family: var(--font-heading); font-size: 30px; font-weight: 600; color: #fff; margin-bottom: 16px; }
         .cta-text { font-size: 14px; color: #777; max-width: 560px; margin: 0 auto 32px; line-height: 1.9; }
-        .cta-btn { display: inline-block; background: var(--gold); color: #000; padding: 13px 40px; border-radius: 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; transition: background 0.2s; }
+        .cta-btn { display: inline-block; background: var(--gold); color: #000; padding: 13px 40px; border-radius: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; transition: background 0.2s; }
         .cta-btn:hover { background: var(--gold-light); }
 
         /* STICKY KNOP */
         .sticky-cta {
-            position: fixed;
-            bottom: 28px;
-            left: 28px;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--gold);
-            color: #000;
-            padding: 12px 20px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+            position: fixed; bottom: 28px; left: 28px; z-index: 999;
+            display: flex; align-items: center; gap: 10px;
+            background: var(--gold); color: #000;
+            padding: 12px 20px; border-radius: 100px;
+            font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+            text-decoration: none; box-shadow: 0 4px 20px rgba(201,168,76,0.3);
             transition: background 0.2s, transform 0.2s;
         }
         .sticky-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
-
-        /* PREMIUM LOOK */
-        .hero { background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 60%); padding-bottom: 16px; }
-        .stats { background: linear-gradient(135deg, #0D0D10 0%, #0A0A0A 100%); border: 1px solid rgba(201,168,76,0.1); }
-        .stat-num { text-shadow: 0 0 24px rgba(201,168,76,0.25); }
-        .info-box { background: linear-gradient(135deg, #111111, #0D0D10); border-color: rgba(201,168,76,0.1); }
-        .light-section {
-            background: #F5F0E8;
-            background-image: radial-gradient(circle at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 80%, rgba(201,168,76,0.03) 0%, transparent 50%);
-        }
-        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-        .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); opacity: 0; transition: opacity 0.3s; }
-        .card:hover::after { opacity: 1; }
-        .card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(201,168,76,0.2); border-color: rgba(201,168,76,0.3); }
 
         /* SCROLL ANIMATIES */
         .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
@@ -142,13 +128,15 @@
 
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
+            .nav-back { display: none; }
             .hero { padding: 48px 20px 0; }
             .stats { margin: 32px 20px 0; }
             .info-box { margin: 20px; }
             .filters-wrap { padding: 0 20px; }
             .grid-wrap { padding: 0 20px 60px; }
             .cards-grid { grid-template-columns: 1fr; }
-            .cta { margin: 0 20px 60px; padding: 36px 24px; }
+            .cta-wrap { padding: 40px 20px; }
+            .cta { padding: 36px 24px; }
         }
     </style>
 </head>
@@ -164,48 +152,53 @@
         </svg>
         <span class="nav-logo-text">Insightance</span>
     </a>
-    <a href="index.html" class="nav-back">← Terug</a>
+    <a href="index.html" class="nav-back" data-nl="← Terug" data-en="← Back">← Terug</a>
+    <div class="nav-right">
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+        <a href="index.html#contact" class="nav-cta" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
+    </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero fade-up">
     <p class="hero-eyebrow">Automations & Agents</p>
-    <h1 class="hero-title">Wat AI kan betekenen<br>voor uw bedrijf.</h1>
-    <p class="hero-sub">Elk systeem wordt op maat gebouwd voor uw situatie, uw processen en uw doelen.</p>
+    <h1 class="hero-title" data-nl="Wat AI kan betekenen<br>voor uw bedrijf" data-en="What AI can do<br>for your business"></h1>
+    <p class="hero-sub" data-nl="Elk systeem wordt op maat gebouwd voor uw situatie, uw processen en uw doelen." data-en="Every system is built to fit your situation, your processes, and your goals."></p>
 </div>
 
 <!-- STATS -->
 <div class="stats fade-up">
     <div class="stat">
         <div class="stat-num">22</div>
-        <div class="stat-label">Beschikbare systemen</div>
+        <div class="stat-label" data-nl="Beschikbare systemen" data-en="Available systems"></div>
     </div>
     <div class="stat">
         <div class="stat-num">6</div>
-        <div class="stat-label">Toepassingsgebieden</div>
+        <div class="stat-label" data-nl="Toepassingsgebieden" data-en="Application areas"></div>
     </div>
     <div class="stat">
         <div class="stat-num">24/7</div>
-        <div class="stat-label">Actief zonder pauze</div>
+        <div class="stat-label" data-nl="Actief zonder pauze" data-en="Active without pause"></div>
     </div>
 </div>
 
 <!-- INFO BOX -->
 <div class="info-box fade-up">
-    <p>Alle systemen zijn beschikbaar als losse automatisering of als onderdeel van een groter AI-systeem. Elk wordt volledig op maat gebouwd voor uw bedrijf. Plan een vrijblijvend kennismaking om te ontdekken wat het beste past.</p>
+    <p data-nl="Alle systemen zijn beschikbaar als losse automatisering of als onderdeel van een groter AI-systeem. Elk wordt volledig op maat gebouwd voor uw bedrijf. Plan een vrijblijvend kennismaking om te ontdekken wat het beste past." data-en="All systems are available as standalone automations or as part of a larger AI system. Each is built entirely custom for your business. Schedule a no-obligation consultation to discover what fits best."></p>
 </div>
 
 <div class="light-section">
+
 <!-- FILTERS -->
 <div class="filters-wrap">
     <div class="filters">
-        <button class="filter-btn active" data-filter="all">Alle systemen <span class="filter-count">22</span></button>
-        <button class="filter-btn" data-filter="sales"><span class="filter-dot" style="background:#5B8AF0"></span>Sales & Marketing <span class="filter-count">5</span></button>
-        <button class="filter-btn" data-filter="klant"><span class="filter-dot" style="background:#4ECDC4"></span>Klantcontact <span class="filter-count">4</span></button>
-        <button class="filter-btn" data-filter="finance"><span class="filter-dot" style="background:#52C17A"></span>Finance & Admin <span class="filter-count">4</span></button>
-        <button class="filter-btn" data-filter="hr"><span class="filter-dot" style="background:#9B7FD4"></span>HR & Personeel <span class="filter-count">3</span></button>
-        <button class="filter-btn" data-filter="data"><span class="filter-dot" style="background:#F0A35B"></span>Data & Analyse <span class="filter-count">3</span></button>
-        <button class="filter-btn" data-filter="intern"><span class="filter-dot" style="background:#E87878"></span>Interne Processen <span class="filter-count">3</span></button>
+        <button class="filter-btn active" data-filter="all" data-nl="Alle systemen" data-en="All systems">Alle systemen <span class="filter-count">22</span></button>
+        <button class="filter-btn" data-filter="sales"><span class="filter-dot" style="background:#5B8AF0"></span><span data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span> <span class="filter-count">5</span></button>
+        <button class="filter-btn" data-filter="klant"><span class="filter-dot" style="background:#4ECDC4"></span><span data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span> <span class="filter-count">4</span></button>
+        <button class="filter-btn" data-filter="finance"><span class="filter-dot" style="background:#52C17A"></span><span data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span> <span class="filter-count">4</span></button>
+        <button class="filter-btn" data-filter="hr"><span class="filter-dot" style="background:#9B7FD4"></span><span data-nl="HR & Personeel" data-en="HR & Staff">HR & Personeel</span> <span class="filter-count">3</span></button>
+        <button class="filter-btn" data-filter="data"><span class="filter-dot" style="background:#F0A35B"></span><span data-nl="Data & Analyse" data-en="Data & Analysis">Data & Analyse</span> <span class="filter-count">3</span></button>
+        <button class="filter-btn" data-filter="intern"><span class="filter-dot" style="background:#E87878"></span><span data-nl="Interne Processen" data-en="Internal Processes">Interne Processen</span> <span class="filter-count">3</span></button>
     </div>
 </div>
 
@@ -217,80 +210,80 @@
     <div class="card fade-up" data-cat="sales">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label">Sales & Marketing</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
         </div>
         <h3 class="card-title">AI Sales Agent</h3>
-        <p class="card-desc">Volgt leads automatisch op via e-mail of WhatsApp en kwalificeert ze zonder handmatig werk.</p>
+        <p class="card-desc" data-nl="Volgt leads automatisch op via e-mail of WhatsApp en kwalificeert ze zonder handmatig werk." data-en="Automatically follows up leads via email or WhatsApp and qualifies them without manual effort."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Leads automatisch opvolgen</li>
-            <li><span class="card-check">✓</span>Kwalificeren & scoren</li>
-            <li><span class="card-check">✓</span>CRM-integratie</li>
-            <li><span class="card-check">✓</span>24/7 actief</li>
+            <li><span class="card-check">✓</span><span data-nl="Leads automatisch opvolgen" data-en="Automatically follow up leads"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Kwalificeren & scoren" data-en="Qualify & score"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="CRM-integratie" data-en="CRM integration"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="24/7 actief" data-en="Active 24/7"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="sales">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#C9A84C" stroke-width="1.5"/><path d="M21 21l-4.35-4.35" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label">Sales & Marketing</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
         </div>
-        <h3 class="card-title">AI Lead Kwalificatie Agent</h3>
-        <p class="card-desc">Analyseert binnenkomende leads en bepaalt automatisch welke prioriteit verdienen.</p>
+        <h3 class="card-title" data-nl="AI Lead Kwalificatie Agent" data-en="AI Lead Qualification Agent"></h3>
+        <p class="card-desc" data-nl="Analyseert binnenkomende leads en bepaalt automatisch welke prioriteit verdienen." data-en="Analyzes incoming leads and automatically determines which ones deserve priority."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Leads scoren</li>
-            <li><span class="card-check">✓</span>Prioriteit bepalen</li>
-            <li><span class="card-check">✓</span>Doorsturen naar sales</li>
-            <li><span class="card-check">✓</span>Rapportage genereren</li>
+            <li><span class="card-check">✓</span><span data-nl="Leads scoren" data-en="Score leads"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Prioriteit bepalen" data-en="Determine priority"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Doorsturen naar sales" data-en="Route to sales"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rapportage genereren" data-en="Generate reports"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="sales">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label">Sales & Marketing</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
         </div>
-        <h3 class="card-title">AI Offerte Generator</h3>
-        <p class="card-desc">Genereert gepersonaliseerde offertes op basis van klantinformatie en verstuurt ze automatisch.</p>
+        <h3 class="card-title" data-nl="AI Offerte Generator" data-en="AI Quote Generator"></h3>
+        <p class="card-desc" data-nl="Genereert gepersonaliseerde offertes op basis van klantinformatie en verstuurt ze automatisch." data-en="Generates personalized quotes based on client information and sends them automatically."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Offertes genereren</li>
-            <li><span class="card-check">✓</span>Gepersonaliseerd opstellen</li>
-            <li><span class="card-check">✓</span>Direct verzenden</li>
-            <li><span class="card-check">✓</span>Opvolging automatiseren</li>
+            <li><span class="card-check">✓</span><span data-nl="Offertes genereren" data-en="Generate quotes"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Gepersonaliseerd opstellen" data-en="Personalize drafts"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Direct verzenden" data-en="Send directly"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Opvolging automatiseren" data-en="Automate follow-up"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="sales">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><path d="M9 22V12h6v10" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label">Sales & Marketing</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
         </div>
         <h3 class="card-title">AI SEO Specialist</h3>
-        <p class="card-desc">Analyseert zoekwoorden, genereert SEO-content en monitort uw rankings automatisch.</p>
+        <p class="card-desc" data-nl="Analyseert zoekwoorden, genereert SEO-content en monitort uw rankings automatisch." data-en="Analyzes keywords, generates SEO content, and automatically monitors your rankings."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Zoekwoorden analyseren</li>
-            <li><span class="card-check">✓</span>Content genereren</li>
-            <li><span class="card-check">✓</span>Rankings monitoren</li>
-            <li><span class="card-check">✓</span>Rapportage bijhouden</li>
+            <li><span class="card-check">✓</span><span data-nl="Zoekwoorden analyseren" data-en="Analyze keywords"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Content genereren" data-en="Generate content"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rankings monitoren" data-en="Monitor rankings"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rapportage bijhouden" data-en="Track reports"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="sales">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label">Sales & Marketing</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
         </div>
         <h3 class="card-title">AI Social Media Manager</h3>
-        <p class="card-desc">Plant, schrijft en publiceert social media content automatisch op basis van uw strategie.</p>
+        <p class="card-desc" data-nl="Plant, schrijft en publiceert social media content automatisch op basis van uw strategie." data-en="Plans, writes, and publishes social media content automatically based on your strategy."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Content schrijven</li>
-            <li><span class="card-check">✓</span>Posts inplannen</li>
-            <li><span class="card-check">✓</span>Reacties monitoren</li>
-            <li><span class="card-check">✓</span>Prestaties analyseren</li>
+            <li><span class="card-check">✓</span><span data-nl="Content schrijven" data-en="Write content"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Posts inplannen" data-en="Schedule posts"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Reacties monitoren" data-en="Monitor reactions"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Prestaties analyseren" data-en="Analyze performance"></span></li>
         </ul>
     </div>
 
@@ -298,64 +291,64 @@
     <div class="card fade-up" data-cat="klant">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label">Klantcontact</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label" data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span></div>
         </div>
-        <h3 class="card-title">AI Klantenservice 24/7</h3>
-        <p class="card-desc">Beantwoordt klantvragen automatisch, dag en nacht, zonder dat u iets hoeft te doen.</p>
+        <h3 class="card-title" data-nl="AI Klantenservice 24/7" data-en="AI Customer Service 24/7"></h3>
+        <p class="card-desc" data-nl="Beantwoordt klantvragen automatisch, dag en nacht, zonder dat u iets hoeft te doen." data-en="Answers customer questions automatically, day and night, without you having to do anything."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Vragen beantwoorden</li>
-            <li><span class="card-check">✓</span>Tickets aanmaken</li>
-            <li><span class="card-check">✓</span>Doorschakelen naar mens</li>
-            <li><span class="card-check">✓</span>Meertalig</li>
+            <li><span class="card-check">✓</span><span data-nl="Vragen beantwoorden" data-en="Answer questions"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Tickets aanmaken" data-en="Create tickets"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Doorschakelen naar mens" data-en="Transfer to human"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Meertalig" data-en="Multilingual"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="klant">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label">Klantcontact</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label" data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span></div>
         </div>
         <h3 class="card-title">AI WhatsApp Bot</h3>
-        <p class="card-desc">Verwerkt binnenkomende WhatsApp-berichten automatisch en reageert direct op klanten.</p>
+        <p class="card-desc" data-nl="Verwerkt binnenkomende WhatsApp-berichten automatisch en reageert direct op klanten." data-en="Automatically processes incoming WhatsApp messages and responds directly to customers."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Berichten beantwoorden</li>
-            <li><span class="card-check">✓</span>Afspraken inplannen</li>
-            <li><span class="card-check">✓</span>Leads kwalificeren</li>
-            <li><span class="card-check">✓</span>24/7 actief</li>
+            <li><span class="card-check">✓</span><span data-nl="Berichten beantwoorden" data-en="Reply to messages"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Afspraken inplannen" data-en="Schedule appointments"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Leads kwalificeren" data-en="Qualify leads"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="24/7 actief" data-en="Active 24/7"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="klant">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label">Klantcontact</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label" data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span></div>
         </div>
         <h3 class="card-title">AI Appointment Setter</h3>
-        <p class="card-desc">Plant automatisch afspraken in, stuurt herinneringen en verwerkt annuleringen.</p>
+        <p class="card-desc" data-nl="Plant automatisch afspraken in, stuurt herinneringen en verwerkt annuleringen." data-en="Automatically schedules appointments, sends reminders, and processes cancellations."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Afspraken inplannen</li>
-            <li><span class="card-check">✓</span>Herinneringen sturen</li>
-            <li><span class="card-check">✓</span>Annuleringen verwerken</li>
-            <li><span class="card-check">✓</span>Agenda synchroniseren</li>
+            <li><span class="card-check">✓</span><span data-nl="Afspraken inplannen" data-en="Schedule appointments"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Herinneringen sturen" data-en="Send reminders"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Annuleringen verwerken" data-en="Process cancellations"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Agenda synchroniseren" data-en="Sync calendar"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="klant">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label">Klantcontact</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#4ECDC4"></div><span class="card-badge-label" data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span></div>
         </div>
-        <h3 class="card-title">AI Telefoniste</h3>
-        <p class="card-desc">Neemt inkomende gesprekken aan, beantwoordt vragen en plant afspraken automatisch in.</p>
+        <h3 class="card-title" data-nl="AI Telefoniste" data-en="AI Receptionist"></h3>
+        <p class="card-desc" data-nl="Neemt inkomende gesprekken aan, beantwoordt vragen en plant afspraken automatisch in." data-en="Answers incoming calls, responds to questions, and schedules appointments automatically."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Gesprekken afhandelen</li>
-            <li><span class="card-check">✓</span>Afspraken inplannen</li>
-            <li><span class="card-check">✓</span>Doorverbinden</li>
-            <li><span class="card-check">✓</span>Notulen genereren</li>
+            <li><span class="card-check">✓</span><span data-nl="Gesprekken afhandelen" data-en="Handle calls"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Afspraken inplannen" data-en="Schedule appointments"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Doorverbinden" data-en="Transfer calls"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Notulen genereren" data-en="Generate minutes"></span></li>
         </ul>
     </div>
 
@@ -363,64 +356,64 @@
     <div class="card fade-up" data-cat="finance">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M2 10h20" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label">Finance & Admin</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label" data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span></div>
         </div>
-        <h3 class="card-title">AI Boekhouder</h3>
-        <p class="card-desc">Verwerkt transacties, categoriseert uitgaven en houdt de boekhouding automatisch bij.</p>
+        <h3 class="card-title" data-nl="AI Boekhouder" data-en="AI Bookkeeper"></h3>
+        <p class="card-desc" data-nl="Verwerkt transacties, categoriseert uitgaven en houdt de boekhouding automatisch bij." data-en="Processes transactions, categorizes expenses, and maintains the administration automatically."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Transacties verwerken</li>
-            <li><span class="card-check">✓</span>Uitgaven categoriseren</li>
-            <li><span class="card-check">✓</span>Rapporten genereren</li>
-            <li><span class="card-check">✓</span>Boekhoudintegratie</li>
+            <li><span class="card-check">✓</span><span data-nl="Transacties verwerken" data-en="Process transactions"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Uitgaven categoriseren" data-en="Categorize expenses"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rapporten genereren" data-en="Generate reports"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Boekhoudintegratie" data-en="Accounting integration"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="finance">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#C9A84C" stroke-width="1.5"/><path d="M14 2v6h6M12 18v-6M9 15h6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label">Finance & Admin</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label" data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span></div>
         </div>
-        <h3 class="card-title">AI Facturatie Systeem</h3>
-        <p class="card-desc">Verstuurt facturen automatisch, stuurt betalingsherinneringen en registreert betalingen.</p>
+        <h3 class="card-title" data-nl="AI Facturatie Systeem" data-en="AI Invoicing System"></h3>
+        <p class="card-desc" data-nl="Verstuurt facturen automatisch, stuurt betalingsherinneringen en registreert betalingen." data-en="Sends invoices automatically, sends payment reminders, and registers payments."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Facturen genereren</li>
-            <li><span class="card-check">✓</span>Automatisch verzenden</li>
-            <li><span class="card-check">✓</span>Betalingen tracken</li>
-            <li><span class="card-check">✓</span>Herinneringen sturen</li>
+            <li><span class="card-check">✓</span><span data-nl="Facturen genereren" data-en="Generate invoices"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Automatisch verzenden" data-en="Send automatically"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Betalingen tracken" data-en="Track payments"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Herinneringen sturen" data-en="Send reminders"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="finance">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label">Finance & Admin</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label" data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span></div>
         </div>
-        <h3 class="card-title">AI E-mail Automatisering</h3>
-        <p class="card-desc">Sorteert, beantwoordt en routeert inkomende e-mails automatisch op basis van inhoud.</p>
+        <h3 class="card-title" data-nl="AI E-mail Automatisering" data-en="AI Email Automation"></h3>
+        <p class="card-desc" data-nl="Sorteert, beantwoordt en routeert inkomende e-mails automatisch op basis van inhoud." data-en="Sorts, answers, and routes incoming emails automatically based on content."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>E-mails sorteren</li>
-            <li><span class="card-check">✓</span>Automatisch beantwoorden</li>
-            <li><span class="card-check">✓</span>Doorsturen & labelen</li>
-            <li><span class="card-check">✓</span>Opvolging inplannen</li>
+            <li><span class="card-check">✓</span><span data-nl="E-mails sorteren" data-en="Sort emails"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Automatisch beantwoorden" data-en="Auto-reply"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Doorsturen & labelen" data-en="Forward & label"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Opvolging inplannen" data-en="Schedule follow-up"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="finance">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="#C9A84C" stroke-width="1.5"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label">Finance & Admin</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#52C17A"></div><span class="card-badge-label" data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span></div>
         </div>
-        <h3 class="card-title">AI Document Verwerker</h3>
-        <p class="card-desc">Leest, verwerkt en slaat documenten automatisch op in de juiste systemen.</p>
+        <h3 class="card-title" data-nl="AI Document Verwerker" data-en="AI Document Processor"></h3>
+        <p class="card-desc" data-nl="Leest, verwerkt en slaat documenten automatisch op in de juiste systemen." data-en="Reads, processes, and automatically stores documents in the correct systems."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Documenten lezen</li>
-            <li><span class="card-check">✓</span>Data extraheren</li>
-            <li><span class="card-check">✓</span>Systemen bijwerken</li>
-            <li><span class="card-check">✓</span>Fouten minimaliseren</li>
+            <li><span class="card-check">✓</span><span data-nl="Documenten lezen" data-en="Read documents"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Data extraheren" data-en="Extract data"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Systemen bijwerken" data-en="Update systems"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Fouten minimaliseren" data-en="Minimize errors"></span></li>
         </ul>
     </div>
 
@@ -428,48 +421,48 @@
     <div class="card fade-up" data-cat="hr">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label">HR & Personeel</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label" data-nl="HR & Personeel" data-en="HR & Staff">HR & Personeel</span></div>
         </div>
-        <h3 class="card-title">AI HR Assistent</h3>
-        <p class="card-desc">Schrijft vacatures, screent cv's en coördineert het sollicitatieproces automatisch.</p>
+        <h3 class="card-title" data-nl="AI HR Assistent" data-en="AI HR Assistant"></h3>
+        <p class="card-desc" data-nl="Schrijft vacatures, screent cv's en coördineert het sollicitatieproces automatisch." data-en="Writes job listings, screens CVs, and coordinates the recruitment process automatically."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Vacatures schrijven</li>
-            <li><span class="card-check">✓</span>CV's screenen</li>
-            <li><span class="card-check">✓</span>Sollicitanten inplannen</li>
-            <li><span class="card-check">✓</span>Onboarding begeleiden</li>
+            <li><span class="card-check">✓</span><span data-nl="Vacatures schrijven" data-en="Write job listings"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="CV's screenen" data-en="Screen CVs"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Sollicitanten inplannen" data-en="Schedule applicants"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Onboarding begeleiden" data-en="Guide onboarding"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="hr">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label">HR & Personeel</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label" data-nl="HR & Personeel" data-en="HR & Staff">HR & Personeel</span></div>
         </div>
-        <h3 class="card-title">AI Roosterplanning</h3>
-        <p class="card-desc">Plant diensten automatisch in op basis van beschikbaarheid, regels en voorkeuren.</p>
+        <h3 class="card-title" data-nl="AI Roosterplanning" data-en="AI Shift Planner"></h3>
+        <p class="card-desc" data-nl="Plant diensten automatisch in op basis van beschikbaarheid, regels en voorkeuren." data-en="Automatically schedules shifts based on availability, rules, and preferences."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Diensten inplannen</li>
-            <li><span class="card-check">✓</span>Beschikbaarheid checken</li>
-            <li><span class="card-check">✓</span>Wijzigingen verwerken</li>
-            <li><span class="card-check">✓</span>Medewerkers notificeren</li>
+            <li><span class="card-check">✓</span><span data-nl="Diensten inplannen" data-en="Schedule shifts"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Beschikbaarheid checken" data-en="Check availability"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Wijzigingen verwerken" data-en="Process changes"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Medewerkers notificeren" data-en="Notify staff"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="hr">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label">HR & Personeel</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#9B7FD4"></div><span class="card-badge-label" data-nl="HR & Personeel" data-en="HR & Staff">HR & Personeel</span></div>
         </div>
         <h3 class="card-title">AI Training Agent</h3>
-        <p class="card-desc">Traint medewerkers via AI-gestuurde modules en houdt voortgang automatisch bij.</p>
+        <p class="card-desc" data-nl="Traint medewerkers via AI-gestuurde modules en houdt voortgang automatisch bij." data-en="Trains employees via AI-driven modules and automatically tracks progress."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Trainingen aanbieden</li>
-            <li><span class="card-check">✓</span>Voortgang bijhouden</li>
-            <li><span class="card-check">✓</span>Kennisquizzen genereren</li>
-            <li><span class="card-check">✓</span>Certificaten uitgeven</li>
+            <li><span class="card-check">✓</span><span data-nl="Trainingen aanbieden" data-en="Offer training"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Voortgang bijhouden" data-en="Track progress"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Kennisquizzen genereren" data-en="Generate knowledge quizzes"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Certificaten uitgeven" data-en="Issue certificates"></span></li>
         </ul>
     </div>
 
@@ -477,48 +470,48 @@
     <div class="card fade-up" data-cat="data">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><line x1="6" y1="20" x2="6" y2="14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label">Data & Analyse</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label" data-nl="Data & Analyse" data-en="Data & Analysis">Data & Analyse</span></div>
         </div>
-        <h3 class="card-title">AI Rapportage Tool</h3>
-        <p class="card-desc">Verzamelt data uit uw systemen en genereert automatisch overzichtelijke rapporten.</p>
+        <h3 class="card-title" data-nl="AI Rapportage Tool" data-en="AI Reporting Tool"></h3>
+        <p class="card-desc" data-nl="Verzamelt data uit uw systemen en genereert automatisch overzichtelijke rapporten." data-en="Collects data from your systems and automatically generates clear reports."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Data verzamelen</li>
-            <li><span class="card-check">✓</span>Rapporten genereren</li>
-            <li><span class="card-check">✓</span>Trends signaleren</li>
-            <li><span class="card-check">✓</span>Dashboard bijhouden</li>
+            <li><span class="card-check">✓</span><span data-nl="Data verzamelen" data-en="Collect data"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rapporten genereren" data-en="Generate reports"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Trends signaleren" data-en="Signal trends"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Dashboard bijhouden" data-en="Maintain dashboard"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="data">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#C9A84C" stroke-width="1.5"/><path d="M21 21l-4.35-4.35M11 8v3l2 2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label">Data & Analyse</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label" data-nl="Data & Analyse" data-en="Data & Analysis">Data & Analyse</span></div>
         </div>
-        <h3 class="card-title">AI Marktonderzoek Agent</h3>
-        <p class="card-desc">Monitort concurrenten, analyseert trends en levert periodiek een marktrapport.</p>
+        <h3 class="card-title" data-nl="AI Marktonderzoek Agent" data-en="AI Market Research Agent"></h3>
+        <p class="card-desc" data-nl="Monitort concurrenten, analyseert trends en levert periodiek een marktrapport." data-en="Monitors competitors, analyzes trends, and delivers periodic market reports."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Concurrenten monitoren</li>
-            <li><span class="card-check">✓</span>Trends analyseren</li>
-            <li><span class="card-check">✓</span>Rapporten genereren</li>
-            <li><span class="card-check">✓</span>Inzichten delen</li>
+            <li><span class="card-check">✓</span><span data-nl="Concurrenten monitoren" data-en="Monitor competitors"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Trends analyseren" data-en="Analyze trends"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Rapporten genereren" data-en="Generate reports"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Inzichten delen" data-en="Share insights"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="data">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label">Data & Analyse</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#F0A35B"></div><span class="card-badge-label" data-nl="Data & Analyse" data-en="Data & Analysis">Data & Analyse</span></div>
         </div>
-        <h3 class="card-title">AI Data Integratie</h3>
-        <p class="card-desc">Koppelt uw systemen aan elkaar zodat data automatisch op de juiste plek terechtkomt.</p>
+        <h3 class="card-title" data-nl="AI Data Integratie" data-en="AI Data Integration"></h3>
+        <p class="card-desc" data-nl="Koppelt uw systemen aan elkaar zodat data automatisch op de juiste plek terechtkomt." data-en="Links your systems together so data automatically ends up in the right place."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Systemen koppelen</li>
-            <li><span class="card-check">✓</span>Data synchroniseren</li>
-            <li><span class="card-check">✓</span>Fouten opsporen</li>
-            <li><span class="card-check">✓</span>Realtime bijwerken</li>
+            <li><span class="card-check">✓</span><span data-nl="Systemen koppelen" data-en="Link systems"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Data synchroniseren" data-en="Synchronize data"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Fouten opsporen" data-en="Detect errors"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Realtime bijwerken" data-en="Update in real-time"></span></li>
         </ul>
     </div>
 
@@ -526,48 +519,48 @@
     <div class="card fade-up" data-cat="intern">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/><path d="M23 11l-4 4-2-2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label">Interne Processen</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label" data-nl="Interne Processen" data-en="Internal Processes">Interne Processen</span></div>
         </div>
-        <h3 class="card-title">AI Notulist</h3>
-        <p class="card-desc">Transcribeert vergaderingen automatisch en genereert een samenvatting met actiepunten.</p>
+        <h3 class="card-title" data-nl="AI Notulist" data-en="AI Meeting Scribe"></h3>
+        <p class="card-desc" data-nl="Transcribeert vergaderingen automatisch en genereert een samenvatting met actiepunten." data-en="Automatically transcribes meetings and generates a summary with action points."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Meetings transcriberen</li>
-            <li><span class="card-check">✓</span>Samenvatting genereren</li>
-            <li><span class="card-check">✓</span>Actiepunten vastleggen</li>
-            <li><span class="card-check">✓</span>Automatisch verzenden</li>
+            <li><span class="card-check">✓</span><span data-nl="Meetings transcriberen" data-en="Transcribe meetings"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Samenvatting genereren" data-en="Generate summary"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Actiepunten vastleggen" data-en="Record action points"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Automatisch verzenden" data-en="Send automatically"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="intern">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label">Interne Processen</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label" data-nl="Interne Processen" data-en="Internal Processes">Interne Processen</span></div>
         </div>
-        <h3 class="card-title">AI Kennisbank</h3>
-        <p class="card-desc">Maakt interne documenten en procedures doorzoekbaar en altijd direct beschikbaar.</p>
+        <h3 class="card-title" data-nl="AI Kennisbank" data-en="AI Knowledge Base"></h3>
+        <p class="card-desc" data-nl="Maakt interne documenten en procedures doorzoekbaar en altijd direct beschikbaar." data-en="Makes internal documents and procedures searchable and always directly available."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Documenten indexeren</li>
-            <li><span class="card-check">✓</span>Snel doorzoeken</li>
-            <li><span class="card-check">✓</span>Antwoorden genereren</li>
-            <li><span class="card-check">✓</span>Altijd up-to-date</li>
+            <li><span class="card-check">✓</span><span data-nl="Documenten indexeren" data-en="Index documents"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Snel doorzoeken" data-en="Quick search"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Antwoorden genereren" data-en="Generate answers"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Altijd up-to-date" data-en="Always up-to-date"></span></li>
         </ul>
     </div>
 
     <div class="card fade-up" data-cat="intern">
         <div class="card-top">
             <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#C9A84C" stroke-width="1.5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label">Interne Processen</span></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#E87878"></div><span class="card-badge-label" data-nl="Interne Processen" data-en="Internal Processes">Interne Processen</span></div>
         </div>
-        <h3 class="card-title">AI Workflow Automatisering</h3>
-        <p class="card-desc">Verbindt uw apps en tools zodat terugkerende taken automatisch worden afgehandeld.</p>
+        <h3 class="card-title" data-nl="AI Workflow Automatisering" data-en="AI Workflow Automation"></h3>
+        <p class="card-desc" data-nl="Verbindt uw apps en tools zodat terugkerende taken automatisch worden afgehandeld." data-en="Connects your apps and tools so recurring tasks are automatically handled."></p>
         <div class="card-divider"></div>
         <ul class="card-bullets">
-            <li><span class="card-check">✓</span>Apps verbinden</li>
-            <li><span class="card-check">✓</span>Triggers instellen</li>
-            <li><span class="card-check">✓</span>Taken automatiseren</li>
-            <li><span class="card-check">✓</span>Fouten elimineren</li>
+            <li><span class="card-check">✓</span><span data-nl="Apps verbinden" data-en="Connect apps"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Triggers instellen" data-en="Set triggers"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Taken automatiseren" data-en="Automate tasks"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Fouten elimineren" data-en="Eliminate errors"></span></li>
         </ul>
     </div>
 
@@ -579,42 +572,78 @@
 <!-- CTA -->
 <div class="cta-wrap">
 <div class="cta">
-    <p class="cta-label">Op maat gebouwd</p>
-    <h2 class="cta-title">Staat uw situatie er niet bij?</h2>
-    <p class="cta-text">Elk bedrijf is anders. Misschien heeft u een specifiek proces dat u wilt automatiseren, een uitdaging die uniek is voor uw branche, of een combinatie van meerdere systemen. Insightance bouwt volledig op maat. Plan een vrijblijvende kennismaking en ontdek samen wat AI voor uw bedrijf kan betekenen.</p>
-    <a href="index.html#contact" class="cta-btn">Plan een kennismaking</a>
+    <p class="cta-label" data-nl="Op maat gebouwd" data-en="Custom built"></p>
+    <h2 class="cta-title" data-nl="Staat uw situatie er niet bij?" data-en="Don't see your situation?"></h2>
+    <p class="cta-text" data-nl="Elk bedrijf is anders. Misschien heeft u een specifiek proces dat u wilt automatiseren, een uitdaging die uniek is voor uw branche, of een combinatie van meerdere systemen. Insightance bouwt volledig op maat. Plan een vrijblijvende kennismaking en ontdek samen wat AI voor uw bedrijf kan betekenen." data-en="Every business is different. Perhaps you have a specific process to automate, a challenge unique to your industry, or a combination of multiple systems. Insightance builds entirely custom. Schedule a no-obligation consultation and discover what AI can mean for your business."></p>
+    <a href="index.html#contact" class="cta-btn" data-nl="Plan een kennismaking" data-en="Schedule a consultation">Plan een kennismaking</a>
 </div>
 </div>
 
 <!-- STICKY CTA -->
 <a href="index.html#contact" class="sticky-cta">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#000" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>
-    Plan een kennismaking
+    <span data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</span>
 </a>
 
 <script>
+    // SCROLL ANIMATIES
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+    // FILTER
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.card');
-
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
             btns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const filter = btn.dataset.filter;
             cards.forEach(card => {
-                if (filter === 'all' || card.dataset.cat === filter) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
+                card.classList.toggle('hidden', filter !== 'all' && card.dataset.cat !== filter);
             });
         });
     });
+
+    // TAAL TOGGLE
+    let currentLang = 'nl';
+
+    function applyLang(lang) {
+        document.querySelectorAll('[data-nl]').forEach(el => {
+            const val = el.getAttribute('data-' + lang);
+            if (!val) return;
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = val;
+            } else if (el.tagName === 'OPTION') {
+                el.textContent = val;
+            } else {
+                el.innerHTML = val;
+            }
+        });
+        // filter btn tekst behouden met count
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            const countEl = btn.querySelector('.filter-count');
+            const count = countEl ? countEl.outerHTML : '';
+            const textSpan = btn.querySelector('[data-nl]');
+            if (textSpan) {
+                textSpan.innerHTML = textSpan.getAttribute('data-' + lang);
+            } else {
+                const nlText = btn.getAttribute('data-nl');
+                if (nlText) btn.innerHTML = btn.getAttribute('data-' + lang) + ' ' + count;
+            }
+        });
+        document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+        document.documentElement.lang = lang;
+    }
+
+    function toggleLang() {
+        currentLang = currentLang === 'nl' ? 'en' : 'nl';
+        applyLang(currentLang);
+    }
+
+    // Init
+    applyLang('nl');
 </script>
 </body>
 </html>
