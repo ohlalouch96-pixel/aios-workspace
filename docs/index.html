@@ -461,6 +461,31 @@
             border-top: none;
         }
 
+        /* TARIEVEN */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+        .pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 40px 36px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--border); border-radius: 10px 10px 0 0; }
+        .pricing-card.featured { border-color: rgba(201,168,76,0.35); background: #1A1810; }
+        .pricing-card.featured::before { background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .pricing-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #000; background: var(--gold); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; align-self: flex-start; }
+        .pricing-name { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .pricing-desc { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 28px; }
+        .pricing-amount { font-family: var(--font-heading); font-size: 44px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+        .pricing-amount span { font-family: var(--font-body); font-size: 16px; font-weight: 400; color: var(--gray); }
+        .pricing-sub { font-size: 12px; color: #444; margin-bottom: 32px; letter-spacing: 0.05em; }
+        .pricing-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 24px; }
+        .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        .pricing-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-light); line-height: 1.5; }
+        .pricing-bullets li::before { content: '✓'; color: var(--gold); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+        .pricing-cta { display: block; text-align: center; margin-top: 32px; padding: 13px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 5px; transition: all 0.2s; }
+        .pricing-cta-outline { border: 1px solid var(--border); color: var(--gray-light); }
+        .pricing-cta-outline:hover { border-color: var(--gold); color: var(--gold); }
+        .pricing-cta-gold { background: var(--gold); color: #000; }
+        .pricing-cta-gold:hover { background: var(--gold-light); }
+        .pricing-note { text-align: center; margin-top: 40px; font-size: 13px; color: #444; line-height: 1.7; }
+        .pricing-note a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+
         /* MOBILE */
         @media (max-width: 768px) {
             nav { padding: 18px 24px; }
@@ -503,6 +528,7 @@
     <ul class="nav-links">
         <li><a href="#mission" data-nl="Missie" data-en="Mission">Missie</a></li>
         <li><a href="#services" data-nl="Diensten" data-en="Services">Diensten</a></li>
+        <li><a href="#tarieven" data-nl="Tarieven" data-en="Pricing">Tarieven</a></li>
         <li><a href="#howwework" data-nl="Hoe we werken" data-en="How we work">Hoe we werken</a></li>
         <li><a href="#about" data-nl="Over Insightance" data-en="About">Over Insightance</a></li>
         <li><a href="#faq" data-nl="FAQ" data-en="FAQ">FAQ</a></li>
@@ -522,6 +548,7 @@
     <a href="#mission" onclick="toggleDrawer()" data-nl="Missie" data-en="Mission">Missie</a>
     <a href="#forwho" onclick="toggleDrawer()" data-nl="Voor wie" data-en="For who">Voor wie</a>
     <a href="#services" onclick="toggleDrawer()" data-nl="Diensten" data-en="Services">Diensten</a>
+    <a href="#tarieven" onclick="toggleDrawer()" data-nl="Tarieven" data-en="Pricing">Tarieven</a>
     <a href="#howwework" onclick="toggleDrawer()" data-nl="Hoe we werken" data-en="How we work">Hoe we werken</a>
     <a href="#about" onclick="toggleDrawer()" data-nl="Over Insightance" data-en="About">Over Insightance</a>
     <a href="#faq" onclick="toggleDrawer()">FAQ</a>
@@ -720,6 +747,70 @@
             <p style="font-size:15px; color:var(--gray); margin-bottom:12px;" data-nl="Wilt u precies weten wat Insightance voor uw bedrijf kan automatiseren?" data-en="Want to know exactly what Insightance can automate for your business?"></p>
             <a href="automations.html" target="_blank" style="font-size:14px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" data-nl="Bekijk alle AI-mogelijkheden →" data-en="View all AI capabilities →">Bekijk alle AI-mogelijkheden →</a>
         </div>
+    </div>
+</div>
+
+<!-- TARIEVEN -->
+<div class="strip depth-1" id="tarieven">
+    <div class="section fade-in">
+        <p class="section-label" data-nl="Tarieven" data-en="Pricing"></p>
+        <h2 class="section-title" data-nl="Transparant over prijs" data-en="Transparent about pricing"></h2>
+        <p class="mission-text" data-nl="Elk project is anders. De bedragen hieronder zijn indicatief — na een kennismaking ontvangt u altijd een concreet voorstel op maat." data-en="Every project is different. The amounts below are indicative — after an initial call you will always receive a concrete custom proposal."></p>
+        <div class="pricing-grid">
+
+            <!-- STARTER -->
+            <div class="pricing-card fade-item">
+                <p class="pricing-name" data-nl="Losse Automatisering" data-en="Single Automation"></p>
+                <p class="pricing-desc" data-nl="Voor ondernemers die één specifiek handmatig proces willen automatiseren." data-en="For business owners who want to automate one specific manual process."></p>
+                <div class="pricing-amount">€750 <span data-nl="– €1.500" data-en="– €1,500"></span></div>
+                <p class="pricing-sub" data-nl="Eenmalig · Live binnen 2 weken" data-en="One-time · Live within 2 weeks"></p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Één AI-systeem volledig op maat" data-en="One fully custom AI system"></li>
+                    <li data-nl="Persoonlijke uitleg na oplevering" data-en="Personal walkthrough after delivery"></li>
+                    <li data-nl="Getest voordat het live gaat" data-en="Tested before going live"></li>
+                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered"></li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <!-- MAATWERK - FEATURED -->
+            <div class="pricing-card featured fade-item">
+                <span class="pricing-badge" data-nl="Meest gekozen" data-en="Most popular">Meest gekozen</span>
+                <p class="pricing-name" data-nl="Maatwerk Systeem" data-en="Custom System"></p>
+                <p class="pricing-desc" data-nl="Voor ondernemers die meerdere processen willen aanpakken en snel willen schalen." data-en="For business owners who want to tackle multiple processes and scale quickly."></p>
+                <div class="pricing-amount">€1.500 <span data-nl="– €3.500" data-en="– €3,500"></span></div>
+                <p class="pricing-sub" data-nl="Eenmalig · Live binnen 4 weken" data-en="One-time · Live within 4 weeks"></p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Meerdere gekoppelde AI-systemen" data-en="Multiple connected AI systems"></li>
+                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes"></li>
+                    <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project"></li>
+                    <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery"></li>
+                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered"></li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-gold" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <!-- AIOS -->
+            <div class="pricing-card fade-item">
+                <p class="pricing-name" data-nl="Volledig AIOS" data-en="Full AIOS"></p>
+                <p class="pricing-desc" data-nl="Voor ambitieuze ondernemers die hun volledige bedrijf willen automatiseren met AI." data-en="For ambitious business owners who want to automate their entire business with AI."></p>
+                <div class="pricing-amount" data-nl="Op aanvraag" data-en="On request">Op aanvraag</div>
+                <p class="pricing-sub" data-nl="Maandelijks of eenmalig · Tijdlijn op maat" data-en="Monthly or one-time · Custom timeline"></p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Complete AI-laag over uw hele bedrijf" data-en="Complete AI layer across your entire business"></li>
+                    <li data-nl="Onbeperkt aantal systemen en koppelingen" data-en="Unlimited systems and integrations"></li>
+                    <li data-nl="Doorlopende optimalisatie en ondersteuning" data-en="Ongoing optimization and support"></li>
+                    <li data-nl="Directe toegang tot Insightance" data-en="Direct access to Insightance"></li>
+                    <li data-nl="Prioritaire oplevering en begeleiding" data-en="Priority delivery and guidance"></li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+        </div>
+        <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat. <a href='#contact'>Plan een kennismaking →</a>" data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal. <a href='#contact'>Schedule a call →</a>"></p>
     </div>
 </div>
 
