@@ -9,9 +9,9 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg: #141414; --surface: #1A1A1A; --surface-2: #222;
+            --bg: #0A0A0A; --surface: #111111; --surface-2: #191919;
             --gold: #C9A84C; --gold-light: #E8C97A; --white: #fff;
-            --gray: #777; --gray-light: #AAA; --border: #2A2A2A;
+            --gray: #777; --gray-light: #AAA; --border: #252525;
             --font-heading: 'Playfair Display', serif; --font-body: 'Inter', sans-serif;
             --c1: #5B8AF0; --c2: #4ECDC4; --c3: #52C17A;
             --c4: #9B7FD4; --c5: #F0A35B; --c6: #E87878;
@@ -20,7 +20,7 @@
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent); z-index: 200; }
 
         /* NAV */
-        nav { position: sticky; top: 2px; background: rgba(20,20,20,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        nav { position: sticky; top: 2px; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
         .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
@@ -85,8 +85,8 @@
         .card-check { color: var(--gold); font-size: 12px; flex-shrink: 0; margin-top: 1px; }
 
         /* CTA — terug naar donker */
-        .cta-wrap { background: #141414; padding: 80px 60px; }
-        .cta { max-width: 800px; margin: 0 auto; background: #1E1E1E; border: 1px solid #2A2A2A; border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
+        .cta-wrap { background: #060608; padding: 80px 60px; }
+        .cta { max-width: 800px; margin: 0 auto; background: #0D0D10; border: 1px solid rgba(201,168,76,0.12); border-radius: 10px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
         .cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .cta-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
         .cta-title { font-family: var(--font-heading); font-size: 30px; font-weight: 600; color: #fff; margin-bottom: 16px; }
@@ -118,9 +118,9 @@
 
         /* PREMIUM LOOK */
         .hero { background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 60%); padding-bottom: 16px; }
-        .stats { background: linear-gradient(135deg, #1A1A1A 0%, #141414 100%); }
+        .stats { background: linear-gradient(135deg, #0D0D10 0%, #0A0A0A 100%); border: 1px solid rgba(201,168,76,0.1); }
         .stat-num { text-shadow: 0 0 24px rgba(201,168,76,0.25); }
-        .info-box { background: linear-gradient(135deg, #1E1E1E, #181818); }
+        .info-box { background: linear-gradient(135deg, #111111, #0D0D10); border-color: rgba(201,168,76,0.1); }
         .light-section {
             background: #F5F0E8;
             background-image: radial-gradient(circle at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 50%),

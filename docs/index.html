@@ -229,7 +229,7 @@
         .depth-light .strip::after { display: none; }
 
         .hero-ctas { display: flex; gap: 20px; align-items: center; position: relative; z-index: 1; margin-top: 16px; }
-        .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
+        .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; border-radius: 6px; }
         .hero-cta-primary:hover { background: var(--gold-light); }
         .hero-cta-secondary { font-size: 13px; color: var(--gray); letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid #2A2A2A; padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
         .hero-cta-secondary:hover { color: var(--gold); border-color: rgba(201,168,76,0.4); }
@@ -517,10 +517,10 @@
 </div>
 
 <!-- MISSION -->
-<div id="mission" class="strip depth-1">
+<div id="mission" class="strip depth-light">
     <div class="section fade-in">
         <p class="section-label" data-nl="Onze missie" data-en="Our mission"></p>
-        <h2 class="section-title" data-nl="Minder handmatig werk.<br>Meer ruimte om te groeien." data-en="Less manual work.<br>More room to grow."></h2>
+        <h2 class="section-title" data-nl="Minder handmatig werk.<br>Meer ruimte om te groeien" data-en="Less manual work.<br>More room to grow"></h2>
         <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag één." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
         <div class="mission-stats">
             <div class="mission-stat">
@@ -544,10 +544,10 @@
 </div>
 
 <!-- VOOR WIE -->
-<div class="strip depth-light" id="forwho">
+<div class="strip depth-1" id="forwho">
     <div class="section fade-in">
         <p class="section-label" data-nl="Voor wie" data-en="For who"></p>
-        <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken." data-en="For business owners ready to work smarter."></h2>
+        <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken" data-en="For business owners ready to work smarter"></h2>
         <div class="forwho-cols">
             <div class="forwho-col fade-item">
                 <div class="forwho-col-top"></div>
@@ -636,7 +636,7 @@
 <div class="strip depth-0" id="services">
     <div class="section fade-in">
         <p class="section-label" data-nl="Diensten" data-en="Services"></p>
-        <h2 class="section-title" data-nl="Wat Insightance voor u doet." data-en="What Insightance does for you."></h2>
+        <h2 class="section-title" data-nl="Wat Insightance voor u doet" data-en="What Insightance does for you"></h2>
         <div class="services-cards">
             <div class="service-card-new fade-item">
                 <div class="service-icon" style="border-color:rgba(91,138,240,0.4); background:rgba(91,138,240,0.07);">
@@ -701,7 +701,7 @@
 <div class="strip depth-2" id="howwework">
     <div class="section fade-in">
         <p class="section-label" data-nl="Hoe Insightance werkt" data-en="How Insightance works"></p>
-        <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem." data-en="From first contact to working system."></h2>
+        <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem" data-en="From first contact to working system"></h2>
         <div class="steps-wrap">
             <div class="steps-row">
                 <div class="step fade-item">
@@ -738,7 +738,7 @@
 <div class="strip depth-0" id="why">
     <div class="section fade-in">
         <p class="section-label" data-nl="Waarom Insightance" data-en="Why Insightance"></p>
-        <h2 class="section-title" data-nl="Wat ons onderscheidt." data-en="What sets us apart."></h2>
+        <h2 class="section-title" data-nl="Wat ons onderscheidt" data-en="What sets us apart"></h2>
         <div class="why-grid" style="margin-top: 56px;">
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Persoonlijk" data-en="Personal"></h3>
@@ -769,7 +769,7 @@
 <div class="strip depth-1" id="about">
     <div class="section fade-in">
         <p class="section-label" data-nl="Over Insightance" data-en="About Insightance"></p>
-        <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer." data-en="From healthcare worker to AI founder."></h2>
+        <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer" data-en="From healthcare worker to AI founder"></h2>
         <div class="about-grid-new" style="margin-top: 56px;">
             <div class="photo-box">
                 <div class="photo-box-icon">
@@ -796,7 +796,7 @@
 <div class="strip depth-2" id="faq">
     <div class="section fade-in">
         <p class="section-label" data-nl="FAQ" data-en="FAQ"></p>
-        <h2 class="section-title" data-nl="Uw vragen beantwoord." data-en="Your questions answered."></h2>
+        <h2 class="section-title" data-nl="Uw vragen beantwoord" data-en="Your questions answered"></h2>
         <div class="faq-list">
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
@@ -863,7 +863,7 @@
 <div class="strip depth-0" id="contact">
     <div class="section fade-in">
         <p class="section-label" data-nl="Contact" data-en="Contact"></p>
-        <h2 class="section-title" data-nl="Laten we praten." data-en="Let's talk."></h2>
+        <h2 class="section-title" data-nl="Laten we praten" data-en="Let's talk"></h2>
         <div class="contact-c-grid" style="margin-top: 56px;">
             <div class="contact-quote-block">
                 <h3 class="contact-quote">
