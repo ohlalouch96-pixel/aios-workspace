@@ -280,7 +280,7 @@
         /* HOW WE WORK - Horizontal */
         .steps-wrap { position: relative; margin-top: 64px; }
         .steps-wrap::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--gold), var(--gold), transparent); }
-        .steps-row { display: grid; grid-template-columns: repeat(5, 1fr); }
+        .steps-row { display: grid; grid-template-columns: repeat(6, 1fr); }
         .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; }
         .step-circle { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--gold); background: var(--bg); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--gold); margin-bottom: 24px; position: relative; z-index: 1; flex-shrink: 0; }
         .step-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
@@ -935,6 +935,11 @@
                     <h3 class="step-title" data-nl="Oplevering" data-en="Delivery"></h3>
                     <p class="step-text" data-nl="Het systeem gaat live. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat." data-en="The system goes live. Insightance ensures everything works correctly and that you know how to use it."></p>
                 </div>
+                <div class="step fade-item">
+                    <div class="step-circle">6</div>
+                    <h3 class="step-title" data-nl="Nazorg" data-en="Aftercare"></h3>
+                    <p class="step-text" data-nl="Vragen achteraf worden altijd beantwoord. Wilt u dat Insightance het systeem blijft bewaken en doorontwikkelen? Dan is een retainer beschikbaar." data-en="Questions after delivery are always answered. Want Insightance to keep monitoring and improving the system? A retainer is available."></p>
+                </div>
             </div>
         </div>
     </div>
@@ -1047,6 +1052,15 @@
                 </div>
                 <div class="faq-answer">
                     <p class="faq-answer-inner" data-nl="Dan passen we het aan. Insightance levert pas op als u tevreden bent. Geen halve oplossingen." data-en="Then we adjust it. Insightance only delivers when you're satisfied. No half-finished solutions."></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-nl="Wat gebeurt er na oplevering?" data-en="What happens after delivery?"></span>
+                    <span class="faq-plus">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="faq-answer-inner" data-nl="Na oplevering zorgt Insightance dat u precies weet hoe het systeem werkt. Vragen achteraf worden altijd beantwoord — dat hoort bij de oplevering. Wilt u dat Insightance het systeem blijft bewaken, updaten en doorontwikkelen? Dan is een maandelijkse retainer beschikbaar. Dit is optioneel: u beslist zelf of u dat wilt, er is geen verplichting." data-en="After delivery, Insightance ensures you know exactly how the system works. Questions afterwards are always answered — that's part of the delivery. Want Insightance to keep monitoring, updating, and improving the system? A monthly retainer is available. This is optional: you decide whether you want it, there is no obligation."></p>
                 </div>
             </div>
             <div class="faq-item">
