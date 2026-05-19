@@ -353,7 +353,7 @@
         .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
 
         /* FOOTER */
-        footer { border-top: 1px solid var(--border); padding: 0 210px; color: var(--gray); font-size: 13px; }
+        footer { border-top: 1px solid var(--border); padding: 0 60px; color: var(--gray); font-size: 13px; }
         .footer-top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--border); }
         .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
         .footer-logo { color: var(--gold); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; font-size: 13px; }
@@ -1240,13 +1240,17 @@
 </footer>
 
 <script>
-    // STICKY CTA — verschijnt zodra hero niet meer zichtbaar is
+    // STICKY CTA — verschijnt na hero, verdwijnt bij footer
     const stickyCta = document.getElementById('stickyCta');
     const heroEl = document.querySelector('.hero');
-    const heroObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => stickyCta.classList.toggle('hidden', e.isIntersecting));
-    }, { threshold: 0.1 });
-    if (heroEl) heroObserver.observe(heroEl);
+    const footerEl = document.querySelector('footer');
+    let pastHero = false;
+    let atFooter = false;
+    function updateSticky() {
+        stickyCta.classList.toggle('hidden', !pastHero || atFooter);
+    }
+    new IntersectionObserver((e) => { pastHero = !e[0].isIntersecting; updateSticky(); }, { threshold: 0.1 }).observe(heroEl);
+    new IntersectionObserver((e) => { atFooter = e[0].isIntersecting; updateSticky(); }, { threshold: 0.01 }).observe(footerEl);
 
     // COOKIE BANNER
     (function() {
