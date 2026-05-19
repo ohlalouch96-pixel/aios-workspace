@@ -462,29 +462,42 @@
         }
 
         /* TARIEVEN */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
-        .pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 40px 36px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--border); border-radius: 10px 10px 0 0; }
-        .pricing-card.featured { border-color: rgba(201,168,76,0.35); background: #1A1810; }
-        .pricing-card.featured::before { background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
-        .pricing-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #000; background: var(--gold); padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; align-self: flex-start; }
-        .pricing-name { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-        .pricing-desc { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 28px; }
-        .pricing-amount { font-family: var(--font-heading); font-size: 44px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
-        .pricing-amount span { font-family: var(--font-body); font-size: 16px; font-weight: 400; color: var(--gray); }
-        .pricing-sub { font-size: 12px; color: #444; margin-bottom: 32px; letter-spacing: 0.05em; }
-        .pricing-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 24px; }
-        .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-        .pricing-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-light); line-height: 1.5; }
-        .pricing-bullets li::before { content: '✓'; color: var(--gold); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
-        .pricing-cta { display: block; text-align: center; margin-top: 32px; padding: 13px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 5px; transition: all 0.2s; }
-        .pricing-cta-outline { border: 1px solid var(--border); color: var(--gray-light); }
-        .pricing-cta-outline:hover { border-color: var(--gold); color: var(--gold); }
-        .pricing-cta-gold { background: var(--gold); color: #000; }
-        .pricing-cta-gold:hover { background: var(--gold-light); }
-        .pricing-note { text-align: center; margin-top: 40px; font-size: 13px; color: #444; line-height: 1.7; }
-        .pricing-note a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
-        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+        .discovery-banner { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 40px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .discovery-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+        .discovery-badge-sm { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #888; background: #F0EBE2; border: 1px solid #DDD6CA; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+        .discovery-title { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+        .discovery-sub { font-size: 13px; color: #999; }
+        .discovery-bullets { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+        .discovery-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
+        .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
+        .discovery-free { font-family: var(--font-heading); font-size: 26px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px; text-align: right; }
+        .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+        .discovery-btn:hover { background: #E8C97A; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .pricing-card { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #D8D0C4; }
+        .pricing-card.featured::before { background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+        .pricing-badge { display: inline-block; align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+        .pricing-badge-default { background: #F0EBE2; color: #888; border: 1px solid #DDD6CA; }
+        .pricing-badge-featured { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+        .pricing-name { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 18px; }
+        .pricing-vanaf { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #AAA; margin-bottom: 4px; }
+        .pricing-amount { font-family: var(--font-heading); font-size: 40px; font-weight: 700; color: #1A1A1A; line-height: 1; margin-bottom: 6px; }
+        .pricing-amount.gold { color: #C9A84C; }
+        .pricing-sub { font-size: 12px; color: #AAA; margin-bottom: 22px; line-height: 1.5; }
+        .pricing-divider { height: 1px; background: #EDE8DC; margin-bottom: 18px; }
+        .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .pricing-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: #555; line-height: 1.5; }
+        .pricing-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+        .pricing-cta { display: block; text-align: center; margin-top: 24px; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
+        .pricing-cta-outline { border: 1px solid #D0C8BB; color: #888; }
+        .pricing-cta-outline:hover { border-color: #C9A84C; color: #C9A84C; }
+        .pricing-cta-gold { background: #C9A84C; color: #000; }
+        .pricing-cta-gold:hover { background: #E8C97A; }
+        .pricing-note { text-align: center; margin-top: 20px; font-size: 12px; color: #AAA; line-height: 1.7; }
+        .pricing-note a { color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } .discovery-banner { grid-template-columns: 1fr; gap: 24px; } .discovery-free { text-align: left; } }
 
         /* MOBILE */
         @media (max-width: 768px) {
@@ -751,66 +764,123 @@
 </div>
 
 <!-- TARIEVEN -->
-<div class="strip depth-1" id="tarieven">
-    <div class="section fade-in">
-        <p class="section-label" data-nl="Tarieven" data-en="Pricing"></p>
-        <h2 class="section-title" data-nl="Transparant over prijs" data-en="Transparent about pricing"></h2>
-        <p class="mission-text" data-nl="Elk project is anders. De bedragen hieronder zijn indicatief — na een kennismaking ontvangt u altijd een concreet voorstel op maat." data-en="Every project is different. The amounts below are indicative — after an initial call you will always receive a concrete custom proposal."></p>
+<div class="strip depth-light" id="tarieven">
+    <div class="section">
+
+        <!-- HEADER -->
+        <div class="fade-in" style="text-align:center; margin-bottom:48px;">
+            <p class="section-label" data-nl="Investering" data-en="Investment"></p>
+            <h2 class="section-title" data-nl="Inzicht in uw investering.<br>Geen verrassingen." data-en="Insight into your investment.<br>No surprises."></h2>
+            <p style="font-size:15px; color:#777; line-height:1.7; max-width:520px; margin:0 auto;" data-nl="Vaste prijzen, duidelijke afspraken. U weet vooraf wat het kost en wat u krijgt." data-en="Fixed prices, clear agreements. You know upfront what it costs and what you get."></p>
+        </div>
+
+        <!-- DISCOVERY CALL BANNER -->
+        <div class="discovery-banner fade-in">
+            <div>
+                <span class="discovery-badge-sm" data-nl="Vrijblijvend · Begin hier" data-en="No obligation · Start here">Vrijblijvend · Begin hier</span>
+                <h3 class="discovery-title" data-nl="Discovery Call" data-en="Discovery Call">Discovery Call</h3>
+                <p class="discovery-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</p>
+            </div>
+            <ul class="discovery-bullets">
+                <li data-nl="Analyse van uw grootste tijdverlies" data-en="Analysis of your biggest time loss">Analyse van uw grootste tijdverlies</li>
+                <li data-nl="Concrete aanbeveling, vrijblijvend" data-en="Concrete recommendation, no obligation">Concrete aanbeveling, vrijblijvend</li>
+                <li data-nl="U beslist of er een volgende stap is" data-en="You decide if there's a next step">U beslist of er een volgende stap is</li>
+            </ul>
+            <div>
+                <p class="discovery-free" data-nl="Gratis" data-en="Free">Gratis</p>
+                <a href="#contact" class="discovery-btn" data-nl="Plan een kennismaking →" data-en="Schedule a call →">Plan een kennismaking →</a>
+            </div>
+        </div>
+
+        <!-- 4 KAARTEN -->
         <div class="pricing-grid">
 
-            <!-- STARTER -->
             <div class="pricing-card fade-item">
-                <p class="pricing-name" data-nl="Losse Automatisering" data-en="Single Automation"></p>
-                <p class="pricing-desc" data-nl="Voor ondernemers die één specifiek handmatig proces willen automatiseren." data-en="For business owners who want to automate one specific manual process."></p>
-                <div class="pricing-amount">€750 <span data-nl="– €1.500" data-en="– €1,500"></span></div>
-                <p class="pricing-sub" data-nl="Eenmalig · Live binnen 2 weken" data-en="One-time · Live within 2 weeks"></p>
+                <span class="pricing-badge pricing-badge-default" data-nl="Eerste stap" data-en="First step">Eerste stap</span>
+                <h3 class="pricing-name" data-nl="AI Assessment" data-en="AI Assessment">AI Assessment</h3>
+                <p class="pricing-vanaf" data-nl="Eenmalig" data-en="One-time">Eenmalig</p>
+                <div class="pricing-amount">€300</div>
+                <p class="pricing-sub" data-nl="Volledig verrekend bij implementatie" data-en="Fully credited at implementation">Volledig verrekend bij implementatie</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
-                    <li data-nl="Één AI-systeem volledig op maat" data-en="One fully custom AI system"></li>
-                    <li data-nl="Persoonlijke uitleg na oplevering" data-en="Personal walkthrough after delivery"></li>
-                    <li data-nl="Getest voordat het live gaat" data-en="Tested before going live"></li>
-                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered"></li>
+                    <li data-nl="Analyse van uw processen en tools" data-en="Analysis of your processes and tools">Analyse van uw processen en tools</li>
+                    <li data-nl="Top 5 AI-kansen geprioriteerd" data-en="Top 5 AI opportunities prioritized">Top 5 AI-kansen geprioriteerd</li>
+                    <li data-nl="Geschatte tijdsbesparing per kans" data-en="Estimated time saving per opportunity">Geschatte tijdsbesparing per kans</li>
+                    <li data-nl="Aanbevolen vervolgstap met kostenindicatie" data-en="Recommended next step with cost indication">Aanbevolen vervolgstap met kostenindicatie</li>
                 </ul>
                 <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
             </div>
 
-            <!-- MAATWERK - FEATURED -->
-            <div class="pricing-card featured fade-item">
-                <span class="pricing-badge" data-nl="Meest gekozen" data-en="Most popular">Meest gekozen</span>
-                <p class="pricing-name" data-nl="Maatwerk Systeem" data-en="Custom System"></p>
-                <p class="pricing-desc" data-nl="Voor ondernemers die meerdere processen willen aanpakken en snel willen schalen." data-en="For business owners who want to tackle multiple processes and scale quickly."></p>
-                <div class="pricing-amount">€1.500 <span data-nl="– €3.500" data-en="– €3,500"></span></div>
-                <p class="pricing-sub" data-nl="Eenmalig · Live binnen 4 weken" data-en="One-time · Live within 4 weeks"></p>
+            <div class="pricing-card fade-item">
+                <span class="pricing-badge pricing-badge-default" data-nl="Losse automation" data-en="Single automation">Losse automation</span>
+                <h3 class="pricing-name" data-nl="AI Implementatie" data-en="AI Implementation">AI Implementatie</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount">€750</div>
+                <p class="pricing-sub" data-nl="Assessment (€300) volledig verrekend" data-en="Assessment (€300) fully credited">Assessment (€300) volledig verrekend</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
-                    <li data-nl="Meerdere gekoppelde AI-systemen" data-en="Multiple connected AI systems"></li>
-                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes"></li>
-                    <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project"></li>
-                    <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery"></li>
-                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered"></li>
+                    <li data-nl="Workflow automation of AI agent op maat" data-en="Workflow automation or custom AI agent">Workflow automation of AI agent op maat</li>
+                    <li data-nl="Vaste prijs, geen uurtje-factuurtje" data-en="Fixed price, no hourly billing">Vaste prijs, geen uurtje-factuurtje</li>
+                    <li data-nl="Live binnen 3 weken" data-en="Live within 3 weeks">Live binnen 3 weken</li>
+                    <li data-nl="30 dagen ondersteuning inbegrepen" data-en="30 days support included">30 dagen ondersteuning inbegrepen</li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <div class="pricing-card featured fade-item">
+                <span class="pricing-badge pricing-badge-featured" data-nl="Aanbevolen" data-en="Recommended">Aanbevolen</span>
+                <h3 class="pricing-name" data-nl="AIOS Setup" data-en="AIOS Setup">AIOS Setup</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount gold">€2.500</div>
+                <p class="pricing-sub" data-nl="Eenmalig · Retainer optioneel" data-en="One-time · Retainer optional">Eenmalig · Retainer optioneel</p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Meerdere gekoppelde AI-systemen op maat" data-en="Multiple connected custom AI systems">Meerdere gekoppelde AI-systemen op maat</li>
+                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geïntegreerd in uw bedrijfsprocessen</li>
+                    <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project">Persoonlijke begeleiding gedurende het traject</li>
+                    <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery">Getest en fijngesteld voor oplevering</li>
+                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered">Vragen achteraf altijd beantwoord</li>
                 </ul>
                 <a href="#contact" class="pricing-cta pricing-cta-gold" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
             </div>
 
-            <!-- AIOS -->
             <div class="pricing-card fade-item">
-                <p class="pricing-name" data-nl="Volledig AIOS" data-en="Full AIOS"></p>
-                <p class="pricing-desc" data-nl="Voor ambitieuze ondernemers die hun volledige bedrijf willen automatiseren met AI." data-en="For ambitious business owners who want to automate their entire business with AI."></p>
-                <div class="pricing-amount" data-nl="Op aanvraag" data-en="On request">Op aanvraag</div>
-                <p class="pricing-sub" data-nl="Maandelijks of eenmalig · Tijdlijn op maat" data-en="Monthly or one-time · Custom timeline"></p>
+                <span class="pricing-badge pricing-badge-default" data-nl="Doorlopend beheer" data-en="Ongoing management">Doorlopend beheer</span>
+                <h3 class="pricing-name" data-nl="AIOS Retainer" data-en="AIOS Retainer">AIOS Retainer</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount">€600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
+                <p class="pricing-sub" data-nl="Maandelijks opzegbaar" data-en="Cancel monthly">Maandelijks opzegbaar</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
-                    <li data-nl="Complete AI-laag over uw hele bedrijf" data-en="Complete AI layer across your entire business"></li>
-                    <li data-nl="Onbeperkt aantal systemen en koppelingen" data-en="Unlimited systems and integrations"></li>
-                    <li data-nl="Doorlopende optimalisatie en ondersteuning" data-en="Ongoing optimization and support"></li>
-                    <li data-nl="Directe toegang tot Insightance" data-en="Direct access to Insightance"></li>
-                    <li data-nl="Prioritaire oplevering en begeleiding" data-en="Priority delivery and guidance"></li>
+                    <li data-nl="Maandelijkse monitoring van alle AI-systemen" data-en="Monthly monitoring of all AI systems">Maandelijkse monitoring van alle AI-systemen</li>
+                    <li data-nl="Updates en aanpassingen bij wijzigingen" data-en="Updates and adjustments when needed">Updates en aanpassingen bij wijzigingen</li>
+                    <li data-nl="Rapportage: wat loopt, wat spaart, wat verbetert" data-en="Reporting: what works, what saves, what improves">Rapportage: wat loopt, wat spaart, wat verbetert</li>
+                    <li data-nl="Directe toegang tot Insightance" data-en="Direct access to Insightance">Directe toegang tot Insightance</li>
                 </ul>
                 <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
             </div>
 
         </div>
-        <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat. <a href='#contact'>Plan een kennismaking →</a>" data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal. <a href='#contact'>Schedule a call →</a>"></p>
+
+        <!-- BETAALSTRUCTUUR -->
+        <div class="fade-in" style="display:flex; justify-content:center; margin-top:28px;">
+            <div style="background:#fff; border:1px solid #D8D0C4; border-radius:8px; padding:18px 32px; display:inline-flex; align-items:center; gap:32px; flex-wrap:wrap;">
+                <span style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#AAA;" data-nl="Betaalstructuur" data-en="Payment structure">Betaalstructuur</span>
+                <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">1</span>
+                    <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> <span data-nl="bij aangaan samenwerking" data-en="upon starting the project">bij aangaan samenwerking</span></span>
+                </div>
+                <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">2</span>
+                    <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> <span data-nl="bij oplevering" data-en="upon delivery">bij oplevering</span></span>
+                </div>
+            </div>
+        </div>
+
+        <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat." data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal."></p>
+
     </div>
 </div>
 
