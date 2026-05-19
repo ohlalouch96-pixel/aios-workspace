@@ -353,10 +353,28 @@
         .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
 
         /* FOOTER */
-        footer { border-top: 1px solid var(--border); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; color: var(--gray); font-size: 13px; }
+        footer { border-top: 1px solid var(--border); padding: 0 60px; color: var(--gray); font-size: 13px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--border); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
         .footer-logo { color: var(--gold); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; font-size: 13px; }
-        .footer-linkedin a { color: var(--gray); display: flex; align-items: center; transition: color 0.2s; }
-        .footer-linkedin a:hover { color: var(--gold); }
+        .footer-links { display: flex; align-items: center; gap: 24px; }
+        .footer-link { display: flex; align-items: center; gap: 7px; color: var(--gray-light); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-link:hover { color: var(--gold); }
+        .footer-link svg { flex-shrink: 0; }
+        .footer-meta-left { font-size: 12px; color: #333; letter-spacing: 0.1em; }
+        .footer-meta-right { display: flex; align-items: center; gap: 20px; font-size: 12px; color: #333; }
+        .footer-meta-right a { color: #444; text-decoration: none; transition: color 0.2s; }
+        .footer-meta-right a:hover { color: var(--gold); }
+        @media (max-width: 768px) {
+            footer { padding: 0 24px; }
+            .footer-top { flex-direction: column; gap: 16px; padding: 20px 0; text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 8px; padding: 12px 0; text-align: center; }
+        }
+
+        /* STICKY CTA */
+        .sticky-cta-main { position: fixed; bottom: 28px; left: 28px; z-index: 990; display: flex; align-items: center; gap: 8px; background: var(--gold); color: #000; padding: 12px 22px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; box-shadow: 0 4px 20px rgba(201,168,76,0.35); transition: background 0.2s, transform 0.3s, opacity 0.3s; }
+        .sticky-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
+        .sticky-cta-main.hidden { opacity: 0; pointer-events: none; transform: translateY(10px); }
 
         /* FADE */
         .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
@@ -475,7 +493,8 @@
         .discovery-btn:hover { background: #E8C97A; }
 
         .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-        .pricing-card { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .pricing-card { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
         .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #D8D0C4; }
         .pricing-card.featured::before { background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
         .pricing-badge { display: inline-block; align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
@@ -769,7 +788,7 @@
 
         <!-- HEADER -->
         <div class="fade-in" style="text-align:center; margin-bottom:48px;">
-            <p class="section-label" data-nl="Investering" data-en="Investment"></p>
+            <p class="section-label" data-nl="Tarieven" data-en="Pricing"></p>
             <h2 class="section-title" data-nl="Inzicht in uw investering.<br>Geen verrassingen." data-en="Insight into your investment.<br>No surprises."></h2>
             <p style="font-size:15px; color:#777; line-height:1.7; max-width:520px; margin:0 auto;" data-nl="Vaste prijzen, duidelijke afspraken. U weet vooraf wat het kost en wat u krijgt." data-en="Fixed prices, clear agreements. You know upfront what it costs and what you get."></p>
         </div>
@@ -821,7 +840,7 @@
                 <ul class="pricing-bullets">
                     <li data-nl="Workflow automation of AI agent op maat" data-en="Workflow automation or custom AI agent">Workflow automation of AI agent op maat</li>
                     <li data-nl="Vaste prijs, geen uurtje-factuurtje" data-en="Fixed price, no hourly billing">Vaste prijs, geen uurtje-factuurtje</li>
-                    <li data-nl="Live binnen 3 weken" data-en="Live within 3 weeks">Live binnen 3 weken</li>
+                    <li data-nl="Live binnen enkele weken" data-en="Live within a few weeks">Live binnen enkele weken</li>
                     <li data-nl="30 dagen ondersteuning inbegrepen" data-en="30 days support included">30 dagen ondersteuning inbegrepen</li>
                 </ul>
                 <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
@@ -1169,6 +1188,12 @@
     </div>
 </div>
 
+<!-- STICKY CTA -->
+<a href="#contact" class="sticky-cta-main hidden" id="stickyCta" data-nl="Plan een kennismaking" data-en="Let's connect">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#000" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>
+    Plan een kennismaking
+</a>
+
 <!-- COOKIE BANNER -->
 <div class="cookie-banner" id="cookieBanner">
     <p>Insightance gebruikt functionele cookies om de website goed te laten werken. <a href="privacybeleid.html">Meer informatie</a></p>
@@ -1180,40 +1205,49 @@
 
 <!-- FOOTER -->
 <footer>
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
-            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
-            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
-            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
-        </svg>
-        <span class="footer-logo">Insightance</span>
+    <div class="footer-top">
+        <a href="#" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+            <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+                <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+                <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+                <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            </svg>
+            <span class="footer-logo">Insightance</span>
+        </a>
+        <div class="footer-links">
+            <a href="mailto:oussama@insightance.ai" class="footer-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.5"/></svg>
+                oussama@insightance.ai
+            </a>
+            <a href="https://wa.me/31653340362" class="footer-link" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+            </a>
+            <a href="#" class="footer-link" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/><line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                LinkedIn
+            </a>
+        </div>
     </div>
-    <span style="font-size:11px; color:#333; letter-spacing:0.15em; text-transform:uppercase;">Amsterdam · KVK: volgt · <a href="privacybeleid.html" style="color:#444; text-decoration:none;" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a></span>
-    <div class="footer-linkedin" style="display:flex; gap:16px; align-items:center;">
-        <a href="https://wa.me/31653340362" title="WhatsApp" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#C9A84C">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-        <a href="mailto:oussama@insightance.ai" title="E-mail">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/>
-                <path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/>
-            </svg>
-        </a>
-        <a href="#" title="LinkedIn" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="2" width="20" height="20" rx="4" stroke="#C9A84C" stroke-width="1.5"/>
-                <circle cx="7.5" cy="7.5" r="1.2" fill="#C9A84C"/>
-                <line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-        </a>
+    <div class="footer-bottom">
+        <span class="footer-meta-left">Insightance · KVK: volgt · Amsterdam</span>
+        <div class="footer-meta-right">
+            <a href="privacybeleid.html" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a>
+            <span data-nl="© 2026 Insightance" data-en="© 2026 Insightance">© 2026 Insightance</span>
+        </div>
     </div>
 </footer>
 
 <script>
+    // STICKY CTA — verschijnt zodra hero niet meer zichtbaar is
+    const stickyCta = document.getElementById('stickyCta');
+    const heroEl = document.querySelector('.hero');
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => stickyCta.classList.toggle('hidden', e.isIntersecting));
+    }, { threshold: 0.1 });
+    if (heroEl) heroObserver.observe(heroEl);
+
     // COOKIE BANNER
     (function() {
         if (!localStorage.getItem('cookie_consent')) {
