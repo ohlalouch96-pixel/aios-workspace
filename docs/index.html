@@ -251,9 +251,10 @@
         .forwho-col-title { font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
         .forwho-col-text { font-size: 15px; color: var(--gray); line-height: 1.85; }
 
-        .results-strip { margin-top: 0; background: var(--surface); border-top: 1px solid var(--border); }
+        .results-strip { margin-top: 0; background: transparent; border-top: none; }
         .results-inner { padding: 48px 0; }
-        .results-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 36px; }
+        .results-label { font-size: 13px; font-weight: 500; color: var(--gray); margin-bottom: 36px; text-align: left; letter-spacing: 0; text-transform: none; }
+        .results-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.4; margin: 0 0 36px; }
         .results-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
         .result-item { padding: 0 32px 0 0; border-right: 1px solid var(--border); }
         .result-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
@@ -659,7 +660,8 @@
     </div>
     <div class="results-strip">
             <div class="results-inner section" style="padding-top:48px;padding-bottom:56px;padding-left:60px;padding-right:60px;">
-                <p class="results-label" data-nl="Wat het u oplevert" data-en="What you gain"></p>
+                <div class="results-divider"></div>
+                <p class="results-label" data-nl="Wat levert het u op?" data-en="What does it give you?"></p>
                 <div class="results-grid">
                     <div class="result-item">
                         <div class="result-icon">
