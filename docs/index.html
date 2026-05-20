@@ -228,8 +228,6 @@
             --border: #CEC6B8;
         }
         .depth-light .strip::after { display: none; }
-        .depth-light .step-circle { background: #fff; border-color: rgba(201,168,76,0.6); }
-        .depth-light .step-line { background: rgba(201,168,76,0.25); }
 
         .hero-ctas { display: flex; gap: 20px; align-items: center; position: relative; z-index: 1; margin-top: 16px; }
         .hero-cta-primary { background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.5); padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; border-radius: 100px; transition: all 0.3s ease; }
@@ -282,13 +280,13 @@
         .service-card-bullets li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
 
         /* HOW WE WORK - Horizontal */
-        .steps-wrap { position: relative; margin-top: 64px; }
-        .steps-wrap::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--gold), var(--gold), transparent); }
-        .steps-row { display: grid; grid-template-columns: repeat(6, 1fr); }
-        .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; }
-        .step-circle { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--gold); background: var(--bg); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--gold); margin-bottom: 24px; position: relative; z-index: 1; flex-shrink: 0; }
-        .step-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
-        .step-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
+        .steps-wrap { margin-top: 64px; }
+        .steps-row { display: grid; grid-template-columns: 1fr 20px 1fr 20px 1fr 20px 1fr 20px 1fr 20px 1fr; align-items: start; }
+        .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; }
+        .step-arrow { display: flex; align-items: flex-start; justify-content: center; padding-top: 14px; opacity: 0.5; }
+        .step-num { font-family: var(--font-heading); font-size: 56px; font-weight: 700; color: rgba(201,168,76,0.5); line-height: 1; margin-bottom: 20px; }
+        .step-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .step-text { font-size: 12px; color: var(--gray); line-height: 1.75; }
 
         /* WHY INSIGHTANCE */
         .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: transparent; }
@@ -790,32 +788,37 @@
         <div class="steps-wrap">
             <div class="steps-row">
                 <div class="step fade-item">
-                    <div class="step-circle">1</div>
+                    <div class="step-num">1</div>
                     <h3 class="step-title" data-nl="Eerste contact" data-en="First contact"></h3>
                     <p class="step-text" data-nl="U neemt contact op via het contactformulier, e-mail of LinkedIn. Insightance reageert binnen 24 uur." data-en="You reach out via the contact form, email or LinkedIn. Insightance responds within 24 hours."></p>
                 </div>
+                <div class="step-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
                 <div class="step fade-item">
-                    <div class="step-circle">2</div>
+                    <div class="step-num">2</div>
                     <h3 class="step-title" data-nl="Discovery call" data-en="Discovery call"></h3>
                     <p class="step-text" data-nl="We plannen een gesprek van 30 minuten, geheel vrijblijvend. Een eerlijk gesprek over uw bedrijf, uw processen en wat er mogelijk is." data-en="We schedule a 30-minute call, completely without obligation. An honest conversation about your business, your processes, and what's possible."></p>
                 </div>
+                <div class="step-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
                 <div class="step fade-item">
-                    <div class="step-circle">3</div>
+                    <div class="step-num">3</div>
                     <h3 class="step-title" data-nl="Voorstel" data-en="Proposal"></h3>
                     <p class="step-text" data-nl="Een helder voorstel met wat er gebouwd wordt, de tijdlijn en de prijs. Geen verrassingen." data-en="A clear proposal with what will be built, the timeline and the price. No surprises."></p>
                 </div>
+                <div class="step-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
                 <div class="step fade-item">
-                    <div class="step-circle">4</div>
+                    <div class="step-num">4</div>
                     <h3 class="step-title" data-nl="Bouw" data-en="Build"></h3>
                     <p class="step-text" data-nl="Insightance bouwt het systeem op maat. U wordt gedurende het hele proces op de hoogte gehouden." data-en="Insightance builds the system to your specifications. You'll be kept informed throughout."></p>
                 </div>
+                <div class="step-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
                 <div class="step fade-item">
-                    <div class="step-circle">5</div>
+                    <div class="step-num">5</div>
                     <h3 class="step-title" data-nl="Oplevering" data-en="Delivery"></h3>
                     <p class="step-text" data-nl="Het systeem gaat live. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat." data-en="The system goes live. Insightance ensures everything works correctly and that you know how to use it."></p>
                 </div>
+                <div class="step-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
                 <div class="step fade-item">
-                    <div class="step-circle">6</div>
+                    <div class="step-num">6</div>
                     <h3 class="step-title" data-nl="Nazorg" data-en="Aftercare"></h3>
                     <p class="step-text" data-nl="Vragen achteraf worden altijd beantwoord. Wilt u dat Insightance het systeem blijft bewaken en doorontwikkelen? Dan is een retainer beschikbaar." data-en="Questions after delivery are always answered. Want Insightance to keep monitoring and improving the system? A retainer is available."></p>
                 </div>
