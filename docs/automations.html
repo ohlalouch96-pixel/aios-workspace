@@ -26,10 +26,11 @@
         .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
         .nav-back:hover { color: var(--gold); }
         .nav-right { display: flex; align-items: center; gap: 12px; }
-        .lang-toggle { background: none; border: 1px solid var(--border); color: var(--gray); padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; }
-        .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
-        .nav-cta { background: var(--gold); color: #000; padding: 9px 20px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: background 0.2s; white-space: nowrap; }
-        .nav-cta:hover { background: var(--gold-light); }
+        .lang-toggle { display: flex; align-items: center; background: #1A1A1D; border: 1px solid #2A2A2D; border-radius: 100px; overflow: hidden; cursor: pointer; padding: 0; }
+        .lang-toggle span { padding: 6px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; color: #555; font-family: var(--font-body); }
+        .lang-toggle span.active { background: rgba(201,168,76,0.12); color: var(--gold); }
+        .nav-cta { background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.7); padding: 9px 22px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.25s; white-space: nowrap; display: inline-block; }
+        .nav-cta:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); color: var(--gold-light); }
 
         /* HERO */
         .hero { padding: 64px 60px 0; text-align: center; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 60%); padding-bottom: 16px; }
@@ -165,7 +166,7 @@
     </a>
     <a href="index.html" class="nav-back" data-nl="← Terug" data-en="← Back">← Terug</a>
     <div class="nav-right">
-        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn"><span id="langNL" class="active">NL</span><span id="langEN">EN</span></button>
         <a href="index.html#contact" class="nav-cta" data-nl="Plan een gesprek" data-en="Let's connect">Plan een gesprek</a>
     </div>
 </nav>
@@ -667,7 +668,8 @@
                 if (nlText) btn.innerHTML = btn.getAttribute('data-' + lang) + ' ' + count;
             }
         });
-        document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+        document.getElementById('langNL').classList.toggle('active', lang === 'nl');
+        document.getElementById('langEN').classList.toggle('active', lang === 'en');
         document.documentElement.lang = lang;
     }
 
