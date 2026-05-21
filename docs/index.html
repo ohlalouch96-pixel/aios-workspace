@@ -266,18 +266,26 @@
         .result-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* SERVICES */
-        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; margin-top: 56px; }
-        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
-        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
-        .service-card-new:hover { background: var(--surface-2); }
-        .service-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; margin-top: 8px; }
-        .service-card-title { font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
-        .service-card-text { font-size: 15px; color: var(--gray); line-height: 1.8; margin-bottom: 28px; }
-        .service-card-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 24px; }
-        .service-card-bullets-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-        .service-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-        .service-card-bullets li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--gray); line-height: 1.5; }
-        .service-card-bullets li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
+        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; background: transparent; margin-top: 56px; }
+        .service-card-new { background: #161619; border: 1px solid #252528; border-radius: 12px; padding: 40px 36px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #252528; transition: background 0.3s; }
+        .service-card-new:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+        .service-card-new:hover::before { background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .service-icon { width: 48px; height: 48px; border-radius: 10px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+        .service-card-title { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+        .service-card-text { font-size: 14px; color: var(--gray); line-height: 1.8; margin-bottom: 28px; }
+        .service-card-divider { width: 100%; height: 1px; background: #252528; margin-bottom: 22px; }
+        .service-card-bullets-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #3A3A3A; margin-bottom: 14px; }
+        .service-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .service-card-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #555; line-height: 1.5; }
+        .service-card-bullets li::before { content: '→'; color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+        .services-cta { background: #161619; border: 1px solid #252528; border-radius: 12px; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 20px; position: relative; overflow: hidden; }
+        .services-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
+        .services-cta-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+        .services-cta-title { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .services-cta-text { font-size: 14px; color: var(--gray); line-height: 1.7; }
+        .services-cta-btn { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.5); padding: 13px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: all 0.3s; white-space: nowrap; flex-shrink: 0; }
+        .services-cta-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); }
 
         /* HOW WE WORK - Horizontal */
         .steps-wrap { margin-top: 64px; }
@@ -742,59 +750,54 @@
         <div class="services-cards">
             <div class="service-card-new fade-item">
                 <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
                 </div>
-                <h3 class="service-card-title" data-nl="Procesautomatisering" data-en="Process Automation"></h3>
-                <p class="service-card-text" data-nl="Repetitieve taken vervangen door slimme AI-systemen. Minder fouten, minder tijdsverspilling, meer ruimte voor groei." data-en="Repetitive tasks replaced by smart AI systems. Fewer errors, less time wasted, more room for growth."></p>
+                <h3 class="service-card-title" data-nl="Workflow Automatisering" data-en="Workflow Automation"></h3>
+                <p class="service-card-text" data-nl="Terugkerende taken die nu handmatig gaan, worden volledig geautomatiseerd. U stelt het eenmalig in — daarna loopt het vanzelf." data-en="Recurring tasks that currently take manual effort are fully automated. Set it up once — then it runs itself."></p>
                 <div class="service-card-divider"></div>
-                <p class="service-card-bullets-label" data-nl="Toepassingen" data-en="Applications"></p>
+                <p class="service-card-bullets-label" data-nl="Voorbeelden" data-en="Examples"></p>
                 <ul class="service-card-bullets">
-                    <li data-nl="Inkomende aanvragen automatisch verwerken en doorsturen" data-en="Automatically process and route incoming requests"></li>
-                    <li data-nl="Afspraken- en boekingsplanner: klanten plannen zelf, zonder handmatig contact" data-en="Appointment & booking planner: clients schedule themselves, no manual contact needed"></li>
+                    <li data-nl="Inkomende aanvragen automatisch verwerken" data-en="Automatically process incoming requests"></li>
                     <li data-nl="Offertes en rapporten automatisch aanmaken" data-en="Automatically generate quotes and reports"></li>
+                    <li data-nl="Afspraken inplannen zonder handmatig contact" data-en="Schedule appointments without manual contact"></li>
                 </ul>
             </div>
             <div class="service-card-new fade-item">
                 <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
-                        <path d="M9 9h6M9 12h6M9 15h4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 </div>
-                <h3 class="service-card-title" data-nl="AI-systemen op maat" data-en="Custom AI Systems"></h3>
-                <p class="service-card-text" data-nl="Geen standaardoplossing. Elk systeem gebouwd rondom uw bedrijf, uw processen en uw doelen." data-en="No standard solution. Every system built around your business, your processes, and your goals."></p>
+                <h3 class="service-card-title" data-nl="AI Klantcontact" data-en="AI Customer Contact"></h3>
+                <p class="service-card-text" data-nl="AI handelt klantcommunicatie af — van eerste vraag tot geplande afspraak. Uw klant krijgt altijd een snel, correct antwoord." data-en="AI handles customer communication — from first question to scheduled appointment. Your client always gets a fast, correct response."></p>
                 <div class="service-card-divider"></div>
-                <p class="service-card-bullets-label" data-nl="Toepassingen" data-en="Applications"></p>
+                <p class="service-card-bullets-label" data-nl="Voorbeelden" data-en="Examples"></p>
                 <ul class="service-card-bullets">
                     <li data-nl="Leads automatisch opvolgen via e-mail of WhatsApp" data-en="Automatically follow up leads via email or WhatsApp"></li>
-                    <li data-nl="Klantcommunicatie afhandelen zonder handmatig werk" data-en="Handle client communication without manual effort"></li>
-                    <li data-nl="Data uit meerdere bronnen samenvoegen in één overzicht" data-en="Consolidate data from multiple sources into one overview"></li>
+                    <li data-nl="Veelgestelde vragen 24/7 beantwoorden" data-en="Answer frequently asked questions 24/7"></li>
+                    <li data-nl="Klanten zelf een afspraak laten inplannen" data-en="Let clients schedule their own appointments"></li>
                 </ul>
             </div>
             <div class="service-card-new fade-item">
                 <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
                 </div>
-                <h3 class="service-card-title" data-nl="Oplevering & Nazorg" data-en="Delivery & Aftercare"></h3>
-                <p class="service-card-text" data-nl="Na oplevering zorgt Insightance dat alles correct werkt en dat u weet hoe u ermee omgaat. Zodra het systeem staat en u er mee uit de voeten kunt, is het project afgerond." data-en="After delivery, Insightance ensures everything works correctly and that you know how to use it. Once the system is in place and you're confident with it, the project is complete."></p>
+                <h3 class="service-card-title" data-nl="AI Agents" data-en="AI Agents"></h3>
+                <p class="service-card-text" data-nl="Autonome AI-assistenten die zelfstandig taken uitvoeren — zonder dat u erbij hoeft te zijn. Actief 24/7, ook buiten kantooruren." data-en="Autonomous AI assistants that independently execute tasks — without you needing to be there. Active 24/7, even outside office hours."></p>
                 <div class="service-card-divider"></div>
-                <p class="service-card-bullets-label" data-nl="Inbegrepen" data-en="Included"></p>
+                <p class="service-card-bullets-label" data-nl="Voorbeelden" data-en="Examples"></p>
                 <ul class="service-card-bullets">
-                    <li data-nl="Persoonlijke uitleg na implementatie, geen technische kennis vereist" data-en="Personal walkthrough after implementation, no technical knowledge required"></li>
-                    <li data-nl="Testen en fijnafstelling voordat het systeem live gaat" data-en="Testing and fine-tuning before the system goes live"></li>
-                    <li data-nl="Vragen achteraf worden altijd beantwoord" data-en="Any questions after delivery are always answered"></li>
+                    <li data-nl="Agent die leads kwalificeert en opvolgt" data-en="Agent that qualifies and follows up leads"></li>
+                    <li data-nl="Agent die data verzamelt en rapporteert" data-en="Agent that collects data and reports"></li>
+                    <li data-nl="Agent die vragen beantwoordt voor uw team" data-en="Agent that answers questions for your team"></li>
                 </ul>
             </div>
         </div>
-        <div style="text-align:center; margin-top: 48px;">
-            <p style="font-size:15px; color:var(--gray); margin-bottom:12px;" data-nl="Wilt u precies weten wat Insightance voor uw bedrijf kan automatiseren?" data-en="Want to know exactly what Insightance can automate for your business?"></p>
-            <a href="automations.html" target="_blank" style="font-size:14px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" data-nl="Bekijk alle AI-mogelijkheden →" data-en="View all AI capabilities →">Bekijk alle AI-mogelijkheden →</a>
+        <div class="services-cta fade-in">
+            <div>
+                <p class="services-cta-tag" data-nl="22 kant-en-klare systemen" data-en="22 ready-made systems">22 kant-en-klare systemen</p>
+                <h3 class="services-cta-title" data-nl="Wat past bij uw bedrijf?" data-en="What fits your business?"></h3>
+                <p class="services-cta-text" data-nl="Bekijk het volledige overzicht van AI-systemen — van klantcontact tot finance en HR. Filter op uw situatie en ontdek wat er mogelijk is." data-en="View the full overview of AI systems — from customer contact to finance and HR. Filter by your situation and discover what's possible."></p>
+            </div>
+            <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden →" data-en="View all possibilities →">Bekijk alle mogelijkheden →</a>
         </div>
     </div>
 </div>
