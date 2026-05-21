@@ -288,6 +288,20 @@
         .step-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
         .step-text { font-size: 12px; color: var(--gray); line-height: 1.75; }
 
+        /* TOOLS MARQUEE */
+        .tools-strip-wrap { background: #EDE8DC; padding: 26px 0; position: relative; overflow: hidden; }
+        .tools-strip-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent); z-index: 2; }
+        .tools-strip-wrap::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent); z-index: 2; }
+        .tools-fade-left { position: absolute; top: 0; left: 0; bottom: 0; width: 120px; background: linear-gradient(to right, #EDE8DC, transparent); z-index: 1; pointer-events: none; }
+        .tools-fade-right { position: absolute; top: 0; right: 0; bottom: 0; width: 120px; background: linear-gradient(to left, #EDE8DC, transparent); z-index: 1; pointer-events: none; }
+        .tools-marquee-track { display: flex; align-items: center; width: max-content; animation: marquee-ltr 22s linear infinite; }
+        .tools-marquee-track:hover { animation-play-state: paused; }
+        .tools-marquee-set { display: flex; align-items: center; white-space: nowrap; }
+        .tool-item-name { font-size: 12px; font-weight: 600; color: rgba(45,40,37,0.4); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 28px; transition: color 0.2s; }
+        .tools-marquee-track:hover .tool-item-name { color: rgba(45,40,37,0.7); }
+        .tool-item-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(201,168,76,0.5); flex-shrink: 0; }
+        @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
         /* WHY INSIGHTANCE */
         .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: transparent; }
         .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
@@ -783,6 +797,32 @@
         <div style="text-align:center; margin-top: 48px;">
             <p style="font-size:15px; color:var(--gray); margin-bottom:12px;" data-nl="Wilt u precies weten wat Insightance voor uw bedrijf kan automatiseren?" data-en="Want to know exactly what Insightance can automate for your business?"></p>
             <a href="automations.html" target="_blank" style="font-size:14px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" data-nl="Bekijk alle AI-mogelijkheden →" data-en="View all AI capabilities →">Bekijk alle AI-mogelijkheden →</a>
+        </div>
+    </div>
+</div>
+
+<!-- TOOLS STRIP -->
+<div class="tools-strip-wrap">
+    <div class="tools-fade-left"></div>
+    <div class="tools-fade-right"></div>
+    <div class="tools-marquee-track">
+        <div class="tools-marquee-set">
+            <span class="tool-item-name">Make</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">n8n</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Claude AI</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">OpenAI</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Airtable</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Lovable</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Relevance AI</span><span class="tool-item-dot"></span>
+        </div>
+        <div class="tools-marquee-set">
+            <span class="tool-item-name">Make</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">n8n</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Claude AI</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">OpenAI</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Airtable</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Lovable</span><span class="tool-item-dot"></span>
+            <span class="tool-item-name">Relevance AI</span><span class="tool-item-dot"></span>
         </div>
     </div>
 </div>
