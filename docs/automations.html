@@ -152,15 +152,23 @@
 
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
-            .nav-back { display: none; }
-            .hero { padding: 48px 20px 0; }
-            .stats { margin: 32px 20px 0; }
-            .info-box { margin: 20px; }
-            .filters-wrap { padding: 0 20px; }
+            .nav-back { font-size: 12px; }
+            .nav-cta { display: none; }
+            .hero { padding: 56px 20px 0; }
+            .hero-title { font-size: clamp(28px, 8vw, 42px); }
+            .stats { margin: 32px 20px 0; flex-wrap: wrap; }
+            .stat { flex: 1 1 45%; border-right: none; border-bottom: 1px solid var(--border); padding: 20px 16px; }
+            .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+            .stat:last-child, .stat:nth-last-child(-n+2):nth-child(odd) { border-bottom: none; }
+            .tools-fade-left, .tools-fade-right { width: 60px; }
+            .info-box { margin: 20px; padding: 20px; }
+            .filters-wrap { padding: 20px 20px 12px; }
+            .filters { gap: 8px; }
             .grid-wrap { padding: 0 20px 60px; }
             .cards-grid { grid-template-columns: 1fr; }
             .cta-wrap { padding: 40px 20px; }
             .cta { padding: 36px 24px; }
+            .sticky-cta { bottom: 16px; left: 16px; font-size: 12px; padding: 10px 20px; }
         }
     </style>
 </head>
