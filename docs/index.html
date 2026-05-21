@@ -522,7 +522,7 @@
         .discovery-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
         .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
         .discovery-free { font-family: var(--font-heading); font-size: 26px; font-weight: 700; color: #2D2825; margin-bottom: 12px; text-align: right; }
-        .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+        .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
         .discovery-btn:hover { background: #E8C97A; }
 
         .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -558,7 +558,9 @@
             .nav-links { display: none; }
             .hamburger { display: flex; }
             .nav-cta { display: none; }
-            .section { padding: 64px 24px; }
+            .hero { padding: 100px 24px 60px; }
+            .section { padding: 48px 24px; }
+            .tools-fade-left, .tools-fade-right { width: 60px; }
             .mission-stats { grid-template-columns: 1fr; }
             .forwho-cols { grid-template-columns: 1fr; }
             .results-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -567,12 +569,11 @@
             .services-cards { grid-template-columns: 1fr; }
             .services-cta { flex-direction: column; gap: 24px; padding: 32px 24px; }
             .services-cta-btn { width: 100%; justify-content: center; }
-            .section { padding: 48px 24px; }
             .steps-row { grid-template-columns: 1fr; gap: 0; }
-            .steps-wrap::before { display: none; }
-            .step { padding: 40px 0; border-bottom: 1px solid var(--border); }
+            .step-arrow { display: none; }
+            .step { padding: 32px 0; border-bottom: 1px solid var(--border); text-align: center; }
             .step:last-child { border-bottom: none; }
-            .step-circle { margin-bottom: 20px; }
+            .step-num { font-size: 40px; margin-bottom: 12px; }
             .why-grid { grid-template-columns: 1fr; }
             .about-grid-new { grid-template-columns: 1fr; }
             .contact-c-grid { grid-template-columns: 1fr; }
