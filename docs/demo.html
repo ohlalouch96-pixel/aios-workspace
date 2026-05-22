@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactieve Demo | Insightance</title>
+    <meta name="description" content="Ervaar zelf hoe een AI Operating System werkt voor uw bedrijf. Klik door een live simulatie en zie wat er mogelijk is.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0D0D10; font-family: 'Inter', sans-serif; color: #EAE5DC; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, #C9A84C 40%, #E8C97A 50%, #C9A84C 60%, transparent); z-index: 200; }
+
+        /* NAV */
+        nav { position: sticky; top: 2px; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: #C9A84C; text-transform: uppercase; }
+        .nav-back { font-size: 13px; color: #666; text-decoration: none; transition: color 0.2s; }
+        .nav-back:hover { color: #C9A84C; }
+        .nav-cta { background: transparent; color: #C9A84C; border: 1px solid rgba(201,168,76,0.7); padding: 9px 22px; border-radius: 100px; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.25s; }
+        .nav-cta:hover { background: rgba(201,168,76,0.08); }
+
+        /* MAIN */
+        main { display: flex; flex-direction: column; align-items: center; padding: 64px 24px 80px; }
+
+        /* HEADER */
+        .demo-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .demo-eyebrow::after { content: ''; display: block; width: 20px; height: 2px; background: #C9A84C; opacity: 0.7; }
+        .demo-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 40px); color: #EAE5DC; margin-bottom: 12px; text-align: center; line-height: 1.2; }
+        .demo-sub { font-size: 15px; color: #555; margin-bottom: 48px; text-align: center; }
+
+        /* SECTOR TOGGLE */
+        .sector-toggle { display: flex; background: #131316; border: 1px solid #252528; border-radius: 100px; padding: 4px; gap: 4px; margin-bottom: 40px; }
+        .sector-btn { padding: 8px 20px; border-radius: 100px; border: none; background: transparent; color: #555; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+        .sector-btn.active { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+
+        /* PROGRESS */
+        .progress-bar { display: flex; align-items: center; gap: 0; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; gap: 4px; }
+        .progress-step { display: flex; align-items: center; gap: 8px; }
+        .progress-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #2A2A2D; background: #131316; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #444; transition: all 0.4s; flex-shrink: 0; }
+        .progress-dot.active { border-color: #C9A84C; background: rgba(201,168,76,0.1); color: #C9A84C; }
+        .progress-dot.done { border-color: #C9A84C; background: #C9A84C; color: #000; }
+        .progress-label { font-size: 11px; color: #444; white-space: nowrap; transition: color 0.4s; }
+        .progress-label.active { color: #C9A84C; }
+        .progress-line { width: 32px; height: 1px; background: #1E1E22; margin: 0 6px; flex-shrink: 0; }
+        .progress-line.done { background: rgba(201,168,76,0.4); }
+
+        /* SCREEN */
+        .screen { width: 100%; max-width: 780px; background: #131316; border: 1px solid #252528; border-radius: 14px; overflow: hidden; }
+        .screen-bar { background: #0D0D10; padding: 12px 20px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1E1E22; }
+        .screen-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .screen-title { font-size: 12px; color: #444; margin-left: 8px; letter-spacing: 0.04em; }
+
+        /* PANELS */
+        .panel { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
+        .panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .panel-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #C9A84C; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .panel-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+
+        /* STATS */
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+        .stat-card { background: #161619; border: 1px solid #252528; border-radius: 10px; padding: 20px; }
+        .stat-card-label { font-size: 11px; color: #555; letter-spacing: 0.08em; margin-bottom: 8px; text-transform: uppercase; }
+        .stat-card-value { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #EAE5DC; line-height: 1; }
+        .stat-card-value.gold { color: #C9A84C; }
+        .stat-card-sub { font-size: 11px; color: #3A3A3A; margin-top: 6px; }
+        .activity-list { display: flex; flex-direction: column; gap: 10px; }
+        .activity-item { background: #161619; border: 1px solid #252528; border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
+        .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .activity-text { font-size: 13px; color: #777; flex: 1; }
+        .activity-text strong { color: #EAE5DC; font-weight: 500; }
+        .activity-time { font-size: 11px; color: #333; }
+
+        /* CHAT */
+        .chat-window { background: #0D0D10; border: 1px solid #1E1E22; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+        .chat-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #1E1E22; }
+        .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+        .chat-name { font-size: 14px; font-weight: 600; color: #EAE5DC; }
+        .chat-platform { font-size: 11px; color: #555; }
+        .chat-messages { display: flex; flex-direction: column; gap: 10px; }
+        .msg { max-width: 75%; padding: 10px 14px; border-radius: 10px; font-size: 13px; line-height: 1.6; }
+        .msg-in { background: #1E1E22; color: #AAA; align-self: flex-start; border-radius: 2px 10px 10px 10px; }
+        .msg-out { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: #C9A84C; align-self: flex-end; border-radius: 10px 2px 10px 10px; }
+        .msg-sender { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #C9A84C; opacity: 0.7; margin-bottom: 4px; text-transform: uppercase; }
+        .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: #C9A84C; font-weight: 600; margin-bottom: 16px; }
+        .ai-badge::before { content: '●'; font-size: 8px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* AGENDA */
+        .calendar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+        .cal-day { background: #161619; border: 1px solid #252528; border-radius: 8px; padding: 12px; text-align: center; }
+        .cal-day-name { font-size: 10px; color: #444; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+        .cal-day-num { font-size: 18px; font-weight: 600; color: #EAE5DC; margin-bottom: 8px; }
+        .cal-slot { background: #1E1E22; border-radius: 4px; padding: 4px 6px; font-size: 10px; color: #555; margin-bottom: 4px; }
+        .cal-slot.new { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-weight: 600; }
+        .cal-slot.new::before { content: '✓ '; }
+
+        /* BEVESTIGING */
+        .confirm-card { background: #161619; border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 32px; text-align: center; position: relative; overflow: hidden; }
+        .confirm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, #C9A84C, #E8C97A, #C9A84C, transparent); }
+        .confirm-icon { font-size: 40px; margin-bottom: 16px; }
+        .confirm-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #EAE5DC; margin-bottom: 10px; }
+        .confirm-text { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 24px; }
+        .confirm-details { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; }
+        .confirm-detail-label { font-size: 10px; color: #444; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; }
+        .confirm-detail-value { font-size: 15px; font-weight: 600; color: #C9A84C; }
+        .confirm-cta { display: inline-block; background: #C9A84C; color: #000; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
+        .confirm-cta:hover { background: #E8C97A; }
+        .confirm-sub { font-size: 12px; color: #3A3A3A; margin-top: 10px; }
+
+        /* NAV ROW */
+        .nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; max-width: 780px; width: 100%; }
+        .btn-next { background: #C9A84C; color: #000; border: none; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .btn-next:hover { background: #E8C97A; transform: translateY(-1px); }
+        .btn-next:disabled { opacity: 0.3; cursor: default; transform: none; }
+        .btn-prev { background: transparent; color: #555; border: 1px solid #252528; padding: 13px 24px; border-radius: 100px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .btn-prev:hover { color: #EAE5DC; border-color: #444; }
+        .btn-prev:disabled { opacity: 0.2; cursor: default; }
+        .step-counter { font-size: 12px; color: #444; }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-back { display: none; }
+            .nav-cta { display: none; }
+            main { padding: 40px 16px 60px; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .stat-card:last-child { grid-column: span 2; }
+            .panel { padding: 20px; }
+            .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+            .confirm-details { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <svg width="26" height="26" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.7"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.7"/>
+        </svg>
+        <span class="nav-logo-text">Insightance</span>
+    </a>
+    <a href="index.html" class="nav-back">← Terug naar website</a>
+    <a href="index.html#contact" class="nav-cta">Plan een gesprek</a>
+</nav>
+
+<main>
+    <p class="demo-eyebrow">Interactieve demo</p>
+    <h1 class="demo-title">Zo werkt een AIOS voor uw bedrijf</h1>
+    <p class="demo-sub">Klik door de stappen en ervaar hoe AI uw aanvragen afhandelt</p>
+
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-step">
+            <div class="progress-dot active" id="dot0">1</div>
+            <span class="progress-label active" id="lbl0">Dashboard</span>
+        </div>
+        <div class="progress-line" id="line0"></div>
+        <div class="progress-step">
+            <div class="progress-dot" id="dot1">2</div>
+            <span class="progress-label" id="lbl1">Aanvraag</span>
+        </div>
+        <div class="progress-line" id="line1"></div>
+        <div class="progress-step">
+            <div class="progress-dot" id="dot2">3</div>
+            <span class="progress-label" id="lbl2">AI reageert</span>
+        </div>
+        <div class="progress-line" id="line2"></div>
+        <div class="progress-step">
+            <div class="progress-dot" id="dot3">4</div>
+            <span class="progress-label" id="lbl3">Planning</span>
+        </div>
+        <div class="progress-line" id="line3"></div>
+        <div class="progress-step">
+            <div class="progress-dot" id="dot4">5</div>
+            <span class="progress-label" id="lbl4">Resultaat</span>
+        </div>
+    </div>
+
+    <div class="screen">
+        <div class="screen-bar">
+            <div class="screen-dot" style="background:#FF5F57"></div>
+            <div class="screen-dot" style="background:#FEBC2E"></div>
+            <div class="screen-dot" style="background:#28C840"></div>
+            <span class="screen-title">Van der Berg Installatie — AIOS Dashboard</span>
+        </div>
+
+        <div class="panel active" id="panel0">
+            <p class="panel-label">Vandaag · Dinsdag 20 mei</p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <p class="stat-card-label">Servicebezoeken vandaag</p>
+                    <div class="stat-card-value">6</div>
+                    <p class="stat-card-sub">Volgende: 10:00 — CV-ketel Janssen</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-card-label">Automatisch verwerkt</p>
+                    <div class="stat-card-value gold">31</div>
+                    <p class="stat-card-sub">Deze week, 0 handmatig</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-card-label">Tijd bespaard</p>
+                    <div class="stat-card-value">5u</div>
+                    <p class="stat-card-sub">Deze week</p>
+                </div>
+            </div>
+            <p class="panel-label">Recente activiteit</p>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-dot" style="background:#C9A84C"></div>
+                    <span class="activity-text">AI heeft servicebezoek bevestigd voor <strong>Fam. De Vries</strong> — vrijdag 09:00</span>
+                    <span class="activity-time">09:22</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot" style="background:#52C17A"></div>
+                    <span class="activity-text">Offerte automatisch verstuurd aan <strong>Peters BV</strong> — badkamerrenovatie</span>
+                    <span class="activity-time">08:15</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot" style="background:#5B8AF0"></div>
+                    <span class="activity-text"><strong>Nieuwe serviceaanvraag</strong> ontvangen via WhatsApp — wordt verwerkt</span>
+                    <span class="activity-time">Nu</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="panel1">
+            <p class="panel-label">Inkomend bericht · WhatsApp</p>
+            <div class="ai-badge">AI verwerkt dit bericht automatisch</div>
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-avatar">R</div>
+                    <div>
+                        <p class="chat-name">Robert Smit</p>
+                        <p class="chat-platform">WhatsApp · Nieuw contact</p>
+                    </div>
+                </div>
+                <div class="chat-messages">
+                    <div class="msg msg-in">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
+                </div>
+            </div>
+            <div style="background:#161619; border:1px solid #252528; border-radius:8px; padding:16px 20px;">
+                <p style="font-size:11px; color:#555; margin-bottom:8px; letter-spacing:0.1em; text-transform:uppercase;">AI analyseert het bericht</p>
+                <p style="font-size:13px; color:#666; line-height:1.8;">✓ Probleem herkend: <span style="color:#EAE5DC;">CV-ketel storing, inspectie nodig</span><br>✓ Voorkeur klant: <span style="color:#EAE5DC;">donderdag of vrijdag</span><br>✓ Vrije monteur gevonden: <span style="color:#C9A84C;">do 22/5 om 10:00 en vr 23/5 om 14:00</span></p>
+            </div>
+        </div>
+
+        <div class="panel" id="panel2">
+            <p class="panel-label">AI-antwoord · Automatisch verstuurd</p>
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-avatar">R</div>
+                    <div>
+                        <p class="chat-name">Robert Smit</p>
+                        <p class="chat-platform">WhatsApp · Gesprek loopt</p>
+                    </div>
+                </div>
+                <div class="chat-messages">
+                    <div class="msg msg-in">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
+                    <div class="msg msg-out">
+                        <p class="msg-sender">Van der Berg Installatie · AI</p>
+                        Goedemiddag meneer Smit! Vervelend om te horen. We komen graag langs voor een inspectie. We hebben nog twee plekken vrij deze week:<br><br>
+                        🔧 <strong>Donderdag 22 mei om 10:00</strong><br>
+                        🔧 <strong>Vrijdag 23 mei om 14:00</strong><br><br>
+                        Welk tijdstip schikt u het beste?
+                    </div>
+                    <div class="msg msg-in">Donderdag om 10:00 is prima, dan ben ik thuis.</div>
+                    <div class="msg msg-out">
+                        <p class="msg-sender">Van der Berg Installatie · AI</p>
+                        Uitstekend! Onze monteur staat op <strong>donderdag 22 mei om 10:00</strong> bij u. U ontvangt zo een bevestiging per e-mail en woensdagavond een herinnering. Tot donderdag! 👍
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="panel3">
+            <p class="panel-label">Planning monteur · Automatisch bijgewerkt</p>
+            <div class="calendar-grid">
+                <div class="cal-day"><p class="cal-day-name">Ma</p><p class="cal-day-num">19</p><div class="cal-slot">08:00 Sanitair</div><div class="cal-slot">13:00 Elektra</div></div>
+                <div class="cal-day"><p class="cal-day-name">Di</p><p class="cal-day-num">20</p><div class="cal-slot">09:00 Inspectie</div><div class="cal-slot">13:00 Badkamer</div></div>
+                <div class="cal-day"><p class="cal-day-name">Wo</p><p class="cal-day-num">21</p><div class="cal-slot">08:30 CV-ketel</div><div class="cal-slot">14:00 Lekkage</div></div>
+                <div class="cal-day" style="border-color:rgba(201,168,76,0.3);"><p class="cal-day-name">Do</p><p class="cal-day-num" style="color:#C9A84C;">22</p><div class="cal-slot new">10:00 R. Smit</div><div class="cal-slot">13:30 Onderhoud</div></div>
+                <div class="cal-day"><p class="cal-day-name">Vr</p><p class="cal-day-num">23</p><div class="cal-slot">08:00 Installatie</div><div class="cal-slot">14:00 Vrij</div></div>
+            </div>
+            <div style="background:#161619; border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+                <span style="font-size:18px;">📱</span>
+                <p style="font-size:13px; color:#666;">Herinnering gepland voor <span style="color:#EAE5DC; font-weight:500;">woensdagavond 21 mei om 19:00</span> — wordt automatisch verstuurd aan R. Smit</p>
+            </div>
+        </div>
+
+        <div class="panel" id="panel4">
+            <div class="confirm-card">
+                <div class="confirm-icon">✅</div>
+                <h2 class="confirm-title">Alles geregeld. Zonder dat u iets deed.</h2>
+                <p class="confirm-text">Robert stuurde een berichtje. Het AIOS herkende het probleem, checkte de monteurplanning, stelde tijden voor, bevestigde het bezoek en plant de herinnering in — volledig automatisch.</p>
+                <div class="confirm-details">
+                    <div class="confirm-detail">
+                        <p class="confirm-detail-label">Uw tijd</p>
+                        <p class="confirm-detail-value">0 minuten</p>
+                    </div>
+                    <div class="confirm-detail">
+                        <p class="confirm-detail-label">Normaal</p>
+                        <p class="confirm-detail-value">~8 minuten</p>
+                    </div>
+                    <div class="confirm-detail">
+                        <p class="confirm-detail-label">Per week</p>
+                        <p class="confirm-detail-value">±5 uur bespaard</p>
+                    </div>
+                </div>
+                <a href="index.html#contact" class="confirm-cta">Plan een vrijblijvend gesprek →</a>
+                <p class="confirm-sub">30 minuten · Vrijblijvend · Geen verplichtingen</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-row">
+        <button class="btn-prev" id="btnPrev" onclick="changeStep(-1)" disabled>← Vorige</button>
+        <span class="step-counter" id="stepCounter">Stap 1 van 5</span>
+        <button class="btn-next" id="btnNext" onclick="changeStep(1)">Volgende →</button>
+    </div>
+</main>
+
+<script>
+    let current = 0;
+    const total = 5;
+    function changeStep(dir) {
+        document.querySelectorAll('.panel')[current].classList.remove('active');
+        updateProgress(current, 'done');
+        current += dir;
+        document.querySelectorAll('.panel')[current].classList.add('active');
+        updateProgress(current, 'active');
+        document.getElementById('btnPrev').disabled = current === 0;
+        document.getElementById('btnNext').disabled = current === total - 1;
+        document.getElementById('stepCounter').textContent = `Stap ${current + 1} van ${total}`;
+        document.getElementById('btnNext').textContent = current === total - 1 ? '✓ Demo voltooid' : 'Volgende →';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function updateProgress(index, state) {
+        document.getElementById('dot' + index).className = 'progress-dot ' + state;
+        document.getElementById('lbl' + index).className = 'progress-label ' + (state === 'active' ? 'active' : '');
+        if (index > 0) {
+            const line = document.getElementById('line' + (index - 1));
+            if (state === 'done' || state === 'active') line.classList.add('done');
+        }
+    }
+    updateProgress(0, 'active');
+</script>
+</body>
+</html>
