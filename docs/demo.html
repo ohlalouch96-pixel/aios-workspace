@@ -6,48 +6,63 @@
     <title>Interactieve Demo | Insightance</title>
     <meta name="description" content="Ervaar zelf hoe een AI Operating System werkt voor uw bedrijf. Klik door een live simulatie en zie wat er mogelijk is.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0D0D10; font-family: 'Inter', sans-serif; color: #EAE5DC; }
-        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, #C9A84C 40%, #E8C97A 50%, #C9A84C 60%, transparent); z-index: 200; }
+
+        :root {
+            --bg: #131316;
+            --surface: #181819;
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888888;
+            --gray-light: #C0C0C0;
+            --border: #252525;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body { background: #0D0D10; font-family: var(--font-body); color: var(--white); }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent); z-index: 200; }
 
         /* NAV */
         nav { position: sticky; top: 2px; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: #C9A84C; text-transform: uppercase; }
+        .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
         .nav-back { font-size: 13px; color: #666; text-decoration: none; transition: color 0.2s; }
-        .nav-back:hover { color: #C9A84C; }
-        .nav-cta { background: transparent; color: #C9A84C; border: 1px solid rgba(201,168,76,0.7); padding: 9px 22px; border-radius: 100px; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.25s; }
+        .nav-back:hover { color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-toggle { display: flex; align-items: center; background: #1A1A1D; border: 1px solid #2A2A2D; border-radius: 100px; overflow: hidden; cursor: pointer; padding: 0; }
+        .lang-toggle span { padding: 6px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; color: #555; font-family: var(--font-body); }
+        .lang-toggle span.active { background: rgba(201,168,76,0.12); color: var(--gold); }
+        .nav-cta { background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.7); padding: 9px 22px; border-radius: 100px; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.25s; white-space: nowrap; }
         .nav-cta:hover { background: rgba(201,168,76,0.08); }
 
         /* MAIN */
         main { display: flex; flex-direction: column; align-items: center; padding: 64px 24px 80px; }
 
         /* HEADER */
-        .demo-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .demo-eyebrow::after { content: ''; display: block; width: 20px; height: 2px; background: #C9A84C; opacity: 0.7; }
-        .demo-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 40px); color: #EAE5DC; margin-bottom: 12px; text-align: center; line-height: 1.2; }
-        .demo-sub { font-size: 15px; color: #555; margin-bottom: 48px; text-align: center; }
-
-        /* SECTOR TOGGLE */
-        .sector-toggle { display: flex; background: #131316; border: 1px solid #252528; border-radius: 100px; padding: 4px; gap: 4px; margin-bottom: 40px; }
-        .sector-btn { padding: 8px 20px; border-radius: 100px; border: none; background: transparent; color: #555; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
-        .sector-btn.active { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+        .demo-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .demo-eyebrow::after { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); opacity: 0.7; }
+        .demo-title { font-family: var(--font-heading); font-size: clamp(26px, 3.5vw, 40px); color: var(--white); margin-bottom: 12px; text-align: center; line-height: 1.2; }
+        .demo-sub { font-size: 15px; color: var(--gray); margin-bottom: 12px; text-align: center; }
+        .demo-example { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: #666; margin-bottom: 48px; letter-spacing: 0.04em; }
+        .demo-example span { color: var(--gold); font-weight: 600; }
 
         /* PROGRESS */
-        .progress-bar { display: flex; align-items: center; gap: 0; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; gap: 4px; }
+        .progress-bar { display: flex; align-items: center; margin-bottom: 32px; justify-content: center; flex-wrap: wrap; }
         .progress-step { display: flex; align-items: center; gap: 8px; }
-        .progress-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #2A2A2D; background: #131316; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #444; transition: all 0.4s; flex-shrink: 0; }
-        .progress-dot.active { border-color: #C9A84C; background: rgba(201,168,76,0.1); color: #C9A84C; }
-        .progress-dot.done { border-color: #C9A84C; background: #C9A84C; color: #000; }
+        .progress-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #2A2A2D; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #444; transition: all 0.4s; flex-shrink: 0; }
+        .progress-dot.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
+        .progress-dot.done { border-color: var(--gold); background: var(--gold); color: #000; }
         .progress-label { font-size: 11px; color: #444; white-space: nowrap; transition: color 0.4s; }
-        .progress-label.active { color: #C9A84C; }
+        .progress-label.active { color: var(--gold); }
         .progress-line { width: 32px; height: 1px; background: #1E1E22; margin: 0 6px; flex-shrink: 0; }
         .progress-line.done { background: rgba(201,168,76,0.4); }
 
         /* SCREEN */
-        .screen { width: 100%; max-width: 780px; background: #131316; border: 1px solid #252528; border-radius: 14px; overflow: hidden; }
+        .screen { width: 100%; max-width: 780px; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
         .screen-bar { background: #0D0D10; padding: 12px 20px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1E1E22; }
         .screen-dot { width: 10px; height: 10px; border-radius: 50%; }
         .screen-title { font-size: 12px; color: #444; margin-left: 8px; letter-spacing: 0.04em; }
@@ -56,67 +71,75 @@
         .panel { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
         .panel.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .panel-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #C9A84C; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .panel-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .panel-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
 
         /* STATS */
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-        .stat-card { background: #161619; border: 1px solid #252528; border-radius: 10px; padding: 20px; }
+        .stat-card { background: #161619; border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
         .stat-card-label { font-size: 11px; color: #555; letter-spacing: 0.08em; margin-bottom: 8px; text-transform: uppercase; }
-        .stat-card-value { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #EAE5DC; line-height: 1; }
-        .stat-card-value.gold { color: #C9A84C; }
+        .stat-card-value { font-family: var(--font-heading); font-size: 32px; font-weight: 700; color: var(--white); line-height: 1; }
+        .stat-card-value.gold { color: var(--gold); }
         .stat-card-sub { font-size: 11px; color: #3A3A3A; margin-top: 6px; }
         .activity-list { display: flex; flex-direction: column; gap: 10px; }
-        .activity-item { background: #161619; border: 1px solid #252528; border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
+        .activity-item { background: #161619; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
         .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .activity-text { font-size: 13px; color: #777; flex: 1; }
-        .activity-text strong { color: #EAE5DC; font-weight: 500; }
+        .activity-text { font-size: 13px; color: #666; flex: 1; }
+        .activity-text strong { color: var(--white); font-weight: 500; }
         .activity-time { font-size: 11px; color: #333; }
 
         /* CHAT */
         .chat-window { background: #0D0D10; border: 1px solid #1E1E22; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
         .chat-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #1E1E22; }
         .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
-        .chat-name { font-size: 14px; font-weight: 600; color: #EAE5DC; }
+        .chat-name { font-size: 14px; font-weight: 600; color: var(--white); }
         .chat-platform { font-size: 11px; color: #555; }
         .chat-messages { display: flex; flex-direction: column; gap: 10px; }
         .msg { max-width: 75%; padding: 10px 14px; border-radius: 10px; font-size: 13px; line-height: 1.6; }
         .msg-in { background: #1E1E22; color: #AAA; align-self: flex-start; border-radius: 2px 10px 10px 10px; }
-        .msg-out { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: #C9A84C; align-self: flex-end; border-radius: 10px 2px 10px 10px; }
-        .msg-sender { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #C9A84C; opacity: 0.7; margin-bottom: 4px; text-transform: uppercase; }
-        .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: #C9A84C; font-weight: 600; margin-bottom: 16px; }
+        .msg-out { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: var(--gold); align-self: flex-end; border-radius: 10px 2px 10px 10px; }
+        .msg-sender { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); opacity: 0.7; margin-bottom: 4px; text-transform: uppercase; }
+        .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 16px; }
         .ai-badge::before { content: '●'; font-size: 8px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .ai-analysis { background: #161619; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+        .ai-analysis-label { font-size: 11px; color: #555; margin-bottom: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+        .ai-analysis-text { font-size: 13px; color: #666; line-height: 1.8; }
+        .ai-analysis-text span.hi { color: var(--white); }
+        .ai-analysis-text span.gold { color: var(--gold); }
 
         /* AGENDA */
         .calendar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
-        .cal-day { background: #161619; border: 1px solid #252528; border-radius: 8px; padding: 12px; text-align: center; }
+        .cal-day { background: #161619; border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
         .cal-day-name { font-size: 10px; color: #444; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-        .cal-day-num { font-size: 18px; font-weight: 600; color: #EAE5DC; margin-bottom: 8px; }
+        .cal-day-num { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
         .cal-slot { background: #1E1E22; border-radius: 4px; padding: 4px 6px; font-size: 10px; color: #555; margin-bottom: 4px; }
-        .cal-slot.new { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: #C9A84C; font-weight: 600; }
+        .cal-slot.new { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-weight: 600; }
         .cal-slot.new::before { content: '✓ '; }
+        .reminder-box { background: #161619; border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+        .reminder-text { font-size: 13px; color: #666; }
+        .reminder-text span { color: var(--white); font-weight: 500; }
 
         /* BEVESTIGING */
         .confirm-card { background: #161619; border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 32px; text-align: center; position: relative; overflow: hidden; }
-        .confirm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, #C9A84C, #E8C97A, #C9A84C, transparent); }
+        .confirm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .confirm-icon { font-size: 40px; margin-bottom: 16px; }
-        .confirm-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #EAE5DC; margin-bottom: 10px; }
-        .confirm-text { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 24px; }
-        .confirm-details { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; }
+        .confirm-title { font-family: var(--font-heading); font-size: 24px; color: var(--white); margin-bottom: 10px; }
+        .confirm-text { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 24px; }
+        .confirm-details { display: flex; justify-content: center; gap: 32px; margin-bottom: 28px; flex-wrap: wrap; }
         .confirm-detail-label { font-size: 10px; color: #444; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; }
-        .confirm-detail-value { font-size: 15px; font-weight: 600; color: #C9A84C; }
-        .confirm-cta { display: inline-block; background: #C9A84C; color: #000; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
-        .confirm-cta:hover { background: #E8C97A; }
+        .confirm-detail-value { font-size: 15px; font-weight: 600; color: var(--gold); }
+        .confirm-cta { display: inline-block; background: var(--gold); color: #000; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
+        .confirm-cta:hover { background: var(--gold-light); }
         .confirm-sub { font-size: 12px; color: #3A3A3A; margin-top: 10px; }
 
         /* NAV ROW */
         .nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; max-width: 780px; width: 100%; }
-        .btn-next { background: #C9A84C; color: #000; border: none; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
-        .btn-next:hover { background: #E8C97A; transform: translateY(-1px); }
+        .btn-next { background: var(--gold); color: #000; border: none; padding: 13px 32px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+        .btn-next:hover { background: var(--gold-light); transform: translateY(-1px); }
         .btn-next:disabled { opacity: 0.3; cursor: default; transform: none; }
-        .btn-prev { background: transparent; color: #555; border: 1px solid #252528; padding: 13px 24px; border-radius: 100px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
-        .btn-prev:hover { color: #EAE5DC; border-color: #444; }
+        .btn-prev { background: transparent; color: #555; border: 1px solid var(--border); padding: 13px 24px; border-radius: 100px; font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
+        .btn-prev:hover { color: var(--white); border-color: #444; }
         .btn-prev:disabled { opacity: 0.2; cursor: default; }
         .step-counter { font-size: 12px; color: #444; }
 
@@ -129,7 +152,11 @@
             .stat-card:last-child { grid-column: span 2; }
             .panel { padding: 20px; }
             .calendar-grid { grid-template-columns: repeat(3, 1fr); }
-            .confirm-details { gap: 16px; }
+            .cal-day:nth-child(4), .cal-day:nth-child(5) { display: none; }
+            .confirm-details { gap: 20px; }
+            .msg { max-width: 90%; }
+            .progress-bar { gap: 4px; }
+            .progress-label { display: none; }
         }
     </style>
 </head>
@@ -145,39 +172,45 @@
         </svg>
         <span class="nav-logo-text">Insightance</span>
     </a>
-    <a href="index.html" class="nav-back">← Terug naar website</a>
-    <a href="index.html#contact" class="nav-cta">Plan een gesprek</a>
+    <a href="index.html" class="nav-back" data-nl="← Terug naar website" data-en="← Back to website">← Terug naar website</a>
+    <div class="nav-right">
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn"><span id="langNL" class="active">NL</span><span id="langEN">EN</span></button>
+        <a href="index.html#contact" class="nav-cta" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
+    </div>
 </nav>
 
 <main>
-    <p class="demo-eyebrow">Interactieve demo</p>
-    <h1 class="demo-title">Zo werkt een AIOS voor uw bedrijf</h1>
-    <p class="demo-sub">Klik door de stappen en ervaar hoe AI uw aanvragen afhandelt</p>
+    <p class="demo-eyebrow" data-nl="Interactieve demo" data-en="Interactive demo">Interactieve demo</p>
+    <h1 class="demo-title" data-nl="Zo werkt een AIOS voor uw bedrijf" data-en="This is how an AIOS works for your business">Zo werkt een AIOS voor uw bedrijf</h1>
+    <p class="demo-sub" data-nl="Klik door de stappen en ervaar hoe AI uw aanvragen afhandelt" data-en="Click through the steps and experience how AI handles your requests">Klik door de stappen en ervaar hoe AI uw aanvragen afhandelt</p>
+    <div class="demo-example">
+        <span data-nl="Voorbeeld" data-en="Example">Voorbeeld</span>: <span data-nl="Installatiebedrijf Van den Berg" data-en="Van den Berg Installation Company">Installatiebedrijf Van den Berg</span>
+    </div>
 
     <div class="progress-bar" id="progressBar">
         <div class="progress-step">
             <div class="progress-dot active" id="dot0">1</div>
-            <span class="progress-label active" id="lbl0">Dashboard</span>
+            <span class="progress-label active" id="lbl0" data-nl="Dashboard" data-en="Dashboard">Dashboard</span>
         </div>
         <div class="progress-line" id="line0"></div>
         <div class="progress-step">
             <div class="progress-dot" id="dot1">2</div>
-            <span class="progress-label" id="lbl1">Aanvraag</span>
+            <span class="progress-label" id="lbl1" data-nl="Aanvraag" data-en="Request">Aanvraag</span>
         </div>
         <div class="progress-line" id="line1"></div>
         <div class="progress-step">
             <div class="progress-dot" id="dot2">3</div>
-            <span class="progress-label" id="lbl2">AI reageert</span>
+            <span class="progress-label" id="lbl2" data-nl="AI reageert" data-en="AI responds">AI reageert</span>
         </div>
         <div class="progress-line" id="line2"></div>
         <div class="progress-step">
             <div class="progress-dot" id="dot3">4</div>
-            <span class="progress-label" id="lbl3">Planning</span>
+            <span class="progress-label" id="lbl3" data-nl="Planning" data-en="Schedule">Planning</span>
         </div>
         <div class="progress-line" id="line3"></div>
         <div class="progress-step">
             <div class="progress-dot" id="dot4">5</div>
-            <span class="progress-label" id="lbl4">Resultaat</span>
+            <span class="progress-label" id="lbl4" data-nl="Resultaat" data-en="Result">Resultaat</span>
         </div>
     </div>
 
@@ -186,147 +219,155 @@
             <div class="screen-dot" style="background:#FF5F57"></div>
             <div class="screen-dot" style="background:#FEBC2E"></div>
             <div class="screen-dot" style="background:#28C840"></div>
-            <span class="screen-title">Van der Berg Installatie — AIOS Dashboard</span>
+            <span class="screen-title" data-nl="Van den Berg Installatie — AIOS Dashboard" data-en="Van den Berg Installation — AIOS Dashboard">Van den Berg Installatie — AIOS Dashboard</span>
         </div>
 
+        <!-- PANEL 1: DASHBOARD -->
         <div class="panel active" id="panel0">
-            <p class="panel-label">Vandaag · Dinsdag 20 mei</p>
+            <p class="panel-label" data-nl="Vandaag · Dinsdag 20 mei" data-en="Today · Tuesday 20 May">Vandaag · Dinsdag 20 mei</p>
             <div class="stats-row">
                 <div class="stat-card">
-                    <p class="stat-card-label">Servicebezoeken vandaag</p>
+                    <p class="stat-card-label" data-nl="Servicebezoeken vandaag" data-en="Service visits today">Servicebezoeken vandaag</p>
                     <div class="stat-card-value">6</div>
-                    <p class="stat-card-sub">Volgende: 10:00 — CV-ketel Janssen</p>
+                    <p class="stat-card-sub" data-nl="Volgende: 10:00 — CV-ketel Janssen" data-en="Next: 10:00 — Boiler Janssen">Volgende: 10:00 — CV-ketel Janssen</p>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-card-label">Automatisch verwerkt</p>
+                    <p class="stat-card-label" data-nl="Automatisch verwerkt" data-en="Automatically processed">Automatisch verwerkt</p>
                     <div class="stat-card-value gold">31</div>
-                    <p class="stat-card-sub">Deze week, 0 handmatig</p>
+                    <p class="stat-card-sub" data-nl="Deze week, 0 handmatig" data-en="This week, 0 manually">Deze week, 0 handmatig</p>
                 </div>
                 <div class="stat-card">
-                    <p class="stat-card-label">Tijd bespaard</p>
+                    <p class="stat-card-label" data-nl="Tijd bespaard" data-en="Time saved">Tijd bespaard</p>
                     <div class="stat-card-value">5u</div>
-                    <p class="stat-card-sub">Deze week</p>
+                    <p class="stat-card-sub" data-nl="Deze week" data-en="This week">Deze week</p>
                 </div>
             </div>
-            <p class="panel-label">Recente activiteit</p>
+            <p class="panel-label" data-nl="Recente activiteit" data-en="Recent activity">Recente activiteit</p>
             <div class="activity-list">
                 <div class="activity-item">
                     <div class="activity-dot" style="background:#C9A84C"></div>
-                    <span class="activity-text">AI heeft servicebezoek bevestigd voor <strong>Fam. De Vries</strong> — vrijdag 09:00</span>
+                    <span class="activity-text" data-nl="AI heeft servicebezoek bevestigd voor <strong>Fam. De Vries</strong> — vrijdag 09:00" data-en="AI confirmed service visit for <strong>De Vries family</strong> — Friday 09:00">AI heeft servicebezoek bevestigd voor <strong>Fam. De Vries</strong> — vrijdag 09:00</span>
                     <span class="activity-time">09:22</span>
                 </div>
                 <div class="activity-item">
                     <div class="activity-dot" style="background:#52C17A"></div>
-                    <span class="activity-text">Offerte automatisch verstuurd aan <strong>Peters BV</strong> — badkamerrenovatie</span>
+                    <span class="activity-text" data-nl="Offerte automatisch verstuurd aan <strong>Peters BV</strong> — badkamerrenovatie" data-en="Quote automatically sent to <strong>Peters BV</strong> — bathroom renovation">Offerte automatisch verstuurd aan <strong>Peters BV</strong> — badkamerrenovatie</span>
                     <span class="activity-time">08:15</span>
                 </div>
                 <div class="activity-item">
                     <div class="activity-dot" style="background:#5B8AF0"></div>
-                    <span class="activity-text"><strong>Nieuwe serviceaanvraag</strong> ontvangen via WhatsApp — wordt verwerkt</span>
-                    <span class="activity-time">Nu</span>
+                    <span class="activity-text" data-nl="<strong>Nieuwe serviceaanvraag</strong> ontvangen via WhatsApp — wordt verwerkt" data-en="<strong>New service request</strong> received via WhatsApp — being processed"><strong>Nieuwe serviceaanvraag</strong> ontvangen via WhatsApp — wordt verwerkt</span>
+                    <span class="activity-time" data-nl="Nu" data-en="Now">Nu</span>
                 </div>
             </div>
         </div>
 
+        <!-- PANEL 2: AANVRAAG -->
         <div class="panel" id="panel1">
-            <p class="panel-label">Inkomend bericht · WhatsApp</p>
-            <div class="ai-badge">AI verwerkt dit bericht automatisch</div>
+            <p class="panel-label" data-nl="Inkomend bericht · WhatsApp" data-en="Incoming message · WhatsApp">Inkomend bericht · WhatsApp</p>
+            <div class="ai-badge" data-nl="AI verwerkt dit bericht automatisch" data-en="AI processes this message automatically">AI verwerkt dit bericht automatisch</div>
             <div class="chat-window">
                 <div class="chat-header">
                     <div class="chat-avatar">R</div>
                     <div>
                         <p class="chat-name">Robert Smit</p>
-                        <p class="chat-platform">WhatsApp · Nieuw contact</p>
+                        <p class="chat-platform" data-nl="WhatsApp · Nieuw contact" data-en="WhatsApp · New contact">WhatsApp · Nieuw contact</p>
                     </div>
                 </div>
                 <div class="chat-messages">
-                    <div class="msg msg-in">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
+                    <div class="msg msg-in" data-nl="Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag." data-en="Good afternoon, my boiler has stopped working. Could you come by for an inspection? Preferably this week. I'm home on Thursday and Friday.">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
                 </div>
             </div>
-            <div style="background:#161619; border:1px solid #252528; border-radius:8px; padding:16px 20px;">
-                <p style="font-size:11px; color:#555; margin-bottom:8px; letter-spacing:0.1em; text-transform:uppercase;">AI analyseert het bericht</p>
-                <p style="font-size:13px; color:#666; line-height:1.8;">✓ Probleem herkend: <span style="color:#EAE5DC;">CV-ketel storing, inspectie nodig</span><br>✓ Voorkeur klant: <span style="color:#EAE5DC;">donderdag of vrijdag</span><br>✓ Vrije monteur gevonden: <span style="color:#C9A84C;">do 22/5 om 10:00 en vr 23/5 om 14:00</span></p>
+            <div class="ai-analysis">
+                <p class="ai-analysis-label" data-nl="AI analyseert het bericht" data-en="AI analyses the message">AI analyseert het bericht</p>
+                <p class="ai-analysis-text">
+                    ✓ <span data-nl="Probleem herkend:" data-en="Problem identified:">Probleem herkend:</span> <span class="hi" data-nl="CV-ketel storing, inspectie nodig" data-en="Boiler malfunction, inspection needed">CV-ketel storing, inspectie nodig</span><br>
+                    ✓ <span data-nl="Voorkeur klant:" data-en="Client preference:">Voorkeur klant:</span> <span class="hi" data-nl="donderdag of vrijdag" data-en="Thursday or Friday">donderdag of vrijdag</span><br>
+                    ✓ <span data-nl="Vrije monteur gevonden:" data-en="Available engineer found:">Vrije monteur gevonden:</span> <span class="gold" data-nl="do 22/5 om 10:00 en vr 23/5 om 14:00" data-en="Thu 22/5 at 10:00 and Fri 23/5 at 14:00">do 22/5 om 10:00 en vr 23/5 om 14:00</span>
+                </p>
             </div>
         </div>
 
+        <!-- PANEL 3: AI REAGEERT -->
         <div class="panel" id="panel2">
-            <p class="panel-label">AI-antwoord · Automatisch verstuurd</p>
+            <p class="panel-label" data-nl="AI-antwoord · Automatisch verstuurd" data-en="AI response · Automatically sent">AI-antwoord · Automatisch verstuurd</p>
             <div class="chat-window">
                 <div class="chat-header">
                     <div class="chat-avatar">R</div>
                     <div>
                         <p class="chat-name">Robert Smit</p>
-                        <p class="chat-platform">WhatsApp · Gesprek loopt</p>
+                        <p class="chat-platform" data-nl="WhatsApp · Gesprek loopt" data-en="WhatsApp · Conversation active">WhatsApp · Gesprek loopt</p>
                     </div>
                 </div>
                 <div class="chat-messages">
-                    <div class="msg msg-in">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
+                    <div class="msg msg-in" data-nl="Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag." data-en="Good afternoon, my boiler has stopped working. Could you come by for an inspection? Preferably this week. I'm home on Thursday and Friday.">Goedemiddag, mijn CV-ketel doet het niet meer. Kunnen jullie langskomen voor een inspectie? Bij voorkeur deze week nog. Ik ben thuis op donderdag en vrijdag.</div>
                     <div class="msg msg-out">
-                        <p class="msg-sender">Van der Berg Installatie · AI</p>
-                        Goedemiddag meneer Smit! Vervelend om te horen. We komen graag langs voor een inspectie. We hebben nog twee plekken vrij deze week:<br><br>
-                        🔧 <strong>Donderdag 22 mei om 10:00</strong><br>
-                        🔧 <strong>Vrijdag 23 mei om 14:00</strong><br><br>
-                        Welk tijdstip schikt u het beste?
+                        <p class="msg-sender" data-nl="Van den Berg Installatie · AI" data-en="Van den Berg Installation · AI">Van den Berg Installatie · AI</p>
+                        <span data-nl="Goedemiddag meneer Smit! Vervelend om te horen. We komen graag langs voor een inspectie. We hebben nog twee plekken vrij deze week:<br><br>🔧 <strong>Donderdag 22 mei om 10:00</strong><br>🔧 <strong>Vrijdag 23 mei om 14:00</strong><br><br>Welk tijdstip schikt u het beste?" data-en="Good afternoon Mr Smit! Sorry to hear that. We'd be happy to come by for an inspection. We still have two slots available this week:<br><br>🔧 <strong>Thursday 22 May at 10:00</strong><br>🔧 <strong>Friday 23 May at 14:00</strong><br><br>Which time suits you best?">Goedemiddag meneer Smit! Vervelend om te horen. We komen graag langs voor een inspectie. We hebben nog twee plekken vrij deze week:<br><br>🔧 <strong>Donderdag 22 mei om 10:00</strong><br>🔧 <strong>Vrijdag 23 mei om 14:00</strong><br><br>Welk tijdstip schikt u het beste?</span>
                     </div>
-                    <div class="msg msg-in">Donderdag om 10:00 is prima, dan ben ik thuis.</div>
+                    <div class="msg msg-in" data-nl="Donderdag om 10:00 is prima, dan ben ik thuis." data-en="Thursday at 10:00 works, I'll be home then.">Donderdag om 10:00 is prima, dan ben ik thuis.</div>
                     <div class="msg msg-out">
-                        <p class="msg-sender">Van der Berg Installatie · AI</p>
-                        Uitstekend! Onze monteur staat op <strong>donderdag 22 mei om 10:00</strong> bij u. U ontvangt zo een bevestiging per e-mail en woensdagavond een herinnering. Tot donderdag! 👍
+                        <p class="msg-sender" data-nl="Van den Berg Installatie · AI" data-en="Van den Berg Installation · AI">Van den Berg Installatie · AI</p>
+                        <span data-nl="Uitstekend! Onze monteur staat op <strong>donderdag 22 mei om 10:00</strong> bij u. U ontvangt zo een bevestiging per e-mail en woensdagavond een herinnering. Tot donderdag! 👍" data-en="Excellent! Our engineer will be with you on <strong>Thursday 22 May at 10:00</strong>. You'll receive a confirmation by email and a reminder on Wednesday evening. See you Thursday! 👍">Uitstekend! Onze monteur staat op <strong>donderdag 22 mei om 10:00</strong> bij u. U ontvangt zo een bevestiging per e-mail en woensdagavond een herinnering. Tot donderdag! 👍</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- PANEL 4: AGENDA -->
         <div class="panel" id="panel3">
-            <p class="panel-label">Planning monteur · Automatisch bijgewerkt</p>
+            <p class="panel-label" data-nl="Planning monteur · Automatisch bijgewerkt" data-en="Engineer schedule · Automatically updated">Planning monteur · Automatisch bijgewerkt</p>
             <div class="calendar-grid">
-                <div class="cal-day"><p class="cal-day-name">Ma</p><p class="cal-day-num">19</p><div class="cal-slot">08:00 Sanitair</div><div class="cal-slot">13:00 Elektra</div></div>
-                <div class="cal-day"><p class="cal-day-name">Di</p><p class="cal-day-num">20</p><div class="cal-slot">09:00 Inspectie</div><div class="cal-slot">13:00 Badkamer</div></div>
-                <div class="cal-day"><p class="cal-day-name">Wo</p><p class="cal-day-num">21</p><div class="cal-slot">08:30 CV-ketel</div><div class="cal-slot">14:00 Lekkage</div></div>
-                <div class="cal-day" style="border-color:rgba(201,168,76,0.3);"><p class="cal-day-name">Do</p><p class="cal-day-num" style="color:#C9A84C;">22</p><div class="cal-slot new">10:00 R. Smit</div><div class="cal-slot">13:30 Onderhoud</div></div>
-                <div class="cal-day"><p class="cal-day-name">Vr</p><p class="cal-day-num">23</p><div class="cal-slot">08:00 Installatie</div><div class="cal-slot">14:00 Vrij</div></div>
+                <div class="cal-day"><p class="cal-day-name" data-nl="Ma" data-en="Mon">Ma</p><p class="cal-day-num">19</p><div class="cal-slot" data-nl="08:00 Sanitair" data-en="08:00 Plumbing">08:00 Sanitair</div><div class="cal-slot" data-nl="13:00 Elektra" data-en="13:00 Electrical">13:00 Elektra</div></div>
+                <div class="cal-day"><p class="cal-day-name" data-nl="Di" data-en="Tue">Di</p><p class="cal-day-num">20</p><div class="cal-slot" data-nl="09:00 Inspectie" data-en="09:00 Inspection">09:00 Inspectie</div><div class="cal-slot" data-nl="13:00 Badkamer" data-en="13:00 Bathroom">13:00 Badkamer</div></div>
+                <div class="cal-day"><p class="cal-day-name" data-nl="Wo" data-en="Wed">Wo</p><p class="cal-day-num">21</p><div class="cal-slot" data-nl="08:30 CV-ketel" data-en="08:30 Boiler">08:30 CV-ketel</div><div class="cal-slot" data-nl="14:00 Lekkage" data-en="14:00 Leak">14:00 Lekkage</div></div>
+                <div class="cal-day" style="border-color:rgba(201,168,76,0.3);"><p class="cal-day-name" data-nl="Do" data-en="Thu">Do</p><p class="cal-day-num" style="color:#C9A84C;">22</p><div class="cal-slot new" data-nl="10:00 R. Smit" data-en="10:00 R. Smit">10:00 R. Smit</div><div class="cal-slot" data-nl="13:30 Onderhoud" data-en="13:30 Maintenance">13:30 Onderhoud</div></div>
+                <div class="cal-day"><p class="cal-day-name" data-nl="Vr" data-en="Fri">Vr</p><p class="cal-day-num">23</p><div class="cal-slot" data-nl="08:00 Installatie" data-en="08:00 Installation">08:00 Installatie</div><div class="cal-slot" data-nl="14:00 Vrij" data-en="14:00 Free">14:00 Vrij</div></div>
             </div>
-            <div style="background:#161619; border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+            <div class="reminder-box">
                 <span style="font-size:18px;">📱</span>
-                <p style="font-size:13px; color:#666;">Herinnering gepland voor <span style="color:#EAE5DC; font-weight:500;">woensdagavond 21 mei om 19:00</span> — wordt automatisch verstuurd aan R. Smit</p>
+                <p class="reminder-text" data-nl="Herinnering gepland voor <span>woensdagavond 21 mei om 19:00</span> — wordt automatisch verstuurd aan R. Smit" data-en="Reminder scheduled for <span>Wednesday evening 21 May at 19:00</span> — automatically sent to R. Smit">Herinnering gepland voor <span>woensdagavond 21 mei om 19:00</span> — wordt automatisch verstuurd aan R. Smit</p>
             </div>
         </div>
 
+        <!-- PANEL 5: RESULTAAT -->
         <div class="panel" id="panel4">
             <div class="confirm-card">
                 <div class="confirm-icon">✅</div>
-                <h2 class="confirm-title">Alles geregeld. Zonder dat u iets deed.</h2>
-                <p class="confirm-text">Robert stuurde een berichtje. Het AIOS herkende het probleem, checkte de monteurplanning, stelde tijden voor, bevestigde het bezoek en plant de herinnering in — volledig automatisch.</p>
+                <h2 class="confirm-title" data-nl="Alles geregeld. Zonder dat u iets deed." data-en="Everything arranged. Without you doing anything.">Alles geregeld. Zonder dat u iets deed.</h2>
+                <p class="confirm-text" data-nl="Robert stuurde een berichtje. Het AIOS herkende het probleem, checkte de monteurplanning, stelde tijden voor, bevestigde het bezoek en plant de herinnering in, volledig automatisch." data-en="Robert sent a message. The AIOS identified the problem, checked the engineer schedule, proposed times, confirmed the visit and scheduled the reminder, fully automatically.">Robert stuurde een berichtje. Het AIOS herkende het probleem, checkte de monteurplanning, stelde tijden voor, bevestigde het bezoek en plant de herinnering in, volledig automatisch.</p>
                 <div class="confirm-details">
-                    <div class="confirm-detail">
-                        <p class="confirm-detail-label">Uw tijd</p>
-                        <p class="confirm-detail-value">0 minuten</p>
+                    <div>
+                        <p class="confirm-detail-label" data-nl="Uw tijd" data-en="Your time">Uw tijd</p>
+                        <p class="confirm-detail-value" data-nl="0 minuten" data-en="0 minutes">0 minuten</p>
                     </div>
-                    <div class="confirm-detail">
-                        <p class="confirm-detail-label">Normaal</p>
-                        <p class="confirm-detail-value">~8 minuten</p>
+                    <div>
+                        <p class="confirm-detail-label" data-nl="Normaal" data-en="Normally">Normaal</p>
+                        <p class="confirm-detail-value" data-nl="~8 minuten" data-en="~8 minutes">~8 minuten</p>
                     </div>
-                    <div class="confirm-detail">
-                        <p class="confirm-detail-label">Per week</p>
-                        <p class="confirm-detail-value">±5 uur bespaard</p>
+                    <div>
+                        <p class="confirm-detail-label" data-nl="Per week" data-en="Per week">Per week</p>
+                        <p class="confirm-detail-value" data-nl="±5 uur bespaard" data-en="±5 hours saved">±5 uur bespaard</p>
                     </div>
                 </div>
-                <a href="index.html#contact" class="confirm-cta">Plan een vrijblijvend gesprek →</a>
-                <p class="confirm-sub">30 minuten · Vrijblijvend · Geen verplichtingen</p>
+                <a href="index.html#contact" class="confirm-cta" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
+                <p class="confirm-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</p>
             </div>
         </div>
     </div>
 
     <div class="nav-row">
-        <button class="btn-prev" id="btnPrev" onclick="changeStep(-1)" disabled>← Vorige</button>
-        <span class="step-counter" id="stepCounter">Stap 1 van 5</span>
-        <button class="btn-next" id="btnNext" onclick="changeStep(1)">Volgende →</button>
+        <button class="btn-prev" id="btnPrev" onclick="changeStep(-1)" disabled data-nl="← Vorige" data-en="← Previous">← Vorige</button>
+        <span class="step-counter" id="stepCounter" data-nl="Stap 1 van 5" data-en="Step 1 of 5">Stap 1 van 5</span>
+        <button class="btn-next" id="btnNext" onclick="changeStep(1)" data-nl="Volgende →" data-en="Next →">Volgende →</button>
     </div>
 </main>
 
 <script>
     let current = 0;
     const total = 5;
+    let lang = 'nl';
+
     function changeStep(dir) {
         document.querySelectorAll('.panel')[current].classList.remove('active');
         updateProgress(current, 'done');
@@ -335,10 +376,13 @@
         updateProgress(current, 'active');
         document.getElementById('btnPrev').disabled = current === 0;
         document.getElementById('btnNext').disabled = current === total - 1;
-        document.getElementById('stepCounter').textContent = `Stap ${current + 1} van ${total}`;
-        document.getElementById('btnNext').textContent = current === total - 1 ? '✓ Demo voltooid' : 'Volgende →';
+        const counter = document.getElementById('stepCounter');
+        counter.textContent = lang === 'nl' ? `Stap ${current + 1} van ${total}` : `Step ${current + 1} of ${total}`;
+        const btnNext = document.getElementById('btnNext');
+        btnNext.textContent = current === total - 1 ? (lang === 'nl' ? '✓ Demo voltooid' : '✓ Demo complete') : (lang === 'nl' ? 'Volgende →' : 'Next →');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
     function updateProgress(index, state) {
         document.getElementById('dot' + index).className = 'progress-dot ' + state;
         document.getElementById('lbl' + index).className = 'progress-label ' + (state === 'active' ? 'active' : '');
@@ -347,7 +391,27 @@
             if (state === 'done' || state === 'active') line.classList.add('done');
         }
     }
+
+    function applyLang() {
+        document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+            el.innerHTML = el.getAttribute('data-' + lang);
+        });
+        document.getElementById('langNL').classList.toggle('active', lang === 'nl');
+        document.getElementById('langEN').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang;
+        const counter = document.getElementById('stepCounter');
+        counter.textContent = lang === 'nl' ? `Stap ${current + 1} van ${total}` : `Step ${current + 1} of ${total}`;
+        const btnNext = document.getElementById('btnNext');
+        if (current === total - 1) btnNext.textContent = lang === 'nl' ? '✓ Demo voltooid' : '✓ Demo complete';
+    }
+
+    function toggleLang() {
+        lang = lang === 'nl' ? 'en' : 'nl';
+        applyLang();
+    }
+
     updateProgress(0, 'active');
+    applyLang();
 </script>
 </body>
 </html>
