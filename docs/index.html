@@ -510,7 +510,10 @@
             letter-spacing: 0.06em;
             border-bottom: 1px solid rgba(201,168,76,0.7) !important;
             border-top: 1px solid rgba(201,168,76,0.7) !important;
+            transition: background 0.2s, border-color 0.2s;
         }
+        .mobile-drawer-cta:hover { background: rgba(201,168,76,0.08) !important; border-color: var(--gold) !important; }
+        .mobile-drawer-sub { display: block; text-align: center; margin-top: 10px; font-size: 11px; color: #555; letter-spacing: 0.06em; }
 
         /* TARIEVEN */
         .discovery-banner { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 40px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; margin-bottom: 20px; position: relative; overflow: hidden; }
@@ -617,6 +620,7 @@
     <a href="#tarieven" onclick="toggleDrawer()" data-nl="Tarieven" data-en="Pricing">Tarieven</a>
     <a href="#contact" onclick="toggleDrawer()" data-nl="Contact" data-en="Contact">Contact</a>
     <a href="#contact" class="mobile-drawer-cta" onclick="toggleDrawer()" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
+    <span class="mobile-drawer-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</span>
 </div>
 
 <!-- HERO -->
