@@ -1419,23 +1419,5 @@
 </script>
 
     <script src="//code.tidio.co/nzmhef9otgpp1wahexx1eo4ohhlv9qos.js" async></script>
-<script>
-(function() {
-    if (window.innerWidth > 768) return;
-    var lastY = 0, timer;
-    window.addEventListener('scroll', function() {
-        var y = window.scrollY;
-        if (y > lastY + 5) {
-            if (window.tidioChatApi) window.tidioChatApi.hide();
-        } else if (y < lastY - 5) {
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-                if (window.tidioChatApi) window.tidioChatApi.show();
-            }, 600);
-        }
-        lastY = y;
-    }, { passive: true });
-})();
-</script>
 </body>
 </html>
