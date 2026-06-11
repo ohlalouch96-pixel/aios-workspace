@@ -437,7 +437,7 @@ window.onload = function() {
     document.getElementById('f-geldig').value = geldig.toISOString().split('T')[0];
 
     const p = new URLSearchParams(window.location.search);
-    ['naam','achternaam','email','tel','adres','postcode','plaats'].forEach(k => {
+    ['naam','email','tel','adres','postcode','plaats'].forEach(k => {
         if (p.get(k)) document.getElementById('f-' + k).value = p.get(k);
     });
     if (p.get('type')) { document.getElementById('f-type').value = p.get('type'); laadStandaard(); }
@@ -484,8 +484,6 @@ function fmtDatum(iso) {
 
 function update() {
     const naam      = document.getElementById('f-naam').value.trim();
-    const achter    = document.getElementById('f-achternaam').value.trim();
-    const aanhef    = document.getElementById('f-aanhef').value;
     const email     = document.getElementById('f-email').value.trim();
     const tel       = document.getElementById('f-tel').value.trim();
     const adres     = document.getElementById('f-adres').value.trim();
