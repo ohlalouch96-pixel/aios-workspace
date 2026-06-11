@@ -217,8 +217,10 @@
     }
 
     function getBericht() {
+        const uur = new Date().getHours();
+        const groet = uur < 12 ? "Goedemorgen" : uur < 18 ? "Goedemiddag" : "Goedenavond";
         const naam = getNaam();
-        const aanhef = naam ? `Goedemiddag ${naam}!` : "Goedemiddag!";
+        const aanhef = naam ? `${groet} ${naam}!` : `${groet}!`;
         return `${aanhef} Bedankt voor uw vertrouwen in MHL Installatieservice. Wij hopen dat alles naar wens is uitgevoerd. Zou u ons een Google review willen achterlaten? Dat helpt ons enorm en kost maar 1 minuutje. 👉 ${GOOGLE_REVIEW_LINK} Hartelijke groet, Mohammed — MHL Installatieservice`;
     }
 
