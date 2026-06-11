@@ -7,410 +7,177 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-        --red: #CC0000;
-        --red-dark: #AA0000;
-        --dark: #1A1A1A;
-        --gray: #555;
-        --light: #F5F5F5;
-        --border: #E0E0E0;
-        --white: #fff;
-        --font: 'Arial', sans-serif;
-    }
+:root {
+    --red: #CC0000;
+    --red-dark: #AA0000;
+    --dark: #1A1A1A;
+    --gray: #555;
+    --border: #E0E0E0;
+    --light: #F5F5F5;
+    --white: #fff;
+    --font: Arial, sans-serif;
+}
 
-    body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
+body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 
-    .topbar {
-        background: var(--white);
-        border-bottom: 3px solid var(--red);
-        padding: 14px 32px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+/* TOPBAR */
+.topbar {
+    background: var(--white);
+    border-bottom: 3px solid var(--red);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.topbar img { height: 36px; }
+.topbar-title { font-size: 15px; font-weight: 700; }
+.topbar-btns { display: flex; gap: 10px; }
+.btn { padding: 10px 20px; border-radius: 4px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; border: none; transition: background .15s; }
+.btn-outline { background: var(--white); border: 2px solid var(--red); color: var(--red); }
+.btn-outline:hover { background: #FFF5F5; }
+.btn-primary { background: var(--red); color: white; }
+.btn-primary:hover { background: var(--red-dark); }
 
-    .topbar img { height: 38px; }
-    .topbar-title { font-size: 15px; font-weight: 700; color: var(--dark); }
-    .topbar-btns { display: flex; gap: 10px; }
+/* LAYOUT */
+.layout {
+    display: grid;
+    grid-template-columns: 390px 1fr;
+    gap: 24px;
+    padding: 24px 32px;
+    max-width: 1300px;
+    margin: 0 auto;
+    align-items: start;
+}
 
-    .btn {
-        padding: 10px 20px;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: 700;
-        font-family: var(--font);
-        cursor: pointer;
-        border: none;
-        transition: background 0.15s;
-    }
+/* FORM PANEL */
+.form-panel {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+}
+.panel-sec { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.panel-sec:last-child { border-bottom: none; }
+.panel-lbl { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+.field { margin-bottom: 10px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: var(--gray); margin-bottom: 4px; }
+.field input, .field select, .field textarea {
+    width: 100%; padding: 8px 10px; font-size: 13px; font-family: var(--font);
+    border: 1.5px solid var(--border); border-radius: 4px; color: var(--dark); background: white; transition: border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--red); }
+.field textarea { min-height: 56px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    .btn-outline { background: var(--white); border: 2px solid var(--red); color: var(--red); }
-    .btn-outline:hover { background: #FFF5F5; }
-    .btn-primary { background: var(--red); color: var(--white); }
-    .btn-primary:hover { background: var(--red-dark); }
+.ptable { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ptable th { background: var(--light); padding: 6px 6px; text-align: left; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--gray); border-bottom: 1px solid var(--border); }
+.ptable td { padding: 5px 3px; border-bottom: 1px solid #F5F5F5; vertical-align: middle; }
+.ptable td input { width: 100%; padding: 5px 6px; font-size: 12px; font-family: var(--font); border: 1px solid var(--border); border-radius: 3px; color: var(--dark); background: white; }
+.ptable td input:focus { outline: none; border-color: var(--red); }
+.del-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 2px 4px; transition: color .15s; }
+.del-btn:hover { color: var(--red); }
+.add-btn { background: none; border: 1px dashed var(--border); border-radius: 4px; color: var(--gray); font-size: 12px; font-family: var(--font); padding: 6px; width: 100%; cursor: pointer; margin-top: 8px; transition: border-color .15s, color .15s; }
+.add-btn:hover { border-color: var(--red); color: var(--red); }
 
-    .layout {
-        display: grid;
-        grid-template-columns: 400px 1fr;
-        gap: 24px;
-        padding: 24px 32px;
-        max-width: 1300px;
-        margin: 0 auto;
-        align-items: start;
-    }
+.totals-box { background: var(--light); border-radius: 4px; padding: 10px 12px; margin-top: 10px; font-size: 13px; }
+.trow { display: flex; justify-content: space-between; padding: 3px 0; color: var(--gray); }
+.trow.final { font-weight: 700; color: var(--dark); font-size: 14px; border-top: 1px solid var(--border); margin-top: 5px; padding-top: 6px; }
 
-    /* ── FORM PANEL ── */
-    .form-panel {
-        background: var(--white);
-        border-radius: 8px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-        overflow: hidden;
-        position: sticky;
-        top: 76px;
-        max-height: calc(100vh - 100px);
-        overflow-y: auto;
-    }
+/* PREVIEW */
+.preview-panel { background: var(--white); border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; }
+.preview-lbl { background: var(--light); border-bottom: 1px solid var(--border); padding: 9px 24px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); font-weight: 700; }
 
-    .panel-section { padding: 18px 22px; border-bottom: 1px solid var(--border); }
-    .panel-section:last-child { border-bottom: none; }
+/* OFFERTE DOCUMENT */
+#offerte-doc {
+    padding: 40px 48px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #1A1A1A;
+    background: white;
+    line-height: 1.5;
+}
 
-    .panel-label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--red);
-        margin-bottom: 12px;
-    }
+.doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.doc-logo { height: 56px; }
+.doc-company { text-align: right; font-size: 12px; color: #555; line-height: 1.9; }
+.doc-company strong { display: block; font-size: 13px; color: #1A1A1A; }
 
-    .field { margin-bottom: 10px; }
-    .field:last-child { margin-bottom: 0; }
+.doc-divider { border: none; border-top: 2px solid #CC0000; margin: 0 0 24px; }
 
-    .field label {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--gray);
-        margin-bottom: 4px;
-    }
+.doc-titel-rij { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.doc-titel { font-size: 32px; font-weight: 700; color: #CC0000; line-height: 1; margin-bottom: 5px; }
+.doc-offnum { font-size: 12px; color: #888; }
+.doc-datumsblok { text-align: right; font-size: 13px; line-height: 2.1; }
+.doc-datumsblok strong { color: #1A1A1A; }
 
-    .field input, .field select, .field textarea {
-        width: 100%;
-        padding: 8px 10px;
-        font-size: 13px;
-        font-family: var(--font);
-        border: 1.5px solid var(--border);
-        border-radius: 4px;
-        color: var(--dark);
-        background: var(--white);
-        transition: border-color 0.15s;
-    }
+.doc-adresbox {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    background: #F5F5F5; border-radius: 6px; padding: 16px 20px;
+    margin-bottom: 28px; font-size: 12px; line-height: 1.8;
+}
+.doc-adresbox .alabel { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #CC0000; margin-bottom: 6px; }
 
-    .field input:focus, .field select:focus, .field textarea:focus {
-        outline: none;
-        border-color: var(--red);
-    }
+.doc-sec-lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: #CC0000; margin-bottom: 8px; margin-top: 24px; padding-bottom: 5px;
+    border-bottom: 1px solid #E8E8E8;
+}
 
-    .field textarea { min-height: 56px; resize: vertical; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.doc-spec-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+.doc-spec-table thead tr { background: #CC0000; color: white; }
+.doc-spec-table thead th { padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.doc-spec-table thead th.r { text-align: right; }
+.doc-spec-table tbody tr { border-bottom: 1px solid #EEE; }
+.doc-spec-table tbody tr:nth-child(even) { background: #FAFAFA; }
+.doc-spec-table tbody td { padding: 9px 12px; color: #333; }
+.doc-spec-table tbody td.r { text-align: right; }
 
-    .ptable { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .ptable th {
-        background: var(--light);
-        padding: 6px 6px;
-        text-align: left;
-        font-size: 10px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: var(--gray);
-        border-bottom: 1px solid var(--border);
-    }
+.doc-totals { margin-left: auto; width: 260px; margin-bottom: 8px; font-size: 12px; }
+.doc-trow { display: flex; justify-content: space-between; padding: 4px 0; color: #666; border-bottom: 1px solid #EEE; }
+.doc-trow:last-child { border-bottom: none; }
+.doc-trow.final { font-size: 14px; font-weight: 700; color: #CC0000; border-top: 2px solid #CC0000; margin-top: 6px; padding-top: 8px; }
 
-    .ptable td { padding: 5px 3px; border-bottom: 1px solid #F5F5F5; vertical-align: middle; }
+.doc-vw-box { background: #F9F9F9; border-left: 3px solid #CC0000; border-radius: 0 4px 4px 0; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; line-height: 1.9; }
+.doc-vw-box table { width: 100%; border-collapse: collapse; }
+.doc-vw-box td { padding: 2px 0; vertical-align: top; color: #444; }
+.doc-vw-box td:first-child { font-weight: 700; color: #1A1A1A; width: 90px; }
 
-    .ptable td input {
-        width: 100%;
-        padding: 5px 6px;
-        font-size: 12px;
-        font-family: var(--font);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--dark);
-        background: var(--white);
-    }
+.doc-niet-lijst { list-style: none; padding: 0; margin-bottom: 8px; font-size: 12px; }
+.doc-niet-lijst li { padding: 3px 0; color: #444; }
+.doc-niet-lijst li::before { content: '— '; color: #CC0000; font-weight: 700; }
 
-    .ptable td input:focus { outline: none; border-color: var(--red); }
+.doc-sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 16px; font-size: 12px; }
+.doc-sig-lijn { border-top: 1px solid #CCC; margin: 28px 0 6px; }
 
-    .del-btn {
-        background: none;
-        border: none;
-        color: #ccc;
-        cursor: pointer;
-        font-size: 16px;
-        padding: 2px 4px;
-        transition: color 0.15s;
-    }
+.doc-footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #CC0000; display: flex; justify-content: space-around; font-size: 11px; color: #666; }
 
-    .del-btn:hover { color: var(--red); }
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; background: #1A1A1A; color: white; padding: 12px 20px; border-radius: 6px; font-size: 14px; font-weight: 700; z-index: 999; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateY(0); }
 
-    .add-row-btn {
-        background: none;
-        border: 1px dashed var(--border);
-        border-radius: 4px;
-        color: var(--gray);
-        font-size: 12px;
-        font-family: var(--font);
-        padding: 6px;
-        width: 100%;
-        cursor: pointer;
-        margin-top: 8px;
-        transition: border-color 0.15s, color 0.15s;
-    }
-
-    .add-row-btn:hover { border-color: var(--red); color: var(--red); }
-
-    .totals-box {
-        background: var(--light);
-        border-radius: 4px;
-        padding: 10px 12px;
-        margin-top: 10px;
-        font-size: 13px;
-    }
-
-    .totals-row { display: flex; justify-content: space-between; padding: 3px 0; color: var(--gray); }
-    .totals-row.final { font-weight: 700; color: var(--dark); font-size: 14px; border-top: 1px solid var(--border); margin-top: 5px; padding-top: 6px; }
-
-    /* ── PREVIEW ── */
-    .preview-panel {
-        background: var(--white);
-        border-radius: 8px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-        overflow: hidden;
-    }
-
-    .preview-label {
-        background: var(--light);
-        border-bottom: 1px solid var(--border);
-        padding: 9px 24px;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--gray);
-        font-weight: 700;
-    }
-
-    /* ── OFFERTE DOCUMENT ── */
-    #offerte-doc {
-        padding: 40px 48px;
-        font-family: Arial, sans-serif;
-        font-size: 12px;
-        color: #1A1A1A;
-        background: white;
-        line-height: 1.5;
-    }
-
-    /* Header */
-    .d-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 28px;
-    }
-
-    .d-logo { height: 56px; }
-
-    .d-bedrijf {
-        font-size: 11px;
-        color: #333;
-        line-height: 1.9;
-    }
-
-    .d-bedrijf table { border-collapse: collapse; }
-    .d-bedrijf td { padding: 1px 6px 1px 0; vertical-align: top; }
-    .d-bedrijf td:first-child { color: #888; font-size: 10px; white-space: nowrap; padding-right: 12px; border-right: 1px solid #DDD; padding-left: 0; }
-    .d-bedrijf td:last-child { font-weight: 600; padding-left: 12px; }
-
-    .d-divider { border: none; border-top: 2px solid var(--red); margin: 0 0 20px; }
-
-    /* Klantgegevens */
-    .d-klant { margin-bottom: 24px; font-size: 12px; }
-
-    /* Titel */
-    .d-titel {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 700;
-        text-decoration: underline;
-        letter-spacing: 0.1em;
-        margin-bottom: 16px;
-    }
-
-    /* Meta */
-    .d-meta { margin-bottom: 16px; font-size: 12px; }
-    .d-meta p { margin-bottom: 2px; }
-
-    /* Betreft */
-    .d-betreft { font-weight: 700; margin-bottom: 14px; font-size: 12px; }
-
-    /* Aanhef */
-    .d-aanhef { margin-bottom: 10px; }
-
-    /* Intro */
-    .d-intro { margin-bottom: 16px; color: #333; }
-
-    /* Sectie balk */
-    .d-sectie-balk {
-        background: var(--red);
-        color: white;
-        font-weight: 700;
-        font-size: 12px;
-        padding: 5px 10px;
-        margin-bottom: 10px;
-        margin-top: 16px;
-    }
-
-    /* Werkzaamheden lijst */
-    .d-spec-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 16px;
-        font-size: 12px;
-    }
-
-    .d-spec-table thead tr { background: #CC0000; color: white; }
-
-    .d-spec-table thead th {
-        padding: 9px 12px;
-        text-align: left;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-    }
-
-    .d-spec-table thead th.r { text-align: right; }
-
-    .d-spec-table tbody tr { border-bottom: 1px solid #EEEEEE; }
-    .d-spec-table tbody tr:nth-child(even) { background: #FAFAFA; }
-
-    .d-spec-table tbody td {
-        padding: 9px 12px;
-        color: #333;
-        vertical-align: middle;
-    }
-
-    .d-spec-table tbody td.r { text-align: right; }
-
-    .d-spec-totals {
-        margin-left: auto;
-        width: 280px;
-        margin-bottom: 20px;
-        font-size: 12px;
-        border-top: 1px solid #EEE;
-        padding-top: 8px;
-    }
-
-    .d-spec-totals .tr {
-        display: flex;
-        justify-content: space-between;
-        padding: 4px 0;
-        color: #666;
-    }
-
-    .d-spec-totals .tr.final {
-        font-weight: 700;
-        font-size: 14px;
-        color: #CC0000;
-        border-top: 2px solid #CC0000;
-        margin-top: 6px;
-        padding-top: 8px;
-    }
-
-    /* Totaalalinea */
-    .d-totaal-alinea { margin-bottom: 16px; color: #333; }
-    .d-totaal-bold { font-weight: 700; text-decoration: underline; }
-
-    /* Niet inbegrepen */
-    .d-niet-lijst {
-        list-style: none;
-        padding: 0 0 0 8px;
-        margin-bottom: 14px;
-    }
-
-    .d-niet-lijst li { padding: 2px 0; color: #333; }
-    .d-niet-lijst li::before { content: '- '; }
-
-    /* Voorwaarden tabel */
-    .d-vw-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
-    .d-vw-table td { padding: 4px 8px 4px 0; vertical-align: top; }
-    .d-vw-table td:first-child { font-weight: 700; white-space: nowrap; width: 90px; }
-
-    /* Slottekst */
-    .d-slot { color: #333; margin-bottom: 10px; }
-
-    /* Handtekening */
-    .d-sig-sectie { margin-top: 24px; }
-    .d-sig-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        margin-top: 8px;
-        font-size: 12px;
-    }
-
-    .d-sig-lijn { border-top: 1px solid #999; margin: 28px 0 6px; }
-
-    /* Footer */
-    .d-footer {
-        margin-top: 32px;
-        padding-top: 12px;
-        border-top: 2px solid var(--red);
-        display: flex;
-        justify-content: space-around;
-        font-size: 11px;
-        color: #555;
-    }
-
-    .d-footer span { display: flex; align-items: center; gap: 5px; }
-
-    /* Toast */
-    .toast {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        background: #1A1A1A;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        z-index: 999;
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.3s, transform 0.3s;
-        pointer-events: none;
-    }
-
-    .toast.show { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 900px) {
-        .layout { grid-template-columns: 1fr; padding: 16px; }
-        .form-panel { position: static; max-height: none; }
-        #offerte-doc { padding: 24px 20px; }
-    }
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; padding: 16px; }
+    .form-panel { position: static; max-height: none; }
+    #offerte-doc { padding: 24px 20px; }
+}
 </style>
 </head>
 <body>
 
 <div class="topbar">
     <img src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL">
-    <span class="topbar-title">Offerte opmaken</span>
+    <span class="topbar-title">Offerte opmaken — MHL Installatieservice</span>
     <div class="topbar-btns">
         <button class="btn btn-outline" onclick="downloadPDF()">⬇ Download PDF</button>
         <button class="btn btn-primary" onclick="verstuurOfferte()">Verstuur naar klant →</button>
@@ -422,8 +189,8 @@
     <!-- FORM PANEL -->
     <div class="form-panel">
 
-        <div class="panel-section">
-            <div class="panel-label">Klantgegevens</div>
+        <div class="panel-sec">
+            <div class="panel-lbl">Klantgegevens</div>
             <div class="field-row">
                 <div class="field">
                     <label>Aanhef</label>
@@ -469,12 +236,8 @@
             </div>
         </div>
 
-        <div class="panel-section">
-            <div class="panel-label">Werkzaamheden</div>
-            <div class="field">
-                <label>Betreft</label>
-                <input type="text" id="f-betreft" placeholder="installatie c.v. ketel" oninput="update()">
-            </div>
+        <div class="panel-sec">
+            <div class="panel-lbl">Werkzaamheden</div>
             <div class="field">
                 <label>Type (laadt standaardprijzen)</label>
                 <select id="f-type" onchange="laadStandaard(); update()">
@@ -491,30 +254,30 @@
             </div>
         </div>
 
-        <div class="panel-section">
-            <div class="panel-label">Werkzaamheden & leveranties</div>
+        <div class="panel-sec">
+            <div class="panel-lbl">Specificatie</div>
             <table class="ptable">
                 <thead>
                     <tr>
-                        <th style="width:55%">Omschrijving</th>
-                        <th style="width:13%">Aantal</th>
-                        <th style="width:20%">Prijs (excl.)</th>
-                        <th style="width:8%">BTW</th>
+                        <th style="width:50%">Omschrijving</th>
+                        <th style="width:12%">Aantal</th>
+                        <th style="width:20%">Prijs excl.</th>
+                        <th style="width:10%">BTW</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody id="prijsregels"></tbody>
             </table>
-            <button class="add-row-btn" onclick="voegToe('', 1, 0, 21)">+ Regel toevoegen</button>
+            <button class="add-btn" onclick="voegToe('',1,0,21)">+ Regel toevoegen</button>
             <div class="totals-box">
-                <div class="totals-row"><span>Subtotaal excl. BTW</span><span id="t-sub">€ 0,00</span></div>
-                <div class="totals-row"><span>BTW (21%)</span><span id="t-btw">€ 0,00</span></div>
-                <div class="totals-row final"><span>Totaal incl. BTW</span><span id="t-tot">€ 0,00</span></div>
+                <div class="trow"><span>Subtotaal excl. BTW</span><span id="t-sub">€ 0,00</span></div>
+                <div class="trow"><span>BTW 21%</span><span id="t-btw">€ 0,00</span></div>
+                <div class="trow final"><span>Totaal incl. BTW</span><span id="t-tot">€ 0,00</span></div>
             </div>
         </div>
 
-        <div class="panel-section">
-            <div class="panel-label">Offerte instellingen</div>
+        <div class="panel-sec">
+            <div class="panel-lbl">Offerte instellingen</div>
             <div class="field-row">
                 <div class="field">
                     <label>Offertenummer</label>
@@ -529,111 +292,116 @@
 
     </div>
 
-    <!-- PREVIEW -->
+    <!-- PREVIEW PANEL -->
     <div class="preview-panel">
-        <div class="preview-label">Voorbeeld offerte</div>
+        <div class="preview-lbl">Voorbeeld offerte</div>
+
         <div id="offerte-doc">
 
-            <div class="d-header">
-                <img class="d-logo" src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL Installatieservice">
-                <div class="d-bedrijf" style="text-align:right; line-height:1.9; font-size:12px;">
-                    <strong style="font-size:13px; color:#1A1A1A;">MHL Installatieservice</strong><br>
+            <!-- HEADER -->
+            <div class="doc-header">
+                <img class="doc-logo" src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL Installatieservice">
+                <div class="doc-company">
+                    <strong>MHL Installatieservice</strong>
                     Amsterdam<br>
                     info@mhl-installatieservice.nl<br>
                     www.mhl-installatieservice.nl
                 </div>
             </div>
 
-            <hr class="d-divider">
+            <hr class="doc-divider">
 
-            <div class="d-klant">
-                <div id="doc-klant-naam">Klant: —</div>
-                <div id="doc-klant-adres">Adres: —</div>
+            <!-- TITEL + DATUM -->
+            <div class="doc-titel-rij">
+                <div>
+                    <div class="doc-titel">Offerte</div>
+                    <div class="doc-offnum">Offertenummer: <span id="doc-nummer">—</span></div>
+                </div>
+                <div class="doc-datumsblok">
+                    <strong>Datum:</strong> <span id="doc-datum">—</span><br>
+                    <strong>Geldig tot:</strong> <span id="doc-geldig">—</span>
+                </div>
             </div>
 
-            <div class="d-titel">OFFERTE</div>
-
-            <div class="d-meta">
-                <p>Offertenummer: <strong id="doc-nummer">—</strong></p>
-                <p>Offertedatum: <strong id="doc-datum">—</strong></p>
+            <!-- ADRESBOX -->
+            <div class="doc-adresbox">
+                <div>
+                    <div class="alabel">Opgesteld voor</div>
+                    <div id="doc-klant">—</div>
+                </div>
+                <div>
+                    <div class="alabel">Uitvoeringslocatie</div>
+                    <div id="doc-adres">—</div>
+                </div>
             </div>
 
-            <div class="d-betreft">Betreft: <span id="doc-betreft">—</span></div>
-
-            <div class="d-aanhef" id="doc-aanhef">Geachte heer/mevrouw,</div>
-
-            <div class="d-intro">
-                Naar aanleiding van uw offerte aanvraag, doen wij u hierbij onze prijsopgave toekomen volgens de hieronder omschreven werkzaamheden en leveranties.
-            </div>
-
-            <div class="d-sectie-balk">Specificatie</div>
-            <table class="d-spec-table">
+            <!-- SPECIFICATIE -->
+            <div class="doc-sec-lbl">Specificatie</div>
+            <table class="doc-spec-table">
                 <thead>
                     <tr>
-                        <th style="width:45%">Omschrijving</th>
+                        <th style="width:44%">Omschrijving</th>
                         <th class="r" style="width:10%">Aantal</th>
-                        <th class="r" style="width:15%">Prijs</th>
+                        <th class="r" style="width:16%">Prijs</th>
                         <th class="r" style="width:10%">BTW</th>
-                        <th class="r" style="width:15%">Totaal</th>
+                        <th class="r" style="width:16%">Totaal</th>
                     </tr>
                 </thead>
-                <tbody id="doc-werklijst"></tbody>
+                <tbody id="doc-regels"></tbody>
             </table>
 
-            <div class="d-spec-totals">
-                <div class="tr"><span>Subtotaal (excl. BTW)</span><span id="doc-subtotaal">€ 0,00</span></div>
-                <div class="tr"><span>BTW 21%</span><span id="doc-btw">€ 0,00</span></div>
-                <div class="tr final"><span>Totaal incl. BTW</span><span id="doc-totaal-bold">€ 0,00</span></div>
+            <div class="doc-totals">
+                <div class="doc-trow"><span>Subtotaal (excl. BTW)</span><span id="doc-sub">€ 0,00</span></div>
+                <div class="doc-trow"><span>BTW 21%</span><span id="doc-btw">€ 0,00</span></div>
+                <div class="doc-trow final"><span>Totaal incl. BTW</span><span id="doc-tot">€ 0,00</span></div>
             </div>
 
-            <div class="d-sectie-balk">Niet in de prijs opgenomen</div>
-            <ul class="d-niet-lijst">
+            <!-- NIET IN DE PRIJS OPGENOMEN -->
+            <div class="doc-sec-lbl">Niet in de prijs opgenomen</div>
+            <ul class="doc-niet-lijst">
                 <li>Werkzaamheden en/of leveranties welke niet zijn omschreven worden als meerwerk aangemerkt.</li>
                 <li>Schilderwerk of meerwerk aan de waterleiding/afvoer in geval van onverwachte lekkages.</li>
                 <li>Te leveren materialen die niet in deze offerte beschreven staan.</li>
             </ul>
 
-            <div class="d-sectie-balk">Leverings-, garantie en betalingsvoorwaarden</div>
-            <table class="d-vw-table">
-                <tr>
-                    <td>Geldigheid:</td>
-                    <td>Deze offerte heeft een geldigheidsduur van 30 dagen.</td>
-                </tr>
-                <tr>
-                    <td>Garantie:</td>
-                    <td>1 jaar of volgens voorwaarden fabrikant, alléén indien betaling binnen het gestelde termijn is voldaan. Voor zelf ingekocht materiaal geldt tevens garantie volgens voorwaarden van betreffende fabrikant.</td>
-                </tr>
-                <tr>
-                    <td>Betaling:</td>
-                    <td>U zult onze factuur na de werkzaamheden ontvangen.</td>
-                </tr>
-            </table>
-
-            <div class="d-slot">
-                Wij hopen u met bovenstaande duidelijk te hebben geïnformeerd en een passende aanbieding te hebben gedaan. Indien u akkoord gaat met deze opgave, verzoeken wij u deze offerte ondertekend te retourneren naar info@mhl-installatieservice.nl, onder vermelding van het offertenummer in het onderwerpveld.
+            <!-- LEVERINGS-, GARANTIE EN BETALINGSVOORWAARDEN -->
+            <div class="doc-sec-lbl">Leverings-, garantie en betalingsvoorwaarden</div>
+            <div class="doc-vw-box">
+                <table>
+                    <tr>
+                        <td>Geldigheid:</td>
+                        <td>Deze offerte heeft een geldigheidsduur van 30 dagen.</td>
+                    </tr>
+                    <tr>
+                        <td>Garantie:</td>
+                        <td>1 jaar of volgens voorwaarden fabrikant, alléén indien betaling binnen het gestelde termijn is voldaan.</td>
+                    </tr>
+                    <tr>
+                        <td>Betaling:</td>
+                        <td>U zult onze factuur na de werkzaamheden ontvangen.</td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="d-slot">
-                Berichtgeving per mail met akkoord is ook mogelijk. Hierna zullen wij contact met u opnemen om de planning te bespreken.
-            </div>
-
-            <div class="d-sectie-balk">Ondertekening voor akkoord</div>
-            <div class="d-sig-grid">
+            <!-- HANDTEKENING -->
+            <div class="doc-sec-lbl">Ondertekening voor akkoord</div>
+            <div class="doc-sig-grid">
                 <div>
                     <div>Akkoord klant:</div>
-                    <div class="d-sig-lijn"></div>
+                    <div class="doc-sig-lijn"></div>
+                    <div id="doc-sig-naam" style="font-weight:600">—</div>
+                    <div style="font-size:11px; color:#888;">Datum: _______________</div>
                 </div>
                 <div>
-                    <div>Datum en plaats:</div>
-                    <div class="d-sig-lijn"></div>
+                    <div>Namens MHL Installatieservice:</div>
+                    <div class="doc-sig-lijn"></div>
+                    <div style="font-weight:600">Mohammed Hlalouch</div>
+                    <div style="font-size:11px; color:#888;">Eigenaar · MHL Installatieservice</div>
                 </div>
             </div>
 
-            <p style="margin-top:20px; color:#333;">Wij danken u voor uw aanvraag en vertrouwen in MHL Installatieservice.</p>
-            <p style="margin-top:6px; color:#333;">Met vriendelijke groet,</p>
-            <p style="margin-top:6px; font-weight:700;">MHL Installatieservice</p>
-
-            <div class="d-footer">
+            <!-- FOOTER -->
+            <div class="doc-footer">
                 <span>✉ info@mhl-installatieservice.nl</span>
                 <span>📞 (+31) 085 130 2258</span>
                 <span>🌐 www.mhl-installatieservice.nl</span>
@@ -655,15 +423,15 @@ const standaard = {
     "cv-onderhoud":  [["CV-ketel revisie en reiniging", 1, 125, 21], ["Onderdelen en materialen", 1, 35, 21]],
     "cv-vervanging": [
         ["Het aftappen van de cv-installatie", 1, 50, 21],
-        ["Het demonteren, verwijderen en afvoeren van de bestaande c.v.-ketel inclusief rookgasafvoer", 1, 75, 21],
-        ["Het leveren, monteren en installeren van een nieuwe c.v.-ketel", 1, 1200, 21],
-        ["Het aansluiten van de nieuwe c.v.-ketel op de bestaande koud-, warmwater- en cv-leidingen", 1, 75, 21],
-        ["Het vullen, ontluchten en proefsttoken van de installatie", 1, 50, 21],
-        ["Controle op correcte werking van de installatie na oplevering", 1, 0, 21],
+        ["Demonteren, verwijderen en afvoeren bestaande c.v.-ketel incl. rookgasafvoer", 1, 75, 21],
+        ["Leveren, monteren en installeren nieuwe c.v.-ketel", 1, 1200, 21],
+        ["Aansluiten op bestaande koud-, warmwater- en cv-leidingen", 1, 75, 21],
+        ["Vullen, ontluchten en proefsttoken van de installatie", 1, 50, 21],
+        ["Controle op correcte werking na oplevering", 1, 0, 21],
     ],
     "ontstopping":   [["Mechanisch ontstoppen afvoer", 1, 95, 21], ["Naspoelen en controle", 1, 30, 21]],
     "lekkage":       [["Opsporen lekkage", 1, 75, 21], ["Reparatie lekkage", 1, 95, 21], ["Materialen", 1, 25, 21]],
-    "badkamer":      [["Arbeid badkamer/toilet renovatie", 1, 75, 21], ["Materialen en sanitair", 1, 0, 21]],
+    "badkamer":      [["Arbeid renovatie badkamer/toilet", 1, 75, 21], ["Materialen en sanitair", 1, 0, 21]],
     "dak":           [["Inspectie dak en zinkwerk", 1, 75, 21], ["Reparatie zinkwerk", 1, 0, 21]],
     "anders":        [["Werkzaamheden", 1, 0, 21]],
 };
@@ -671,22 +439,17 @@ const standaard = {
 window.onload = function() {
     const jaar = new Date().getFullYear();
     const num  = String(Math.floor(Math.random() * 9000) + 1000);
-    document.getElementById('f-nummer').value = `000${num}`.slice(-7);
+    document.getElementById('f-nummer').value = `MHL-${jaar}-${num}`;
 
     const geldig = new Date();
     geldig.setDate(geldig.getDate() + 30);
     document.getElementById('f-geldig').value = geldig.toISOString().split('T')[0];
 
     const p = new URLSearchParams(window.location.search);
-    if (p.get('naam'))         document.getElementById('f-naam').value = p.get('naam');
-    if (p.get('achternaam'))   document.getElementById('f-achternaam').value = p.get('achternaam');
-    if (p.get('email'))        document.getElementById('f-email').value = p.get('email');
-    if (p.get('tel'))          document.getElementById('f-tel').value = p.get('tel');
-    if (p.get('adres'))        document.getElementById('f-adres').value = p.get('adres');
-    if (p.get('postcode'))     document.getElementById('f-postcode').value = p.get('postcode');
-    if (p.get('plaats'))       document.getElementById('f-plaats').value = p.get('plaats');
-    if (p.get('betreft'))      document.getElementById('f-betreft').value = p.get('betreft');
-    if (p.get('type'))         { document.getElementById('f-type').value = p.get('type'); laadStandaard(); }
+    ['naam','achternaam','email','tel','adres','postcode','plaats'].forEach(k => {
+        if (p.get(k)) document.getElementById('f-' + k).value = p.get(k);
+    });
+    if (p.get('type')) { document.getElementById('f-type').value = p.get('type'); laadStandaard(); }
 
     if (!document.getElementById('prijsregels').children.length) voegToe('', 1, 0, 21);
 
@@ -711,8 +474,8 @@ function voegToe(omschr, aantal, prijs, btw) {
         <td><input type="text" value="${omschr}" placeholder="Omschrijving" oninput="update()"></td>
         <td><input type="number" value="${aantal}" min="0" step="0.5" style="width:46px" oninput="update()"></td>
         <td><input type="number" value="${prijs}" min="0" placeholder="0" oninput="update()"></td>
-        <td><input type="number" value="${btw}" min="0" max="21" style="width:38px" oninput="update()"></td>
-        <td><button class="del-btn" onclick="this.closest('tr').remove(); update()">×</button></td>
+        <td><input type="number" value="${btw}" min="0" max="21" style="width:36px" oninput="update()"></td>
+        <td><button class="del-btn" onclick="this.closest('tr').remove();update()">×</button></td>
     `;
     document.getElementById('prijsregels').appendChild(tr);
     update();
@@ -725,76 +488,71 @@ function fmt(n) {
 function fmtDatum(iso) {
     if (!iso) return '—';
     const [y,m,d] = iso.split('-');
-    const mnd = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
-    return `${parseInt(d)} ${mnd[parseInt(m)-1]} ${y}`;
+    return `${parseInt(d)}-${m}-${y}`;
 }
 
 function update() {
-    const naam       = document.getElementById('f-naam').value.trim();
-    const achternaam = document.getElementById('f-achternaam').value.trim();
-    const aanhef     = document.getElementById('f-aanhef').value;
-    const email      = document.getElementById('f-email').value.trim();
-    const tel        = document.getElementById('f-tel').value.trim();
-    const adres      = document.getElementById('f-adres').value.trim();
-    const postcode   = document.getElementById('f-postcode').value.trim();
-    const plaats     = document.getElementById('f-plaats').value.trim();
-    const betreft    = document.getElementById('f-betreft').value.trim();
-    const nummer     = document.getElementById('f-nummer').value.trim();
-    const geldig     = document.getElementById('f-geldig').value;
+    const naam      = document.getElementById('f-naam').value.trim();
+    const achter    = document.getElementById('f-achternaam').value.trim();
+    const aanhef    = document.getElementById('f-aanhef').value;
+    const email     = document.getElementById('f-email').value.trim();
+    const tel       = document.getElementById('f-tel').value.trim();
+    const adres     = document.getElementById('f-adres').value.trim();
+    const postcode  = document.getElementById('f-postcode').value.trim();
+    const plaats    = document.getElementById('f-plaats').value.trim();
+    const nummer    = document.getElementById('f-nummer').value.trim();
+    const geldig    = document.getElementById('f-geldig').value;
 
-    // Klantblok
-    document.getElementById('doc-klant-naam').textContent = `Klant: ${naam || '—'}`;
+    // Klantblok in doc
+    const klantLines = [naam, tel, email].filter(Boolean);
+    document.getElementById('doc-klant').innerHTML = klantLines.join('<br>') || '—';
     const adresregel = [adres, [postcode, plaats].filter(Boolean).join(' ')].filter(Boolean).join(', ');
-    document.getElementById('doc-klant-adres').textContent = `Adres: ${adresregel || '—'}`;
+    document.getElementById('doc-adres').textContent = adresregel || '—';
 
-    // Meta
-    document.getElementById('doc-nummer').textContent = nummer || '—';
-    document.getElementById('doc-datum').textContent  = fmtDatum(new Date().toISOString().split('T')[0]);
-    document.getElementById('doc-betreft').textContent = betreft || '—';
+    document.getElementById('doc-nummer').textContent  = nummer || '—';
+    document.getElementById('doc-datum').textContent   = fmtDatum(new Date().toISOString().split('T')[0]);
+    document.getElementById('doc-geldig').textContent  = fmtDatum(geldig);
+    document.getElementById('doc-sig-naam').textContent = naam || '—';
 
-    // Aanhef
-    const aanhefTekst = achternaam ? `${aanhef} ${achternaam},` : `${aanhef},`;
-    document.getElementById('doc-aanhef').textContent = aanhefTekst;
-
-    // Prijsregels → werklijst + totalen
+    // Prijsregels
     const rijen = document.querySelectorAll('#prijsregels tr');
-    let subtotaal = 0, btwTot = 0;
-    const werklijst = document.getElementById('doc-werklijst');
-    werklijst.innerHTML = '';
+    let sub = 0, btwTot = 0;
+    const tbody = document.getElementById('doc-regels');
+    tbody.innerHTML = '';
 
     rijen.forEach(tr => {
-        const inp = tr.querySelectorAll('input');
+        const inp   = tr.querySelectorAll('input');
         const txt   = inp[0].value.trim();
         const antal = parseFloat(inp[1].value) || 0;
         const prijs = parseFloat(inp[2].value) || 0;
         const btw   = parseFloat(inp[3].value) || 0;
         const regel = antal * prijs;
-        subtotaal += regel;
-        btwTot    += regel * (btw / 100);
+        const btwB  = regel * (btw / 100);
+        sub    += regel;
+        btwTot += btwB;
 
-        const regelTotIncl = regel + (regel * (btw / 100));
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+        const row = document.createElement('tr');
+        row.innerHTML = `
             <td>${txt || '—'}</td>
             <td class="r">${antal}</td>
             <td class="r">${fmt(prijs)}</td>
             <td class="r">${btw}%</td>
-            <td class="r">${fmt(regelTotIncl)}</td>
+            <td class="r">${fmt(regel + btwB)}</td>
         `;
-        werklijst.appendChild(tr);
+        tbody.appendChild(row);
     });
 
-    if (!werklijst.children.length) werklijst.innerHTML = '<li>—</li>';
+    const tot = sub + btwTot;
 
-    const totaal = subtotaal + btwTot;
-
-    document.getElementById('t-sub').textContent = fmt(subtotaal);
+    // Form totalen
+    document.getElementById('t-sub').textContent = fmt(sub);
     document.getElementById('t-btw').textContent = fmt(btwTot);
-    document.getElementById('t-tot').textContent = fmt(totaal);
+    document.getElementById('t-tot').textContent = fmt(tot);
 
-    document.getElementById('doc-subtotaal').textContent  = fmt(subtotaal);
-    document.getElementById('doc-btw').textContent        = fmt(btwTot);
-    document.getElementById('doc-totaal-bold').textContent = fmt(totaal);
+    // Doc totalen
+    document.getElementById('doc-sub').textContent = fmt(sub);
+    document.getElementById('doc-btw').textContent = fmt(btwTot);
+    document.getElementById('doc-tot').textContent = fmt(tot);
 }
 
 function downloadPDF() {
