@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offerte opmaken — MHL Installatieservice</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --red: #AA1C1C;
+        --red-dark: #8B1515;
+        --dark: #1A1A1A;
+        --gray: #555;
+        --light: #F5F5F5;
+        --border: #E0E0E0;
+        --white: #fff;
+        --font: 'Arial', sans-serif;
+    }
+
+    body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
+
+    /* ── HEADER ── */
+    .topbar {
+        background: var(--white);
+        border-bottom: 3px solid var(--red);
+        padding: 14px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .topbar img { height: 40px; }
+
+    .topbar-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    .topbar-btns { display: flex; gap: 10px; }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 700;
+        font-family: var(--font);
+        cursor: pointer;
+        border: none;
+        transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-outline {
+        background: var(--white);
+        border: 2px solid var(--red);
+        color: var(--red);
+    }
+
+    .btn-outline:hover { background: #FFF5F5; }
+
+    .btn-primary {
+        background: var(--red);
+        color: var(--white);
+    }
+
+    .btn-primary:hover { background: var(--red-dark); }
+
+    /* ── LAYOUT ── */
+    .layout {
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        gap: 24px;
+        padding: 24px 32px;
+        max-width: 1300px;
+        margin: 0 auto;
+        align-items: start;
+    }
+
+    /* ── FORM PANEL ── */
+    .form-panel {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        overflow: hidden;
+        position: sticky;
+        top: 80px;
+    }
+
+    .panel-section {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .panel-section:last-child { border-bottom: none; }
+
+    .panel-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 14px;
+    }
+
+    .field { margin-bottom: 12px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gray);
+        margin-bottom: 4px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+        width: 100%;
+        padding: 9px 11px;
+        font-size: 13px;
+        font-family: var(--font);
+        border: 1.5px solid var(--border);
+        border-radius: 4px;
+        color: var(--dark);
+        transition: border-color 0.15s;
+        background: var(--white);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+        outline: none;
+        border-color: var(--red);
+    }
+
+    .field textarea { min-height: 60px; resize: vertical; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* ── PRIJSTABEL ── */
+    .price-table-wrapper { overflow-x: auto; }
+
+    .ptable {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+
+    .ptable th {
+        background: var(--light);
+        padding: 7px 8px;
+        text-align: left;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--gray);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .ptable td {
+        padding: 6px 4px;
+        border-bottom: 1px solid #F0F0F0;
+        vertical-align: middle;
+    }
+
+    .ptable td input {
+        width: 100%;
+        padding: 6px 7px;
+        font-size: 12px;
+        font-family: var(--font);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--dark);
+        background: var(--white);
+    }
+
+    .ptable td input:focus {
+        outline: none;
+        border-color: var(--red);
+    }
+
+    .ptable .td-del {
+        width: 28px;
+        text-align: center;
+    }
+
+    .del-btn {
+        background: none;
+        border: none;
+        color: #ccc;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        padding: 2px 4px;
+        transition: color 0.15s;
+    }
+
+    .del-btn:hover { color: var(--red); }
+
+    .add-row-btn {
+        background: none;
+        border: 1px dashed var(--border);
+        border-radius: 4px;
+        color: var(--gray);
+        font-size: 12px;
+        font-family: var(--font);
+        padding: 7px;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: border-color 0.15s, color 0.15s;
+    }
+
+    .add-row-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* Totalen */
+    .totals-box {
+        background: var(--light);
+        border-radius: 4px;
+        padding: 12px 14px;
+        margin-top: 12px;
+        font-size: 13px;
+    }
+
+    .totals-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        color: var(--gray);
+    }
+
+    .totals-row.final {
+        font-weight: 700;
+        color: var(--dark);
+        font-size: 15px;
+        border-top: 1px solid var(--border);
+        margin-top: 6px;
+        padding-top: 8px;
+    }
+
+    /* ── PREVIEW PANEL ── */
+    .preview-panel {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .preview-label {
+        background: var(--light);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 24px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray);
+        font-weight: 700;
+    }
+
+    /* ── OFFERTE DOCUMENT ── */
+    #offerte-doc {
+        padding: 48px 56px;
+        font-family: 'Arial', sans-serif;
+        font-size: 13px;
+        color: #1A1A1A;
+        min-height: 297mm;
+        background: white;
+    }
+
+    .doc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #AA1C1C;
+    }
+
+    .doc-logo { height: 48px; }
+
+    .doc-company {
+        text-align: right;
+        font-size: 12px;
+        color: #666;
+        line-height: 1.8;
+    }
+
+    .doc-company strong { display: block; color: #1A1A1A; font-size: 13px; margin-bottom: 2px; }
+
+    .doc-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 28px;
+    }
+
+    .doc-title h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #AA1C1C;
+        margin-bottom: 3px;
+    }
+
+    .doc-title .offnum { font-size: 12px; color: #888; }
+
+    .doc-meta { text-align: right; font-size: 12px; color: #666; line-height: 1.9; }
+    .doc-meta strong { color: #1A1A1A; }
+
+    .doc-address-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        background: #F7F7F7;
+        border-radius: 6px;
+        padding: 16px 20px;
+        margin-bottom: 28px;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .doc-address-row .alabel {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #AA1C1C;
+        margin-bottom: 6px;
+    }
+
+    .doc-sec-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #AA1C1C;
+        margin-bottom: 8px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #E0E0E0;
+    }
+
+    .doc-omschrijving {
+        font-size: 12px;
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 24px;
+        padding: 10px 14px;
+        background: #F7F7F7;
+        border-left: 2px solid #AA1C1C;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+        font-size: 12px;
+    }
+
+    .doc-table thead tr { background: #AA1C1C; color: white; }
+    .doc-table thead th {
+        padding: 9px 12px;
+        text-align: left;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .doc-table thead th.right { text-align: right; }
+
+    .doc-table tbody tr { border-bottom: 1px solid #EEEEEE; }
+    .doc-table tbody tr:nth-child(even) { background: #F9F9F9; }
+    .doc-table tbody td { padding: 9px 12px; vertical-align: top; }
+    .doc-table tbody td.right { text-align: right; }
+    .doc-table tbody td.center { text-align: center; }
+
+    .doc-totals {
+        margin-left: auto;
+        width: 240px;
+        margin-bottom: 28px;
+        font-size: 12px;
+    }
+
+    .doc-totals-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        color: #666;
+        border-bottom: 1px solid #EEE;
+    }
+
+    .doc-totals-row:last-child { border-bottom: none; }
+
+    .doc-totals-row.final {
+        font-weight: 700;
+        color: #AA1C1C;
+        font-size: 15px;
+        border-top: 2px solid #AA1C1C;
+        margin-top: 4px;
+        padding-top: 8px;
+    }
+
+    .doc-voorwaarden {
+        background: #FFF5F5;
+        border-left: 3px solid #AA1C1C;
+        border-radius: 0 4px 4px 0;
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        font-size: 11px;
+        color: #666;
+        line-height: 1.9;
+    }
+
+    .doc-voorwaarden strong { color: #1A1A1A; display: block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+
+    .doc-sig {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid #E0E0E0;
+        font-size: 12px;
+    }
+
+    .doc-sig .sig-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb; margin-bottom: 24px; }
+    .doc-sig .sig-line { border-top: 1px solid #DDD; margin-bottom: 6px; }
+    .doc-sig .sig-name { font-weight: 600; color: #1A1A1A; }
+    .doc-sig .sig-role { color: #888; font-size: 11px; }
+
+    /* ── TOAST ── */
+    .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #1A1A1A;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s, transform 0.3s;
+        pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+        .layout { grid-template-columns: 1fr; padding: 16px; }
+        .form-panel { position: static; }
+        #offerte-doc { padding: 28px 24px; }
+    }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <img src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL">
+    <span class="topbar-title">Offerte opmaken</span>
+    <div class="topbar-btns">
+        <button class="btn btn-outline" onclick="downloadPDF()">⬇ Download PDF</button>
+        <button class="btn btn-primary" onclick="verstuurOfferte()">Verstuur naar klant →</button>
+    </div>
+</div>
+
+<div class="layout">
+
+    <!-- FORM PANEL -->
+    <div class="form-panel">
+
+        <!-- Klantgegevens -->
+        <div class="panel-section">
+            <div class="panel-label">Klantgegevens</div>
+            <div class="field">
+                <label>Naam</label>
+                <input type="text" id="f-naam" placeholder="Voor- en achternaam" oninput="update()">
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Telefoon</label>
+                    <input type="tel" id="f-tel" placeholder="06 00000000" oninput="update()">
+                </div>
+                <div class="field">
+                    <label>E-mail</label>
+                    <input type="email" id="f-email" placeholder="klant@email.nl" oninput="update()">
+                </div>
+            </div>
+            <div class="field">
+                <label>Adres</label>
+                <input type="text" id="f-adres" placeholder="Straat + huisnummer" oninput="update()">
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Postcode</label>
+                    <input type="text" id="f-postcode" placeholder="1234 AB" oninput="update()">
+                </div>
+                <div class="field">
+                    <label>Woonplaats</label>
+                    <input type="text" id="f-plaats" placeholder="Amsterdam" oninput="update()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Werkzaamheden -->
+        <div class="panel-section">
+            <div class="panel-label">Werkzaamheden</div>
+            <div class="field">
+                <label>Type klus</label>
+                <select id="f-type" onchange="laadStandaardPrijzen(); update()">
+                    <option value="">Selecteer type</option>
+                    <option value="loodgieter">Loodgieterswerkzaamheden</option>
+                    <option value="cv-onderhoud">CV-ketel onderhoud</option>
+                    <option value="cv-vervanging">CV-ketel vervanging</option>
+                    <option value="ontstopping">Ontstopping</option>
+                    <option value="lekkage">Lekkagereparatie</option>
+                    <option value="badkamer">Badkamer/toilet renovatie</option>
+                    <option value="dak">Dak- en zinkwerk</option>
+                    <option value="anders">Anders</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Omschrijving</label>
+                <textarea id="f-omschrijving" placeholder="Korte beschrijving van de werkzaamheden..." oninput="update()"></textarea>
+            </div>
+        </div>
+
+        <!-- Prijsopbouw -->
+        <div class="panel-section">
+            <div class="panel-label">Prijsopbouw</div>
+            <div class="price-table-wrapper">
+                <table class="ptable">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">Omschrijving</th>
+                            <th style="width:12%">Aantal</th>
+                            <th style="width:20%">Prijs</th>
+                            <th style="width:12%">BTW</th>
+                            <th style="width:12%">Totaal</th>
+                            <th class="td-del"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="prijsregels"></tbody>
+                </table>
+                <button class="add-row-btn" onclick="voegRegelToe('', 1, '', 21)">+ Regel toevoegen</button>
+            </div>
+
+            <div class="totals-box">
+                <div class="totals-row"><span>Subtotaal (excl. BTW)</span><span id="t-subtotaal">€ 0,00</span></div>
+                <div class="totals-row"><span>BTW</span><span id="t-btw">€ 0,00</span></div>
+                <div class="totals-row final"><span>Totaal incl. BTW</span><span id="t-totaal">€ 0,00</span></div>
+            </div>
+        </div>
+
+        <!-- Offerte instellingen -->
+        <div class="panel-section">
+            <div class="panel-label">Offerte instellingen</div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Offertenummer</label>
+                    <input type="text" id="f-nummer" oninput="update()">
+                </div>
+                <div class="field">
+                    <label>Geldig tot</label>
+                    <input type="date" id="f-geldig" oninput="update()">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PREVIEW PANEL -->
+    <div class="preview-panel">
+        <div class="preview-label">Voorbeeld offerte</div>
+        <div id="offerte-doc">
+
+            <!-- Document header -->
+            <div class="doc-header">
+                <img class="doc-logo" src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL Installatieservice">
+                <div class="doc-company">
+                    <strong>MHL Installatieservice</strong>
+                    Amsterdam<br>
+                    info@mhl-installatieservice.nl<br>
+                    www.mhl-installatieservice.nl
+                </div>
+            </div>
+
+            <!-- Titel + meta -->
+            <div class="doc-title-row">
+                <div class="doc-title">
+                    <h1>Offerte</h1>
+                    <div class="offnum" id="doc-nummer">Offertenummer: —</div>
+                </div>
+                <div class="doc-meta">
+                    <strong>Datum:</strong> <span id="doc-datum">—</span><br>
+                    <strong>Geldig tot:</strong> <span id="doc-geldig">—</span>
+                </div>
+            </div>
+
+            <!-- Adresblok -->
+            <div class="doc-address-row">
+                <div>
+                    <div class="alabel">Opgesteld voor</div>
+                    <div id="doc-klant">—</div>
+                </div>
+                <div>
+                    <div class="alabel">Uitvoeringslocatie</div>
+                    <div id="doc-adres">—</div>
+                </div>
+            </div>
+
+            <!-- Omschrijving -->
+            <div class="doc-sec-label">Omschrijving werkzaamheden</div>
+            <div class="doc-omschrijving" id="doc-omschrijving">—</div>
+
+            <!-- Prijstabel -->
+            <div class="doc-sec-label">Specificatie</div>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th style="width:44%">Omschrijving</th>
+                        <th class="right" style="width:10%">Aantal</th>
+                        <th class="right" style="width:18%">Prijs</th>
+                        <th class="right" style="width:10%">BTW</th>
+                        <th class="right" style="width:18%">Totaal</th>
+                    </tr>
+                </thead>
+                <tbody id="doc-regels"></tbody>
+            </table>
+
+            <!-- Totalen -->
+            <div class="doc-totals">
+                <div class="doc-totals-row"><span>Subtotaal (excl. BTW)</span><span id="doc-subtotaal">€ 0,00</span></div>
+                <div class="doc-totals-row"><span>BTW 21%</span><span id="doc-btw">€ 0,00</span></div>
+                <div class="doc-totals-row final"><span>Totaal incl. BTW</span><span id="doc-totaal">€ 0,00</span></div>
+            </div>
+
+            <!-- Voorwaarden -->
+            <div class="doc-voorwaarden">
+                <strong>Voorwaarden</strong>
+                Betaling binnen 14 dagen na factuurdatum · 30% aanbetaling bij opdrachten boven €500 · 2 jaar garantie op alle werkzaamheden · Meerwerk altijd vooraf overlegd en schriftelijk bevestigd · Op al onze werkzaamheden zijn de algemene voorwaarden van MHL Installatieservice van toepassing.
+            </div>
+
+            <!-- Handtekening -->
+            <div class="doc-sig">
+                <div>
+                    <div class="sig-lbl">Akkoord opdrachtgever</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-name" id="doc-sig-naam">—</div>
+                    <div class="sig-role">Datum: _______________</div>
+                </div>
+                <div>
+                    <div class="sig-lbl">Namens MHL Installatieservice</div>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">Mohammed Hlalouch</div>
+                    <div class="sig-role">Eigenaar · MHL Installatieservice</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Toast melding -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── EMAILJS CONFIG (invullen na account aanmaken) ──
+const EMAILJS_PUBLIC_KEY   = "JOUW_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID   = "JOUW_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID  = "JOUW_TEMPLATE_ID";
+
+// ── STANDAARDPRIJZEN PER TYPE KLUS ──
+const standaardPrijzen = {
+    "loodgieter":    [["Arbeid loodgieterswerk", 1, 75, 21], ["Materialen", 1, 50, 21]],
+    "cv-onderhoud":  [["CV-ketel revisie en reiniging", 1, 125, 21], ["Onderdelen en materialen", 1, 35, 21]],
+    "cv-vervanging": [["Verwijderen en afvoeren oude CV-ketel", 1, 50, 21], ["Levering + plaatsing nieuwe CV-ketel", 1, 1200, 21], ["Inbedrijfstelling en controle", 1, 75, 21]],
+    "ontstopping":   [["Mechanisch ontstoppen afvoer", 1, 95, 21], ["Naspoelen en controle", 1, 30, 21]],
+    "lekkage":       [["Opsporen lekkage", 1, 75, 21], ["Reparatie lekkage", 1, 95, 21], ["Materialen", 1, 25, 21]],
+    "badkamer":      [["Arbeid badkamer/toilet renovatie", 1, 75, 21], ["Materialen en sanitair", 1, 0, 21]],
+    "dak":           [["Inspectie dak en zinkwerk", 1, 75, 21], ["Reparatie", 1, 0, 21]],
+    "anders":        [["Werkzaamheden", 1, 0, 21]],
+};
+
+// ── INITIALISATIE ──
+window.onload = function() {
+    // Offertenummer genereren
+    const jaar = new Date().getFullYear();
+    const num = String(Math.floor(Math.random() * 900) + 100);
+    document.getElementById('f-nummer').value = `MHL-${jaar}-${num}`;
+
+    // Geldigheidsdatum (14 dagen)
+    const geldig = new Date();
+    geldig.setDate(geldig.getDate() + 14);
+    document.getElementById('f-geldig').value = geldig.toISOString().split('T')[0];
+
+    // URL parameters inlezen (voor automatisch invullen vanuit e-mail)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('naam'))        document.getElementById('f-naam').value = params.get('naam');
+    if (params.get('email'))       document.getElementById('f-email').value = params.get('email');
+    if (params.get('tel'))         document.getElementById('f-tel').value = params.get('tel');
+    if (params.get('adres'))       document.getElementById('f-adres').value = params.get('adres');
+    if (params.get('postcode'))    document.getElementById('f-postcode').value = params.get('postcode');
+    if (params.get('plaats'))      document.getElementById('f-plaats').value = params.get('plaats');
+    if (params.get('type'))        { document.getElementById('f-type').value = params.get('type'); laadStandaardPrijzen(); }
+    if (params.get('omschrijving')) document.getElementById('f-omschrijving').value = params.get('omschrijving');
+
+    // Eerste lege regel als geen standaardprijzen
+    if (document.getElementById('prijsregels').children.length === 0) {
+        voegRegelToe('', 1, '', 21);
+    }
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    update();
+};
+
+// ── STANDAARDPRIJZEN LADEN ──
+function laadStandaardPrijzen() {
+    const type = document.getElementById('f-type').value;
+    const regels = standaardPrijzen[type];
+    if (!regels) return;
+    document.getElementById('prijsregels').innerHTML = '';
+    regels.forEach(r => voegRegelToe(r[0], r[1], r[2], r[3]));
+    update();
+}
+
+// ── PRIJSREGEL TOEVOEGEN ──
+let regelId = 0;
+function voegRegelToe(omschrijving, aantal, prijs, btw) {
+    const id = regelId++;
+    const tbody = document.getElementById('prijsregels');
+    const tr = document.createElement('tr');
+    tr.dataset.id = id;
+    tr.innerHTML = `
+        <td><input type="text" value="${omschrijving}" placeholder="Omschrijving" oninput="update()"></td>
+        <td><input type="number" value="${aantal}" min="0" step="0.5" style="width:52px" oninput="update()"></td>
+        <td><input type="number" value="${prijs}" min="0" step="1" placeholder="0" oninput="update()"></td>
+        <td><input type="number" value="${btw}" min="0" max="21" step="1" style="width:44px" oninput="update()"></td>
+        <td class="right" id="reg-tot-${id}">€ 0,00</td>
+        <td class="td-del"><button class="del-btn" onclick="this.closest('tr').remove(); update()">×</button></td>
+    `;
+    tbody.appendChild(tr);
+    update();
+}
+
+// ── FORMATEER BEDRAG ──
+function fmt(n) {
+    return '€ ' + n.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// ── DATUM FORMATEREN ──
+function fmtDatum(d) {
+    if (!d) return '—';
+    const [y, m, dd] = d.split('-');
+    return `${dd}-${m}-${y}`;
+}
+
+// ── UPDATE PREVIEW ──
+function update() {
+    // Klantgegevens
+    const naam     = document.getElementById('f-naam').value.trim() || '—';
+    const tel      = document.getElementById('f-tel').value.trim();
+    const email    = document.getElementById('f-email').value.trim();
+    const adres    = document.getElementById('f-adres').value.trim();
+    const postcode = document.getElementById('f-postcode').value.trim();
+    const plaats   = document.getElementById('f-plaats').value.trim();
+    const omschr   = document.getElementById('f-omschrijving').value.trim() || '—';
+    const nummer   = document.getElementById('f-nummer').value.trim();
+    const geldig   = document.getElementById('f-geldig').value;
+
+    // Adresregel klant
+    const klantInfo = [naam, tel, email].filter(Boolean).join(' · ');
+    const adresInfo = [adres, [postcode, plaats].filter(Boolean).join(' ')].filter(Boolean).join(', ') || '—';
+
+    document.getElementById('doc-klant').innerHTML = naam + (tel ? '<br>' + tel : '') + (email ? '<br>' + email : '');
+    document.getElementById('doc-adres').textContent = adresInfo;
+    document.getElementById('doc-omschrijving').textContent = omschr;
+    document.getElementById('doc-nummer').textContent = `Offertenummer: ${nummer || '—'}`;
+    document.getElementById('doc-datum').textContent = fmtDatum(new Date().toISOString().split('T')[0]);
+    document.getElementById('doc-geldig').textContent = fmtDatum(geldig);
+    document.getElementById('doc-sig-naam').textContent = naam;
+
+    // Prijsregels berekenen
+    const rijen = document.querySelectorAll('#prijsregels tr');
+    let subtotaal = 0, btwTotaal = 0;
+    const docRegels = document.getElementById('doc-regels');
+    docRegels.innerHTML = '';
+
+    rijen.forEach(tr => {
+        const inputs = tr.querySelectorAll('input');
+        const omschrVal = inputs[0].value.trim();
+        const aantalVal = parseFloat(inputs[1].value) || 0;
+        const prijsVal  = parseFloat(inputs[2].value) || 0;
+        const btwVal    = parseFloat(inputs[3].value) || 0;
+        const regelTot  = aantalVal * prijsVal;
+        const btwBedrag = regelTot * (btwVal / 100);
+        subtotaal  += regelTot;
+        btwTotaal  += btwBedrag;
+
+        const id = tr.dataset.id;
+        if (document.getElementById(`reg-tot-${id}`)) {
+            document.getElementById(`reg-tot-${id}`).textContent = fmt(regelTot + btwBedrag);
+        }
+
+        // Preview rij
+        const tdoc = document.createElement('tr');
+        tdoc.innerHTML = `
+            <td>${omschrVal || '—'}</td>
+            <td class="right">${aantalVal}</td>
+            <td class="right">${fmt(prijsVal)}</td>
+            <td class="right">${btwVal}%</td>
+            <td class="right">${fmt(regelTot + btwBedrag)}</td>
+        `;
+        docRegels.appendChild(tdoc);
+    });
+
+    const totaal = subtotaal + btwTotaal;
+
+    // Form totalen
+    document.getElementById('t-subtotaal').textContent = fmt(subtotaal);
+    document.getElementById('t-btw').textContent = fmt(btwTotaal);
+    document.getElementById('t-totaal').textContent = fmt(totaal);
+
+    // Preview totalen
+    document.getElementById('doc-subtotaal').textContent = fmt(subtotaal);
+    document.getElementById('doc-btw').textContent = fmt(btwTotaal);
+    document.getElementById('doc-totaal').textContent = fmt(totaal);
+}
+
+// ── PDF DOWNLOADEN ──
+function downloadPDF() {
+    const naam = document.getElementById('f-naam').value.trim() || 'klant';
+    const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
+    const element = document.getElementById('offerte-doc');
+    const opt = {
+        margin: 0,
+        filename: `Offerte-MHL-${naam}-${nummer}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    toon('PDF wordt gegenereerd...');
+    html2pdf().set(opt).from(element).save().then(() => toon('PDF opgeslagen!'));
+}
+
+// ── OFFERTE VERSTUREN ──
+function verstuurOfferte() {
+    const emailKlant = document.getElementById('f-email').value.trim();
+    if (!emailKlant) { toon('Vul het e-mailadres van de klant in.'); return; }
+    if (EMAILJS_PUBLIC_KEY === 'JOUW_PUBLIC_KEY') {
+        toon('EmailJS nog niet ingesteld — download de PDF en stuur handmatig.');
+        return;
+    }
+
+    const naam = document.getElementById('f-naam').value.trim();
+    const nummer = document.getElementById('f-nummer').value.trim();
+    const element = document.getElementById('offerte-doc');
+
+    toon('PDF genereren en versturen...');
+
+    html2pdf().set({
+        margin: 0,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).from(element).outputPdf('datauristring').then(pdf => {
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_email: emailKlant,
+            to_name: naam,
+            offerte_nummer: nummer,
+            pdf_attachment: pdf,
+        }).then(() => toon('Offerte verstuurd naar ' + emailKlant))
+          .catch(() => toon('Versturen mislukt — download de PDF en stuur handmatig.'));
+    });
+}
+
+// ── TOAST ──
+function toon(tekst) {
+    const t = document.getElementById('toast');
+    t.textContent = tekst;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+
+</body>
+</html>
