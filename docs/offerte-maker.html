@@ -279,15 +279,23 @@
     .d-werklijst {
         list-style: none;
         margin-bottom: 14px;
-        padding: 0 0 0 8px;
+        padding: 0;
+        border-top: 1px solid #EEE;
     }
 
     .d-werklijst li {
-        padding: 2px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 6px 0;
+        border-bottom: 1px solid #EEE;
         color: #333;
+        gap: 12px;
     }
 
-    .d-werklijst li::before { content: '- '; }
+    .d-werklijst li .w-omschr { flex: 1; }
+    .d-werklijst li .w-omschr::before { content: '- '; }
+    .d-werklijst li .w-prijs { white-space: nowrap; font-weight: 600; color: #1A1A1A; min-width: 80px; text-align: right; }
 
     /* Totaalalinea */
     .d-totaal-alinea { margin-bottom: 16px; color: #333; }
@@ -493,14 +501,11 @@
 
             <div class="d-header">
                 <img class="d-logo" src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL Installatieservice">
-                <div class="d-bedrijf">
-                    <table>
-                        <tr><td>Adres:</td><td><strong>MHL Installatieservice</strong><br>Melis Stokehof 18<br>1064 JE, Amsterdam</td></tr>
-                        <tr><td>KVK nummer:</td><td>77840240</td></tr>
-                        <tr><td>BTW nummer:</td><td>NL0032.47.423.B45</td></tr>
-                        <tr><td>Bank:</td><td>ING</td></tr>
-                        <tr><td>IBAN:</td><td>NL02 INGB 0006 615 287</td></tr>
-                    </table>
+                <div class="d-bedrijf" style="text-align:right; line-height:1.9; font-size:12px;">
+                    <strong style="font-size:13px; color:#1A1A1A;">MHL Installatieservice</strong><br>
+                    Amsterdam<br>
+                    info@mhl-installatieservice.nl<br>
+                    www.mhl-installatieservice.nl
                 </div>
             </div>
 
@@ -723,8 +728,9 @@ function update() {
         btwTot    += regel * (btw / 100);
 
         if (txt) {
+            const regelTotIncl = regel + (regel * (btw / 100));
             const li = document.createElement('li');
-            li.textContent = txt + (antal > 1 ? ` (${antal}×)` : '');
+            li.innerHTML = `<span class="w-omschr">${txt}${antal > 1 ? ` (${antal}×)` : ''}</span><span class="w-prijs">${fmt(regelTotIncl)}</span>`;
             werklijst.appendChild(li);
         }
     });
