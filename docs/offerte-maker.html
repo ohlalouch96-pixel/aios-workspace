@@ -480,7 +480,8 @@ function update() {
     const klantLines = [naam, tel, email].filter(Boolean);
     document.getElementById('doc-klant').innerHTML = klantLines.join('<br>') || '—';
     const adresregel = [adres, [postcode, plaats].filter(Boolean).join(' ')].filter(Boolean).join(', ');
-    document.getElementById('doc-adres').textContent = adresregel || '—';
+    const adresEl = document.getElementById('doc-adres');
+    if (adresEl) adresEl.textContent = adresregel || '—';
 
     document.getElementById('doc-nummer').textContent  = nummer || '—';
     document.getElementById('doc-datum').textContent   = fmtDatum(new Date().toISOString().split('T')[0]);
