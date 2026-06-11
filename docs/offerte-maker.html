@@ -541,12 +541,24 @@ function pdfOpties(bestandsnaam) {
 }
 
 function downloadPDF() {
-    const naam   = document.getElementById('f-naam').value.trim() || 'klant';
-    const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
+    const naam     = document.getElementById('f-naam').value.trim() || 'klant';
+    const nummer   = document.getElementById('f-nummer').value.trim() || 'offerte';
+    const bestand  = `Offerte-MHL-${naam}-${nummer}.pdf`;
     toon('PDF wordt gegenereerd...');
-    html2pdf().set(pdfOpties(`Offerte-MHL-${naam}-${nummer}.pdf`))
-        .from(document.getElementById('offerte-doc')).save()
-        .then(() => toon('PDF opgeslagen!'));
+    html2pdf().set(pdfOpties(bestand))
+        .from(document.getElementById('offerte-doc'))
+        .outputPdf('blob')
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a   = document.createElement('a');
+            a.href     = url;
+            a.download = bestand;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            toon('PDF opgeslagen!');
+        });
 }
 
 function verstuurOfferte() {
@@ -559,8 +571,16 @@ function verstuurOfferte() {
 
     toon('PDF wordt gegenereerd...');
     html2pdf().set(pdfOpties(bestand))
-        .from(document.getElementById('offerte-doc')).save()
-        .then(() => {
+        .from(document.getElementById('offerte-doc'))
+        .outputPdf('blob')
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a   = document.createElement('a');
+            a.href = url; a.download = bestand;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }).then(() => {
             // PDF is opgeslagen — open nu e-mailvenster
             const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
             const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
