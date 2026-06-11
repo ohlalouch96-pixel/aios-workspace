@@ -527,23 +527,40 @@ function update() {
     document.getElementById('doc-tot').textContent = fmt(tot);
 }
 
-function pdfOpties(bestandsnaam) {
-    return {
-        margin: [4, 4, 4, 4],
-        filename: bestandsnaam,
-        image: { type: 'jpeg', quality: 0.99 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, windowWidth: 794 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+function maakClone() {
+    const original = document.getElementById('offerte-doc');
+    const clone = original.cloneNode(true);
+    clone.style.cssText = 'position:absolute; top:-9999px; left:-9999px; width:740px; background:white; padding:20px 28px; font-family:Arial,sans-serif; font-size:11px; line-height:1.35;';
+    document.body.appendChild(clone);
+    return clone;
+}
+
+function genereerPDF(bestandsnaam) {
+    return new Promise((resolve, reject) => {
+        const clone = maakClone();
+        html2pdf().set({
+            margin: [6, 6, 6, 6],
+            filename: bestandsnaam,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(clone).save().then(() => {
+            document.body.removeChild(clone);
+            resolve();
+        }).catch(err => {
+            document.body.removeChild(clone);
+            reject(err);
+        });
+    });
 }
 
 function downloadPDF() {
     const naam   = document.getElementById('f-naam').value.trim() || 'klant';
     const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
     toon('PDF wordt gegenereerd...');
-    html2pdf().set(pdfOpties(`Offerte-MHL-${naam}-${nummer}.pdf`))
-        .from(document.getElementById('offerte-doc')).save()
-        .then(() => toon('PDF opgeslagen!'));
+    genereerPDF(`Offerte-MHL-${naam}-${nummer}.pdf`)
+        .then(() => toon('PDF opgeslagen!'))
+        .catch(() => toon('Fout bij genereren PDF.'));
 }
 
 function verstuurOfferte() {
@@ -555,9 +572,7 @@ function verstuurOfferte() {
     const bestand = `Offerte-MHL-${naam}-${nummer}.pdf`;
 
     toon('PDF wordt gegenereerd...');
-    html2pdf().set(pdfOpties(bestand))
-        .from(document.getElementById('offerte-doc')).save()
-        .then(() => {
+    genereerPDF(bestand).then(() => {
             // PDF is opgeslagen — open nu e-mailvenster
             const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
             const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
