@@ -167,20 +167,23 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 }
 
 @media print {
-    body * { visibility: hidden; }
-    #offerte-doc, #offerte-doc * { visibility: visible; }
-    #offerte-doc {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px 28px;
-        font-size: 11px;
-        line-height: 1.35;
-        background: white;
-        box-shadow: none;
+    body { background: white !important; margin: 0; }
+    .topbar { display: none !important; }
+    .form-panel { display: none !important; }
+    .preview-lbl { display: none !important; }
+    .layout {
+        display: block !important;
+        padding: 0 !important;
+        max-width: 100% !important;
     }
-    .topbar, .form-panel, .preview-lbl, .layout { display: none !important; }
+    .preview-panel {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+    #offerte-doc {
+        padding: 14mm 16mm !important;
+        box-shadow: none !important;
+    }
 }
 </style>
 </head>
