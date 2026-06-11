@@ -155,7 +155,8 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 .doc-sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 10px; font-size: 11px; }
 .doc-sig-lijn { border-top: 1px solid #CCC; margin: 22px 0 4px; }
 
-.doc-footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #CC0000; display: flex; justify-content: space-around; font-size: 11px; color: #666; }
+.doc-footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #CC0000; display: flex; justify-content: space-around; font-size: 11px; color: #666; page-break-after: avoid; }
+#offerte-doc * { page-break-inside: avoid; }
 
 /* TOAST */
 .toast { position: fixed; bottom: 24px; right: 24px; background: #1A1A1A; color: white; padding: 12px 20px; border-radius: 6px; font-size: 14px; font-weight: 700; z-index: 999; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; }
@@ -532,11 +533,12 @@ function update() {
 
 function pdfOpties(bestandsnaam) {
     return {
-        margin: [8, 8, 8, 8],
+        margin: [6, 6, 6, 6],
         filename: bestandsnaam,
         image: { type: 'jpeg', quality: 0.99 },
         html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: 'avoid-all' }
     };
 }
 
