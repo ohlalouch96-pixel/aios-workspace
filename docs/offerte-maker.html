@@ -545,41 +545,42 @@ function update() {
     document.getElementById('doc-tot').textContent = fmt(tot);
 }
 
+function pdfOpties(bestandsnaam) {
+    return {
+        margin: [8, 8, 8, 8],
+        filename: bestandsnaam,
+        image: { type: 'jpeg', quality: 0.99 },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+}
+
 function downloadPDF() {
     const naam   = document.getElementById('f-naam').value.trim() || 'klant';
     const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
     toon('PDF wordt gegenereerd...');
-    html2pdf().set({
-        margin: 0,
-        filename: `Offerte-MHL-${naam}-${nummer}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).from(document.getElementById('offerte-doc')).save()
-      .then(() => toon('PDF opgeslagen!'));
+    html2pdf().set(pdfOpties(`Offerte-MHL-${naam}-${nummer}.pdf`))
+        .from(document.getElementById('offerte-doc')).save()
+        .then(() => toon('PDF opgeslagen!'));
 }
 
 function verstuurOfferte() {
     const emailKlant = document.getElementById('f-email').value.trim();
     if (!emailKlant) { toon('Vul het e-mailadres van de klant in.'); return; }
-    if (EMAILJS_PUBLIC_KEY === 'JOUW_PUBLIC_KEY') {
-        toon('EmailJS nog niet ingesteld — download de PDF en stuur handmatig.');
-        return;
-    }
-    toon('Versturen...');
-    html2pdf().set({
-        margin: 0,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    }).from(document.getElementById('offerte-doc')).outputPdf('datauristring').then(pdf => {
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-            to_email: emailKlant,
-            to_name: document.getElementById('f-naam').value.trim(),
-            offerte_nummer: document.getElementById('f-nummer').value.trim(),
-            pdf_attachment: pdf,
-        }).then(() => toon('Offerte verstuurd!'))
-          .catch(() => toon('Mislukt — download PDF en stuur handmatig.'));
+
+    const naam   = document.getElementById('f-naam').value.trim() || 'klant';
+    const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
+    const bestand = `Offerte-MHL-${naam}-${nummer}.pdf`;
+
+    toon('PDF wordt gegenereerd...');
+    html2pdf().set(pdfOpties(bestand))
+        .from(document.getElementById('offerte-doc')).save()
+        .then(() => {
+            // PDF is opgeslagen — open nu e-mailvenster
+            const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
+            const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
+            window.location.href = `mailto:${emailKlant}?subject=${onderwerp}&body=${body}`;
+            toon('PDF opgeslagen — e-mailvenster opent...');
     });
 }
 
