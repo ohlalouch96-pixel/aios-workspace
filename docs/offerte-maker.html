@@ -100,65 +100,60 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 
 /* OFFERTE DOCUMENT */
 #offerte-doc {
-    padding: 40px 48px;
+    padding: 24px 32px;
     font-family: Arial, sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #1A1A1A;
     background: white;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
-.doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-.doc-logo { height: 56px; }
-.doc-company { text-align: right; font-size: 12px; color: #555; line-height: 1.9; }
-.doc-company strong { display: block; font-size: 13px; color: #1A1A1A; }
+.doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.doc-logo { height: 44px; }
+.doc-company { text-align: right; font-size: 11px; color: #555; line-height: 1.7; }
+.doc-company strong { display: block; font-size: 12px; color: #1A1A1A; }
 
-.doc-divider { border: none; border-top: 2px solid #CC0000; margin: 0 0 24px; }
+.doc-divider { border: none; border-top: 2px solid #CC0000; margin: 0 0 14px; }
 
-.doc-titel-rij { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-.doc-titel { font-size: 32px; font-weight: 700; color: #CC0000; line-height: 1; margin-bottom: 5px; }
-.doc-offnum { font-size: 12px; color: #888; }
-.doc-datumsblok { text-align: right; font-size: 13px; line-height: 2.1; }
+.doc-titel-rij { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.doc-titel { font-size: 24px; font-weight: 700; color: #CC0000; line-height: 1; margin-bottom: 3px; }
+.doc-offnum { font-size: 11px; color: #888; }
+.doc-datumsblok { text-align: right; font-size: 11px; line-height: 1.9; }
 .doc-datumsblok strong { color: #1A1A1A; }
 
 .doc-adresbox {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    background: #F5F5F5; border-radius: 6px; padding: 16px 20px;
-    margin-bottom: 28px; font-size: 12px; line-height: 1.8;
+    background: #F5F5F5; border-radius: 4px; padding: 10px 14px;
+    margin-bottom: 14px; font-size: 11px; line-height: 1.7;
 }
-.doc-adresbox .alabel { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #CC0000; margin-bottom: 6px; }
+.doc-adresbox .alabel { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #CC0000; margin-bottom: 4px; }
 
 .doc-sec-lbl {
-    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    color: #CC0000; margin-bottom: 8px; margin-top: 24px; padding-bottom: 5px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: #CC0000; margin-bottom: 6px; margin-top: 14px; padding-bottom: 4px;
     border-bottom: 1px solid #E8E8E8;
 }
 
-.doc-spec-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+.doc-spec-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 11px; }
 .doc-spec-table thead tr { background: #CC0000; color: white; }
-.doc-spec-table thead th { padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.doc-spec-table thead th { padding: 6px 10px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 .doc-spec-table thead th.r { text-align: right; }
 .doc-spec-table tbody tr { border-bottom: 1px solid #EEE; }
 .doc-spec-table tbody tr:nth-child(even) { background: #FAFAFA; }
-.doc-spec-table tbody td { padding: 9px 12px; color: #333; }
+.doc-spec-table tbody td { padding: 6px 10px; color: #333; }
 .doc-spec-table tbody td.r { text-align: right; }
 
-.doc-totals { margin-left: auto; width: 260px; margin-bottom: 8px; font-size: 12px; }
-.doc-trow { display: flex; justify-content: space-between; padding: 4px 0; color: #666; border-bottom: 1px solid #EEE; }
+.doc-totals { margin-left: auto; width: 240px; margin-bottom: 6px; font-size: 11px; }
+.doc-trow { display: flex; justify-content: space-between; padding: 3px 0; color: #666; border-bottom: 1px solid #EEE; }
 .doc-trow:last-child { border-bottom: none; }
-.doc-trow.final { font-size: 14px; font-weight: 700; color: #CC0000; border-top: 2px solid #CC0000; margin-top: 6px; padding-top: 8px; }
+.doc-trow.final { font-size: 13px; font-weight: 700; color: #CC0000; border-top: 2px solid #CC0000; margin-top: 4px; padding-top: 6px; }
 
-.doc-vw-box { background: #F9F9F9; border-left: 3px solid #CC0000; border-radius: 0 4px 4px 0; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; line-height: 1.9; }
+.doc-vw-box { background: #F9F9F9; border-left: 3px solid #CC0000; border-radius: 0 4px 4px 0; padding: 8px 12px; margin-bottom: 10px; font-size: 11px; line-height: 1.7; }
 .doc-vw-box table { width: 100%; border-collapse: collapse; }
 .doc-vw-box td { padding: 2px 0; vertical-align: top; color: #444; }
-.doc-vw-box td:first-child { font-weight: 700; color: #1A1A1A; width: 90px; }
+.doc-vw-box td:first-child { font-weight: 700; color: #1A1A1A; width: 80px; }
 
-.doc-niet-lijst { list-style: none; padding: 0; margin-bottom: 8px; font-size: 12px; }
-.doc-niet-lijst li { padding: 3px 0; color: #444; }
-.doc-niet-lijst li::before { content: '— '; color: #CC0000; font-weight: 700; }
-
-.doc-sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 16px; font-size: 12px; }
-.doc-sig-lijn { border-top: 1px solid #CCC; margin: 28px 0 6px; }
+.doc-sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 10px; font-size: 11px; }
+.doc-sig-lijn { border-top: 1px solid #CCC; margin: 22px 0 4px; }
 
 .doc-footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #CC0000; display: flex; justify-content: space-around; font-size: 11px; color: #666; }
 
@@ -312,14 +307,8 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 
             <!-- ADRESBOX -->
             <div class="doc-adresbox">
-                <div>
-                    <div class="alabel">Opgesteld voor</div>
-                    <div id="doc-klant">—</div>
-                </div>
-                <div>
-                    <div class="alabel">Uitvoeringslocatie</div>
-                    <div id="doc-adres">—</div>
-                </div>
+                <div class="alabel">Opgesteld voor</div>
+                <div id="doc-klant">—</div>
             </div>
 
             <!-- SPECIFICATIE -->
@@ -344,12 +333,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             </div>
 
             <!-- NIET IN DE PRIJS OPGENOMEN -->
-            <div class="doc-sec-lbl">Niet in de prijs opgenomen</div>
-            <ul class="doc-niet-lijst">
-                <li>Werkzaamheden en/of leveranties welke niet zijn omschreven worden als meerwerk aangemerkt.</li>
-                <li>Schilderwerk of meerwerk aan de waterleiding/afvoer in geval van onverwachte lekkages.</li>
-                <li>Te leveren materialen die niet in deze offerte beschreven staan.</li>
-            </ul>
+            <p style="font-size:10px; color:#888; margin-bottom:8px;">Niet inbegrepen: meerwerk buiten deze omschrijving, schilderwerk, onverwachte lekkages en niet-genoemde materialen.</p>
 
             <!-- LEVERINGS-, GARANTIE EN BETALINGSVOORWAARDEN -->
             <div class="doc-sec-lbl">Leverings-, garantie en betalingsvoorwaarden</div>
@@ -371,25 +355,25 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             </div>
 
             <!-- SLOTTEKST -->
-            <p style="font-size:12px; color:#444; line-height:1.8; margin-bottom:20px;">Indien u akkoord gaat met deze opgave, verzoeken wij u deze offerte ondertekend te retourneren naar <strong>info@mhl-installatieservice.nl</strong>, onder vermelding van het offertenummer in het onderwerpveld. Na akkoord nemen wij zo snel mogelijk contact met u op om de planning te bespreken.</p>
+            <p style="font-size:11px; color:#444; line-height:1.7; margin-bottom:12px;">Akkoord? Mail ondertekend naar <strong>info@mhl-installatieservice.nl</strong> o.v.v. offertenummer. Wij nemen daarna zo snel mogelijk contact op.</p>
 
             <!-- HANDTEKENING -->
             <div class="doc-sec-lbl">Ondertekening voor akkoord</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; font-size:12px; margin-bottom:32px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; font-size:11px; margin-bottom:16px;">
                 <div>
-                    <div style="margin-bottom:36px;">Akkoord klant:</div>
+                    <div style="margin-bottom:24px;">Akkoord klant:</div>
                     <div class="doc-sig-lijn"></div>
                 </div>
                 <div>
-                    <div style="margin-bottom:36px;">Datum en plaats:</div>
+                    <div style="margin-bottom:24px;">Datum en plaats:</div>
                     <div class="doc-sig-lijn"></div>
                 </div>
             </div>
 
-            <p style="font-size:12px; color:#444; margin-bottom:6px;">Wij danken u voor uw aanvraag en vertrouwen in MHL Installatieservice.</p>
-            <p style="font-size:12px; color:#444; margin-bottom:12px;">Met vriendelijke groet,</p>
-            <p style="font-size:13px; font-weight:700; color:#1A1A1A; margin-bottom:2px;">Mohammed Hlalouch</p>
-            <p style="font-size:12px; color:#888; font-style:italic;">Eigenaar / Founder</p>
+            <p style="font-size:11px; color:#444; margin-bottom:4px;">Wij danken u voor uw vertrouwen in MHL Installatieservice.</p>
+            <p style="font-size:11px; color:#444; margin-bottom:8px;">Met vriendelijke groet,</p>
+            <p style="font-size:12px; font-weight:700; color:#1A1A1A; margin-bottom:1px;">Mohammed Hlalouch</p>
+            <p style="font-size:11px; color:#888; font-style:italic;">Eigenaar / Founder</p>
 
             <!-- FOOTER -->
             <div class="doc-footer">
