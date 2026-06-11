@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Offerte opmaken — MHL Installatieservice</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -165,6 +164,23 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
     .layout { grid-template-columns: 1fr; padding: 16px; }
     .form-panel { position: static; max-height: none; }
     #offerte-doc { padding: 24px 20px; }
+}
+
+@media print {
+    body * { visibility: hidden; }
+    #offerte-doc, #offerte-doc * { visibility: visible; }
+    #offerte-doc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 28px;
+        font-size: 11px;
+        line-height: 1.35;
+        background: white;
+        box-shadow: none;
+    }
+    .topbar, .form-panel, .preview-lbl, .layout { display: none !important; }
 }
 </style>
 </head>
@@ -527,58 +543,21 @@ function update() {
     document.getElementById('doc-tot').textContent = fmt(tot);
 }
 
-function maakClone() {
-    const original = document.getElementById('offerte-doc');
-    const clone = original.cloneNode(true);
-    clone.style.cssText = 'position:absolute; top:-9999px; left:-9999px; width:740px; background:white; padding:20px 28px; font-family:Arial,sans-serif; font-size:11px; line-height:1.35;';
-    document.body.appendChild(clone);
-    return clone;
-}
-
-function genereerPDF(bestandsnaam) {
-    return new Promise((resolve, reject) => {
-        const clone = maakClone();
-        html2pdf().set({
-            margin: [6, 6, 6, 6],
-            filename: bestandsnaam,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(clone).save().then(() => {
-            document.body.removeChild(clone);
-            resolve();
-        }).catch(err => {
-            document.body.removeChild(clone);
-            reject(err);
-        });
-    });
-}
-
 function downloadPDF() {
-    const naam   = document.getElementById('f-naam').value.trim() || 'klant';
-    const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
-    toon('PDF wordt gegenereerd...');
-    genereerPDF(`Offerte-MHL-${naam}-${nummer}.pdf`)
-        .then(() => toon('PDF opgeslagen!'))
-        .catch(() => toon('Fout bij genereren PDF.'));
+    window.print();
 }
 
 function verstuurOfferte() {
     const emailKlant = document.getElementById('f-email').value.trim();
     if (!emailKlant) { toon('Vul het e-mailadres van de klant in.'); return; }
-
     const naam   = document.getElementById('f-naam').value.trim() || 'klant';
     const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
-    const bestand = `Offerte-MHL-${naam}-${nummer}.pdf`;
-
-    toon('PDF wordt gegenereerd...');
-    genereerPDF(bestand).then(() => {
-            // PDF is opgeslagen — open nu e-mailvenster
-            const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
-            const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
-            window.location.href = `mailto:${emailKlant}?subject=${onderwerp}&body=${body}`;
-            toon('PDF opgeslagen — e-mailvenster opent...');
-    });
+    const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
+    const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
+    window.print();
+    setTimeout(() => {
+        window.location.href = `mailto:${emailKlant}?subject=${onderwerp}&body=${body}`;
+    }, 1000);
 }
 
 function toon(tekst) {
