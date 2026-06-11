@@ -276,26 +276,61 @@
     }
 
     /* Werkzaamheden lijst */
-    .d-werklijst {
-        list-style: none;
-        margin-bottom: 14px;
-        padding: 0;
-        border-top: 1px solid #EEE;
+    .d-spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+        font-size: 12px;
     }
 
-    .d-werklijst li {
+    .d-spec-table thead tr { background: #CC0000; color: white; }
+
+    .d-spec-table thead th {
+        padding: 9px 12px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .d-spec-table thead th.r { text-align: right; }
+
+    .d-spec-table tbody tr { border-bottom: 1px solid #EEEEEE; }
+    .d-spec-table tbody tr:nth-child(even) { background: #FAFAFA; }
+
+    .d-spec-table tbody td {
+        padding: 9px 12px;
+        color: #333;
+        vertical-align: middle;
+    }
+
+    .d-spec-table tbody td.r { text-align: right; }
+
+    .d-spec-totals {
+        margin-left: auto;
+        width: 280px;
+        margin-bottom: 20px;
+        font-size: 12px;
+        border-top: 1px solid #EEE;
+        padding-top: 8px;
+    }
+
+    .d-spec-totals .tr {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        padding: 6px 0;
-        border-bottom: 1px solid #EEE;
-        color: #333;
-        gap: 12px;
+        padding: 4px 0;
+        color: #666;
     }
 
-    .d-werklijst li .w-omschr { flex: 1; }
-    .d-werklijst li .w-omschr::before { content: '- '; }
-    .d-werklijst li .w-prijs { white-space: nowrap; font-weight: 600; color: #1A1A1A; min-width: 80px; text-align: right; }
+    .d-spec-totals .tr.final {
+        font-weight: 700;
+        font-size: 14px;
+        color: #CC0000;
+        border-top: 2px solid #CC0000;
+        margin-top: 6px;
+        padding-top: 8px;
+    }
 
     /* Totaalalinea */
     .d-totaal-alinea { margin-bottom: 16px; color: #333; }
@@ -531,14 +566,24 @@
                 Naar aanleiding van uw offerte aanvraag, doen wij u hierbij onze prijsopgave toekomen volgens de hieronder omschreven werkzaamheden en leveranties.
             </div>
 
-            <div class="d-sectie-balk">Werkzaamheden en leveranties</div>
-            <ul class="d-werklijst" id="doc-werklijst">
-                <li>—</li>
-            </ul>
+            <div class="d-sectie-balk">Specificatie</div>
+            <table class="d-spec-table">
+                <thead>
+                    <tr>
+                        <th style="width:45%">Omschrijving</th>
+                        <th class="r" style="width:10%">Aantal</th>
+                        <th class="r" style="width:15%">Prijs</th>
+                        <th class="r" style="width:10%">BTW</th>
+                        <th class="r" style="width:15%">Totaal</th>
+                    </tr>
+                </thead>
+                <tbody id="doc-werklijst"></tbody>
+            </table>
 
-            <div class="d-totaal-alinea" id="doc-totaal-alinea">
-                De hierboven vermelde werkzaamheden en leveranties kunnen wij uitvoeren voor een totaalbedrag van: <strong>€ 0,00</strong> excl. BTW en incl. materiaal. BTW tarief (21%) over bovengenoemd bedrag bedraagt: <strong>€ 0,00</strong>.<br><br>
-                Totaalbedrag inclusief BTW: <span class="d-totaal-bold" id="doc-totaal-bold">€ 0,00</span>
+            <div class="d-spec-totals">
+                <div class="tr"><span>Subtotaal (excl. BTW)</span><span id="doc-subtotaal">€ 0,00</span></div>
+                <div class="tr"><span>BTW 21%</span><span id="doc-btw">€ 0,00</span></div>
+                <div class="tr final"><span>Totaal incl. BTW</span><span id="doc-totaal-bold">€ 0,00</span></div>
             </div>
 
             <div class="d-sectie-balk">Niet in de prijs opgenomen</div>
@@ -727,12 +772,16 @@ function update() {
         subtotaal += regel;
         btwTot    += regel * (btw / 100);
 
-        if (txt) {
-            const regelTotIncl = regel + (regel * (btw / 100));
-            const li = document.createElement('li');
-            li.innerHTML = `<span class="w-omschr">${txt}${antal > 1 ? ` (${antal}×)` : ''}</span><span class="w-prijs">${fmt(regelTotIncl)}</span>`;
-            werklijst.appendChild(li);
-        }
+        const regelTotIncl = regel + (regel * (btw / 100));
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${txt || '—'}</td>
+            <td class="r">${antal}</td>
+            <td class="r">${fmt(prijs)}</td>
+            <td class="r">${btw}%</td>
+            <td class="r">${fmt(regelTotIncl)}</td>
+        `;
+        werklijst.appendChild(tr);
     });
 
     if (!werklijst.children.length) werklijst.innerHTML = '<li>—</li>';
@@ -743,9 +792,9 @@ function update() {
     document.getElementById('t-btw').textContent = fmt(btwTot);
     document.getElementById('t-tot').textContent = fmt(totaal);
 
-    document.getElementById('doc-totaal-alinea').innerHTML =
-        `De hierboven vermelde werkzaamheden en leveranties kunnen wij uitvoeren voor een totaalbedrag van: <strong>${fmt(subtotaal)}</strong> excl. BTW en incl. materiaal. BTW tarief (21%) over bovengenoemd bedrag bedraagt: <strong>${fmt(btwTot)}</strong>.<br><br>
-        Totaalbedrag inclusief BTW: <span class="d-totaal-bold">${fmt(totaal)}</span>`;
+    document.getElementById('doc-subtotaal').textContent  = fmt(subtotaal);
+    document.getElementById('doc-btw').textContent        = fmt(btwTot);
+    document.getElementById('doc-totaal-bold').textContent = fmt(totaal);
 }
 
 function downloadPDF() {
