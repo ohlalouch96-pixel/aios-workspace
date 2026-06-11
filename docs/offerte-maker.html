@@ -501,7 +501,8 @@ function update() {
     document.getElementById('doc-nummer').textContent  = nummer || '—';
     document.getElementById('doc-datum').textContent   = fmtDatum(new Date().toISOString().split('T')[0]);
     document.getElementById('doc-geldig').textContent  = fmtDatum(geldig);
-    document.getElementById('doc-sig-naam').textContent = naam || '—';
+    const sigNaam = document.getElementById('doc-sig-naam');
+    if (sigNaam) sigNaam.textContent = naam || '—';
 
     // Prijsregels
     const rijen = document.querySelectorAll('#prijsregels tr');
