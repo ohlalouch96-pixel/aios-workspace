@@ -219,10 +219,6 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
         <div class="panel-sec">
             <div class="panel-lbl">Werkzaamheden</div>
             <div class="field">
-                <label>Betreft</label>
-                <input type="text" id="f-betreft" placeholder="Bijv. vervanging CV-ketel" oninput="update()">
-            </div>
-            <div class="field">
                 <label>Type (laadt standaardprijzen)</label>
                 <select id="f-type" onchange="laadStandaard(); update()">
                     <option value="">Kies type</option>
@@ -299,7 +295,6 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
                 <div>
                     <div class="doc-titel">Offerte</div>
                     <div class="doc-offnum">Offertenummer: <span id="doc-nummer">—</span></div>
-                    <div style="font-size:11px; color:#333; margin-top:4px;"><strong>Betreft:</strong> <span id="doc-betreft">—</span></div>
                 </div>
                 <div class="doc-datumsblok">
                     <strong>Datum:</strong> <span id="doc-datum">—</span><br>
@@ -488,8 +483,6 @@ function update() {
     document.getElementById('doc-nummer').textContent  = nummer || '—';
     document.getElementById('doc-datum').textContent   = fmtDatum(new Date().toISOString().split('T')[0]);
     document.getElementById('doc-geldig').textContent  = fmtDatum(geldig);
-    const betreft = document.getElementById('f-betreft').value.trim();
-    document.getElementById('doc-betreft').textContent = betreft || '—';
     const sigNaam = document.getElementById('doc-sig-naam');
     if (sigNaam) sigNaam.textContent = naam || '—';
 
