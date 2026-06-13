@@ -557,28 +557,40 @@ function verstuurOfferte() {
     const emailKlant = document.getElementById('f-email').value.trim();
     if (!emailKlant) { toon('Vul het e-mailadres van de klant in.'); return; }
 
-    const naam   = document.getElementById('f-naam').value.trim() || 'klant';
-    const nummer = document.getElementById('f-nummer').value.trim() || 'offerte';
-    const bestand = `Offerte-MHL-${naam}-${nummer}.pdf`;
+    const naam     = document.getElementById('f-naam').value.trim() || 'klant';
+    const nummer   = document.getElementById('f-nummer').value.trim() || 'offerte';
+    const tel      = document.getElementById('f-tel').value.trim();
+    const adres    = document.getElementById('f-adres').value.trim();
+    const postcode = document.getElementById('f-postcode').value.trim();
+    const plaats   = document.getElementById('f-plaats').value.trim();
+    const geldig   = document.getElementById('f-geldig').value;
+    const offerteHtml = document.getElementById('offerte-doc').innerHTML;
 
-    toon('PDF wordt gegenereerd...');
-    html2pdf().set(pdfOpties(bestand))
-        .from(document.getElementById('offerte-doc'))
-        .outputPdf('blob')
-        .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const a   = document.createElement('a');
-            a.href = url; a.download = bestand;
-            document.body.appendChild(a); a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }).then(() => {
-            // PDF is opgeslagen — open nu e-mailvenster
-            const onderwerp = encodeURIComponent(`Uw offerte van MHL Installatieservice - ${nummer}`);
-            const body = encodeURIComponent(`Geachte ${naam},\n\nBijgevoegd vindt u uw offerte van MHL Installatieservice.\n\nBij vragen kunt u contact opnemen via info@mhl-installatieservice.nl of bellen naar +31 085 130 2258.\n\nMet vriendelijke groet,\nMohammed Hlalouch\nMHL Installatieservice`);
-            window.location.href = `mailto:${emailKlant}?subject=${onderwerp}&body=${body}`;
-            toon('PDF opgeslagen — e-mailvenster opent...');
-    });
+    toon('Offerte wordt verstuurd...');
+
+    fetch('https://n8n.insightance.ai/webhook-test/mhl-offerte', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            klant_naam: naam,
+            klant_email: emailKlant,
+            klant_tel: tel,
+            klant_adres: adres,
+            klant_postcode: postcode,
+            klant_plaats: plaats,
+            offerte_nummer: nummer,
+            geldig_tot: geldig,
+            offerte_html: offerteHtml
+        })
+    })
+    .then(res => {
+        if (res.ok) {
+            toon('Offerte verstuurd naar ' + emailKlant + ' ✓');
+        } else {
+            toon('Fout bij versturen. Probeer opnieuw.');
+        }
+    })
+    .catch(() => toon('Verbindingsfout. Controleer uw internetverbinding.'));
 }
 
 function toon(tekst) {
