@@ -564,7 +564,11 @@ function verstuurOfferte() {
     const postcode = document.getElementById('f-postcode').value.trim();
     const plaats   = document.getElementById('f-plaats').value.trim();
     const geldig   = document.getElementById('f-geldig').value;
-    const offerteHtml = document.getElementById('offerte-doc').innerHTML;
+    const styles = Array.from(document.styleSheets).map(sheet => {
+        try { return Array.from(sheet.cssRules).map(r => r.cssText).join('\n'); }
+        catch(e) { return ''; }
+    }).join('\n');
+    const offerteHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${styles}</style></head><body style="background:#fff;padding:32px;">${document.getElementById('offerte-doc').outerHTML}</body></html>`;
 
     toon('Offerte wordt verstuurd...');
 
