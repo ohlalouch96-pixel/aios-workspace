@@ -564,37 +564,46 @@ function verstuurOfferte() {
     const postcode = document.getElementById('f-postcode').value.trim();
     const plaats   = document.getElementById('f-plaats').value.trim();
     const geldig   = document.getElementById('f-geldig').value;
-    const styles = Array.from(document.styleSheets).map(sheet => {
-        try { return Array.from(sheet.cssRules).map(r => r.cssText).join('\n'); }
-        catch(e) { return ''; }
-    }).join('\n');
-    const offerteHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${styles}</style></head><body style="background:#fff;padding:32px;">${document.getElementById('offerte-doc').outerHTML}</body></html>`;
+    const bestand  = `Offerte-MHL-${nummer}.pdf`;
 
-    toon('Offerte wordt verstuurd...');
+    toon('PDF wordt gegenereerd...');
 
-    fetch('https://n8n.insightance.ai/webhook-test/mhl-offerte', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            klant_naam: naam,
-            klant_email: emailKlant,
-            klant_tel: tel,
-            klant_adres: adres,
-            klant_postcode: postcode,
-            klant_plaats: plaats,
-            offerte_nummer: nummer,
-            geldig_tot: geldig,
-            offerte_html: offerteHtml
+    html2pdf().set(pdfOpties(bestand))
+        .from(document.getElementById('offerte-doc'))
+        .outputPdf('blob')
+        .then(blob => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        }))
+        .then(base64 => {
+            toon('Offerte wordt verstuurd...');
+            return fetch('https://n8n.insightance.ai/webhook-test/mhl-offerte', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    klant_naam: naam,
+                    klant_email: emailKlant,
+                    klant_tel: tel,
+                    klant_adres: adres,
+                    klant_postcode: postcode,
+                    klant_plaats: plaats,
+                    offerte_nummer: nummer,
+                    geldig_tot: geldig,
+                    pdf_base64: base64,
+                    pdf_bestandsnaam: bestand
+                })
+            });
         })
-    })
-    .then(res => {
-        if (res.ok) {
-            toon('Offerte verstuurd naar ' + emailKlant + ' ✓');
-        } else {
-            toon('Fout bij versturen. Probeer opnieuw.');
-        }
-    })
-    .catch(() => toon('Verbindingsfout. Controleer uw internetverbinding.'));
+        .then(res => {
+            if (res.ok) {
+                toon('Offerte verstuurd naar ' + emailKlant + ' ✓');
+            } else {
+                toon('Fout bij versturen. Probeer opnieuw.');
+            }
+        })
+        .catch(() => toon('Fout bij genereren of versturen. Probeer opnieuw.'));
 }
 
 function toon(tekst) {
