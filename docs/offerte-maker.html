@@ -579,7 +579,7 @@ function verstuurOfferte() {
         }))
         .then(base64 => {
             toon('Offerte wordt verstuurd...');
-            return fetch('https://n8n.insightance.ai/webhook-test/mhl-offerte', {
+            return fetch('https://n8n.insightance.ai/webhook/mhl-offerte', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
