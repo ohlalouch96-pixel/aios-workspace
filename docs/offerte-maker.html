@@ -108,7 +108,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 }
 
 .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-.doc-logo { height: 44px; }
+.doc-logo { height: 64px; }
 .doc-company { text-align: right; font-size: 11px; color: #555; line-height: 1.7; }
 .doc-company strong { display: block; font-size: 12px; color: #1A1A1A; }
 
@@ -292,7 +292,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             <!-- TITEL + DATUM -->
             <div class="doc-titel-rij">
                 <div>
-                    <div class="doc-titel">Offerte</div>
+                    <div class="doc-titel">OFFERTE</div>
                     <div class="doc-offnum">Offertenummer: <span id="doc-nummer">—</span></div>
                 </div>
                 <div class="doc-datumsblok">
@@ -367,9 +367,6 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             </div>
 
             <p style="font-size:11px; color:#444; margin-bottom:4px;">Wij danken u voor uw vertrouwen in MHL Installatieservice.</p>
-            <p style="font-size:11px; color:#444; margin-bottom:8px;">Met vriendelijke groet,</p>
-            <p style="font-size:12px; font-weight:700; color:#1A1A1A; margin-bottom:1px;">Mohammed Hlalouch</p>
-            <p style="font-size:11px; color:#888; font-style:italic; margin-bottom:0;">Eigenaar / Founder</p>
 
             <!-- FOOTER -->
             <div class="doc-footer" style="margin-top:14px; padding-top:8px;">
@@ -405,9 +402,10 @@ const standaard = {
 };
 
 window.onload = function() {
-    const jaar = new Date().getFullYear();
-    const num  = String(Math.floor(Math.random() * 9000) + 1000);
-    document.getElementById('f-nummer').value = `MHL-${jaar}-${num}`;
+    const lastNum = parseInt(localStorage.getItem('mhl_offerte_num') || '1022');
+    const nextNum = lastNum + 1;
+    localStorage.setItem('mhl_offerte_num', nextNum);
+    document.getElementById('f-nummer').value = String(nextNum).padStart(7, '0');
 
     const geldig = new Date();
     geldig.setDate(geldig.getDate() + 30);
@@ -469,7 +467,8 @@ function update() {
     const geldig    = document.getElementById('f-geldig').value;
 
     // Klantblok in doc
-    const klantLines = [naam, tel, email].filter(Boolean);
+    const adresregel2 = [adres, [postcode, plaats].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+    const klantLines = [naam, adresregel2, tel, email].filter(Boolean);
     document.getElementById('doc-klant').innerHTML = klantLines.join('<br>') || '—';
     const adresregel = [adres, [postcode, plaats].filter(Boolean).join(' ')].filter(Boolean).join(', ');
     const adresEl = document.getElementById('doc-adres');
