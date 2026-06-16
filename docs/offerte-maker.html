@@ -289,21 +289,21 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 
             <hr class="doc-divider">
 
-            <!-- TITEL -->
-            <div style="text-align: right; margin-bottom: 14px;">
-                <div class="doc-titel">OFFERTE</div>
-                <div class="doc-offnum">Offertenummer <span id="doc-nummer">—</span></div>
-            </div>
-
-            <!-- ADRESBOX + DATUM naast elkaar -->
-            <div style="display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start; margin-bottom: 14px;">
-                <div class="doc-adresbox" style="margin-bottom: 0;">
-                    <div class="alabel">Opgesteld voor</div>
-                    <div id="doc-klant">—</div>
-                </div>
-                <div class="doc-datumsblok" style="white-space: nowrap; padding-top: 4px;">
-                    <strong>Datum:</strong> <span id="doc-datum">—</span><br>
-                    <strong>Geldig tot:</strong> <span id="doc-geldig">—</span>
+            <!-- GECOMBINEERD GRIJS VAK -->
+            <div class="doc-adresbox" style="margin-bottom: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: start;">
+                    <div>
+                        <div class="alabel">Opgesteld voor</div>
+                        <div id="doc-klant">—</div>
+                    </div>
+                    <div style="text-align: right; white-space: nowrap;">
+                        <div class="doc-titel">OFFERTE</div>
+                        <div class="doc-offnum" style="margin-bottom: 8px;">Offertenummer <span id="doc-nummer">—</span></div>
+                        <div class="doc-datumsblok">
+                            <strong>Datum:</strong> <span id="doc-datum">—</span><br>
+                            <strong>Geldig tot:</strong> <span id="doc-geldig">—</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
