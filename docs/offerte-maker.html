@@ -293,7 +293,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             <div class="doc-titel-rij">
                 <div>
                     <div class="doc-titel">OFFERTE</div>
-                    <div class="doc-offnum">Offertenummer: <span id="doc-nummer">—</span></div>
+                    <div class="doc-offnum">Offertenummer <span id="doc-nummer">—</span></div>
                 </div>
                 <div class="doc-datumsblok">
                     <strong>Datum:</strong> <span id="doc-datum">—</span><br>
@@ -411,10 +411,7 @@ const standaard = {
 };
 
 window.onload = function() {
-    const lastNum = parseInt(localStorage.getItem('mhl_offerte_num') || '1022');
-    const nextNum = lastNum + 1;
-    localStorage.setItem('mhl_offerte_num', nextNum);
-    document.getElementById('f-nummer').value = String(nextNum).padStart(7, '0');
+    document.getElementById('f-nummer').value = '0001023';
 
     const geldig = new Date();
     geldig.setDate(geldig.getDate() + 30);
