@@ -438,11 +438,10 @@
         }
         .case-visual {
             background: #0F0F12;
-            border-bottom: 1px solid rgba(201,168,76,0.1);
+            border-top: 1px solid rgba(201,168,76,0.1);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            height: 340px;
         }
         .case-visual-browser {
             background: #1A1A1E;
@@ -469,10 +468,8 @@
         }
         .case-screenshot-img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
             display: block;
+            object-fit: contain;
         }
         .case-content {
             display: grid;
@@ -934,16 +931,6 @@
         <p style="font-size:16px; color:var(--gray); text-align:center; max-width:520px; margin:0 auto 56px; line-height:1.8;" data-nl="Een voorbeeld van wat AI-automatisering betekent voor een klein bedrijf in de praktijk." data-en="An example of what AI automation means for a small business in practice."></p>
 
         <div class="case-card">
-            <div class="case-visual">
-                <div class="case-visual-browser">
-                    <div class="browser-dot"></div>
-                    <div class="browser-dot"></div>
-                    <div class="browser-dot"></div>
-                    <div class="browser-url">insightance.ai/offerte-maker.html</div>
-                </div>
-                <img class="case-screenshot-img" src="screenshot-MHL.png" alt="MHL Installatieservice offerte-maker">
-            </div>
-
             <div class="case-content">
                 <!-- Links: bedrijf + situatie/oplossing -->
                 <div>
@@ -982,6 +969,16 @@
                         <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
                     </div>
                 </div>
+            </div>
+
+            <div class="case-visual">
+                <div class="case-visual-browser">
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-url">insightance.ai/offerte-maker.html</div>
+                </div>
+                <img class="case-screenshot-img" src="screenshot-MHL.png" alt="MHL Installatieservice offerte-maker">
             </div>
         </div>
     </div>
