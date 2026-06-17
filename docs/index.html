@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -280,7 +280,7 @@
         .service-card-bullets-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #3A3A3A; margin-bottom: 14px; }
         .service-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         .service-card-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #555; line-height: 1.5; }
-        .service-card-bullets li::before { content: '→'; color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+        .service-card-bullets li::before { content: 'â†’'; color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
         .services-cta { background: #161619; border: 1px solid #252528; border-radius: 12px; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 20px; position: relative; overflow: hidden; }
         .services-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .services-cta-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
@@ -531,6 +531,48 @@
         .om-trow:last-child { border-bottom: none; }
         .om-trow.final { font-size: 10px; font-weight: 700; color: #CC0000; border-top: 2px solid #CC0000; margin-top: 3px; padding-top: 4px; }
         @media (max-width: 768px) { .om-layout { grid-template-columns: 1fr; } .om-form-panel { display: none; } }
+
+        /* CASE DEMO INVITE */
+        .case-demo-invite {
+            border-top: 1px solid rgba(201,168,76,0.12);
+            background: linear-gradient(135deg, #0F0F12 0%, #161619 100%);
+            padding: 56px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .case-demo-invite-inner {
+            max-width: 640px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+        .case-demo-text {
+            font-size: 17px;
+            color: var(--gray-light);
+            line-height: 1.85;
+            font-style: italic;
+        }
+        .case-demo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gold);
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+        }
+        .case-demo-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.4); }
+        .case-demo-sub { font-size: 12px; color: var(--gray); letter-spacing: 0.06em; }
+        @media (max-width: 768px) { .case-demo-invite { padding: 40px 24px; } .case-demo-text { font-size: 15px; } }
         .case-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -690,7 +732,7 @@
         .discovery-sub { font-size: 13px; color: #999; }
         .discovery-bullets { display: flex; flex-direction: column; gap: 10px; list-style: none; }
         .discovery-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
-        .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
+        .discovery-bullets li::before { content: 'âœ“'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
         .discovery-free { font-family: var(--font-heading); font-size: 26px; font-weight: 700; color: #2D2825; margin-bottom: 12px; text-align: right; }
         .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
         .discovery-btn:hover { background: #E8C97A; }
@@ -712,7 +754,7 @@
         .pricing-divider { height: 1px; background: #EDE8DC; margin-bottom: 18px; }
         .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .pricing-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: #555; line-height: 1.5; }
-        .pricing-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+        .pricing-bullets li::before { content: 'âœ“'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
         .pricing-cta { display: block; text-align: center; margin-top: 24px; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
         .pricing-cta-outline { border: 1px solid #D0C8BB; color: #888; }
         .pricing-cta-outline:hover { border-color: #C9A84C; color: #C9A84C; }
@@ -794,7 +836,7 @@
     <a href="#tarieven" onclick="toggleDrawer()" data-nl="Tarieven" data-en="Pricing">Tarieven</a>
     <a href="#contact" onclick="toggleDrawer()" data-nl="Contact" data-en="Contact">Contact</a>
     <a href="#contact" class="mobile-drawer-cta" onclick="toggleDrawer()" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
-    <span class="mobile-drawer-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</span>
+    <span class="mobile-drawer-sub" data-nl="30 minuten Â· Vrijblijvend" data-en="30 minutes Â· No obligation">30 minuten Â· Vrijblijvend</span>
 </div>
 
 <!-- HERO -->
@@ -804,10 +846,10 @@
     <p class="hero-intro" data-nl="<strong>Insightance</strong> automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages. U houdt wekelijks uren over, geen technische kennis nodig. <a href='#services' style='color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.4);'>Bekijk onze diensten</a> om te zien of dit bij uw bedrijf past." data-en="<strong>Insightance</strong> automates processes within your business using AI. Think of client follow-up, appointment management and reports. You'll save hours every week, no technical knowledge needed. <a href='#services' style='color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.4);'>View our services</a> to see if this fits your business."></p>
     <div class="hero-ctas">
         <a href="#contact" class="hero-cta-primary" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
-        <a href="demo.html" class="hero-cta-secondary" data-nl="Bekijk een demo →" data-en="View a demo →">Bekijk een demo →</a>
+        <a href="demo.html" class="hero-cta-secondary" data-nl="Bekijk een demo â†’" data-en="View a demo â†’">Bekijk een demo â†’</a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
-    <span class="hero-side">Insightance · 2026</span>
+    <span class="hero-side">Insightance Â· 2026</span>
 </div>
 
 <!-- MISSION -->
@@ -815,10 +857,10 @@
     <div class="section fade-in">
         <p class="section-label" data-nl="Het probleem" data-en="The problem"></p>
         <h2 class="section-title" data-nl="Wat als uw bedrijf minder van u vraagt?" data-en="What if your business asked less of you?"></h2>
-        <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag één." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
+        <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>Â¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag Ã©Ã©n." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>Â¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
         <div class="mission-stats">
             <div class="mission-stat">
-                <div class="mission-stat-number">70%<sup style="font-size:12px;color:var(--gold);vertical-align:super;">²</sup></div>
+                <div class="mission-stat-number">70%<sup style="font-size:12px;color:var(--gold);vertical-align:super;">Â²</sup></div>
                 <div class="mission-stat-label" data-nl="van de handmatige taken is automatiseerbaar" data-en="of manual tasks can be automated"></div>
             </div>
             <div class="mission-stat">
@@ -826,13 +868,13 @@
                 <div class="mission-stat-label" data-nl="draait uw AI-systeem, ook als u slaapt" data-en="your AI system runs, even while you sleep"></div>
             </div>
             <div class="mission-stat">
-                <div class="mission-stat-number">€0</div>
+                <div class="mission-stat-number">â‚¬0</div>
                 <div class="mission-stat-label" data-nl="extra personeelskosten voor geautomatiseerde taken" data-en="extra staffing costs for automated tasks"></div>
             </div>
         </div>
         <p style="margin-top:28px; font-size:11px; color:#3A3A3A; text-align:center; line-height:1.7;">
-            <sup>¹</sup> Asana <em>Anatomy of Work</em> Global Index, 2022 &nbsp;·&nbsp;
-            <sup>²</sup> McKinsey Global Institute, <em>The Future of Work in America</em>, 2023
+            <sup>Â¹</sup> Asana <em>Anatomy of Work</em> Global Index, 2022 &nbsp;Â·&nbsp;
+            <sup>Â²</sup> McKinsey Global Institute, <em>The Future of Work in America</em>, 2023
         </p>
     </div>
 </div>
@@ -861,7 +903,7 @@
                 <div class="forwho-col-top"></div>
                 <div class="forwho-col-inner">
                     <h3 class="forwho-col-title" data-nl="De gevestigde organisatie" data-en="The established organisation"></h3>
-                    <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step, but internal capacity to implement it is lacking."></p>
+                    <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiÃ«nties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step, but internal capacity to implement it is lacking."></p>
                 </div>
             </div>
         </div>
@@ -983,8 +1025,8 @@
                 <p class="services-cta-text" data-nl="Bekijk het volledige overzicht van AI-systemen, van klantcontact tot finance en HR. Filter op uw situatie en ontdek wat er mogelijk is." data-en="View the full overview of AI systems, from customer contact to finance and HR. Filter by your situation and discover what's possible."></p>
             </div>
             <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-end; flex-shrink:0;">
-                <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden →" data-en="View all possibilities →">Bekijk alle mogelijkheden →</a>
-                <a href="demo.html" style="font-size:12px; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-nl="Of bekijk eerst een demo →" data-en="Or view a demo first →">Of bekijk eerst een demo →</a>
+                <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden â†’" data-en="View all possibilities â†’">Bekijk alle mogelijkheden â†’</a>
+                <a href="demo.html" style="font-size:12px; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-nl="Of bekijk eerst een demo â†’" data-en="Or view a demo first â†’">Of bekijk eerst een demo â†’</a>
             </div>
         </div>
     </div>
@@ -1020,154 +1062,39 @@
                             </div>
                             <div class="case-flow-body" style="padding-bottom:0;">
                                 <div class="case-flow-label" data-nl="Oplossing" data-en="Solution"></div>
-                                <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, één knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
+                                <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, Ã©Ã©n knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Rechts: resultaat + quote -->
-                <div class="case-right"><a href="offerte-maker-demo.html" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,0.5); padding:11px 24px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-decoration:none; transition:all 0.3s; margin-bottom:20px;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'" data-nl="Probeer het zelf →" data-en="Try it yourself →">Probeer het zelf →</a>
+                <div class="case-right"><a href="offerte-maker-demo.html" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,0.5); padding:11px 24px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-decoration:none; transition:all 0.3s; margin-bottom:20px;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'" data-nl="Probeer het zelf â†’" data-en="Try it yourself â†’">Probeer het zelf â†’</a>
                     <div class="case-result">
                         <div class="case-result-number">90%</div>
                         <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
                     </div>
                     <div class="case-quote">
-                        <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
-                        <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
+                        <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op Ã©Ã©n knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
+                        <cite>â€” Mohammed, eigenaar MHL Installatieservice</cite>
                     </div>
                 </div>
             </div>
 
-            <div class="case-visual">
-                <div class="case-visual-browser">
-                    <div class="browser-dot"></div>
-                    <div class="browser-dot"></div>
-                    <div class="browser-dot"></div>
-                    <div class="browser-url">insightance.ai/offerte-maker.html</div>
-                </div>
-                <div class="offerte-mockup-bg">
-                    <div class="offerte-mockup">
-
-                        <!-- TOPBAR -->
-                        <div class="om-topbar">
-                            <div>
-                                <span class="om-logo-text">MHL</span>
-                                <span class="om-logo-sub">INSTALLATIESERVICE</span>
-                            </div>
-                            <span class="om-topbar-title">Offerte opmaken — MHL Installatieservice</span>
-                            <div class="om-topbar-btns">
-                                <span class="om-btn-outline">⬇ Download PDF</span>
-                                <span class="om-btn-primary">Verstuur naar klant →</span>
-                            </div>
-                        </div>
-
-                        <!-- TWO COLUMN LAYOUT -->
-                        <div class="om-layout">
-
-                            <!-- LEFT: FORM PANEL -->
-                            <div class="om-form-panel">
-                                <div class="om-panel-sec">
-                                    <div class="om-panel-lbl">Klantgegevens</div>
-                                    <div class="om-field-lbl">Volledige naam</div>
-                                    <div class="om-field-val">Martin Schoenmaker</div>
-                                    <div class="om-field-row">
-                                        <div><div class="om-field-lbl">Telefoon</div><div class="om-field-val">0612345678</div></div>
-                                        <div><div class="om-field-lbl">E-mail</div><div class="om-field-val">M.Schoenmaker@gmail.com</div></div>
-                                    </div>
-                                    <div class="om-field-lbl">Straat + huisnummer</div>
-                                    <div class="om-field-val">Prins Hendrikkade 20</div>
-                                    <div class="om-field-row">
-                                        <div><div class="om-field-lbl">Postcode</div><div class="om-field-val">1044BJ</div></div>
-                                        <div><div class="om-field-lbl">Woonplaats</div><div class="om-field-val">Amsterdam</div></div>
-                                    </div>
-                                </div>
-                                <div class="om-panel-sec">
-                                    <div class="om-panel-lbl">Werkzaamheden</div>
-                                    <div class="om-field-lbl">Type</div>
-                                    <div class="om-field-val om-select-val">CV-ketel vervanging ▾</div>
-                                </div>
-                                <div class="om-panel-sec">
-                                    <div class="om-panel-lbl">Specificatie</div>
-                                    <table class="om-ptable">
-                                        <thead><tr><th>Omschrijving</th><th>Aantal</th><th>Prijs</th></tr></thead>
-                                        <tbody>
-                                            <tr><td>Het aftappen van de cv-ins...</td><td>1</td><td>50</td></tr>
-                                            <tr><td>Demonteren en afvoeren...</td><td>1</td><td>75</td></tr>
-                                            <tr><td>Leveren en installeren c.v.-ketel</td><td>1</td><td>1200</td></tr>
-                                            <tr><td>Aansluiten op leidingen</td><td>1</td><td>75</td></tr>
-                                            <tr><td>Vullen en proeftaken</td><td>1</td><td>50</td></tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="om-totals-small">
-                                        <div class="om-trow-s"><span>Subtotaal excl. BTW</span><span>€ 1.450,00</span></div>
-                                        <div class="om-trow-s"><span>BTW 21%</span><span>€ 304,50</span></div>
-                                        <div class="om-trow-s final"><span>Totaal incl. BTW</span><span>€ 1.754,50</span></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- RIGHT: OFFERTE PREVIEW -->
-                            <div class="om-preview-panel">
-                                <div class="om-preview-lbl">VOORBEELD OFFERTE</div>
-                                <div class="om-doc">
-                                    <div class="om-header">
-                                        <div>
-                                            <div class="om-logo-text" style="font-size:18px;">MHL</div>
-                                            <div class="om-logo-sub">Installatieservice</div>
-                                        </div>
-                                        <div class="om-company">
-                                            <strong>MHL Installatieservice</strong>
-                                            Amsterdam · info@mhl-installatieservice.nl<br>
-                                            KVK: 77840240 · BTW: NL002 47.423.845
-                                        </div>
-                                    </div>
-                                    <hr class="om-hr">
-                                    <div class="om-title-row">
-                                        <div>
-                                            <div class="om-title">OFFERTE</div>
-                                            <div class="om-offnum">Offertenummer 0001023</div>
-                                        </div>
-                                        <div class="om-dates">
-                                            <strong>Datum:</strong> 17-06-2026<br>
-                                            <strong>Geldig tot:</strong> 17-07-2026
-                                        </div>
-                                    </div>
-                                    <div class="om-adresbox">
-                                        <div class="om-alabel">Opgesteld voor</div>
-                                        Martin Schoenmaker<br>
-                                        Prins Hendrikkade 20, 1044BJ Amsterdam<br>
-                                        0612345678 · M.Schoenmaker@gmail.com
-                                    </div>
-                                    <div class="om-sec-lbl">Specificatie</div>
-                                    <table class="om-table">
-                                        <thead>
-                                            <tr><th>Omschrijving</th><th class="r">Aantal</th><th class="r">Prijs</th><th class="r">BTW</th><th class="r">Totaal</th></tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>Het aftappen van de cv-installatie</td><td class="r">1</td><td class="r">€ 50,00</td><td class="r">21%</td><td class="r">€ 60,50</td></tr>
-                                            <tr><td>Demonteren en afvoeren ketel</td><td class="r">1</td><td class="r">€ 75,00</td><td class="r">21%</td><td class="r">€ 90,75</td></tr>
-                                            <tr><td>Leveren en installeren c.v.-ketel</td><td class="r">1</td><td class="r">€ 1.200,00</td><td class="r">21%</td><td class="r">€ 1.452,00</td></tr>
-                                            <tr><td>Aansluiten op leidingen</td><td class="r">1</td><td class="r">€ 75,00</td><td class="r">21%</td><td class="r">€ 90,75</td></tr>
-                                            <tr><td>Vullen en proeftaken</td><td class="r">1</td><td class="r">€ 50,00</td><td class="r">21%</td><td class="r">€ 60,50</td></tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="om-totals">
-                                        <div class="om-trow"><span>Subtotaal (excl. BTW)</span><span>€ 1.450,00</span></div>
-                                        <div class="om-trow"><span>BTW 21%</span><span>€ 304,50</span></div>
-                                        <div class="om-trow final"><span>Totaal incl. BTW</span><span>€ 1.754,50</span></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div><!-- end layout -->
+            <div class="case-demo-invite">
+                <div class="case-demo-invite-inner">
+                    <div class="case-demo-quote">
+                        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:16px; opacity:0.4;"><path d="M0 20V12.667C0 5.667 4.222 1.444 12.667 0l1.777 2.444C10.222 3.556 7.778 5.778 7.111 9.333H12V20H0zm16 0V12.667C16 5.667 20.222 1.444 28.667 0l1.777 2.444C26.222 3.556 23.778 5.778 23.111 9.333H28V20H16z" fill="#C9A84C"/></svg>
+                        <p class="case-demo-text" data-nl="Dit is een authentieke creatie van mijn hand. Het resultaat is zoals je kunt zien, en ik ben trots op het eindproduct. Neem gerust een kijkje en laat je verrassen door het ontwerp en de functionaliteit." data-en="This is an authentic creation of my own making. The result speaks for itself, and I'm proud of the final product. Feel free to take a look and be surprised by the design and functionality."></p>
                     </div>
+                    <a href="offerte-maker-demo.html" target="_blank" class="case-demo-btn" data-nl="Bekijk de live demo â†’" data-en="View the live demo â†’">Bekijk de live demo â†’</a>
+                    <p class="case-demo-sub" data-nl="Volledig interactief Â· Geen echte gegevens verstuurd" data-en="Fully interactive Â· No real data sent"></p>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- TOOLS STRIP -->
 <div class="tools-strip-wrap">
     <div class="tools-fade-left"></div>
     <div class="tools-fade-right"></div>
@@ -1283,7 +1210,7 @@
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Persoonlijk" data-en="Personal"></h3>
                 <span class="why-tag" data-nl="Direct contact" data-en="Direct contact"></span>
-                <p class="why-text" data-nl="U werkt direct met de oprichter van Insightance, niet met een team van junior medewerkers. Eén aanspreekpunt, altijd." data-en="You work directly with the founder of Insightance, not a team of junior employees. One point of contact, always."></p>
+                <p class="why-text" data-nl="U werkt direct met de oprichter van Insightance, niet met een team van junior medewerkers. EÃ©n aanspreekpunt, altijd." data-en="You work directly with the founder of Insightance, not a team of junior employees. One point of contact, always."></p>
             </div>
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Op maat gebouwd" data-en="Custom built"></h3>
@@ -1299,7 +1226,7 @@
                 <h3 class="why-title" data-nl="Achtergrond als zorgverlener" data-en="Healthcare background"></h3>
                 <span class="why-tag" data-nl="Precisie & zorgvuldigheid" data-en="Precision & care"></span>
                 <p class="why-text" data-nl="Jarenlang gewerkt in een omgeving waar fouten flinke consequenties kunnen hebben, heeft ertoe geleid dat Insightance met precisie en zorgvuldigheid te werk gaat." data-en="Years of working in an environment where mistakes have serious consequences has led Insightance to work with precision and care."></p>
-                <a href="#about" class="why-link" data-nl="Lees meer over de oprichter →" data-en="Read more about the founder →"></a>
+                <a href="#about" class="why-link" data-nl="Lees meer over de oprichter â†’" data-en="Read more about the founder â†’"></a>
             </div>
         </div>
     </div>
@@ -1319,9 +1246,9 @@
         <!-- DISCOVERY CALL BANNER -->
         <div class="discovery-banner fade-in">
             <div>
-                <span class="discovery-badge-sm" data-nl="Vrijblijvend · Begin hier" data-en="No obligation · Start here">Vrijblijvend · Begin hier</span>
+                <span class="discovery-badge-sm" data-nl="Vrijblijvend Â· Begin hier" data-en="No obligation Â· Start here">Vrijblijvend Â· Begin hier</span>
                 <h3 class="discovery-title" data-nl="Discovery Call" data-en="Discovery Call">Discovery Call</h3>
-                <p class="discovery-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</p>
+                <p class="discovery-sub" data-nl="30 minuten Â· Vrijblijvend" data-en="30 minutes Â· No obligation">30 minuten Â· Vrijblijvend</p>
             </div>
             <ul class="discovery-bullets">
                 <li data-nl="Analyse van uw grootste tijdverlies" data-en="Analysis of your biggest time loss">Analyse van uw grootste tijdverlies</li>
@@ -1330,7 +1257,7 @@
             </ul>
             <div>
                 <p class="discovery-free" data-nl="Gratis" data-en="Free">Gratis</p>
-                <a href="#contact" class="discovery-btn" data-nl="Plan een gesprek →" data-en="Schedule a call →">Plan een gesprek →</a>
+                <a href="#contact" class="discovery-btn" data-nl="Plan een gesprek â†’" data-en="Schedule a call â†’">Plan een gesprek â†’</a>
             </div>
         </div>
 
@@ -1341,8 +1268,8 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Eerste stap" data-en="First step">Eerste stap</span>
                 <h3 class="pricing-name" data-nl="AI Assessment" data-en="AI Assessment">AI Assessment</h3>
                 <p class="pricing-vanaf" data-nl="Eenmalig" data-en="One-time">Eenmalig</p>
-                <div class="pricing-amount">€300</div>
-                <p class="pricing-sub-highlight" data-nl="✓ Volledig verrekend bij implementatie" data-en="✓ Fully credited at implementation">✓ Volledig verrekend bij implementatie</p>
+                <div class="pricing-amount">â‚¬300</div>
+                <p class="pricing-sub-highlight" data-nl="âœ“ Volledig verrekend bij implementatie" data-en="âœ“ Fully credited at implementation">âœ“ Volledig verrekend bij implementatie</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Analyse van uw processen en tools" data-en="Analysis of your processes and tools">Analyse van uw processen en tools</li>
@@ -1357,7 +1284,7 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Losse automation" data-en="Single automation">Losse automation</span>
                 <h3 class="pricing-name" data-nl="AI Implementatie" data-en="AI Implementation">AI Implementatie</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount">€750</div>
+                <div class="pricing-amount">â‚¬750</div>
                 <div class="pricing-divider" style="margin-top: 22px;"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Workflow automation of AI agent op maat" data-en="Workflow automation or custom AI agent">Workflow automation of AI agent op maat</li>
@@ -1372,12 +1299,12 @@
                 <span class="pricing-badge pricing-badge-featured" data-nl="Aanbevolen" data-en="Recommended">Aanbevolen</span>
                 <h3 class="pricing-name" data-nl="AIOS Setup" data-en="AIOS Setup">AIOS Setup</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount gold">€2.500</div>
-                <p class="pricing-sub" data-nl="Eenmalig · Retainer optioneel" data-en="One-time · Retainer optional">Eenmalig · Retainer optioneel</p>
+                <div class="pricing-amount gold">â‚¬2.500</div>
+                <p class="pricing-sub" data-nl="Eenmalig Â· Retainer optioneel" data-en="One-time Â· Retainer optional">Eenmalig Â· Retainer optioneel</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Meerdere gekoppelde AI-systemen op maat" data-en="Multiple connected custom AI systems">Meerdere gekoppelde AI-systemen op maat</li>
-                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geïntegreerd in uw bedrijfsprocessen</li>
+                    <li data-nl="Volledig geÃ¯ntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geÃ¯ntegreerd in uw bedrijfsprocessen</li>
                     <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project">Persoonlijke begeleiding gedurende het traject</li>
                     <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery">Getest en fijngesteld voor oplevering</li>
                     <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered">Vragen achteraf altijd beantwoord</li>
@@ -1389,7 +1316,7 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Doorlopend beheer" data-en="Ongoing management">Doorlopend beheer</span>
                 <h3 class="pricing-name" data-nl="AIOS Retainer" data-en="AIOS Retainer">AIOS Retainer</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount">€600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
+                <div class="pricing-amount">â‚¬600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
                 <p class="pricing-sub" data-nl="Maandelijks opzegbaar" data-en="Cancel monthly">Maandelijks opzegbaar</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
@@ -1423,7 +1350,7 @@
         <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat." data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal."></p>
 
         <p style="text-align:center; margin-top:16px;">
-            <a href="demo.html" style="font-size:13px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'" data-nl="Wilt u eerst zien hoe het werkt? Bekijk de demo →" data-en="Want to see how it works first? View the demo →">Wilt u eerst zien hoe het werkt? Bekijk de demo →</a>
+            <a href="demo.html" style="font-size:13px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'" data-nl="Wilt u eerst zien hoe het werkt? Bekijk de demo â†’" data-en="Want to see how it works first? View the demo â†’">Wilt u eerst zien hoe het werkt? Bekijk de demo â†’</a>
         </p>
 
     </div>
@@ -1606,7 +1533,7 @@
                         placeholder="Vertel ons over uw bedrijf en waar u mee geholpen wilt worden..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit" data-nl="Verstuur bericht" data-en="Send message"></button>
-                <p style="text-align:center; margin-top:12px; font-size:12px; color:#3A3A3A; letter-spacing:0.08em;">30 minuten · Vrijblijvend</p>
+                <p style="text-align:center; margin-top:12px; font-size:12px; color:#3A3A3A; letter-spacing:0.08em;">30 minuten Â· Vrijblijvend</p>
             </form>
         </div>
     </div>
@@ -1655,16 +1582,16 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span class="footer-meta-left">Insightance · KVK: volgt · Amsterdam</span>
+        <span class="footer-meta-left">Insightance Â· KVK: volgt Â· Amsterdam</span>
         <div class="footer-meta-right">
             <a href="privacybeleid.html" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a>
-            <span data-nl="© 2026 Insightance" data-en="© 2026 Insightance">© 2026 Insightance</span>
+            <span data-nl="Â© 2026 Insightance" data-en="Â© 2026 Insightance">Â© 2026 Insightance</span>
         </div>
     </div>
 </footer>
 
 <script>
-    // STICKY CTA — verschijnt na hero, verdwijnt bij footer
+    // STICKY CTA â€” verschijnt na hero, verdwijnt bij footer
     const stickyCta = document.getElementById('stickyCta');
     const heroEl = document.querySelector('.hero');
     const footerEl = document.querySelector('footer');
