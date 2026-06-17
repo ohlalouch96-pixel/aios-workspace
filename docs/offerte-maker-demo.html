@@ -288,7 +288,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
                 <div class="doc-company">
                     <strong>MHL Installatieservice</strong>
                     Amsterdam &nbsp;·&nbsp; info@mhl-installatieservice.nl &nbsp;·&nbsp; www.mhl-installatieservice.nl<br>
-                    <span style="color:#555; font-size:10px;">KVK: 77840240 &nbsp;·&nbsp; BTW: NL0032.47.423.B45 &nbsp;·&nbsp; IBAN: NL02 INGB 0006 615 287 (ING)</span>
+                    <span style="color:#555; font-size:10px; filter: blur(4px); user-select:none;">KVK: 77840240 &nbsp;·&nbsp; BTW: NL0032.47.423.B45 &nbsp;·&nbsp; IBAN: NL02 INGB 0006 615 287 (ING)</span>
                 </div>
             </div>
 
@@ -552,24 +552,7 @@ function pdfOpties(bestandsnaam) {
 }
 
 function downloadPDF() {
-    const naam     = document.getElementById('f-naam').value.trim() || 'klant';
-    const nummer   = document.getElementById('f-nummer').value.trim() || 'offerte';
-    const bestand  = `Offerte-MHL-${naam}-${nummer}.pdf`;
-    toon('PDF wordt gegenereerd...');
-    html2pdf().set(pdfOpties(bestand))
-        .from(document.getElementById('offerte-doc'))
-        .outputPdf('blob')
-        .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const a   = document.createElement('a');
-            a.href     = url;
-            a.download = bestand;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            toon('PDF opgeslagen!');
-        });
+    toon('PDF downloaden is uitgeschakeld in de demo.');
 }
 
 function verstuurOfferte() {
