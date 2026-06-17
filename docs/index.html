@@ -467,12 +467,56 @@
             letter-spacing: 0.03em;
             margin-left: 8px;
         }
-        .case-screenshot-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            display: block;
+        .offerte-mockup-bg {
+            flex: 1;
+            background: #EFEFEF;
+            overflow: hidden;
+            position: relative;
+        }
+        .offerte-mockup {
+            position: absolute;
+            top: 20px;
+            left: 0; right: 0;
+            margin: 0 auto;
+            width: 820px;
+            background: white;
+            padding: 22px 28px;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            color: #1A1A1A;
+            line-height: 1.4;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.13);
+        }
+        .om-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .om-logo-text { font-size: 26px; font-weight: 900; color: #CC0000; letter-spacing: 0.02em; line-height: 1; }
+        .om-logo-sub { font-size: 6.5px; font-weight: 700; letter-spacing: 0.14em; color: #CC0000; text-transform: uppercase; margin-top: 2px; }
+        .om-company { text-align: right; font-size: 10px; color: #555; line-height: 1.7; }
+        .om-company strong { display: block; font-size: 11px; color: #1A1A1A; }
+        .om-hr { border: none; border-top: 2px solid #CC0000; margin: 0 0 12px; }
+        .om-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .om-title { font-size: 22px; font-weight: 700; color: #CC0000; line-height: 1; margin-bottom: 2px; }
+        .om-offnum { font-size: 10px; color: #888; }
+        .om-dates { text-align: right; font-size: 10px; line-height: 1.9; }
+        .om-dates strong { color: #1A1A1A; }
+        .om-adresbox { background: #F5F5F5; border-radius: 4px; padding: 8px 12px; margin-bottom: 12px; font-size: 10px; line-height: 1.7; }
+        .om-alabel { font-size: 8.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #CC0000; margin-bottom: 3px; }
+        .om-sec-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #CC0000; margin-bottom: 5px; margin-top: 12px; padding-bottom: 3px; border-bottom: 1px solid #E8E8E8; }
+        .om-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .om-table thead tr { background: #CC0000; color: white; }
+        .om-table thead th { padding: 5px 8px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+        .om-table thead th.r { text-align: right; }
+        .om-table tbody tr { border-bottom: 1px solid #EEE; }
+        .om-table tbody tr:nth-child(even) { background: #FAFAFA; }
+        .om-table tbody td { padding: 5px 8px; color: #333; }
+        .om-table tbody td.r { text-align: right; }
+        .om-totals { margin-left: auto; width: 220px; margin-top: 8px; font-size: 10px; }
+        .om-trow { display: flex; justify-content: space-between; padding: 3px 0; color: #666; border-bottom: 1px solid #EEE; }
+        .om-trow:last-child { border-bottom: none; }
+        .om-trow.final { font-size: 12px; font-weight: 700; color: #CC0000; border-top: 2px solid #CC0000; margin-top: 3px; padding-top: 5px; }
+        @media (max-width: 768px) {
+            .offerte-mockup { width: calc(100% - 32px); left: 16px; right: 16px; margin: 0; top: 12px; padding: 14px 16px; }
+            .om-logo-text { font-size: 18px; }
+            .om-title { font-size: 16px; }
         }
         .case-content {
             display: grid;
@@ -988,7 +1032,62 @@
                     <div class="browser-dot"></div>
                     <div class="browser-url">insightance.ai/offerte-maker.html</div>
                 </div>
-                <img class="case-screenshot-img" src="screenshot-MHL.png" alt="MHL Installatieservice offerte-maker">
+                <div class="offerte-mockup-bg">
+                    <div class="offerte-mockup">
+                        <div class="om-header">
+                            <div>
+                                <div class="om-logo-text">MHL</div>
+                                <div class="om-logo-sub">Installatieservice</div>
+                            </div>
+                            <div class="om-company">
+                                <strong>MHL Installatieservice</strong>
+                                Amsterdam · info@mhl-installatieservice.nl · www.mhl-installatieservice.nl<br>
+                                KVK: 77840240 · BTW: NL002 47.423.845 · IBAN: NL02 INGB 0006 615 287
+                            </div>
+                        </div>
+                        <hr class="om-hr">
+                        <div class="om-title-row">
+                            <div>
+                                <div class="om-title">OFFERTE</div>
+                                <div class="om-offnum">Offertenummer 0001023</div>
+                            </div>
+                            <div class="om-dates">
+                                <strong>Datum:</strong> 17-06-2026<br>
+                                <strong>Geldig tot:</strong> 17-07-2026
+                            </div>
+                        </div>
+                        <div class="om-adresbox">
+                            <div class="om-alabel">Opgesteld voor</div>
+                            Martin Schoenmaker<br>
+                            Prins Hendrikkade 20, 1044BJ Amsterdam<br>
+                            0612345678 · M.Schoenmaker@gmail.com
+                        </div>
+                        <div class="om-sec-lbl">Specificatie</div>
+                        <table class="om-table">
+                            <thead>
+                                <tr>
+                                    <th>Omschrijving</th>
+                                    <th class="r">Aantal</th>
+                                    <th class="r">Prijs excl.</th>
+                                    <th class="r">BTW</th>
+                                    <th class="r">Totaal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Het aftappen van de cv-installatie</td><td class="r">1</td><td class="r">€ 50,00</td><td class="r">21%</td><td class="r">€ 60,50</td></tr>
+                                <tr><td>Demonteren en afvoeren bestaande c.v.-ketel incl. rookgasafvoer</td><td class="r">1</td><td class="r">€ 75,00</td><td class="r">21%</td><td class="r">€ 90,75</td></tr>
+                                <tr><td>Leveren, monteren en installeren nieuwe c.v.-ketel</td><td class="r">1</td><td class="r">€ 1.200,00</td><td class="r">21%</td><td class="r">€ 1.452,00</td></tr>
+                                <tr><td>Aansluiten op bestaande koud-, warmwater- en cv-leidingen</td><td class="r">1</td><td class="r">€ 75,00</td><td class="r">21%</td><td class="r">€ 90,75</td></tr>
+                                <tr><td>Vullen, ontluchten en proeftaken van de installatie</td><td class="r">1</td><td class="r">€ 50,00</td><td class="r">21%</td><td class="r">€ 60,50</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="om-totals">
+                            <div class="om-trow"><span>Subtotaal (excl. BTW)</span><span>€ 1.450,00</span></div>
+                            <div class="om-trow"><span>BTW 21%</span><span>€ 304,50</span></div>
+                            <div class="om-trow final"><span>Totaal incl. BTW</span><span>€ 1.754,50</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
