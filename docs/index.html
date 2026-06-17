@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -280,7 +280,7 @@
         .service-card-bullets-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #3A3A3A; margin-bottom: 14px; }
         .service-card-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         .service-card-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #555; line-height: 1.5; }
-        .service-card-bullets li::before { content: 'â†’'; color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+        .service-card-bullets li::before { content: '→'; color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
         .services-cta { background: #161619; border: 1px solid #252528; border-radius: 12px; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 20px; position: relative; overflow: hidden; }
         .services-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--gold-light), var(--gold), transparent); }
         .services-cta-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
@@ -533,46 +533,15 @@
         @media (max-width: 768px) { .om-layout { grid-template-columns: 1fr; } .om-form-panel { display: none; } }
 
         /* CASE DEMO INVITE */
-        .case-demo-invite {
-            border-top: 1px solid rgba(201,168,76,0.12);
-            background: linear-gradient(135deg, #0F0F12 0%, #161619 100%);
-            padding: 56px 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .case-demo-invite-inner {
-            max-width: 640px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 28px;
-        }
-        .case-demo-text {
-            font-size: 17px;
-            color: var(--gray-light);
-            line-height: 1.85;
-            font-style: italic;
-        }
-        .case-demo-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--gold);
-            color: #000;
-            padding: 15px 40px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(201,168,76,0.3);
-        }
+        .case-demo-invite { border-top: 1px solid rgba(201,168,76,0.12); background: linear-gradient(135deg, #0F0F12 0%, #161619 100%); padding: 56px 52px; display: flex; align-items: center; justify-content: center; }
+        .case-demo-invite-inner { max-width: 640px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .case-demo-quote-mark { font-family: var(--font-heading); font-size: 64px; color: var(--gold); opacity: 0.3; line-height: 0.5; }
+        .case-demo-text { font-size: 17px; color: var(--gray-light); line-height: 1.85; }
+        .case-demo-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: #000; padding: 15px 40px; border-radius: 100px; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: all 0.3s; box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
         .case-demo-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.4); }
-        .case-demo-sub { font-size: 12px; color: var(--gray); letter-spacing: 0.06em; }
+        .case-demo-sub { font-size: 12px; color: var(--gray); letter-spacing: 0.05em; }
         @media (max-width: 768px) { .case-demo-invite { padding: 40px 24px; } .case-demo-text { font-size: 15px; } }
+
         .case-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -732,7 +701,7 @@
         .discovery-sub { font-size: 13px; color: #999; }
         .discovery-bullets { display: flex; flex-direction: column; gap: 10px; list-style: none; }
         .discovery-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
-        .discovery-bullets li::before { content: 'âœ“'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
+        .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
         .discovery-free { font-family: var(--font-heading); font-size: 26px; font-weight: 700; color: #2D2825; margin-bottom: 12px; text-align: right; }
         .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
         .discovery-btn:hover { background: #E8C97A; }
@@ -754,7 +723,7 @@
         .pricing-divider { height: 1px; background: #EDE8DC; margin-bottom: 18px; }
         .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .pricing-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: #555; line-height: 1.5; }
-        .pricing-bullets li::before { content: 'âœ“'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+        .pricing-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
         .pricing-cta { display: block; text-align: center; margin-top: 24px; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
         .pricing-cta-outline { border: 1px solid #D0C8BB; color: #888; }
         .pricing-cta-outline:hover { border-color: #C9A84C; color: #C9A84C; }
@@ -836,7 +805,7 @@
     <a href="#tarieven" onclick="toggleDrawer()" data-nl="Tarieven" data-en="Pricing">Tarieven</a>
     <a href="#contact" onclick="toggleDrawer()" data-nl="Contact" data-en="Contact">Contact</a>
     <a href="#contact" class="mobile-drawer-cta" onclick="toggleDrawer()" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
-    <span class="mobile-drawer-sub" data-nl="30 minuten Â· Vrijblijvend" data-en="30 minutes Â· No obligation">30 minuten Â· Vrijblijvend</span>
+    <span class="mobile-drawer-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</span>
 </div>
 
 <!-- HERO -->
@@ -846,10 +815,10 @@
     <p class="hero-intro" data-nl="<strong>Insightance</strong> automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages. U houdt wekelijks uren over, geen technische kennis nodig. <a href='#services' style='color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.4);'>Bekijk onze diensten</a> om te zien of dit bij uw bedrijf past." data-en="<strong>Insightance</strong> automates processes within your business using AI. Think of client follow-up, appointment management and reports. You'll save hours every week, no technical knowledge needed. <a href='#services' style='color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.4);'>View our services</a> to see if this fits your business."></p>
     <div class="hero-ctas">
         <a href="#contact" class="hero-cta-primary" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
-        <a href="demo.html" class="hero-cta-secondary" data-nl="Bekijk een demo â†’" data-en="View a demo â†’">Bekijk een demo â†’</a>
+        <a href="demo.html" class="hero-cta-secondary" data-nl="Bekijk een demo →" data-en="View a demo →">Bekijk een demo →</a>
     </div>
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
-    <span class="hero-side">Insightance Â· 2026</span>
+    <span class="hero-side">Insightance · 2026</span>
 </div>
 
 <!-- MISSION -->
@@ -857,10 +826,10 @@
     <div class="section fade-in">
         <p class="section-label" data-nl="Het probleem" data-en="The problem"></p>
         <h2 class="section-title" data-nl="Wat als uw bedrijf minder van u vraagt?" data-en="What if your business asked less of you?"></h2>
-        <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>Â¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag Ã©Ã©n." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>Â¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
+        <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag één." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
         <div class="mission-stats">
             <div class="mission-stat">
-                <div class="mission-stat-number">70%<sup style="font-size:12px;color:var(--gold);vertical-align:super;">Â²</sup></div>
+                <div class="mission-stat-number">70%<sup style="font-size:12px;color:var(--gold);vertical-align:super;">²</sup></div>
                 <div class="mission-stat-label" data-nl="van de handmatige taken is automatiseerbaar" data-en="of manual tasks can be automated"></div>
             </div>
             <div class="mission-stat">
@@ -868,13 +837,13 @@
                 <div class="mission-stat-label" data-nl="draait uw AI-systeem, ook als u slaapt" data-en="your AI system runs, even while you sleep"></div>
             </div>
             <div class="mission-stat">
-                <div class="mission-stat-number">â‚¬0</div>
+                <div class="mission-stat-number">€0</div>
                 <div class="mission-stat-label" data-nl="extra personeelskosten voor geautomatiseerde taken" data-en="extra staffing costs for automated tasks"></div>
             </div>
         </div>
         <p style="margin-top:28px; font-size:11px; color:#3A3A3A; text-align:center; line-height:1.7;">
-            <sup>Â¹</sup> Asana <em>Anatomy of Work</em> Global Index, 2022 &nbsp;Â·&nbsp;
-            <sup>Â²</sup> McKinsey Global Institute, <em>The Future of Work in America</em>, 2023
+            <sup>¹</sup> Asana <em>Anatomy of Work</em> Global Index, 2022 &nbsp;·&nbsp;
+            <sup>²</sup> McKinsey Global Institute, <em>The Future of Work in America</em>, 2023
         </p>
     </div>
 </div>
@@ -903,7 +872,7 @@
                 <div class="forwho-col-top"></div>
                 <div class="forwho-col-inner">
                     <h3 class="forwho-col-title" data-nl="De gevestigde organisatie" data-en="The established organisation"></h3>
-                    <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiÃ«nties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step, but internal capacity to implement it is lacking."></p>
+                    <p class="forwho-col-text" data-nl="De operatie draait, maar inefficiënties kosten dagelijks geld en energie. Automatisering is de volgende stap, maar intern ontbreekt de capaciteit om het te realiseren." data-en="Operations are running, but inefficiencies cost money and energy daily. Automation is the next step, but internal capacity to implement it is lacking."></p>
                 </div>
             </div>
         </div>
@@ -1025,8 +994,8 @@
                 <p class="services-cta-text" data-nl="Bekijk het volledige overzicht van AI-systemen, van klantcontact tot finance en HR. Filter op uw situatie en ontdek wat er mogelijk is." data-en="View the full overview of AI systems, from customer contact to finance and HR. Filter by your situation and discover what's possible."></p>
             </div>
             <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-end; flex-shrink:0;">
-                <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden â†’" data-en="View all possibilities â†’">Bekijk alle mogelijkheden â†’</a>
-                <a href="demo.html" style="font-size:12px; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-nl="Of bekijk eerst een demo â†’" data-en="Or view a demo first â†’">Of bekijk eerst een demo â†’</a>
+                <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden →" data-en="View all possibilities →">Bekijk alle mogelijkheden →</a>
+                <a href="demo.html" style="font-size:12px; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-nl="Of bekijk eerst een demo →" data-en="Or view a demo first →">Of bekijk eerst een demo →</a>
             </div>
         </div>
     </div>
@@ -1062,39 +1031,37 @@
                             </div>
                             <div class="case-flow-body" style="padding-bottom:0;">
                                 <div class="case-flow-label" data-nl="Oplossing" data-en="Solution"></div>
-                                <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, Ã©Ã©n knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
+                                <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, één knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Rechts: resultaat + quote -->
-                <div class="case-right"><a href="offerte-maker-demo.html" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,0.5); padding:11px 24px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-decoration:none; transition:all 0.3s; margin-bottom:20px;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'" data-nl="Probeer het zelf â†’" data-en="Try it yourself â†’">Probeer het zelf â†’</a>
+                <div class="case-right"><a href="offerte-maker-demo.html" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,0.5); padding:11px 24px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-decoration:none; transition:all 0.3s; margin-bottom:20px;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'" data-nl="Probeer het zelf →" data-en="Try it yourself →">Probeer het zelf →</a>
                     <div class="case-result">
                         <div class="case-result-number">90%</div>
                         <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
                     </div>
                     <div class="case-quote">
-                        <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op Ã©Ã©n knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
-                        <cite>â€” Mohammed, eigenaar MHL Installatieservice</cite>
+                        <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
+                        <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
                     </div>
                 </div>
             </div>
 
             <div class="case-demo-invite">
                 <div class="case-demo-invite-inner">
-                    <div class="case-demo-quote">
-                        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:16px; opacity:0.4;"><path d="M0 20V12.667C0 5.667 4.222 1.444 12.667 0l1.777 2.444C10.222 3.556 7.778 5.778 7.111 9.333H12V20H0zm16 0V12.667C16 5.667 20.222 1.444 28.667 0l1.777 2.444C26.222 3.556 23.778 5.778 23.111 9.333H28V20H16z" fill="#C9A84C"/></svg>
-                        <p class="case-demo-text" data-nl="Dit is een authentieke creatie van mijn hand. Het resultaat is zoals je kunt zien, en ik ben trots op het eindproduct. Neem gerust een kijkje en laat je verrassen door het ontwerp en de functionaliteit." data-en="This is an authentic creation of my own making. The result speaks for itself, and I'm proud of the final product. Feel free to take a look and be surprised by the design and functionality."></p>
-                    </div>
-                    <a href="offerte-maker-demo.html" target="_blank" class="case-demo-btn" data-nl="Bekijk de live demo â†’" data-en="View the live demo â†’">Bekijk de live demo â†’</a>
-                    <p class="case-demo-sub" data-nl="Volledig interactief Â· Geen echte gegevens verstuurd" data-en="Fully interactive Â· No real data sent"></p>
+                    <div class="case-demo-quote-mark">"</div>
+                    <p class="case-demo-text" data-nl="Dit project heb ik recent afgerond. Het resultaat kun je zelf inzien door op de knop hieronder te klikken." data-en="I recently completed this project. You can see the result yourself by clicking the button below."></p>
+                    <a href="offerte-maker-demo.html" target="_blank" class="case-demo-btn" data-nl="Bekijk het systeem &rarr;" data-en="View the system &rarr;">Bekijk het systeem &rarr;</a>
+                    <p class="case-demo-sub" data-nl="Volledig interactief &middot; Gebouwd voor MHL Installatieservice" data-en="Fully interactive &middot; Built for MHL Installatieservice"></p>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
+<!-- TOOLS STRIP -->
 <div class="tools-strip-wrap">
     <div class="tools-fade-left"></div>
     <div class="tools-fade-right"></div>
@@ -1103,53 +1070,53 @@
             <div class="tool-item"><img src="https://cdn.simpleicons.org/hubspot" class="tool-logo" alt="HubSpot"><span class="tool-item-name">HubSpot</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/n8n" class="tool-logo" alt="n8n"><span class="tool-item-name">n8n</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/airtable" class="tool-logo" alt="Airtable"><span class="tool-item-name">Airtable</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386z" fill="#36C5F0"/><path d="M54 19.884a5.381 5.381 0 0 0-5.376-5.386 5.381 5.381 0 0 0-5.376 5.386v5.387h5.376A5.381 5.381 0 0 0 54 19.884m-14.336 0V5.52A5.381 5.381 0 0 0 34.288.133a5.381 5.381 0 0 0-5.376 5.387v14.364a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387z" fill="#2EB67D"/><path d="M34.288 54a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386h-5.376v5.386A5.381 5.381 0 0 0 34.288 54m0-14.365h14.336A5.381 5.381 0 0 0 54 34.248a5.381 5.381 0 0 0-5.376-5.387H34.288a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.387z" fill="#ECB22E"/><path d="M0 34.248a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387v-5.387H5.376A5.381 5.381 0 0 0 0 34.248m14.336 0V48.613A5.381 5.381 0 0 0 19.712 54a5.381 5.381 0 0 0 5.376-5.387V34.248a5.381 5.381 0 0 0-5.376-5.387 5.381 5.381 0 0 0-5.376 5.387z" fill="#E01E5A"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#4A154B"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/notion" class="tool-logo" alt="Notion"><span class="tool-item-name">Notion</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.304 5.087L12.636 17.5h-1.8l-1.628-4.455H4.917L3.33 17.5H1.5L6.168 5.087h1.709l1.636 4.483h4.247l1.636-4.483h1.908zm-10.21 6.24l1.53-4.228 1.53 4.228H7.093zM22.5 17.5h-1.628l-1.59-4.455h-2.619l.48-1.327h2.612l-1.53-4.228-2.135 5.91-.48 1.327-.96 2.773h-1.627l4.668-12.413h1.709L22.5 17.5z" fill="#D97757"/></svg><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/anthropic" class="tool-logo" alt="Claude"><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.911 6.046 6.046 0 0 0-6.51-2.9 6.065 6.065 0 0 0-4.49-2.002 6.056 6.056 0 0 0-5.775 4.196 5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .511 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zm-9.022 12.607a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387 2.02-1.168a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.412-.663zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.141.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z" fill="#000"/></svg><span class="tool-item-name">OpenAI</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/><path d="M0 5.457l6.545 4.91v9.272H1.636A1.636 1.636 0 0 1 0 18.003V5.457z" fill="#C5221F"/><path d="M24 5.457l-6.545 4.91v9.272h4.909A1.636 1.636 0 0 0 24 18.003V5.457z" fill="#C5221F"/></svg><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/gmail" class="tool-logo" alt="Gmail"><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/google" class="tool-logo" alt="Google AI"><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/make" class="tool-logo" alt="Make"><span class="tool-item-name">Make</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><img src="https://api.iconify.design/logos:lovable.svg" class="tool-logo" alt="Lovable" onerror="this.outerHTML='<svg class=\'tool-logo\' viewBox=\'0 0 24 24\'><rect width=\'24\' height=\'24\' rx=\'6\' fill=\'%23FF6B6B\'/><text x=\'12\' y=\'17\' text-anchor=\'middle\' fill=\'white\' font-size=\'14\' font-weight=\'900\' font-family=\'Arial\'>L</text></svg>'"><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#FF6B6B"/></svg><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
         </div>
         <div class="tools-marquee-set">
             <div class="tool-item"><img src="https://cdn.simpleicons.org/hubspot" class="tool-logo" alt="HubSpot"><span class="tool-item-name">HubSpot</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/n8n" class="tool-logo" alt="n8n"><span class="tool-item-name">n8n</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/airtable" class="tool-logo" alt="Airtable"><span class="tool-item-name">Airtable</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386z" fill="#36C5F0"/><path d="M54 19.884a5.381 5.381 0 0 0-5.376-5.386 5.381 5.381 0 0 0-5.376 5.386v5.387h5.376A5.381 5.381 0 0 0 54 19.884m-14.336 0V5.52A5.381 5.381 0 0 0 34.288.133a5.381 5.381 0 0 0-5.376 5.387v14.364a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387z" fill="#2EB67D"/><path d="M34.288 54a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386h-5.376v5.386A5.381 5.381 0 0 0 34.288 54m0-14.365h14.336A5.381 5.381 0 0 0 54 34.248a5.381 5.381 0 0 0-5.376-5.387H34.288a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.387z" fill="#ECB22E"/><path d="M0 34.248a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387v-5.387H5.376A5.381 5.381 0 0 0 0 34.248m14.336 0V48.613A5.381 5.381 0 0 0 19.712 54a5.381 5.381 0 0 0 5.376-5.387V34.248a5.381 5.381 0 0 0-5.376-5.387 5.381 5.381 0 0 0-5.376 5.387z" fill="#E01E5A"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#4A154B"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/notion" class="tool-logo" alt="Notion"><span class="tool-item-name">Notion</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.304 5.087L12.636 17.5h-1.8l-1.628-4.455H4.917L3.33 17.5H1.5L6.168 5.087h1.709l1.636 4.483h4.247l1.636-4.483h1.908zm-10.21 6.24l1.53-4.228 1.53 4.228H7.093zM22.5 17.5h-1.628l-1.59-4.455h-2.619l.48-1.327h2.612l-1.53-4.228-2.135 5.91-.48 1.327-.96 2.773h-1.627l4.668-12.413h1.709L22.5 17.5z" fill="#D97757"/></svg><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/anthropic" class="tool-logo" alt="Claude"><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.911 6.046 6.046 0 0 0-6.51-2.9 6.065 6.065 0 0 0-4.49-2.002 6.056 6.056 0 0 0-5.775 4.196 5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .511 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zm-9.022 12.607a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387 2.02-1.168a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.412-.663zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.141.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z" fill="#000"/></svg><span class="tool-item-name">OpenAI</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/><path d="M0 5.457l6.545 4.91v9.272H1.636A1.636 1.636 0 0 1 0 18.003V5.457z" fill="#C5221F"/><path d="M24 5.457l-6.545 4.91v9.272h4.909A1.636 1.636 0 0 0 24 18.003V5.457z" fill="#C5221F"/></svg><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/gmail" class="tool-logo" alt="Gmail"><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/google" class="tool-logo" alt="Google AI"><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/make" class="tool-logo" alt="Make"><span class="tool-item-name">Make</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><img src="https://api.iconify.design/logos:lovable.svg" class="tool-logo" alt="Lovable" onerror="this.outerHTML='<svg class=\'tool-logo\' viewBox=\'0 0 24 24\'><rect width=\'24\' height=\'24\' rx=\'6\' fill=\'%23FF6B6B\'/><text x=\'12\' y=\'17\' text-anchor=\'middle\' fill=\'white\' font-size=\'14\' font-weight=\'900\' font-family=\'Arial\'>L</text></svg>'"><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#FF6B6B"/></svg><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
         </div>
         <div class="tools-marquee-set">
             <div class="tool-item"><img src="https://cdn.simpleicons.org/hubspot" class="tool-logo" alt="HubSpot"><span class="tool-item-name">HubSpot</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/n8n" class="tool-logo" alt="n8n"><span class="tool-item-name">n8n</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/airtable" class="tool-logo" alt="Airtable"><span class="tool-item-name">Airtable</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386z" fill="#36C5F0"/><path d="M54 19.884a5.381 5.381 0 0 0-5.376-5.386 5.381 5.381 0 0 0-5.376 5.386v5.387h5.376A5.381 5.381 0 0 0 54 19.884m-14.336 0V5.52A5.381 5.381 0 0 0 34.288.133a5.381 5.381 0 0 0-5.376 5.387v14.364a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387z" fill="#2EB67D"/><path d="M34.288 54a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386h-5.376v5.386A5.381 5.381 0 0 0 34.288 54m0-14.365h14.336A5.381 5.381 0 0 0 54 34.248a5.381 5.381 0 0 0-5.376-5.387H34.288a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.387z" fill="#ECB22E"/><path d="M0 34.248a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387v-5.387H5.376A5.381 5.381 0 0 0 0 34.248m14.336 0V48.613A5.381 5.381 0 0 0 19.712 54a5.381 5.381 0 0 0 5.376-5.387V34.248a5.381 5.381 0 0 0-5.376-5.387 5.381 5.381 0 0 0-5.376 5.387z" fill="#E01E5A"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#4A154B"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/notion" class="tool-logo" alt="Notion"><span class="tool-item-name">Notion</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.304 5.087L12.636 17.5h-1.8l-1.628-4.455H4.917L3.33 17.5H1.5L6.168 5.087h1.709l1.636 4.483h4.247l1.636-4.483h1.908zm-10.21 6.24l1.53-4.228 1.53 4.228H7.093zM22.5 17.5h-1.628l-1.59-4.455h-2.619l.48-1.327h2.612l-1.53-4.228-2.135 5.91-.48 1.327-.96 2.773h-1.627l4.668-12.413h1.709L22.5 17.5z" fill="#D97757"/></svg><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/anthropic" class="tool-logo" alt="Claude"><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.911 6.046 6.046 0 0 0-6.51-2.9 6.065 6.065 0 0 0-4.49-2.002 6.056 6.056 0 0 0-5.775 4.196 5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .511 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zm-9.022 12.607a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387 2.02-1.168a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.412-.663zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.141.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z" fill="#000"/></svg><span class="tool-item-name">OpenAI</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/><path d="M0 5.457l6.545 4.91v9.272H1.636A1.636 1.636 0 0 1 0 18.003V5.457z" fill="#C5221F"/><path d="M24 5.457l-6.545 4.91v9.272h4.909A1.636 1.636 0 0 0 24 18.003V5.457z" fill="#C5221F"/></svg><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/gmail" class="tool-logo" alt="Gmail"><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/google" class="tool-logo" alt="Google AI"><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/make" class="tool-logo" alt="Make"><span class="tool-item-name">Make</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><img src="https://api.iconify.design/logos:lovable.svg" class="tool-logo" alt="Lovable" onerror="this.outerHTML='<svg class=\'tool-logo\' viewBox=\'0 0 24 24\'><rect width=\'24\' height=\'24\' rx=\'6\' fill=\'%23FF6B6B\'/><text x=\'12\' y=\'17\' text-anchor=\'middle\' fill=\'white\' font-size=\'14\' font-weight=\'900\' font-family=\'Arial\'>L</text></svg>'"><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#FF6B6B"/></svg><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
         </div>
         <div class="tools-marquee-set">
             <div class="tool-item"><img src="https://cdn.simpleicons.org/hubspot" class="tool-logo" alt="HubSpot"><span class="tool-item-name">HubSpot</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/n8n" class="tool-logo" alt="n8n"><span class="tool-item-name">n8n</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/airtable" class="tool-logo" alt="Airtable"><span class="tool-item-name">Airtable</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386z" fill="#36C5F0"/><path d="M54 19.884a5.381 5.381 0 0 0-5.376-5.386 5.381 5.381 0 0 0-5.376 5.386v5.387h5.376A5.381 5.381 0 0 0 54 19.884m-14.336 0V5.52A5.381 5.381 0 0 0 34.288.133a5.381 5.381 0 0 0-5.376 5.387v14.364a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387z" fill="#2EB67D"/><path d="M34.288 54a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386h-5.376v5.386A5.381 5.381 0 0 0 34.288 54m0-14.365h14.336A5.381 5.381 0 0 0 54 34.248a5.381 5.381 0 0 0-5.376-5.387H34.288a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.387z" fill="#ECB22E"/><path d="M0 34.248a5.381 5.381 0 0 0 5.376 5.387 5.381 5.381 0 0 0 5.376-5.387v-5.387H5.376A5.381 5.381 0 0 0 0 34.248m14.336 0V48.613A5.381 5.381 0 0 0 19.712 54a5.381 5.381 0 0 0 5.376-5.387V34.248a5.381 5.381 0 0 0-5.376-5.387 5.381 5.381 0 0 0-5.376 5.387z" fill="#E01E5A"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#4A154B"/></svg><span class="tool-item-name">Slack</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/notion" class="tool-logo" alt="Notion"><span class="tool-item-name">Notion</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.304 5.087L12.636 17.5h-1.8l-1.628-4.455H4.917L3.33 17.5H1.5L6.168 5.087h1.709l1.636 4.483h4.247l1.636-4.483h1.908zm-10.21 6.24l1.53-4.228 1.53 4.228H7.093zM22.5 17.5h-1.628l-1.59-4.455h-2.619l.48-1.327h2.612l-1.53-4.228-2.135 5.91-.48 1.327-.96 2.773h-1.627l4.668-12.413h1.709L22.5 17.5z" fill="#D97757"/></svg><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/anthropic" class="tool-logo" alt="Claude"><span class="tool-item-name">Claude</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.911 6.046 6.046 0 0 0-6.51-2.9 6.065 6.065 0 0 0-4.49-2.002 6.056 6.056 0 0 0-5.775 4.196 5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .511 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zm-9.022 12.607a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387 2.02-1.168a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.412-.663zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.141.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z" fill="#000"/></svg><span class="tool-item-name">OpenAI</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L12 9.548l8.073-6.055C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/><path d="M0 5.457l6.545 4.91v9.272H1.636A1.636 1.636 0 0 1 0 18.003V5.457z" fill="#C5221F"/><path d="M24 5.457l-6.545 4.91v9.272h4.909A1.636 1.636 0 0 0 24 18.003V5.457z" fill="#C5221F"/></svg><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/gmail" class="tool-logo" alt="Gmail"><span class="tool-item-name">Gmail</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><img src="https://cdn.simpleicons.org/google" class="tool-logo" alt="Google AI"><span class="tool-item-name">Google AI</span></div><span class="tool-item-dot"></span>
             <div class="tool-item"><img src="https://cdn.simpleicons.org/make" class="tool-logo" alt="Make"><span class="tool-item-name">Make</span></div><span class="tool-item-dot"></span>
-            <div class="tool-item"><img src="https://api.iconify.design/logos:lovable.svg" class="tool-logo" alt="Lovable" onerror="this.outerHTML='<svg class=\'tool-logo\' viewBox=\'0 0 24 24\'><rect width=\'24\' height=\'24\' rx=\'6\' fill=\'%23FF6B6B\'/><text x=\'12\' y=\'17\' text-anchor=\'middle\' fill=\'white\' font-size=\'14\' font-weight=\'900\' font-family=\'Arial\'>L</text></svg>'"><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
+            <div class="tool-item"><svg class="tool-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#FF6B6B"/></svg><span class="tool-item-name">Lovable</span></div><span class="tool-item-dot"></span>
         </div>
     </div>
 </div>
@@ -1210,7 +1177,7 @@
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Persoonlijk" data-en="Personal"></h3>
                 <span class="why-tag" data-nl="Direct contact" data-en="Direct contact"></span>
-                <p class="why-text" data-nl="U werkt direct met de oprichter van Insightance, niet met een team van junior medewerkers. EÃ©n aanspreekpunt, altijd." data-en="You work directly with the founder of Insightance, not a team of junior employees. One point of contact, always."></p>
+                <p class="why-text" data-nl="U werkt direct met de oprichter van Insightance, niet met een team van junior medewerkers. Eén aanspreekpunt, altijd." data-en="You work directly with the founder of Insightance, not a team of junior employees. One point of contact, always."></p>
             </div>
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Op maat gebouwd" data-en="Custom built"></h3>
@@ -1226,7 +1193,7 @@
                 <h3 class="why-title" data-nl="Achtergrond als zorgverlener" data-en="Healthcare background"></h3>
                 <span class="why-tag" data-nl="Precisie & zorgvuldigheid" data-en="Precision & care"></span>
                 <p class="why-text" data-nl="Jarenlang gewerkt in een omgeving waar fouten flinke consequenties kunnen hebben, heeft ertoe geleid dat Insightance met precisie en zorgvuldigheid te werk gaat." data-en="Years of working in an environment where mistakes have serious consequences has led Insightance to work with precision and care."></p>
-                <a href="#about" class="why-link" data-nl="Lees meer over de oprichter â†’" data-en="Read more about the founder â†’"></a>
+                <a href="#about" class="why-link" data-nl="Lees meer over de oprichter →" data-en="Read more about the founder →"></a>
             </div>
         </div>
     </div>
@@ -1246,9 +1213,9 @@
         <!-- DISCOVERY CALL BANNER -->
         <div class="discovery-banner fade-in">
             <div>
-                <span class="discovery-badge-sm" data-nl="Vrijblijvend Â· Begin hier" data-en="No obligation Â· Start here">Vrijblijvend Â· Begin hier</span>
+                <span class="discovery-badge-sm" data-nl="Vrijblijvend · Begin hier" data-en="No obligation · Start here">Vrijblijvend · Begin hier</span>
                 <h3 class="discovery-title" data-nl="Discovery Call" data-en="Discovery Call">Discovery Call</h3>
-                <p class="discovery-sub" data-nl="30 minuten Â· Vrijblijvend" data-en="30 minutes Â· No obligation">30 minuten Â· Vrijblijvend</p>
+                <p class="discovery-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</p>
             </div>
             <ul class="discovery-bullets">
                 <li data-nl="Analyse van uw grootste tijdverlies" data-en="Analysis of your biggest time loss">Analyse van uw grootste tijdverlies</li>
@@ -1257,7 +1224,7 @@
             </ul>
             <div>
                 <p class="discovery-free" data-nl="Gratis" data-en="Free">Gratis</p>
-                <a href="#contact" class="discovery-btn" data-nl="Plan een gesprek â†’" data-en="Schedule a call â†’">Plan een gesprek â†’</a>
+                <a href="#contact" class="discovery-btn" data-nl="Plan een gesprek →" data-en="Schedule a call →">Plan een gesprek →</a>
             </div>
         </div>
 
@@ -1268,8 +1235,8 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Eerste stap" data-en="First step">Eerste stap</span>
                 <h3 class="pricing-name" data-nl="AI Assessment" data-en="AI Assessment">AI Assessment</h3>
                 <p class="pricing-vanaf" data-nl="Eenmalig" data-en="One-time">Eenmalig</p>
-                <div class="pricing-amount">â‚¬300</div>
-                <p class="pricing-sub-highlight" data-nl="âœ“ Volledig verrekend bij implementatie" data-en="âœ“ Fully credited at implementation">âœ“ Volledig verrekend bij implementatie</p>
+                <div class="pricing-amount">€300</div>
+                <p class="pricing-sub-highlight" data-nl="✓ Volledig verrekend bij implementatie" data-en="✓ Fully credited at implementation">✓ Volledig verrekend bij implementatie</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Analyse van uw processen en tools" data-en="Analysis of your processes and tools">Analyse van uw processen en tools</li>
@@ -1284,7 +1251,7 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Losse automation" data-en="Single automation">Losse automation</span>
                 <h3 class="pricing-name" data-nl="AI Implementatie" data-en="AI Implementation">AI Implementatie</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount">â‚¬750</div>
+                <div class="pricing-amount">€750</div>
                 <div class="pricing-divider" style="margin-top: 22px;"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Workflow automation of AI agent op maat" data-en="Workflow automation or custom AI agent">Workflow automation of AI agent op maat</li>
@@ -1299,12 +1266,12 @@
                 <span class="pricing-badge pricing-badge-featured" data-nl="Aanbevolen" data-en="Recommended">Aanbevolen</span>
                 <h3 class="pricing-name" data-nl="AIOS Setup" data-en="AIOS Setup">AIOS Setup</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount gold">â‚¬2.500</div>
-                <p class="pricing-sub" data-nl="Eenmalig Â· Retainer optioneel" data-en="One-time Â· Retainer optional">Eenmalig Â· Retainer optioneel</p>
+                <div class="pricing-amount gold">€2.500</div>
+                <p class="pricing-sub" data-nl="Eenmalig · Retainer optioneel" data-en="One-time · Retainer optional">Eenmalig · Retainer optioneel</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
                     <li data-nl="Meerdere gekoppelde AI-systemen op maat" data-en="Multiple connected custom AI systems">Meerdere gekoppelde AI-systemen op maat</li>
-                    <li data-nl="Volledig geÃ¯ntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geÃ¯ntegreerd in uw bedrijfsprocessen</li>
+                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geïntegreerd in uw bedrijfsprocessen</li>
                     <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project">Persoonlijke begeleiding gedurende het traject</li>
                     <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery">Getest en fijngesteld voor oplevering</li>
                     <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered">Vragen achteraf altijd beantwoord</li>
@@ -1316,7 +1283,7 @@
                 <span class="pricing-badge pricing-badge-default" data-nl="Doorlopend beheer" data-en="Ongoing management">Doorlopend beheer</span>
                 <h3 class="pricing-name" data-nl="AIOS Retainer" data-en="AIOS Retainer">AIOS Retainer</h3>
                 <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
-                <div class="pricing-amount">â‚¬600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
+                <div class="pricing-amount">€600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
                 <p class="pricing-sub" data-nl="Maandelijks opzegbaar" data-en="Cancel monthly">Maandelijks opzegbaar</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-bullets">
@@ -1350,7 +1317,7 @@
         <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat." data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal."></p>
 
         <p style="text-align:center; margin-top:16px;">
-            <a href="demo.html" style="font-size:13px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'" data-nl="Wilt u eerst zien hoe het werkt? Bekijk de demo â†’" data-en="Want to see how it works first? View the demo â†’">Wilt u eerst zien hoe het werkt? Bekijk de demo â†’</a>
+            <a href="demo.html" style="font-size:13px; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3); padding-bottom:2px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'" data-nl="Wilt u eerst zien hoe het werkt? Bekijk de demo →" data-en="Want to see how it works first? View the demo →">Wilt u eerst zien hoe het werkt? Bekijk de demo →</a>
         </p>
 
     </div>
@@ -1533,7 +1500,7 @@
                         placeholder="Vertel ons over uw bedrijf en waar u mee geholpen wilt worden..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit" data-nl="Verstuur bericht" data-en="Send message"></button>
-                <p style="text-align:center; margin-top:12px; font-size:12px; color:#3A3A3A; letter-spacing:0.08em;">30 minuten Â· Vrijblijvend</p>
+                <p style="text-align:center; margin-top:12px; font-size:12px; color:#3A3A3A; letter-spacing:0.08em;">30 minuten · Vrijblijvend</p>
             </form>
         </div>
     </div>
@@ -1582,16 +1549,16 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span class="footer-meta-left">Insightance Â· KVK: volgt Â· Amsterdam</span>
+        <span class="footer-meta-left">Insightance · KVK: volgt · Amsterdam</span>
         <div class="footer-meta-right">
             <a href="privacybeleid.html" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a>
-            <span data-nl="Â© 2026 Insightance" data-en="Â© 2026 Insightance">Â© 2026 Insightance</span>
+            <span data-nl="© 2026 Insightance" data-en="© 2026 Insightance">© 2026 Insightance</span>
         </div>
     </div>
 </footer>
 
 <script>
-    // STICKY CTA â€” verschijnt na hero, verdwijnt bij footer
+    // STICKY CTA — verschijnt na hero, verdwijnt bij footer
     const stickyCta = document.getElementById('stickyCta');
     const heroEl = document.querySelector('.hero');
     const footerEl = document.querySelector('footer');
