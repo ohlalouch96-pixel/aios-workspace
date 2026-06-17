@@ -419,6 +419,118 @@
         .steps-row > .step:nth-child(9)  { transition-delay: 0.5s; }
         .steps-row > .step:nth-child(11) { transition-delay: 0.6s; }
 
+        /* CASE STUDY */
+        .case-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: #161619;
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+        .case-visual {
+            background: #0F0F12;
+            border-right: 1px solid rgba(201,168,76,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            min-height: 480px;
+            overflow: hidden;
+        }
+        .case-visual-browser {
+            background: #1A1A1E;
+            border-bottom: 1px solid #2A2A2E;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .browser-dot:nth-child(1) { background: #FF5F57; }
+        .browser-dot:nth-child(2) { background: #FEBC2E; }
+        .browser-dot:nth-child(3) { background: #28C840; }
+        .browser-url {
+            flex: 1;
+            background: #252528;
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 11px;
+            color: #555;
+            letter-spacing: 0.03em;
+            margin-left: 8px;
+        }
+        .case-screenshot-img {
+            flex: 1;
+            width: 100%;
+            object-fit: cover;
+            object-position: top left;
+            display: block;
+        }
+        .case-content {
+            padding: 52px 52px 52px 48px;
+            display: flex;
+            flex-direction: column;
+        }
+        .case-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .case-tag::before { content: ''; width: 16px; height: 1px; background: var(--gold); opacity: 0.5; }
+        .case-company {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 36px;
+            line-height: 1.2;
+        }
+        .case-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 36px; }
+        .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
+        .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .case-flow-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0; }
+        .case-flow-dot.active { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.4); }
+        .case-flow-connector { width: 1px; flex: 1; min-height: 28px; background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05)); margin: 4px 0; }
+        .case-flow-body { padding-bottom: 28px; }
+        .case-flow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
+        .case-flow-text { font-size: 14px; color: var(--gray-light); line-height: 1.75; }
+        .case-result {
+            background: rgba(201,168,76,0.05);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+        .case-result-number { font-family: var(--font-heading); font-size: 42px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; }
+        .case-result-text { font-size: 14px; color: var(--gray-light); line-height: 1.6; }
+        .case-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 20px; margin-top: auto; }
+        .case-quote p { font-size: 14px; color: var(--gray-light); line-height: 1.8; font-style: italic; margin-bottom: 10px; }
+        .case-quote cite { font-size: 12px; color: var(--gold); font-style: normal; letter-spacing: 0.05em; font-weight: 500; }
+        @media (max-width: 900px) {
+            .case-card { grid-template-columns: 1fr; }
+            .case-visual { min-height: 260px; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+            .case-content { padding: 36px 28px; }
+        }
+
         /* COOKIE BANNER */
         .cookie-banner {
             position: fixed;
@@ -811,6 +923,64 @@
             <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-end; flex-shrink:0;">
                 <a href="automations.html" class="services-cta-btn" data-nl="Bekijk alle mogelijkheden →" data-en="View all possibilities →">Bekijk alle mogelijkheden →</a>
                 <a href="demo.html" style="font-size:12px; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.2s; white-space:nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-nl="Of bekijk eerst een demo →" data-en="Or view a demo first →">Of bekijk eerst een demo →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CASE STUDY -->
+<div class="strip depth-1" id="cases">
+    <div class="section fade-in">
+        <span class="section-label" data-nl="Resultaten" data-en="Results"></span>
+        <h2 class="section-title" data-nl="Wat we bouwen, werkt" data-en="What we build, works"></h2>
+        <p style="font-size:16px; color:var(--gray); text-align:center; max-width:520px; margin:0 auto 56px; line-height:1.8;" data-nl="Een voorbeeld van wat AI-automatisering betekent voor een klein bedrijf in de praktijk." data-en="An example of what AI automation means for a small business in practice."></p>
+
+        <div class="case-card">
+            <div class="case-visual">
+                <div class="case-visual-browser">
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-url">insightance.ai/offerte-maker.html</div>
+                </div>
+                <img class="case-screenshot-img" src="screenshot-mhl.png" alt="MHL Installatieservice offerte-maker">
+            </div>
+
+            <div class="case-content">
+                <div class="case-tag" data-nl="Technische dienstverlening" data-en="Technical services"></div>
+                <h3 class="case-company">MHL Installatieservice</h3>
+
+                <div class="case-flow">
+                    <div class="case-flow-item">
+                        <div class="case-flow-line">
+                            <div class="case-flow-dot"></div>
+                            <div class="case-flow-connector"></div>
+                        </div>
+                        <div class="case-flow-body">
+                            <div class="case-flow-label" data-nl="Situatie" data-en="Situation"></div>
+                            <div class="case-flow-text" data-nl="Offertes handmatig opstellen en versturen kostte elke keer veel tijd." data-en="Manually creating and sending quotes took a lot of time every time."></div>
+                        </div>
+                    </div>
+                    <div class="case-flow-item">
+                        <div class="case-flow-line">
+                            <div class="case-flow-dot active"></div>
+                        </div>
+                        <div class="case-flow-body" style="padding-bottom:0;">
+                            <div class="case-flow-label" data-nl="Oplossing" data-en="Solution"></div>
+                            <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, één knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-result">
+                    <div class="case-result-number">90%</div>
+                    <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
+                </div>
+
+                <div class="case-quote">
+                    <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
+                    <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
+                </div>
             </div>
         </div>
     </div>
