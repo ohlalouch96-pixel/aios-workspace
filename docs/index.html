@@ -421,9 +421,8 @@
 
         /* CASE STUDY */
         .case-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
+            display: flex;
+            flex-direction: column;
             background: #161619;
             border: 1px solid rgba(201,168,76,0.15);
             border-radius: 14px;
@@ -439,12 +438,11 @@
         }
         .case-visual {
             background: #0F0F12;
-            border-right: 1px solid rgba(201,168,76,0.1);
+            border-bottom: 1px solid rgba(201,168,76,0.1);
             display: flex;
             flex-direction: column;
-            align-items: stretch;
-            min-height: 620px;
             overflow: hidden;
+            height: 340px;
         }
         .case-visual-browser {
             background: #1A1A1E;
@@ -470,18 +468,17 @@
             margin-left: 8px;
         }
         .case-screenshot-img {
-            flex: 1;
             width: 100%;
+            height: 100%;
             object-fit: cover;
-            object-position: 60% top;
+            object-position: top center;
             display: block;
-            transform: scale(1.15);
-            transform-origin: top center;
         }
         .case-content {
-            padding: 52px 52px 52px 48px;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 48px 52px;
         }
         .case-tag {
             display: inline-flex;
@@ -500,10 +497,10 @@
             font-size: 26px;
             font-weight: 600;
             color: var(--white);
-            margin-bottom: 36px;
+            margin-bottom: 32px;
             line-height: 1.2;
         }
-        .case-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 36px; }
+        .case-flow { display: flex; flex-direction: column; gap: 0; }
         .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
         .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
         .case-flow-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0; }
@@ -512,6 +509,7 @@
         .case-flow-body { padding-bottom: 28px; }
         .case-flow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
         .case-flow-text { font-size: 14px; color: var(--gray-light); line-height: 1.75; }
+        .case-right { display: flex; flex-direction: column; gap: 28px; }
         .case-result {
             background: rgba(201,168,76,0.05);
             border: 1px solid rgba(201,168,76,0.15);
@@ -520,17 +518,15 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            margin-bottom: 32px;
         }
         .case-result-number { font-family: var(--font-heading); font-size: 42px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; }
         .case-result-text { font-size: 14px; color: var(--gray-light); line-height: 1.6; }
-        .case-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 20px; margin-top: auto; }
+        .case-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 20px; }
         .case-quote p { font-size: 14px; color: var(--gray-light); line-height: 1.8; font-style: italic; margin-bottom: 10px; }
         .case-quote cite { font-size: 12px; color: var(--gold); font-style: normal; letter-spacing: 0.05em; font-weight: 500; }
         @media (max-width: 900px) {
-            .case-card { grid-template-columns: 1fr; }
-            .case-visual { min-height: 260px; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
-            .case-content { padding: 36px 28px; }
+            .case-content { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
+            .case-visual { height: 220px; }
         }
 
         /* COOKIE BANNER */
@@ -949,39 +945,42 @@
             </div>
 
             <div class="case-content">
-                <div class="case-tag" data-nl="Technische dienstverlening" data-en="Technical services"></div>
-                <h3 class="case-company">MHL Installatieservice</h3>
-
-                <div class="case-flow">
-                    <div class="case-flow-item">
-                        <div class="case-flow-line">
-                            <div class="case-flow-dot"></div>
-                            <div class="case-flow-connector"></div>
+                <!-- Links: bedrijf + situatie/oplossing -->
+                <div>
+                    <div class="case-tag" data-nl="Technische dienstverlening" data-en="Technical services"></div>
+                    <h3 class="case-company">MHL Installatieservice</h3>
+                    <div class="case-flow">
+                        <div class="case-flow-item">
+                            <div class="case-flow-line">
+                                <div class="case-flow-dot"></div>
+                                <div class="case-flow-connector"></div>
+                            </div>
+                            <div class="case-flow-body">
+                                <div class="case-flow-label" data-nl="Situatie" data-en="Situation"></div>
+                                <div class="case-flow-text" data-nl="Offertes handmatig opstellen en versturen kostte elke keer veel tijd." data-en="Manually creating and sending quotes took a lot of time every time."></div>
+                            </div>
                         </div>
-                        <div class="case-flow-body">
-                            <div class="case-flow-label" data-nl="Situatie" data-en="Situation"></div>
-                            <div class="case-flow-text" data-nl="Offertes handmatig opstellen en versturen kostte elke keer veel tijd." data-en="Manually creating and sending quotes took a lot of time every time."></div>
-                        </div>
-                    </div>
-                    <div class="case-flow-item">
-                        <div class="case-flow-line">
-                            <div class="case-flow-dot active"></div>
-                        </div>
-                        <div class="case-flow-body" style="padding-bottom:0;">
-                            <div class="case-flow-label" data-nl="Oplossing" data-en="Solution"></div>
-                            <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, één knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
+                        <div class="case-flow-item">
+                            <div class="case-flow-line">
+                                <div class="case-flow-dot active"></div>
+                            </div>
+                            <div class="case-flow-body" style="padding-bottom:0;">
+                                <div class="case-flow-label" data-nl="Oplossing" data-en="Solution"></div>
+                                <div class="case-flow-text" data-nl="Geautomatiseerde offerte-tool: formulier invullen, één knop, klant ontvangt professionele PDF rechtstreeks in zijn inbox." data-en="Automated quote tool: fill in the form, one button, client receives a professional PDF directly in their inbox."></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="case-result">
-                    <div class="case-result-number">90%</div>
-                    <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
-                </div>
-
-                <div class="case-quote">
-                    <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
-                    <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
+                <!-- Rechts: resultaat + quote -->
+                <div class="case-right">
+                    <div class="case-result">
+                        <div class="case-result-number">90%</div>
+                        <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
+                    </div>
+                    <div class="case-quote">
+                        <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out a quote manually and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox immediately."'></p>
+                        <cite>— Mohammed, eigenaar MHL Installatieservice</cite>
+                    </div>
                 </div>
             </div>
         </div>
