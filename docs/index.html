@@ -540,6 +540,9 @@
         .case-demo-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: #000; padding: 15px 40px; border-radius: 100px; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: all 0.3s; box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
         .case-demo-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.4); }
         .case-demo-sub { font-size: 12px; color: var(--gray); letter-spacing: 0.05em; }
+        .case-demo-cta { font-size: 13px; color: var(--gray); margin-top: 4px; }
+        .case-demo-cta-link { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 1px; transition: border-color 0.2s; }
+        .case-demo-cta-link:hover { border-color: var(--gold); }
         @media (max-width: 768px) { .case-demo-invite { padding: 40px 24px; } .case-demo-text { font-size: 15px; } }
 
         .case-content {
@@ -1037,7 +1040,7 @@
                     </div>
                 </div>
                 <!-- Rechts: resultaat + quote -->
-                <div class="case-right"><a href="offerte-maker-demo.html" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,0.5); padding:11px 24px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:0.06em; text-decoration:none; transition:all 0.3s; margin-bottom:20px;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='transparent'" data-nl="Probeer het zelf →" data-en="Try it yourself →">Probeer het zelf →</a>
+                <div class="case-right">
                     <div class="case-result">
                         <div class="case-result-number">90%</div>
                         <div class="case-result-text" data-nl="minder tijd per offerte.<br>Geen handmatig typen meer." data-en="less time per quote.<br>No more manual typing."></div>
@@ -1055,6 +1058,7 @@
                     <p class="case-demo-text" data-nl="Dit project heb ik recent afgerond. Het resultaat kun je zelf inzien door op de knop hieronder te klikken." data-en="I recently completed this project. You can see the result yourself by clicking the button below."></p>
                     <a href="offerte-maker-demo.html" target="_blank" class="case-demo-btn" data-nl="Bekijk het systeem &rarr;" data-en="View the system &rarr;">Bekijk het systeem &rarr;</a>
                     <p class="case-demo-sub" data-nl="Volledig interactief &middot; Gebouwd voor MHL Installatieservice" data-en="Fully interactive &middot; Built for MHL Installatieservice"></p>
+                    <p class="case-demo-cta" data-nl='Wil je ook zoiets? <a href="#contact" class="case-demo-cta-link">Plan vrijblijvend een gesprek &rarr;</a>' data-en='Want something similar? <a href="#contact" class="case-demo-cta-link">Schedule a free call &rarr;</a>'></p>
                 </div>
             </div>
         </div>
