@@ -1,16 +1,22 @@
 # Key Metrics
 
-> Auto-gegenereerd vanuit database. Laatste update: 2026-04-26
+> Auto-gegenereerd vanuit database. Laatste update: 2026-06-15
 > Bron: `data/data.db` | Vernieuwen: `python scripts/generate_metrics.py`
 
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
 | Totaal benaderd | 2 |
-| Gereageerd | 0 |
-| Deals gesloten | 0 |
+| Gereageerd | 1 |
+| Deals gesloten | 1 |
 | Afgewezen | 0 |
-| Conversieratio | 0.0% |
+| Conversieratio | 50% |
+
+## Actieve Projecten
+| Project | Type | Status | Waarde |
+|---------|------|--------|--------|
+| FTUK | Betalende klant | In uitvoering | €7.500 + €1.250/mnd |
+| MHL Installatieservice | Gratis pilot | In uitvoering | Portfolio/testimonial |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
@@ -24,4 +30,4 @@
 | Bron | Laatste Record | Status |
 |------|----------------|--------|
 | fx_rates | 2026-04-24 | Verbonden |
-| outreach | 26-4-2026 | Verbonden |
+| outreach | 2026-06-15 | Verbonden |

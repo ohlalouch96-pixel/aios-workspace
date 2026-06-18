@@ -8,6 +8,68 @@
 
 ---
 
+## 2026-06-18
+
+### Insightance Website — Logo's & Case Study Verbeterd
+
+**Logo's tool-strip (echte merkkleuren)**
+- Slack: vervangen door officieel 4-kleurig SVG (rood, blauw, groen, geel)
+- Anthropic/Claude: vervangen door officieel starburst SVG (#D97757 terracotta)
+- Google AI: vervangen door Gemini-ster SVG met gradient (blauw → paars → rood)
+- Lovable: vervangen door officieel L-shape SVG met gradient (oranje → roze → blauw)
+- Gmail: vervangen door officieel 5-kleurig SVG via Wikimedia (Google merkkleurem)
+- Make: vervangen door inline SVG met officiële paarse gradient (#EE2FEE → #240342)
+
+**Navigatie**
+- "Resultaten" toegevoegd aan desktop- en mobiel menu (link naar #cases)
+- "AI-systemen" verwijderd uit nav
+- "jouw" gewijzigd naar "uw" in CTA-tekst
+
+**MHL case study — story-first herstructurering**
+- Labels gewijzigd van Situatie/Oplossing naar Vroeger/Nu
+- Vroeger-tekst uitgebreid met concreet stappenproces (Word openen, kopiëren, PDF exporteren, mailen)
+- 90%-metric verplaatst naar linkerkolom onderaan
+- Rechterkolom: quote Mohammed → screenshot systeem → "Herkent u dit?" → CTA
+- Aparte donkere demo-sectie verwijderd, alles geïntegreerd in één kaart
+- Demo-banner tekst vereenvoudigd (uitprobeer-tekst verwijderd)
+- Screenshot van systeem toegevoegd als statisch beeld (docs/images/mhl-demo-preview.jpg)
+- CTA aangepast naar "Wat zou dit voor uw bedrijf opleveren?"
+
+**Bio geschreven voor Looma (netwerk platform)**
+- "I build AI automations for small businesses looking to cut down on manual work, early days but already working with my first clients. Always keen to connect with people in AI, tech or entrepreneurship. Based in Amsterdam."
+
+---
+
+## 2026-06-15
+
+### Insightance — Eerste Klant & Infrastructuur Live
+
+**FTUK project (eerste betalende klant)**
+- Analyse van FTUK gedaan: prop trading firm, €50k/maand adspend, gebruikt HYROS
+- Voorstel #002 gemaakt: AI Media Intelligence systeem (creative intelligence, competitor monitoring, geo trends)
+- Akkoord ontvangen: €7.500 eenmalig + €1.250/maand
+- Hetzner server opgezet (91.99.172.227, CPX22, Ubuntu 22.04)
+- n8n geïnstalleerd via Docker op eigen server
+- Workflow 1 gebouwd: dagelijks rapport (Schedule → Claude → Brevo email)
+- Workflow 2 gebouwd: Telegram alerts via @ftuk_alerts_bot
+- Wacht op: WooCommerce API en HYROS viewer toegang van Abdelilah Ibrahimi
+
+**MHL Installatieservice (gratis pilot)**
+- Analyse gedaan van mhl-installatieservice.nl
+- Intake vragenlijst opgesteld
+- Voorstel #001 gemaakt (gratis pilot, €0)
+- Offerte aanvraagformulier gebouwd (outputs/offerte-formulier-mhl.html)
+- Volgende stap: formulier plaatsen op Wix website (vader uitnodigen als editor)
+
+**Insightance infrastructuur**
+- Website live op https://insightance.ai (GitHub Pages + Cloudflare)
+- Email live: oussama@insightance.ai (Google Workspace, Gmail geactiveerd)
+- DNS volledig omgezet naar Cloudflare
+- Google Workspace MX records en DKIM ingesteld
+- HTTPS bevestigd werkend via Cloudflare SSL
+
+---
+
 ## 2026-04-25
 
 ### InfraOS Installatie
