@@ -586,20 +586,11 @@ function renderKPIs(d) {
   }
 }
 
-function renderRevenueChart(weekOrders, todayOrders) {
+function renderRevenueChart(weekRevenue, todayOrders) {
   const chart = document.getElementById('revenue-chart');
+  const subtitleEl = document.querySelector('#tab-overzicht .grid-2-1 .card .card-sub');
 
-  // Groepeer echte orders per dag (UK timezone)
-  const dayMap = {};
-  (weekOrders || []).forEach(o => {
-    const day = (o.date_created || '').slice(0, 10);
-    if (day) {
-      dayMap[day] = (dayMap[day] || 0) + (+o.total || 0);
-    }
-  });
-  const hasRealData = Object.keys(dayMap).length > 0;
-
-  // Bouw array van laatste 7 dagen
+  // Bouw array van laatste 7 dagen (UK timezone)
   const days = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date(Date.now() - i * 86400000);
@@ -609,21 +600,31 @@ function renderRevenueChart(weekOrders, todayOrders) {
   }
 
   let vals;
-  if (hasRealData) {
-    vals = days.map(d => dayMap[d.key] || 0);
+  // Prioriteit 1: Analytics API (nauwkeurige dagelijkse totalen)
+  if (Array.isArray(weekRevenue) && weekRevenue.length > 0) {
+    const revMap = {};
+    weekRevenue.forEach(d => {
+      const day = (d.interval || d.date_start || '').slice(0, 10);
+      const rev = d.subtotals?.net_revenue || d.subtotals?.gross_revenue || 0;
+      if (day) revMap[day] = rev;
+    });
+    vals = days.map(d => revMap[d.key] || 0);
+    if (subtitleEl) subtitleEl.textContent = 'Werkelijke omzet per dag';
   } else {
-    // Fallback simulatie totdat weekOrders in n8n is gekoppeld
-    const todayTotal = (todayOrders || []).reduce((s, o) => s + (+o.total || 0), 0);
-    vals = [todayTotal * 0.77, todayTotal * 0.91, todayTotal * 0.68, todayTotal * 1.16, todayTotal * 0.84, todayTotal * 0.95, todayTotal];
+    // Fallback: aggregeer uit orders (max 100 — kan onvolledig zijn)
+    const dayMap = {};
+    (todayOrders || []).forEach(o => {
+      const day = (o.date_created || '').slice(0, 10);
+      if (day) dayMap[day] = (dayMap[day] || 0) + (+o.total || 0);
+    });
+    vals = days.map(d => dayMap[d.key] || 0);
+    if (subtitleEl) subtitleEl.textContent = 'Omzet per dag (beperkt tot 100 orders)';
   }
 
   const max = Math.max(...vals, 1);
-  const subtitleEl = document.querySelector('#tab-overzicht .grid-2-1 .card .card-sub');
-  if (subtitleEl) subtitleEl.textContent = hasRealData ? 'Werkelijke omzet per dag' : 'Gesimuleerde data — weekOrders nog niet gekoppeld';
-
   chart.innerHTML = days.map(({ label, isToday }, i) => {
     const v = vals[i];
-    const h = Math.max(8, Math.round((v / max) * 110));
+    const h = Math.max(4, Math.round((v / max) * 110));
     const color = isToday ? '#00c853' : '#2C3470';
     return `<div class="bar-col">
       <div class="bar-col-val">${v > 0 ? eur(Math.round(v)) : ''}</div>
@@ -868,7 +869,7 @@ async function fetchData() {
     const d = Array.isArray(raw) ? raw[0] : raw;
 
     const orders = d.orders || [];
-    const weekOrders = (Array.isArray(d.weekOrders) && d.weekOrders.length > 0) ? d.weekOrders : orders;
+    const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
     const sellers = d.topSellers || [];
     const rawAnalysis = d.analysis || d.claudeAnalysis || '';
     const analysis = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
@@ -877,7 +878,7 @@ async function fetchData() {
 
     // Render all sections
     renderKPIs(d);
-    renderRevenueChart(weekOrders, orders);
+    renderRevenueChart(weekRevenue, orders);
     renderDonut(orders);
     renderTopProducts(sellers, orders);
     renderGeo(orders);
@@ -953,7 +954,7 @@ function loadDemoData() {
   };
 
   renderKPIs(demoData);
-  renderRevenueChart(demoWeekOrders, demoOrders);
+  renderRevenueChart([], demoOrders);
   renderDonut(demoOrders);
   renderTopProducts(demoSellers, demoOrders);
   renderGeo(demoOrders);
