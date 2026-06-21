@@ -349,6 +349,12 @@
               <div class="legend-row"><div class="legend-dot" style="background:#3a4060;"></div> Overig <strong id="leg-other">—</strong></div>
             </div>
           </div>
+          <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:12px;">
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px;">Betaalmethoden</div>
+            <div id="payment-body">
+              <div style="color:var(--muted);font-size:12px;text-align:center;padding:8px 0;">Laden…</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -380,13 +386,13 @@
           </div>
         </div>
 
-        <!-- Payment methods -->
+        <!-- AI Aanbevelingen preview -->
         <div class="card">
           <div class="card-head">
-            <div class="card-title">Betaalmethoden</div>
-            <div class="card-sub">Verdeling vandaag</div>
+            <div class="card-title">AI Aanbevelingen</div>
+            <div class="card-sub">Top 3 van vandaag &nbsp;·&nbsp; <span onclick="switchTab('aanbevelingen', document.querySelector('.nav-item[onclick*=aanbevelingen]'))" style="cursor:pointer;color:#5b6de8;">Bekijk alle →</span></div>
           </div>
-          <div id="payment-body">
+          <div id="overview-recs-body">
             <div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div>
           </div>
         </div>
@@ -622,16 +628,41 @@ function renderDonut(orders) {
   });
 }
 
-function renderTopProducts(sellers) {
+function renderTopProducts(sellers, orders) {
   const tbody = document.getElementById('top-products-body');
   if (!sellers.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen data</td></tr>'; return; }
-  tbody.innerHTML = sellers.slice(0, 6).map((p, i) => `
-    <tr>
+  const revenueMap = {};
+  (orders || []).forEach(o => {
+    (o.line_items || []).forEach(item => {
+      const name = (item.name || '').trim();
+      if (!revenueMap[name]) revenueMap[name] = 0;
+      revenueMap[name] += parseFloat(item.total || 0);
+    });
+  });
+  tbody.innerHTML = sellers.slice(0, 6).map((p, i) => {
+    const rev = revenueMap[p.name] || p.total || 0;
+    return `<tr>
       <td><span class="rank-badge">${i+1}</span></td>
       <td class="td-main">${p.name || '—'}</td>
       <td>${fmt(p.quantity)}</td>
-      <td class="td-green">${p.total ? eur(p.total) : '—'}</td>
-    </tr>`).join('');
+      <td class="td-green">${rev > 0 ? eur(rev) : '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderOverviewRecs(items) {
+  const container = document.getElementById('overview-recs-body');
+  if (!container) return;
+  if (!items || !items.length) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen — voer het daily report uit</div>';
+    return;
+  }
+  const icons = ['🚀', '📈', '💡'];
+  container.innerHTML = items.slice(0, 3).map((item, i) => `
+    <div class="rec-item">
+      <div class="rec-icon">${icons[i]}</div>
+      <div class="rec-body"><p style="font-size:12px;">${item}</p></div>
+    </div>`).join('');
 }
 
 function renderGeo(orders) {
@@ -787,11 +818,12 @@ async function fetchData() {
     renderKPIs(d);
     renderRevenueChart(orders);
     renderDonut(orders);
-    renderTopProducts(sellers);
+    renderTopProducts(sellers, orders);
     renderGeo(orders);
     renderPayments(orders);
     renderAttribution(orders);
     renderRecommendations(recommendations);
+    renderOverviewRecs(recommendations);
     renderRisks(risks);
     renderDeepAnalysis(analysis);
     renderAlerts(orders);
@@ -850,11 +882,12 @@ function loadDemoData() {
   renderKPIs(demoData);
   renderRevenueChart(demoOrders);
   renderDonut(demoOrders);
-  renderTopProducts(demoSellers);
+  renderTopProducts(demoSellers, demoOrders);
   renderGeo(demoOrders);
   renderPayments(demoOrders);
   renderAttribution(demoOrders);
   renderRecommendations(demoData.recommendations);
+  renderOverviewRecs(demoData.recommendations);
   renderRisks(demoData.risks);
   renderDeepAnalysis(demoData.analysis);
 
