@@ -82,7 +82,7 @@
     .alert-bar.hidden { display: none; }
 
     /* ─── KPI strip ─── */
-    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px; }
     .kpi {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 10px; padding: 16px; position: relative; overflow: hidden;
@@ -197,7 +197,8 @@
     #loading-overlay.hidden { display: none; }
 
     /* ─── Responsive tweaks ─── */
-    @media (max-width: 1100px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 1300px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px)  { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -262,6 +263,12 @@
   <!-- Main -->
   <main class="main">
 
+    <!-- Demo mode banner -->
+    <div id="demo-banner" style="display:none;background:rgba(229,57,53,0.12);border:1px solid rgba(229,57,53,0.35);border-radius:8px;padding:12px 16px;margin-bottom:18px;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:#ff8a80;">
+      <span>⚠️ <strong>Demo modus</strong> — n8n niet bereikbaar. U ziet voorbeelddata, niet live cijfers. Start n8n en vernieuw de pagina.</span>
+      <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#ff8a80;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">×</button>
+    </div>
+
     <!-- Topbar -->
     <div class="topbar">
       <div class="topbar-title">
@@ -305,6 +312,11 @@
           <div class="kpi-label">Refunds</div>
           <div class="kpi-value colored-r" id="kpi-refunds">—</div>
           <div class="kpi-sub" id="kpi-refunds-sub"></div>
+        </div>
+        <div class="kpi b">
+          <div class="kpi-label">Gem. Orderwaarde</div>
+          <div class="kpi-value" id="kpi-aov">—</div>
+          <div class="kpi-sub" id="kpi-aov-sub">Per order</div>
         </div>
         <div class="kpi p">
           <div class="kpi-label">Google Ads ROAS</div>
@@ -540,10 +552,14 @@ function renderKPIs(d) {
   document.getElementById('kpi-refunds').textContent = eur(+s.total_refunds);
   document.getElementById('kpi-refunds-sub').textContent = `${d.refunds?.length || 0} terugbetalingen`;
 
-  // Delta berekening: vandaag vs gisteren op basis van orders array
+  const aov = +s.total_orders > 0 ? Math.round((+s.total_sales || 0) / +s.total_orders) : 0;
+  document.getElementById('kpi-aov').textContent = eur(aov);
+  document.getElementById('kpi-aov-sub').textContent = `${fmt(s.total_orders)} orders totaal`;
+
+  // Delta berekening: vandaag vs gisteren — UK tijdzone (Europe/London)
   const orders = d.orders || [];
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const yestStr = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+  const yestStr  = new Date(Date.now() - 86400000).toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
   const todayOrders = orders.filter(o => o.date_created?.startsWith(todayStr));
   const yestOrders  = orders.filter(o => o.date_created?.startsWith(yestStr));
   const todayRev = todayOrders.reduce((a, o) => a + (+o.total || 0), 0);
@@ -895,6 +911,8 @@ function loadDemoData() {
   document.getElementById('topbar-date').textContent = now.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   document.getElementById('last-updated-label').textContent = '⚠️ Demo data — n8n niet bereikbaar';
   document.getElementById('footer-status').textContent = '⚠️ Demo modus';
+  const demoBanner = document.getElementById('demo-banner');
+  if (demoBanner) demoBanner.style.display = 'flex';
 }
 
 // ─── Password gate ─────────────────────────────────────────
