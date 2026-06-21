@@ -586,26 +586,49 @@ function renderKPIs(d) {
   }
 }
 
-function renderRevenueChart(orders) {
+function renderRevenueChart(weekOrders, todayOrders) {
   const chart = document.getElementById('revenue-chart');
-  const days = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'];
-  // Build last 7 days of dummy buckets (real: would come from weekly endpoint)
-  // For now, use order data to build today + placeholder prior days
-  const today = orders.reduce((s, o) => s + (+o.total || 0), 0);
-  // Simulate 7-day trend around today
-  const vals = [today * 0.77, today * 0.91, today * 0.68, today * 1.16, today * 0.84, today * 0.95, today];
+
+  // Groepeer echte orders per dag (UK timezone)
+  const dayMap = {};
+  (weekOrders || []).forEach(o => {
+    const day = (o.date_created || '').slice(0, 10);
+    if (day) {
+      dayMap[day] = (dayMap[day] || 0) + (+o.total || 0);
+    }
+  });
+  const hasRealData = Object.keys(dayMap).length > 0;
+
+  // Bouw array van laatste 7 dagen
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000);
+    const key = d.toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+    const label = d.toLocaleDateString('nl-NL', { weekday: 'short', timeZone: 'Europe/London' });
+    days.push({ key, label, isToday: i === 0 });
+  }
+
+  let vals;
+  if (hasRealData) {
+    vals = days.map(d => dayMap[d.key] || 0);
+  } else {
+    // Fallback simulatie totdat weekOrders in n8n is gekoppeld
+    const todayTotal = (todayOrders || []).reduce((s, o) => s + (+o.total || 0), 0);
+    vals = [todayTotal * 0.77, todayTotal * 0.91, todayTotal * 0.68, todayTotal * 1.16, todayTotal * 0.84, todayTotal * 0.95, todayTotal];
+  }
+
   const max = Math.max(...vals, 1);
-  const todayDow = new Date().getDay(); // 0=sun
-  const dow = ['zo','ma','di','wo','do','vr','za'];
-  chart.innerHTML = vals.map((v, i) => {
-    const isToday = i === 6;
+  const subtitleEl = document.querySelector('#tab-overzicht .grid-2-1 .card .card-sub');
+  if (subtitleEl) subtitleEl.textContent = hasRealData ? 'Werkelijke omzet per dag' : 'Gesimuleerde data — weekOrders nog niet gekoppeld';
+
+  chart.innerHTML = days.map(({ label, isToday }, i) => {
+    const v = vals[i];
     const h = Math.max(8, Math.round((v / max) * 110));
-    const label = dow[(todayDow - 6 + i + 7) % 7];
     const color = isToday ? '#00c853' : '#2C3470';
     return `<div class="bar-col">
-      <div class="bar-col-val">${eur(Math.round(v))}</div>
-      <div class="bar-col-bar" style="height:${h}px;background:${color};"></div>
-      <div class="bar-col-lbl" style="${isToday ? 'color:#00c853;' : ''}">${isToday ? 'vandaag' : label}</div>
+      <div class="bar-col-val">${v > 0 ? eur(Math.round(v)) : ''}</div>
+      <div class="bar-col-bar" style="height:${h}px;background:${color};" title="${eur(Math.round(v))}"></div>
+      <div class="bar-col-lbl" style="${isToday ? 'color:#00c853;font-weight:600;' : ''}">${isToday ? 'vandaag' : label}</div>
     </div>`;
   }).join('');
 }
@@ -824,6 +847,7 @@ async function fetchData() {
     const d = Array.isArray(raw) ? raw[0] : raw;
 
     const orders = d.orders || [];
+    const weekOrders = (Array.isArray(d.weekOrders) && d.weekOrders.length > 0) ? d.weekOrders : orders;
     const sellers = d.topSellers || [];
     const rawAnalysis = d.analysis || d.claudeAnalysis || '';
     const analysis = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
@@ -832,7 +856,7 @@ async function fetchData() {
 
     // Render all sections
     renderKPIs(d);
-    renderRevenueChart(orders);
+    renderRevenueChart(weekOrders, orders);
     renderDonut(orders);
     renderTopProducts(sellers, orders);
     renderGeo(orders);
@@ -865,6 +889,19 @@ async function fetchData() {
 
 // ─── Demo data (fallback when n8n not reachable) ───────────
 function loadDemoData() {
+  // Realistische 7-daagse demo orders voor de grafiek
+  const demoWeekTotals = [18420, 21830, 15670, 26540, 19880, 22100, 23884];
+  const demoWeekOrders = demoWeekTotals.flatMap((t, dayIdx) => {
+    const daysAgo = 6 - dayIdx;
+    const base = new Date();
+    base.setDate(base.getDate() - daysAgo);
+    base.setHours(12, 0, 0, 0);
+    return Array.from({length: 8}, (_, j) => ({
+      date_created: new Date(base.getTime() - j * 3600000).toISOString(),
+      total: String(Math.round(t / 8 + (j * 31) % 150))
+    }));
+  });
+
   const demoOrders = Array.from({length: 147}, (_, i) => ({
     id: i+1, status: ['completed','completed','completed','processing','on-hold'][i % 5],
     total: String(80 + (i * 37) % 300), payment_method: ['iDEAL','Credit Card','PayPal','Bancontact'][i%4],
@@ -896,7 +933,7 @@ function loadDemoData() {
   };
 
   renderKPIs(demoData);
-  renderRevenueChart(demoOrders);
+  renderRevenueChart(demoWeekOrders, demoOrders);
   renderDonut(demoOrders);
   renderTopProducts(demoSellers, demoOrders);
   renderGeo(demoOrders);
