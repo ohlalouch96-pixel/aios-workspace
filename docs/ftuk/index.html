@@ -837,6 +837,26 @@ function renderAlerts(orders) {
   }
 }
 
+// ─── Error state ──────────────────────────────────────────
+function showErrorState() {
+  const noData = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen data beschikbaar</div>';
+  ['payment-body','geo-body','recommendations-body','risk-body','overview-recs-body','deep-analysis-body'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = noData;
+  });
+  const noRow = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen data beschikbaar</td></tr>';
+  ['top-products-body','attribution-body'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = noRow;
+  });
+  document.getElementById('revenue-chart').innerHTML = '';
+  const banner = document.getElementById('demo-banner');
+  if (banner) {
+    banner.querySelector('span').innerHTML = '⚠️ <strong>n8n niet bereikbaar</strong> — Geen data beschikbaar. Controleer of n8n actief is en vernieuw de pagina.';
+    banner.style.display = 'flex';
+  }
+}
+
 // ─── Main data fetch ───────────────────────────────────────
 async function fetchData() {
   document.getElementById('footer-status').textContent = 'Data ophalen…';
@@ -879,9 +899,8 @@ async function fetchData() {
   } catch (err) {
     console.warn('Fetch failed:', err);
     document.getElementById('footer-status').textContent = 'Verbinding mislukt — retry over 60s';
-    document.getElementById('last-updated-label').textContent = 'Fout bij ophalen';
-    // Show demo data so dashboard is not empty
-    loadDemoData();
+    document.getElementById('last-updated-label').textContent = 'Geen data';
+    showErrorState();
   } finally {
     document.getElementById('loading-overlay').classList.add('hidden');
   }
