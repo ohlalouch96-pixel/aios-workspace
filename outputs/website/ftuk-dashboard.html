@@ -604,7 +604,7 @@ function renderRevenueChart(weekRevenue, todayOrders) {
   if (Array.isArray(weekRevenue) && weekRevenue.length > 0) {
     const revMap = {};
     weekRevenue.forEach(d => {
-      const day = (d.interval || d.date_start || '').slice(0, 10);
+      const day = (d.date_start || d.interval || '').slice(0, 10);
       const rev = d.subtotals?.net_revenue || d.subtotals?.gross_revenue || 0;
       if (day) revMap[day] = rev;
     });
