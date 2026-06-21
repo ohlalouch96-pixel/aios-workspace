@@ -770,7 +770,8 @@ async function fetchData() {
 
     const orders = d.orders || [];
     const sellers = d.topSellers || [];
-    const analysis = d.analysis || d.claudeAnalysis || '';
+    const rawAnalysis = d.analysis || d.claudeAnalysis || '';
+    const analysis = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
 
     // Render all sections
     renderKPIs(d);
