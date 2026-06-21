@@ -533,7 +533,35 @@ function renderKPIs(d) {
   document.getElementById('kpi-discounts-sub').textContent = 'Korting op orders';
   document.getElementById('kpi-refunds').textContent = eur(+s.total_refunds);
   document.getElementById('kpi-refunds-sub').textContent = `${d.refunds?.length || 0} terugbetalingen`;
-  document.getElementById('kpi-orders-sub').textContent = 'Orders vandaag';
+
+  // Delta berekening: vandaag vs gisteren op basis van orders array
+  const orders = d.orders || [];
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const yestStr = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const todayOrders = orders.filter(o => o.date_created?.startsWith(todayStr));
+  const yestOrders  = orders.filter(o => o.date_created?.startsWith(yestStr));
+  const todayRev = todayOrders.reduce((a, o) => a + (+o.total || 0), 0);
+  const yestRev  = yestOrders.reduce((a, o)  => a + (+o.total || 0), 0);
+
+  function deltaTag(today, yesterday, el) {
+    if (!el) return;
+    if (yesterday === 0) { el.textContent = 'vs gisteren'; return; }
+    const pct = Math.round(((today - yesterday) / yesterday) * 100);
+    const up = pct >= 0;
+    el.className = up ? 'delta-up' : 'delta-down';
+    el.textContent = `${up ? '▲' : '▼'} ${Math.abs(pct)}% vs gisteren`;
+  }
+
+  deltaTag(todayRev, yestRev, document.getElementById('kpi-revenue-delta'));
+  const ordEl = document.getElementById('kpi-orders-sub');
+  if (ordEl) {
+    if (yestOrders.length === 0) { ordEl.textContent = 'Orders vandaag'; }
+    else {
+      const pct = Math.round(((todayOrders.length - yestOrders.length) / yestOrders.length) * 100);
+      const up = pct >= 0;
+      ordEl.innerHTML = `<span class="${up ? 'delta-up' : 'delta-down'}">${up ? '▲' : '▼'} ${Math.abs(pct)}% vs gisteren</span>`;
+    }
+  }
 }
 
 function renderRevenueChart(orders) {
