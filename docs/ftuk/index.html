@@ -673,54 +673,34 @@ function stripHtml(html) {
   return div.textContent || div.innerText || '';
 }
 
-function renderRecommendations(text) {
+function renderRecommendations(items) {
   const container = document.getElementById('recommendations-body');
-  if (!text) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen beschikbaar</div>'; return; }
-  text = stripHtml(text);
-  // Parse numbered or bulleted items
-  const lines = text.split('\n').filter(l => l.trim());
-  const items = [];
-  let current = null;
-  lines.forEach(line => {
-    const stripped = line.replace(/^[\d\.\-\*\•]+\s*/, '').trim();
-    if (!stripped) return;
-    const isHeader = /^[A-Z\*\*]/.test(stripped) || stripped.startsWith('**');
-    const clean = stripped.replace(/\*\*/g, '');
-    if (isHeader && clean.length < 80) {
-      if (current) items.push(current);
-      current = { title: clean, body: '' };
-    } else if (current) {
-      current.body += (current.body ? ' ' : '') + clean;
-    } else {
-      items.push({ title: '', body: clean });
-    }
-  });
-  if (current) items.push(current);
-
-  const icons = ['🚀', '⚠️', '💡', '📈', '🔍', '✅', '🎯'];
-  container.innerHTML = items.slice(0, 7).map((item, i) => `
+  if (!items || !items.length) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen beschikbaar — voer het daily report uit</div>';
+    return;
+  }
+  const icons = ['🚀', '📈', '💡', '⚡', '🎯', '✅', '🔧'];
+  container.innerHTML = items.map((item, i) => `
     <div class="rec-item">
       <div class="rec-icon">${icons[i % icons.length]}</div>
-      <div class="rec-body">
-        ${item.title ? `<strong>${item.title}</strong>` : ''}
-        ${item.body ? `<p>${item.body}</p>` : ''}
-      </div>
+      <div class="rec-body"><p>${item}</p></div>
     </div>`).join('');
 }
 
-function renderRisks(text) {
+function renderRisks(items) {
   const container = document.getElementById('risk-body');
-  if (!text) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen risico flags</div>'; return; }
-  text = stripHtml(text);
-  // Simple extract of risk-related lines
-  const lines = text.split('\n').filter(l => l.trim() && l.length > 20).slice(0, 5);
-  container.innerHTML = lines.map(line => {
-    const clean = line.replace(/^[\d\.\-\*\•]+\s*/, '').replace(/\*\*/g, '').trim();
-    return `<div class="rec-item">
-      <div class="rec-icon">🔴</div>
-      <div class="rec-body"><p>${clean}</p></div>
-    </div>`;
-  }).join('') || '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen risico flags vandaag</div>';
+  if (!items || !items.length) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen risico flags vandaag</div>';
+    return;
+  }
+  const dotColors = ['var(--red)', 'var(--orange)', 'var(--yellow)'];
+  container.innerHTML = items.map((item, i) => `
+    <div class="rec-item">
+      <div class="rec-icon" style="display:flex;align-items:center;justify-content:center;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${dotColors[Math.min(i,2)]};box-shadow:0 0 6px ${dotColors[Math.min(i,2)]}88;"></span>
+      </div>
+      <div class="rec-body"><p>${item}</p></div>
+    </div>`).join('');
 }
 
 function renderDeepAnalysis(analysisText) {
@@ -772,6 +752,8 @@ async function fetchData() {
     const sellers = d.topSellers || [];
     const rawAnalysis = d.analysis || d.claudeAnalysis || '';
     const analysis = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
+    const recommendations = Array.isArray(d.recommendations) ? d.recommendations : [];
+    const risks = Array.isArray(d.risks) ? d.risks : [];
 
     // Render all sections
     renderKPIs(d);
@@ -781,8 +763,8 @@ async function fetchData() {
     renderGeo(orders);
     renderPayments(orders);
     renderAttribution(orders);
-    renderRecommendations(analysis);
-    renderRisks(analysis);
+    renderRecommendations(recommendations);
+    renderRisks(risks);
     renderDeepAnalysis(analysis);
     renderAlerts(orders);
 
@@ -825,7 +807,16 @@ function loadDemoData() {
     orders: demoOrders,
     topSellers: demoSellers,
     salesSummary: [{ total_sales: '23884.62', total_orders: 147, total_discount: '1284.00', total_refunds: '640.00' }],
-    analysis: '**Executive Summary**\nVandaag zijn er 147 orders binnengekomen met een netto-omzet van €23.445. Dit is een stijging van 12% ten opzichte van gisteren.\n\n**Aanbevelingen**\n- Schaal de Elite 100K-campagne op: 34 verkopen vandaag, het beste product.\n- Controleer 24 orders in "processing" status die langer dan 24 uur openstaan.\n- Kortingscode FTUK20 is 18x gebruikt — controleer of dit een lekke code is.\n\n**Risico flags**\n- 3 orders langer dan 48 uur in processing status\n- Stijgend kortingsgebruik: €1.284 vandaag vs €890 gisteren',
+    analysis: '',
+    recommendations: [
+      'Schaal de Elite 100K-campagne op: 34 verkopen vandaag, het beste product.',
+      'Controleer 24 orders in "processing" status die langer dan 24 uur openstaan.',
+      'Kortingscode FTUK20 is 18x gebruikt — controleer of dit een lekke code is.',
+    ],
+    risks: [
+      '3 orders staan langer dan 48 uur op "processing" — controleer betalingsstatus.',
+      'Stijgend kortingsgebruik: €1.284 vandaag vs €890 gisteren (+44%).',
+    ],
   };
 
   renderKPIs(demoData);
@@ -835,8 +826,8 @@ function loadDemoData() {
   renderGeo(demoOrders);
   renderPayments(demoOrders);
   renderAttribution(demoOrders);
-  renderRecommendations(demoData.analysis);
-  renderRisks(demoData.analysis);
+  renderRecommendations(demoData.recommendations);
+  renderRisks(demoData.risks);
   renderDeepAnalysis(demoData.analysis);
 
   const now = new Date();
