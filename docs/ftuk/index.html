@@ -113,7 +113,7 @@
 
     /* ─── Bar chart ─── */
     .chart-outer { position: relative; }
-    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 110px; margin-top: 24px; position: relative; }
+    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 120px; margin-top: 10px; position: relative; }
     .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; position: relative; }
     .bar-col-bar { width: 100%; border-radius: 3px 3px 0 0; transition: opacity 0.15s; }
     .bar-col-bar:hover { opacity: 0.8; }
@@ -678,7 +678,6 @@ function renderRevenueChart(weekRevenue, orders) {
     const sel = selectedBarIdx === i ? ' selected' : '';
     const barStyle = isToday ? '' : 'background:linear-gradient(to top,#2C3470,#3d4a9e);';
     return `<div class="bar-col${sel}" onclick="clickBar(${i})" style="position:relative;">
-      <div class="bar-col-val" style="font-weight:${isToday?'700':'400'};color:${isToday?'#00c853':'var(--muted)'};">${v > 0 ? eur(Math.round(v)) : ''}</div>
       <div class="bar-col-bar${isToday ? ' bar-today' : ''}" style="height:${h}px;${barStyle}"></div>
       <div class="bar-col-lbl" style="${isToday ? 'color:#00c853;font-weight:600;' : ''}">${isToday ? 'vandaag' : label}</div>
       <div class="bar-col-pct" style="${isToday?'color:#00c85388;':''}${pct > 0 ? '' : 'visibility:hidden;'}">${pct}%</div>
@@ -741,7 +740,8 @@ function renderTopProducts(sellers, orders) {
   (orders || []).forEach(o => { (o.line_items || []).forEach(item => { const n = (item.name||'').trim(); revenueMap[n] = (revenueMap[n]||0) + parseFloat(item.total||0); }); });
   tbody.innerHTML = sellers.slice(0, 6).map((p, i) => {
     const rev = revenueMap[p.name] || p.total || 0;
-    return `<tr><td><span class="rank-badge">${i+1}</span></td><td class="td-main">${p.name||'—'}</td><td>${fmt(p.quantity)}</td><td class="td-green">${rev > 0 ? eur(rev) : '—'}</td></tr>`;
+    const revCell = rev > 0 ? `<span class="td-green">${eur(rev)}</span>` : `<span style="font-size:10px;color:var(--muted2);">buiten sample</span>`;
+    return `<tr><td><span class="rank-badge">${i+1}</span></td><td class="td-main">${p.name||'—'}</td><td>${fmt(p.quantity)}</td><td>${revCell}</td></tr>`;
   }).join('');
 }
 
