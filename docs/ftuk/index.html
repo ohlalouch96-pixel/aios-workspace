@@ -547,51 +547,44 @@ function renderKPIs(d) {
   const net = Math.round((+s.total_sales || 0) - (+s.total_discount || 0) - (+s.total_refunds || 0));
   const aov = +s.total_orders > 0 ? Math.round((+s.total_sales || 0) / +s.total_orders) : 0;
 
-  // Count-up animations
-  countUp(document.getElementById('kpi-revenue'),   net,               v => eur(v), 900);
+  countUp(document.getElementById('kpi-revenue'),   net,                v => eur(v), 900);
   countUp(document.getElementById('kpi-orders'),    +s.total_orders||0, v => fmt(v), 750);
   countUp(document.getElementById('kpi-discounts'), +s.total_discount||0, v => eur(v), 820);
   countUp(document.getElementById('kpi-refunds'),   +s.total_refunds||0,  v => eur(v), 700);
-  countUp(document.getElementById('kpi-aov'),       aov,               v => eur(v), 650);
+  countUp(document.getElementById('kpi-aov'),       aov,                v => eur(v), 650);
 
-  document.getElementById('kpi-discounts-sub').textContent = 'Korting op orders';
-  document.getElementById('kpi-refunds-sub').textContent = `${d.refunds?.length || 0} terugbetalingen`;
-  document.getElementById('kpi-aov-sub').textContent = `${fmt(s.total_orders)} orders totaal`;
-
-  // Delta: vandaag vs gisteren (UK timezone) + vroege ochtend fix
-  const orders = d.orders || [];
+  // Gebruik Analytics weekRevenue voor delta's (geen 100-orders limiet)
+  const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
   const hour = new Date().getHours();
   const earlyMorning = hour < 10;
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
   const yestStr  = new Date(Date.now() - 86400000).toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
-  const todayOrders = orders.filter(o => o.date_created?.startsWith(todayStr));
-  const yestOrders  = orders.filter(o => o.date_created?.startsWith(yestStr));
-  const todayRev = todayOrders.reduce((a, o) => a + (+o.total || 0), 0);
-  const yestRev  = yestOrders.reduce((a, o)  => a + (+o.total || 0), 0);
+  const todayDay = weekRevenue.find(w => (w.date_start || '').startsWith(todayStr));
+  const yestDay  = weekRevenue.find(w => (w.date_start || '').startsWith(yestStr));
 
-  const deltaEl = document.getElementById('kpi-revenue-delta');
-  if (earlyMorning && yestRev > 0) {
-    deltaEl.className = '';
-    deltaEl.innerHTML = '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
-  } else if (yestRev === 0) {
-    deltaEl.textContent = 'vs gisteren';
-  } else {
-    const p = Math.round(((todayRev - yestRev) / yestRev) * 100);
-    deltaEl.className = p >= 0 ? 'delta-up' : 'delta-down';
-    deltaEl.textContent = `${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren`;
+  function makeDelta(todayVal, yestVal, isEarly) {
+    if (isEarly && yestVal > 0) return '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
+    if (!yestVal || yestVal === 0) return '<span style="color:var(--muted2);">vs gisteren</span>';
+    const p = Math.round(((todayVal - yestVal) / yestVal) * 100);
+    return `<span class="${p >= 0 ? 'delta-up' : 'delta-down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren</span>`;
   }
 
-  const ordEl = document.getElementById('kpi-orders-sub');
-  if (ordEl) {
-    if (earlyMorning && yestOrders.length > 0) {
-      ordEl.innerHTML = '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
-    } else if (yestOrders.length === 0) {
-      ordEl.textContent = 'Orders vandaag';
-    } else {
-      const p = Math.round(((todayOrders.length - yestOrders.length) / yestOrders.length) * 100);
-      ordEl.innerHTML = `<span class="${p >= 0 ? 'delta-up' : 'delta-down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren</span>`;
-    }
-  }
+  const todayRev  = +(todayDay?.subtotals?.net_revenue  || net);
+  const yestRev   = +(yestDay?.subtotals?.net_revenue   || 0);
+  const todayOrd  = +(todayDay?.subtotals?.orders_count || s.total_orders || 0);
+  const yestOrd   = +(yestDay?.subtotals?.orders_count  || 0);
+  const todayDisc = +(todayDay?.subtotals?.coupons       || s.total_discount || 0);
+  const yestDisc  = +(yestDay?.subtotals?.coupons        || 0);
+  const todayRef  = +(todayDay?.subtotals?.refunds       || s.total_refunds || 0);
+  const yestRef   = +(yestDay?.subtotals?.refunds        || 0);
+  const todayAOV  = todayOrd > 0 ? Math.round(todayRev / todayOrd) : aov;
+  const yestAOV   = yestOrd  > 0 ? Math.round(yestRev  / yestOrd)  : 0;
+
+  document.getElementById('kpi-revenue-delta').innerHTML  = makeDelta(todayRev,  yestRev,  earlyMorning);
+  document.getElementById('kpi-orders-sub').innerHTML     = makeDelta(todayOrd,  yestOrd,  earlyMorning);
+  document.getElementById('kpi-discounts-sub').innerHTML  = makeDelta(todayDisc, yestDisc, false);
+  document.getElementById('kpi-refunds-sub').innerHTML    = makeDelta(todayRef,  yestRef,  false);
+  document.getElementById('kpi-aov-sub').innerHTML        = makeDelta(todayAOV,  yestAOV,  false);
 }
 
 // ─── Range selector ────────────────────────────────────────
