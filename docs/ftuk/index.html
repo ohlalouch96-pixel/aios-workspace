@@ -113,7 +113,7 @@
 
     /* ─── Bar chart ─── */
     .chart-outer { position: relative; }
-    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 130px; position: relative; }
+    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 110px; margin-top: 24px; position: relative; }
     .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; position: relative; }
     .bar-col-bar { width: 100%; border-radius: 3px 3px 0 0; transition: opacity 0.15s; }
     .bar-col-bar:hover { opacity: 0.8; }
@@ -678,7 +678,7 @@ function renderRevenueChart(weekRevenue, orders) {
   const total = vals.reduce((s, v) => s + v, 0);
   chart.innerHTML = days.map(({ label, isToday }, i) => {
     const v   = vals[i];
-    const h   = Math.max(4, Math.round((v / max) * 118));
+    const h   = Math.max(4, Math.round((v / max) * 95));
     const pct = total > 0 && v > 0 ? Math.round((v / total) * 100) : 0;
     const sel = selectedBarIdx === i ? ' selected' : '';
     const barStyle = isToday ? '' : 'background:linear-gradient(to top,#2C3470,#3d4a9e);';
@@ -702,9 +702,13 @@ function clickBar(idx) {
 
   const day  = lastChartDays[idx];
   const rev  = lastChartVals[idx];
+  // Gebruik Analytics interval data voor orders_count en avg_order_value (gaat verder terug dan 100 orders)
+  const weekDay  = (lastData?.weekRevenue || []).find(w => (w.date_start || '').startsWith(day.key));
   const dayOrders = (lastData?.orders || []).filter(o => o.date_created?.startsWith(day.key));
-  const ordCount  = dayOrders.length;
-  const aov = ordCount > 0 ? Math.round(rev / ordCount) : 0;
+  const ordCount  = weekDay?.subtotals?.orders_count || dayOrders.length || 0;
+  const aov = weekDay?.subtotals?.avg_order_value
+    ? Math.round(weekDay.subtotals.avg_order_value)
+    : (ordCount > 0 ? Math.round(rev / ordCount) : 0);
 
   document.getElementById('sel-day').textContent = day.isToday ? `Vandaag — ${day.key}` : `${day.label} — ${day.key}`;
   document.getElementById('sel-rev').textContent = rev > 0 ? eur(Math.round(rev)) : '—';
