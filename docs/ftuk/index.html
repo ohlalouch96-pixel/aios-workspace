@@ -714,12 +714,13 @@ function clickBar(idx) {
 }
 
 // ─── Donut ────────────────────────────────────────────────
-function renderDonut(orders) {
+function renderDonut(orders, totalOverride) {
   const statuses = { completed: 0, processing: 0, 'on-hold': 0, other: 0 };
   orders.forEach(o => { if (statuses[o.status] !== undefined) statuses[o.status]++; else statuses.other++; });
   const total = orders.length;
-  document.getElementById('donut-center-val').textContent = total;
-  document.getElementById('orders-total-label').textContent = `${total} orders vandaag`;
+  const displayTotal = totalOverride > 0 ? totalOverride : total;
+  document.getElementById('donut-center-val').textContent = displayTotal;
+  document.getElementById('orders-total-label').textContent = `${displayTotal} orders vandaag`;
   document.getElementById('leg-completed').textContent  = statuses.completed;
   document.getElementById('leg-processing').textContent = statuses.processing;
   document.getElementById('leg-onhold').textContent     = statuses['on-hold'];
@@ -900,7 +901,8 @@ async function fetchData() {
     renderKPIs(d);
     if (currentRange !== 'today') applyRange(d, currentRange);
     renderRevenueChart(weekRevenue, orders);
-    renderDonut(orders);
+    const salesSum = d.salesSummary?.[0] || {};
+    renderDonut(orders, +salesSum.total_orders || 0);
     renderTopProducts(sellers, orders);
     renderGeo(orders);
     renderPayments(orders);
