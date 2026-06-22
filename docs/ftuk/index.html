@@ -8,20 +8,11 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --navy: #2C3470;
-      --navy-light: #3d4a9e;
-      --bg: #0b0d18;
-      --surface: #12152a;
-      --surface2: #181c30;
-      --border: #222640;
-      --text: #e8eaf0;
-      --muted: #6070a0;
-      --muted2: #3a4060;
-      --green: #00c853;
-      --orange: #ff6d00;
-      --red: #e53935;
-      --purple: #7c3aed;
-      --yellow: #ffc107;
+      --navy: #2C3470; --navy-light: #3d4a9e; --bg: #0b0d18;
+      --surface: #12152a; --surface2: #181c30; --border: #222640;
+      --text: #e8eaf0; --muted: #6070a0; --muted2: #3a4060;
+      --green: #00c853; --orange: #ff6d00; --red: #e53935;
+      --purple: #7c3aed; --yellow: #ffc107;
     }
 
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -31,10 +22,8 @@
 
     /* ─── Sidebar ─── */
     .sidebar {
-      width: 230px; flex-shrink: 0;
-      background: var(--surface); border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+      width: 230px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
     }
     .sidebar-header { padding: 22px 18px 18px; border-bottom: 1px solid var(--border); }
     .sidebar-logo { height: 30px; object-fit: contain; }
@@ -49,29 +38,33 @@
     .nav-item:hover { color: var(--text); background: rgba(44,52,112,0.2); }
     .nav-item.active { color: #fff; background: rgba(44,52,112,0.4); border-left-color: #5b6de8; }
     .nav-icon { font-size: 14px; width: 18px; text-align: center; }
-    .nav-badge { margin-left: auto; font-size: 10px; background: var(--navy); color: #a0b0ff; padding: 2px 6px; border-radius: 10px; }
     .sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--border); }
     .live-indicator { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     /* ─── Main ─── */
     .main { margin-left: 230px; flex: 1; padding: 26px 28px; min-height: 100vh; }
 
-    /* ─── Top bar ─── */
+    /* ─── Topbar ─── */
     .topbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; }
     .topbar-title h1 { font-size: 18px; font-weight: 600; color: #fff; }
     .topbar-title p { font-size: 12px; color: var(--muted); margin-top: 3px; }
-    .topbar-right { display: flex; align-items: center; gap: 10px; }
-    .btn {
-      padding: 7px 14px; border-radius: 8px; font-size: 12px; border: none;
-      cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.15s;
-    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .btn { padding: 7px 14px; border-radius: 8px; font-size: 12px; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn-ghost { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
     .btn-ghost:hover { color: var(--text); border-color: var(--muted2); }
     .btn-primary { background: var(--navy); color: #fff; }
     .btn-primary:hover { background: var(--navy-light); }
     .last-updated { font-size: 11px; color: var(--muted2); background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 8px; }
+
+    /* ─── Countdown ─── */
+    .countdown-badge {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 12px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 8px;
+    }
+    .cring { width: 18px; height: 18px; flex-shrink: 0; }
+    .cring svg { transform: rotate(-90deg); display: block; }
 
     /* ─── Alert bar ─── */
     .alert-bar {
@@ -81,46 +74,78 @@
     }
     .alert-bar.hidden { display: none; }
 
+    /* ─── Date range selector ─── */
+    .range-bar { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+    .range-btn { padding: 7px 16px; border-radius: 7px; font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.15s; border: none; background: transparent; }
+    .range-btn:hover:not(.active) { color: var(--text); }
+    .range-btn.active { background: var(--navy); color: #fff; }
+
     /* ─── KPI strip ─── */
     .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px; }
-    .kpi {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px; position: relative; overflow: hidden;
-    }
+    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; overflow: hidden; }
     .kpi::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent, var(--navy)); }
-    .kpi.g { --accent: var(--green); }
-    .kpi.b { --accent: var(--navy-light); }
-    .kpi.o { --accent: var(--orange); }
-    .kpi.r { --accent: var(--red); }
-    .kpi.p { --accent: var(--purple); }
+    .kpi.g{--accent:var(--green)} .kpi.b{--accent:var(--navy-light)} .kpi.o{--accent:var(--orange)} .kpi.r{--accent:var(--red)} .kpi.p{--accent:var(--purple)}
     .kpi-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .kpi-value { font-size: 21px; font-weight: 700; color: #fff; }
+    .kpi-value { font-size: 21px; font-weight: 700; color: #fff; min-height: 28px; }
     .kpi-value.colored-g { color: var(--green); }
     .kpi-value.colored-r { color: var(--red); }
     .kpi-value.colored-o { color: var(--orange); }
     .kpi-value.colored-p { color: #a78bfa; }
-    .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+    .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 5px; display: flex; align-items: center; gap: 4px; min-height: 16px; }
     .delta-up { color: var(--green); }
     .delta-down { color: var(--red); }
     .placeholder-tag { font-size: 9px; color: var(--muted2); background: var(--surface2); padding: 2px 6px; border-radius: 4px; border: 1px dashed var(--muted2); }
+
+    /* ─── Skeleton ─── */
+    .skel { background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: shimmer 1.3s infinite; border-radius: 4px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skel-val { height: 26px; width: 75%; margin-bottom: 6px; }
+    .skel-sub { height: 11px; width: 50%; }
 
     /* ─── Cards & grid ─── */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
     .card-head { margin-bottom: 14px; }
     .card-title { font-size: 13px; font-weight: 600; color: #fff; }
     .card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
     .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 16px; }
 
     /* ─── Bar chart ─── */
-    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 120px; }
-    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .bar-col-bar { width: 100%; border-radius: 3px 3px 0 0; cursor: pointer; transition: opacity 0.2s; }
-    .bar-col-bar:hover { opacity: 0.75; }
+    .chart-outer { position: relative; }
+    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 120px; position: relative; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; position: relative; }
+    .bar-col-bar { width: 100%; border-radius: 3px 3px 0 0; transition: opacity 0.15s; }
+    .bar-col-bar:hover { opacity: 0.8; }
+    .bar-col-bar.bar-today { background: linear-gradient(to top, #00b248, #00e676) !important; box-shadow: 0 0 14px rgba(0,200,83,0.3); }
+    .bar-col.selected .bar-col-bar { outline: 2px solid #5b6de8; outline-offset: 2px; }
+    .bar-col.selected .bar-col-lbl { color: #5b6de8 !important; font-weight: 600; }
     .bar-col-lbl { font-size: 9px; color: var(--muted); }
     .bar-col-val { font-size: 9px; color: var(--muted); }
+    .bar-tip {
+      position: absolute; background: #1a1d38; border: 1px solid #3a4070;
+      border-radius: 6px; padding: 6px 10px; font-size: 11px; color: #fff;
+      pointer-events: none; white-space: nowrap; z-index: 20;
+      left: 50%; transform: translateX(-50%);
+      opacity: 0; transition: opacity 0.15s; bottom: 100%; margin-bottom: 6px;
+    }
+    .bar-col:hover .bar-tip { opacity: 1; }
+    .chart-legend { display: flex; gap: 14px; margin-top: 10px; font-size: 10px; color: var(--muted); }
+    .chart-legend .leg { display: flex; align-items: center; gap: 5px; }
+    .chart-legend .leg-bar { width: 10px; height: 4px; border-radius: 2px; }
+
+    /* ─── Selected day card ─── */
+    .sel-card {
+      display: none; margin-top: 12px;
+      background: rgba(44,52,112,0.15); border: 1px solid rgba(91,109,232,0.3);
+      border-radius: 8px; padding: 12px 16px; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .sel-card.on { display: flex; animation: sel-in 0.2s ease; }
+    @keyframes sel-in { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+    .sel-title { font-size: 12px; color: #7b8df8; font-weight: 600; flex: 1; min-width: 120px; }
+    .sel-stat { text-align: center; }
+    .sel-stat strong { display: block; font-size: 15px; font-weight: 700; color: #fff; }
+    .sel-stat span { font-size: 10px; color: var(--muted); }
 
     /* ─── Donut ─── */
     .donut-wrap { display: flex; align-items: center; gap: 18px; }
@@ -144,7 +169,7 @@
     .geo-row { margin-bottom: 11px; }
     .geo-header { display: flex; justify-content: space-between; font-size: 12px; color: #b0b8d8; margin-bottom: 5px; }
     .geo-track { height: 5px; background: var(--surface2); border-radius: 3px; }
-    .geo-fill { height: 5px; border-radius: 3px; background: var(--navy-light); }
+    .geo-fill { height: 5px; border-radius: 3px; background: var(--navy-light); transition: width 0.8s ease; width: 0%; }
 
     /* ─── Payment method ─── */
     .pay-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; padding: 8px 0; border-top: 1px solid var(--surface2); }
@@ -162,10 +187,7 @@
     .rec-body p { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
     /* ─── Placeholder sections ─── */
-    .placeholder-section {
-      background: var(--surface); border: 1px dashed var(--muted2);
-      border-radius: 10px; padding: 28px; text-align: center; color: var(--muted);
-    }
+    .placeholder-section { background: var(--surface); border: 1px dashed var(--muted2); border-radius: 10px; padding: 28px; text-align: center; color: var(--muted); }
     .placeholder-section .ph-icon { font-size: 28px; margin-bottom: 10px; }
     .placeholder-section h3 { font-size: 14px; font-weight: 600; color: #6070a0; margin-bottom: 6px; }
     .placeholder-section p { font-size: 12px; line-height: 1.6; max-width: 380px; margin: 0 auto; }
@@ -178,7 +200,7 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* ─── Deep analysis (tab 4) ─── */
+    /* ─── Deep analysis ─── */
     .analysis-block { margin-bottom: 20px; }
     .analysis-block h3 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
     .analysis-block p { font-size: 13px; color: #8890b5; line-height: 1.8; }
@@ -186,19 +208,37 @@
     .analysis-block ul li { font-size: 13px; color: #8890b5; line-height: 1.7; padding: 3px 0; padding-left: 16px; position: relative; }
     .analysis-block ul li::before { content: '→'; position: absolute; left: 0; color: var(--navy-light); }
 
-    /* ─── Loading ─── */
-    #loading-overlay {
-      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-    }
+    /* ─── Loading overlay ─── */
+    #loading-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
     .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--navy-light); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     #loading-overlay p { font-size: 13px; color: var(--muted); }
     #loading-overlay.hidden { display: none; }
 
-    /* ─── Responsive tweaks ─── */
+    /* ─── Mobile sidebar ─── */
+    .hamburger-btn {
+      display: none; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 11px; color: var(--text); cursor: pointer;
+      font-size: 18px; line-height: 1; align-items: center;
+    }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 99; }
+    .sidebar-overlay.visible { display: block; }
+
+    /* ─── Responsive ─── */
     @media (max-width: 1300px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 700px)  { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; z-index: 200; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0 !important; padding: 16px; }
+      .hamburger-btn { display: flex; }
+      .topbar { flex-wrap: wrap; gap: 10px; }
+      .topbar-right { flex-wrap: wrap; gap: 8px; }
+      .grid-2 { grid-template-columns: 1fr !important; }
+      .grid-3 { grid-template-columns: 1fr !important; }
+      .grid-2-1 { grid-template-columns: 1fr !important; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -211,10 +251,7 @@
     <input id="pw-input" type="password" placeholder="Wachtwoord" autocomplete="current-password"
       style="width:100%;padding:12px 16px;background:#0b0d18;border:1px solid #2a2d45;border-radius:8px;color:#fff;font-size:14px;outline:none;margin-bottom:12px;">
     <div id="pw-error" style="color:#ff6b6b;font-size:12px;margin-bottom:10px;display:none;">Onjuist wachtwoord</div>
-    <button onclick="checkPassword()"
-      style="width:100%;padding:12px;background:#2C3470;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;">
-      Inloggen
-    </button>
+    <button onclick="checkPassword()" style="width:100%;padding:12px;background:#2C3470;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;">Inloggen</button>
   </div>
 </div>
 
@@ -224,34 +261,24 @@
   <p>Data ophalen van WooCommerce…</p>
 </div>
 
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
 <div class="layout">
 
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img class="sidebar-logo"
-        src="https://ftuk.com/wp-content/uploads/2021/02/Blue-Transparent-Logo.png"
-        alt="FTUK"
+      <img class="sidebar-logo" src="https://ftuk.com/wp-content/uploads/2021/02/Blue-Transparent-Logo.png" alt="FTUK"
         onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:700;color:#fff;\'>FTUK</span>'">
       <div class="sidebar-tagline">Business Intelligence</div>
     </div>
-
     <nav class="nav">
       <div class="nav-section">Navigatie</div>
-      <div class="nav-item active" onclick="switchTab('overzicht', this)">
-        <span class="nav-icon">📊</span> Overzicht
-      </div>
-      <div class="nav-item" onclick="switchTab('advertenties', this)">
-        <span class="nav-icon">📣</span> Advertenties &amp; ROAS
-      </div>
-      <div class="nav-item" onclick="switchTab('aanbevelingen', this)">
-        <span class="nav-icon">💡</span> AI Aanbevelingen
-      </div>
-      <div class="nav-item" onclick="switchTab('analyse', this)">
-        <span class="nav-icon">🔍</span> Diepgaande Analyse
-      </div>
+      <div class="nav-item active" onclick="switchTab('overzicht', this)"><span class="nav-icon">📊</span> Overzicht</div>
+      <div class="nav-item" onclick="switchTab('advertenties', this)"><span class="nav-icon">📣</span> Advertenties &amp; ROAS</div>
+      <div class="nav-item" onclick="switchTab('aanbevelingen', this)"><span class="nav-icon">💡</span> AI Aanbevelingen</div>
+      <div class="nav-item" onclick="switchTab('analyse', this)"><span class="nav-icon">🔍</span> Diepgaande Analyse</div>
     </nav>
-
     <div class="sidebar-footer">
       <div class="live-indicator">
         <div class="live-dot"></div>
@@ -265,64 +292,56 @@
 
     <!-- Demo mode banner -->
     <div id="demo-banner" style="display:none;background:rgba(229,57,53,0.12);border:1px solid rgba(229,57,53,0.35);border-radius:8px;padding:12px 16px;margin-bottom:18px;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:#ff8a80;">
-      <span>⚠️ <strong>Demo modus</strong> — n8n niet bereikbaar. U ziet voorbeelddata, niet live cijfers. Start n8n en vernieuw de pagina.</span>
+      <span>⚠️ <strong>Demo modus</strong> — n8n niet bereikbaar. U ziet voorbeelddata, niet live cijfers.</span>
       <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#ff8a80;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">×</button>
     </div>
 
     <!-- Topbar -->
     <div class="topbar">
-      <div class="topbar-title">
-        <h1>FTUK Business Intelligence</h1>
-        <p id="topbar-date">Laden…</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title">
+          <h1>FTUK Business Intelligence</h1>
+          <p id="topbar-date">Laden…</p>
+        </div>
       </div>
       <div class="topbar-right">
+        <div class="countdown-badge">
+          <div class="cring">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <circle cx="9" cy="9" r="7" fill="none" stroke="#222640" stroke-width="2.5"/>
+              <circle id="cring-prog" cx="9" cy="9" r="7" fill="none" stroke="#00c853" stroke-width="2.5"
+                stroke-dasharray="44" stroke-dashoffset="0" stroke-linecap="round" style="transition:stroke-dashoffset 1s linear;"/>
+            </svg>
+          </div>
+          <span id="ctext">—</span>
+        </div>
         <div class="last-updated" id="last-updated-label">—</div>
         <button class="btn btn-ghost" onclick="fetchData()">↻ Vernieuwen</button>
       </div>
     </div>
 
-    <!-- Alert bar (only shown when there are issues) -->
-    <div class="alert-bar hidden" id="alert-bar">
-      ⚠️ <span id="alert-text"></span>
-    </div>
+    <!-- Alert bar -->
+    <div class="alert-bar hidden" id="alert-bar">⚠️ <span id="alert-text"></span></div>
 
-    <!-- ═══════════════════════════════════════════════ -->
     <!-- TAB 1: Overzicht -->
-    <!-- ═══════════════════════════════════════════════ -->
     <div class="tab-content active" id="tab-overzicht">
 
+      <!-- Range selector -->
+      <div class="range-bar">
+        <button class="range-btn active" onclick="setRange('today', this)">Vandaag</button>
+        <button class="range-btn" onclick="setRange('7d', this)">7 Dagen</button>
+        <button class="range-btn" onclick="setRange('30d', this)">30 Dagen</button>
+      </div>
+
       <!-- KPI Strip -->
-      <div class="kpi-row">
-        <div class="kpi g">
-          <div class="kpi-label">Netto Omzet</div>
-          <div class="kpi-value colored-g" id="kpi-revenue">—</div>
-          <div class="kpi-sub"><span id="kpi-revenue-delta" class="delta-up"></span></div>
-        </div>
-        <div class="kpi b">
-          <div class="kpi-label">Totaal Orders</div>
-          <div class="kpi-value" id="kpi-orders">—</div>
-          <div class="kpi-sub" id="kpi-orders-sub"></div>
-        </div>
-        <div class="kpi o">
-          <div class="kpi-label">Kortingen</div>
-          <div class="kpi-value colored-o" id="kpi-discounts">—</div>
-          <div class="kpi-sub" id="kpi-discounts-sub"></div>
-        </div>
-        <div class="kpi r">
-          <div class="kpi-label">Refunds</div>
-          <div class="kpi-value colored-r" id="kpi-refunds">—</div>
-          <div class="kpi-sub" id="kpi-refunds-sub"></div>
-        </div>
-        <div class="kpi b">
-          <div class="kpi-label">Gem. Orderwaarde</div>
-          <div class="kpi-value" id="kpi-aov">—</div>
-          <div class="kpi-sub" id="kpi-aov-sub">Per order</div>
-        </div>
-        <div class="kpi p">
-          <div class="kpi-label">Google Ads ROAS</div>
-          <div class="kpi-value colored-p">—</div>
-          <div class="kpi-sub"><span class="placeholder-tag">⏳ Koppeling in aanbouw</span></div>
-        </div>
+      <div class="kpi-row" id="kpi-row">
+        <div class="kpi g"><div class="kpi-label">Netto Omzet</div><div class="kpi-value colored-g" id="kpi-revenue">—</div><div class="kpi-sub"><span id="kpi-revenue-delta"></span></div></div>
+        <div class="kpi b"><div class="kpi-label">Totaal Orders</div><div class="kpi-value" id="kpi-orders">—</div><div class="kpi-sub" id="kpi-orders-sub"></div></div>
+        <div class="kpi o"><div class="kpi-label">Kortingen</div><div class="kpi-value colored-o" id="kpi-discounts">—</div><div class="kpi-sub" id="kpi-discounts-sub"></div></div>
+        <div class="kpi r"><div class="kpi-label">Refunds</div><div class="kpi-value colored-r" id="kpi-refunds">—</div><div class="kpi-sub" id="kpi-refunds-sub"></div></div>
+        <div class="kpi b"><div class="kpi-label">Gem. Orderwaarde</div><div class="kpi-value" id="kpi-aov">—</div><div class="kpi-sub" id="kpi-aov-sub">Per order</div></div>
+        <div class="kpi p"><div class="kpi-label">Google Ads ROAS</div><div class="kpi-value colored-p">—</div><div class="kpi-sub"><span class="placeholder-tag">⏳ Koppeling in aanbouw</span></div></div>
       </div>
 
       <!-- Charts row -->
@@ -330,10 +349,20 @@
         <div class="card">
           <div class="card-head">
             <div class="card-title">Omzet afgelopen 7 dagen</div>
-            <div class="card-sub">Netto omzet per dag</div>
+            <div class="card-sub" id="chart-subtitle">Netto omzet per dag</div>
           </div>
-          <div class="bar-chart-wrap" id="revenue-chart">
-            <!-- filled by JS -->
+          <div class="chart-outer">
+            <div class="bar-chart-wrap" id="revenue-chart"></div>
+          </div>
+          <div class="chart-legend">
+            <div class="leg"><div class="leg-bar" style="background:#2C3470;"></div> Per dag</div>
+            <div class="leg"><div class="leg-bar" style="background:linear-gradient(to right,#00b248,#00e676);"></div> Vandaag</div>
+          </div>
+          <div class="sel-card" id="sel-card">
+            <span class="sel-title" id="sel-day">—</span>
+            <div class="sel-stat"><strong id="sel-rev">—</strong><span>Omzet</span></div>
+            <div class="sel-stat"><strong id="sel-ord">—</strong><span>Orders</span></div>
+            <div class="sel-stat"><strong id="sel-aov">—</strong><span>Gem. order</span></div>
           </div>
         </div>
 
@@ -345,12 +374,9 @@
           <div class="donut-wrap">
             <svg class="donut-svg" width="100" height="100" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="40" fill="none" stroke="#1e2035" stroke-width="16"/>
-              <circle id="donut-completed" cx="50" cy="50" r="40" fill="none" stroke="#00c853" stroke-width="16"
-                stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
-              <circle id="donut-processing" cx="50" cy="50" r="40" fill="none" stroke="#ff6d00" stroke-width="16"
-                stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
-              <circle id="donut-onhold" cx="50" cy="50" r="40" fill="none" stroke="#7c3aed" stroke-width="16"
-                stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
+              <circle id="donut-completed" cx="50" cy="50" r="40" fill="none" stroke="#00c853" stroke-width="16" stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
+              <circle id="donut-processing" cx="50" cy="50" r="40" fill="none" stroke="#ff6d00" stroke-width="16" stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
+              <circle id="donut-onhold" cx="50" cy="50" r="40" fill="none" stroke="#7c3aed" stroke-width="16" stroke-dasharray="0 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.6s;"/>
               <text x="50" y="47" text-anchor="middle" fill="#fff" font-size="14" font-weight="700" id="donut-center-val">—</text>
               <text x="50" y="59" text-anchor="middle" fill="#6070a0" font-size="8">orders</text>
             </svg>
@@ -363,63 +389,37 @@
           </div>
           <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:12px;">
             <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px;">Betaalmethoden</div>
-            <div id="payment-body">
-              <div style="color:var(--muted);font-size:12px;text-align:center;padding:8px 0;">Laden…</div>
-            </div>
+            <div id="payment-body"><div style="color:var(--muted);font-size:12px;text-align:center;padding:8px 0;">Laden…</div></div>
           </div>
         </div>
       </div>
 
       <!-- Bottom row -->
       <div class="grid-3">
-
-        <!-- Top sellers -->
         <div class="card">
-          <div class="card-head">
-            <div class="card-title">Top Producten</div>
-            <div class="card-sub">Omzet vandaag</div>
-          </div>
+          <div class="card-head"><div class="card-title">Top Producten</div><div class="card-sub">Omzet vandaag</div></div>
           <table class="dtable">
             <thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Omzet</th></tr></thead>
-            <tbody id="top-products-body">
-              <tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Laden…</td></tr>
-            </tbody>
+            <tbody id="top-products-body"><tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Laden…</td></tr></tbody>
           </table>
         </div>
-
-        <!-- Geo -->
         <div class="card">
-          <div class="card-head">
-            <div class="card-title">Geografische verdeling</div>
-            <div class="card-sub">Omzet per land</div>
-          </div>
-          <div id="geo-body">
-            <div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div>
-          </div>
+          <div class="card-head"><div class="card-title">Geografische verdeling</div><div class="card-sub">Omzet per land</div></div>
+          <div id="geo-body"><div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div></div>
         </div>
-
-        <!-- AI Aanbevelingen preview -->
         <div class="card">
           <div class="card-head">
             <div class="card-title">AI Aanbevelingen</div>
             <div class="card-sub">Top 3 van vandaag &nbsp;·&nbsp; <span onclick="switchTab('aanbevelingen', document.querySelector('.nav-item[onclick*=aanbevelingen]'))" style="cursor:pointer;color:#5b6de8;">Bekijk alle →</span></div>
           </div>
-          <div id="overview-recs-body">
-            <div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div>
-          </div>
+          <div id="overview-recs-body"><div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div></div>
         </div>
-
       </div>
 
     </div><!-- /tab-overzicht -->
 
-
-    <!-- ═══════════════════════════════════════════════ -->
     <!-- TAB 2: Advertenties & ROAS -->
-    <!-- ═══════════════════════════════════════════════ -->
     <div class="tab-content" id="tab-advertenties">
-
-      <!-- Placeholder Google Ads -->
       <div class="placeholder-section" style="margin-bottom:16px;">
         <div class="ph-icon">📣</div>
         <h3>Google Ads koppeling in aanbouw</h3>
@@ -431,99 +431,68 @@
           <span>☐ HYROS viewer-toegang</span>
         </div>
       </div>
-
-      <!-- UTM attributie (WooCommerce data, already available) -->
       <div class="card" style="margin-bottom:16px;">
-        <div class="card-head">
-          <div class="card-title">Verkeersbronnen via WooCommerce</div>
-          <div class="card-sub">UTM-attributie uit orderdata — beschikbaar zonder Google Ads API</div>
-        </div>
+        <div class="card-head"><div class="card-title">Verkeersbronnen via WooCommerce</div><div class="card-sub">UTM-attributie uit orderdata</div></div>
         <table class="dtable">
           <thead><tr><th>Bron</th><th>Medium</th><th>Orders</th><th>Omzet</th></tr></thead>
-          <tbody id="attribution-body">
-            <tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Laden…</td></tr>
-          </tbody>
+          <tbody id="attribution-body"><tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Laden…</td></tr></tbody>
         </table>
       </div>
-
-      <!-- Preview van wat Google Ads gaat tonen -->
       <div class="grid-2">
-        <div class="placeholder-section">
-          <div class="ph-icon">💰</div>
-          <h3>ROAS per campagne</h3>
-          <p>Advertentie-uitgaven vs. WooCommerce-omzet per campagne. Welke ads verdienen hun budget terug?</p>
-        </div>
-        <div class="placeholder-section">
-          <div class="ph-icon">🌍</div>
-          <h3>Prestaties per land</h3>
-          <p>Bijvoorbeeld: Spanje spend €200 → €2.000 omzet = 10x ROAS. AI zegt: schaal dit op.</p>
-        </div>
+        <div class="placeholder-section"><div class="ph-icon">💰</div><h3>ROAS per campagne</h3><p>Advertentie-uitgaven vs. WooCommerce-omzet per campagne.</p></div>
+        <div class="placeholder-section"><div class="ph-icon">🌍</div><h3>Prestaties per land</h3><p>Spend per land vs. omzet — AI zegt: schaal dit op.</p></div>
       </div>
+    </div>
 
-    </div><!-- /tab-advertenties -->
-
-
-    <!-- ═══════════════════════════════════════════════ -->
     <!-- TAB 3: AI Aanbevelingen -->
-    <!-- ═══════════════════════════════════════════════ -->
     <div class="tab-content" id="tab-aanbevelingen">
-
       <div class="card" style="margin-bottom:16px;">
-        <div class="card-head">
-          <div class="card-title">AI Aanbevelingen van vandaag</div>
-          <div class="card-sub" id="rec-generated-at">Gegenereerd door Claude AI op basis van WooCommerce data</div>
-        </div>
-        <div id="recommendations-body">
-          <div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div>
-        </div>
+        <div class="card-head"><div class="card-title">AI Aanbevelingen van vandaag</div><div class="card-sub" id="rec-generated-at">Gegenereerd door Claude AI op basis van WooCommerce data</div></div>
+        <div id="recommendations-body"><div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div></div>
       </div>
-
-      <!-- Risk flags -->
       <div class="card">
-        <div class="card-head">
-          <div class="card-title">Risico flags</div>
-          <div class="card-sub">Automatisch gedetecteerde aandachtspunten</div>
-        </div>
-        <div id="risk-body">
-          <div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div>
-        </div>
+        <div class="card-head"><div class="card-title">Risico flags</div><div class="card-sub">Automatisch gedetecteerde aandachtspunten</div></div>
+        <div id="risk-body"><div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Laden…</div></div>
       </div>
+    </div>
 
-    </div><!-- /tab-aanbevelingen -->
-
-
-    <!-- ═══════════════════════════════════════════════ -->
     <!-- TAB 4: Diepgaande Analyse -->
-    <!-- ═══════════════════════════════════════════════ -->
     <div class="tab-content" id="tab-analyse">
       <div class="card">
-        <div class="card-head">
-          <div class="card-title">Volledig dagrapport</div>
-          <div class="card-sub">Gegenereerd door Claude AI — alle 10 secties</div>
-        </div>
-        <div id="deep-analysis-body" style="font-size:13px;color:#8890b5;line-height:1.8;">
-          <div style="color:var(--muted);padding:16px 0;text-align:center;">Laden…</div>
-        </div>
+        <div class="card-head"><div class="card-title">Volledig dagrapport</div><div class="card-sub">Gegenereerd door Claude AI — alle 10 secties</div></div>
+        <div id="deep-analysis-body" style="font-size:13px;color:#8890b5;line-height:1.8;"><div style="color:var(--muted);padding:16px 0;text-align:center;">Laden…</div></div>
       </div>
-    </div><!-- /tab-analyse -->
+    </div>
 
   </main>
-</div><!-- /layout -->
+</div>
 
 <script>
 // ─── Config ───────────────────────────────────────────────
 const DATA_URL = 'https://n8n.insightance.ai/webhook/ftuk-data';
-const REFRESH_INTERVAL_MS = 60000; // 60 seconden
 
-// ─── Tab switching ─────────────────────────────────────────
-function switchTab(id, navEl) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  if (navEl) navEl.classList.add('active');
+// ─── Global state ─────────────────────────────────────────
+let lastData = null;
+let currentRange = 'today';
+let selectedBarIdx = null;
+let lastChartVals = [];
+let lastChartDays = [];
+let cdVal = 60;
+const CIRC = 44;
+
+// ─── Count-up animation ────────────────────────────────────
+function countUp(el, end, fmtFn, dur = 900) {
+  if (!el || isNaN(end)) return;
+  const start = performance.now();
+  (function frame(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmtFn(Math.round(end * ease));
+    if (t < 1) requestAnimationFrame(frame);
+  })(start);
 }
 
-// ─── Formatting helpers ────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────
 function eur(n) {
   if (n == null || isNaN(n)) return '—';
   return '€' + Number(n).toLocaleString('nl-NL', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -532,32 +501,67 @@ function fmt(n) {
   if (n == null || isNaN(n)) return '—';
   return Number(n).toLocaleString('nl-NL');
 }
-function pct(a, total) {
+function pctOf(a, total) {
   if (!total) return 0;
   return Math.round((a / total) * 100);
 }
-function countryFlag(cc) {
-  if (!cc || cc.length !== 2) return '🌍';
-  return String.fromCodePoint(...[...cc.toUpperCase()].map(c => 0x1F1E6 - 65 + c.charCodeAt(0)));
+function countryName(cc) {
+  const names = {
+    GB:'United Kingdom', US:'United States', NL:'Nederland', DE:'Duitsland',
+    FR:'Frankrijk', BE:'België', ES:'Spanje', IT:'Italië', AU:'Australië',
+    CA:'Canada', AE:'V.A.E.', SA:'Saudi-Arabië', KW:'Koeweit', QA:'Qatar',
+    NG:'Nigeria', ZA:'Zuid-Afrika', SG:'Singapore', IN:'India',
+    PK:'Pakistan', MY:'Maleisië', LS:'Lesotho', IE:'Ierland',
+    PT:'Portugal', CH:'Zwitserland', SE:'Zweden', DK:'Denemarken',
+    NO:'Noorwegen', PL:'Polen', TR:'Turkije', BR:'Brazilië', MX:'Mexico',
+    JP:'Japan', KR:'Zuid-Korea', HK:'Hong Kong', EG:'Egypte',
+    MA:'Marokko', KE:'Kenia', GH:'Ghana', IL:'Israël', JO:'Jordanië',
+    LB:'Libanon', PH:'Filipijnen', ID:'Indonesië', TH:'Thailand',
+    BD:'Bangladesh', LK:'Sri Lanka', TN:'Tunesië', DZ:'Algerije',
+  };
+  return names[cc] || cc;
 }
 
-// ─── Render functions ──────────────────────────────────────
+// ─── Tab switching ─────────────────────────────────────────
+function switchTab(id, navEl) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  if (window.innerWidth <= 768) closeSidebar();
+}
+
+// ─── Mobile sidebar ────────────────────────────────────────
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('visible');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('visible');
+}
+
+// ─── KPIs ─────────────────────────────────────────────────
 function renderKPIs(d) {
   const s = d.salesSummary?.[0] || {};
   const net = Math.round((+s.total_sales || 0) - (+s.total_discount || 0) - (+s.total_refunds || 0));
-  document.getElementById('kpi-revenue').textContent = eur(net);
-  document.getElementById('kpi-orders').textContent = fmt(s.total_orders);
-  document.getElementById('kpi-discounts').textContent = eur(+s.total_discount);
-  document.getElementById('kpi-discounts-sub').textContent = 'Korting op orders';
-  document.getElementById('kpi-refunds').textContent = eur(+s.total_refunds);
-  document.getElementById('kpi-refunds-sub').textContent = `${d.refunds?.length || 0} terugbetalingen`;
-
   const aov = +s.total_orders > 0 ? Math.round((+s.total_sales || 0) / +s.total_orders) : 0;
-  document.getElementById('kpi-aov').textContent = eur(aov);
+
+  // Count-up animations
+  countUp(document.getElementById('kpi-revenue'),   net,               v => eur(v), 900);
+  countUp(document.getElementById('kpi-orders'),    +s.total_orders||0, v => fmt(v), 750);
+  countUp(document.getElementById('kpi-discounts'), +s.total_discount||0, v => eur(v), 820);
+  countUp(document.getElementById('kpi-refunds'),   +s.total_refunds||0,  v => eur(v), 700);
+  countUp(document.getElementById('kpi-aov'),       aov,               v => eur(v), 650);
+
+  document.getElementById('kpi-discounts-sub').textContent = 'Korting op orders';
+  document.getElementById('kpi-refunds-sub').textContent = `${d.refunds?.length || 0} terugbetalingen`;
   document.getElementById('kpi-aov-sub').textContent = `${fmt(s.total_orders)} orders totaal`;
 
-  // Delta berekening: vandaag vs gisteren — UK tijdzone (Europe/London)
+  // Delta: vandaag vs gisteren (UK timezone) + vroege ochtend fix
   const orders = d.orders || [];
+  const hour = new Date().getHours();
+  const earlyMorning = hour < 10;
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
   const yestStr  = new Date(Date.now() - 86400000).toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
   const todayOrders = orders.filter(o => o.date_created?.startsWith(todayStr));
@@ -565,42 +569,91 @@ function renderKPIs(d) {
   const todayRev = todayOrders.reduce((a, o) => a + (+o.total || 0), 0);
   const yestRev  = yestOrders.reduce((a, o)  => a + (+o.total || 0), 0);
 
-  function deltaTag(today, yesterday, el) {
-    if (!el) return;
-    if (yesterday === 0) { el.textContent = 'vs gisteren'; return; }
-    const pct = Math.round(((today - yesterday) / yesterday) * 100);
-    const up = pct >= 0;
-    el.className = up ? 'delta-up' : 'delta-down';
-    el.textContent = `${up ? '▲' : '▼'} ${Math.abs(pct)}% vs gisteren`;
+  const deltaEl = document.getElementById('kpi-revenue-delta');
+  if (earlyMorning && yestRev > 0) {
+    deltaEl.className = '';
+    deltaEl.innerHTML = '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
+  } else if (yestRev === 0) {
+    deltaEl.textContent = 'vs gisteren';
+  } else {
+    const p = Math.round(((todayRev - yestRev) / yestRev) * 100);
+    deltaEl.className = p >= 0 ? 'delta-up' : 'delta-down';
+    deltaEl.textContent = `${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren`;
   }
 
-  deltaTag(todayRev, yestRev, document.getElementById('kpi-revenue-delta'));
   const ordEl = document.getElementById('kpi-orders-sub');
   if (ordEl) {
-    if (yestOrders.length === 0) { ordEl.textContent = 'Orders vandaag'; }
-    else {
-      const pct = Math.round(((todayOrders.length - yestOrders.length) / yestOrders.length) * 100);
-      const up = pct >= 0;
-      ordEl.innerHTML = `<span class="${up ? 'delta-up' : 'delta-down'}">${up ? '▲' : '▼'} ${Math.abs(pct)}% vs gisteren</span>`;
+    if (earlyMorning && yestOrders.length > 0) {
+      ordEl.innerHTML = '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
+    } else if (yestOrders.length === 0) {
+      ordEl.textContent = 'Orders vandaag';
+    } else {
+      const p = Math.round(((todayOrders.length - yestOrders.length) / yestOrders.length) * 100);
+      ordEl.innerHTML = `<span class="${p >= 0 ? 'delta-up' : 'delta-down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren</span>`;
     }
   }
 }
 
-function renderRevenueChart(weekRevenue, todayOrders) {
-  const chart = document.getElementById('revenue-chart');
-  const subtitleEl = document.querySelector('#tab-overzicht .grid-2-1 .card .card-sub');
+// ─── Range selector ────────────────────────────────────────
+function setRange(range, btn) {
+  currentRange = range;
+  document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (lastData) applyRange(lastData, range);
+}
 
-  // Bouw array van laatste 7 dagen (UK timezone)
+function applyRange(d, range) {
+  if (range === 'today') { renderKPIs(d); return; }
+
+  if (range === '7d') {
+    const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
+    const totalRev7d = weekRevenue.reduce((s, day) => s + (+(day.subtotals?.net_revenue || 0)), 0);
+    const orders7d = d.orders || [];
+    const discounts7d = orders7d.reduce((s, o) => s + (+o.discount_total || 0), 0);
+    const refunds7d   = orders7d.reduce((s, o) => s + (+o.total_refunded || 0), 0);
+    const aov7d = orders7d.length > 0 ? Math.round(totalRev7d / orders7d.length) : 0;
+
+    countUp(document.getElementById('kpi-revenue'),   Math.round(totalRev7d), v => eur(v), 900);
+    countUp(document.getElementById('kpi-orders'),    orders7d.length,        v => fmt(v), 750);
+    countUp(document.getElementById('kpi-discounts'), Math.round(discounts7d), v => eur(v), 820);
+    countUp(document.getElementById('kpi-refunds'),   Math.round(refunds7d),  v => eur(v), 700);
+    countUp(document.getElementById('kpi-aov'),       aov7d,                  v => eur(v), 650);
+
+    const deltaEl = document.getElementById('kpi-revenue-delta');
+    deltaEl.className = ''; deltaEl.textContent = '7 dagen totaal';
+    document.getElementById('kpi-orders-sub').textContent = '7 dagen totaal';
+    document.getElementById('kpi-discounts-sub').textContent = '7 dagen';
+    document.getElementById('kpi-refunds-sub').textContent  = '7 dagen';
+    document.getElementById('kpi-aov-sub').textContent = `${fmt(orders7d.length)} orders`;
+    return;
+  }
+
+  if (range === '30d') {
+    ['kpi-revenue','kpi-orders','kpi-discounts','kpi-refunds','kpi-aov'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.textContent = '—';
+    });
+    const deltaEl = document.getElementById('kpi-revenue-delta');
+    deltaEl.className = ''; deltaEl.textContent = 'Vereist n8n uitbreiding';
+    ['kpi-orders-sub','kpi-discounts-sub','kpi-refunds-sub','kpi-aov-sub'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.textContent = 'Binnenkort beschikbaar';
+    });
+  }
+}
+
+// ─── Bar chart ─────────────────────────────────────────────
+function renderRevenueChart(weekRevenue, orders) {
+  const chart = document.getElementById('revenue-chart');
+  const subtitleEl = document.getElementById('chart-subtitle');
+
   const days = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date(Date.now() - i * 86400000);
-    const key = d.toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+    const key   = d.toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
     const label = d.toLocaleDateString('nl-NL', { weekday: 'short', timeZone: 'Europe/London' });
     days.push({ key, label, isToday: i === 0 });
   }
 
   let vals;
-  // Prioriteit 1: Analytics API (nauwkeurige dagelijkse totalen)
   if (Array.isArray(weekRevenue) && weekRevenue.length > 0) {
     const revMap = {};
     weekRevenue.forEach(d => {
@@ -609,57 +662,69 @@ function renderRevenueChart(weekRevenue, todayOrders) {
       if (day) revMap[day] = rev;
     });
     vals = days.map(d => revMap[d.key] || 0);
-    if (subtitleEl) subtitleEl.textContent = 'Werkelijke omzet per dag';
+    if (subtitleEl) subtitleEl.textContent = 'Werkelijke omzet per dag · klik voor details';
   } else {
-    // Fallback: aggregeer uit orders (max 100 — kan onvolledig zijn)
     const dayMap = {};
-    (todayOrders || []).forEach(o => {
+    (orders || []).forEach(o => {
       const day = (o.date_created || '').slice(0, 10);
       if (day) dayMap[day] = (dayMap[day] || 0) + (+o.total || 0);
     });
     vals = days.map(d => dayMap[d.key] || 0);
-    if (subtitleEl) subtitleEl.textContent = 'Omzet per dag (beperkt tot 100 orders)';
+    if (subtitleEl) subtitleEl.textContent = 'Omzet per dag · klik voor details';
   }
+
+  lastChartVals = vals;
+  lastChartDays = days;
 
   const max = Math.max(...vals, 1);
   chart.innerHTML = days.map(({ label, isToday }, i) => {
-    const v = vals[i];
-    const h = Math.max(4, Math.round((v / max) * 110));
-    const color = isToday ? '#00c853' : '#2C3470';
-    return `<div class="bar-col">
+    const v   = vals[i];
+    const h   = Math.max(4, Math.round((v / max) * 110));
+    const sel = selectedBarIdx === i ? ' selected' : '';
+    return `<div class="bar-col${sel}" onclick="clickBar(${i})" style="position:relative;">
       <div class="bar-col-val">${v > 0 ? eur(Math.round(v)) : ''}</div>
-      <div class="bar-col-bar" style="height:${h}px;background:${color};" title="${eur(Math.round(v))}"></div>
+      <div class="bar-col-bar${isToday ? ' bar-today' : ''}" style="height:${h}px;${isToday ? '' : 'background:#2C3470;'}"></div>
       <div class="bar-col-lbl" style="${isToday ? 'color:#00c853;font-weight:600;' : ''}">${isToday ? 'vandaag' : label}</div>
+      <div class="bar-tip">${v > 0 ? eur(Math.round(v)) : 'Geen data'}</div>
     </div>`;
   }).join('');
 }
 
+// ─── Click on bar ──────────────────────────────────────────
+function clickBar(idx) {
+  selectedBarIdx = selectedBarIdx === idx ? null : idx;
+  if (lastData) renderRevenueChart(lastData.weekRevenue || [], lastData.orders || []);
+
+  const card = document.getElementById('sel-card');
+  if (selectedBarIdx === null) { card.classList.remove('on'); return; }
+
+  const day  = lastChartDays[idx];
+  const rev  = lastChartVals[idx];
+  const dayOrders = (lastData?.orders || []).filter(o => o.date_created?.startsWith(day.key));
+  const ordCount  = dayOrders.length;
+  const aov = ordCount > 0 ? Math.round(rev / ordCount) : 0;
+
+  document.getElementById('sel-day').textContent = day.isToday ? `Vandaag — ${day.key}` : `${day.label} — ${day.key}`;
+  document.getElementById('sel-rev').textContent = rev > 0 ? eur(Math.round(rev)) : '—';
+  document.getElementById('sel-ord').textContent = ordCount || '—';
+  document.getElementById('sel-aov').textContent = aov > 0 ? eur(aov) : '—';
+  card.classList.add('on');
+}
+
+// ─── Donut ────────────────────────────────────────────────
 function renderDonut(orders) {
   const statuses = { completed: 0, processing: 0, 'on-hold': 0, other: 0 };
-  orders.forEach(o => {
-    if (statuses[o.status] !== undefined) statuses[o.status]++;
-    else statuses.other++;
-  });
+  orders.forEach(o => { if (statuses[o.status] !== undefined) statuses[o.status]++; else statuses.other++; });
   const total = orders.length;
   document.getElementById('donut-center-val').textContent = total;
   document.getElementById('orders-total-label').textContent = `${total} orders vandaag`;
-  document.getElementById('leg-completed').textContent = statuses.completed;
+  document.getElementById('leg-completed').textContent  = statuses.completed;
   document.getElementById('leg-processing').textContent = statuses.processing;
-  document.getElementById('leg-onhold').textContent = statuses['on-hold'];
-  document.getElementById('leg-other').textContent = statuses.other;
-
+  document.getElementById('leg-onhold').textContent     = statuses['on-hold'];
+  document.getElementById('leg-other').textContent      = statuses.other;
   const circ = 251;
-  function arc(count, offset) {
-    const dash = (count / total) * circ;
-    return { dash, offset };
-  }
   let offset = 63;
-  const layers = [
-    { id: 'donut-completed', count: statuses.completed, color: '#00c853' },
-    { id: 'donut-processing', count: statuses.processing, color: '#ff6d00' },
-    { id: 'donut-onhold', count: statuses['on-hold'], color: '#7c3aed' },
-  ];
-  layers.forEach(({ id, count }) => {
+  [['donut-completed', statuses.completed], ['donut-processing', statuses.processing], ['donut-onhold', statuses['on-hold']]].forEach(([id, count]) => {
     const dash = total > 0 ? (count / total) * circ : 0;
     const el = document.getElementById(id);
     el.setAttribute('stroke-dasharray', `${dash} ${circ}`);
@@ -668,132 +733,95 @@ function renderDonut(orders) {
   });
 }
 
+// ─── Top products ──────────────────────────────────────────
 function renderTopProducts(sellers, orders) {
   const tbody = document.getElementById('top-products-body');
   if (!sellers.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen data</td></tr>'; return; }
   const revenueMap = {};
-  (orders || []).forEach(o => {
-    (o.line_items || []).forEach(item => {
-      const name = (item.name || '').trim();
-      if (!revenueMap[name]) revenueMap[name] = 0;
-      revenueMap[name] += parseFloat(item.total || 0);
-    });
-  });
+  (orders || []).forEach(o => { (o.line_items || []).forEach(item => { const n = (item.name||'').trim(); revenueMap[n] = (revenueMap[n]||0) + parseFloat(item.total||0); }); });
   tbody.innerHTML = sellers.slice(0, 6).map((p, i) => {
     const rev = revenueMap[p.name] || p.total || 0;
-    return `<tr>
-      <td><span class="rank-badge">${i+1}</span></td>
-      <td class="td-main">${p.name || '—'}</td>
-      <td>${fmt(p.quantity)}</td>
-      <td class="td-green">${rev > 0 ? eur(rev) : '—'}</td>
-    </tr>`;
+    return `<tr><td><span class="rank-badge">${i+1}</span></td><td class="td-main">${p.name||'—'}</td><td>${fmt(p.quantity)}</td><td class="td-green">${rev > 0 ? eur(rev) : '—'}</td></tr>`;
   }).join('');
 }
 
-function renderOverviewRecs(items) {
-  const container = document.getElementById('overview-recs-body');
-  if (!container) return;
-  if (!items || !items.length) {
-    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen — voer het daily report uit</div>';
-    return;
-  }
-  const icons = ['🚀', '📈', '💡'];
-  container.innerHTML = items.slice(0, 3).map((item, i) => `
-    <div class="rec-item">
-      <div class="rec-icon">${icons[i]}</div>
-      <div class="rec-body"><p style="font-size:12px;">${item}</p></div>
-    </div>`).join('');
-}
-
+// ─── Geo ──────────────────────────────────────────────────
 function renderGeo(orders) {
-  const countryMap = {};
-  orders.forEach(o => {
-    const cc = o.billing?.country || 'XX';
-    if (!countryMap[cc]) countryMap[cc] = 0;
-    countryMap[cc] += (+o.total || 0);
-  });
-  const sorted = Object.entries(countryMap).sort((a,b) => b[1]-a[1]).slice(0,6);
+  const map = {};
+  orders.forEach(o => { const cc = o.billing?.country || 'XX'; map[cc] = (map[cc]||0) + (+o.total||0); });
+  const sorted = Object.entries(map).sort((a,b) => b[1]-a[1]).slice(0,6);
   const totalRev = sorted.reduce((s,[,v]) => s+v, 0);
   const container = document.getElementById('geo-body');
   if (!sorted.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px 0;">Geen data</div>'; return; }
   container.innerHTML = sorted.map(([cc, rev]) => {
-    const p = pct(rev, totalRev);
+    const p = pctOf(rev, totalRev);
     return `<div class="geo-row">
-      <div class="geo-header"><span>${countryFlag(cc)} ${cc}</span><span>${eur(rev)} (${p}%)</span></div>
-      <div class="geo-track"><div class="geo-fill" style="width:${p}%;"></div></div>
+      <div class="geo-header">
+        <span style="display:inline-flex;align-items:center;gap:7px;">
+          <span style="background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--muted);font-weight:600;">${cc}</span>
+          ${countryName(cc)}
+        </span>
+        <span>${eur(rev)} (${p}%)</span>
+      </div>
+      <div class="geo-track"><div class="geo-fill" data-w="${p}"></div></div>
     </div>`;
   }).join('');
+  setTimeout(() => { document.querySelectorAll('.geo-fill').forEach(el => { el.style.width = el.dataset.w + '%'; }); }, 80);
 }
 
+// ─── Payments ─────────────────────────────────────────────
 function renderPayments(orders) {
   const payMap = {};
-  orders.forEach(o => {
-    const m = o.payment_method || 'Onbekend';
-    if (!payMap[m]) payMap[m] = 0;
-    payMap[m]++;
-  });
+  orders.forEach(o => { const m = o.payment_method||'Onbekend'; payMap[m] = (payMap[m]||0)+1; });
   const sorted = Object.entries(payMap).sort((a,b) => b[1]-a[1]);
   const total = orders.length;
   const container = document.getElementById('payment-body');
   if (!sorted.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px 0;">Geen data</div>'; return; }
   container.innerHTML = sorted.slice(0,5).map(([name, count]) => {
-    const p = pct(count, total);
-    return `<div class="pay-row">
-      <span class="pay-name">${name}</span>
-      <div class="pay-bar-wrap"><div class="pay-bar" style="width:${p}%;"></div></div>
-      <span class="pay-val">${count} (${p}%)</span>
-    </div>`;
+    const p = pctOf(count, total);
+    return `<div class="pay-row"><span class="pay-name">${name}</span><div class="pay-bar-wrap"><div class="pay-bar" style="width:${p}%;"></div></div><span class="pay-val">${count} (${p}%)</span></div>`;
   }).join('');
 }
 
+// ─── Attribution ──────────────────────────────────────────
 function renderAttribution(orders) {
   const attrMap = {};
   orders.forEach(o => {
-    const src = o.attribution?.source || 'direct';
-    const med = o.attribution?.medium || '—';
+    const src = o.attribution?.source||'direct'; const med = o.attribution?.medium||'—';
     const key = `${src}||${med}`;
-    if (!attrMap[key]) attrMap[key] = { orders: 0, revenue: 0 };
-    attrMap[key].orders++;
-    attrMap[key].revenue += (+o.total || 0);
+    if (!attrMap[key]) attrMap[key] = { orders:0, revenue:0 };
+    attrMap[key].orders++; attrMap[key].revenue += (+o.total||0);
   });
-  const sorted = Object.entries(attrMap).sort((a,b) => b[1].revenue - a[1].revenue);
+  const sorted = Object.entries(attrMap).sort((a,b) => b[1].revenue-a[1].revenue);
   const tbody = document.getElementById('attribution-body');
-  if (!sorted.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen UTM data beschikbaar</td></tr>'; return; }
+  if (!sorted.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen UTM data</td></tr>'; return; }
   tbody.innerHTML = sorted.slice(0,8).map(([key, val]) => {
     const [src, med] = key.split('||');
     return `<tr><td class="td-main">${src}</td><td>${med}</td><td>${val.orders}</td><td class="td-green">${eur(val.revenue)}</td></tr>`;
   }).join('');
 }
 
-function stripHtml(html) {
-  if (!html || !html.includes('<')) return html;
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
+// ─── Recommendations ──────────────────────────────────────
+function renderOverviewRecs(items) {
+  const container = document.getElementById('overview-recs-body');
+  if (!container) return;
+  if (!items?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen — voer het daily report uit</div>'; return; }
+  const icons = ['🚀','📈','💡'];
+  container.innerHTML = items.slice(0,3).map((item,i) => `<div class="rec-item"><div class="rec-icon">${icons[i]}</div><div class="rec-body"><p style="font-size:12px;">${item}</p></div></div>`).join('');
 }
 
 function renderRecommendations(items) {
   const container = document.getElementById('recommendations-body');
-  if (!items || !items.length) {
-    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen beschikbaar — voer het daily report uit</div>';
-    return;
-  }
-  const icons = ['🚀', '📈', '💡', '⚡', '🎯', '✅', '🔧'];
-  container.innerHTML = items.map((item, i) => `
-    <div class="rec-item">
-      <div class="rec-icon">${icons[i % icons.length]}</div>
-      <div class="rec-body"><p>${item}</p></div>
-    </div>`).join('');
+  if (!items?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen beschikbaar — voer het daily report uit</div>'; return; }
+  const icons = ['🚀','📈','💡','⚡','🎯','✅','🔧'];
+  container.innerHTML = items.map((item,i) => `<div class="rec-item"><div class="rec-icon">${icons[i%icons.length]}</div><div class="rec-body"><p>${item}</p></div></div>`).join('');
 }
 
 function renderRisks(items) {
   const container = document.getElementById('risk-body');
-  if (!items || !items.length) {
-    container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen risico flags vandaag</div>';
-    return;
-  }
-  const dotColors = ['var(--red)', 'var(--orange)', 'var(--yellow)'];
-  container.innerHTML = items.map((item, i) => `
+  if (!items?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen risico flags vandaag</div>'; return; }
+  const dotColors = ['var(--red)','var(--orange)','var(--yellow)'];
+  container.innerHTML = items.map((item,i) => `
     <div class="rec-item">
       <div class="rec-icon" style="display:flex;align-items:center;justify-content:center;">
         <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${dotColors[Math.min(i,2)]};box-shadow:0 0 6px ${dotColors[Math.min(i,2)]}88;"></span>
@@ -804,11 +832,10 @@ function renderRisks(items) {
 
 function renderDeepAnalysis(analysisText) {
   const container = document.getElementById('deep-analysis-body');
-  if (!analysisText) { container.innerHTML = '<div style="color:var(--muted);padding:16px 0;text-align:center;">Geen analyse beschikbaar. Voer de daily report workflow uit om analyse te genereren.</div>'; return; }
+  if (!analysisText) { container.innerHTML = '<div style="color:var(--muted);padding:16px 0;text-align:center;">Geen analyse beschikbaar. Voer de daily report workflow uit.</div>'; return; }
   if (analysisText.trim().startsWith('<') || analysisText.includes('<!DOCTYPE')) {
     const blob = new Blob([analysisText], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    container.innerHTML = `<iframe src="${url}" style="width:100%;height:720px;border:none;border-radius:4px;background:#fff;" sandbox="allow-same-origin allow-scripts"></iframe>`;
+    container.innerHTML = `<iframe src="${URL.createObjectURL(blob)}" style="width:100%;height:720px;border:none;border-radius:4px;background:#fff;" sandbox="allow-same-origin allow-scripts"></iframe>`;
   } else {
     let html = analysisText
       .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#c0c8e8;">$1</strong>')
@@ -826,9 +853,7 @@ function renderAlerts(orders) {
   const bar = document.getElementById('alert-bar');
   const longProcessing = orders.filter(o => {
     if (o.status !== 'processing') return false;
-    const created = new Date(o.date_created);
-    const age = (Date.now() - created) / 1000 / 3600;
-    return age > 48;
+    return (Date.now() - new Date(o.date_created)) / 3600000 > 48;
   });
   if (longProcessing.length > 0) {
     document.getElementById('alert-text').textContent = `${longProcessing.length} orders staan langer dan 48 uur op "processing" — controleer betalingsstatus.`;
@@ -838,27 +863,18 @@ function renderAlerts(orders) {
   }
 }
 
-// ─── Error state ──────────────────────────────────────────
+// ─── Error state ───────────────────────────────────────────
 function showErrorState() {
   const noData = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen data beschikbaar</div>';
-  ['payment-body','geo-body','recommendations-body','risk-body','overview-recs-body','deep-analysis-body'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = noData;
-  });
+  ['payment-body','geo-body','recommendations-body','risk-body','overview-recs-body','deep-analysis-body'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = noData; });
   const noRow = '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:16px 0;">Geen data beschikbaar</td></tr>';
-  ['top-products-body','attribution-body'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = noRow;
-  });
+  ['top-products-body','attribution-body'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = noRow; });
   document.getElementById('revenue-chart').innerHTML = '';
   const banner = document.getElementById('demo-banner');
-  if (banner) {
-    banner.querySelector('span').innerHTML = '⚠️ <strong>n8n niet bereikbaar</strong> — Geen data beschikbaar. Controleer of n8n actief is en vernieuw de pagina.';
-    banner.style.display = 'flex';
-  }
+  if (banner) { banner.querySelector('span').innerHTML = '⚠️ <strong>n8n niet bereikbaar</strong> — Geen data beschikbaar.'; banner.style.display = 'flex'; }
 }
 
-// ─── Main data fetch ───────────────────────────────────────
+// ─── Fetch data ────────────────────────────────────────────
 async function fetchData() {
   document.getElementById('footer-status').textContent = 'Data ophalen…';
   try {
@@ -867,16 +883,17 @@ async function fetchData() {
     const raw = await res.json();
     const d = Array.isArray(raw) ? raw[0] : raw;
 
-    const orders = d.orders || [];
-    const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
-    const sellers = d.topSellers || [];
-    const rawAnalysis = d.analysis || d.claudeAnalysis || '';
-    const analysis = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
+    lastData = d;
+    const orders       = d.orders || [];
+    const weekRevenue  = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
+    const sellers      = d.topSellers || [];
+    const rawAnalysis  = d.analysis || d.claudeAnalysis || '';
+    const analysis     = rawAnalysis.replace(/^```[\w]*\n?/, '').replace(/\n?```\s*$/, '').trim();
     const recommendations = Array.isArray(d.recommendations) ? d.recommendations : [];
-    const risks = Array.isArray(d.risks) ? d.risks : [];
+    const risks        = Array.isArray(d.risks) ? d.risks : [];
 
-    // Render all sections
     renderKPIs(d);
+    if (currentRange !== 'today') applyRange(d, currentRange);
     renderRevenueChart(weekRevenue, orders);
     renderDonut(orders);
     renderTopProducts(sellers, orders);
@@ -889,17 +906,15 @@ async function fetchData() {
     renderDeepAnalysis(analysis);
     renderAlerts(orders);
 
-    // Update labels
     const now = new Date();
-    document.getElementById('topbar-date').textContent =
-      now.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    document.getElementById('last-updated-label').textContent =
-      'Bijgewerkt: ' + now.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('topbar-date').textContent = now.toLocaleDateString('nl-NL', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('last-updated-label').textContent = 'Bijgewerkt: ' + now.toLocaleTimeString('nl-NL', { hour:'2-digit', minute:'2-digit' });
     document.getElementById('footer-status').textContent = 'Live verbonden';
+    cdVal = 60;
 
   } catch (err) {
     console.warn('Fetch failed:', err);
-    document.getElementById('footer-status').textContent = 'Verbinding mislukt — retry over 60s';
+    document.getElementById('footer-status').textContent = 'Verbinding mislukt';
     document.getElementById('last-updated-label').textContent = 'Geen data';
     showErrorState();
   } finally {
@@ -907,81 +922,64 @@ async function fetchData() {
   }
 }
 
-// ─── Demo data (fallback when n8n not reachable) ───────────
+// ─── Demo data ─────────────────────────────────────────────
 function loadDemoData() {
-  // Realistische 7-daagse demo orders voor de grafiek
-  const demoWeekTotals = [18420, 21830, 15670, 26540, 19880, 22100, 23884];
-  const demoWeekOrders = demoWeekTotals.flatMap((t, dayIdx) => {
-    const daysAgo = 6 - dayIdx;
-    const base = new Date();
-    base.setDate(base.getDate() - daysAgo);
-    base.setHours(12, 0, 0, 0);
-    return Array.from({length: 8}, (_, j) => ({
-      date_created: new Date(base.getTime() - j * 3600000).toISOString(),
-      total: String(Math.round(t / 8 + (j * 31) % 150))
-    }));
-  });
-
   const demoOrders = Array.from({length: 147}, (_, i) => ({
-    id: i+1, status: ['completed','completed','completed','processing','on-hold'][i % 5],
-    total: String(80 + (i * 37) % 300), payment_method: ['iDEAL','Credit Card','PayPal','Bancontact'][i%4],
+    id: i+1, status: ['completed','completed','completed','processing','on-hold'][i%5],
+    total: String(80 + (i*37)%300), payment_method: ['iDEAL','Credit Card','PayPal','Bancontact'][i%4],
     billing: { country: ['NL','GB','DE','US','BE','FR'][i%6] },
-    date_created: new Date(Date.now() - (i * 3600000)).toISOString(),
+    date_created: new Date(Date.now() - i*3600000).toISOString(),
     attribution: { source: ['google','facebook','direct','email'][i%4], medium: ['cpc','social','(none)','email'][i%4] },
   }));
-  const demoSellers = [
-    { name: 'FTUK Elite 100K', quantity: 34, total: 8840 },
-    { name: 'FTUK Pro 50K', quantity: 51, total: 6375 },
-    { name: 'FTUK Starter 25K', quantity: 38, total: 3990 },
-    { name: 'FTUK Reset Fee', quantity: 18, total: 2160 },
-    { name: 'FTUK Upgrade 200K', quantity: 6, total: 2070 },
-  ];
   const demoData = {
-    orders: demoOrders,
-    topSellers: demoSellers,
-    salesSummary: [{ total_sales: '23884.62', total_orders: 147, total_discount: '1284.00', total_refunds: '640.00' }],
-    analysis: '',
-    recommendations: [
+    orders: demoOrders, topSellers: [
+      {name:'FTUK Elite 100K',quantity:34,total:8840}, {name:'FTUK Pro 50K',quantity:51,total:6375},
+      {name:'FTUK Starter 25K',quantity:38,total:3990}, {name:'FTUK Reset Fee',quantity:18,total:2160},
+      {name:'FTUK Upgrade 200K',quantity:6,total:2070},
+    ],
+    salesSummary: [{total_sales:'23884.62',total_orders:147,total_discount:'1284.00',total_refunds:'640.00'}],
+    analysis: '', recommendations: [
       'Schaal de Elite 100K-campagne op: 34 verkopen vandaag, het beste product.',
       'Controleer 24 orders in "processing" status die langer dan 24 uur openstaan.',
       'Kortingscode FTUK20 is 18x gebruikt — controleer of dit een lekke code is.',
-    ],
-    risks: [
+    ], risks: [
       '3 orders staan langer dan 48 uur op "processing" — controleer betalingsstatus.',
       'Stijgend kortingsgebruik: €1.284 vandaag vs €890 gisteren (+44%).',
     ],
   };
-
-  renderKPIs(demoData);
-  renderRevenueChart([], demoOrders);
-  renderDonut(demoOrders);
-  renderTopProducts(demoSellers, demoOrders);
-  renderGeo(demoOrders);
-  renderPayments(demoOrders);
-  renderAttribution(demoOrders);
-  renderRecommendations(demoData.recommendations);
-  renderOverviewRecs(demoData.recommendations);
-  renderRisks(demoData.risks);
-  renderDeepAnalysis(demoData.analysis);
-
+  lastData = demoData;
+  renderKPIs(demoData); renderRevenueChart([], demoOrders); renderDonut(demoOrders);
+  renderTopProducts(demoData.topSellers, demoOrders); renderGeo(demoOrders);
+  renderPayments(demoOrders); renderAttribution(demoOrders);
+  renderRecommendations(demoData.recommendations); renderOverviewRecs(demoData.recommendations);
+  renderRisks(demoData.risks); renderDeepAnalysis('');
   const now = new Date();
-  document.getElementById('topbar-date').textContent = now.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  document.getElementById('last-updated-label').textContent = '⚠️ Demo data — n8n niet bereikbaar';
+  document.getElementById('topbar-date').textContent = now.toLocaleDateString('nl-NL', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('last-updated-label').textContent = '⚠️ Demo data';
   document.getElementById('footer-status').textContent = '⚠️ Demo modus';
-  const demoBanner = document.getElementById('demo-banner');
-  if (demoBanner) demoBanner.style.display = 'flex';
+  const banner = document.getElementById('demo-banner'); if (banner) banner.style.display = 'flex';
 }
 
-// ─── Password gate ─────────────────────────────────────────
-const DASHBOARD_PASSWORD = 'ftuk2026';
+// ─── Countdown ────────────────────────────────────────────
+function tickCountdown() {
+  cdVal--;
+  if (cdVal <= 0) { cdVal = 60; fetchData(); return; }
+  const offset = ((60 - cdVal) / 60) * CIRC;
+  const prog = document.getElementById('cring-prog'); if (prog) prog.style.strokeDashoffset = offset;
+  const ctxt = document.getElementById('ctext'); if (ctxt) ctxt.textContent = `${cdVal}s`;
+}
+
+// ─── Password gate (SHA-256) ───────────────────────────────
+const PW_HASH = 'c063f99d1de7942fdf8c60298c2b994805155f53713a659527beb01e0712e907';
 const AUTH_KEY = 'ftuk_auth';
 const AUTH_EXPIRY_DAYS = 7;
 
-function checkPassword() {
+async function checkPassword() {
   const input = document.getElementById('pw-input').value;
-  if (input === DASHBOARD_PASSWORD) {
-    const expires = Date.now() + AUTH_EXPIRY_DAYS * 86400000;
-    localStorage.setItem(AUTH_KEY, expires);
+  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
+  const hash = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+  if (hash === PW_HASH) {
+    localStorage.setItem(AUTH_KEY, Date.now() + AUTH_EXPIRY_DAYS * 86400000);
     document.getElementById('password-gate').style.display = 'none';
     document.getElementById('loading-overlay').classList.remove('hidden');
     initDashboard();
@@ -992,13 +990,11 @@ function checkPassword() {
   }
 }
 
-document.getElementById('pw-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkPassword();
-});
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
 
 function initDashboard() {
   fetchData();
-  setInterval(fetchData, REFRESH_INTERVAL_MS);
+  setInterval(tickCountdown, 1000);
 }
 
 // ─── Init ──────────────────────────────────────────────────
@@ -1008,6 +1004,5 @@ if (savedAuth && Date.now() < parseInt(savedAuth)) {
   initDashboard();
 }
 </script>
-
 </body>
 </html>
