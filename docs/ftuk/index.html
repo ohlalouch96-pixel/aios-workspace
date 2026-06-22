@@ -607,17 +607,19 @@ function applyRange(d, range) {
 
   if (range === '7d') {
     const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
-    const totalRev7d = weekRevenue.reduce((s, day) => s + (+(day.subtotals?.net_revenue || 0)), 0);
-    const orders7d = d.orders || [];
-    const discounts7d = orders7d.reduce((s, o) => s + (+o.discount_total || 0), 0);
-    const refunds7d   = orders7d.reduce((s, o) => s + (+o.total_refunded || 0), 0);
-    const aov7d = orders7d.length > 0 ? Math.round(totalRev7d / orders7d.length) : 0;
 
-    countUp(document.getElementById('kpi-revenue'),   Math.round(totalRev7d), v => eur(v), 900);
-    countUp(document.getElementById('kpi-orders'),    orders7d.length,        v => fmt(v), 750);
-    countUp(document.getElementById('kpi-discounts'), Math.round(discounts7d), v => eur(v), 820);
-    countUp(document.getElementById('kpi-refunds'),   Math.round(refunds7d),  v => eur(v), 700);
-    countUp(document.getElementById('kpi-aov'),       aov7d,                  v => eur(v), 650);
+    // Gebruik Analytics intervals voor nauwkeurige 7-daagse totalen (geen 100-orders limiet)
+    const totalRev7d      = weekRevenue.reduce((s, day) => s + (+(day.subtotals?.net_revenue  || 0)), 0);
+    const total7dOrders   = weekRevenue.reduce((s, day) => s + (+(day.subtotals?.orders_count || 0)), 0);
+    const total7dRefunds  = weekRevenue.reduce((s, day) => s + (+(day.subtotals?.refunds      || 0)), 0);
+    const total7dDiscounts= weekRevenue.reduce((s, day) => s + (+(day.subtotals?.coupons      || 0)), 0);
+    const aov7d = total7dOrders > 0 ? Math.round(totalRev7d / total7dOrders) : 0;
+
+    countUp(document.getElementById('kpi-revenue'),   Math.round(totalRev7d),       v => eur(v), 900);
+    countUp(document.getElementById('kpi-orders'),    total7dOrders,                v => fmt(v), 750);
+    countUp(document.getElementById('kpi-discounts'), Math.round(total7dDiscounts), v => eur(v), 820);
+    countUp(document.getElementById('kpi-refunds'),   Math.round(total7dRefunds),   v => eur(v), 700);
+    countUp(document.getElementById('kpi-aov'),       aov7d,                        v => eur(v), 650);
 
     const deltaEl = document.getElementById('kpi-revenue-delta');
     const prevWeek = Array.isArray(d.prevWeekRevenue) ? d.prevWeekRevenue : [];
@@ -630,10 +632,10 @@ function applyRange(d, range) {
       deltaEl.className = ''; deltaEl.textContent = '7 dagen totaal';
     }
 
-    document.getElementById('kpi-orders-sub').textContent = '7 dagen totaal';
+    document.getElementById('kpi-orders-sub').textContent    = '7 dagen totaal';
     document.getElementById('kpi-discounts-sub').textContent = '7 dagen';
-    document.getElementById('kpi-refunds-sub').textContent  = '7 dagen';
-    document.getElementById('kpi-aov-sub').textContent = `${fmt(orders7d.length)} orders`;
+    document.getElementById('kpi-refunds-sub').textContent   = '7 dagen';
+    document.getElementById('kpi-aov-sub').textContent       = `${fmt(total7dOrders)} orders`;
     return;
   }
 }
@@ -703,12 +705,10 @@ function clickBar(idx) {
   const day  = lastChartDays[idx];
   const rev  = lastChartVals[idx];
   // Gebruik Analytics interval data voor orders_count en avg_order_value (gaat verder terug dan 100 orders)
-  const weekDay  = (lastData?.weekRevenue || []).find(w => (w.date_start || '').startsWith(day.key));
+  const weekDay   = (lastData?.weekRevenue || []).find(w => (w.date_start || '').startsWith(day.key));
   const dayOrders = (lastData?.orders || []).filter(o => o.date_created?.startsWith(day.key));
-  const ordCount  = weekDay?.subtotals?.orders_count || dayOrders.length || 0;
-  const aov = weekDay?.subtotals?.avg_order_value
-    ? Math.round(weekDay.subtotals.avg_order_value)
-    : (ordCount > 0 ? Math.round(rev / ordCount) : 0);
+  const ordCount  = +(weekDay?.subtotals?.orders_count) || dayOrders.length || 0;
+  const aov = ordCount > 0 ? Math.round(rev / ordCount) : 0;
 
   document.getElementById('sel-day').textContent = day.isToday ? `Vandaag — ${day.key}` : `${day.label} — ${day.key}`;
   document.getElementById('sel-rev').textContent = rev > 0 ? eur(Math.round(rev)) : '—';
