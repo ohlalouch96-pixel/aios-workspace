@@ -196,9 +196,40 @@
     #loading-overlay p { font-size: 13px; color: var(--muted); }
     #loading-overlay.hidden { display: none; }
 
+    /* ─── Date range selector ─── */
+    .range-bar { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+    .range-btn { padding: 7px 16px; border-radius: 7px; font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.15s; border: none; background: transparent; }
+    .range-btn:hover:not(.active) { color: var(--text); }
+    .range-btn.active { background: var(--navy); color: #fff; }
+
+    /* ─── Mobile sidebar ─── */
+    .hamburger-btn {
+      display: none; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 11px; color: var(--text); cursor: pointer;
+      font-size: 18px; line-height: 1; align-items: center;
+    }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 99;
+    }
+    .sidebar-overlay.visible { display: block; }
+
     /* ─── Responsive tweaks ─── */
     @media (max-width: 1300px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 700px)  { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; z-index: 200; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0 !important; padding: 16px; }
+      .hamburger-btn { display: flex; }
+      .topbar { flex-wrap: wrap; gap: 10px; }
+      .topbar-right { flex-wrap: wrap; gap: 8px; }
+      .grid-2 { grid-template-columns: 1fr !important; }
+      .grid-3 { grid-template-columns: 1fr !important; }
+      .grid-2-1 { grid-template-columns: 1fr !important; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -223,6 +254,8 @@
   <div class="spinner"></div>
   <p>Data ophalen van WooCommerce…</p>
 </div>
+
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <div class="layout">
 
@@ -271,9 +304,12 @@
 
     <!-- Topbar -->
     <div class="topbar">
-      <div class="topbar-title">
-        <h1>FTUK Business Intelligence</h1>
-        <p id="topbar-date">Laden…</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title">
+          <h1>FTUK Business Intelligence</h1>
+          <p id="topbar-date">Laden…</p>
+        </div>
       </div>
       <div class="topbar-right">
         <div class="last-updated" id="last-updated-label">—</div>
@@ -290,6 +326,13 @@
     <!-- TAB 1: Overzicht -->
     <!-- ═══════════════════════════════════════════════ -->
     <div class="tab-content active" id="tab-overzicht">
+
+      <!-- Date range selector -->
+      <div class="range-bar">
+        <button class="range-btn active" onclick="setRange('today', this)">Vandaag</button>
+        <button class="range-btn" onclick="setRange('7d', this)">7 Dagen</button>
+        <button class="range-btn" onclick="setRange('30d', this)">30 Dagen</button>
+      </div>
 
       <!-- KPI Strip -->
       <div class="kpi-row">
@@ -515,12 +558,82 @@
 const DATA_URL = 'https://n8n.insightance.ai/webhook/ftuk-data';
 const REFRESH_INTERVAL_MS = 60000; // 60 seconden
 
+// ─── Global state ─────────────────────────────────────────
+let lastData = null;
+let currentRange = 'today';
+
 // ─── Tab switching ─────────────────────────────────────────
 function switchTab(id, navEl) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   if (navEl) navEl.classList.add('active');
+  if (window.innerWidth <= 768) closeSidebar();
+}
+
+// ─── Mobile sidebar ────────────────────────────────────────
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('visible');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('visible');
+}
+
+// ─── Date range selector ───────────────────────────────────
+function setRange(range, btn) {
+  currentRange = range;
+  document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (lastData) applyRange(lastData, range);
+}
+
+function applyRange(d, range) {
+  if (range === 'today') {
+    renderKPIs(d);
+    return;
+  }
+
+  if (range === '7d') {
+    const weekRevenue = Array.isArray(d.weekRevenue) ? d.weekRevenue : [];
+    const totalRev7d = weekRevenue.reduce((sum, day) => {
+      return sum + (+(day.subtotals?.net_revenue || day.subtotals?.gross_revenue || 0));
+    }, 0);
+    const orders7d = d.orders || [];
+    const totalOrders7d = orders7d.length;
+    const discounts7d = orders7d.reduce((s, o) => s + (+o.discount_total || 0), 0);
+    const refunds7d   = orders7d.reduce((s, o) => s + (+o.total_refunded || 0), 0);
+    const aov7d = totalOrders7d > 0 ? Math.round(totalRev7d / totalOrders7d) : 0;
+
+    document.getElementById('kpi-revenue').textContent = eur(Math.round(totalRev7d));
+    const deltaEl = document.getElementById('kpi-revenue-delta');
+    deltaEl.className = ''; deltaEl.textContent = '7 dagen totaal';
+    document.getElementById('kpi-orders').textContent = fmt(totalOrders7d);
+    document.getElementById('kpi-orders-sub').innerHTML = '7 dagen totaal';
+    document.getElementById('kpi-discounts').textContent = eur(Math.round(discounts7d));
+    document.getElementById('kpi-discounts-sub').textContent = '7 dagen';
+    document.getElementById('kpi-refunds').textContent = refunds7d > 0 ? eur(Math.round(refunds7d)) : '—';
+    document.getElementById('kpi-refunds-sub').textContent = '7 dagen';
+    document.getElementById('kpi-aov').textContent = eur(aov7d);
+    document.getElementById('kpi-aov-sub').textContent = `${fmt(totalOrders7d)} orders`;
+    return;
+  }
+
+  if (range === '30d') {
+    ['kpi-revenue', 'kpi-orders', 'kpi-discounts', 'kpi-refunds', 'kpi-aov'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '—';
+    });
+    const deltaEl = document.getElementById('kpi-revenue-delta');
+    deltaEl.className = ''; deltaEl.textContent = 'Vereist n8n uitbreiding';
+    ['kpi-orders-sub','kpi-discounts-sub','kpi-refunds-sub','kpi-aov-sub'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = 'Binnenkort beschikbaar';
+    });
+  }
 }
 
 // ─── Formatting helpers ────────────────────────────────────
@@ -536,9 +649,21 @@ function pct(a, total) {
   if (!total) return 0;
   return Math.round((a / total) * 100);
 }
-function countryFlag(cc) {
-  if (!cc || cc.length !== 2) return '🌍';
-  return String.fromCodePoint(...[...cc.toUpperCase()].map(c => 0x1F1E6 - 65 + c.charCodeAt(0)));
+function countryName(cc) {
+  const names = {
+    GB:'United Kingdom', US:'United States', NL:'Nederland', DE:'Duitsland',
+    FR:'Frankrijk', BE:'België', ES:'Spanje', IT:'Italië', AU:'Australië',
+    CA:'Canada', AE:'V.A.E.', SA:'Saudi-Arabië', KW:'Koeweit', QA:'Qatar',
+    NG:'Nigeria', ZA:'Zuid-Afrika', SG:'Singapore', IN:'India',
+    PK:'Pakistan', MY:'Maleisië', LS:'Lesotho', IE:'Ierland',
+    PT:'Portugal', CH:'Zwitserland', SE:'Zweden', DK:'Denemarken',
+    NO:'Noorwegen', PL:'Polen', TR:'Turkije', BR:'Brazilië', MX:'Mexico',
+    JP:'Japan', KR:'Zuid-Korea', HK:'Hong Kong', EG:'Egypte',
+    MA:'Marokko', KE:'Kenia', GH:'Ghana', IL:'Israël', JO:'Jordanië',
+    LB:'Libanon', PH:'Filipijnen', ID:'Indonesië', TH:'Thailand',
+    BD:'Bangladesh', LK:'Sri Lanka', TN:'Tunesië', DZ:'Algerije',
+  };
+  return names[cc] || cc;
 }
 
 // ─── Render functions ──────────────────────────────────────
@@ -719,8 +844,15 @@ function renderGeo(orders) {
   if (!sorted.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px 0;">Geen data</div>'; return; }
   container.innerHTML = sorted.map(([cc, rev]) => {
     const p = pct(rev, totalRev);
+    const name = countryName(cc);
     return `<div class="geo-row">
-      <div class="geo-header"><span>${countryFlag(cc)} ${cc}</span><span>${eur(rev)} (${p}%)</span></div>
+      <div class="geo-header">
+        <span style="display:inline-flex;align-items:center;gap:7px;">
+          <span style="background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:9px;letter-spacing:0.5px;color:var(--muted);font-weight:600;">${cc}</span>
+          ${name}
+        </span>
+        <span>${eur(rev)} (${p}%)</span>
+      </div>
       <div class="geo-track"><div class="geo-fill" style="width:${p}%;"></div></div>
     </div>`;
   }).join('');
@@ -876,8 +1008,12 @@ async function fetchData() {
     const recommendations = Array.isArray(d.recommendations) ? d.recommendations : [];
     const risks = Array.isArray(d.risks) ? d.risks : [];
 
+    // Store for range selector
+    lastData = d;
+
     // Render all sections
     renderKPIs(d);
+    if (currentRange !== 'today') applyRange(d, currentRange);
     renderRevenueChart(weekRevenue, orders);
     renderDonut(orders);
     renderTopProducts(sellers, orders);
@@ -953,6 +1089,7 @@ function loadDemoData() {
     ],
   };
 
+  lastData = demoData;
   renderKPIs(demoData);
   renderRevenueChart([], demoOrders);
   renderDonut(demoOrders);
@@ -974,13 +1111,15 @@ function loadDemoData() {
 }
 
 // ─── Password gate ─────────────────────────────────────────
-const DASHBOARD_PASSWORD = 'ftuk2026';
+const PW_HASH = 'c063f99d1de7942fdf8c60298c2b994805155f53713a659527beb01e0712e907';
 const AUTH_KEY = 'ftuk_auth';
 const AUTH_EXPIRY_DAYS = 7;
 
-function checkPassword() {
+async function checkPassword() {
   const input = document.getElementById('pw-input').value;
-  if (input === DASHBOARD_PASSWORD) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
+  const hash = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  if (hash === PW_HASH) {
     const expires = Date.now() + AUTH_EXPIRY_DAYS * 86400000;
     localStorage.setItem(AUTH_KEY, expires);
     document.getElementById('password-gate').style.display = 'none';
