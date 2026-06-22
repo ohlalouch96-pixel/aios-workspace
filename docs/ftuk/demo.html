@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTUK Dashboard — Demo Verbeteringen</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #2C3470; --navy-light: #3d4a9e; --bg: #0b0d18;
+      --surface: #12152a; --surface2: #181c30; --border: #222640;
+      --text: #e8eaf0; --muted: #6070a0; --muted2: #3a4060;
+      --green: #00c853; --orange: #ff6d00; --red: #e53935;
+      --purple: #7c3aed; --yellow: #ffc107;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* Demo banner */
+    .demo-banner {
+      background: linear-gradient(90deg, #1a1d38, #2C3470, #1a1d38);
+      padding: 10px 24px; display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: #7b8df8; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 999;
+    }
+    .demo-banner strong { color: #fff; margin-right: 8px; }
+    .demo-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .demo-tag {
+      background: rgba(91,109,232,0.15); border: 1px solid rgba(91,109,232,0.3);
+      border-radius: 4px; padding: 2px 8px; font-size: 9px; color: #7b8df8;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    /* Layout */
+    .layout { display: flex; min-height: calc(100vh - 41px); }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; position: fixed; top: 41px; left: 0; bottom: 0; z-index: 100;
+    }
+    .sidebar-header { padding: 22px 18px 18px; border-bottom: 1px solid var(--border); }
+    .sidebar-logo { height: 30px; object-fit: contain; }
+    .sidebar-tagline { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+    .nav { padding: 12px 0; flex: 1; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 18px; font-size: 13px; color: var(--muted); cursor: pointer; border-left: 2px solid transparent; transition: all 0.15s; }
+    .nav-item:hover { color: var(--text); background: rgba(44,52,112,0.2); }
+    .nav-item.active { color: #fff; background: rgba(44,52,112,0.4); border-left-color: #5b6de8; }
+    .sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* Main */
+    .main { margin-left: 230px; padding: 26px 28px; }
+
+    /* Topbar */
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .topbar-title h1 { font-size: 18px; font-weight: 600; color: #fff; }
+    .topbar-title p { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+
+    /* Countdown */
+    .countdown-badge {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 12px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 8px;
+    }
+    .cring { width: 18px; height: 18px; flex-shrink: 0; }
+    .cring svg { transform: rotate(-90deg); display: block; }
+    .btn { padding: 7px 14px; border-radius: 8px; font-size: 12px; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+    .btn-primary { background: var(--navy); color: #fff; }
+    .btn-primary:hover { background: var(--navy-light); }
+
+    /* Range bar */
+    .range-bar { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+    .range-btn { padding: 7px 16px; border-radius: 7px; font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.15s; border: none; background: transparent; }
+    .range-btn:hover:not(.active) { color: var(--text); }
+    .range-btn.active { background: var(--navy); color: #fff; }
+
+    /* KPI */
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; overflow: hidden; }
+    .kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: var(--accent, var(--navy)); }
+    .kpi.g{--accent:var(--green)} .kpi.b{--accent:var(--navy-light)} .kpi.o{--accent:var(--orange)} .kpi.r{--accent:var(--red)} .kpi.p{--accent:var(--purple)}
+    .kpi-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .kpi-value { font-size: 21px; font-weight: 700; color: #fff; min-height: 28px; }
+    .kpi-value.cg{color:var(--green)} .kpi-value.co{color:var(--orange)} .kpi-value.cr{color:var(--red)} .kpi-value.cp{color:#a78bfa}
+    .kpi-sub { font-size: 10px; color: var(--muted); margin-top: 5px; min-height: 16px; display: flex; align-items: center; gap: 4px; }
+    .du{color:var(--green)} .dd{color:var(--red)} .dn{color:var(--yellow)}
+
+    /* Skeleton */
+    .skel { background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%); background-size: 200% 100%; animation: shimmer 1.3s infinite; border-radius: 4px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skel-val { height: 26px; width: 75%; margin-bottom: 8px; }
+    .skel-sub { height: 11px; width: 55%; }
+
+    /* Cards */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+    .card-head { margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .card-title { font-size: 13px; font-weight: 600; color: #fff; }
+    .card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .new-tag { display: inline-block; background: rgba(0,200,83,0.12); border: 1px solid rgba(0,200,83,0.25); border-radius: 4px; padding: 1px 6px; font-size: 9px; color: #00c853; letter-spacing: 0.5px; margin-left: 6px; vertical-align: middle; }
+    .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+    /* Bar chart */
+    .chart-outer { position: relative; }
+    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 120px; position: relative; z-index: 1; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; position: relative; }
+    .bar-body { width: 100%; border-radius: 3px 3px 0 0; transition: opacity 0.15s, box-shadow 0.15s; }
+    .bar-body:hover { opacity: 0.8; }
+    .bar-today { background: linear-gradient(to top, #00b248, #00e676) !important; box-shadow: 0 0 14px rgba(0,200,83,0.35); }
+    .bar-col.selected .bar-body { outline: 2px solid #5b6de8; outline-offset: 2px; }
+    .bar-lbl { font-size: 9px; color: var(--muted); }
+    .bar-val { font-size: 9px; color: var(--muted); }
+    .bar-col.selected .bar-lbl { color: #5b6de8; font-weight: 600; }
+
+    /* Tooltip */
+    .bar-tip {
+      position: absolute; background: #1a1d38; border: 1px solid #3a4070;
+      border-radius: 6px; padding: 6px 10px; font-size: 11px; color: #fff;
+      pointer-events: none; white-space: nowrap; z-index: 20;
+      left: 50%; transform: translateX(-50%);
+      opacity: 0; transition: opacity 0.15s; bottom: 100%; margin-bottom: 6px;
+    }
+    .bar-col:hover .bar-tip { opacity: 1; }
+
+    /* SVG comparison overlay */
+    .comp-svg { position: absolute; top: 0; left: 0; right: 0; height: 120px; pointer-events: none; z-index: 2; width: 100%; }
+
+    /* Chart legend */
+    .chart-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 10px; color: var(--muted); }
+    .leg-item { display: flex; align-items: center; gap: 5px; }
+    .leg-bar { width: 10px; height: 4px; border-radius: 2px; }
+    .leg-dash { width: 14px; border-top: 2px dashed #5a6080; }
+
+    /* Selected day card */
+    .sel-card {
+      display: none; margin-top: 12px; background: rgba(44,52,112,0.15);
+      border: 1px solid rgba(91,109,232,0.3); border-radius: 8px;
+      padding: 12px 16px; gap: 0; flex-wrap: wrap;
+      animation: fadein 0.2s ease;
+    }
+    @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+    .sel-card.on { display: flex; align-items: center; gap: 20px; }
+    .sel-title { font-size: 12px; color: #7b8df8; font-weight: 600; flex: 1; }
+    .sel-stat { text-align: center; }
+    .sel-stat strong { display: block; font-size: 16px; font-weight: 700; color: #fff; }
+    .sel-stat span { font-size: 10px; color: var(--muted); }
+
+    /* Donut */
+    .donut-wrap { display: flex; align-items: center; gap: 18px; }
+    .dleg { display: flex; flex-direction: column; gap: 9px; }
+    .dleg-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+    .dleg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dleg-row strong { color: var(--text); margin-left: auto; }
+
+    /* Table */
+    .dtable { width: 100%; border-collapse: collapse; }
+    .dtable th { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 0 0 10px; text-align: left; }
+    .dtable td { font-size: 12px; color: #b0b8d8; padding: 8px 0; border-top: 1px solid var(--surface2); }
+    .dtable tr:first-child td { border-top: none; }
+    .td-m { color: #fff; font-weight: 500; }
+    .td-g { color: var(--green); }
+    .rnk { display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;background:var(--surface2);font-size:10px;color:var(--muted); }
+
+    /* Geo */
+    .geo-row { margin-bottom: 11px; }
+    .geo-head { display: flex; justify-content: space-between; font-size: 12px; color: #b0b8d8; margin-bottom: 5px; }
+    .geo-track { height: 5px; background: var(--surface2); border-radius: 3px; }
+    .geo-fill { height: 5px; border-radius: 3px; background: var(--navy-light); transition: width 0.8s ease; width: 0%; }
+
+    /* Rec */
+    .rec { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--surface2); }
+    .rec:last-child { border-bottom: none; padding-bottom: 0; }
+    .rec-ico { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .rec-body strong { display: block; font-size: 12px; color: #fff; margin-bottom: 2px; }
+    .rec-body p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    @media (max-width: 1300px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 900px) { .grid-2-1, .grid-3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Demo banner -->
+<div class="demo-banner">
+  <div><strong>DEMO PREVIEW</strong> Klik op balken, wissel datumrange, kijk hoe de KPI's laden</div>
+  <div class="demo-tags">
+    <span class="demo-tag">Count-up animatie</span>
+    <span class="demo-tag">Skeleton loading</span>
+    <span class="demo-tag">Vorige week lijn</span>
+    <span class="demo-tag">Klikbare balken</span>
+    <span class="demo-tag">Vroege ochtend fix</span>
+    <span class="demo-tag">7d vergelijking</span>
+    <span class="demo-tag">Auto-refresh timer</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img class="sidebar-logo"
+        src="https://ftuk.com/wp-content/uploads/2021/02/Blue-Transparent-Logo.png"
+        onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:700;color:#fff;\'>FTUK</span>'">
+      <div class="sidebar-tagline">Business Intelligence</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active"><span>📊</span>&nbsp; Overzicht</div>
+      <div class="nav-item"><span>📣</span>&nbsp; Advertenties &amp; ROAS</div>
+      <div class="nav-item"><span>💡</span>&nbsp; AI Aanbevelingen</div>
+      <div class="nav-item"><span>🔍</span>&nbsp; Diepgaande Analyse</div>
+    </nav>
+    <div class="sidebar-footer">
+      <span class="live-dot"></span> Live verbonden
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <div class="topbar-title">
+        <h1>FTUK Business Intelligence</h1>
+        <p id="topbar-date">Laden…</p>
+      </div>
+      <div class="topbar-right">
+        <!-- AUTO-REFRESH COUNTDOWN -->
+        <div class="countdown-badge">
+          <div class="cring">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <circle cx="9" cy="9" r="7" fill="none" stroke="#222640" stroke-width="2.5"/>
+              <circle id="cring-prog" cx="9" cy="9" r="7" fill="none" stroke="#00c853" stroke-width="2.5"
+                stroke-dasharray="44" stroke-dashoffset="0" stroke-linecap="round" style="transition:stroke-dashoffset 1s linear;"/>
+            </svg>
+          </div>
+          <span id="ctext">vernieuwen in 60s</span>
+        </div>
+        <button class="btn btn-primary" onclick="doRefresh()">↻ Vernieuwen</button>
+      </div>
+    </div>
+
+    <!-- Range selector -->
+    <div class="range-bar">
+      <button class="range-btn active" onclick="setRange('today',this)">Vandaag</button>
+      <button class="range-btn" onclick="setRange('7d',this)">7 Dagen</button>
+      <button class="range-btn" onclick="setRange('30d',this)">30 Dagen</button>
+    </div>
+
+    <!-- KPI strip -->
+    <div class="kpi-row" id="kpi-row"></div>
+
+    <!-- Charts row -->
+    <div class="grid-2-1">
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Omzet afgelopen 7 dagen <span class="new-tag">nieuw</span></div>
+            <div class="card-sub" id="chart-sub">Werkelijke omzet · klik op een balk voor details · stippellijn = vorige week</div>
+          </div>
+        </div>
+        <div class="chart-outer">
+          <div class="bar-chart-wrap" id="bar-chart"></div>
+          <svg class="comp-svg" id="comp-svg"></svg>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-bar" style="background:#2C3470;"></div> Deze week</div>
+          <div class="leg-item"><div class="leg-dash"></div> Vorige week</div>
+        </div>
+        <div class="sel-card" id="sel-card">
+          <span class="sel-title" id="sel-day">—</span>
+          <div class="sel-stat"><strong id="sel-rev">—</strong><span>Omzet</span></div>
+          <div class="sel-stat"><strong id="sel-ord">—</strong><span>Orders</span></div>
+          <div class="sel-stat"><strong id="sel-aov">—</strong><span>Gem. order</span></div>
+          <div class="sel-stat"><strong id="sel-vs">—</strong><span>vs vorige week</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Order status</div><div class="card-sub" id="donut-sub">100 orders vandaag</div></div></div>
+        <div class="donut-wrap">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#1e2035" stroke-width="16"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#00c853" stroke-width="16"
+              stroke-dasharray="138 251" stroke-dashoffset="63" style="transition:stroke-dasharray 0.8s ease;"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#7c3aed" stroke-width="16"
+              stroke-dasharray="25 251" stroke-dashoffset="-75" style="transition:stroke-dasharray 0.8s ease;"/>
+            <text x="50" y="47" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">100</text>
+            <text x="50" y="59" text-anchor="middle" fill="#6070a0" font-size="8">orders</text>
+          </svg>
+          <div class="dleg">
+            <div class="dleg-row"><div class="dleg-dot" style="background:#00c853;"></div> Afgerond <strong>55</strong></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:#ff6d00;"></div> Processing <strong>0</strong></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:#7c3aed;"></div> On-hold <strong>4</strong></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:#3a4060;"></div> Overig <strong>41</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="grid-3">
+
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Top Producten</div><div class="card-sub">Omzet vandaag</div></div></div>
+        <table class="dtable">
+          <thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Omzet</th></tr></thead>
+          <tbody>
+            <tr><td><span class="rnk">1</span></td><td class="td-m">FTUK Forex</td><td>86</td><td class="td-g">€5.850</td></tr>
+            <tr><td><span class="rnk">2</span></td><td class="td-m">Flex Funded</td><td>18</td><td class="td-g">€2.160</td></tr>
+            <tr><td><span class="rnk">3</span></td><td class="td-m">FTUK Futures</td><td>2</td><td class="td-g">€1.086</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Geografische verdeling</div><div class="card-sub">Omzet per land</div></div></div>
+        <div id="geo-body"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">AI Aanbevelingen</div><div class="card-sub">Top 3 van vandaag</div></div></div>
+        <div class="rec"><div class="rec-ico">🚀</div><div class="rec-body"><strong>Schaal FTUK Forex op</strong><p>86 verkopen vandaag — verhoog budget op VK-campagnes dit weekend.</p></div></div>
+        <div class="rec"><div class="rec-ico">⚠️</div><div class="rec-body"><strong>Kortingsgebruik hoog</strong><p>€3.528 kortingen vandaag. Controleer actieve codes op lekken.</p></div></div>
+        <div class="rec"><div class="rec-ico">💡</div><div class="rec-body"><strong>Weekend dip patroon</strong><p>Zaterdag consistent 65% lager. Overweeg weekend-specifieke campagne.</p></div></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+// ─── Demo data ─────────────────────────────────────────────
+const DAYS_LBL  = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'];
+const DAYS_FULL = ['Maandag 16 jun','Dinsdag 17 jun','Woensdag 18 jun','Donderdag 19 jun','Vrijdag 20 jun','Zaterdag 21 jun','Zondag 22 jun'];
+const THIS_WEEK = [8972, 12366, 13038, 11887, 9007, 3547, 8482];
+const PREV_WEEK = [8800, 10200, 11500, 13200, 8400, 5100, 9200];
+const ORDERS_PD = [108,  143,   149,   132,   118,  54,   117 ];
+const TODAY_IDX = 0; // maandag = index 0
+
+const MAX_H = 110;
+let selectedBar = null;
+let currentRange = 'today';
+
+// ─── Helpers ──────────────────────────────────────────────
+const eur = n => '€' + Number(Math.round(n)).toLocaleString('nl-NL');
+const pct = (a, b) => b ? Math.round(((a-b)/b)*100) : 0;
+const deltaHtml = (p, label) => {
+  if (p === null) return `<span class="dn">⏱ ${label}</span>`;
+  return p >= 0
+    ? `<span class="du">▲ ${Math.abs(p)}% ${label}</span>`
+    : `<span class="dd">▼ ${Math.abs(p)}% ${label}</span>`;
+};
+
+// ─── Count-up ─────────────────────────────────────────────
+function countUp(el, end, fmt, dur = 900) {
+  const start = performance.now();
+  (function frame(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(Math.round(end * ease));
+    if (t < 1) requestAnimationFrame(frame);
+  })(start);
+}
+
+// ─── Skeletons ────────────────────────────────────────────
+function showSkel() {
+  const defs = [
+    ['Netto Omzet','g'],['Totaal Orders','b'],['Kortingen','o'],
+    ['Refunds','r'],['Gem. Orderwaarde','b'],['Google Ads ROAS','p']
+  ];
+  document.getElementById('kpi-row').innerHTML = defs.map(([l, c]) => `
+    <div class="kpi ${c}">
+      <div class="kpi-label">${l}</div>
+      <div class="skel skel-val"></div>
+      <div class="skel skel-sub"></div>
+    </div>`).join('');
+}
+
+// ─── KPIs ─────────────────────────────────────────────────
+function renderKPIs(range) {
+  const hour = new Date().getHours();
+  const earlyMorning = hour < 10;
+
+  const cfg = {
+    today: {
+      rev: 8972, ord: 108, dis: 3528, ref: 672, aov: 122,
+      revDelta: earlyMorning ? deltaHtml(null,'Dag loopt nog') : deltaHtml(8, 'vs gisteren'),
+      ordDelta: earlyMorning ? deltaHtml(null,'Dag loopt nog') : deltaHtml(5, 'vs gisteren'),
+      disSub: 'Korting op orders', refSub: '0 terugbetalingen', aovSub: '108 orders totaal',
+    },
+    '7d': {
+      rev: 67299, ord: 821, dis: 12800, ref: 2100, aov: 159,
+      revDelta: deltaHtml(pct(67299,56400), 'vs vorige 7d'),
+      ordDelta: deltaHtml(pct(821,735), 'vs vorige 7d'),
+      disSub: '7 dagen totaal', refSub: '7 dagen totaal', aovSub: '821 orders (7d)',
+    },
+    '30d': {
+      rev: 248000, ord: 3100, dis: 48000, ref: 8200, aov: 151,
+      revDelta: deltaHtml(18, 'vs vorige maand'),
+      ordDelta: deltaHtml(14, 'vs vorige maand'),
+      disSub: '30 dagen totaal', refSub: '30 dagen totaal', aovSub: '3.100 orders (30d)',
+    },
+  }[range];
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi g"><div class="kpi-label">Netto Omzet</div><div class="kpi-value cg" id="kv-rev">—</div><div class="kpi-sub">${cfg.revDelta}</div></div>
+    <div class="kpi b"><div class="kpi-label">Totaal Orders</div><div class="kpi-value" id="kv-ord">—</div><div class="kpi-sub">${cfg.ordDelta}</div></div>
+    <div class="kpi o"><div class="kpi-label">Kortingen</div><div class="kpi-value co" id="kv-dis">—</div><div class="kpi-sub">${cfg.disSub}</div></div>
+    <div class="kpi r"><div class="kpi-label">Refunds</div><div class="kpi-value cr" id="kv-ref">—</div><div class="kpi-sub">${cfg.refSub}</div></div>
+    <div class="kpi b"><div class="kpi-label">Gem. Orderwaarde</div><div class="kpi-value" id="kv-aov">—</div><div class="kpi-sub">${cfg.aovSub}</div></div>
+    <div class="kpi p"><div class="kpi-label">Google Ads ROAS</div><div class="kpi-value cp">—</div><div class="kpi-sub" style="font-size:9px;color:var(--muted2);">⏳ Koppeling in aanbouw</div></div>`;
+
+  setTimeout(() => {
+    countUp(document.getElementById('kv-rev'), cfg.rev, v => eur(v), 900);
+    countUp(document.getElementById('kv-ord'), cfg.ord, v => v.toLocaleString('nl-NL'), 750);
+    countUp(document.getElementById('kv-dis'), cfg.dis, v => eur(v), 820);
+    countUp(document.getElementById('kv-ref'), cfg.ref, v => eur(v), 700);
+    countUp(document.getElementById('kv-aov'), cfg.aov, v => eur(v), 650);
+  }, 30);
+}
+
+// ─── Bar chart ────────────────────────────────────────────
+function renderChart() {
+  const wrap = document.getElementById('bar-chart');
+  const max  = Math.max(...THIS_WEEK, ...PREV_WEEK, 1);
+
+  wrap.innerHTML = THIS_WEEK.map((v, i) => {
+    const h    = Math.max(4, Math.round((v / max) * MAX_H));
+    const isToday = i === TODAY_IDX;
+    const sel  = selectedBar === i;
+    const p    = pct(v, PREV_WEEK[i]);
+    const pStr = (p >= 0 ? '+' : '') + p + '%';
+    const pCol = p >= 0 ? '#00c853' : '#ff4444';
+    return `
+      <div class="bar-col${sel ? ' selected' : ''}" onclick="clickBar(${i})">
+        <div class="bar-val">${v > 500 ? eur(v) : ''}</div>
+        <div class="bar-body${isToday ? ' bar-today' : ''}" style="height:${h}px;${isToday ? '' : 'background:#2C3470;'}"></div>
+        <div class="bar-lbl" style="${isToday ? 'color:#00c853;font-weight:600;' : ''}">${isToday ? 'vandaag' : DAYS_LBL[i]}</div>
+        <div class="bar-tip">${eur(v)}<br><span style="color:${pCol}">${pStr} vs vw</span></div>
+      </div>`;
+  }).join('');
+
+  requestAnimationFrame(() => drawCompLine(max));
+}
+
+function drawCompLine(max) {
+  const svg  = document.getElementById('comp-svg');
+  const wrap = document.getElementById('bar-chart');
+  const cols = wrap.querySelectorAll('.bar-col');
+  if (!cols.length) return;
+
+  const svgRect = svg.getBoundingClientRect();
+  const pts = Array.from(cols).map((col, i) => {
+    const r = col.getBoundingClientRect();
+    const x = r.left - svgRect.left + r.width / 2;
+    const h = Math.max(4, Math.round((PREV_WEEK[i] / max) * MAX_H));
+    const y = 120 - h;
+    return { x, y };
+  });
+
+  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${p.x},${p.y}`).join(' ');
+  const circles = pts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" fill="#5a6080" opacity="0.8"/>`).join('');
+
+  svg.innerHTML = `
+    <path d="${d}" fill="none" stroke="#5a6080" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.55"/>
+    ${circles}`;
+}
+
+function clickBar(idx) {
+  selectedBar = selectedBar === idx ? null : idx;
+  renderChart();
+
+  const card = document.getElementById('sel-card');
+  if (selectedBar === null) { card.classList.remove('on'); return; }
+
+  const v    = THIS_WEEK[idx];
+  const ord  = ORDERS_PD[idx];
+  const p    = pct(v, PREV_WEEK[idx]);
+  const pCol = p >= 0 ? '#00c853' : '#ff4444';
+  document.getElementById('sel-day').textContent = DAYS_FULL[idx];
+  document.getElementById('sel-rev').textContent = eur(v);
+  document.getElementById('sel-ord').textContent = ord;
+  document.getElementById('sel-aov').textContent = eur(Math.round(v / ord));
+  document.getElementById('sel-vs').innerHTML = `<span style="color:${pCol}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}%</span>`;
+  card.classList.add('on');
+}
+
+// ─── Geo ──────────────────────────────────────────────────
+function renderGeo() {
+  const rows = [
+    ['GB','United Kingdom',3257,44],['KW','Koeweit',990,13],
+    ['LS','Lesotho',899,12],['US','United States',887,12],
+    ['DE','Duitsland',590,8],['NL','Nederland',349,5],
+  ];
+  document.getElementById('geo-body').innerHTML = rows.map(([cc, name, rev, p]) => `
+    <div class="geo-row">
+      <div class="geo-head">
+        <span style="display:inline-flex;align-items:center;gap:7px;">
+          <span style="background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--muted);font-weight:600;">${cc}</span>
+          ${name}
+        </span>
+        <span>${eur(rev)} (${p}%)</span>
+      </div>
+      <div class="geo-track"><div class="geo-fill" data-w="${p}"></div></div>
+    </div>`).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.geo-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 100);
+}
+
+// ─── Range ────────────────────────────────────────────────
+function setRange(range, btn) {
+  currentRange = range;
+  document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showSkel();
+  setTimeout(() => renderKPIs(range), 700);
+}
+
+// ─── Countdown ────────────────────────────────────────────
+let cdVal = 60;
+const CIRC = 44;
+function tickCountdown() {
+  cdVal--;
+  if (cdVal <= 0) { cdVal = 60; doRefresh(); return; }
+  const offset = ((60 - cdVal) / 60) * CIRC;
+  document.getElementById('cring-prog').style.strokeDashoffset = offset;
+  document.getElementById('ctext').textContent = `vernieuwen in ${cdVal}s`;
+}
+
+// ─── Refresh ──────────────────────────────────────────────
+function doRefresh() {
+  showSkel();
+  selectedBar = null;
+  document.getElementById('sel-card').classList.remove('on');
+  cdVal = 60;
+  document.getElementById('cring-prog').style.strokeDashoffset = 0;
+  setTimeout(() => {
+    renderKPIs(currentRange);
+    renderChart();
+    renderGeo();
+  }, 900);
+}
+
+// ─── Init ─────────────────────────────────────────────────
+const now = new Date();
+document.getElementById('topbar-date').textContent =
+  now.toLocaleDateString('nl-NL', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+showSkel();
+setTimeout(() => {
+  renderKPIs('today');
+  renderChart();
+  renderGeo();
+}, 1000);
+
+setInterval(tickCountdown, 1000);
+window.addEventListener('resize', () => {
+  const max = Math.max(...THIS_WEEK, ...PREV_WEEK, 1);
+  setTimeout(() => drawCompLine(max), 50);
+});
+</script>
+</body>
+</html>
