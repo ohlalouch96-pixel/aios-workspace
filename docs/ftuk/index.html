@@ -113,7 +113,7 @@
 
     /* ─── Bar chart ─── */
     .chart-outer { position: relative; }
-    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 120px; position: relative; }
+    .bar-chart-wrap { display: flex; align-items: flex-end; gap: 7px; height: 130px; position: relative; }
     .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; position: relative; }
     .bar-col-bar { width: 100%; border-radius: 3px 3px 0 0; transition: opacity 0.15s; }
     .bar-col-bar:hover { opacity: 0.8; }
@@ -122,6 +122,7 @@
     .bar-col.selected .bar-col-lbl { color: #5b6de8 !important; font-weight: 600; }
     .bar-col-lbl { font-size: 9px; color: var(--muted); }
     .bar-col-val { font-size: 9px; color: var(--muted); }
+    .bar-col-pct { font-size: 8px; color: var(--muted2); margin-top: 2px; }
     .bar-tip {
       position: absolute; background: #1a1d38; border: 1px solid #3a4070;
       border-radius: 6px; padding: 6px 10px; font-size: 11px; color: #fff;
@@ -331,7 +332,6 @@
       <div class="range-bar">
         <button class="range-btn active" onclick="setRange('today', this)">Vandaag</button>
         <button class="range-btn" onclick="setRange('7d', this)">7 Dagen</button>
-        <button class="range-btn" onclick="setRange('30d', this)">30 Dagen</button>
       </div>
 
       <!-- KPI Strip -->
@@ -620,23 +620,21 @@ function applyRange(d, range) {
     countUp(document.getElementById('kpi-aov'),       aov7d,                  v => eur(v), 650);
 
     const deltaEl = document.getElementById('kpi-revenue-delta');
-    deltaEl.className = ''; deltaEl.textContent = '7 dagen totaal';
+    const prevWeek = Array.isArray(d.prevWeekRevenue) ? d.prevWeekRevenue : [];
+    const prevTotal = prevWeek.reduce((s, day) => s + (+(day.subtotals?.net_revenue || 0)), 0);
+    if (prevTotal > 0) {
+      const p = Math.round(((totalRev7d - prevTotal) / prevTotal) * 100);
+      deltaEl.className = p >= 0 ? 'delta-up' : 'delta-down';
+      deltaEl.textContent = `${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs vorige 7d`;
+    } else {
+      deltaEl.className = ''; deltaEl.textContent = '7 dagen totaal';
+    }
+
     document.getElementById('kpi-orders-sub').textContent = '7 dagen totaal';
     document.getElementById('kpi-discounts-sub').textContent = '7 dagen';
     document.getElementById('kpi-refunds-sub').textContent  = '7 dagen';
     document.getElementById('kpi-aov-sub').textContent = `${fmt(orders7d.length)} orders`;
     return;
-  }
-
-  if (range === '30d') {
-    ['kpi-revenue','kpi-orders','kpi-discounts','kpi-refunds','kpi-aov'].forEach(id => {
-      const el = document.getElementById(id); if (el) el.textContent = '—';
-    });
-    const deltaEl = document.getElementById('kpi-revenue-delta');
-    deltaEl.className = ''; deltaEl.textContent = 'Vereist n8n uitbreiding';
-    ['kpi-orders-sub','kpi-discounts-sub','kpi-refunds-sub','kpi-aov-sub'].forEach(id => {
-      const el = document.getElementById(id); if (el) el.textContent = 'Binnenkort beschikbaar';
-    });
   }
 }
 
@@ -676,16 +674,20 @@ function renderRevenueChart(weekRevenue, orders) {
   lastChartVals = vals;
   lastChartDays = days;
 
-  const max = Math.max(...vals, 1);
+  const max   = Math.max(...vals, 1);
+  const total = vals.reduce((s, v) => s + v, 0);
   chart.innerHTML = days.map(({ label, isToday }, i) => {
     const v   = vals[i];
-    const h   = Math.max(4, Math.round((v / max) * 110));
+    const h   = Math.max(4, Math.round((v / max) * 118));
+    const pct = total > 0 && v > 0 ? Math.round((v / total) * 100) : 0;
     const sel = selectedBarIdx === i ? ' selected' : '';
+    const barStyle = isToday ? '' : 'background:linear-gradient(to top,#2C3470,#3d4a9e);';
     return `<div class="bar-col${sel}" onclick="clickBar(${i})" style="position:relative;">
-      <div class="bar-col-val">${v > 0 ? eur(Math.round(v)) : ''}</div>
-      <div class="bar-col-bar${isToday ? ' bar-today' : ''}" style="height:${h}px;${isToday ? '' : 'background:#2C3470;'}"></div>
+      <div class="bar-col-val" style="font-weight:${isToday?'700':'400'};color:${isToday?'#00c853':'var(--muted)'};">${v > 0 ? eur(Math.round(v)) : ''}</div>
+      <div class="bar-col-bar${isToday ? ' bar-today' : ''}" style="height:${h}px;${barStyle}"></div>
       <div class="bar-col-lbl" style="${isToday ? 'color:#00c853;font-weight:600;' : ''}">${isToday ? 'vandaag' : label}</div>
-      <div class="bar-tip">${v > 0 ? eur(Math.round(v)) : 'Geen data'}</div>
+      <div class="bar-col-pct" style="${isToday?'color:#00c85388;':''}${pct > 0 ? '' : 'visibility:hidden;'}">${pct}%</div>
+      <div class="bar-tip">${v > 0 ? `${eur(Math.round(v))} &nbsp;·&nbsp; ${pct}% van week` : 'Geen data'}</div>
     </div>`;
   }).join('');
 }
@@ -754,14 +756,17 @@ function renderGeo(orders) {
   const container = document.getElementById('geo-body');
   if (!sorted.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px 0;">Geen data</div>'; return; }
   container.innerHTML = sorted.map(([cc, rev]) => {
-    const p = pctOf(rev, totalRev);
+    const p   = pctOf(rev, totalRev);
+    const ccL = cc.toLowerCase();
     return `<div class="geo-row">
       <div class="geo-header">
-        <span style="display:inline-flex;align-items:center;gap:7px;">
-          <span style="background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--muted);font-weight:600;">${cc}</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;">
+          <img src="https://flagcdn.com/24x18/${ccL}.png" width="24" height="18"
+            style="border-radius:2px;object-fit:cover;flex-shrink:0;vertical-align:middle;box-shadow:0 0 0 1px rgba(255,255,255,0.08);"
+            onerror="this.outerHTML='<span style=&quot;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--muted);font-weight:600;&quot;>${cc}</span>'">
           ${countryName(cc)}
         </span>
-        <span>${eur(rev)} (${p}%)</span>
+        <span>${eur(rev)} <span style="color:var(--muted2);">(${p}%)</span></span>
       </div>
       <div class="geo-track"><div class="geo-fill" data-w="${p}"></div></div>
     </div>`;
