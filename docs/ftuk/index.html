@@ -566,7 +566,7 @@ function renderKPIs(d) {
 
   function makeDelta(todayVal, yestVal, isEarly) {
     if (isEarly && yestVal > 0) return '<span style="color:var(--yellow);">⏱ Dag loopt nog</span>';
-    if (!yestVal || yestVal === 0) return '<span style="color:var(--muted);">vs gisteren</span>';
+    if (!yestVal || yestVal === 0) return todayVal > 0 ? '<span class="delta-down">▲ nieuw vs gisteren</span>' : '<span style="color:var(--muted);">vs gisteren</span>';
     const p = Math.round(((todayVal - yestVal) / yestVal) * 100);
     return `<span class="${p >= 0 ? 'delta-up' : 'delta-down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}% vs gisteren</span>`;
   }
@@ -718,7 +718,7 @@ function clickBar(idx) {
     wowEl.textContent = '—';
   }
 
-  const dateLabel = new Date(day.key).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'short' });
+  const dateLabel = new Date(day.key).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
   document.getElementById('sel-day').textContent = day.isToday ? `Vandaag — ${day.key}` : dateLabel;
   document.getElementById('sel-rev').textContent = rev > 0 ? eur(Math.round(rev)) : '—';
   document.getElementById('sel-ord').textContent = ordCount || '—';
@@ -826,15 +826,29 @@ function renderOverviewRecs(items) {
   const container = document.getElementById('overview-recs-body');
   if (!container) return;
   if (!items?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen — voer het daily report uit</div>'; return; }
-  const icons = ['🚀','📈','💡'];
-  container.innerHTML = items.slice(0,3).map((item,i) => `<div class="rec-item"><div class="rec-icon">${icons[i]}</div><div class="rec-body"><p style="font-size:12px;">${item}</p></div></div>`).join('');
+  const colors = ['#00c853','#5b6de8','#ffc107'];
+  const labels = ['#1 PRIORITEIT','#2 HOOG','#3 MEDIUM'];
+  container.innerHTML = items.slice(0,3).map((item,i) => `
+    <div style="border-left:3px solid ${colors[i]};padding:10px 12px;margin-bottom:10px;background:rgba(255,255,255,0.02);border-radius:0 6px 6px 0;">
+      <div style="font-size:9px;letter-spacing:1.5px;color:${colors[i]};font-weight:700;margin-bottom:5px;">${labels[i]}</div>
+      <p style="font-size:12px;color:#c0c8e8;line-height:1.7;margin:0;">${item}</p>
+    </div>`).join('');
 }
 
 function renderRecommendations(items) {
   const container = document.getElementById('recommendations-body');
   if (!items?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:16px 0;text-align:center;">Geen aanbevelingen beschikbaar — voer het daily report uit</div>'; return; }
-  const icons = ['🚀','📈','💡','⚡','🎯','✅','🔧'];
-  container.innerHTML = items.map((item,i) => `<div class="rec-item"><div class="rec-icon">${icons[i%icons.length]}</div><div class="rec-body"><p>${item}</p></div></div>`).join('');
+  const colors = ['#00c853','#5b6de8','#ffc107','#ff6d00','#e53935'];
+  const labels = ['#1 PRIORITEIT','#2 HOOG','#3 MEDIUM','#4 OVERWEEG','#5 NOTITIE'];
+  container.innerHTML = items.map((item, i) => {
+    const color = colors[Math.min(i, colors.length - 1)];
+    const label = labels[Math.min(i, labels.length - 1)];
+    return `
+      <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid ${color};border-radius:8px;padding:16px 18px;margin-bottom:12px;">
+        <div style="font-size:9px;letter-spacing:1.5px;color:${color};font-weight:700;margin-bottom:8px;">${label}</div>
+        <p style="font-size:13px;color:#c0c8e8;line-height:1.8;margin:0;">${item}</p>
+      </div>`;
+  }).join('');
 }
 
 function renderRisks(items) {
