@@ -156,6 +156,21 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 
 .doc-footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #CC0000; display: flex; justify-content: space-around; font-size: 11px; color: #666; }
 
+/* WERKOMSCHRIJVING TAGS */
+.omschr-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.omschr-tag { background: #FFF0F0; border: 1px solid #FFCCCC; border-radius: 3px; font-size: 11px; padding: 4px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: var(--dark); }
+.omschr-tag .x { color: #CC0000; font-weight: 700; font-size: 13px; line-height: 1; }
+.omschr-hint { font-size: 11px; color: #999; margin-top: 6px; }
+
+/* DOC WERKOMSCHRIJVING */
+.doc-omschr-item { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; border-bottom: 1px solid #F0F0F0; font-size: 11px; color: #333; }
+.doc-omschr-item:last-child { border-bottom: none; }
+.doc-omschr-bullet { color: #CC0000; font-weight: 700; flex-shrink: 0; }
+
+/* A4 WITRUIMTE */
+.preview-panel { background: #C8C8C8 !important; padding: 32px !important; }
+#offerte-doc { box-shadow: 0 4px 24px rgba(0,0,0,0.2); margin: 0 auto; }
+
 /* TOAST */
 .toast { position: fixed; bottom: 24px; right: 24px; background: #1A1A1A; color: white; padding: 12px 20px; border-radius: 6px; font-size: 14px; font-weight: 700; z-index: 999; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateY(0); }
@@ -219,7 +234,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             <div class="panel-lbl">Werkzaamheden</div>
             <div class="field">
                 <label>Type (laadt standaardprijzen)</label>
-                <select id="f-type" onchange="laadStandaard(); update()">
+                <select id="f-type" onchange="laadStandaard(); laadOmschrijvingen(); update()">
                     <option value="">Kies type</option>
                     <option value="loodgieter">Loodgieterswerkzaamheden</option>
                     <option value="cv-onderhoud">CV-ketel onderhoud</option>
@@ -233,16 +248,28 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             </div>
         </div>
 
+        <div class="panel-sec" id="sec-omschr" style="display:none;">
+            <div class="panel-lbl">Werkomschrijving</div>
+            <div class="field">
+                <label>Selecteer omschrijving</label>
+                <select id="omschr-select" onchange="voegOmschrToe()">
+                    <option value="">— kies omschrijving —</option>
+                </select>
+            </div>
+            <div class="omschr-tags" id="omschr-tags"></div>
+            <p class="omschr-hint">Klik op × om te verwijderen.</p>
+        </div>
+
         <div class="panel-sec">
-            <div class="panel-lbl">Specificatie</div>
+            <div class="panel-lbl">Leverancies</div>
             <table class="ptable">
                 <thead>
                     <tr>
-                        <th style="width:50%">Omschrijving</th>
+                        <th style="width:44%">Omschrijving</th>
                         <th style="width:12%">Aantal</th>
                         <th style="width:20%">Prijs excl.</th>
-                        <th style="width:10%">BTW</th>
-                        <th></th>
+                        <th style="width:16%">BTW %</th>
+                        <th style="width:8%"></th>
                     </tr>
                 </thead>
                 <tbody id="prijsregels"></tbody>
@@ -307,8 +334,12 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
                 </div>
             </div>
 
-            <!-- SPECIFICATIE -->
-            <div class="doc-sec-lbl">Specificatie</div>
+            <!-- WERKOMSCHRIJVING -->
+            <div class="doc-sec-lbl" id="doc-omschr-lbl" style="display:none;">Werkomschrijving</div>
+            <div id="doc-omschr-list" style="margin-bottom:10px;"></div>
+
+            <!-- LEVERANCIES -->
+            <div class="doc-sec-lbl">Leverancies</div>
             <table class="doc-spec-table">
                 <thead>
                     <tr>
@@ -390,6 +421,129 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 <div class="toast" id="toast"></div>
 
 <script>
+
+const omschrijvingen = {
+    "loodgieter": [
+        "Inspectie leidingwerk en aansluitingen",
+        "Vervanging lekkende kraan of afsluiter",
+        "Reparatie lekkende leiding",
+        "Aansluiten nieuw apparaat (wasmachine, vaatwasser)",
+        "Vervangen watertoevoerslang",
+        "Overige loodgieterswerkzaamheden"
+    ],
+    "cv-onderhoud": [
+        "Inspectie en reiniging brander en verbrandingskamer",
+        "Ontluchten verwarmingsinstallatie",
+        "Bijvullen en op druk brengen systeem",
+        "Controle en testen veiligheidsventiel",
+        "Vervangen expansievat of filter",
+        "Doorspuiten radiatoren",
+        "Overige onderhoudswerkzaamheden"
+    ],
+    "cv-vervanging": [
+        "Aftappen bestaande CV-installatie",
+        "Demonteren, verwijderen en afvoeren bestaande CV-ketel inclusief rookgasafvoer",
+        "Leveren, monteren en aansluiten nieuwe CV-ketel",
+        "Aansluiten op bestaande koud-, warm- en CV-leidingen",
+        "Vullen, ontluchten en proefsttoken van de installatie",
+        "Controle op correcte werking en instructie klant"
+    ],
+    "ontstopping": [
+        "Ontstoppen wastafelafvoer",
+        "Ontstoppen toiletafvoer",
+        "Ontstoppen keukenafvoer",
+        "Ontstoppen doucheafvoer",
+        "Mechanisch ontstoppen hoofdrioolaansluiting",
+        "Camera-inspectie afvoerleidingen",
+        "Naspoelen en controle afvoer"
+    ],
+    "lekkage": [
+        "Opsporen en lokaliseren lekkage",
+        "Reparatie lekkende leiding",
+        "Reparatie lekkende aansluiting of fitting",
+        "Vervangen beschadigde leiding",
+        "Droogleggen ruimte en nazorg",
+        "Rapportage lekkageoorzaak"
+    ],
+    "badkamer": [
+        "Demonteren en afvoeren bestaand sanitair",
+        "Installeren nieuw toilet",
+        "Installeren wastafel met mengkraan",
+        "Installeren douche inclusief thermostaatkraan",
+        "Installeren ligbad",
+        "Aansluiten op bestaand leidingwerk",
+        "Testen en oplevering installatie"
+    ],
+    "dak": [
+        "Inspectie dak en zinkwerk",
+        "Reparatie of vervanging lekkende dakpannen",
+        "Vervanging zinkwerk goot of hemelwaterafvoer",
+        "Afdichten dakdoorvoeren en aansluitingen",
+        "Reinigen en doorspuiten goten",
+        "Overige dakwerkzaamheden"
+    ]
+};
+
+let geselecteerdeOmschr = [];
+
+function laadOmschrijvingen() {
+    const type = document.getElementById('f-type').value;
+    const sec = document.getElementById('sec-omschr');
+    const select = document.getElementById('omschr-select');
+    geselecteerdeOmschr = [];
+    renderTags();
+    renderOmschrDoc();
+    if (!type || !omschrijvingen[type]) { sec.style.display = 'none'; return; }
+    sec.style.display = 'block';
+    select.innerHTML = '<option value="">— kies omschrijving —</option>';
+    omschrijvingen[type].forEach((o, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = o;
+        select.appendChild(opt);
+    });
+}
+
+function voegOmschrToe() {
+    const type = document.getElementById('f-type').value;
+    const select = document.getElementById('omschr-select');
+    const idx = select.value;
+    if (idx === '') return;
+    const tekst = omschrijvingen[type][parseInt(idx)];
+    if (!geselecteerdeOmschr.includes(tekst)) {
+        geselecteerdeOmschr.push(tekst);
+        renderTags();
+        renderOmschrDoc();
+    }
+    select.value = '';
+}
+
+function renderTags() {
+    const container = document.getElementById('omschr-tags');
+    container.innerHTML = '';
+    geselecteerdeOmschr.forEach((t, i) => {
+        const tag = document.createElement('div');
+        tag.className = 'omschr-tag';
+        tag.innerHTML = `${t} <span class="x" onclick="verwijderTag(${i})">×</span>`;
+        container.appendChild(tag);
+    });
+}
+
+function verwijderTag(i) {
+    geselecteerdeOmschr.splice(i, 1);
+    renderTags();
+    renderOmschrDoc();
+}
+
+function renderOmschrDoc() {
+    const lbl = document.getElementById('doc-omschr-lbl');
+    const list = document.getElementById('doc-omschr-list');
+    if (!geselecteerdeOmschr.length) { lbl.style.display = 'none'; list.innerHTML = ''; return; }
+    lbl.style.display = 'block';
+    list.innerHTML = geselecteerdeOmschr.map(t =>
+        `<div class="doc-omschr-item"><span class="doc-omschr-bullet">▸</span> ${t}</div>`
+    ).join('');
+}
 
 const standaard = {
     "loodgieter":    [["Arbeid loodgieterswerk", 1, 75, 21], ["Materialen", 1, 50, 21]],
