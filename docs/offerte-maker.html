@@ -202,7 +202,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             <div class="panel-lbl">Klantgegevens</div>
             <div class="field">
                 <label>Volledige naam</label>
-                <input type="text" id="f-naam" placeholder="Marijke van der Horst" oninput="update()">
+                <input type="text" id="f-naam" placeholder="Naam klant" oninput="update()">
             </div>
             <div class="field-row">
                 <div class="field">
@@ -257,6 +257,13 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
                 </select>
             </div>
             <div class="omschr-tags" id="omschr-tags"></div>
+            <div class="field" style="margin-top:10px;">
+                <label>Of typ zelf een omschrijving</label>
+                <div style="display:flex; gap:6px;">
+                    <input type="text" id="omschr-vrij" placeholder="Bijv. Vervangen radiatorafsluiter..." style="flex:1;">
+                    <button class="add-btn" style="width:auto; margin-top:0; padding:6px 12px;" onclick="voegVrijToe()">+ Toevoegen</button>
+                </div>
+            </div>
             <p class="omschr-hint">Klik op × om te verwijderen.</p>
         </div>
 
@@ -535,6 +542,18 @@ function verwijderTag(i) {
     renderOmschrDoc();
 }
 
+function voegVrijToe() {
+    const input = document.getElementById('omschr-vrij');
+    const tekst = input.value.trim();
+    if (!tekst) return;
+    if (!geselecteerdeOmschr.includes(tekst)) {
+        geselecteerdeOmschr.push(tekst);
+        renderTags();
+        renderOmschrDoc();
+    }
+    input.value = '';
+}
+
 function renderOmschrDoc() {
     const lbl = document.getElementById('doc-omschr-lbl');
     const list = document.getElementById('doc-omschr-list');
@@ -596,9 +615,9 @@ function voegToe(omschr, aantal, prijs, btw) {
     tr.dataset.id = id;
     tr.innerHTML = `
         <td><input type="text" value="${omschr}" placeholder="Omschrijving" oninput="update()"></td>
-        <td><input type="number" value="${aantal}" min="0" step="0.5" style="width:46px" oninput="update()"></td>
+        <td><input type="number" value="${aantal}" min="0" step="0.5" style="width:36px" oninput="update()"></td>
         <td><input type="number" value="${prijs}" min="0" placeholder="0" oninput="update()"></td>
-        <td><input type="number" value="${btw}" min="0" max="21" style="width:36px" oninput="update()"></td>
+        <td><input type="number" value="${btw}" min="0" max="21" style="width:46px" oninput="update()"></td>
         <td><button class="del-btn" onclick="this.closest('tr').remove();update()">×</button></td>
     `;
     document.getElementById('prijsregels').appendChild(tr);
