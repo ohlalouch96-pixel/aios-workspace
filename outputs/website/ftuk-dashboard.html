@@ -682,11 +682,14 @@ function renderKPIs(d) {
   document.getElementById('kpi-aov-sub').textContent = `${fmt(s.total_orders)} orders totaal`;
 
   // Delta berekening: vandaag vs gisteren — UK tijdzone (Europe/London)
+  // WooCommerce store staat op UTC: date_created heeft geen Z-suffix maar is wel UTC.
+  // Append 'Z' zodat JS het correct als UTC parseert, dan converteren naar UK-tijd.
   const orders = d.orders || [];
   const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
   const yestStr  = new Date(Date.now() - 86400000).toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
-  const todayOrders = orders.filter(o => o.date_created?.startsWith(todayStr));
-  const yestOrders  = orders.filter(o => o.date_created?.startsWith(yestStr));
+  const toUKDate = s => new Date(s + 'Z').toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+  const todayOrders = orders.filter(o => o.date_created && toUKDate(o.date_created) === todayStr);
+  const yestOrders  = orders.filter(o => o.date_created && toUKDate(o.date_created) === yestStr);
   const todayRev = todayOrders.reduce((a, o) => a + (+o.total || 0), 0);
   const yestRev  = yestOrders.reduce((a, o)  => a + (+o.total || 0), 0);
 
@@ -737,9 +740,11 @@ function renderRevenueChart(weekRevenue, todayOrders) {
     if (subtitleEl) subtitleEl.textContent = 'Werkelijke omzet per dag';
   } else {
     // Fallback: aggregeer uit orders (max 100 — kan onvolledig zijn)
+    // date_created is UTC (geen Z), converteren naar UK-datum voor correcte dagindeling
+    const toUKDateChart = s => new Date(s + 'Z').toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
     const dayMap = {};
     (todayOrders || []).forEach(o => {
-      const day = (o.date_created || '').slice(0, 10);
+      const day = o.date_created ? toUKDateChart(o.date_created) : null;
       if (day) dayMap[day] = (dayMap[day] || 0) + (+o.total || 0);
     });
     vals = days.map(d => dayMap[d.key] || 0);
