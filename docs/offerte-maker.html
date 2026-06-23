@@ -744,7 +744,7 @@ function pdfOpties(bestandsnaam) {
         margin: [8, 8, 8, 8],
         filename: bestandsnaam,
         image: { type: 'jpeg', quality: 0.99 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff' },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff', scrollX: 0, scrollY: -window.scrollY },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['css', 'legacy'] }
     };
