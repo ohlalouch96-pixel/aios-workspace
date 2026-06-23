@@ -744,7 +744,7 @@ function pdfOpties(bestandsnaam) {
         margin: [8, 8, 8, 8],
         filename: bestandsnaam,
         image: { type: 'jpeg', quality: 0.99 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff', scrollX: 0, scrollY: -window.scrollY },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['css', 'legacy'] }
     };
@@ -753,13 +753,26 @@ function pdfOpties(bestandsnaam) {
 function prepPDF() {
     const wrapper = document.querySelector('.doc-wrapper');
     if (wrapper) { wrapper.style.background = 'white'; wrapper.style.padding = '0'; }
-    document.getElementById('offerte-doc').style.boxShadow = 'none';
+    const doc = document.getElementById('offerte-doc');
+    doc.style.boxShadow = 'none';
+    const w = doc.offsetWidth;
+    doc.style.position = 'fixed';
+    doc.style.top = '0';
+    doc.style.left = '0';
+    doc.style.width = w + 'px';
+    doc.style.zIndex = '-1';
 }
 
 function restorePDF() {
     const wrapper = document.querySelector('.doc-wrapper');
     if (wrapper) { wrapper.style.background = ''; wrapper.style.padding = ''; }
-    document.getElementById('offerte-doc').style.boxShadow = '';
+    const doc = document.getElementById('offerte-doc');
+    doc.style.boxShadow = '';
+    doc.style.position = '';
+    doc.style.top = '';
+    doc.style.left = '';
+    doc.style.width = '';
+    doc.style.zIndex = '';
 }
 
 function downloadPDF() {
