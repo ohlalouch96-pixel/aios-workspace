@@ -168,8 +168,10 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
 .doc-omschr-bullet { color: #CC0000; font-weight: 700; flex-shrink: 0; }
 
 /* A4 WITRUIMTE */
-.preview-panel { background: #C8C8C8 !important; padding: 32px !important; }
-#offerte-doc { box-shadow: 0 4px 24px rgba(0,0,0,0.2); margin: 0 auto; }
+.preview-panel { background: #BEBEBE !important; overflow: visible !important; }
+.preview-lbl { position: relative; z-index: 1; }
+.doc-wrapper { padding: 24px; background: #BEBEBE; }
+#offerte-doc { box-shadow: 0 6px 28px rgba(0,0,0,0.22); }
 
 /* TOAST */
 .toast { position: fixed; bottom: 24px; right: 24px; background: #1A1A1A; color: white; padding: 12px 20px; border-radius: 6px; font-size: 14px; font-weight: 700; z-index: 999; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; }
@@ -309,6 +311,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
     <div class="preview-panel">
         <div class="preview-lbl">Voorbeeld offerte</div>
 
+        <div class="doc-wrapper">
         <div id="offerte-doc">
 
             <!-- HEADER -->
@@ -422,6 +425,7 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             </div>
 
         </div>
+        </div><!-- /doc-wrapper -->
     </div>
 </div>
 
@@ -497,18 +501,24 @@ function laadOmschrijvingen() {
     const type = document.getElementById('f-type').value;
     const sec = document.getElementById('sec-omschr');
     const select = document.getElementById('omschr-select');
-    geselecteerdeOmschr = [];
-    renderTags();
-    renderOmschrDoc();
-    if (!type || !omschrijvingen[type]) { sec.style.display = 'none'; return; }
+    if (!type || !omschrijvingen[type]) {
+        geselecteerdeOmschr = [];
+        renderTags();
+        renderOmschrDoc();
+        sec.style.display = 'none';
+        return;
+    }
+    geselecteerdeOmschr = [...omschrijvingen[type]];
     sec.style.display = 'block';
-    select.innerHTML = '<option value="">— kies omschrijving —</option>';
+    select.innerHTML = '<option value="">— extra omschrijving toevoegen —</option>';
     omschrijvingen[type].forEach((o, i) => {
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = o;
         select.appendChild(opt);
     });
+    renderTags();
+    renderOmschrDoc();
 }
 
 function voegOmschrToe() {
@@ -565,21 +575,17 @@ function renderOmschrDoc() {
 }
 
 const standaard = {
-    "loodgieter":    [["Arbeid loodgieterswerk", 1, 75, 21], ["Materialen", 1, 50, 21]],
-    "cv-onderhoud":  [["CV-ketel revisie en reiniging", 1, 125, 21], ["Onderdelen en materialen", 1, 35, 21]],
+    "loodgieter":    [["Materialen en hulpstukken", 1, 0, 21]],
+    "cv-onderhoud":  [["Onderhoudsonderdelen en materialen", 1, 0, 21]],
     "cv-vervanging": [
-        ["Het aftappen van de cv-installatie", 1, 50, 21],
-        ["Demonteren, verwijderen en afvoeren bestaande c.v.-ketel incl. rookgasafvoer", 1, 75, 21],
-        ["Leveren, monteren en installeren nieuwe c.v.-ketel", 1, 1200, 21],
-        ["Aansluiten op bestaande koud-, warmwater- en cv-leidingen", 1, 75, 21],
-        ["Vullen, ontluchten en proefsttoken van de installatie", 1, 50, 21],
-        ["Controle op correcte werking na oplevering", 1, 0, 21],
+        ["CV-ketel (nader te specificeren)", 1, 0, 21],
+        ["Aansluitmateriaal en hulpstukken", 1, 0, 21],
     ],
-    "ontstopping":   [["Mechanisch ontstoppen afvoer", 1, 95, 21], ["Naspoelen en controle", 1, 30, 21]],
-    "lekkage":       [["Opsporen lekkage", 1, 75, 21], ["Reparatie lekkage", 1, 95, 21], ["Materialen", 1, 25, 21]],
-    "badkamer":      [["Arbeid renovatie badkamer/toilet", 1, 75, 21], ["Materialen en sanitair", 1, 0, 21]],
-    "dak":           [["Inspectie dak en zinkwerk", 1, 75, 21], ["Reparatie zinkwerk", 1, 0, 21]],
-    "anders":        [["Werkzaamheden", 1, 0, 21]],
+    "ontstopping":   [["Materialen", 1, 0, 21]],
+    "lekkage":       [["Reparatiemateriaal", 1, 0, 21]],
+    "badkamer":      [["Sanitair en materialen", 1, 0, 21]],
+    "dak":           [["Dakbedekkingsmateriaal en hulpstukken", 1, 0, 21]],
+    "anders":        [["Materialen", 1, 0, 21]],
 };
 
 window.onload = function() {
