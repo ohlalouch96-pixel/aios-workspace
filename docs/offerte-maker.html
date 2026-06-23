@@ -348,8 +348,10 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
             <div id="doc-betreft" style="display:none; font-size:12px; font-weight:700; color:#1A1A1A; margin-bottom:14px;">Betreft: <span id="doc-betreft-tekst" style="font-weight:400;"></span></div>
 
             <!-- WERKOMSCHRIJVING -->
-            <div class="doc-sec-lbl" id="doc-omschr-lbl" style="display:none;">Werkomschrijving</div>
-            <div id="doc-omschr-list" style="margin-bottom:10px;"></div>
+            <div id="doc-omschr-wrap" style="page-break-inside: avoid;">
+                <div class="doc-sec-lbl" id="doc-omschr-lbl" style="display:none;">Werkomschrijving</div>
+                <div id="doc-omschr-list" style="margin-bottom:10px;"></div>
+            </div>
 
             <!-- LEVERANCIES -->
             <div class="doc-sec-lbl">Leverancies</div>
@@ -739,12 +741,12 @@ function update() {
 
 function pdfOpties(bestandsnaam) {
     return {
-        margin: [12, 10, 12, 10],
+        margin: [8, 8, 8, 8],
         filename: bestandsnaam,
         image: { type: 'jpeg', quality: 0.99 },
         html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff' },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak: { mode: ['css', 'legacy'] }
     };
 }
 
