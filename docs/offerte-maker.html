@@ -753,26 +753,13 @@ function pdfOpties(bestandsnaam) {
 function prepPDF() {
     const wrapper = document.querySelector('.doc-wrapper');
     if (wrapper) { wrapper.style.background = 'white'; wrapper.style.padding = '0'; }
-    const doc = document.getElementById('offerte-doc');
-    doc.style.boxShadow = 'none';
-    const w = doc.offsetWidth;
-    doc.style.position = 'fixed';
-    doc.style.top = '0';
-    doc.style.left = '0';
-    doc.style.width = w + 'px';
-    doc.style.zIndex = '-1';
+    document.getElementById('offerte-doc').style.boxShadow = 'none';
 }
 
 function restorePDF() {
     const wrapper = document.querySelector('.doc-wrapper');
     if (wrapper) { wrapper.style.background = ''; wrapper.style.padding = ''; }
-    const doc = document.getElementById('offerte-doc');
-    doc.style.boxShadow = '';
-    doc.style.position = '';
-    doc.style.top = '';
-    doc.style.left = '';
-    doc.style.width = '';
-    doc.style.zIndex = '';
+    document.getElementById('offerte-doc').style.boxShadow = '';
 }
 
 function downloadPDF() {
