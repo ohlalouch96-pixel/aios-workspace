@@ -344,6 +344,9 @@ body { font-family: var(--font); background: #EFEFEF; color: var(--dark); }
                 </div>
             </div>
 
+            <!-- BETREFT -->
+            <div id="doc-betreft" style="display:none; font-size:12px; font-weight:700; color:#1A1A1A; margin-bottom:14px;">Betreft: <span id="doc-betreft-tekst" style="font-weight:400;"></span></div>
+
             <!-- WERKOMSCHRIJVING -->
             <div class="doc-sec-lbl" id="doc-omschr-lbl" style="display:none;">Werkomschrijving</div>
             <div id="doc-omschr-list" style="margin-bottom:10px;"></div>
@@ -508,9 +511,9 @@ function laadOmschrijvingen() {
         sec.style.display = 'none';
         return;
     }
-    geselecteerdeOmschr = [...omschrijvingen[type]];
+    geselecteerdeOmschr = [];
     sec.style.display = 'block';
-    select.innerHTML = '<option value="">— extra omschrijving toevoegen —</option>';
+    select.innerHTML = '<option value="">— kies omschrijving —</option>';
     omschrijvingen[type].forEach((o, i) => {
         const opt = document.createElement('option');
         opt.value = i;
@@ -574,18 +577,33 @@ function renderOmschrDoc() {
     ).join('');
 }
 
+const typeLabels = {
+    "loodgieter": "Loodgieterswerkzaamheden",
+    "cv-onderhoud": "CV-ketel onderhoud",
+    "cv-vervanging": "CV-ketel vervanging",
+    "ontstopping": "Ontstopping",
+    "lekkage": "Lekkagereparatie",
+    "badkamer": "Badkamer/toilet renovatie",
+    "dak": "Dak- en zinkwerk",
+    "anders": "Overige werkzaamheden"
+};
+
 const standaard = {
-    "loodgieter":    [["Materialen en hulpstukken", 1, 0, 21]],
-    "cv-onderhoud":  [["Onderhoudsonderdelen en materialen", 1, 0, 21]],
+    "loodgieter":    [["Arbeid loodgieterswerk", 1, 75, 21], ["Materialen", 1, 50, 21]],
+    "cv-onderhoud":  [["CV-ketel revisie en reiniging", 1, 125, 21], ["Onderdelen en materialen", 1, 35, 21]],
     "cv-vervanging": [
-        ["CV-ketel (nader te specificeren)", 1, 0, 21],
-        ["Aansluitmateriaal en hulpstukken", 1, 0, 21],
+        ["Het aftappen van de cv-installatie", 1, 50, 21],
+        ["Demonteren, verwijderen en afvoeren bestaande c.v.-ketel incl. rookgasafvoer", 1, 75, 21],
+        ["Leveren, monteren en installeren nieuwe c.v.-ketel", 1, 1200, 21],
+        ["Aansluiten op bestaande koud-, warmwater- en cv-leidingen", 1, 75, 21],
+        ["Vullen, ontluchten en proefsttoken van de installatie", 1, 50, 21],
+        ["Controle op correcte werking na oplevering", 1, 0, 21],
     ],
-    "ontstopping":   [["Materialen", 1, 0, 21]],
-    "lekkage":       [["Reparatiemateriaal", 1, 0, 21]],
-    "badkamer":      [["Sanitair en materialen", 1, 0, 21]],
-    "dak":           [["Dakbedekkingsmateriaal en hulpstukken", 1, 0, 21]],
-    "anders":        [["Materialen", 1, 0, 21]],
+    "ontstopping":   [["Mechanisch ontstoppen afvoer", 1, 95, 21], ["Naspoelen en controle", 1, 30, 21]],
+    "lekkage":       [["Opsporen lekkage", 1, 75, 21], ["Reparatie lekkage", 1, 95, 21], ["Materialen", 1, 25, 21]],
+    "badkamer":      [["Arbeid renovatie badkamer/toilet", 1, 75, 21], ["Materialen en sanitair", 1, 0, 21]],
+    "dak":           [["Inspectie dak en zinkwerk", 1, 75, 21], ["Reparatie zinkwerk", 1, 0, 21]],
+    "anders":        [["Werkzaamheden", 1, 0, 21]],
 };
 
 window.onload = function() {
@@ -661,6 +679,16 @@ function update() {
     document.getElementById('doc-nummer').textContent  = nummer || '—';
     document.getElementById('doc-datum').textContent   = fmtDatum(new Date().toISOString().split('T')[0]);
     document.getElementById('doc-geldig').textContent  = fmtDatum(geldig);
+
+    // Betreft
+    const type = document.getElementById('f-type').value;
+    const betreftEl = document.getElementById('doc-betreft');
+    if (type && typeLabels[type]) {
+        betreftEl.style.display = 'block';
+        document.getElementById('doc-betreft-tekst').textContent = typeLabels[type];
+    } else {
+        betreftEl.style.display = 'none';
+    }
     const sigNaam = document.getElementById('doc-sig-naam');
     if (sigNaam) sigNaam.textContent = naam || '—';
 
@@ -707,12 +735,25 @@ function update() {
 
 function pdfOpties(bestandsnaam) {
     return {
-        margin: [3, 3, 3, 3],
+        margin: [12, 10, 12, 10],
         filename: bestandsnaam,
         image: { type: 'jpeg', quality: 0.99 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, imageTimeout: 15000, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'] }
     };
+}
+
+function prepPDF() {
+    const wrapper = document.querySelector('.doc-wrapper');
+    if (wrapper) { wrapper.style.background = 'white'; wrapper.style.padding = '0'; }
+    document.getElementById('offerte-doc').style.boxShadow = 'none';
+}
+
+function restorePDF() {
+    const wrapper = document.querySelector('.doc-wrapper');
+    if (wrapper) { wrapper.style.background = ''; wrapper.style.padding = ''; }
+    document.getElementById('offerte-doc').style.boxShadow = '';
 }
 
 function downloadPDF() {
@@ -720,10 +761,12 @@ function downloadPDF() {
     const nummer   = document.getElementById('f-nummer').value.trim() || 'offerte';
     const bestand  = `Offerte-MHL-${naam}-${nummer}.pdf`;
     toon('PDF wordt gegenereerd...');
+    prepPDF();
     html2pdf().set(pdfOpties(bestand))
         .from(document.getElementById('offerte-doc'))
         .outputPdf('blob')
         .then(blob => {
+            restorePDF();
             const url = URL.createObjectURL(blob);
             const a   = document.createElement('a');
             a.href     = url;
@@ -750,7 +793,7 @@ function verstuurOfferte() {
     const bestand  = `Offerte-MHL-${nummer}.pdf`;
 
     toon('PDF wordt gegenereerd...');
-
+    prepPDF();
     html2pdf().set(pdfOpties(bestand))
         .from(document.getElementById('offerte-doc'))
         .outputPdf('blob')
@@ -786,7 +829,7 @@ function verstuurOfferte() {
                 toon('Fout bij versturen. Probeer opnieuw.');
             }
         })
-        .catch(() => toon('Fout bij genereren of versturen. Probeer opnieuw.'));
+        .catch(() => { restorePDF(); toon('Fout bij genereren of versturen. Probeer opnieuw.'); });
 }
 
 function toon(tekst) {
