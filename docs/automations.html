@@ -157,13 +157,16 @@
         .fade-up:nth-child(5) { transition-delay: 0.4s; }
         .fade-up:nth-child(6) { transition-delay: 0.5s; }
 
+        .nav-back-short { display: none; }
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
-            .nav-back { display: none; }
+            .nav-back { display: flex; }
+            .nav-back-full { display: none; }
+            .nav-back-short { display: inline; }
             .hero { padding: 48px 20px 0; }
             .stats { margin: 32px 20px 0; }
             .info-box { margin: 20px; }
-            .filters-wrap { padding: 0 20px; }
+            .filters-wrap { padding: 32px 20px 0; }
             .grid-wrap { padding: 0 20px 60px; }
             .cards-grid { grid-template-columns: 1fr; }
             .cta-wrap { padding: 40px 20px; }
@@ -183,7 +186,10 @@
         </svg>
         <span class="logo-text">Insightance</span>
     </a>
-    <a href="index.html#services" class="nav-back" data-nl="← Terug naar homepage" data-en="← Back to homepage">← Terug naar homepage</a>
+    <a href="index.html#services" class="nav-back">
+        <span class="nav-back-full" data-nl="← Terug naar homepage" data-en="← Back to homepage">← Terug naar homepage</span>
+        <span class="nav-back-short" data-nl="← Terug" data-en="← Back">← Terug</span>
+    </a>
     <div style="display: flex; align-items: center; gap: 12px;">
         <button class="lang-toggle" onclick="toggleLang()" id="langBtn"><span id="langNL" class="active">NL</span><span id="langEN">EN</span></button>
         <a href="index.html#contact" class="nav-cta" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
