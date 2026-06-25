@@ -520,7 +520,6 @@
             el.innerHTML = el.getAttribute('data-' + lang);
         });
         document.documentElement.lang = lang;
-        document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
     }
     function toggleLang() {
         lang = lang === 'nl' ? 'en' : 'nl';
