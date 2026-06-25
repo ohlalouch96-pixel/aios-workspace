@@ -84,7 +84,6 @@
             display: grid; grid-template-columns: 400px 1fr;
             background: var(--surface); border: 1px solid rgba(201,168,76,0.15);
             border-radius: 14px; overflow: hidden; position: relative;
-            max-height: 565px;
         }
         .case-card-ftuk::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
 
@@ -117,7 +116,8 @@
         .case-quote cite { font-size: 12px; color: var(--gold); font-style: normal; letter-spacing: 0.05em; font-weight: 500; }
 
         /* FTUK quote in right column */
-        .ftuk-visual .case-quote { padding: 24px 28px; border-bottom: 1px solid rgba(201,168,76,0.06); margin-top: 0; border-left: none; border-left: 3px solid rgba(201,168,76,0.3); margin-left: 0; padding-left: 20px; }
+        .ftuk-visual .case-quote { padding: 16px 24px; border-bottom: 1px solid rgba(201,168,76,0.06); margin-top: 0; border-left: none; border-left: 3px solid rgba(201,168,76,0.3); margin-left: 0; padding-left: 20px; }
+        .ftuk-bot { display: none; }
 
         /* FTUK Dashboard visual */
         .ftuk-visual { background: #0b0d18; display: flex; flex-direction: column; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
