@@ -53,10 +53,10 @@
         .inner { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
 
         /* CASE INTRO */
-        .case-intro { margin-bottom: 24px; scroll-margin-top: 90px; }
-        .case-intro-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .case-intro { margin-bottom: 24px; scroll-margin-top: 90px; text-align: center; }
+        .case-intro-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
         .case-intro-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.4; }
-        .case-intro-text { font-size: 16px; color: rgba(234,229,220,0.6); line-height: 1.7; max-width: 680px; }
+        .case-intro-text { font-size: 16px; color: rgba(234,229,220,0.6); line-height: 1.7; max-width: 680px; margin: 0 auto; }
 
         /* DIVIDER */
         .case-divider { display: flex; align-items: center; gap: 24px; margin: 72px 0; }
@@ -71,12 +71,12 @@
         }
         .case-card-mhl::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
 
-        .mhl-text { padding: 52px 48px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
+        .mhl-text { padding: 36px 36px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
         .mhl-visual { background: #0F0F12; display: flex; flex-direction: column; }
-        .mhl-quote-block { padding: 40px 44px 28px; border-bottom: 1px solid rgba(201,168,76,0.06); border-left: 3px solid var(--gold); flex-shrink: 0; }
-        .mhl-quote-text { font-size: 17px; color: var(--white); line-height: 1.8; font-style: italic; margin-bottom: 14px; }
-        .mhl-quote-cite { font-size: 13px; font-weight: 600; color: var(--gold); }
-        .mhl-screenshot { flex: 1; padding: 20px 28px 28px; display: flex; align-items: flex-start; }
+        .mhl-quote-block { padding: 28px 32px 20px; border-bottom: 1px solid rgba(201,168,76,0.06); border-left: 3px solid var(--gold); flex-shrink: 0; }
+        .mhl-quote-text { font-size: 14px; color: var(--white); line-height: 1.8; font-style: italic; margin-bottom: 12px; }
+        .mhl-quote-cite { font-size: 12px; font-weight: 600; color: var(--gold); }
+        .mhl-screenshot { flex: 1; padding: 16px 24px 24px; display: flex; align-items: flex-start; }
         .mhl-screenshot img { width: 100%; border-radius: 8px; border: 1px solid rgba(201,168,76,0.15); display: block; }
 
         /* CASE CARD — FTUK (text left, dashboard right) */
@@ -88,10 +88,10 @@
         .case-card-ftuk::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
 
         /* Shared text column */
-        .case-text { padding: 52px 48px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
+        .case-text { padding: 36px 36px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
         .case-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
         .case-tag::before { content: ''; width: 16px; height: 1px; background: var(--gold); opacity: 0.5; }
-        .case-company { font-family: var(--font-heading); font-size: 26px; font-weight: 600; color: var(--white); margin-bottom: 36px; line-height: 1.2; }
+        .case-company { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 28px; line-height: 1.2; }
         .case-flow { display: flex; flex-direction: column; margin-bottom: 36px; }
         .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
         .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
@@ -105,15 +105,18 @@
         .case-flow-text strong { color: #fff; }
 
         /* Result metric tile */
-        .case-result { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 18px; margin-bottom: 32px; }
-        .case-result-number { font-family: var(--font-heading); font-size: 48px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; text-shadow: 0 0 24px rgba(201,168,76,0.3); }
-        .case-result-text { font-size: 14px; color: var(--gray-light); line-height: 1.65; }
-        .case-result-text strong { display: block; color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+        .case-result { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+        .case-result-number { font-family: var(--font-heading); font-size: 38px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; text-shadow: 0 0 24px rgba(201,168,76,0.3); }
+        .case-result-text { font-size: 13px; color: var(--gray-light); line-height: 1.65; }
+        .case-result-text strong { display: block; color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
 
         /* Quote */
         .case-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 20px; margin-top: auto; }
         .case-quote p { font-size: 14px; color: var(--gray-light); line-height: 1.8; font-style: italic; margin-bottom: 10px; }
         .case-quote cite { font-size: 12px; color: var(--gold); font-style: normal; letter-spacing: 0.05em; font-weight: 500; }
+
+        /* FTUK quote in right column */
+        .ftuk-visual .case-quote { padding: 24px 28px; border-bottom: 1px solid rgba(201,168,76,0.06); margin-top: 0; border-left: none; border-left: 3px solid rgba(201,168,76,0.3); margin-left: 0; padding-left: 20px; }
 
         /* FTUK Dashboard visual */
         .ftuk-visual { background: #0b0d18; display: flex; flex-direction: column; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -313,7 +316,7 @@
                 <p class="mhl-quote-cite">— Mohammed, eigenaar MHL Installatieservice</p>
             </div>
             <div class="mhl-screenshot">
-                <img src="../../docs/images/mhl-demo-preview.jpg" alt="MHL Installatieservice offerte-maker" onerror="this.style.display='none'">
+                <img src="images/mhl-demo-preview.jpg" alt="MHL Installatieservice offerte-maker" style="display:block;">
             </div>
         </div>
     </div>
@@ -364,14 +367,14 @@
                     <span data-nl="Real-time inzicht in 30 seconden." data-en="Real-time insight in 30 seconds.">Real-time inzicht in 30 seconden.</span>
                 </div>
             </div>
-            <div class="case-quote">
-                <p data-nl='"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"' data-en='"Through this dashboard I can see at a glance how my business is performing. It provides clarity, is accurate and gives me a great deal of valuable information that I can act on immediately. I have already saved so much time and energy through it — truly brilliant!"'>"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"</p>
-                <cite>Forex Trading UK (FTUK)</cite>
-            </div>
         </div>
 
         <!-- Dashboard rechts -->
         <div class="ftuk-visual">
+            <div class="case-quote">
+                <p data-nl='"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"' data-en='"Through this dashboard I can see at a glance how my business is performing. It provides clarity, is accurate and gives me a great deal of valuable information that I can act on immediately. I have already saved so much time and energy through it — truly brilliant!"'>"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"</p>
+                <cite>Forex Trading UK (FTUK)</cite>
+            </div>
             <div class="ftuk-browser">
                 <div class="fbd"></div><div class="fbd"></div><div class="fbd"></div>
                 <div class="fburl">dashboard.ftuk.nl / overview</div>
