@@ -240,6 +240,19 @@
             .footer-bottom { flex-direction: column; gap: 8px; padding: 12px 0; text-align: center; }
             .footer-links { flex-wrap: wrap; justify-content: center; }
         }
+        @media (max-width: 768px) {
+            .inner { padding: 0 16px; }
+            .page-header { padding: 40px 20px 32px; }
+            .case-card-mhl,
+            .case-card-ftuk { grid-template-columns: 1fr; }
+            .mhl-text,
+            .case-text { padding: 24px 20px; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.08); }
+            .mhl-result-top { padding: 16px 20px 12px; }
+            .mhl-screenshot { padding: 0 8px; }
+            .ftuk-browser, .ftuk-dash-body { display: none; }
+            .ftuk-visual .case-quote { padding-bottom: 28px; }
+            .case-divider { margin: 48px 0; }
+        }
     </style>
 </head>
 <body>
