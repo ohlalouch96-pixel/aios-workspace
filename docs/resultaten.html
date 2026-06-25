@@ -117,7 +117,6 @@
 
         /* FTUK quote in right column */
         .ftuk-visual .case-quote { padding: 16px 24px; border-bottom: 1px solid rgba(201,168,76,0.06); margin-top: 0; border-left: none; border-left: 3px solid rgba(201,168,76,0.3); margin-left: 0; padding-left: 20px; }
-        .ftuk-bot { display: none; }
 
         /* FTUK Dashboard visual */
         .ftuk-visual { background: #0b0d18; display: flex; flex-direction: column; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -153,7 +152,7 @@
         .ftuk-kpi-val { font-size: 14px; font-weight: 700; color: #fff; filter: blur(5px); line-height: 1; user-select: none; }
         .ftuk-kpi-delta { font-size: 8px; margin-top: 4px; filter: blur(3.5px); }
 
-        .ftuk-mid { display: grid; grid-template-columns: 1.7fr 0.85fr 0.85fr; gap: 8px; flex: 1; min-height: 0; }
+        .ftuk-mid { display: grid; grid-template-columns: 1.7fr 0.85fr 0.85fr; gap: 8px; max-height: 160px; min-height: 0; }
         .ftuk-panel { background: #12152a; border: 1px solid #222640; border-radius: 8px; padding: 7px; display: flex; flex-direction: column; overflow: hidden; }
         .ftuk-panel-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 2px; }
         .ftuk-panel-sub { font-size: 9px; color: #6070a0; margin-bottom: 8px; }
@@ -188,7 +187,7 @@
         .ftuk-geo-bar-bg { height: 3px; background: #222640; border-radius: 2px; overflow: hidden; }
         .ftuk-geo-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, #3d4a9e, #5b6de8); }
 
-        .ftuk-bot { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+        .ftuk-bot { display: none; }
         .ftuk-ads { display: flex; flex-direction: column; }
         .ftuk-ads-head { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 0 0 5px; border-bottom: 1px solid #222640; font-size: 7.5px; color: #3a4060; text-transform: uppercase; }
         .ftuk-ads-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 5px 0; border-bottom: 1px solid rgba(34,38,64,0.6); align-items: center; }
