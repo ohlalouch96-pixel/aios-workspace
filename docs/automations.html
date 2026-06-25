@@ -23,11 +23,8 @@
         nav { position: sticky; top: 2px; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-text { font-size: 16px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
-        .nav-links { display: flex; align-items: center; gap: 0; list-style: none; }
-        .nav-links li { display: flex; align-items: center; }
-        .nav-links li + li::before { content: ''; width: 1px; height: 14px; background: rgba(201,168,76,0.2); margin: 0 20px; flex-shrink: 0; }
-        .nav-links a { color: var(--gray-light); text-decoration: none; font-size: 13px; letter-spacing: 0.04em; transition: color 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+        .nav-back:hover { color: var(--gold); }
         .lang-toggle { display: flex; align-items: center; background: #1A1A1D; border: 1px solid #2A2A2D; border-radius: 100px; overflow: hidden; cursor: pointer; padding: 0; }
         .lang-toggle span { padding: 6px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; color: #555; font-family: var(--font-body); }
         .lang-toggle span.active { background: rgba(201,168,76,0.12); color: var(--gold); }
@@ -142,7 +139,7 @@
 
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
-            .nav-links { display: none; }
+            .nav-back { display: none; }
             .hero { padding: 48px 20px 0; }
             .stats { margin: 32px 20px 0; }
             .info-box { margin: 20px; }
@@ -166,12 +163,7 @@
         </svg>
         <span class="logo-text">Insightance</span>
     </a>
-    <ul class="nav-links">
-        <li><a href="automations.html" class="active" data-nl="Diensten" data-en="Services">Diensten</a></li>
-        <li><a href="resultaten.html" data-nl="Resultaten" data-en="Results">Resultaten</a></li>
-        <li><a href="index.html#tarieven" data-nl="Tarieven" data-en="Pricing">Tarieven</a></li>
-        <li><a href="index.html#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
-    </ul>
+    <a href="index.html" class="nav-back" data-nl="← Terug naar homepage" data-en="← Back to homepage">← Terug naar homepage</a>
     <div style="display: flex; align-items: center; gap: 12px;">
         <button class="lang-toggle" onclick="toggleLang()" id="langBtn"><span id="langNL" class="active">NL</span><span id="langEN">EN</span></button>
         <a href="index.html#contact" class="nav-cta" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
