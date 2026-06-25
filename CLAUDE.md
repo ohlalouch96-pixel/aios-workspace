@@ -113,7 +113,12 @@ These are how you know your AIOS is working:
 │       ├── collect_fathom.py # Fathom meeting collector
 │       └── db.py            # IntelOS database helpers
 ├── credentials/             # Google service account JSON (gitignored)
-├── docs/                    # Technische documentatie (auto-bijgehouden door /commit)
+├── docs/                    # ⚠️ LIVE WEBSITE (insightance.ai via GitHub Pages) — altijd hier bewerken
+│   ├── index.html           # Homepage
+│   ├── automations.html     # Automatiseringen pagina
+│   ├── resultaten.html      # Resultaten / case studies
+│   ├── offerte-maker.html   # Offerte tool
+│   ├── images/              # Afbeeldingen voor de website
 │   ├── _index.md            # Documentatie-index
 │   └── _templates/          # Sjablonen voor nieuwe docs
 ├── module-installs/         # AIOS modules — drop module folders here, install with /install
@@ -152,6 +157,8 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | `context/import/`  | Drop any docs here (business plans, ChatGPT exports, etc.) for Claude to analyze.      |
 | `module-installs/` | AIOS modules go here. Install them with `/install module-installs/{module-name}`.      |
 | `plans/`           | Detailed implementation plans. Created by `/create-plan`, executed by `/implement`.    |
+| `docs/`            | **LIVE WEBSITE** — GitHub Pages serveert dit. Altijd hier bewerken voor website-aanpassingen. |
+| `outputs/website/` | Oude previews en drafts. Nooit kopiëren naar `docs/`. Nooit als bron gebruiken voor live aanpassingen. |
 | `outputs/`         | Deliverables, analyses, reports, and work products.                                    |
 | `reference/`       | Helpful docs, templates and patterns to assist in various workflows.                   |
 | `scripts/`         | Automation scripts — added by modules as you install them.                             |
@@ -241,6 +248,19 @@ After any change — adding commands, scripts, workflows, or modifying structure
 4. Does context/ need new files to capture this?
 
 If yes to any, update the relevant sections. This file must always reflect the current state of the workspace so future sessions have accurate context.
+
+---
+
+## Website Regel — Altijd Volgen
+
+**`docs/` is de live website. Elke website-aanpassing gaat direct in `docs/`.**
+
+- Pagina aanpassen → open het bestand in `docs/` en bewerk het daar
+- Nieuwe pagina toevoegen → maak aan in `docs/`
+- Iets testen → maak `docs/preview-naam.html` aan (bereikbaar maar niet gelinkt)
+- `outputs/website/` bevat alleen oude drafts — **nooit** kopiëren naar `docs/`, **nooit** als bron gebruiken
+
+Na elke website-aanpassing: committen en pushen naar GitHub.
 
 ---
 
