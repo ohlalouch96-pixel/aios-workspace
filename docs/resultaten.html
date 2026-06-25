@@ -30,19 +30,20 @@
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 0%, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent 100%); z-index: 200; }
 
         /* NAV */
-        nav { position: fixed; top: 2px; left: 0; right: 0; z-index: 100; padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); transition: border-color 0.3s; }
-        .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-text { font-size: 16px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
-        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-        .nav-links a { color: var(--gray-light); text-decoration: none; font-size: 13px; letter-spacing: 0.04em; transition: color 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        nav { position: sticky; top: 2px; background: rgba(19,19,22,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+        .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
+        .nav-back:hover { color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
         .lang-toggle { background: none; border: 1px solid var(--border); color: var(--gray); padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; }
         .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
-        .nav-cta { background: var(--gold); color: #000; padding: 10px 22px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.2s; white-space: nowrap; }
+        .nav-cta { background: var(--gold); color: #000; padding: 9px 20px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: background 0.2s; white-space: nowrap; }
         .nav-cta:hover { background: var(--gold-light); }
+        @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-back { display: none; } }
 
         /* PAGE HEADER */
-        .page-header { padding: 140px 40px 72px; text-align: center; }
+        .page-header { padding: 64px 40px 56px; text-align: center; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.09) 0%, transparent 60%); }
         .page-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); display: block; }
         .page-kicker::after { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); margin: 10px auto 20px; opacity: 0.7; }
         .page-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 600; color: var(--white); margin-bottom: 16px; line-height: 1.15; }
@@ -231,25 +232,18 @@
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-    <a href="index.html" class="logo-wrap">
-        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+<nav>
+    <a href="index.html" class="nav-logo">
+        <svg width="26" height="26" viewBox="0 0 44 44" fill="none">
             <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
             <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
-            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.7"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.7"/>
         </svg>
-        <span class="logo-text">Insightance</span>
+        <span class="nav-logo-text">Insightance</span>
     </a>
-    <ul class="nav-links">
-        <li><a href="index.html#services" data-nl="Diensten" data-en="Services">Diensten</a></li>
-        <li><a href="resultaten.html" class="active" data-nl="Resultaten" data-en="Results">Resultaten</a></li>
-        <li><a href="index.html#tarieven" data-nl="Tarieven" data-en="Pricing">Tarieven</a></li>
-        <li><a href="index.html#faq" data-nl="FAQ" data-en="FAQ">FAQ</a></li>
-        <li><a href="index.html#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
-    </ul>
-    <div style="display:flex; align-items:center; gap:12px;">
+    <a href="index.html" class="nav-back" data-nl="← Terug" data-en="← Back">← Terug</a>
+    <div class="nav-right">
         <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
         <a href="index.html#contact" class="nav-cta" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
     </div>
@@ -530,10 +524,6 @@
     }
     function toggleLang() { lang = lang === 'nl' ? 'en' : 'nl'; applyLang(); }
     applyLang();
-    window.addEventListener('scroll', () => {
-        document.getElementById('navbar').style.borderBottomColor = window.scrollY > 60
-            ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.12)';
-    });
 </script>
 <script src="//code.tidio.co/nzmhef9otgpp1wahexx1eo4ohhlv9qos.js" async></script>
 </body>
