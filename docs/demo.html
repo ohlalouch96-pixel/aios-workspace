@@ -32,6 +32,7 @@
         .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
         .nav-back { font-size: 13px; color: #666; text-decoration: none; transition: color 0.2s; }
         .nav-back:hover { color: var(--gold); }
+        .nav-back-short { display: none; }
         .nav-right { display: flex; align-items: center; gap: 12px; }
         .lang-toggle { display: flex; align-items: center; background: #1A1A1D; border: 1px solid #2A2A2D; border-radius: 100px; overflow: hidden; cursor: pointer; padding: 0; }
         .lang-toggle span { padding: 6px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; color: #555; font-family: var(--font-body); }
@@ -145,7 +146,8 @@
 
         @media (max-width: 768px) {
             nav { padding: 16px 20px; }
-            .nav-back { font-size: 11px; letter-spacing: 0.04em; }
+            .nav-back-full { display: none; }
+            .nav-back-short { display: inline; }
             .nav-cta { display: none; }
             main { padding: 40px 16px 60px; }
             .stats-row { grid-template-columns: 1fr 1fr; }
@@ -172,7 +174,10 @@
         </svg>
         <span class="nav-logo-text">Insightance</span>
     </a>
-    <a href="index.html" class="nav-back" data-nl="← Terug naar homepage" data-en="← Back to homepage">← Terug naar homepage</a>
+    <a href="index.html" class="nav-back">
+        <span class="nav-back-full" data-nl="← Terug naar homepage" data-en="← Back to homepage">← Terug naar homepage</span>
+        <span class="nav-back-short" data-nl="← Terug" data-en="← Back">← Terug</span>
+    </a>
     <div class="nav-right">
         <button class="lang-toggle" onclick="toggleLang()" id="langBtn"><span id="langNL" class="active">NL</span><span id="langEN">EN</span></button>
         <a href="index.html#contact" class="nav-cta" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
