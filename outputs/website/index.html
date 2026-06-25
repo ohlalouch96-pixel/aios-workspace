@@ -13,16 +13,16 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg: #1C1C1C;
-            --surface: #1E1E1E;
-            --surface-2: #242424;
-            --surface-3: #2C2C2C;
+            --bg: #131316;
+            --surface: #181819;
+            --surface-2: #202023;
+            --surface-3: #242424;
             --gold: #C9A84C;
             --gold-light: #E8C97A;
             --white: #FFFFFF;
             --gray: #888888;
             --gray-light: #C0C0C0;
-            --border: #2E2E2E;
+            --border: #252525;
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -56,7 +56,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(28, 28, 28, 0.95);
+            background: rgba(10, 10, 10, 0.96);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(201, 168, 76, 0.12);
             transition: border-color 0.3s;
@@ -202,39 +202,59 @@
 
         /* SHARED */
         .section { padding: 100px 60px; max-width: 1160px; margin: 0 auto; }
-        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; text-align: center; }
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0; text-align: center; display: block; }
+        .section-label::after { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); margin: 10px auto 20px; opacity: 0.7; }
         .section-title { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 52px); font-weight: 600; line-height: 1.15; margin-bottom: 28px; color: var(--white); text-align: center; }
         .section-text { font-size: 17px; color: var(--gray-light); line-height: 1.85; }
         .gold-line { width: 56px; height: 1px; background: var(--gold); margin: 28px auto; }
-        .strip { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .strip::after { content: 'Insightance'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); font-size: 10px; color: rgba(201,168,76,0.06); letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap; pointer-events: none; font-family: var(--font-body); font-weight: 600; }
+        .strip { background: var(--surface); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+        .strip::after { content: 'Insightance'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); font-size: 10px; color: rgba(201,168,76,0.05); letter-spacing: 0.4em; text-transform: uppercase; white-space: nowrap; pointer-events: none; font-family: var(--font-body); font-weight: 600; }
+
+        /* SECTION DEPTH SYSTEM */
+        .depth-0 { background: #0F0F12 !important; }
+        .depth-1 { background: #161619 !important; }
+        .depth-2 { background: #1C1C20 !important; }
+
+        /* LIGHT SECTION */
+        .depth-light {
+            background: #EDE8DC !important;
+            --white: #1A1A1A;
+            --gray: #5A5A5A;
+            --gray-light: #333333;
+            --surface: #FDFBF8;
+            --surface-2: #F5F0E8;
+            --surface-3: #EDE9E0;
+            --border: #CEC6B8;
+        }
+        .depth-light .strip::after { display: none; }
 
         .hero-ctas { display: flex; gap: 20px; align-items: center; position: relative; z-index: 1; margin-top: 16px; }
-        .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; }
+        .hero-cta-primary { background: var(--gold); color: #000; padding: 14px 36px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: background 0.2s; border-radius: 6px; }
         .hero-cta-primary:hover { background: var(--gold-light); }
         .hero-cta-secondary { font-size: 13px; color: var(--gray); letter-spacing: 0.06em; text-decoration: none; border-bottom: 1px solid #2A2A2A; padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
         .hero-cta-secondary:hover { color: var(--gold); border-color: rgba(201,168,76,0.4); }
 
         /* MISSION */
         .mission-text { text-align: center; max-width: 600px; margin: 0 auto 64px; font-size: 17px; color: var(--gray-light); line-height: 1.85; }
-        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); max-width: 800px; margin: 0 auto; }
-        .mission-stat { background: var(--surface); padding: 40px 24px; text-align: center; position: relative; overflow: hidden; }
-        .mission-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .mission-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; max-width: 800px; margin: 0 auto; }
+        .mission-stat { background: var(--surface); padding: 40px 24px; text-align: center; position: relative; overflow: hidden; border-radius: 10px; border: 1px solid rgba(201,168,76,0.12); }
+        .mission-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .mission-stat-number { font-family: var(--font-heading); font-size: 48px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 12px; }
-        .mission-stat-label { font-size: 14px; color: var(--gray); line-height: 1.6; }
+        .mission-stat-label { font-size: 14px; color: var(--white); line-height: 1.6; }
 
         /* FOR WHO */
-        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
-        .forwho-col { background: var(--surface); position: relative; transition: background 0.3s; }
+        .forwho-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; }
+        .forwho-col { background: var(--surface); position: relative; transition: background 0.3s; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,168,76,0.1); }
         .forwho-col:hover { background: var(--surface-2); }
-        .forwho-col-top { height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .forwho-col-top { height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
         .forwho-col-inner { padding: 44px 44px 52px; }
         .forwho-col-title { font-size: 21px; font-weight: 600; color: var(--white); margin-bottom: 16px; }
         .forwho-col-text { font-size: 15px; color: var(--gray); line-height: 1.85; }
 
-        .results-strip { margin-top: 0; background: var(--surface); border-top: 1px solid var(--border); }
+        .results-strip { margin-top: 0; background: transparent; border-top: none; }
         .results-inner { padding: 48px 0; }
-        .results-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 36px; }
+        .results-label { font-size: 13px; font-weight: 500; color: var(--gray); margin-bottom: 36px; text-align: left; letter-spacing: 0; text-transform: none; }
+        .results-divider { width: 40px; height: 1px; background: var(--gold); opacity: 0.4; margin: 0 0 36px; }
         .results-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
         .result-item { padding: 0 32px 0 0; border-right: 1px solid var(--border); }
         .result-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
@@ -245,9 +265,9 @@
         .result-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* SERVICES */
-        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); margin-top: 56px; }
-        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
-        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .services-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: transparent; margin-top: 56px; }
+        .service-card-new { background: var(--surface); padding: 44px 40px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
+        .service-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .service-card-new:hover { background: var(--surface-2); }
         .service-icon { width: 48px; height: 48px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; margin-top: 8px; }
         .service-card-title { font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
@@ -261,17 +281,17 @@
         /* HOW WE WORK - Horizontal */
         .steps-wrap { position: relative; margin-top: 64px; }
         .steps-wrap::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--gold), var(--gold), transparent); }
-        .steps-row { display: grid; grid-template-columns: repeat(5, 1fr); }
+        .steps-row { display: grid; grid-template-columns: repeat(6, 1fr); }
         .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; }
         .step-circle { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--gold); background: var(--bg); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--gold); margin-bottom: 24px; position: relative; z-index: 1; flex-shrink: 0; }
         .step-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
         .step-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
         /* WHY INSIGHTANCE */
-        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
-        .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: transparent; }
+        .why-item { background: var(--surface); padding: 48px; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 10px; border: 1px solid rgba(201,168,76,0.1); }
         .why-item:hover { background: var(--surface-2); }
-        .why-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+        .why-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); border-radius: 10px 10px 0 0; }
         .why-title { font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
         .why-tag { font-size: 11px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 18px; display: block; }
         .why-text { font-size: 15px; color: var(--gray-light); line-height: 1.8; }
@@ -334,10 +354,28 @@
         .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
 
         /* FOOTER */
-        footer { border-top: 1px solid var(--border); padding: 36px 60px; display: flex; justify-content: space-between; align-items: center; color: var(--gray); font-size: 13px; }
+        footer { border-top: 1px solid var(--border); padding: 0 60px; color: var(--gray); font-size: 13px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--border); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; }
         .footer-logo { color: var(--gold); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; font-size: 13px; }
-        .footer-linkedin a { color: var(--gray); display: flex; align-items: center; transition: color 0.2s; }
-        .footer-linkedin a:hover { color: var(--gold); }
+        .footer-links { display: flex; align-items: center; gap: 24px; }
+        .footer-link { display: flex; align-items: center; gap: 7px; color: var(--gray-light); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-link:hover { color: var(--gold); }
+        .footer-link svg { flex-shrink: 0; }
+        .footer-meta-left { font-size: 12px; color: #333; letter-spacing: 0.1em; }
+        .footer-meta-right { display: flex; align-items: center; gap: 20px; font-size: 12px; color: #333; }
+        .footer-meta-right a { color: #444; text-decoration: none; transition: color 0.2s; }
+        .footer-meta-right a:hover { color: var(--gold); }
+        @media (max-width: 768px) {
+            footer { padding: 0 24px; }
+            .footer-top { flex-direction: column; gap: 16px; padding: 20px 0; text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 8px; padding: 12px 0; text-align: center; }
+        }
+
+        /* STICKY CTA */
+        .sticky-cta-main { position: fixed; bottom: 28px; left: 28px; z-index: 990; display: flex; align-items: center; gap: 7px; background: var(--gold); color: #000; padding: 9px 18px; border-radius: 100px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; box-shadow: 0 4px 20px rgba(201,168,76,0.35); transition: background 0.2s, transform 0.3s, opacity 0.3s; }
+        .sticky-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
+        .sticky-cta-main.hidden { opacity: 0; pointer-events: none; transform: translateY(10px); }
 
         /* FADE */
         .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
@@ -350,6 +388,33 @@
         .fade-item:nth-child(3) { transition-delay: 0.3s; }
         .fade-item:nth-child(4) { transition-delay: 0.4s; }
         .fade-item:nth-child(5) { transition-delay: 0.5s; }
+        .fade-item:nth-child(6) { transition-delay: 0.6s; }
+
+        /* COOKIE BANNER */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #0F0F12;
+            border-top: 1px solid rgba(201,168,76,0.2);
+            padding: 18px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            z-index: 500;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .cookie-banner.visible { transform: translateY(0); }
+        .cookie-banner p { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
+        .cookie-banner a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        .cookie-banner a:hover { border-color: var(--gold); }
+        .cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+        .cookie-accept { background: var(--gold); color: #000; border: none; padding: 9px 24px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: background 0.2s; white-space: nowrap; }
+        .cookie-accept:hover { background: var(--gold-light); }
+        .cookie-decline { background: none; border: 1px solid var(--border); color: var(--gray); padding: 9px 20px; font-family: var(--font-body); font-size: 12px; cursor: pointer; border-radius: 3px; transition: all 0.2s; white-space: nowrap; }
+        .cookie-decline:hover { border-color: var(--gray); color: var(--gray-light); }
+        @media (max-width: 768px) { .cookie-banner { padding: 16px 20px; flex-direction: column; align-items: flex-start; } }
 
         /* HAMBURGER + DRAWER */
         .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 201; }
@@ -362,7 +427,7 @@
             position: fixed;
             top: 0; right: 0; bottom: 0;
             width: 280px;
-            background: #141414;
+            background: #0D0D10;
             border-left: 1px solid var(--border);
             z-index: 199;
             transform: translateX(100%);
@@ -416,6 +481,45 @@
             border-top: none;
         }
 
+        /* TARIEVEN */
+        .discovery-banner { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 40px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .discovery-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+        .discovery-badge-sm { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #888; background: #F0EBE2; border: 1px solid #DDD6CA; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+        .discovery-title { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+        .discovery-sub { font-size: 13px; color: #999; }
+        .discovery-bullets { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+        .discovery-bullets li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
+        .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
+        .discovery-free { font-family: var(--font-heading); font-size: 26px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px; text-align: right; }
+        .discovery-btn { display: inline-block; background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+        .discovery-btn:hover { background: #E8C97A; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .pricing-card { background: #fff; border: 1px solid #D8D0C4; border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
+        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #D8D0C4; }
+        .pricing-card.featured::before { background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+        .pricing-badge { display: inline-block; align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+        .pricing-badge-default { background: #F0EBE2; color: #888; border: 1px solid #DDD6CA; }
+        .pricing-badge-featured { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+        .pricing-name { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 18px; }
+        .pricing-vanaf { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #AAA; margin-bottom: 4px; }
+        .pricing-amount { font-family: var(--font-heading); font-size: 40px; font-weight: 700; color: #1A1A1A; line-height: 1; margin-bottom: 6px; }
+        .pricing-amount.gold { color: #C9A84C; }
+        .pricing-sub { font-size: 12px; color: #AAA; margin-bottom: 22px; line-height: 1.5; }
+        .pricing-divider { height: 1px; background: #EDE8DC; margin-bottom: 18px; }
+        .pricing-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .pricing-bullets li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: #555; line-height: 1.5; }
+        .pricing-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+        .pricing-cta { display: block; text-align: center; margin-top: 24px; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
+        .pricing-cta-outline { border: 1px solid #D0C8BB; color: #888; }
+        .pricing-cta-outline:hover { border-color: #C9A84C; color: #C9A84C; }
+        .pricing-cta-gold { background: #C9A84C; color: #000; }
+        .pricing-cta-gold:hover { background: #E8C97A; }
+        .pricing-note { text-align: center; margin-top: 20px; font-size: 12px; color: #AAA; line-height: 1.7; }
+        .pricing-note a { color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } .discovery-banner { grid-template-columns: 1fr; gap: 24px; } .discovery-free { text-align: left; } }
+
         /* MOBILE */
         @media (max-width: 768px) {
             nav { padding: 18px 24px; }
@@ -438,7 +542,7 @@
             .about-grid-new { grid-template-columns: 1fr; }
             .contact-c-grid { grid-template-columns: 1fr; }
             .form-grid-2 { grid-template-columns: 1fr; }
-            footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+            footer { padding: 24px; flex-direction: column; gap: 14px; text-align: center; }
         }
     </style>
 </head>
@@ -456,10 +560,9 @@
         <span class="logo-text">Insightance</span>
     </a>
     <ul class="nav-links">
-        <li><a href="#mission" data-nl="Missie" data-en="Mission">Missie</a></li>
         <li><a href="#services" data-nl="Diensten" data-en="Services">Diensten</a></li>
-        <li><a href="#howwework" data-nl="Hoe we werken" data-en="How we work">Hoe we werken</a></li>
-        <li><a href="#about" data-nl="Over Insightance" data-en="About">Over Insightance</a></li>
+        <li><a href="resultaten.html" data-nl="Resultaten" data-en="Results">Resultaten</a></li>
+        <li><a href="#tarieven" data-nl="Tarieven" data-en="Pricing">Tarieven</a></li>
         <li><a href="#faq" data-nl="FAQ" data-en="FAQ">FAQ</a></li>
         <li><a href="#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
     </ul>
@@ -474,11 +577,10 @@
 
 <div class="mobile-drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
 <div class="mobile-drawer" id="mobileDrawer">
-    <a href="#mission" onclick="toggleDrawer()" data-nl="Missie" data-en="Mission">Missie</a>
-    <a href="#forwho" onclick="toggleDrawer()" data-nl="Voor wie" data-en="For who">Voor wie</a>
     <a href="#services" onclick="toggleDrawer()" data-nl="Diensten" data-en="Services">Diensten</a>
+    <a href="resultaten.html" onclick="toggleDrawer()" data-nl="Resultaten" data-en="Results">Resultaten</a>
     <a href="#howwework" onclick="toggleDrawer()" data-nl="Hoe we werken" data-en="How we work">Hoe we werken</a>
-    <a href="#about" onclick="toggleDrawer()" data-nl="Over Insightance" data-en="About">Over Insightance</a>
+    <a href="#tarieven" onclick="toggleDrawer()" data-nl="Tarieven" data-en="Pricing">Tarieven</a>
     <a href="#faq" onclick="toggleDrawer()">FAQ</a>
     <a href="#contact" onclick="toggleDrawer()" data-nl="Contact" data-en="Contact">Contact</a>
     <a href="#contact" class="mobile-drawer-cta" onclick="toggleDrawer()" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
@@ -498,10 +600,10 @@
 </div>
 
 <!-- MISSION -->
-<div id="mission" class="strip">
+<div id="mission" class="strip depth-light">
     <div class="section fade-in">
         <p class="section-label" data-nl="Onze missie" data-en="Our mission"></p>
-        <h2 class="section-title" data-nl="Minder handmatig werk.<br>Meer ruimte om te groeien." data-en="Less manual work.<br>More room to grow."></h2>
+        <h2 class="section-title" data-nl="Minder handmatig werk.<br>Meer ruimte om te groeien" data-en="Less manual work.<br>More room to grow"></h2>
         <p class="mission-text" data-nl="De meeste ondernemers besteden meer dan de helft van hun tijd aan terugkerende, handmatige taken.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance vervangt die taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag één." data-en="Most business owners spend more than half of their time on repetitive, manual tasks.<sup style='font-size:10px;color:var(--gold);'>¹</sup> Insightance replaces those tasks with smart AI systems, built for your business, active from day one."></p>
         <div class="mission-stats">
             <div class="mission-stat">
@@ -525,10 +627,10 @@
 </div>
 
 <!-- VOOR WIE -->
-<div class="strip" id="forwho">
-    <div class="section fade-in">
+<div class="strip depth-1" id="forwho">
+    <div class="section fade-in" style="padding-bottom:24px;">
         <p class="section-label" data-nl="Voor wie" data-en="For who"></p>
-        <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken." data-en="For business owners ready to work smarter."></h2>
+        <h2 class="section-title" data-nl="Voor ondernemers die klaar zijn om slimmer te werken" data-en="For business owners ready to work smarter"></h2>
         <div class="forwho-cols">
             <div class="forwho-col fade-item">
                 <div class="forwho-col-top"></div>
@@ -552,56 +654,58 @@
                 </div>
             </div>
         </div>
-        <div class="results-strip">
-            <div class="results-inner section" style="padding-top:48px;padding-bottom:56px;">
-                <p class="results-label" data-nl="Wat het u oplevert" data-en="What you gain"></p>
+    </div>
+    <div class="results-strip">
+            <div class="results-inner section" style="padding-top:28px;padding-bottom:56px;padding-left:60px;padding-right:60px;">
+                <div class="results-divider"></div>
+                <p class="results-label" data-nl="Wat levert het u op?" data-en="What does it give you?"></p>
                 <div class="results-grid">
                     <div class="result-item">
-                        <div class="result-icon" style="border-color:rgba(91,138,240,0.4); background:rgba(91,138,240,0.07);">
+                        <div class="result-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <circle cx="12" cy="12" r="10" stroke="#5B8AF0" stroke-width="1.5"/>
-                                <path d="M12 7v5l3 3" stroke="#5B8AF0" stroke-width="1.5" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M12 7v5l3 3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <div class="result-title" data-nl="Meer tijd" data-en="More time"></div>
                         <div class="result-text" data-nl="Uren per week die u terugkrijgt voor wat echt telt" data-en="Hours per week returned to what truly matters"></div>
                     </div>
                     <div class="result-item">
-                        <div class="result-icon" style="border-color:rgba(78,205,196,0.4); background:rgba(78,205,196,0.07);">
+                        <div class="result-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#4ECDC4" stroke-width="1.5" stroke-linecap="round"/>
-                                <circle cx="9" cy="7" r="4" stroke="#4ECDC4" stroke-width="1.5"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#4ECDC4" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                                <circle cx="9" cy="7" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <div class="result-title" data-nl="Minder personeel nodig" data-en="Less staff needed"></div>
                         <div class="result-text" data-nl="Routinetaken worden overgenomen zonder extra mensen" data-en="Routine tasks handled without extra headcount"></div>
                     </div>
                     <div class="result-item">
-                        <div class="result-icon" style="border-color:rgba(155,127,212,0.4); background:rgba(155,127,212,0.07);">
+                        <div class="result-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#9B7FD4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#9B7FD4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
                         <div class="result-title" data-nl="Lagere kosten" data-en="Lower costs"></div>
                         <div class="result-text" data-nl="Minder operationele kosten door slimme automatisering" data-en="Reduced operational costs through smart automation"></div>
                     </div>
                     <div class="result-item">
-                        <div class="result-icon" style="border-color:rgba(82,193,122,0.4); background:rgba(82,193,122,0.07);">
+                        <div class="result-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#52C17A" stroke-width="1.5" stroke-linecap="round"/>
-                                <path d="M22 4L12 14.01l-3-3" stroke="#52C17A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
                         <div class="result-title" data-nl="Minder fouten" data-en="Fewer errors"></div>
                         <div class="result-text" data-nl="AI maakt geen menselijke fouten bij routinewerk" data-en="AI makes no human errors on routine work"></div>
                     </div>
                     <div class="result-item">
-                        <div class="result-icon" style="border-color:rgba(240,163,91,0.4); background:rgba(240,163,91,0.07);">
+                        <div class="result-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                <rect x="2" y="3" width="20" height="14" rx="2" stroke="#F0A35B" stroke-width="1.5"/>
-                                <path d="M8 21h8M12 17v4" stroke="#F0A35B" stroke-width="1.5" stroke-linecap="round"/>
+                                <rect x="2" y="3" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                                <path d="M8 21h8M12 17v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <div class="result-title" data-nl="Altijd actief" data-en="Always on"></div>
@@ -610,20 +714,19 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <!-- DIENSTEN -->
-<div class="strip" id="services">
+<div class="strip depth-0" id="services">
     <div class="section fade-in">
         <p class="section-label" data-nl="Diensten" data-en="Services"></p>
-        <h2 class="section-title" data-nl="Wat Insightance voor u doet." data-en="What Insightance does for you."></h2>
+        <h2 class="section-title" data-nl="Wat Insightance voor u doet" data-en="What Insightance does for you"></h2>
         <div class="services-cards">
             <div class="service-card-new fade-item">
-                <div class="service-icon" style="border-color:rgba(91,138,240,0.4); background:rgba(91,138,240,0.07);">
+                <div class="service-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#5B8AF0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#5B8AF0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <h3 class="service-card-title" data-nl="Procesautomatisering" data-en="Process Automation"></h3>
@@ -637,10 +740,10 @@
                 </ul>
             </div>
             <div class="service-card-new fade-item">
-                <div class="service-icon" style="border-color:rgba(155,127,212,0.4); background:rgba(155,127,212,0.07);">
+                <div class="service-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="#9B7FD4" stroke-width="1.5"/>
-                        <path d="M9 9h6M9 12h6M9 15h4" stroke="#9B7FD4" stroke-width="1.5" stroke-linecap="round"/>
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+                        <path d="M9 9h6M9 12h6M9 15h4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                 </div>
                 <h3 class="service-card-title" data-nl="AI-systemen op maat" data-en="Custom AI Systems"></h3>
@@ -654,10 +757,10 @@
                 </ul>
             </div>
             <div class="service-card-new fade-item">
-                <div class="service-icon" style="border-color:rgba(82,193,122,0.4); background:rgba(82,193,122,0.07);">
+                <div class="service-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#52C17A" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M22 4L12 14.01l-3-3" stroke="#52C17A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M22 4L12 14.01l-3-3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <h3 class="service-card-title" data-nl="Oplevering & Nazorg" data-en="Delivery & Aftercare"></h3>
@@ -679,10 +782,10 @@
 </div>
 
 <!-- HOE INSIGHTANCE WERKT -->
-<div class="strip" id="howwework">
+<div class="strip depth-2" id="howwework">
     <div class="section fade-in">
         <p class="section-label" data-nl="Hoe Insightance werkt" data-en="How Insightance works"></p>
-        <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem." data-en="From first contact to working system."></h2>
+        <h2 class="section-title" data-nl="Van eerste contact tot werkend systeem" data-en="From first contact to working system"></h2>
         <div class="steps-wrap">
             <div class="steps-row">
                 <div class="step fade-item">
@@ -710,16 +813,21 @@
                     <h3 class="step-title" data-nl="Oplevering" data-en="Delivery"></h3>
                     <p class="step-text" data-nl="Het systeem gaat live. Insightance zorgt dat alles correct werkt en dat u weet hoe u ermee omgaat." data-en="The system goes live. Insightance ensures everything works correctly and that you know how to use it."></p>
                 </div>
+                <div class="step fade-item">
+                    <div class="step-circle">6</div>
+                    <h3 class="step-title" data-nl="Nazorg" data-en="Aftercare"></h3>
+                    <p class="step-text" data-nl="Vragen achteraf worden altijd beantwoord. Wilt u dat Insightance het systeem blijft bewaken en doorontwikkelen? Dan is een retainer beschikbaar." data-en="Questions after delivery are always answered. Want Insightance to keep monitoring and improving the system? A retainer is available."></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- WAAROM INSIGHTANCE -->
-<div class="strip" id="why">
+<div class="strip depth-0" id="why">
     <div class="section fade-in">
         <p class="section-label" data-nl="Waarom Insightance" data-en="Why Insightance"></p>
-        <h2 class="section-title" data-nl="Wat ons onderscheidt." data-en="What sets us apart."></h2>
+        <h2 class="section-title" data-nl="Wat ons onderscheidt" data-en="What sets us apart"></h2>
         <div class="why-grid" style="margin-top: 56px;">
             <div class="why-item fade-item">
                 <h3 class="why-title" data-nl="Persoonlijk" data-en="Personal"></h3>
@@ -747,10 +855,10 @@
 </div>
 
 <!-- OVER INSIGHTANCE -->
-<div class="strip" id="about">
+<div class="strip depth-1" id="about">
     <div class="section fade-in">
         <p class="section-label" data-nl="Over Insightance" data-en="About Insightance"></p>
-        <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer." data-en="From healthcare worker to AI founder."></h2>
+        <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer" data-en="From healthcare worker to AI founder"></h2>
         <div class="about-grid-new" style="margin-top: 56px;">
             <div class="photo-box">
                 <div class="photo-box-icon">
@@ -773,11 +881,132 @@
     </div>
 </div>
 
+<!-- TARIEVEN -->
+<div class="strip depth-light" id="tarieven">
+    <div class="section">
+
+        <!-- HEADER -->
+        <div class="fade-in" style="text-align:center; margin-bottom:48px;">
+            <p class="section-label" data-nl="Tarieven" data-en="Pricing"></p>
+            <h2 class="section-title" data-nl="Inzicht in uw investering.<br>Geen verrassingen." data-en="Insight into your investment.<br>No surprises."></h2>
+            <p style="font-size:15px; color:#777; line-height:1.7; max-width:520px; margin:0 auto;" data-nl="Vaste prijzen, duidelijke afspraken. U weet vooraf wat het kost en wat u krijgt." data-en="Fixed prices, clear agreements. You know upfront what it costs and what you get."></p>
+        </div>
+
+        <!-- DISCOVERY CALL BANNER -->
+        <div class="discovery-banner fade-in">
+            <div>
+                <span class="discovery-badge-sm" data-nl="Vrijblijvend · Begin hier" data-en="No obligation · Start here">Vrijblijvend · Begin hier</span>
+                <h3 class="discovery-title" data-nl="Discovery Call" data-en="Discovery Call">Discovery Call</h3>
+                <p class="discovery-sub" data-nl="30 minuten · Vrijblijvend" data-en="30 minutes · No obligation">30 minuten · Vrijblijvend</p>
+            </div>
+            <ul class="discovery-bullets">
+                <li data-nl="Analyse van uw grootste tijdverlies" data-en="Analysis of your biggest time loss">Analyse van uw grootste tijdverlies</li>
+                <li data-nl="Concrete aanbeveling, vrijblijvend" data-en="Concrete recommendation, no obligation">Concrete aanbeveling, vrijblijvend</li>
+                <li data-nl="U beslist of er een volgende stap is" data-en="You decide if there's a next step">U beslist of er een volgende stap is</li>
+            </ul>
+            <div>
+                <p class="discovery-free" data-nl="Gratis" data-en="Free">Gratis</p>
+                <a href="#contact" class="discovery-btn" data-nl="Plan een kennismaking →" data-en="Schedule a call →">Plan een kennismaking →</a>
+            </div>
+        </div>
+
+        <!-- 4 KAARTEN -->
+        <div class="pricing-grid">
+
+            <div class="pricing-card fade-item">
+                <span class="pricing-badge pricing-badge-default" data-nl="Eerste stap" data-en="First step">Eerste stap</span>
+                <h3 class="pricing-name" data-nl="AI Assessment" data-en="AI Assessment">AI Assessment</h3>
+                <p class="pricing-vanaf" data-nl="Eenmalig" data-en="One-time">Eenmalig</p>
+                <div class="pricing-amount">€300</div>
+                <p class="pricing-sub" data-nl="Volledig verrekend bij implementatie" data-en="Fully credited at implementation">Volledig verrekend bij implementatie</p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Analyse van uw processen en tools" data-en="Analysis of your processes and tools">Analyse van uw processen en tools</li>
+                    <li data-nl="Top 5 AI-kansen geprioriteerd" data-en="Top 5 AI opportunities prioritized">Top 5 AI-kansen geprioriteerd</li>
+                    <li data-nl="Geschatte tijdsbesparing per kans" data-en="Estimated time saving per opportunity">Geschatte tijdsbesparing per kans</li>
+                    <li data-nl="Aanbevolen vervolgstap met kostenindicatie" data-en="Recommended next step with cost indication">Aanbevolen vervolgstap met kostenindicatie</li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <div class="pricing-card fade-item">
+                <span class="pricing-badge pricing-badge-default" data-nl="Losse automation" data-en="Single automation">Losse automation</span>
+                <h3 class="pricing-name" data-nl="AI Implementatie" data-en="AI Implementation">AI Implementatie</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount">€750</div>
+                <p class="pricing-sub" data-nl="Assessment (€300) volledig verrekend" data-en="Assessment (€300) fully credited">Assessment (€300) volledig verrekend</p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Workflow automation of AI agent op maat" data-en="Workflow automation or custom AI agent">Workflow automation of AI agent op maat</li>
+                    <li data-nl="Vaste prijs, geen uurtje-factuurtje" data-en="Fixed price, no hourly billing">Vaste prijs, geen uurtje-factuurtje</li>
+                    <li data-nl="Live binnen enkele weken" data-en="Live within a few weeks">Live binnen enkele weken</li>
+                    <li data-nl="30 dagen ondersteuning inbegrepen" data-en="30 days support included">30 dagen ondersteuning inbegrepen</li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <div class="pricing-card featured fade-item">
+                <span class="pricing-badge pricing-badge-featured" data-nl="Aanbevolen" data-en="Recommended">Aanbevolen</span>
+                <h3 class="pricing-name" data-nl="AIOS Setup" data-en="AIOS Setup">AIOS Setup</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount gold">€2.500</div>
+                <p class="pricing-sub" data-nl="Eenmalig · Retainer optioneel" data-en="One-time · Retainer optional">Eenmalig · Retainer optioneel</p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Meerdere gekoppelde AI-systemen op maat" data-en="Multiple connected custom AI systems">Meerdere gekoppelde AI-systemen op maat</li>
+                    <li data-nl="Volledig geïntegreerd in uw bedrijfsprocessen" data-en="Fully integrated into your business processes">Volledig geïntegreerd in uw bedrijfsprocessen</li>
+                    <li data-nl="Persoonlijke begeleiding gedurende het traject" data-en="Personal guidance throughout the project">Persoonlijke begeleiding gedurende het traject</li>
+                    <li data-nl="Getest en fijngesteld voor oplevering" data-en="Tested and fine-tuned before delivery">Getest en fijngesteld voor oplevering</li>
+                    <li data-nl="Vragen achteraf altijd beantwoord" data-en="Questions afterwards always answered">Vragen achteraf altijd beantwoord</li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-gold" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+            <div class="pricing-card fade-item">
+                <span class="pricing-badge pricing-badge-default" data-nl="Doorlopend beheer" data-en="Ongoing management">Doorlopend beheer</span>
+                <h3 class="pricing-name" data-nl="AIOS Retainer" data-en="AIOS Retainer">AIOS Retainer</h3>
+                <p class="pricing-vanaf" data-nl="Vanaf" data-en="From">Vanaf</p>
+                <div class="pricing-amount">€600<span style="font-size:16px; font-weight:400; color:#AAA;">/mnd</span></div>
+                <p class="pricing-sub" data-nl="Maandelijks opzegbaar" data-en="Cancel monthly">Maandelijks opzegbaar</p>
+                <div class="pricing-divider"></div>
+                <ul class="pricing-bullets">
+                    <li data-nl="Maandelijkse monitoring van alle AI-systemen" data-en="Monthly monitoring of all AI systems">Maandelijkse monitoring van alle AI-systemen</li>
+                    <li data-nl="Updates en aanpassingen bij wijzigingen" data-en="Updates and adjustments when needed">Updates en aanpassingen bij wijzigingen</li>
+                    <li data-nl="Rapportage: wat loopt, wat spaart, wat verbetert" data-en="Reporting: what works, what saves, what improves">Rapportage: wat loopt, wat spaart, wat verbetert</li>
+                    <li data-nl="Directe toegang tot Insightance" data-en="Direct access to Insightance">Directe toegang tot Insightance</li>
+                </ul>
+                <a href="#contact" class="pricing-cta pricing-cta-outline" data-nl="Plan een kennismaking" data-en="Schedule a call">Plan een kennismaking</a>
+            </div>
+
+        </div>
+
+        <!-- BETAALSTRUCTUUR -->
+        <div class="fade-in" style="display:flex; justify-content:center; margin-top:28px;">
+            <div style="background:#fff; border:1px solid #D8D0C4; border-radius:8px; padding:18px 32px; display:inline-flex; align-items:center; gap:32px; flex-wrap:wrap;">
+                <span style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#AAA;" data-nl="Betaalstructuur" data-en="Payment structure">Betaalstructuur</span>
+                <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">1</span>
+                    <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> <span data-nl="bij aangaan samenwerking" data-en="upon starting the project">bij aangaan samenwerking</span></span>
+                </div>
+                <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">2</span>
+                    <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> <span data-nl="bij oplevering" data-en="upon delivery">bij oplevering</span></span>
+                </div>
+            </div>
+        </div>
+
+        <p class="pricing-note" data-nl="Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat." data-en="All amounts are exclusive of VAT and indicative. After a no-obligation call you will always receive a transparent custom proposal."></p>
+
+    </div>
+</div>
+
 <!-- FAQ -->
-<div class="strip" id="faq">
+<div class="strip depth-2" id="faq">
     <div class="section fade-in">
         <p class="section-label" data-nl="FAQ" data-en="FAQ"></p>
-        <h2 class="section-title" data-nl="Uw vragen beantwoord." data-en="Your questions answered."></h2>
+        <h2 class="section-title" data-nl="Uw vragen beantwoord" data-en="Your questions answered"></h2>
         <div class="faq-list">
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
@@ -803,7 +1032,7 @@
                     <span class="faq-plus">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p class="faq-answer-inner" data-nl="De prijs is afhankelijk van het project en de complexiteit. Plan een vrijblijvend oriëntatie gesprek in en u ontvangt een eerlijke indicatie zonder verplichtingen." data-en="The price depends on the project and complexity. Schedule a no-obligation orientation call and you'll receive an honest estimate without any commitments."></p>
+                    <p class="faq-answer-inner" data-nl="De tarieven beginnen vanaf €300 voor een AI Assessment, vanaf €750 voor een losse AI implementatie en vanaf €2.500 voor een volledig maatwerk systeem. Voor doorlopend beheer is een retainer beschikbaar vanaf €600 per maand. De uiteindelijke prijs is afhankelijk van het project en de complexiteit. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat." data-en="Pricing starts from €300 for an AI Assessment, from €750 for a single AI implementation, and from €2,500 for a fully custom system. Ongoing management is available via a retainer from €600 per month. The final price depends on the project and complexity. After a no-obligation call you will always receive a transparent custom proposal."></p>
                 </div>
             </div>
             <div class="faq-item">
@@ -826,6 +1055,15 @@
             </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-nl="Wat gebeurt er na oplevering?" data-en="What happens after delivery?"></span>
+                    <span class="faq-plus">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p class="faq-answer-inner" data-nl="Na oplevering zorgt Insightance dat u precies weet hoe het systeem werkt. Vragen achteraf worden altijd beantwoord, dat hoort bij de oplevering. Wilt u dat Insightance het systeem blijft bewaken, updaten en doorontwikkelen? Dan is een maandelijkse retainer beschikbaar. Dit is optioneel: u beslist zelf of u dat wilt, er is geen verplichting." data-en="After delivery, Insightance ensures you know exactly how the system works. Questions afterwards are always answered — that's part of the delivery. Want Insightance to keep monitoring, updating, and improving the system? A monthly retainer is available. This is optional: you decide whether you want it, there is no obligation."></p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
                     <span data-nl="Ik twijfel en wil meer informatie, wat moet ik doen?" data-en="I'm unsure and want more information, what should I do?"></span>
                     <span class="faq-plus">+</span>
                 </div>
@@ -840,11 +1078,118 @@
     </div>
 </div>
 
+<!-- RESULTATEN TEASER -->
+<div class="strip depth-1" id="resultaten" style="padding: 80px 0;">
+    <div class="section fade-in" style="max-width:1160px; margin:0 auto; padding:0 60px;">
+        <div style="text-align:center; margin-bottom:44px;">
+            <span class="section-label" data-nl="Resultaten" data-en="Results"></span>
+            <h2 class="section-title" data-nl="Wat we bouwen, werkt" data-en="What we build, works"></h2>
+            <p style="font-size:15px; color:var(--gray); max-width:420px; margin:0 auto; line-height:1.8;" data-nl="Dit is wat er verandert als een systeem het overneemt." data-en="This is what changes when a system takes over."></p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:860px; margin:0 auto 40px;">
+
+            <!-- MHL mini card -->
+            <div style="background:#161619; border:1px solid rgba(201,168,76,0.12); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; position:relative;">
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,#C9A84C,#E8C97A,#C9A84C);"></div>
+                <div style="padding:0; overflow:hidden; height:120px;">
+                    <img src="docs/images/mhl-demo-preview.jpg" alt="MHL offerte-maker" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;" onerror="this.style.display='none'">
+                </div>
+                <div style="padding:20px 22px 24px; display:flex; flex-direction:column; gap:8px; flex:1;">
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C9A84C;" data-nl="Dienstverlening" data-en="Services"></div>
+                    <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#EAE5DC;">MHL Installatieservice</div>
+                    <div style="font-size:12px;color:#C0C0C0;line-height:1.65;" data-nl="Van <strong>20 minuten handmatig</strong> per offerte naar één klik. Klant ontvangt de PDF direct in zijn inbox." data-en="From <strong>20 minutes manually</strong> per quote to one click. Client receives the PDF directly."></div>
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:4px;">
+                        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#C9A84C;text-shadow:0 0 20px rgba(201,168,76,0.3);">90%</div>
+                        <div style="font-size:12px;color:#C0C0C0;line-height:1.5;"><strong style="display:block;color:#fff;font-weight:700;" data-nl="minder tijd" data-en="less time"></strong><span data-nl="per offerte" data-en="per quote"></span></div>
+                    </div>
+                    <a href="resultaten.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#C9A84C;letter-spacing:.04em;margin-top:4px;text-decoration:none;" data-nl="Bekijk case study →" data-en="View case study →"></a>
+                </div>
+            </div>
+
+            <!-- FTUK mini card -->
+            <div style="background:#161619; border:1px solid rgba(201,168,76,0.12); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; position:relative;">
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,#C9A84C,#E8C97A,#C9A84C);"></div>
+                <div style="padding:0; overflow:hidden; height:120px; background:#0b0d18; display:flex; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                    <div style="width:56px;background:#12152a;border-right:1px solid #222640;flex-shrink:0;padding:6px 0;display:flex;flex-direction:column;">
+                        <div style="padding:5px 7px 5px;border-bottom:1px solid #222640;margin-bottom:4px;">
+                            <div style="font-size:5.5px;font-weight:700;color:#fff;letter-spacing:.08em;">FTUK</div>
+                            <div style="font-size:3.5px;color:#3a4060;letter-spacing:.05em;margin-top:1px;">BUSINESS<br>INTELLIGENCE</div>
+                        </div>
+                        <div style="padding:3px 7px;font-size:5px;color:#fff;background:rgba(44,52,112,0.4);border-left:2px solid #5b6de8;display:flex;align-items:center;gap:3px;">▦ Overview</div>
+                        <div style="padding:3px 7px;font-size:5px;color:#4a5580;">↗ Revenue</div>
+                        <div style="padding:3px 7px;font-size:5px;color:#4a5580;">◈ Ads</div>
+                        <div style="padding:3px 7px;font-size:5px;color:#4a5580;">☰ Orders</div>
+                    </div>
+                    <div style="flex:1;padding:7px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                            <div>
+                                <div style="font-size:9px;font-weight:700;color:#fff;">Good morning</div>
+                                <div style="font-size:4px;color:#3a4060;margin-top:1px;">Last updated: just now · auto-refresh every 60s</div>
+                            </div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:2px 5px;font-size:4px;color:#4a5580;flex-shrink:0;">Daily report sent · 07:00</div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px;">
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:3px 4px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#00c853;"></div><div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">NET REVENUE</div><div style="font-size:7px;font-weight:700;color:#00c853;filter:blur(3px);">£3,847</div></div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:3px 4px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#3d4a9e;"></div><div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">ORDERS</div><div style="font-size:7px;font-weight:700;color:#fff;filter:blur(3px);">142</div></div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:3px 4px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#e53935;"></div><div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">REFUNDS</div><div style="font-size:7px;font-weight:700;color:#e53935;filter:blur(3px);">£214</div></div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:3px 4px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#7c3aed;"></div><div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">ROAS</div><div style="font-size:7px;font-weight:700;color:#a78bfa;filter:blur(3px);">4.2×</div></div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:3px 4px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#ff6d00;"></div><div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">VISITORS</div><div style="font-size:7px;font-weight:700;color:#ff6d00;filter:blur(3px);">89</div></div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:3px;flex:1;min-height:0;">
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:4px 5px;">
+                                <div style="font-size:5px;font-weight:600;color:#fff;margin-bottom:3px;">Revenue — Last 7 Days</div>
+                                <div style="display:flex;align-items:flex-end;gap:2px;height:22px;">
+                                    <div style="flex:1;height:48%;background:#3d4a9e;border-radius:1px 1px 0 0;opacity:.8;"></div>
+                                    <div style="flex:1;height:62%;background:#5b6de8;border-radius:1px 1px 0 0;opacity:.8;"></div>
+                                    <div style="flex:1;height:41%;background:#3d4a9e;border-radius:1px 1px 0 0;opacity:.8;"></div>
+                                    <div style="flex:1;height:55%;background:#5b6de8;border-radius:1px 1px 0 0;opacity:.8;"></div>
+                                    <div style="flex:1;height:91%;background:#C9A84C;border-radius:1px 1px 0 0;"></div>
+                                    <div style="flex:1;height:100%;background:#C9A84C;border-radius:1px 1px 0 0;"></div>
+                                    <div style="flex:1;height:68%;background:#5b6de8;border-radius:1px 1px 0 0;opacity:.8;"></div>
+                                </div>
+                            </div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:4px 5px;display:flex;align-items:center;justify-content:center;">
+                                <svg viewBox="0 0 36 36" style="width:24px;height:24px;">
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#222640" stroke-width="3.5"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#00c853" stroke-width="3.5" stroke-dasharray="73 27" stroke-dashoffset="25"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#ffc107" stroke-width="3.5" stroke-dasharray="17 83" stroke-dashoffset="-48"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#e53935" stroke-width="3.5" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+                                </svg>
+                            </div>
+                            <div style="background:#12152a;border:1px solid #222640;border-radius:3px;padding:4px 5px;">
+                                <div style="font-size:5px;font-weight:600;color:#fff;margin-bottom:3px;">Top Markets</div>
+                                <div style="font-size:3.5px;color:#8090b0;margin-bottom:2px;">🇬🇧 United Kingdom</div>
+                                <div style="height:2px;background:#222640;border-radius:1px;overflow:hidden;margin-bottom:3px;"><div style="width:54%;height:100%;background:#3d4a9e;"></div></div>
+                                <div style="font-size:3.5px;color:#8090b0;margin-bottom:2px;">🇦🇺 Australia</div>
+                                <div style="height:2px;background:#222640;border-radius:1px;overflow:hidden;"><div style="width:24%;height:100%;background:#3d4a9e;opacity:.7;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1;">
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C9A84C;" data-nl="E-commerce & Media" data-en="E-commerce & Media"></div>
+                    <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#EAE5DC;">FTUK</div>
+                    <div style="font-size:12px;color:#C0C0C0;line-height:1.65;" data-nl="Van <strong>minimaal 8 uur per week</strong> aan handmatig dataverzamelen naar een live dashboard met accurate aanbevelingen en een dagelijks rapport." data-en="From <strong>at least 8 hours per week</strong> of manual data gathering to a live dashboard with accurate recommendations and a daily report."></div>
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:4px;">
+                        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#C9A84C;text-shadow:0 0 20px rgba(201,168,76,0.3);">8 uur</div>
+                        <div style="font-size:12px;color:#C0C0C0;line-height:1.5;"><strong style="display:block;color:#fff;font-weight:700;" data-nl="per week" data-en="per week"></strong><span data-nl="teruggewonnen" data-en="recovered"></span></div>
+                    </div>
+                    <a href="resultaten.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#C9A84C;letter-spacing:.04em;margin-top:4px;text-decoration:none;" data-nl="Bekijk case study →" data-en="View case study →"></a>
+                </div>
+            </div>
+
+        </div>
+        <div style="text-align:center;">
+            <a href="resultaten.html" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#C9A84C;font-size:13px;font-weight:600;letter-spacing:.08em;padding:12px 32px;border-radius:999px;border:1px solid rgba(201,168,76,0.4);text-decoration:none;" data-nl="Bekijk alle resultaten →" data-en="View all results →"></a>
+        </div>
+    </div>
+</div>
+
 <!-- CONTACT -->
-<div class="strip" id="contact">
+<div class="strip depth-0" id="contact">
     <div class="section fade-in">
         <p class="section-label" data-nl="Contact" data-en="Contact"></p>
-        <h2 class="section-title" data-nl="Laten we praten." data-en="Let's talk."></h2>
+        <h2 class="section-title" data-nl="Laten we praten" data-en="Let's talk"></h2>
         <div class="contact-c-grid" style="margin-top: 56px;">
             <div class="contact-quote-block">
                 <h3 class="contact-quote">
@@ -888,12 +1233,12 @@
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
                         </div>
-                        <div class="contact-icon-value"><a href="https://wa.me/31653340362" target="_blank" data-nl="WhatsApp: +31 6 53340362" data-en="WhatsApp: +31 6 53340362">WhatsApp: +31 6 53340362</a></div>
+                        <div class="contact-icon-value"><a href="https://wa.me/31653340362" target="_blank" data-nl="WhatsApp" data-en="WhatsApp">WhatsApp</a></div>
                     </div>
                 </div>
             </div>
             <!-- Vervang YOURFORMID met uw Formspree form ID na registratie op formspree.io -->
-            <form action="https://formspree.io/f/YOURFORMID" method="POST">
+            <form action="https://formspree.io/f/xvzygweb" method="POST">
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label" data-nl="Naam *" data-en="Name *"></label>
@@ -963,43 +1308,84 @@
     </div>
 </div>
 
+<!-- STICKY CTA -->
+<a href="#contact" class="sticky-cta-main hidden" id="stickyCta" data-nl="Plan een kennismaking" data-en="Let's connect">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#000" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>
+    Plan een kennismaking
+</a>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+    <p>Insightance gebruikt functionele cookies om de website goed te laten werken. <a href="privacybeleid.html">Meer informatie</a></p>
+    <div class="cookie-actions">
+        <button class="cookie-decline" onclick="dismissCookie()">Sluiten</button>
+        <button class="cookie-accept" onclick="acceptCookie()">Akkoord</button>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
-            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
-            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
-            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
-        </svg>
-        <span class="footer-logo">Insightance</span>
+    <div class="footer-top">
+        <a href="#" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+            <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+                <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+                <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+                <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            </svg>
+            <span class="footer-logo">Insightance</span>
+        </a>
+        <div class="footer-links">
+            <a href="mailto:oussama@insightance.ai" class="footer-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.5"/></svg>
+                oussama@insightance.ai
+            </a>
+            <a href="https://wa.me/31653340362" class="footer-link" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+            </a>
+            <a href="#" class="footer-link" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/><line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                LinkedIn
+            </a>
+        </div>
     </div>
-    <span data-nl="© 2026 Insightance. Alle rechten voorbehouden." data-en="© 2026 Insightance. All rights reserved."></span>
-    <span style="font-size:11px; color: #333; letter-spacing: 0.2em; text-transform: uppercase;">Amsterdam · 2026</span>
-    <div class="footer-linkedin" style="display:flex; gap:16px; align-items:center;">
-        <a href="https://wa.me/31653340362" title="WhatsApp" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#C9A84C">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-        <a href="mailto:oussama@insightance.ai" title="E-mail">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A84C" stroke-width="1.5"/>
-                <path d="M22 6l-10 7L2 6" stroke="#C9A84C" stroke-width="1.5"/>
-            </svg>
-        </a>
-        <a href="#" title="LinkedIn" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="2" width="20" height="20" rx="4" stroke="#C9A84C" stroke-width="1.5"/>
-                <circle cx="7.5" cy="7.5" r="1.2" fill="#C9A84C"/>
-                <line x1="7.5" y1="10.5" x2="7.5" y2="17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M11 10.5v6.5M11 13c0-1.5 1-2.5 2.5-2.5S16 12 16 13.5V17" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-        </a>
+    <div class="footer-bottom">
+        <span class="footer-meta-left">Insightance · KVK: volgt · Amsterdam</span>
+        <div class="footer-meta-right">
+            <a href="privacybeleid.html" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a>
+            <span data-nl="© 2026 Insightance" data-en="© 2026 Insightance">© 2026 Insightance</span>
+        </div>
     </div>
 </footer>
 
 <script>
+    // STICKY CTA — verschijnt na hero, verdwijnt bij footer
+    const stickyCta = document.getElementById('stickyCta');
+    const heroEl = document.querySelector('.hero');
+    const footerEl = document.querySelector('footer');
+    let pastHero = false;
+    let atFooter = false;
+    function updateSticky() {
+        stickyCta.classList.toggle('hidden', !pastHero || atFooter);
+    }
+    new IntersectionObserver((e) => { pastHero = !e[0].isIntersecting; updateSticky(); }, { threshold: 0.1 }).observe(heroEl);
+    new IntersectionObserver((e) => { atFooter = e[0].isIntersecting; updateSticky(); }, { threshold: 0.01 }).observe(footerEl);
+
+    // COOKIE BANNER
+    (function() {
+        if (!localStorage.getItem('cookie_consent')) {
+            setTimeout(() => document.getElementById('cookieBanner').classList.add('visible'), 800);
+        }
+    })();
+    function acceptCookie() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').classList.remove('visible');
+    }
+    function dismissCookie() {
+        document.getElementById('cookieBanner').classList.remove('visible');
+    }
+
     let lang = 'nl';
 
     function applyLang() {
