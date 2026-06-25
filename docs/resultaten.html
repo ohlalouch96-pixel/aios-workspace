@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Insightance — Bekijk de resultaten van onze AI-automatiseringsprojecten. Van handmatige processen naar slimme systemen.">
+    <title>Resultaten | Insightance</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --bg: #131316;
+            --surface: #161619;
+            --white: #EAE5DC;
+            --gray: #888;
+            --gray-light: #C0C0C0;
+            --border: #252525;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 0%, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent 100%); z-index: 200; }
+
+        /* NAV */
+        nav { position: fixed; top: 2px; left: 0; right: 0; z-index: 100; padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,10,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); transition: border-color 0.3s; }
+        .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-text { font-size: 16px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a { color: var(--gray-light); text-decoration: none; font-size: 13px; letter-spacing: 0.04em; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .lang-toggle { background: none; border: 1px solid var(--border); color: var(--gray); padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.2s; }
+        .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
+        .nav-cta { background: var(--gold); color: #000; padding: 10px 22px; border-radius: 3px; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; transition: all 0.2s; white-space: nowrap; }
+        .nav-cta:hover { background: var(--gold-light); }
+
+        /* PAGE HEADER */
+        .page-header { padding: 140px 40px 72px; text-align: center; }
+        .page-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); display: block; }
+        .page-kicker::after { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); margin: 10px auto 20px; opacity: 0.7; }
+        .page-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 600; color: var(--white); margin-bottom: 16px; line-height: 1.15; }
+        .page-intro { font-size: 16px; color: var(--gray); max-width: 480px; margin: 0 auto; line-height: 1.8; }
+
+        /* INNER */
+        .inner { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+
+        /* CASE INTRO */
+        .case-intro { margin-bottom: 24px; }
+        .case-intro-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .case-intro-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.4; }
+        .case-intro-text { font-size: 16px; color: rgba(234,229,220,0.6); line-height: 1.7; max-width: 680px; }
+
+        /* DIVIDER */
+        .case-divider { display: flex; align-items: center; gap: 24px; margin: 72px 0; }
+        .case-divider-line { flex: 1; height: 1px; background: #1e1e22; }
+        .case-divider-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(201,168,76,0.3); flex-shrink: 0; }
+
+        /* CASE CARD — MHL (visual left, content right reversed = text left, visual right) */
+        .case-card-mhl {
+            display: grid; grid-template-columns: 1fr 1fr;
+            background: var(--surface); border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px; overflow: hidden; position: relative;
+        }
+        .case-card-mhl::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+
+        .mhl-text { padding: 52px 48px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
+        .mhl-visual { background: #0F0F12; display: flex; flex-direction: column; }
+        .mhl-quote-block { padding: 40px 44px 28px; border-bottom: 1px solid rgba(201,168,76,0.06); border-left: 3px solid var(--gold); flex-shrink: 0; }
+        .mhl-quote-text { font-size: 17px; color: var(--white); line-height: 1.8; font-style: italic; margin-bottom: 14px; }
+        .mhl-quote-cite { font-size: 13px; font-weight: 600; color: var(--gold); }
+        .mhl-screenshot { flex: 1; padding: 20px 28px 28px; display: flex; align-items: flex-start; }
+        .mhl-screenshot img { width: 100%; border-radius: 8px; border: 1px solid rgba(201,168,76,0.15); display: block; }
+
+        /* CASE CARD — FTUK (text left, dashboard right) */
+        .case-card-ftuk {
+            display: grid; grid-template-columns: 400px 1fr;
+            background: var(--surface); border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px; overflow: hidden; position: relative;
+        }
+        .case-card-ftuk::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold)); }
+
+        /* Shared text column */
+        .case-text { padding: 52px 48px; display: flex; flex-direction: column; border-right: 1px solid rgba(201,168,76,0.08); }
+        .case-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+        .case-tag::before { content: ''; width: 16px; height: 1px; background: var(--gold); opacity: 0.5; }
+        .case-company { font-family: var(--font-heading); font-size: 26px; font-weight: 600; color: var(--white); margin-bottom: 36px; line-height: 1.2; }
+        .case-flow { display: flex; flex-direction: column; margin-bottom: 36px; }
+        .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
+        .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .case-flow-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0; }
+        .case-flow-dot.active { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.4); }
+        .case-flow-connector { width: 1px; flex: 1; min-height: 28px; background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05)); margin: 4px 0; }
+        .case-flow-body { padding-bottom: 28px; }
+        .case-flow-body.last { padding-bottom: 0; }
+        .case-flow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
+        .case-flow-text { font-size: 14px; color: var(--gray-light); line-height: 1.75; }
+        .case-flow-text strong { color: #fff; }
+
+        /* Result metric tile */
+        .case-result { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; gap: 18px; margin-bottom: 32px; }
+        .case-result-number { font-family: var(--font-heading); font-size: 48px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; text-shadow: 0 0 24px rgba(201,168,76,0.3); }
+        .case-result-text { font-size: 14px; color: var(--gray-light); line-height: 1.65; }
+        .case-result-text strong { display: block; color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+
+        /* Quote */
+        .case-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 20px; margin-top: auto; }
+        .case-quote p { font-size: 14px; color: var(--gray-light); line-height: 1.8; font-style: italic; margin-bottom: 10px; }
+        .case-quote cite { font-size: 12px; color: var(--gold); font-style: normal; letter-spacing: 0.05em; font-weight: 500; }
+
+        /* FTUK Dashboard visual */
+        .ftuk-visual { background: #0b0d18; display: flex; flex-direction: column; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .ftuk-browser { background: #13162a; border-bottom: 1px solid #222640; padding: 9px 14px; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+        .fbd { width: 9px; height: 9px; border-radius: 50%; }
+        .fbd:nth-child(1) { background: #FF5F57; } .fbd:nth-child(2) { background: #FEBC2E; } .fbd:nth-child(3) { background: #28C840; }
+        .fburl { flex: 1; background: #1e2236; border-radius: 3px; padding: 4px 10px; font-size: 10px; color: #3a4060; margin-left: 6px; }
+        .fblive { display: flex; align-items: center; gap: 5px; font-size: 9px; color: #00c853; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+        .fblive-dot { width: 6px; height: 6px; background: #00c853; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        .ftuk-dash-body { flex: 1; display: flex; overflow: hidden; }
+        .ftuk-sidebar { width: 140px; background: #0f1226; border-right: 1px solid #222640; display: flex; flex-direction: column; flex-shrink: 0; padding: 0; }
+        .ftuk-logo-area { padding: 14px 16px 12px; border-bottom: 1px solid #222640; }
+        .ftuk-logo-name { font-size: 10px; font-weight: 700; color: #fff; letter-spacing: 0.08em; text-transform: uppercase; }
+        .ftuk-logo-sub { font-size: 7.5px; color: #6070a0; margin-top: 2px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .ftuk-nav { flex: 1; padding: 6px 0; }
+        .ftuk-nav-section { font-size: 7.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #3a4060; padding: 10px 16px 4px; }
+        .ftuk-nav-item { padding: 7px 16px; font-size: 11px; color: #6070a0; border-left: 2px solid transparent; display: flex; align-items: center; gap: 8px; }
+        .ftuk-nav-item.active { color: #fff; background: rgba(44,52,112,0.4); border-left-color: #5b6de8; }
+        .ftuk-nav-footer { padding: 10px 16px; border-top: 1px solid #222640; font-size: 9px; color: #3a4060; display: flex; align-items: center; gap: 6px; }
+
+        .ftuk-main { flex: 1; padding: 14px 14px 10px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+        .ftuk-topbar { display: flex; justify-content: space-between; align-items: flex-start; }
+        .ftuk-greeting { font-size: 14px; font-weight: 600; color: #fff; }
+        .ftuk-subline { font-size: 9px; color: #6070a0; margin-top: 2px; }
+        .ftuk-badge { background: #12152a; border: 1px solid #222640; border-radius: 6px; padding: 3px 8px; font-size: 9px; color: #6070a0; }
+
+        .ftuk-kpis { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+        .ftuk-kpi { background: #12152a; border: 1px solid #222640; border-radius: 8px; padding: 10px 10px 8px; position: relative; overflow: hidden; }
+        .ftuk-kpi-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+        .ftuk-kpi-lbl { font-size: 7.5px; color: #6070a0; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; }
+        .ftuk-kpi-val { font-size: 14px; font-weight: 700; color: #fff; filter: blur(5px); line-height: 1; user-select: none; }
+        .ftuk-kpi-delta { font-size: 8px; margin-top: 4px; filter: blur(3.5px); }
+
+        .ftuk-mid { display: grid; grid-template-columns: 1.7fr 0.85fr 0.85fr; gap: 8px; flex: 1; min-height: 0; }
+        .ftuk-panel { background: #12152a; border: 1px solid #222640; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; overflow: hidden; }
+        .ftuk-panel-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .ftuk-panel-sub { font-size: 9px; color: #6070a0; margin-bottom: 8px; }
+        .ftuk-panel-sub span { filter: blur(3px); }
+
+        .ftuk-bars { display: flex; align-items: flex-end; gap: 5px; height: 64px; }
+        .ftuk-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+        .ftuk-bar { width: 100%; border-radius: 3px 3px 0 0; }
+        .ftuk-bar.blue { background: #3d4a9e; }
+        .ftuk-bar.navy { background: #5b6de8; opacity: 0.8; }
+        .ftuk-bar.gold { background: #C9A84C; }
+        .ftuk-bar-lbl { font-size: 7px; color: #3a4060; }
+
+        .ftuk-today-bar { margin-top: 8px; background: #12152a; border: 1px solid #2a3060; border-radius: 6px; padding: 7px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .ftuk-today-label { font-size: 9px; font-weight: 600; color: #5b6de8; }
+        .ftuk-today-stats { display: flex; gap: 20px; }
+        .ftuk-today-stat { text-align: center; }
+        .ftuk-today-val { font-size: 11px; font-weight: 700; filter: blur(4px); line-height: 1; }
+        .ftuk-today-lbl { font-size: 7.5px; color: #6070a0; margin-top: 1px; }
+
+        .ftuk-donut-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; gap: 10px; }
+        .ftuk-donut-svg { width: 70px; height: 70px; flex-shrink: 0; }
+        .ftuk-legend { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .ftuk-legend-item { display: flex; align-items: center; gap: 6px; font-size: 8.5px; color: #8090b0; }
+        .ftuk-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        .ftuk-geo { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+        .ftuk-geo-row { display: flex; flex-direction: column; gap: 3px; }
+        .ftuk-geo-top { display: flex; justify-content: space-between; font-size: 9px; }
+        .ftuk-geo-country { color: #8090b0; }
+        .ftuk-geo-pct { color: #6070a0; filter: blur(3px); }
+        .ftuk-geo-bar-bg { height: 3px; background: #222640; border-radius: 2px; overflow: hidden; }
+        .ftuk-geo-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, #3d4a9e, #5b6de8); }
+
+        .ftuk-bot { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+        .ftuk-ads { display: flex; flex-direction: column; }
+        .ftuk-ads-head { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 0 0 5px; border-bottom: 1px solid #222640; font-size: 7.5px; color: #3a4060; text-transform: uppercase; }
+        .ftuk-ads-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 5px 0; border-bottom: 1px solid rgba(34,38,64,0.6); align-items: center; }
+        .ftuk-ads-row:last-child { border-bottom: none; }
+        .ftuk-ads-name { font-size: 8.5px; color: #8090b0; filter: blur(3.5px); white-space: nowrap; overflow: hidden; }
+        .ftuk-ads-cell { font-size: 8.5px; color: #6070a0; filter: blur(3px); }
+        .ftuk-ads-cell.pos { color: #00c853; } .ftuk-ads-cell.neg { color: #e53935; }
+        .ftuk-ads-badge { font-size: 7.5px; padding: 2px 5px; border-radius: 8px; background: rgba(44,52,112,0.5); color: #a0b0ff; text-align: center; }
+
+        .ftuk-ai-panel { display: flex; flex-direction: column; gap: 6px; }
+        .ftuk-ai-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+        .ftuk-ai-title::before { content: '◈'; color: #ffc107; font-size: 10px; }
+        .ftuk-rec { background: rgba(44,52,112,0.2); border: 1px solid #222640; border-radius: 6px; padding: 7px 9px; }
+        .ftuk-rec.warn { background: rgba(229,57,53,0.06); border-color: rgba(229,57,53,0.2); }
+        .ftuk-rec-tag { font-size: 7.5px; color: #a0b0ff; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; font-weight: 600; }
+        .ftuk-rec.warn .ftuk-rec-tag { color: #ff8a80; }
+        .ftuk-rec-text { font-size: 8.5px; color: #8090b0; line-height: 1.45; }
+        .ftuk-rec-text strong { color: #c0c8e0; }
+        .ftuk-report { background: rgba(44,52,112,0.15); border: 1px solid #222640; border-radius: 6px; padding: 6px 9px; display: flex; align-items: center; gap: 6px; }
+        .ftuk-report-icon { font-size: 11px; color: #5b6de8; flex-shrink: 0; }
+        .ftuk-report-text { font-size: 8.5px; color: #8090b0; line-height: 1.35; }
+        .ftuk-report-text strong { color: #a0b0c0; }
+
+        /* CTA BLOCK */
+        .cta-block { text-align: center; padding: 88px 0 80px; }
+        .cta-kicker { font-size: 13px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; opacity: 0.8; }
+        .cta-title { font-family: var(--font-heading); font-size: clamp(22px, 2.4vw, 32px); font-weight: 600; color: var(--white); line-height: 1.35; max-width: 600px; margin: 0 auto 16px; }
+        .cta-sub { font-size: 15px; color: var(--gray); margin-bottom: 40px; }
+        .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--gold); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; padding: 12px 32px; border-radius: 999px; border: 1px solid rgba(201,168,76,0.5); text-decoration: none; transition: all 0.2s; font-family: var(--font-body); }
+        .cta-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+        /* FOOTER */
+        footer { background: #0a0a0c; border-top: 1px solid #1a1a1e; padding: 48px 60px 32px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+        .footer-logo { color: var(--gold); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; font-size: 13px; }
+        .footer-links { display: flex; gap: 28px; }
+        .footer-link { color: var(--gray); text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+        .footer-link:hover { color: var(--gold); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1e; padding-top: 24px; }
+        .footer-meta-left { font-size: 12px; color: #444; }
+        .footer-meta-right { display: flex; gap: 24px; }
+        .footer-meta-right a { font-size: 12px; color: #444; text-decoration: none; transition: color 0.2s; }
+        .footer-meta-right a:hover { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a href="index.html" class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+        </svg>
+        <span class="logo-text">Insightance</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html#services" data-nl="Diensten" data-en="Services">Diensten</a></li>
+        <li><a href="resultaten.html" class="active" data-nl="Resultaten" data-en="Results">Resultaten</a></li>
+        <li><a href="index.html#tarieven" data-nl="Tarieven" data-en="Pricing">Tarieven</a></li>
+        <li><a href="index.html#faq" data-nl="FAQ" data-en="FAQ">FAQ</a></li>
+        <li><a href="index.html#contact" data-nl="Contact" data-en="Contact">Contact</a></li>
+    </ul>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+        <a href="index.html#contact" class="nav-cta" data-nl="Plan een kennismaking" data-en="Let's connect">Plan een kennismaking</a>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <span class="page-kicker" data-nl="Resultaten" data-en="Results">Resultaten</span>
+    <h1 class="page-title" data-nl="Wat we bouwen, werkt" data-en="What we build, works">Wat we bouwen, werkt</h1>
+    <p class="page-intro" data-nl="Zo ziet het eruit als handmatig werk verdwijnt." data-en="This is what it looks like when manual work disappears.">Zo ziet het eruit als handmatig werk verdwijnt.</p>
+</div>
+
+<!-- CASES -->
+<div class="inner" style="padding-bottom: 20px;">
+
+    <!-- Case 01 -->
+    <div class="case-intro">
+        <div class="case-intro-label" data-nl="Case 01" data-en="Case 01">Case 01</div>
+        <p class="case-intro-text" data-nl="Een installatiebedrijf verloor wekelijks uren aan het handmatig opstellen en versturen van offertes. Twintig minuten per offerte, keer op keer." data-en="An installation company lost hours every week manually creating and sending quotes. Twenty minutes per quote, time and again.">Een installatiebedrijf verloor wekelijks uren aan het handmatig opstellen en versturen van offertes. Twintig minuten per offerte, keer op keer.</p>
+    </div>
+
+    <div class="case-card-mhl">
+        <!-- Tekst links -->
+        <div class="mhl-text">
+            <div class="case-tag" data-nl="Technische dienstverlening" data-en="Technical services">Technische dienstverlening</div>
+            <h2 class="case-company">MHL Installatieservice</h2>
+            <div class="case-flow">
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot"></div>
+                        <div class="case-flow-connector"></div>
+                    </div>
+                    <div class="case-flow-body">
+                        <div class="case-flow-label" data-nl="Vroeger" data-en="Before">Vroeger</div>
+                        <div class="case-flow-text" data-nl="Elke offerte begon met een oude Word-offerte openen en de vorige klantgegevens handmatig weghalen. Naam, adres, telefoon opnieuw intypen. Werkzaamheden regel voor regel invullen, prijzen opzoeken, BTW berekenen. Opmaken, controleren, opslaan als PDF. Dan een mail openen, de PDF bijvoegen, een begeleidende tekst schrijven en versturen. Twintig minuten per offerte. Bij meerdere aanvragen per week loopt dat op tot uren verloren tijd." data-en="Every quote started by opening an old Word template and manually clearing the previous client details. Retyping name, address, phone. Filling in work line by line, looking up prices, calculating VAT. Formatting, checking, saving as PDF. Then opening an email, attaching the PDF, writing a cover note and sending. Twenty minutes per quote. With multiple requests per week, that adds up to hours of lost time.">Elke offerte begon met een oude Word-offerte openen en de vorige klantgegevens handmatig weghalen. Naam, adres, telefoon opnieuw intypen. Werkzaamheden regel voor regel invullen, prijzen opzoeken, BTW berekenen. Opmaken, controleren, opslaan als PDF. Dan een mail openen, de PDF bijvoegen, een begeleidende tekst schrijven en versturen. Twintig minuten per offerte. Bij meerdere aanvragen per week loopt dat op tot uren verloren tijd.</div>
+                    </div>
+                </div>
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot active"></div>
+                    </div>
+                    <div class="case-flow-body last">
+                        <div class="case-flow-label" data-nl="Nu" data-en="Now">Nu</div>
+                        <div class="case-flow-text" data-nl="Mohammed opent een webformulier, vult de klantgegevens in en kiest het type werkzaamheden. Één druk op de knop. De klant heeft binnen seconden een professionele offerte in zijn inbox, compleet met logo, specificaties, BTW-berekening en betalingsvoorwaarden. Geen Word, geen PDF-export, geen aparte mail." data-en="Mohammed opens a web form, fills in the client details and selects the type of work. One click. The client receives a professional quote in their inbox within seconds, complete with logo, specifications, VAT calculation and payment terms. No Word, no PDF export, no separate email.">Mohammed opent een webformulier, vult de klantgegevens in en kiest het type werkzaamheden. Één druk op de knop. De klant heeft binnen seconden een professionele offerte in zijn inbox, compleet met logo, specificaties, BTW-berekening en betalingsvoorwaarden. Geen Word, geen PDF-export, geen aparte mail.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-result">
+                <div class="case-result-number">90%</div>
+                <div class="case-result-text">
+                    <strong data-nl="minder tijd per offerte." data-en="less time per quote.">minder tijd per offerte.</strong>
+                    <span data-nl="Van twintig minuten handmatig werk naar één klik." data-en="From twenty minutes of manual work to one click.">Van twintig minuten handmatig werk naar één klik.</span>
+                </div>
+            </div>
+        </div>
+        <!-- Quote + screenshot rechts -->
+        <div class="mhl-visual">
+            <div class="mhl-quote-block">
+                <p class="mhl-quote-text" data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out every quote by hand and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox straight away."'>"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."</p>
+                <p class="mhl-quote-cite">— Mohammed, eigenaar MHL Installatieservice</p>
+            </div>
+            <div class="mhl-screenshot">
+                <img src="../../docs/images/mhl-demo-preview.jpg" alt="MHL Installatieservice offerte-maker" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="case-divider">
+        <div class="case-divider-line"></div>
+        <div class="case-divider-dot"></div>
+        <div class="case-divider-line"></div>
+    </div>
+
+    <!-- Case 02 -->
+    <div class="case-intro">
+        <div class="case-intro-label" data-nl="Case 02" data-en="Case 02">Case 02</div>
+        <p class="case-intro-text" data-nl="FTUK draaide advertenties op meerdere platforms tegelijk. Maar welke campagne verdiende meer budget? Welk product scoorde het best? Elke week opnieuw: zoeken, samenvoegen, raden. Tot het dashboard er was." data-en="FTUK was running ads on multiple platforms simultaneously. But which campaign deserved more budget? Which product performed best? Every week the same story: searching, merging, guessing. Until the dashboard arrived.">FTUK draaide advertenties op meerdere platforms tegelijk. Maar welke campagne verdiende meer budget? Welk product scoorde het best? Elke week opnieuw: zoeken, samenvoegen, raden. Tot het dashboard er was.</p>
+    </div>
+
+    <div class="case-card-ftuk">
+        <!-- Tekst links -->
+        <div class="case-text">
+            <div class="case-tag" data-nl="E-commerce & Media" data-en="E-commerce & Media">E-commerce & Media</div>
+            <h2 class="case-company">FTUK</h2>
+            <div class="case-flow">
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot"></div>
+                        <div class="case-flow-connector"></div>
+                    </div>
+                    <div class="case-flow-body">
+                        <div class="case-flow-label" data-nl="Vroeger" data-en="Before">Vroeger</div>
+                        <div class="case-flow-text" data-nl="Elke week hetzelfde ritueel: WooCommerce openen voor de orderdata, Meta Ads Manager voor de campagneresultaten, Google Analytics voor het siteverkeer, Klaviyo voor de e-mailcijfers. Alles kopiëren naar Excel, handmatig samenvoegen. <strong>Iedere beslissing werd genomen op data die al twee dagen oud was.</strong> Bijsturen op een advertentie die niet presteerde? Dat ontdekte je altijd te laat." data-en="Every week the same ritual: opening WooCommerce for order data, Meta Ads Manager for campaign results, Google Analytics for site traffic, Klaviyo for email metrics. Copying everything into Excel, merging manually. <strong>Every decision was made on data that was already two days old.</strong> Adjusting an underperforming ad? You always found out too late.">Elke week hetzelfde ritueel: WooCommerce openen voor de orderdata, Meta Ads Manager voor de campagneresultaten, Google Analytics voor het siteverkeer, Klaviyo voor de e-mailcijfers. Alles kopiëren naar Excel, handmatig samenvoegen. <strong>Iedere beslissing werd genomen op data die al twee dagen oud was.</strong> Bijsturen op een advertentie die niet presteerde? Dat ontdekte je altijd te laat.</div>
+                    </div>
+                </div>
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot active"></div>
+                    </div>
+                    <div class="case-flow-body last">
+                        <div class="case-flow-label" data-nl="Nu" data-en="Now">Nu</div>
+                        <div class="case-flow-text" data-nl="Eén dashboard. Alle systemen zijn gekoppeld, de data stroomt automatisch binnen en ververst <strong>elke minuut</strong>. Omzet per dag, beste advertentie van de week, kosten per nieuwe klant, alles in één overzicht. Het dashboard geeft ook <strong>actieve aanbevelingen</strong> en elke ochtend ontvangt het team automatisch een <strong>dagrapport</strong> van de afgelopen 24 uur, direct in de inbox." data-en="One dashboard. All systems connected, data flows in automatically and refreshes <strong>every minute</strong>. Revenue per day, best-performing ad of the week, cost per new customer — all in one view. The dashboard also provides <strong>active recommendations</strong> and every morning the team automatically receives a <strong>daily report</strong> of the last 24 hours, straight to their inbox.">Eén dashboard. Alle systemen zijn gekoppeld, de data stroomt automatisch binnen en ververst <strong>elke minuut</strong>. Omzet per dag, beste advertentie van de week, kosten per nieuwe klant, alles in één overzicht. Het dashboard geeft ook <strong>actieve aanbevelingen</strong> en elke ochtend ontvangt het team automatisch een <strong>dagrapport</strong> van de afgelopen 24 uur, direct in de inbox.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-result">
+                <div class="case-result-number">8 uur</div>
+                <div class="case-result-text">
+                    <strong data-nl="per week teruggewonnen." data-en="recovered per week.">per week teruggewonnen.</strong>
+                    <span data-nl="Real-time inzicht in 30 seconden." data-en="Real-time insight in 30 seconds.">Real-time inzicht in 30 seconden.</span>
+                </div>
+            </div>
+            <div class="case-quote">
+                <p data-nl='"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"' data-en='"Through this dashboard I can see at a glance how my business is performing. It provides clarity, is accurate and gives me a great deal of valuable information that I can act on immediately. I have already saved so much time and energy through it — truly brilliant!"'>"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"</p>
+                <cite>Forex Trading UK (FTUK)</cite>
+            </div>
+        </div>
+
+        <!-- Dashboard rechts -->
+        <div class="ftuk-visual">
+            <div class="ftuk-browser">
+                <div class="fbd"></div><div class="fbd"></div><div class="fbd"></div>
+                <div class="fburl">dashboard.ftuk.nl / overview</div>
+                <div class="fblive"><span class="fblive-dot"></span> Live</div>
+            </div>
+            <div class="ftuk-dash-body">
+                <div class="ftuk-sidebar">
+                    <div class="ftuk-logo-area">
+                        <div class="ftuk-logo-name">FTUK</div>
+                        <div class="ftuk-logo-sub">Business Intelligence</div>
+                    </div>
+                    <div class="ftuk-nav">
+                        <div class="ftuk-nav-section">Main</div>
+                        <div class="ftuk-nav-item active">▦ Overview</div>
+                        <div class="ftuk-nav-item">↗ Revenue</div>
+                        <div class="ftuk-nav-item">◈ Ads</div>
+                        <div class="ftuk-nav-item">☰ Orders</div>
+                        <div class="ftuk-nav-item">◎ Visitors</div>
+                        <div class="ftuk-nav-section">Reports</div>
+                        <div class="ftuk-nav-item">✉ Daily Report</div>
+                    </div>
+                    <div class="ftuk-nav-footer"><span class="fblive-dot" style="width:5px;height:5px;"></span> All systems connected</div>
+                </div>
+                <div class="ftuk-main">
+                    <div class="ftuk-topbar">
+                        <div>
+                            <div class="ftuk-greeting">Good morning</div>
+                            <div class="ftuk-subline">Last updated: just now · auto-refresh every 60s · Wed 24 Jun 2026</div>
+                        </div>
+                        <div class="ftuk-badge">Daily report sent · 07:00</div>
+                    </div>
+                    <div class="ftuk-kpis">
+                        <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#00c853"></div><div class="ftuk-kpi-lbl">Net Revenue Today</div><div class="ftuk-kpi-val" style="color:#00c853;">£ 3,847</div><div class="ftuk-kpi-delta" style="color:#00c853;filter:blur(3px);">▲ 18%</div></div>
+                        <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#3d4a9e"></div><div class="ftuk-kpi-lbl">Total Orders</div><div class="ftuk-kpi-val">142</div><div class="ftuk-kpi-delta" style="color:#00c853;filter:blur(3px);">▲ 23</div></div>
+                        <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#e53935"></div><div class="ftuk-kpi-lbl">Refunds</div><div class="ftuk-kpi-val" style="color:#e53935;">£ 214</div><div class="ftuk-kpi-delta" style="color:#e53935;filter:blur(3px);">▲ 3</div></div>
+                        <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#7c3aed"></div><div class="ftuk-kpi-lbl">Overall ROAS</div><div class="ftuk-kpi-val" style="color:#a78bfa;">4.2×</div><div class="ftuk-kpi-delta" style="color:#00c853;filter:blur(3px);">▲ 0.4</div></div>
+                        <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#ff6d00"></div><div class="ftuk-kpi-lbl">Live Visitors</div><div class="ftuk-kpi-val" style="color:#ff6d00;">89</div><div class="ftuk-kpi-delta" style="color:#6070a0;filter:none;">● real-time</div></div>
+                    </div>
+                    <div class="ftuk-mid">
+                        <div class="ftuk-panel">
+                            <div class="ftuk-panel-title">Revenue — Last 7 Days</div>
+                            <div class="ftuk-panel-sub">Total: <span>£ 22,413</span></div>
+                            <div class="ftuk-bars">
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar blue" style="height:48%"></div><div class="ftuk-bar-lbl">Mon</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar navy" style="height:62%"></div><div class="ftuk-bar-lbl">Tue</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar blue" style="height:41%"></div><div class="ftuk-bar-lbl">Wed</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar navy" style="height:55%"></div><div class="ftuk-bar-lbl">Thu</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar gold" style="height:85%"></div><div class="ftuk-bar-lbl">Fri</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar gold" style="height:100%"></div><div class="ftuk-bar-lbl">Sat</div></div>
+                                <div class="ftuk-bar-wrap"><div class="ftuk-bar navy" style="height:68%"></div><div class="ftuk-bar-lbl">Sun</div></div>
+                            </div>
+                            <div class="ftuk-today-bar">
+                                <span class="ftuk-today-label">Today — 2026-06-24</span>
+                                <div class="ftuk-today-stats">
+                                    <div class="ftuk-today-stat"><div class="ftuk-today-val" style="color:#00c853;">£6,806</div><div class="ftuk-today-lbl">Revenue</div></div>
+                                    <div class="ftuk-today-stat"><div class="ftuk-today-val">77</div><div class="ftuk-today-lbl">Orders</div></div>
+                                    <div class="ftuk-today-stat"><div class="ftuk-today-val">£88</div><div class="ftuk-today-lbl">Avg. order</div></div>
+                                    <div class="ftuk-today-stat"><div class="ftuk-today-val" style="color:#6070a0;filter:none;">—</div><div class="ftuk-today-lbl">vs last week</div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftuk-panel">
+                            <div class="ftuk-panel-title">Order Status</div>
+                            <div class="ftuk-panel-sub">Last 30 days</div>
+                            <div class="ftuk-donut-wrap">
+                                <svg class="ftuk-donut-svg" viewBox="0 0 36 36">
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#222640" stroke-width="3.5"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#00c853" stroke-width="3.5" stroke-dasharray="73 27" stroke-dashoffset="25" stroke-linecap="round"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#ffc107" stroke-width="3.5" stroke-dasharray="17 83" stroke-dashoffset="-48" stroke-linecap="round"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#e53935" stroke-width="3.5" stroke-dasharray="10 90" stroke-dashoffset="-65" stroke-linecap="round"/>
+                                    <text x="18" y="17.5" text-anchor="middle" dominant-baseline="middle" font-size="5.5" font-weight="700" fill="white" style="filter:blur(2.5px)">███</text>
+                                    <text x="18" y="22.5" text-anchor="middle" dominant-baseline="middle" font-size="3.5" fill="#6070a0">orders</text>
+                                </svg>
+                                <div class="ftuk-legend">
+                                    <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#00c853"></div>Fulfilled — 73%</div>
+                                    <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#ffc107"></div>Pending — 17%</div>
+                                    <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#e53935"></div>Cancelled — 10%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftuk-panel">
+                            <div class="ftuk-panel-title">Top Markets</div>
+                            <div class="ftuk-panel-sub">By revenue share</div>
+                            <div class="ftuk-geo">
+                                <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇬🇧 United Kingdom</span><span class="ftuk-geo-pct">54%</span></div><div class="ftuk-geo-bar-bg"><div class="ftuk-geo-fill" style="width:54%"></div></div></div>
+                                <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇦🇺 Australia</span><span class="ftuk-geo-pct">24%</span></div><div class="ftuk-geo-bar-bg"><div class="ftuk-geo-fill" style="width:24%;opacity:.75"></div></div></div>
+                                <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇿🇦 South Africa</span><span class="ftuk-geo-pct">13%</span></div><div class="ftuk-geo-bar-bg"><div class="ftuk-geo-fill" style="width:13%;opacity:.55"></div></div></div>
+                                <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇩🇪 Germany</span><span class="ftuk-geo-pct">9%</span></div><div class="ftuk-geo-bar-bg"><div class="ftuk-geo-fill" style="width:9%;opacity:.4"></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ftuk-bot">
+                        <div class="ftuk-panel ftuk-ads">
+                            <div class="ftuk-panel-title" style="margin-bottom:8px;">Active Campaigns — ROAS</div>
+                            <div class="ftuk-ads-head"><div>Campaign</div><div>Spend</div><div>Revenue</div><div>ROAS</div></div>
+                            <div class="ftuk-ads-row"><div class="ftuk-ads-name">Summer Drop 2026</div><div class="ftuk-ads-cell">£ ███</div><div class="ftuk-ads-cell pos">£ ████</div><div class="ftuk-ads-badge">4.8×</div></div>
+                            <div class="ftuk-ads-row"><div class="ftuk-ads-name">Retargeting — UK</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell pos">£ ███</div><div class="ftuk-ads-cell pos">3.2×</div></div>
+                            <div class="ftuk-ads-row"><div class="ftuk-ads-name">Lookalike AU/ZA</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell pos">£ ███</div><div class="ftuk-ads-cell pos">2.7×</div></div>
+                            <div class="ftuk-ads-row"><div class="ftuk-ads-name">Brand Awareness DE</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell neg">£ ██</div><div class="ftuk-ads-cell neg">1.3×</div></div>
+                        </div>
+                        <div class="ftuk-panel ftuk-ai-panel">
+                            <div class="ftuk-ai-title">AI Recommendations</div>
+                            <div class="ftuk-rec"><div class="ftuk-rec-tag">↑ Scale</div><div class="ftuk-rec-text"><strong>"Summer Drop 2026"</strong> is 34% above avg. ROAS. Increase daily budget for max return this weekend.</div></div>
+                            <div class="ftuk-rec warn"><div class="ftuk-rec-tag">⚠ Review</div><div class="ftuk-rec-text"><strong>"Brand Awareness DE"</strong> ROAS below break-even. Pause or revise creative.</div></div>
+                            <div class="ftuk-report"><span class="ftuk-report-icon">✉</span><div class="ftuk-report-text"><strong>Daily Report sent · 07:00</strong><br>Last 24h summary in your inbox</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+        <p class="cta-kicker" data-nl="Herkent u dit?" data-en="Does this sound familiar?">Herkent u dit?</p>
+        <h2 class="cta-title" data-nl="Veel ondernemers verliezen wekelijks uren aan handmatig werk dat een systeem ook kan doen." data-en="Many business owners lose hours every week on manual work that a system can handle.">Veel ondernemers verliezen wekelijks uren aan handmatig werk dat een systeem ook kan doen.</h2>
+        <p class="cta-sub" data-nl="Wat zou dit voor uw bedrijf opleveren?" data-en="What could this do for your business?">Wat zou dit voor uw bedrijf opleveren?</p>
+        <a href="index.html#contact" class="cta-btn" data-nl="Plan vrijblijvend een gesprek →" data-en="Schedule a free call →">Plan vrijblijvend een gesprek →</a>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <a href="index.html" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+            <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+                <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+                <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
+                <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
+            </svg>
+            <span class="footer-logo">Insightance</span>
+        </a>
+        <div class="footer-links">
+            <a href="mailto:oussama@insightance.ai" class="footer-link">oussama@insightance.ai</a>
+            <a href="https://wa.me/31653340362" class="footer-link" target="_blank">WhatsApp</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-meta-left">Insightance · KVK: volgt · Amsterdam</span>
+        <div class="footer-meta-right">
+            <a href="privacybeleid.html" data-nl="Privacybeleid" data-en="Privacy Policy">Privacybeleid</a>
+            <span data-nl="© 2026 Insightance" data-en="© 2026 Insightance">© 2026 Insightance</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    let lang = 'nl';
+    function applyLang() {
+        document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+            el.innerHTML = el.getAttribute('data-' + lang);
+        });
+        document.documentElement.lang = lang;
+        document.getElementById('langBtn').textContent = lang === 'nl' ? 'EN' : 'NL';
+    }
+    function toggleLang() { lang = lang === 'nl' ? 'en' : 'nl'; applyLang(); }
+    applyLang();
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').style.borderBottomColor = window.scrollY > 60
+            ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.12)';
+    });
+</script>
+<script src="//code.tidio.co/nzmhef9otgpp1wahexx1eo4ohhlv9qos.js" async></script>
+</body>
+</html>
