@@ -76,8 +76,7 @@
         .mhl-visual { background: #EFEFEF; display: flex; flex-direction: column; }
         .mhl-result-top { background: #0F0F12; padding: 24px 28px 16px; }
         .mhl-quote-block { padding: 28px 32px 32px; flex-shrink: 0; background: linear-gradient(to bottom, #0F0F12 72%, #d4cfc7 100%); }
-        .mhl-quote-text { font-size: 14px; color: var(--gray-light); line-height: 1.8; font-style: italic; font-weight: 400; margin-bottom: 10px; }
-        .mhl-quote-cite { font-size: 12px; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; font-style: normal; }
+        .mhl-quote-block .case-quote { border-left: none; padding-left: 0; margin-top: 0; }
         .mhl-screenshot { flex: 1; overflow: hidden; padding: 0 12px; }
         .mhl-screenshot img { width: 100%; display: block; border-radius: 6px 6px 0 0; box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
 
@@ -335,8 +334,10 @@
                 </div>
             </div>
             <div class="mhl-quote-block">
-                <p class="mhl-quote-text" data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out every quote by hand and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox straight away."'>"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."</p>
-                <p class="mhl-quote-cite">Mohammed, MHL Installatieservice</p>
+                <div class="case-quote">
+                    <p data-nl='"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."' data-en='"Before, I typed out every quote by hand and sent it by email. Now I fill in the form and press one button. The client has the quote in their inbox straight away."'>"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."</p>
+                    <cite>Mohammed, MHL Installatieservice</cite>
+                </div>
             </div>
             <div class="mhl-screenshot">
                 <img src="images/mhl-demo-preview.jpg" alt="MHL Installatieservice offerte-maker" style="display:block;">
