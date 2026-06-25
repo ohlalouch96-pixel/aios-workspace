@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>AI Implementatievoorstel — Insightance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --gold: #C9A84C;
+        --dark: #0D0D10;
+        --cream: #EAE5DC;
+        --text: #2D2825;
+        --gray: #777;
+        --light: #F7F4EF;
+        --border: #E0DAD2;
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Inter', sans-serif;
+    }
+
+    body { font-family: var(--font-body); background: #eee; }
+
+    .print-hint {
+        background: var(--dark);
+        color: var(--gold);
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+    }
+
+    @media print {
+        body { background: #fff; }
+        .print-hint { display: none; }
+        .page { box-shadow: none; margin: 0; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+
+    /* ── PAGE ── */
+    .page {
+        width: 210mm;
+        min-height: 297mm;
+        background: #fff;
+        margin: 12px auto;
+        padding: 56px 64px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ── COVER ── */
+    .cover {
+        background: var(--dark);
+        justify-content: space-between;
+    }
+
+    .cover-logo { display: flex; align-items: center; gap: 10px; }
+    .cover-logo-text {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        letter-spacing: 0.28em;
+        color: var(--gold);
+        text-transform: uppercase;
+    }
+
+    .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 64px 0 48px; }
+    .cover-tag { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .cover-line { width: 36px; height: 1px; background: var(--gold); opacity: 0.5; margin-bottom: 28px; }
+    .cover-title {
+        font-family: var(--font-heading);
+        font-size: 44px;
+        color: var(--cream);
+        line-height: 1.15;
+        margin-bottom: 40px;
+    }
+    .cover-for { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,168,76,0.5); margin-bottom: 8px; }
+    .cover-client { font-family: var(--font-heading); font-size: 22px; color: var(--cream); margin-bottom: 4px; }
+    .cover-contact { font-size: 13px; color: rgba(234,229,220,0.4); }
+
+    .cover-footer { display: flex; justify-content: space-between; font-size: 11px; color: rgba(234,229,220,0.25); letter-spacing: 0.1em; }
+
+    /* ── CONTENT PAGES ── */
+    .page-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 40px;
+    }
+    .page-top-brand { font-size: 10px; letter-spacing: 0.2em; color: var(--gold); font-weight: 600; text-transform: uppercase; }
+    .page-top-num { font-size: 10px; color: #bbb; letter-spacing: 0.1em; }
+
+    .sec-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+    .sec-title { font-family: var(--font-heading); font-size: 28px; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
+    .sec-intro { font-size: 13px; color: var(--gray); line-height: 1.75; margin-bottom: 32px; border-left: 2px solid var(--gold); padding-left: 14px; }
+
+    /* ── LISTS ── */
+    .simple-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .simple-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--text); line-height: 1.65; }
+    .simple-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+
+    .block { margin-bottom: 28px; }
+    .block-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 10px; letter-spacing: 0.02em; }
+
+    /* ── RESULTS (pagina 3) ── */
+    .result-item {
+        padding: 18px 0;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-num { font-family: var(--font-heading); font-size: 20px; color: var(--gold); flex-shrink: 0; width: 28px; line-height: 1; }
+    .result-body { flex: 1; }
+    .result-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .result-desc { font-size: 13px; color: var(--gray); line-height: 1.65; margin-bottom: 6px; }
+    .result-metric { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+
+    /* ── PRICE ── */
+    .price-row { display: flex; align-items: baseline; gap: 6px; margin: 16px 0 6px; }
+    .price-amount { font-family: var(--font-heading); font-size: 48px; color: var(--text); line-height: 1; }
+    .price-suffix { font-size: 14px; color: var(--gray); }
+    .price-note { font-size: 12px; color: var(--gray); margin-bottom: 24px; }
+
+    /* ── STEPS ── */
+    .step-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .step-row:last-child { border-bottom: none; }
+    .step-n { font-family: var(--font-heading); font-size: 18px; color: var(--gold); flex-shrink: 0; width: 24px; }
+    .step-body { flex: 1; }
+    .step-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+    .step-time { font-size: 11px; color: var(--gold); font-weight: 600; flex-shrink: 0; align-self: center; }
+
+    /* ── SIGNATURE ── */
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; }
+    .sig-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; margin-bottom: 32px; }
+    .sig-line { border-top: 1px solid var(--border); margin-bottom: 8px; }
+    .sig-name { font-size: 13px; color: var(--text); font-weight: 500; }
+    .sig-role { font-size: 11px; color: var(--gray); }
+    .sig-pre { font-family: 'Georgia', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; font-style: italic; }
+    .voorstel-num { font-size: 10px; letter-spacing: 0.18em; color: rgba(201,168,76,0.6); margin-top: 6px; }
+    .questions-box { background: #F7F4EF; border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 0 6px 6px 0; margin-bottom: 28px; }
+    .questions-box p { font-size: 12px; color: var(--gray); line-height: 1.7; }
+    .questions-box strong { color: var(--text); }
+    .action-step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .action-step:last-child { border-bottom: none; }
+    .action-num { font-family: var(--font-heading); font-size: 18px; color: var(--gold); flex-shrink: 0; width: 24px; line-height: 1.2; }
+    .action-body .action-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .action-body .action-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+    .gold-bar { height: 2px; background: linear-gradient(to right, var(--gold), transparent); margin: 32px 0; }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Opslaan als PDF: Ctrl+P → PDF → Marges: Geen</div>
+
+<!-- PAGINA 1 — COVER -->
+<div class="page cover">
+    <div class="cover-logo">
+        <svg width="24" height="24" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+        <span class="cover-logo-text">Insightance</span>
+    </div>
+    <div class="cover-body">
+        <p class="cover-tag">AI Implementatievoorstel #001</p>
+        <div class="cover-line"></div>
+        <h1 class="cover-title">Slimmer werken.<br>Minder handmatig.<br>Meer tijd.</h1>
+        <p class="cover-for">Opgesteld voor</p>
+        <p class="cover-client">De Vries Installatietechniek</p>
+        <p class="cover-contact">Mark de Vries, Eigenaar</p>
+    </div>
+    <div class="cover-footer">
+        <span>4 juni 2026 · Amsterdam</span>
+        <span>Voorstel #001 · Vertrouwelijk</span>
+    </div>
+</div>
+
+<!-- PAGINA 2 — UW SITUATIE -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">02 / 06</span>
+    </div>
+    <p class="sec-label">01 — Uw situatie</p>
+    <h2 class="sec-title">Waar het nu knelt</h2>
+    <p class="sec-intro">Tijdens ons gesprek werd duidelijk dat een aanzienlijk deel van uw tijd opgaat aan taken die herhaalbaar en voorspelbaar zijn. Taken die u afleiden van het werk waar u goed in bent: installaties uitvoeren en klanten helpen.</p>
+
+    <div class="block">
+        <p class="block-title">Terugkerende knelpunten</p>
+        <ul class="simple-list">
+            <li>Alle afspraken worden handmatig ingepland via de telefoon, ook tijdens lopende werkzaamheden <em style="color:var(--gold); font-size:11px; margin-left:6px;">±4 uur/week</em></li>
+            <li>Offertes worden handmatig opgesteld en verstuurd, elke keer opnieuw <em style="color:var(--gold); font-size:11px; margin-left:6px;">±3 uur/week</em></li>
+            <li>Openstaande offertes worden niet systematisch opgevolgd, waardoor klanten afhaken zonder reactie <em style="color:var(--gold); font-size:11px; margin-left:6px;">±2 uur/week</em></li>
+            <li>Klanten worden na een klus nooit gevraagd om een review, waardoor het online profiel achterblijft <em style="color:var(--gold); font-size:11px; margin-left:6px;">0 reviews/maand</em></li>
+        </ul>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <div class="block">
+        <p class="block-title">Wat dit in de praktijk betekent</p>
+        <ul class="simple-list">
+            <li>U bent moeilijk bereikbaar voor nieuwe klanten terwijl u aan het werk bent, waardoor aanvragen mislopen</li>
+            <li>Elke offerte kost onnodig veel tijd, terwijl de inhoud grotendeels hetzelfde is</li>
+            <li>Potentiële klanten die geen reactie ontvangen gaan naar de concurrent</li>
+        </ul>
+    </div>
+</div>
+
+<!-- PAGINA 3 — WAT U KRIJGT -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">03 / 06</span>
+    </div>
+    <p class="sec-label">02 — Wat u krijgt</p>
+    <h2 class="sec-title">Wat dit voor u betekent</h2>
+    <p class="sec-intro">Dit is wat er concreet verandert na de implementatie: in uw dagelijkse werk, voor uw klanten en voor uw bedrijfsresultaat.</p>
+
+    <div class="result-item">
+        <div class="result-num">1</div>
+        <div class="result-body">
+            <p class="result-title">Nooit meer een gemiste aanvraag</p>
+            <p class="result-desc">Klanten plannen 24/7 zelf een afspraak in via uw website, ook 's avonds en in het weekend. U hoeft de telefoon niet op te nemen voor elke boeking. Nieuwe aanvragen komen automatisch binnen terwijl u aan het werk bent.</p>
+            <p class="result-metric">→ ±4 uur bespaard per week</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">2</div>
+        <div class="result-body">
+            <p class="result-title">Een offerte versturen kost u nog maar 5 minuten</p>
+            <p class="result-desc">Op basis van uw intake wordt automatisch een professionele offerte aangemaakt. U controleert, past eventueel aan en verstuurt met één klik. Geen blanco document meer, geen herhalend typewerk.</p>
+            <p class="result-metric">→ ±3 uur bespaard per week</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">3</div>
+        <div class="result-body">
+            <p class="result-title">Elke offerte wordt automatisch opgevolgd</p>
+            <p class="result-desc">Heeft een klant na 3 dagen nog niet gereageerd? Dan stuurt het systeem automatisch een vriendelijke herinnering. U hoeft er niet meer aan te denken. Geen verloren klanten meer door stilte.</p>
+            <p class="result-metric">→ Hogere offerteconversie zonder extra inspanning</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">4</div>
+        <div class="result-body">
+            <p class="result-title">Meer Google-reviews zonder er iets voor te doen</p>
+            <p class="result-desc">Na elke afgeronde klus ontvangt de klant automatisch een reviewverzoek via WhatsApp of e-mail. Tevreden klanten klikken in 30 seconden op de link. Uw online profiel groeit vanzelf.</p>
+            <p class="result-metric">→ Gemiddeld 3–5 nieuwe reviews per maand</p>
+        </div>
+    </div>
+</div>
+
+<!-- PAGINA 4 — AANPAK -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">04 / 06</span>
+    </div>
+    <p class="sec-label">03 — Onze aanpak</p>
+    <h2 class="sec-title">Hoe we dit aanpakken</h2>
+    <p class="sec-intro">Van start tot oplevering. U wordt bij elke stap betrokken en weet altijd waar we staan.</p>
+
+    <div class="step-row">
+        <div class="step-n">1</div>
+        <div class="step-body">
+            <p class="step-title">Intake & analyse</p>
+            <p class="step-desc">We brengen uw huidige processen gedetailleerd in kaart. Wat zijn de stappen, waar zit de meeste tijdsinvestering, wat zijn de randvoorwaarden.</p>
+        </div>
+        <span class="step-time">2 dagen</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">2</div>
+        <div class="step-body">
+            <p class="step-title">Ontwerp & afstemming</p>
+            <p class="step-desc">We presenteren het ontwerp van het systeem. U geeft feedback en we stemmen af totdat alles klopt.</p>
+        </div>
+        <span class="step-time">2 dagen</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">3</div>
+        <div class="step-body">
+            <p class="step-title">Bouwen & testen</p>
+            <p class="step-desc">Het systeem wordt gebouwd en uitgebreid getest. We simuleren echte situaties (afspraken inplannen, offertes versturen, reviews opvragen) zodat alles werkt zoals verwacht vóór de oplevering.</p>
+        </div>
+        <span class="step-time">2 weken</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">4</div>
+        <div class="step-body">
+            <p class="step-title">Oplevering & instructie</p>
+            <p class="step-desc">We leveren op, lopen samen door het systeem en zorgen dat u precies weet hoe u het gebruikt. Vragen achteraf worden altijd beantwoord.</p>
+        </div>
+        <span class="step-time">1 dag</span>
+    </div>
+</div>
+
+<!-- PAGINA 5 — INVESTERING -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">05 / 06</span>
+    </div>
+    <p class="sec-label">04 — Investering</p>
+    <h2 class="sec-title">Wat het kost</h2>
+    <p class="sec-intro">Een transparant overzicht van de investering. Geen verrassingen achteraf.</p>
+
+    <div class="block">
+        <p class="block-title">AI Implementatie op maat</p>
+        <div class="price-row">
+            <span class="price-amount">€1.250</span>
+            <span class="price-suffix">eenmalig</span>
+        </div>
+        <p class="price-note">Exclusief BTW</p>
+        <ul class="simple-list">
+            <li>Volledig werkend automatiseringssysteem (afspraken, offertes, reviews)</li>
+            <li>Persoonlijke instructiesessie na oplevering</li>
+            <li>30 dagen nazorg waarbij vragen altijd worden beantwoord</li>
+            <li>Alle licentiekosten inbegrepen gedurende de eerste maand</li>
+        </ul>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <div class="block">
+        <p class="block-title">Betalingsvoorwaarden</p>
+        <ul class="simple-list">
+            <li><strong>50% bij start.</strong> Na het startgesprek ontvangt u een officiële offerte. Zodra de aanbetaling van 50% is ontvangen, beginnen wij met bouwen.</li>
+            <li><strong>50% bij oplevering.</strong> Het resterende bedrag is verschuldigd op het moment van oplevering van het systeem.</li>
+        </ul>
+    </div>
+
+    <p style="font-size:12px; color:var(--gray); line-height:1.7; margin-top: 8px;">Dit voorstel is geldig tot <strong style="color:var(--text)">18 juni 2026</strong>. Na akkoord plannen we binnen 24 uur een startgesprek in.</p>
+</div>
+
+<!-- PAGINA 6 — VOLGENDE STAP -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">06 / 06</span>
+    </div>
+    <p class="sec-label">05 — Volgende stap</p>
+    <h2 class="sec-title">Zo gaan we van start</h2>
+    <p class="sec-intro">Vier stappen scheiden u van een werkend systeem. Volg ze op volgorde, zo verliezen we geen tijd.</p>
+
+    <div class="block">
+        <div class="action-step">
+            <div class="action-num">1</div>
+            <div class="action-body">
+                <p class="action-title">Onderteken dit voorstel en stuur het retour</p>
+                <p class="action-desc">Zet uw handtekening onderaan dit document en mail het terug naar <strong>oussama@insightance.ai</strong>. Vermeld in de onderwerpregel: <em>Akkoord voorstel #001</em>.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">2</div>
+            <div class="action-body">
+                <p class="action-title">Stuur minimaal 3 data's mee voor het startgesprek</p>
+                <p class="action-desc">Voeg bij uw mail minimaal 3 momenten toe waarop u beschikbaar bent voor een startgesprek van 30 minuten. Wij bevestigen binnen 24 uur. Zo plannen we direct in. Geen heen-en-weer mailen, geen vertraging.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">3</div>
+            <div class="action-body">
+                <p class="action-title">Startgesprek: afstemming en officiële offerte</p>
+                <p class="action-desc">Tijdens dit gesprek lopen we alles samen door zodat we zeker weten dat we op één lijn zitten. Na afloop ontvangt u de officiële offerte. Zodra de aanbetaling van <strong>50%</strong> is voldaan, starten wij direct met bouwen.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">4</div>
+            <div class="action-body">
+                <p class="action-title">Oplevering en slotbetaling</p>
+                <p class="action-desc">U ontvangt het systeem kant-en-klaar binnen <strong>3 weken</strong> na de startdatum. Bij oplevering wordt het resterende bedrag van 50% gefactureerd.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="questions-box">
+        <p><strong>Vragen naar aanleiding van dit voorstel?</strong> Stuur een mail naar <strong>oussama@insightance.ai</strong> met als onderwerp: <em>Vraag voorstel #001</em>. Wij reageren binnen één werkdag.</p>
+    </div>
+
+    <div class="sig-grid">
+        <div>
+            <p class="sig-label">Akkoord opdrachtgever</p>
+            <div class="sig-line"></div>
+            <p class="sig-name">Mark de Vries</p>
+            <p class="sig-role">Eigenaar · De Vries Installatietechniek</p>
+        </div>
+        <div>
+            <p class="sig-label">Namens Insightance</p>
+            <p class="sig-pre">O. Hlalouch</p>
+            <div class="sig-line"></div>
+            <p class="sig-name">Oussama Hlalouch</p>
+            <p class="sig-role">Oprichter · Insightance</p>
+            <p class="voorstel-num">Voorstel #001</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Hero — Premium V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #111; font-family: 'Inter', sans-serif; }
+
+        .divider-label {
+            font-size: 10px; font-weight: 600; color: #C9A84C;
+            letter-spacing: 0.4em; text-transform: uppercase;
+            padding: 28px 60px 16px; background: #0A0A0A;
+            border-bottom: 1px solid #1A1A1A;
+        }
+
+
+        /* ══════════════════════════════════════════
+           HERO A — Architecturaal. Grote serif links,
+           dunne gouden lijn, tekst rechtsonder.
+        ══════════════════════════════════════════ */
+        .ha {
+            min-height: 100vh;
+            background: #0C0C0C;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            border-bottom: 1px solid #1A1A1A;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ha-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 64px 64px;
+        }
+
+        .ha-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(72px, 10vw, 148px);
+            font-weight: 700;
+            line-height: 0.92;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .ha-title .italic { font-style: italic; color: #C9A84C; }
+
+        .ha-rule {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, #C9A84C 0%, rgba(201,168,76,0.15) 60%, transparent 100%);
+            margin: 40px 0;
+        }
+
+        .ha-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 64px 64px;
+        }
+
+        .ha-sub {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            max-width: 400px;
+        }
+
+        .ha-ctas {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .ha-cta-primary {
+            background: #C9A84C;
+            color: #000;
+            padding: 14px 36px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ha-cta-secondary {
+            font-size: 12px;
+            color: #444;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border-bottom: 1px solid #2A2A2A;
+            padding-bottom: 2px;
+        }
+
+        .ha-year {
+            position: absolute;
+            top: 64px;
+            right: 64px;
+            font-size: 11px;
+            color: #2A2A2A;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl;
+            text-transform: uppercase;
+        }
+
+
+        /* ══════════════════════════════════════════
+           HERO B — Eén brutale vraag. Alles eromheen
+           ademt ruimte. Goud accent op één woord.
+        ══════════════════════════════════════════ */
+        .hb {
+            min-height: 100vh;
+            background: #0F0F0F;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 64px;
+            border-bottom: 1px solid #1A1A1A;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hb-num {
+            font-size: 11px;
+            color: #2E2E2E;
+            letter-spacing: 0.3em;
+            margin-bottom: 80px;
+        }
+
+        .hb-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 7.5vw, 106px);
+            font-weight: 700;
+            line-height: 1.0;
+            color: #fff;
+            max-width: 1000px;
+            letter-spacing: -0.02em;
+        }
+
+        .hb-title .word {
+            display: inline-block;
+            position: relative;
+        }
+
+        .hb-title .underline {
+            color: #C9A84C;
+            font-style: italic;
+            position: relative;
+        }
+
+        .hb-title .underline::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0; right: 0;
+            height: 2px;
+            background: #C9A84C;
+            opacity: 0.4;
+        }
+
+        .hb-right {
+            position: absolute;
+            right: 64px;
+            bottom: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 24px;
+        }
+
+        .hb-sub {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.85;
+            max-width: 320px;
+            text-align: right;
+        }
+
+        .hb-ctas {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .hb-cta-primary {
+            background: #C9A84C;
+            color: #000;
+            padding: 14px 36px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .hb-cta-secondary {
+            font-size: 12px;
+            color: #3A3A3A;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            border-bottom: 1px solid #2A2A2A;
+            padding-bottom: 2px;
+        }
+
+        .hb-line {
+            position: absolute;
+            left: 64px;
+            bottom: 0;
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(to bottom, #C9A84C, transparent);
+        }
+
+
+        /* ══════════════════════════════════════════
+           HERO C — Magazine cover. Groot woord als
+           grafisch element, kleine tekst eromheen.
+        ══════════════════════════════════════════ */
+        .hc {
+            min-height: 100vh;
+            background: #0A0A0A;
+            display: grid;
+            grid-template-columns: 1fr 520px;
+            border-bottom: 1px solid #1A1A1A;
+            overflow: hidden;
+        }
+
+        .hc-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 64px;
+            border-right: 1px solid #161616;
+            position: relative;
+        }
+
+        .hc-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: #C9A84C;
+        }
+
+        .hc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+
+        .hc-brand {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #C9A84C;
+        }
+
+        .hc-year { font-size: 11px; color: #2A2A2A; letter-spacing: 0.2em; }
+
+        .hc-big {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(96px, 16vw, 220px);
+            font-weight: 700;
+            line-height: 0.85;
+            color: #161616;
+            letter-spacing: -0.03em;
+            user-select: none;
+            align-self: center;
+        }
+
+        .hc-bottom { }
+
+        .hc-bottom-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hc-bottom-title em { color: #C9A84C; font-style: italic; }
+
+        .hc-bottom-sub { font-size: 14px; color: #444; line-height: 1.8; max-width: 440px; }
+
+        .hc-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 64px;
+            background: #0E0E0E;
+            gap: 48px;
+        }
+
+        .hc-label { font-size: 10px; color: #333; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 16px; }
+
+        .hc-desc { font-size: 15px; color: #555; line-height: 1.9; }
+
+        .hc-ctas { display: flex; flex-direction: column; gap: 12px; }
+
+        .hc-cta-primary {
+            background: #C9A84C;
+            color: #000;
+            padding: 16px 32px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .hc-cta-secondary {
+            font-size: 12px;
+            color: #333;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            border-bottom: 1px solid #222;
+            padding-bottom: 2px;
+            text-align: center;
+        }
+
+        .hc-stats { display: flex; gap: 40px; }
+        .hc-stat-num { font-family: 'Playfair Display', serif; font-size: 28px; color: #C9A84C; }
+        .hc-stat-label { font-size: 11px; color: #333; margin-top: 4px; }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO A -->
+    <p class="divider-label">Variatie A — Architecturaal. Titel vult het scherm, details onderaan.</p>
+    <div class="ha">
+        <div class="ha-main">
+            <h1 class="ha-title">
+                Inzicht.<br>
+                <span class="italic">Groei.</span>
+            </h1>
+        </div>
+        <div class="ha-rule" style="margin: 0;"></div>
+        <div class="ha-bottom">
+            <p class="ha-sub">Insightance automatiseert de processen die uw tijd kosten. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+            <div class="ha-ctas">
+                <a href="#" class="ha-cta-primary">Kom in contact</a>
+                <a href="#" class="ha-cta-secondary">Bekijk onze diensten</a>
+            </div>
+        </div>
+        <span class="ha-year">Insightance · 2026</span>
+    </div>
+
+
+    <!-- HERO B -->
+    <p class="divider-label">Variatie B — Eén provocerende vraag. Goud streepje onder sleutelwoord.</p>
+    <div class="hb">
+        <p class="hb-num">01 / Insightance</p>
+        <h1 class="hb-title">
+            Hoeveel tijd<br>
+            verliest u aan<br>
+            werk dat <span class="underline">u niet</span><br>
+            zou moeten doen?
+        </h1>
+        <div class="hb-line"></div>
+        <div class="hb-right">
+            <p class="hb-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+            <div class="hb-ctas">
+                <a href="#" class="hb-cta-secondary">Bekijk onze diensten</a>
+                <a href="#" class="hb-cta-primary">Kom in contact</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- HERO C -->
+    <p class="divider-label">Variatie C — Magazine cover stijl. Groot grafisch woord, inhoud rechts.</p>
+    <div class="hc">
+        <div class="hc-left">
+            <div class="hc-top">
+                <span class="hc-brand">Insightance</span>
+                <span class="hc-year">2026</span>
+            </div>
+            <div class="hc-big">AI</div>
+            <div class="hc-bottom">
+                <h2 class="hc-bottom-title">Inzicht in uw bedrijf.<br><em>Grip op uw groei.</em></h2>
+                <p class="hc-bottom-sub">AI-automatisering voor ondernemers die slimmer willen werken, niet harder.</p>
+            </div>
+        </div>
+        <div class="hc-right">
+            <div>
+                <p class="hc-label">Wat Insightance doet</p>
+                <p class="hc-desc">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen, gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+            </div>
+            <div class="hc-stats">
+                <div>
+                    <div class="hc-stat-num">80%</div>
+                    <div class="hc-stat-label">automatiseerbaar</div>
+                </div>
+                <div>
+                    <div class="hc-stat-num">24/7</div>
+                    <div class="hc-stat-label">actief</div>
+                </div>
+                <div>
+                    <div class="hc-stat-num">€0</div>
+                    <div class="hc-stat-label">extra personeel</div>
+                </div>
+            </div>
+            <div class="hc-ctas">
+                <a href="#" class="hc-cta-primary">Kom in contact</a>
+                <a href="#" class="hc-cta-secondary">Bekijk onze diensten</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

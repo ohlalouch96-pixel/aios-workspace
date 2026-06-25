@@ -15,7 +15,7 @@
 ## Actieve Projecten
 | Project | Type | Status | Waarde |
 |---------|------|--------|--------|
-| FTUK | Betalende klant | In uitvoering | €7.500 + €1.250/mnd |
+| FTUK | Gratis pilot | In uitvoering | Portfolio/testimonial |
 | MHL Installatieservice | Gratis pilot | In uitvoering | Portfolio/testimonial |
 
 ## Wisselkoersen (EUR basis)

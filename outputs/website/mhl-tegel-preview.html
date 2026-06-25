@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHL Tegel — Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888888;
+            --gray-light: #C0C0C0;
+            --bg: #131316;
+            --surface: #161619;
+            --border: #252525;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--font-body);
+            padding: 80px 40px;
+        }
+
+        .section {
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        /* Sectie header */
+        .section-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.35em;
+            text-transform: uppercase; color: var(--gold);
+            text-align: center; display: block;
+        }
+        .section-label::after {
+            content: ''; display: block; width: 20px; height: 2px;
+            background: var(--gold); margin: 10px auto 20px; opacity: 0.7;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(26px, 3vw, 40px);
+            font-weight: 600; line-height: 1.15;
+            color: var(--white); text-align: center; margin-bottom: 12px;
+        }
+        .section-intro {
+            font-size: 16px; color: var(--gray); text-align: center;
+            max-width: 520px; margin: 0 auto 64px; line-height: 1.8;
+        }
+
+        /* Case card */
+        .case-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--surface);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .case-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+
+        /* Linker kolom: tekst */
+        .case-text {
+            padding: 52px 48px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(201,168,76,0.08);
+        }
+
+        .case-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+        }
+        .case-tag::before {
+            content: ''; width: 16px; height: 1px; background: var(--gold); opacity: 0.5;
+        }
+
+        .case-company {
+            font-family: var(--font-heading);
+            font-size: 26px; font-weight: 600;
+            color: var(--white); margin-bottom: 36px; line-height: 1.2;
+        }
+
+        /* Vroeger / Nu flow */
+        .case-flow { display: flex; flex-direction: column; margin-bottom: 36px; }
+        .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
+        .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .case-flow-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0;
+        }
+        .case-flow-dot.active {
+            background: var(--gold); border-color: var(--gold);
+            box-shadow: 0 0 8px rgba(201,168,76,0.4);
+        }
+        .case-flow-connector {
+            width: 1px; flex: 1; min-height: 28px;
+            background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+            margin: 4px 0;
+        }
+        .case-flow-body { padding-bottom: 28px; }
+        .case-flow-body.last { padding-bottom: 0; }
+        .case-flow-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--gray); margin-bottom: 6px;
+        }
+        .case-flow-text { font-size: 14px; color: var(--gray-light); line-height: 1.75; }
+
+        /* 90% blok */
+        .case-result {
+            background: rgba(201,168,76,0.05);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px; padding: 20px 24px;
+            display: flex; align-items: center; gap: 18px;
+            margin-bottom: 32px;
+        }
+        .case-result-number {
+            font-family: var(--font-heading); font-size: 48px;
+            font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0;
+            text-shadow: 0 0 24px rgba(201,168,76,0.35);
+        }
+        .case-result-text { font-size: 14px; color: var(--gray-light); line-height: 1.65; }
+        .case-result-text strong { display: block; color: #fff; font-size: 15px; margin-bottom: 3px; }
+
+        /* Rechter kolom: quote + screenshot */
+        .case-visual {
+            background: #161619;
+            display: flex; flex-direction: column;
+        }
+
+        .case-quote-block {
+            padding: 40px 44px 28px;
+            border-bottom: 1px solid rgba(201,168,76,0.06);
+            border-left: 3px solid var(--gold);
+            flex-shrink: 0;
+        }
+        .case-quote-text {
+            font-size: 16px; color: var(--white); line-height: 1.8;
+            font-style: italic; margin-bottom: 14px;
+        }
+        .case-quote-cite {
+            font-size: 13px; font-weight: 600; color: var(--gold);
+        }
+
+        .case-screenshot {
+            flex: 1; padding: 20px 28px 28px;
+            display: flex; align-items: flex-start;
+        }
+        .case-screenshot img {
+            width: 100%; border-radius: 8px;
+            border: 1px solid rgba(201,168,76,0.15);
+            display: block;
+        }
+
+        /* Herkent u dit */
+        .cta-block {
+            text-align: center;
+            padding: 72px 0 0;
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        .cta-block p { margin-bottom: 4px; }
+        .cta-block a {
+            color: var(--gold); text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="section">
+
+    <span class="section-label">Resultaten</span>
+    <h2 class="section-title">Wat we bouwen, werkt</h2>
+    <p class="section-intro">Eén klant. Eén automatisering. Dit is wat er veranderde.</p>
+
+    <div class="case-card">
+
+        <!-- LINKS: tekst -->
+        <div class="case-text">
+            <div class="case-tag">Technische dienstverlening</div>
+            <h3 class="case-company">MHL Installatieservice</h3>
+
+            <div class="case-flow">
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot"></div>
+                        <div class="case-flow-connector"></div>
+                    </div>
+                    <div class="case-flow-body">
+                        <div class="case-flow-label">Vroeger</div>
+                        <div class="case-flow-text">Elke offerte begon met een oude Word-offerte openen en de vorige klantgegevens handmatig weghalen. Naam, adres, telefoon opnieuw intypen. Werkzaamheden regel voor regel invullen, prijzen opzoeken, BTW berekenen. Opmaken, controleren, opslaan als PDF. Dan een mail openen, de PDF bijvoegen, een begeleidende tekst schrijven en versturen. Twintig minuten per offerte. Bij meerdere aanvragen per week loopt dat op tot uren verloren tijd.</div>
+                    </div>
+                </div>
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot active"></div>
+                    </div>
+                    <div class="case-flow-body last">
+                        <div class="case-flow-label">Nu</div>
+                        <div class="case-flow-text">Mohammed opent een webformulier, vult de klantgegevens in en kiest het type werkzaamheden. Één druk op de knop. De klant heeft binnen seconden een professionele offerte in zijn inbox, compleet met logo, specificaties, BTW-berekening en betalingsvoorwaarden. Geen Word, geen PDF-export, geen aparte mail.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-result">
+                <div class="case-result-number">90%</div>
+                <div class="case-result-text"><strong>minder tijd per offerte.</strong>Van twintig minuten handmatig werk naar één klik.</div>
+            </div>
+        </div>
+
+        <!-- RECHTS: quote + screenshot -->
+        <div class="case-visual">
+            <div class="case-quote-block">
+                <p class="case-quote-text">"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."</p>
+                <p class="case-quote-cite">— Mohammed, eigenaar MHL Installatieservice</p>
+            </div>
+            <div class="case-screenshot">
+                <img
+                    src="../../docs/images/mhl-demo-preview.jpg"
+                    alt="MHL Installatieservice offerte-maker"
+                    onerror="this.style.display='none'"
+                >
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Herkent u dit -->
+    <div class="cta-block">
+        <p>Herkent u dit? Veel ondernemers verliezen wekelijks uren aan handmatig werk dat een systeem ook kan doen.</p>
+        <p>Wat zou dit voor uw bedrijf opleveren? <a href="#">Plan vrijblijvend een gesprek →</a></p>
+    </div>
+
+</div>
+</body>
+</html>

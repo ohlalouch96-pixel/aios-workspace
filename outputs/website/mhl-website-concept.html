@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHL Installatieservice</title>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --dark: #111;
+        --mid: #444;
+        --light: #888;
+        --border: #ddd;
+        --bg: #f9f9f9;
+        --white: #fff;
+        --font: 'Arial', sans-serif;
+    }
+
+    body { font-family: var(--font); color: var(--dark); background: var(--white); }
+
+    /* ── NAV ── */
+    nav {
+        position: sticky;
+        top: 0;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 0 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 64px;
+        z-index: 100;
+    }
+
+    .nav-logo {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--dark);
+        letter-spacing: -0.02em;
+    }
+
+    .nav-logo span {
+        font-weight: 400;
+        color: var(--light);
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+        color: var(--mid);
+        text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--dark); }
+
+    .nav-cta {
+        background: var(--dark);
+        color: var(--white);
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+        background: var(--dark);
+        color: var(--white);
+        padding: 100px 48px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+        min-height: 520px;
+    }
+
+    .hero-label {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--light);
+        margin-bottom: 16px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        letter-spacing: -0.02em;
+    }
+
+    .hero p {
+        font-size: 16px;
+        color: #aaa;
+        line-height: 1.7;
+        margin-bottom: 32px;
+        max-width: 440px;
+    }
+
+    .hero-btns {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        background: var(--white);
+        color: var(--dark);
+        padding: 14px 24px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        border: 1px solid #555;
+        color: var(--white);
+        padding: 14px 24px;
+        border-radius: 4px;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .stat-card {
+        background: #1e1e1e;
+        border-radius: 8px;
+        padding: 24px;
+    }
+
+    .stat-card .num {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .stat-card .lbl {
+        font-size: 13px;
+        color: #888;
+        line-height: 1.5;
+    }
+
+    /* ── STRIP ── */
+    .strip {
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 48px;
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        font-size: 13px;
+        color: var(--mid);
+    }
+
+    .strip strong { color: var(--dark); }
+
+    .strip-sep { color: var(--border); }
+
+    /* ── SECTION ── */
+    section { padding: 80px 48px; }
+
+    .section-label {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--light);
+        margin-bottom: 12px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+    }
+
+    .section-sub {
+        font-size: 15px;
+        color: var(--mid);
+        line-height: 1.7;
+        max-width: 520px;
+        margin-bottom: 48px;
+    }
+
+    /* ── DIENSTEN ── */
+    .diensten-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .dienst-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 28px;
+        background: var(--white);
+    }
+
+    .dienst-icon {
+        font-size: 28px;
+        margin-bottom: 14px;
+    }
+
+    .dienst-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .dienst-card p {
+        font-size: 13px;
+        color: var(--mid);
+        line-height: 1.65;
+    }
+
+    /* ── WAAROM ── */
+    .waarom { background: var(--bg); }
+
+    .waarom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: start;
+    }
+
+    .waarom-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .waarom-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .waarom-num {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--light);
+        flex-shrink: 0;
+        width: 24px;
+        padding-top: 2px;
+    }
+
+    .waarom-item h4 {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .waarom-item p {
+        font-size: 13px;
+        color: var(--mid);
+        line-height: 1.6;
+    }
+
+    .waarom-image {
+        background: var(--border);
+        border-radius: 8px;
+        height: 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+    }
+
+    /* ── WERKGEBIED ── */
+    .werkgebied-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 32px;
+    }
+
+    .werkgebied-tag {
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        padding: 8px 18px;
+        font-size: 13px;
+        color: var(--mid);
+        background: var(--white);
+    }
+
+    /* ── OFFERTE SECTIE ── */
+    .offerte-section {
+        background: var(--dark);
+        color: var(--white);
+    }
+
+    .offerte-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+    }
+
+    .offerte-section .section-label { color: #666; }
+    .offerte-section .section-title { color: var(--white); }
+    .offerte-section .section-sub { color: #888; margin-bottom: 0; }
+
+    .offerte-form {
+        background: #1a1a1a;
+        border-radius: 8px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .offerte-form label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #888;
+        display: block;
+        margin-bottom: 5px;
+        letter-spacing: 0.03em;
+    }
+
+    .offerte-form input,
+    .offerte-form select,
+    .offerte-form textarea {
+        width: 100%;
+        background: #111;
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 13px;
+        color: var(--white);
+        font-family: var(--font);
+    }
+
+    .offerte-form textarea { min-height: 80px; resize: vertical; }
+
+    .offerte-form button {
+        background: var(--white);
+        color: var(--dark);
+        border: none;
+        border-radius: 4px;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 4px;
+        font-family: var(--font);
+    }
+
+    /* ── CALAMITEIT BANNER ── */
+    .calamiteit {
+        background: #1a1a1a;
+        color: var(--white);
+        padding: 28px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .calamiteit p { font-size: 14px; color: #aaa; }
+    .calamiteit strong { font-size: 18px; display: block; color: var(--white); margin-bottom: 4px; }
+
+    .calamiteit a {
+        background: var(--white);
+        color: var(--dark);
+        padding: 12px 28px;
+        border-radius: 4px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 15px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+        background: #0a0a0a;
+        color: #666;
+        padding: 40px 48px;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 48px;
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    footer .footer-brand {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 8px;
+    }
+
+    footer h4 {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #444;
+        margin-bottom: 12px;
+        font-weight: 700;
+    }
+
+    footer a { color: #666; text-decoration: none; display: block; }
+    footer a:hover { color: #aaa; }
+
+    .footer-bottom {
+        background: #0a0a0a;
+        border-top: 1px solid #1a1a1a;
+        padding: 16px 48px;
+        font-size: 12px;
+        color: #333;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">MHL <span>Installatieservice</span></div>
+    <ul class="nav-links">
+        <li><a href="#diensten">Diensten</a></li>
+        <li><a href="#waarom">Waarom MHL</a></li>
+        <li><a href="#werkgebied">Werkgebied</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#offerte" class="nav-cta">Offerte aanvragen</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div>
+        <p class="hero-label">Amsterdam · Installatieservice</p>
+        <h1>Vakwerk.<br>Geen gedoe.</h1>
+        <p>Al meer dan 30 jaar de vaste installateur voor particulieren en bedrijven in Amsterdam en omgeving. Van lekkage tot CV-ketel — wij lossen het op.</p>
+        <div class="hero-btns">
+            <a href="#offerte" class="btn-primary">Offerte aanvragen</a>
+            <a href="tel:0612345678" class="btn-secondary">Direct bellen</a>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-card">
+            <div class="num">30+</div>
+            <div class="lbl">Jaar ervaring in de installatiebranche</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">24/7</div>
+            <div class="lbl">Bereikbaar voor calamiteiten</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">5</div>
+            <div class="lbl">Gemeenten in het werkgebied</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">2jr</div>
+            <div class="lbl">Garantie op alle werkzaamheden</div>
+        </div>
+    </div>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+    <span><strong>Loodgieterswerkzaamheden</strong></span>
+    <span class="strip-sep">·</span>
+    <span><strong>CV-ketel onderhoud</strong></span>
+    <span class="strip-sep">·</span>
+    <span><strong>Ontstopping</strong></span>
+    <span class="strip-sep">·</span>
+    <span><strong>Lekkagereparatie</strong></span>
+    <span class="strip-sep">·</span>
+    <span><strong>Badkamerrenovatie</strong></span>
+    <span class="strip-sep">·</span>
+    <span><strong>Dak- en zinkwerk</strong></span>
+</div>
+
+<!-- DIENSTEN -->
+<section id="diensten">
+    <p class="section-label">Wat we doen</p>
+    <h2 class="section-title">Onze diensten</h2>
+    <p class="section-sub">Van kleine reparatie tot volledige renovatie. We pakken het aan zoals het hoort — vakkundig, netjes en met respect voor uw woning.</p>
+
+    <div class="diensten-grid">
+        <div class="dienst-card">
+            <div class="dienst-icon">🔧</div>
+            <h3>Loodgieterswerkzaamheden</h3>
+            <p>Reparaties, vervangingen en nieuwe aansluitingen. Snel en vakkundig uitgevoerd.</p>
+        </div>
+        <div class="dienst-card">
+            <div class="dienst-icon">🔥</div>
+            <h3>CV-ketel onderhoud & reparatie</h3>
+            <p>Jaarlijks onderhoud, storingen verhelpen en volledige vervangingen van alle merken.</p>
+        </div>
+        <div class="dienst-card">
+            <div class="dienst-icon">🚿</div>
+            <h3>Ontstoppingsdiensten</h3>
+            <p>Verstopte afvoeren, toiletten of riolen — we lossen het snel op.</p>
+        </div>
+        <div class="dienst-card">
+            <div class="dienst-icon">💧</div>
+            <h3>Lekkagereparatie</h3>
+            <p>Lekkages opsporen en vakkundig verhelpen, ook op moeilijk bereikbare plekken.</p>
+        </div>
+        <div class="dienst-card">
+            <div class="dienst-icon">🛁</div>
+            <h3>Badkamer- & toiletrenovatie</h3>
+            <p>Complete renovaties van badkamer of toilet, inclusief alle sanitaire aansluitingen.</p>
+        </div>
+        <div class="dienst-card">
+            <div class="dienst-icon">🏠</div>
+            <h3>Dak- en zinkwerk</h3>
+            <p>Herstel en vervanging van dakgoten, zinkwerk en aanverwante constructies.</p>
+        </div>
+    </div>
+</section>
+
+<!-- WAAROM MHL -->
+<section id="waarom" class="waarom">
+    <p class="section-label">Waarom MHL</p>
+    <h2 class="section-title">Waar wij het verschil maken</h2>
+    <p class="section-sub">Wij doen niet aan loze beloftes. Dit is wat u van ons mag verwachten.</p>
+
+    <div class="waarom-grid">
+        <div class="waarom-list">
+            <div class="waarom-item">
+                <div class="waarom-num">01</div>
+                <div>
+                    <h4>Duidelijke prijs vooraf</h4>
+                    <p>U ontvangt altijd een offerte voordat wij beginnen. Geen verrassingen op de factuur.</p>
+                </div>
+            </div>
+            <div class="waarom-item">
+                <div class="waarom-num">02</div>
+                <div>
+                    <h4>30 jaar vakkennis</h4>
+                    <p>Wij kennen elk type woning in Amsterdam. Oudere woningen, nieuwbouw, monumenten — we hebben het allemaal al gezien.</p>
+                </div>
+            </div>
+            <div class="waarom-item">
+                <div class="waarom-num">03</div>
+                <div>
+                    <h4>2 jaar garantie</h4>
+                    <p>Op al onze werkzaamheden geven wij 2 jaar garantie. Gaat er iets mis? Wij lossen het op.</p>
+                </div>
+            </div>
+            <div class="waarom-item">
+                <div class="waarom-num">04</div>
+                <div>
+                    <h4>Netjes en respectvol</h4>
+                    <p>We werken in uw woning. Dat betekent opruimen na de klus en respect voor uw spullen.</p>
+                </div>
+            </div>
+        </div>
+        <div class="waarom-image">[ Foto van werkzaamheden ]</div>
+    </div>
+</section>
+
+<!-- WERKGEBIED -->
+<section id="werkgebied">
+    <p class="section-label">Waar we werken</p>
+    <h2 class="section-title">Werkgebied</h2>
+    <p class="section-sub">Wij zijn actief in Amsterdam en de directe omgeving. Twijfelt u of wij bij u in de buurt komen? Neem gerust contact op.</p>
+    <div class="werkgebied-list">
+        <span class="werkgebied-tag">Amsterdam</span>
+        <span class="werkgebied-tag">Amstelveen</span>
+        <span class="werkgebied-tag">Zaandam</span>
+        <span class="werkgebied-tag">Haarlem</span>
+        <span class="werkgebied-tag">Diemen</span>
+        <span class="werkgebied-tag">Ouderkerk aan de Amstel</span>
+        <span class="werkgebied-tag">Badhoevedorp</span>
+    </div>
+</section>
+
+<!-- OFFERTE FORMULIER -->
+<section id="offerte" class="offerte-section">
+    <div class="offerte-inner">
+        <div>
+            <p class="section-label">Vrijblijvende offerte</p>
+            <h2 class="section-title">Wat kan MHL voor u betekenen?</h2>
+            <p class="section-sub">Vul het formulier in. Wij nemen binnen 1 werkdag contact met u op met een heldere offerte — geen verplichtingen.</p>
+        </div>
+        <div class="offerte-form">
+            <div class="form-row">
+                <div>
+                    <label>Naam *</label>
+                    <input type="text" placeholder="Voor- en achternaam">
+                </div>
+                <div>
+                    <label>Telefoonnummer *</label>
+                    <input type="tel" placeholder="06 - 00 00 00 00">
+                </div>
+            </div>
+            <div>
+                <label>Type werkzaamheden *</label>
+                <select>
+                    <option value="" disabled selected>Selecteer een categorie</option>
+                    <option>Loodgieterswerkzaamheden</option>
+                    <option>CV-ketel onderhoud of reparatie</option>
+                    <option>Ontstopping</option>
+                    <option>Lekkagereparatie</option>
+                    <option>Badkamer- of toiletrenovatie</option>
+                    <option>Dak- en zinkwerk</option>
+                    <option>Anders</option>
+                </select>
+            </div>
+            <div>
+                <label>Omschrijving</label>
+                <textarea placeholder="Beschrijf kort wat er aan de hand is..."></textarea>
+            </div>
+            <button type="submit">Offerte aanvragen →</button>
+        </div>
+    </div>
+</section>
+
+<!-- CALAMITEIT BANNER -->
+<div class="calamiteit">
+    <div>
+        <strong>Spoedreparatie nodig?</strong>
+        <p>Voor calamiteiten zijn wij 24 uur per dag, 7 dagen per week bereikbaar. Bel direct.</p>
+    </div>
+    <a href="tel:0612345678">Direct bellen</a>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+    <div>
+        <div class="footer-brand">MHL Installatieservice</div>
+        <p>Al meer dan 30 jaar de vaste installateur in Amsterdam en omgeving. Vakwerk, eerlijke prijzen, geen gedoe.</p>
+    </div>
+    <div>
+        <h4>Diensten</h4>
+        <a href="#">Loodgieterswerkzaamheden</a>
+        <a href="#">CV-ketel</a>
+        <a href="#">Ontstopping</a>
+        <a href="#">Lekkage</a>
+        <a href="#">Badkamerrenovatie</a>
+        <a href="#">Dak- en zinkwerk</a>
+    </div>
+    <div>
+        <h4>Contact</h4>
+        <a href="#">info@mhl-installatieservice.nl</a>
+        <a href="#">www.mhl-installatieservice.nl</a>
+        <a href="#">Amsterdam</a>
+        <br>
+        <a href="#">KvK: [nummer]</a>
+        <a href="#">BTW: [nummer]</a>
+    </div>
+</footer>
+<div class="footer-bottom">
+    <span>© 2026 MHL Installatieservice</span>
+    <span>Alle rechten voorbehouden</span>
+</div>
+
+</body>
+</html>

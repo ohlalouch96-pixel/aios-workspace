@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview — FTUK Case Study v2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888;
+            --gray-light: #C0C0C0;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        body {
+            background: #111114;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 60px 0 120px;
+        }
+
+        /* ── LAYOUT LABELS ── */
+        .layout-label {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 32px;
+        }
+        .layout-divider {
+            border: none;
+            border-top: 1px solid #252525;
+            margin: 80px auto;
+            max-width: 900px;
+        }
+
+        /* ── SHARED SECTION HEADER ── */
+        .section { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        .section-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.35em;
+            text-transform: uppercase; color: var(--gold);
+            text-align: center; display: block;
+        }
+        .section-label::after {
+            content: ''; display: block; width: 20px; height: 2px;
+            background: var(--gold); margin: 10px auto 20px; opacity: 0.7;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(24px, 2.8vw, 38px);
+            font-weight: 600; line-height: 1.15;
+            color: var(--white); text-align: center; margin-bottom: 12px;
+        }
+        .section-intro {
+            font-size: 15px; color: var(--gray); text-align: center;
+            max-width: 480px; margin: 0 auto 56px; line-height: 1.8;
+        }
+
+        /* ════════════════════════════════
+           LAYOUT A — TEKST BOVEN / DASH ONDER
+           ════════════════════════════════ */
+        .card-a {
+            background: #161619;
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-a::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+
+        /* Text block top */
+        .card-a-text {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            padding: 40px 48px;
+            border-bottom: 1px solid rgba(201,168,76,0.1);
+        }
+        .card-a-meta { display: flex; flex-direction: column; gap: 6px; }
+        .case-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--gold);
+        }
+        .case-tag::before {
+            content: ''; width: 16px; height: 1px; background: var(--gold); opacity: 0.5;
+        }
+        .case-company {
+            font-family: var(--font-heading); font-size: 24px;
+            font-weight: 600; color: var(--white); line-height: 1.2;
+        }
+        .card-a-flow { padding: 0 24px; border-left: 1px solid #252525; border-right: 1px solid #252525; }
+        .flow-block { margin-bottom: 16px; }
+        .flow-block:last-child { margin-bottom: 0; }
+        .flow-label {
+            font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--gray); margin-bottom: 4px;
+        }
+        .flow-text { font-size: 13px; color: var(--gray-light); line-height: 1.7; }
+        .flow-text strong { color: #fff; }
+        .card-a-result { display: flex; flex-direction: column; justify-content: center; padding: 0 0 0 32px; gap: 20px; }
+        .result-stat {
+            background: rgba(201,168,76,0.06);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px; padding: 16px 20px;
+        }
+        .result-number {
+            font-family: var(--font-heading); font-size: 36px;
+            font-weight: 700; color: var(--gold); line-height: 1;
+        }
+        .result-text { font-size: 12px; color: var(--gray-light); margin-top: 4px; line-height: 1.5; }
+        .result-quote {
+            border-left: 2px solid rgba(201,168,76,0.3);
+            padding-left: 16px;
+        }
+        .result-quote p {
+            font-size: 12px; color: var(--gray-light); font-style: italic;
+            line-height: 1.7; margin-bottom: 6px;
+        }
+        .result-quote cite { font-size: 11px; color: var(--gold); font-style: normal; }
+
+        /* Dashboard block bottom — full width */
+        .card-a-dash {
+            width: 100%;
+            background: #0c0e18;
+        }
+
+        /* ════════════════════════════════
+           LAYOUT B — TEKST LINKS / DASH RECHTS
+           ════════════════════════════════ */
+        .card-b {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            background: #161619;
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-height: 600px;
+        }
+        .card-b::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+        .card-b-text {
+            padding: 48px 44px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(201,168,76,0.1);
+        }
+        .card-b-flow { display: flex; flex-direction: column; gap: 0; margin: 28px 0 28px; }
+        .b-flow-item { display: flex; gap: 16px; align-items: flex-start; }
+        .b-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .b-flow-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0;
+        }
+        .b-flow-dot.active { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.4); }
+        .b-flow-connector {
+            width: 1px; flex: 1; min-height: 24px;
+            background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+            margin: 4px 0;
+        }
+        .b-flow-body { padding-bottom: 24px; }
+        .b-flow-body:last-child { padding-bottom: 0; }
+        .b-flow-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--gray); margin-bottom: 5px;
+        }
+        .b-flow-text { font-size: 13.5px; color: var(--gray-light); line-height: 1.75; }
+        .b-flow-text strong { color: #fff; }
+        .b-result {
+            background: rgba(201,168,76,0.05);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px; padding: 18px 22px;
+            display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+        }
+        .b-result-number {
+            font-family: var(--font-heading); font-size: 40px;
+            font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0;
+        }
+        .b-result-text { font-size: 13px; color: var(--gray-light); line-height: 1.6; }
+        .b-quote { border-left: 2px solid rgba(201,168,76,0.3); padding-left: 18px; margin-top: auto; }
+        .b-quote p { font-size: 13px; color: var(--gray-light); font-style: italic; line-height: 1.8; margin-bottom: 8px; }
+        .b-quote cite { font-size: 11px; color: var(--gold); font-style: normal; }
+
+        .card-b-dash { background: #0c0e18; }
+
+        /* ════════════════════════════════
+           SHARED DASHBOARD STYLES
+           ════════════════════════════════ */
+        .db-browser {
+            background: #13162a;
+            border-bottom: 1px solid #2a2d45;
+            padding: 9px 14px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .db-dot { width: 9px; height: 9px; border-radius: 50%; }
+        .db-dot:nth-child(1) { background: #FF5F57; }
+        .db-dot:nth-child(2) { background: #FEBC2E; }
+        .db-dot:nth-child(3) { background: #28C840; }
+        .db-url {
+            flex: 1; background: #1e2236; border-radius: 3px;
+            padding: 4px 10px; font-size: 10px; color: #3a4060; margin-left: 6px;
+        }
+        .db-live {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 9px; color: #00c853; letter-spacing: 0.1em;
+            text-transform: uppercase; font-weight: 600;
+        }
+        .live-dot {
+            width: 6px; height: 6px; background: #00c853;
+            border-radius: 50%; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        .db-body { display: flex; overflow: hidden; }
+
+        /* Sidebar */
+        .db-sidebar {
+            width: 150px; background: #0f1226; border-right: 1px solid #1e2236;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .db-sidebar-logo {
+            padding: 16px 16px 14px;
+            border-bottom: 1px solid #1e2236;
+        }
+        .db-sidebar-name {
+            font-size: 11px; font-weight: 700; color: #fff;
+            letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.3;
+        }
+        .db-sidebar-sub { font-size: 8px; color: #3a4060; margin-top: 2px; letter-spacing: 0.05em; }
+        .db-sidebar-section {
+            font-size: 7.5px; color: #2a3050; letter-spacing: 0.15em;
+            text-transform: uppercase; padding: 12px 16px 4px;
+        }
+        .db-nav { padding: 4px 0; flex: 1; }
+        .db-nav-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 16px; font-size: 10px; color: #4a5580;
+            border-left: 2px solid transparent; cursor: default;
+        }
+        .db-nav-item.active {
+            color: #fff; background: rgba(74,95,212,0.18);
+            border-left-color: #4a6fef;
+        }
+        .db-nav-item:hover { color: #8890b5; }
+        .db-nav-icon { font-size: 11px; width: 14px; text-align: center; }
+        .db-sidebar-footer {
+            padding: 10px 16px; border-top: 1px solid #1e2236;
+            font-size: 8px; color: #2a3050;
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        /* Main panel */
+        .db-main { flex: 1; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+
+        .db-topbar {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .db-topbar-left {}
+        .db-greeting { font-size: 13px; font-weight: 600; color: #fff; }
+        .db-subline { font-size: 9px; color: #3a4060; margin-top: 1px; }
+        .db-topbar-right { display: flex; align-items: center; gap: 6px; }
+        .db-badge {
+            background: #1a1d30; border: 1px solid #2a2d45;
+            border-radius: 3px; padding: 3px 8px;
+            font-size: 8px; color: #4a5580;
+        }
+        .db-badge.alert {
+            background: rgba(201,168,76,0.08);
+            border-color: rgba(201,168,76,0.25); color: var(--gold);
+        }
+
+        /* KPI row — 5 cards */
+        .db-kpi-row {
+            display: grid; grid-template-columns: repeat(5,1fr); gap: 6px;
+        }
+        .db-kpi {
+            background: #13162a; border: 1px solid #1e2236;
+            border-radius: 5px; padding: 8px 10px; position: relative; overflow: hidden;
+        }
+        .db-kpi.gold { border-color: rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); }
+        .db-kpi-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #4a6fef; }
+        .db-kpi.gold .db-kpi-bar { background: var(--gold); }
+        .db-kpi-label { font-size: 7.5px; color: #4a5580; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+        .db-kpi-val { font-size: 15px; font-weight: 700; color: #fff; line-height: 1; filter: blur(5px); user-select: none; }
+        .db-kpi.gold .db-kpi-val { color: var(--gold); }
+        .db-kpi-delta { font-size: 7.5px; margin-top: 3px; filter: blur(3px); }
+        .db-kpi-delta.up { color: #00c853; }
+        .db-kpi-delta.dn { color: #ff5252; }
+        .db-kpi-delta.neu { color: #4a5580; }
+
+        /* Middle row — chart + donut + geo */
+        .db-mid { display: grid; grid-template-columns: 1.8fr 1fr 1fr; gap: 8px; flex: 1; min-height: 0; }
+
+        .db-panel {
+            background: #13162a; border: 1px solid #1e2236;
+            border-radius: 5px; padding: 10px; display: flex; flex-direction: column; overflow: hidden;
+        }
+        .db-panel-title {
+            font-size: 8px; color: #4a5580; text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .db-panel-title span { color: #8890b5; filter: blur(3.5px); }
+
+        /* Bar chart */
+        .db-bars { display: flex; align-items: flex-end; gap: 4px; flex: 1; min-height: 60px; }
+        .db-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
+        .db-bar { width: 100%; border-radius: 2px 2px 0 0; }
+        .db-bar.blue { background: linear-gradient(to top, #3a4fc4, #5a6fd4); opacity: 0.75; }
+        .db-bar.gold { background: linear-gradient(to top, #b8943c, #d4a84c); }
+        .db-bar.red { background: linear-gradient(to top, #c43a3a, #d45a5a); opacity: 0.5; }
+        .db-bar-lbl { font-size: 7px; color: #2a3050; }
+
+        /* Donut chart */
+        .db-donut-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; gap: 10px; }
+        .db-donut {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: conic-gradient(
+                #00c853 0% 73%,
+                #f59e0b 73% 90%,
+                #ff5252 90% 100%
+            );
+            position: relative;
+            flex-shrink: 0;
+        }
+        .db-donut::after {
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 50px; height: 50px; background: #13162a; border-radius: 50%;
+        }
+        .db-donut-center {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 2; text-align: center;
+        }
+        .db-donut-num { font-size: 13px; font-weight: 700; color: #fff; filter: blur(4px); line-height: 1; }
+        .db-donut-sub { font-size: 7px; color: #4a5580; }
+        .db-legend { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .db-legend-item { display: flex; align-items: center; gap: 6px; font-size: 8px; color: #8890b5; }
+        .db-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Geo table */
+        .db-geo { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+        .db-geo-row { display: flex; flex-direction: column; gap: 2px; }
+        .db-geo-top { display: flex; justify-content: space-between; font-size: 8px; }
+        .db-geo-country { color: #8890b5; }
+        .db-geo-pct { color: #4a6fef; filter: blur(3px); }
+        .db-geo-bar-wrap { height: 3px; background: #1e2236; border-radius: 2px; overflow: hidden; }
+        .db-geo-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, #4a6fef, #6a8fff); }
+
+        /* Bottom row — ads table + AI recs */
+        .db-bot { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+
+        .db-ads-table { display: flex; flex-direction: column; gap: 0; }
+        .db-ads-head {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4px; padding: 0 0 5px;
+            border-bottom: 1px solid #1e2236;
+            font-size: 7px; color: #2a3050; text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .db-ads-row {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4px; padding: 5px 0;
+            border-bottom: 1px solid rgba(30,34,54,0.5);
+            align-items: center;
+        }
+        .db-ads-row:last-child { border-bottom: none; }
+        .db-ads-name { font-size: 8.5px; color: #8890b5; filter: blur(3.5px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .db-ads-cell { font-size: 8.5px; color: #6070a0; filter: blur(3px); }
+        .db-ads-cell.pos { color: #00c853; }
+        .db-ads-cell.neg { color: #ff5252; }
+        .db-ads-badge {
+            font-size: 7px; padding: 1px 5px; border-radius: 2px; text-align: center;
+            background: rgba(201,168,76,0.12); color: var(--gold); filter: none;
+        }
+
+        .db-ai-recs { display: flex; flex-direction: column; gap: 5px; }
+        .db-ai-title {
+            font-size: 8px; color: #4a5580; text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 3px; display: flex; align-items: center; gap: 5px;
+        }
+        .db-ai-title::before { content: '◈'; color: var(--gold); font-size: 9px; }
+        .db-rec {
+            background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 4px; padding: 6px 8px;
+        }
+        .db-rec.blue-rec { background: rgba(74,111,239,0.06); border-color: rgba(74,111,239,0.2); }
+        .db-rec-tag { font-size: 7px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+        .db-rec.blue-rec .db-rec-tag { color: #4a6fef; }
+        .db-rec-text { font-size: 8px; color: #a0a8c0; line-height: 1.45; }
+        .db-rec-text strong { color: #fff; }
+
+        .db-report-strip {
+            background: rgba(74,111,239,0.06); border: 1px solid rgba(74,111,239,0.18);
+            border-radius: 4px; padding: 6px 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .db-report-icon { font-size: 11px; color: #4a6fef; flex-shrink: 0; }
+        .db-report-text { font-size: 8px; color: #8890b5; line-height: 1.4; }
+        .db-report-text strong { color: #aab0d0; }
+    </style>
+</head>
+<body>
+
+<!-- ── SHARED DASHBOARD MACRO ── rendered twice below ── -->
+
+<!-- ════════════════════════
+     LAYOUT A — BOVEN/ONDER
+     ════════════════════════ -->
+<div class="section" style="margin-bottom:0;">
+    <p class="layout-label">Optie A — Tekst boven · Dashboard onder</p>
+    <span class="section-label">Resultaten</span>
+    <h2 class="section-title">Wat we bouwen, werkt</h2>
+    <p class="section-intro">Eén klant. Eén automatisering. Dit is wat er veranderde.</p>
+
+    <div class="card-a">
+        <!-- TEXT ROW -->
+        <div class="card-a-text">
+            <div class="card-a-meta">
+                <div class="case-tag">E-commerce & Media</div>
+                <div class="case-company">FTUK</div>
+            </div>
+            <div class="card-a-flow">
+                <div class="flow-block">
+                    <div class="flow-label">Vroeger</div>
+                    <div class="flow-text">Data ophalen uit <strong>3 bronnen</strong>, samenvoegen in Excel, grafieken bijwerken. <strong>6 uur per week</strong> handmatig werk — en de cijfers waren dan nog <strong>2 tot 3 dagen</strong> oud.</div>
+                </div>
+                <div class="flow-block" style="margin-top:16px;">
+                    <div class="flow-label">Nu</div>
+                    <div class="flow-text">Eén dashboard, alle systemen gekoppeld, live bijgewerkt <strong>elke minuut</strong>. AI-aanbevelingen en elke ochtend een <strong>dagrapport</strong> in de inbox.</div>
+                </div>
+            </div>
+            <div class="card-a-result">
+                <div class="result-stat">
+                    <div class="result-number">6 uur</div>
+                    <div class="result-text">per week teruggewonnen. Real-time inzicht in 30 seconden.</div>
+                </div>
+                <div class="result-quote">
+                    <p>"Vroeger wist ik pas op maandag hoe het weekend was gegaan. Nu zie ik het terwijl het gebeurt."</p>
+                    <cite>— Abdelilah, FTUK</cite>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD FULL WIDTH -->
+        <div class="card-a-dash" id="dash-a"></div>
+    </div>
+</div>
+
+<hr class="layout-divider">
+
+<!-- ════════════════════════
+     LAYOUT B — LINKS/RECHTS
+     ════════════════════════ -->
+<div class="section">
+    <p class="layout-label">Optie B — Tekst links · Dashboard rechts</p>
+    <span class="section-label">Resultaten</span>
+    <h2 class="section-title">Wat we bouwen, werkt</h2>
+    <p class="section-intro">Eén klant. Eén automatisering. Dit is wat er veranderde.</p>
+
+    <div class="card-b">
+        <!-- TEXT LEFT -->
+        <div class="card-b-text">
+            <div class="case-tag">E-commerce & Media</div>
+            <div class="case-company" style="margin-top:10px; margin-bottom:0;">FTUK</div>
+
+            <div class="card-b-flow">
+                <div class="b-flow-item">
+                    <div class="b-flow-line">
+                        <div class="b-flow-dot"></div>
+                        <div class="b-flow-connector"></div>
+                    </div>
+                    <div class="b-flow-body">
+                        <div class="b-flow-label">Vroeger</div>
+                        <div class="b-flow-text">Elke week data ophalen uit <strong>3 verschillende bronnen</strong>: Meta Ads Manager, webshop-analytics en verkoopoverzichten. Kopiëren naar Excel, handmatig samenvoegen. Antwoorden die pas na <strong>gemiddeld 6 uur</strong> beschikbaar waren — en dan nog <strong>2 tot 3 dagen</strong> te laat om bij te sturen.</div>
+                    </div>
+                </div>
+                <div class="b-flow-item">
+                    <div class="b-flow-line">
+                        <div class="b-flow-dot active"></div>
+                    </div>
+                    <div class="b-flow-body">
+                        <div class="b-flow-label">Nu</div>
+                        <div class="b-flow-text">Eén dashboard. Alle systemen gekoppeld, data ververst <strong>elke minuut</strong>. Omzet, orders, refunds, advertentieprestaties — alles live. Het systeem geeft <strong>AI-aanbevelingen</strong> en stuurt elke ochtend automatisch een <strong>dagrapport</strong> van de afgelopen 24 uur.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="b-result">
+                <div class="b-result-number">6 uur</div>
+                <div class="b-result-text">per week teruggewonnen.<br>Real-time inzicht in 30 seconden.</div>
+            </div>
+            <div class="b-quote">
+                <p>"Vroeger wist ik pas op maandag hoe het weekend was gegaan. Nu zie ik het terwijl het gebeurt."</p>
+                <cite>— Abdelilah, FTUK</cite>
+            </div>
+        </div>
+
+        <!-- DASHBOARD RIGHT -->
+        <div class="card-b-dash" id="dash-b"></div>
+    </div>
+</div>
+
+<script>
+// Build the dashboard HTML once, inject into both slots
+function buildDash(height) {
+    return `
+    <div class="db-browser">
+        <div class="db-dot"></div><div class="db-dot"></div><div class="db-dot"></div>
+        <div class="db-url">dashboard.ftuk.nl &nbsp;/&nbsp; overview</div>
+        <div class="db-live"><span class="live-dot"></span> Live</div>
+    </div>
+    <div class="db-body" style="height:${height}px;">
+        <!-- SIDEBAR -->
+        <div class="db-sidebar">
+            <div class="db-sidebar-logo">
+                <div class="db-sidebar-name">FTUK<br>Business</div>
+                <div class="db-sidebar-sub">Intelligence Platform</div>
+            </div>
+            <div class="db-sidebar-section">Main</div>
+            <div class="db-nav">
+                <div class="db-nav-item active"><span class="db-nav-icon">▦</span> Overview</div>
+                <div class="db-nav-item"><span class="db-nav-icon">↗</span> Revenue</div>
+                <div class="db-nav-item"><span class="db-nav-icon">◈</span> Ads</div>
+                <div class="db-nav-item"><span class="db-nav-icon">☰</span> Orders</div>
+                <div class="db-nav-item"><span class="db-nav-icon">◎</span> Visitors</div>
+            </div>
+            <div class="db-sidebar-section">Reports</div>
+            <div class="db-nav">
+                <div class="db-nav-item"><span class="db-nav-icon">✉</span> Daily Report</div>
+                <div class="db-nav-item"><span class="db-nav-icon">⚙</span> Settings</div>
+            </div>
+            <div class="db-sidebar-footer"><span class="live-dot" style="width:5px;height:5px;background:#00c853;border-radius:50%;"></span> All systems connected</div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="db-main">
+            <!-- Topbar -->
+            <div class="db-topbar">
+                <div class="db-topbar-left">
+                    <div class="db-greeting">Good morning, FTUK</div>
+                    <div class="db-subline">Last updated: just now &nbsp;·&nbsp; auto-refresh every 60s &nbsp;·&nbsp; Tue 24 Jun 2026</div>
+                </div>
+                <div class="db-topbar-right">
+                    <div class="db-badge alert">⚡ 2 AI Recommendations</div>
+                    <div class="db-badge">Daily report sent · 07:00</div>
+                </div>
+            </div>
+
+            <!-- 5 KPI cards -->
+            <div class="db-kpi-row">
+                <div class="db-kpi gold">
+                    <div class="db-kpi-bar"></div>
+                    <div class="db-kpi-label">Net Revenue Today</div>
+                    <div class="db-kpi-val">€ 3,847</div>
+                    <div class="db-kpi-delta up">▲ 18% vs yesterday</div>
+                </div>
+                <div class="db-kpi">
+                    <div class="db-kpi-bar"></div>
+                    <div class="db-kpi-label">Total Orders</div>
+                    <div class="db-kpi-val">142</div>
+                    <div class="db-kpi-delta up">▲ 23 vs yesterday</div>
+                </div>
+                <div class="db-kpi">
+                    <div class="db-kpi-bar"></div>
+                    <div class="db-kpi-label">Refunds</div>
+                    <div class="db-kpi-val">€ 214</div>
+                    <div class="db-kpi-delta dn">▲ 3 refunds</div>
+                </div>
+                <div class="db-kpi">
+                    <div class="db-kpi-bar"></div>
+                    <div class="db-kpi-label">Overall ROAS</div>
+                    <div class="db-kpi-val">4.2×</div>
+                    <div class="db-kpi-delta up">▲ 0.4 vs last week</div>
+                </div>
+                <div class="db-kpi">
+                    <div class="db-kpi-bar"></div>
+                    <div class="db-kpi-label">Live Visitors</div>
+                    <div class="db-kpi-val">89</div>
+                    <div class="db-kpi-delta neu">● real-time</div>
+                </div>
+            </div>
+
+            <!-- Mid: chart + donut + geo -->
+            <div class="db-mid">
+                <!-- Revenue chart -->
+                <div class="db-panel">
+                    <div class="db-panel-title">Revenue — Last 7 Days <span>Total: € 22,413</span></div>
+                    <div class="db-bars">
+                        <div class="db-bar-wrap"><div class="db-bar blue" style="height:52%"></div><div class="db-bar-lbl">Mon</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar blue" style="height:67%"></div><div class="db-bar-lbl">Tue</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar blue" style="height:44%"></div><div class="db-bar-lbl">Wed</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar blue" style="height:59%"></div><div class="db-bar-lbl">Thu</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar gold" style="height:91%"></div><div class="db-bar-lbl">Fri</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar gold" style="height:100%"></div><div class="db-bar-lbl">Sat</div></div>
+                        <div class="db-bar-wrap"><div class="db-bar blue" style="height:74%"></div><div class="db-bar-lbl">Sun</div></div>
+                    </div>
+                </div>
+
+                <!-- Donut: order status -->
+                <div class="db-panel">
+                    <div class="db-panel-title">Order Status</div>
+                    <div class="db-donut-wrap">
+                        <div style="position:relative; width:80px; height:80px;">
+                            <div class="db-donut"></div>
+                            <div class="db-donut-center">
+                                <div class="db-donut-num">142</div>
+                                <div class="db-donut-sub">orders</div>
+                            </div>
+                        </div>
+                        <div class="db-legend">
+                            <div class="db-legend-item"><div class="db-legend-dot" style="background:#00c853"></div> Fulfilled — 73%</div>
+                            <div class="db-legend-item"><div class="db-legend-dot" style="background:#f59e0b"></div> Pending — 17%</div>
+                            <div class="db-legend-item"><div class="db-legend-dot" style="background:#ff5252"></div> Cancelled — 10%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geo breakdown -->
+                <div class="db-panel">
+                    <div class="db-panel-title">Top Markets</div>
+                    <div class="db-geo">
+                        <div class="db-geo-row">
+                            <div class="db-geo-top"><span class="db-geo-country">🇳🇱 Netherlands</span><span class="db-geo-pct">68%</span></div>
+                            <div class="db-geo-bar-wrap"><div class="db-geo-bar-fill" style="width:68%"></div></div>
+                        </div>
+                        <div class="db-geo-row">
+                            <div class="db-geo-top"><span class="db-geo-country">🇧🇪 Belgium</span><span class="db-geo-pct">21%</span></div>
+                            <div class="db-geo-bar-wrap"><div class="db-geo-bar-fill" style="width:21%; opacity:0.7"></div></div>
+                        </div>
+                        <div class="db-geo-row">
+                            <div class="db-geo-top"><span class="db-geo-country">🇩🇪 Germany</span><span class="db-geo-pct">8%</span></div>
+                            <div class="db-geo-bar-wrap"><div class="db-geo-bar-fill" style="width:8%; opacity:0.5"></div></div>
+                        </div>
+                        <div class="db-geo-row">
+                            <div class="db-geo-top"><span class="db-geo-country">🌍 Other</span><span class="db-geo-pct">3%</span></div>
+                            <div class="db-geo-bar-wrap"><div class="db-geo-bar-fill" style="width:3%; opacity:0.3"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom: ads table + AI recs -->
+            <div class="db-bot">
+                <div class="db-panel db-ads-table">
+                    <div class="db-panel-title" style="margin-bottom:6px;">Active Ad Campaigns — ROAS</div>
+                    <div class="db-ads-head">
+                        <div>Campaign</div><div>Spend</div><div>Revenue</div><div>ROAS</div>
+                    </div>
+                    <div class="db-ads-row">
+                        <div class="db-ads-name">Summer Collection 2026</div>
+                        <div class="db-ads-cell">€ ███</div>
+                        <div class="db-ads-cell pos">€ ████</div>
+                        <div class="db-ads-badge">4.8×</div>
+                    </div>
+                    <div class="db-ads-row">
+                        <div class="db-ads-name">Retargeting — Visitors</div>
+                        <div class="db-ads-cell">€ ██</div>
+                        <div class="db-ads-cell pos">€ ███</div>
+                        <div class="db-ads-cell pos">3.2×</div>
+                    </div>
+                    <div class="db-ads-row">
+                        <div class="db-ads-name">Lookalike — NL</div>
+                        <div class="db-ads-cell">€ ██</div>
+                        <div class="db-ads-cell pos">€ ███</div>
+                        <div class="db-ads-cell pos">2.9×</div>
+                    </div>
+                    <div class="db-ads-row">
+                        <div class="db-ads-name">Brand Awareness Q2</div>
+                        <div class="db-ads-cell">€ ██</div>
+                        <div class="db-ads-cell neg">€ ██</div>
+                        <div class="db-ads-cell neg">1.4×</div>
+                    </div>
+                </div>
+
+                <div class="db-panel db-ai-recs">
+                    <div class="db-ai-title">AI Recommendations</div>
+                    <div class="db-rec">
+                        <div class="db-rec-tag">↑ Scale</div>
+                        <div class="db-rec-text"><strong>"Summer Collection"</strong> is 34% above avg. ROAS. Recommend increasing daily budget by €50 for maximum return.</div>
+                    </div>
+                    <div class="db-rec blue-rec">
+                        <div class="db-rec-tag">⚠ Review</div>
+                        <div class="db-rec-text"><strong>"Brand Awareness Q2"</strong> ROAS below break-even (1.4×). Consider pausing or revising creative.</div>
+                    </div>
+                    <div class="db-report-strip" style="margin-top:2px;">
+                        <span class="db-report-icon">✉</span>
+                        <div class="db-report-text"><strong>Daily Report sent · 07:00</strong><br>Last 24h summary delivered to your inbox</div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end db-main -->
+    </div><!-- end db-body -->
+    `;
+}
+
+document.getElementById('dash-a').innerHTML = buildDash(480);
+document.getElementById('dash-b').innerHTML = buildDash(560);
+</script>
+</body>
+</html>

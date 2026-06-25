@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offerte aanvragen — MHL Installatieservice</title>
+<style>
+    :root {
+        --primary: #AA1C1C;       /* MHL rood */
+        --accent: #AA1C1C;        /* MHL rood */
+        --accent-hover: #8B1515;  /* MHL rood donkerder bij hover */
+        --bg: #F5F5F5;
+        --white: #FFFFFF;
+        --text: #1A1A1A;
+        --text-light: #666;
+        --border: #DDDDDD;
+        --error: #C0392B;
+        --success: #27AE60;
+        --radius: 4px;
+        --font: 'Arial', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        padding: 40px 16px 60px;
+    }
+
+    .form-wrapper {
+        max-width: 640px;
+        margin: 0 auto;
+        background: var(--white);
+        border-radius: 10px;
+        box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .form-header {
+        background: var(--white);
+        border-bottom: 3px solid var(--primary);
+        padding: 28px 40px 24px;
+        color: var(--text);
+    }
+
+    .form-header img {
+        height: 52px;
+        margin-bottom: 16px;
+        display: block;
+    }
+
+    .form-header h1 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        line-height: 1.3;
+        color: var(--text);
+    }
+
+    .form-header p {
+        font-size: 14px;
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* ── BODY ── */
+    .form-body {
+        padding: 36px 40px 40px;
+    }
+
+    .section-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 16px;
+        margin-top: 28px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section-label:first-child { margin-top: 0; }
+
+    .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .field-group {
+        margin-bottom: 16px;
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 6px;
+    }
+
+    label .required {
+        color: var(--accent);
+        margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 11px 14px;
+        font-size: 14px;
+        font-family: var(--font);
+        color: var(--text);
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        transition: border-color 0.15s, box-shadow 0.15s;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(26, 61, 107, 0.1);
+    }
+
+    select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 38px;
+        cursor: pointer;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    /* Urgentie radio buttons */
+    .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 4px;
+    }
+
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: border-color 0.15s, background 0.15s;
+        font-size: 14px;
+    }
+
+    .radio-option:hover {
+        border-color: var(--primary);
+        background: #F0F4FA;
+    }
+
+    .radio-option input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary);
+        cursor: pointer;
+        flex-shrink: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    .radio-option input[type="radio"]:focus {
+        box-shadow: none;
+        border: none;
+    }
+
+    .radio-option.selected {
+        border-color: var(--primary);
+        background: #F0F4FA;
+    }
+
+    /* Foto upload */
+    .upload-area {
+        border: 2px dashed var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.15s, background 0.15s;
+    }
+
+    .upload-area:hover {
+        border-color: var(--primary);
+        background: #F0F4FA;
+    }
+
+    .upload-area input[type="file"] {
+        display: none;
+    }
+
+    .upload-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .upload-area p {
+        font-size: 13px;
+        color: var(--text-light);
+        line-height: 1.5;
+    }
+
+    .upload-area strong {
+        color: var(--primary);
+    }
+
+    /* Submit knop */
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-weight: 700;
+        font-family: var(--font);
+        cursor: pointer;
+        margin-top: 28px;
+        transition: background 0.15s, transform 0.1s;
+        letter-spacing: 0.02em;
+    }
+
+    .submit-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .form-note {
+        font-size: 12px;
+        color: var(--text-light);
+        text-align: center;
+        margin-top: 14px;
+        line-height: 1.6;
+    }
+
+    /* Succes bericht */
+    .success-msg {
+        display: none;
+        background: #EAF7EF;
+        border: 1.5px solid var(--success);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 24px;
+        text-align: center;
+    }
+
+    .success-msg .checkmark { font-size: 32px; margin-bottom: 8px; }
+    .success-msg h3 { color: var(--success); font-size: 17px; margin-bottom: 6px; }
+    .success-msg p { font-size: 13px; color: var(--text-light); }
+
+    @media (max-width: 520px) {
+        .form-header { padding: 24px 24px 20px; }
+        .form-body { padding: 24px 24px 32px; }
+        .field-row { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<div class="form-wrapper">
+
+    <!-- HEADER -->
+    <div class="form-header">
+        <img src="https://lirp.cdn-website.com/900a67dc/dms3rep/multi/opt/Transparant-eec9df39-274w.png" alt="MHL Installatieservice" onerror="this.style.display='none'">
+        <h1>Offerte aanvragen</h1>
+        <p>Vul het formulier in en wij nemen zo snel mogelijk contact met u op.</p>
+    </div>
+
+    <!-- FORMULIER -->
+    <div class="form-body">
+        <form id="offerte-form" action="https://formspree.io/f/JOUW_FORM_ID" method="POST">
+
+            <!-- Sectie 1: Contactgegevens -->
+            <p class="section-label">Uw gegevens</p>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="naam">Naam <span class="required">*</span></label>
+                    <input type="text" id="naam" name="naam" placeholder="Voor- en achternaam" required>
+                </div>
+                <div class="field-group">
+                    <label for="telefoon">Telefoonnummer <span class="required">*</span></label>
+                    <input type="tel" id="telefoon" name="telefoon" placeholder="06 - 12 34 56 78" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="email">E-mailadres</label>
+                <input type="email" id="email" name="email" placeholder="uw@email.nl">
+            </div>
+
+            <!-- Sectie 2: Adres -->
+            <p class="section-label">Adresgegevens</p>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="straat">Straat + huisnummer <span class="required">*</span></label>
+                    <input type="text" id="straat" name="straat" placeholder="Kalverstraat 1" required>
+                </div>
+                <div class="field-group">
+                    <label for="postcode">Postcode <span class="required">*</span></label>
+                    <input type="text" id="postcode" name="postcode" placeholder="1234 AB" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="woonplaats">Woonplaats <span class="required">*</span></label>
+                <input type="text" id="woonplaats" name="woonplaats" placeholder="Amsterdam" required>
+            </div>
+
+            <!-- Sectie 3: De klus -->
+            <p class="section-label">De klus</p>
+
+            <div class="field-group">
+                <label for="type">Type werkzaamheden <span class="required">*</span></label>
+                <select id="type" name="type_werkzaamheden" required>
+                    <option value="" disabled selected>Selecteer een categorie</option>
+                    <option value="loodgieter">Loodgieterswerkzaamheden</option>
+                    <option value="cv-ketel">CV-ketelonderhoud of reparatie</option>
+                    <option value="ontstopping">Ontstopping</option>
+                    <option value="lekkage">Lekkagereparatie</option>
+                    <option value="badkamer">Badkamer- of toiletrenovatie</option>
+                    <option value="dak-zinkwerk">Dak- en zinkwerk</option>
+                    <option value="verwarming">Verwarming</option>
+                    <option value="anders">Anders / weet ik niet</option>
+                </select>
+            </div>
+
+            <div class="field-group">
+                <label for="omschrijving">Omschrijving <span class="required">*</span></label>
+                <textarea id="omschrijving" name="omschrijving" placeholder="Beschrijf zo duidelijk mogelijk wat er aan de hand is of wat u wilt laten doen." required></textarea>
+            </div>
+
+            <!-- Urgentie -->
+            <div class="field-group">
+                <label>Hoe urgent is dit? <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="urgentie" value="geen_haast" required>
+                        Geen haast — ik plan het graag in
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="urgentie" value="binnen_week">
+                        Binnen een week
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="urgentie" value="zo_snel_mogelijk">
+                        Zo snel mogelijk
+                    </label>
+                </div>
+            </div>
+
+            <!-- Foto upload -->
+            <div class="field-group">
+                <label>Foto's toevoegen <span style="font-weight:400; color:var(--text-light)">(optioneel)</span></label>
+                <label class="upload-area" for="fotos">
+                    <input type="file" id="fotos" name="fotos" accept="image/*" multiple>
+                    <div class="upload-icon">📎</div>
+                    <p><strong>Klik om foto's toe te voegen</strong><br>of sleep ze hier naartoe<br><span style="font-size:11px">JPG, PNG — max. 10 MB per foto</span></p>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">Offerte aanvragen</button>
+
+            <p class="form-note">
+                Wij nemen contact met u op via telefoon of e-mail.<br>
+                Uw gegevens worden niet gedeeld met derden.
+            </p>
+
+        </form>
+
+        <!-- Succes bericht (verschijnt na verzenden) -->
+        <div class="success-msg" id="success-msg">
+            <div class="checkmark">✅</div>
+            <h3>Aanvraag ontvangen!</h3>
+            <p>Bedankt voor uw aanvraag. Wij nemen zo snel mogelijk contact met u op.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Radio opties visueel markeren
+    document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
+            if (radio.checked) radio.closest('.radio-option').classList.add('selected');
+        });
+    });
+
+    // Upload label bijwerken bij bestandsselectie
+    document.getElementById('fotos').addEventListener('change', function () {
+        const area = this.closest('.upload-area');
+        const count = this.files.length;
+        if (count > 0) {
+            area.querySelector('p').innerHTML = `<strong>${count} foto${count > 1 ? "'s" : ""} geselecteerd</strong><br><span style="font-size:12px; color:var(--success)">Klik om te wijzigen</span>`;
+        }
+    });
+</script>
+
+</body>
+</html>

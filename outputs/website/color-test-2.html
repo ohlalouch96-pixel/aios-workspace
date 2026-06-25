@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Insightance — Kleur Varianten 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .label {
+            background: #0A0A0A;
+            color: #444;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            padding: 20px 48px;
+            border-top: 1px solid #1A1A1A;
+        }
+
+        /* ─────────────────────────────────────────
+           VARIANT 6 — Diep zwart + Amber oranje
+           Warm, energiek, premium gevoel
+        ───────────────────────────────────────── */
+        .v6-hero {
+            background: #0E0A04;
+            padding: 80px 64px 64px;
+            position: relative;
+            overflow: hidden;
+        }
+        .v6-hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #F59E0B, #FCD34D, #F59E0B);
+        }
+        .v6-hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .v6-tag { font-size: 11px; color: #F59E0B; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 32px; position: relative; }
+        .v6-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 700; color: #fff; line-height: 1.05; letter-spacing: -0.02em; position: relative; }
+        .v6-title em { color: #F59E0B; font-style: italic; }
+        .v6-sub { font-size: 16px; color: #5C4A1E; line-height: 1.8; max-width: 520px; margin: 28px 0 40px; position: relative; }
+        .v6-btn { background: #F59E0B; color: #000; padding: 14px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; position: relative; }
+        .v6-mission { background: #080601; padding: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+        .v6-stat { background: #100C03; padding: 40px 32px; text-align: center; position: relative; }
+        .v6-stat::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 2px; background: #F59E0B; }
+        .v6-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #F59E0B; line-height: 1; margin-bottom: 10px; margin-top: 20px; }
+        .v6-stat-label { font-size: 13px; color: #fff; line-height: 1.6; }
+
+        /* ─────────────────────────────────────────
+           VARIANT 7 — Grijsblauw + Ijsblauw
+           Modern, koel, data-gedreven, analytics
+        ───────────────────────────────────────── */
+        .v7-hero {
+            background: #0B1017;
+            padding: 80px 64px 64px;
+            border-left: 4px solid #67E8F9;
+        }
+        .v7-tag { font-size: 11px; color: #67E8F9; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 32px; }
+        .v7-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 700; color: #E2EBF0; line-height: 1.05; letter-spacing: -0.02em; }
+        .v7-title em { color: #67E8F9; font-style: italic; }
+        .v7-sub { font-size: 16px; color: #2E4A5A; line-height: 1.8; max-width: 520px; margin: 28px 0 40px; }
+        .v7-btn { background: transparent; color: #67E8F9; padding: 13px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; border: 1px solid #67E8F9; }
+        .v7-mission { background: #070C12; padding: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: #0F1820; }
+        .v7-stat { background: #070C12; padding: 40px 32px; text-align: center; }
+        .v7-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #67E8F9; line-height: 1; margin-bottom: 10px; }
+        .v7-stat-label { font-size: 13px; color: #fff; line-height: 1.6; }
+
+        /* ─────────────────────────────────────────
+           VARIANT 8 — Crème + Zwart (warm licht)
+           Chique, editorial, hoog vertrouwen
+        ───────────────────────────────────────── */
+        .v8-hero {
+            background: #F2EDE4;
+            padding: 80px 64px 64px;
+            border-top: 3px solid #1A1A1A;
+        }
+        .v8-tag { font-size: 11px; color: #999; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 32px; }
+        .v8-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 700; color: #111; line-height: 1.05; letter-spacing: -0.02em; }
+        .v8-title em { font-style: italic; color: #111; border-bottom: 3px solid #C9A84C; }
+        .v8-sub { font-size: 16px; color: #888; line-height: 1.8; max-width: 520px; margin: 28px 0 40px; }
+        .v8-btn { background: #111; color: #F2EDE4; padding: 14px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+        .v8-mission { background: #111; padding: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: #2A2A2A; }
+        .v8-stat { background: #111; padding: 40px 32px; text-align: center; }
+        .v8-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #C9A84C; line-height: 1; margin-bottom: 10px; }
+        .v8-stat-label { font-size: 13px; color: #F2EDE4; line-height: 1.6; }
+
+        /* ─────────────────────────────────────────
+           VARIANT 9 — Donker + Rose/Rood
+           Gedurfd, opvallend, haalt leads binnen
+        ───────────────────────────────────────── */
+        .v9-hero {
+            background: #0F0608;
+            padding: 80px 64px 64px;
+            position: relative;
+            overflow: hidden;
+        }
+        .v9-hero::before {
+            content: '';
+            position: absolute;
+            bottom: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(225,29,72,0.1) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .v9-tag { font-size: 11px; color: #E11D48; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 32px; position: relative; }
+        .v9-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 700; color: #fff; line-height: 1.05; letter-spacing: -0.02em; position: relative; }
+        .v9-title em { color: #FB7185; font-style: italic; }
+        .v9-sub { font-size: 16px; color: #4A1525; line-height: 1.8; max-width: 520px; margin: 28px 0 40px; position: relative; }
+        .v9-btn { background: #E11D48; color: #fff; padding: 14px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; position: relative; }
+        .v9-mission { background: #080304; padding: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+        .v9-stat { background: #0F0507; padding: 40px 32px; text-align: center; border-bottom: 2px solid #E11D48; }
+        .v9-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #FB7185; line-height: 1; margin-bottom: 10px; }
+        .v9-stat-label { font-size: 13px; color: #fff; line-height: 1.6; }
+
+        /* ─────────────────────────────────────────
+           VARIANT 10 — Antraciet + Zilver/Wit
+           Strak, neutraal, past bij alles
+        ───────────────────────────────────────── */
+        .v10-hero {
+            background: #141414;
+            padding: 80px 64px 64px;
+        }
+        .v10-rule { width: 64px; height: 2px; background: #fff; margin-bottom: 36px; }
+        .v10-tag { font-size: 11px; color: #555; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 32px; }
+        .v10-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 6vw, 88px); font-weight: 700; color: #fff; line-height: 1.05; letter-spacing: -0.02em; }
+        .v10-title em { font-style: italic; color: #D1D5DB; }
+        .v10-sub { font-size: 16px; color: #444; line-height: 1.8; max-width: 520px; margin: 28px 0 40px; }
+        .v10-btn { background: #fff; color: #111; padding: 14px 36px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+        .v10-mission { background: #0E0E0E; padding: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: #1E1E1E; }
+        .v10-stat { background: #0E0E0E; padding: 40px 32px; text-align: center; }
+        .v10-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 10px; }
+        .v10-stat-label { font-size: 13px; color: #888; line-height: 1.6; }
+
+    </style>
+</head>
+<body>
+
+<!-- VARIANT 6 -->
+<p class="label">Variant 6 — Zwart + Amber · Warm, energiek, premium</p>
+<div class="v6-hero">
+    <p class="v6-tag">Insightance · AI Automatisering</p>
+    <h1 class="v6-title">Uw bedrijf.<br><em>Slimmer.</em></h1>
+    <p class="v6-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    <a href="#" class="v6-btn">Plan een kennismaking</a>
+</div>
+<div class="v6-mission">
+    <div class="v6-stat"><div class="v6-stat-num">70%</div><div class="v6-stat-label">van de handmatige taken is automatiseerbaar</div></div>
+    <div class="v6-stat"><div class="v6-stat-num">24/7</div><div class="v6-stat-label">draait uw AI-systeem, ook als u slaapt</div></div>
+    <div class="v6-stat"><div class="v6-stat-num">€0</div><div class="v6-stat-label">extra personeelskosten voor geautomatiseerde taken</div></div>
+</div>
+
+<!-- VARIANT 7 -->
+<p class="label">Variant 7 — Grijsblauw + IJsblauw · Modern, koel, data-gedreven</p>
+<div class="v7-hero">
+    <p class="v7-tag">Insightance · AI Automatisering</p>
+    <h1 class="v7-title">Uw bedrijf.<br><em>Slimmer.</em></h1>
+    <p class="v7-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    <a href="#" class="v7-btn">Plan een kennismaking</a>
+</div>
+<div class="v7-mission">
+    <div class="v7-stat"><div class="v7-stat-num">70%</div><div class="v7-stat-label">van de handmatige taken is automatiseerbaar</div></div>
+    <div class="v7-stat"><div class="v7-stat-num">24/7</div><div class="v7-stat-label">draait uw AI-systeem, ook als u slaapt</div></div>
+    <div class="v7-stat"><div class="v7-stat-num">€0</div><div class="v7-stat-label">extra personeelskosten voor geautomatiseerde taken</div></div>
+</div>
+
+<!-- VARIANT 8 -->
+<p class="label">Variant 8 — Crème + Zwart + Goud · Chique, editorial, hoog vertrouwen</p>
+<div class="v8-hero">
+    <p class="v8-tag">Insightance · AI Automatisering</p>
+    <h1 class="v8-title">Uw bedrijf.<br><em>Slimmer.</em></h1>
+    <p class="v8-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    <a href="#" class="v8-btn">Plan een kennismaking</a>
+</div>
+<div class="v8-mission">
+    <div class="v8-stat"><div class="v8-stat-num">70%</div><div class="v8-stat-label">van de handmatige taken is automatiseerbaar</div></div>
+    <div class="v8-stat"><div class="v8-stat-num">24/7</div><div class="v8-stat-label">draait uw AI-systeem, ook als u slaapt</div></div>
+    <div class="v8-stat"><div class="v8-stat-num">€0</div><div class="v8-stat-label">extra personeelskosten voor geautomatiseerde taken</div></div>
+</div>
+
+<!-- VARIANT 9 -->
+<p class="label">Variant 9 — Donker + Rood · Gedurfd, opvallend, converteert</p>
+<div class="v9-hero">
+    <p class="v9-tag">Insightance · AI Automatisering</p>
+    <h1 class="v9-title">Uw bedrijf.<br><em>Slimmer.</em></h1>
+    <p class="v9-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    <a href="#" class="v9-btn">Plan een kennismaking</a>
+</div>
+<div class="v9-mission">
+    <div class="v9-stat"><div class="v9-stat-num">70%</div><div class="v9-stat-label">van de handmatige taken is automatiseerbaar</div></div>
+    <div class="v9-stat"><div class="v9-stat-num">24/7</div><div class="v9-stat-label">draait uw AI-systeem, ook als u slaapt</div></div>
+    <div class="v9-stat"><div class="v9-stat-num">€0</div><div class="v9-stat-label">extra personeelskosten voor geautomatiseerde taken</div></div>
+</div>
+
+<!-- VARIANT 10 -->
+<p class="label">Variant 10 — Antraciet + Puur wit · Strak, minimaal, tijdloos</p>
+<div class="v10-hero">
+    <p class="v10-tag">Insightance · AI Automatisering</p>
+    <div class="v10-rule"></div>
+    <h1 class="v10-title">Uw bedrijf.<br><em>Slimmer.</em></h1>
+    <p class="v10-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf, actief vanaf dag één.</p>
+    <a href="#" class="v10-btn">Plan een kennismaking</a>
+</div>
+<div class="v10-mission">
+    <div class="v10-stat"><div class="v10-stat-num">70%</div><div class="v10-stat-label">van de handmatige taken is automatiseerbaar</div></div>
+    <div class="v10-stat"><div class="v10-stat-num">24/7</div><div class="v10-stat-label">draait uw AI-systeem, ook als u slaapt</div></div>
+    <div class="v10-stat"><div class="v10-stat-num">€0</div><div class="v10-stat-label">extra personeelskosten voor geautomatiseerde taken</div></div>
+</div>
+
+</body>
+</html>

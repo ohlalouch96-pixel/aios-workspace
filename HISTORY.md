@@ -8,6 +8,29 @@
 
 ---
 
+## 2026-06-25
+
+### Insightance Website — Subpagina's Gesynchroniseerd & UX Verbeterd
+
+**Resultaten sectie (homepage)**
+- Titel gewijzigd naar "Wat we bouwen, werkt", oude titel werd subtitel
+- Navbar anchor fix: "Resultaten" link verwees naar #cases, nu correct #resultaten
+- FTUK "Bekijk case study" link gaat nu direct naar `resultaten.html#ftuk` (anchor op Case 02)
+
+**Resultaten pagina (resultaten.html)**
+- Navbar volledig gesynchroniseerd met hoofdwebsite: NL/EN pill-toggle, transparante CTA-knop
+- Nav-links vervangen door "← Terug naar homepage" (verwijst terug naar #resultaten sectie)
+- NL/EN toggle bug opgelost: `textContent` overschreef de spans, nu correct
+- Footer vervangen door exacte kopie van hoofdwebsite (met e-mail/WhatsApp/LinkedIn iconen)
+- CTA blok onder cases: kleinere lettergrootte, niet meer vetgedrukt
+
+**Diensten pagina (automations.html)**
+- Navbar gesynchroniseerd met hoofdwebsite: zelfde NL/EN pill, CTA-knop stijl
+- Nav-links vervangen door "← Terug naar homepage" (verwijst terug naar #services sectie)
+- Footer toegevoegd (ontbrak volledig) — exacte kopie van hoofdwebsite
+
+---
+
 ## 2026-06-18
 
 ### Insightance Website — Logo's & Case Study Verbeterd
@@ -44,10 +67,10 @@
 
 ### Insightance — Eerste Klant & Infrastructuur Live
 
-**FTUK project (eerste betalende klant)**
+**FTUK project (gratis pilot)**
 - Analyse van FTUK gedaan: prop trading firm, €50k/maand adspend, gebruikt HYROS
 - Voorstel #002 gemaakt: AI Media Intelligence systeem (creative intelligence, competitor monitoring, geo trends)
-- Akkoord ontvangen: €7.500 eenmalig + €1.250/maand
+- Akkoord ontvangen: gratis pilot (Abdelilah is familie)
 - Hetzner server opgezet (91.99.172.227, CPX22, Ubuntu 22.04)
 - n8n geïnstalleerd via Docker op eigen server
 - Workflow 1 gebouwd: dagelijks rapport (Schedule → Claude → Brevo email)

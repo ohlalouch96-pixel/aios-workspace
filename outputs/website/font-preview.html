@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@600;700&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #131316; font-family: 'Inter', sans-serif; }
+
+        .block { padding: 56px 80px; border-bottom: 2px solid #0D0D10; }
+        .font-label { font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #C9A84C; margin-bottom: 40px; padding-bottom: 12px; border-bottom: 1px solid #252525; }
+
+        /* HERO */
+        .hero-area { margin-bottom: 48px; }
+        .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; margin-bottom: 18px; display: block; }
+        .sub { font-size: 15px; color: #777; line-height: 1.75; max-width: 520px; margin-top: 18px; }
+        .gold { color: #C9A84C; }
+
+        /* SECTION + PRICES */
+        .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding-top: 40px; border-top: 1px solid #1E1E22; }
+        .section-ex {}
+        .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #C9A84C; margin-bottom: 12px; display: block; }
+        .section-sub { font-size: 13px; color: #666; margin-top: 10px; line-height: 1.7; }
+
+        .prices-ex { display: flex; gap: 32px; align-items: flex-end; }
+        .price-item { display: flex; flex-direction: column; }
+        .price-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+        .price-note { font-size: 11px; color: #444; margin-top: 4px; }
+
+        /* FONTS */
+        .f { }
+
+        /* Playfair */
+        .playfair .h1 { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: #fff; line-height: 1.1; }
+        .playfair .h2 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #fff; line-height: 1.15; }
+        .playfair .num { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: #fff; line-height: 1; }
+        .playfair .num-gold { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: #C9A84C; line-height: 1; }
+        .playfair .step-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; color: rgba(201,168,76,0.45); line-height: 1; }
+
+        /* DM Serif */
+        .dm .h1 { font-family: 'DM Serif Display', serif; font-size: 52px; font-weight: 400; color: #fff; line-height: 1.1; }
+        .dm .h2 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; color: #fff; line-height: 1.15; }
+        .dm .num { font-family: 'DM Serif Display', serif; font-size: 44px; font-weight: 400; color: #fff; line-height: 1; }
+        .dm .num-gold { font-family: 'DM Serif Display', serif; font-size: 44px; font-weight: 400; color: #C9A84C; line-height: 1; }
+        .dm .step-num { font-family: 'DM Serif Display', serif; font-size: 56px; font-weight: 400; color: rgba(201,168,76,0.45); line-height: 1; }
+
+        /* Cormorant */
+        .cormorant .h1 { font-family: 'Cormorant Garamond', serif; font-size: 62px; font-weight: 700; color: #fff; line-height: 1.05; }
+        .cormorant .h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 700; color: #fff; line-height: 1.1; }
+        .cormorant .num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: #fff; line-height: 1; }
+        .cormorant .num-gold { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: #C9A84C; line-height: 1; }
+        .cormorant .step-num { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 700; color: rgba(201,168,76,0.45); line-height: 1; }
+
+        /* Space Grotesk */
+        .space .h1 { font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+        .space .h2 { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.02em; }
+        .space .num { font-family: 'Space Grotesk', sans-serif; font-size: 42px; font-weight: 700; color: #fff; line-height: 1; letter-spacing: -0.02em; }
+        .space .num-gold { font-family: 'Space Grotesk', sans-serif; font-size: 42px; font-weight: 700; color: #C9A84C; line-height: 1; letter-spacing: -0.02em; }
+        .space .step-num { font-family: 'Space Grotesk', sans-serif; font-size: 54px; font-weight: 700; color: rgba(201,168,76,0.45); line-height: 1; letter-spacing: -0.02em; }
+
+        /* Syne */
+        .syne .h1 { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: #fff; line-height: 1.05; letter-spacing: -0.02em; }
+        .syne .h2 { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+        .syne .num { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 700; color: #fff; line-height: 1; letter-spacing: -0.02em; }
+        .syne .num-gold { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 700; color: #C9A84C; line-height: 1; letter-spacing: -0.02em; }
+        .syne .step-num { font-family: 'Syne', sans-serif; font-size: 54px; font-weight: 800; color: rgba(201,168,76,0.45); line-height: 1; letter-spacing: -0.02em; }
+    </style>
+</head>
+<body>
+
+    <!-- PLAYFAIR -->
+    <div class="block f playfair">
+        <p class="font-label">HUIDIG — Playfair Display</p>
+        <div class="hero-area">
+            <span class="eyebrow">AI-automatisering voor ondernemers</span>
+            <h1 class="h1">Handmatig werk verdwijnt.<br><span class="gold">Groei neemt het over.</span></h1>
+            <p class="sub">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages.</p>
+        </div>
+        <div class="bottom-row">
+            <div class="section-ex">
+                <span class="section-eyebrow">Tarieven</span>
+                <h2 class="h2">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+                <p class="section-sub">Stap nummers → &nbsp;<span class="step-num">1 &nbsp;2 &nbsp;3</span></p>
+            </div>
+            <div class="prices-ex">
+                <div class="price-item"><span class="price-label">Assessment</span><span class="num">€300</span></div>
+                <div class="price-item"><span class="price-label">Implementatie</span><span class="num">€750</span></div>
+                <div class="price-item"><span class="price-label">AIOS Setup</span><span class="num-gold">€2.500</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DM SERIF -->
+    <div class="block f dm">
+        <p class="font-label">A — DM Serif Display</p>
+        <div class="hero-area">
+            <span class="eyebrow">AI-automatisering voor ondernemers</span>
+            <h1 class="h1">Handmatig werk verdwijnt.<br><span class="gold">Groei neemt het over.</span></h1>
+            <p class="sub">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages.</p>
+        </div>
+        <div class="bottom-row">
+            <div class="section-ex">
+                <span class="section-eyebrow">Tarieven</span>
+                <h2 class="h2">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+                <p class="section-sub">Stap nummers → &nbsp;<span class="step-num">1 &nbsp;2 &nbsp;3</span></p>
+            </div>
+            <div class="prices-ex">
+                <div class="price-item"><span class="price-label">Assessment</span><span class="num">€300</span></div>
+                <div class="price-item"><span class="price-label">Implementatie</span><span class="num">€750</span></div>
+                <div class="price-item"><span class="price-label">AIOS Setup</span><span class="num-gold">€2.500</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORMORANT -->
+    <div class="block f cormorant">
+        <p class="font-label">B — Cormorant Garamond</p>
+        <div class="hero-area">
+            <span class="eyebrow">AI-automatisering voor ondernemers</span>
+            <h1 class="h1">Handmatig werk verdwijnt.<br><span class="gold">Groei neemt het over.</span></h1>
+            <p class="sub">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages.</p>
+        </div>
+        <div class="bottom-row">
+            <div class="section-ex">
+                <span class="section-eyebrow">Tarieven</span>
+                <h2 class="h2">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+                <p class="section-sub">Stap nummers → &nbsp;<span class="step-num">1 &nbsp;2 &nbsp;3</span></p>
+            </div>
+            <div class="prices-ex">
+                <div class="price-item"><span class="price-label">Assessment</span><span class="num">€300</span></div>
+                <div class="price-item"><span class="price-label">Implementatie</span><span class="num">€750</span></div>
+                <div class="price-item"><span class="price-label">AIOS Setup</span><span class="num-gold">€2.500</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPACE GROTESK -->
+    <div class="block f space">
+        <p class="font-label">C — Space Grotesk</p>
+        <div class="hero-area">
+            <span class="eyebrow">AI-automatisering voor ondernemers</span>
+            <h1 class="h1">Handmatig werk verdwijnt.<br><span class="gold">Groei neemt het over.</span></h1>
+            <p class="sub">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages.</p>
+        </div>
+        <div class="bottom-row">
+            <div class="section-ex">
+                <span class="section-eyebrow">Tarieven</span>
+                <h2 class="h2">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+                <p class="section-sub">Stap nummers → &nbsp;<span class="step-num">1 &nbsp;2 &nbsp;3</span></p>
+            </div>
+            <div class="prices-ex">
+                <div class="price-item"><span class="price-label">Assessment</span><span class="num">€300</span></div>
+                <div class="price-item"><span class="price-label">Implementatie</span><span class="num">€750</span></div>
+                <div class="price-item"><span class="price-label">AIOS Setup</span><span class="num-gold">€2.500</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SYNE -->
+    <div class="block f syne">
+        <p class="font-label">D — Syne</p>
+        <div class="hero-area">
+            <span class="eyebrow">AI-automatisering voor ondernemers</span>
+            <h1 class="h1">Handmatig werk verdwijnt.<br><span class="gold">Groei neemt het over.</span></h1>
+            <p class="sub">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Denk aan klantopvolging, afsprakenbeheer en rapportages.</p>
+        </div>
+        <div class="bottom-row">
+            <div class="section-ex">
+                <span class="section-eyebrow">Tarieven</span>
+                <h2 class="h2">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+                <p class="section-sub">Stap nummers → &nbsp;<span class="step-num">1 &nbsp;2 &nbsp;3</span></p>
+            </div>
+            <div class="prices-ex">
+                <div class="price-item"><span class="price-label">Assessment</span><span class="num">€300</span></div>
+                <div class="price-item"><span class="price-label">Implementatie</span><span class="num">€750</span></div>
+                <div class="price-item"><span class="price-label">AIOS Setup</span><span class="num-gold">€2.500</span></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

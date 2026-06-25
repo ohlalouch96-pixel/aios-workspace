@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools Strip Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #131316; font-family: 'Inter', sans-serif; }
+
+        .label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #444; text-align: center; padding: 12px; background: #0D0D10; }
+
+        /* ---- VARIANT A: Tekst + subtiele dividers ---- */
+        .strip-a {
+            padding: 28px 60px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            background: #181819;
+        }
+        .strip-a-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #3A3A3A; white-space: nowrap; margin-right: 40px; }
+        .strip-a-tools { display: flex; align-items: center; gap: 0; }
+        .strip-a-tool { font-size: 13px; font-weight: 600; color: #555; letter-spacing: 0.04em; padding: 0 28px; border-right: 1px solid #252525; transition: color 0.2s; }
+        .strip-a-tool:last-child { border-right: none; }
+        .strip-a-tool:hover { color: #C9A84C; }
+
+        /* ---- VARIANT B: Icoon blokken ---- */
+        .strip-b {
+            padding: 36px 60px;
+            background: #0F0F12;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .strip-b-label { font-size: 11px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: #3A3A3A; }
+        .strip-b-tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .strip-b-tool {
+            display: flex; align-items: center; gap: 10px;
+            background: #161619; border: 1px solid #252528;
+            border-radius: 8px; padding: 12px 20px;
+            transition: border-color 0.2s;
+        }
+        .strip-b-tool:hover { border-color: rgba(201,168,76,0.3); }
+        .strip-b-icon { width: 24px; height: 24px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .strip-b-name { font-size: 13px; font-weight: 500; color: #666; }
+
+        /* ---- VARIANT C: Minimaal, enkel tekst, crème achtergrond ---- */
+        .strip-c {
+            padding: 32px 60px;
+            background: #EDE8DC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .strip-c-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #AAA; }
+        .strip-c-tool { font-size: 14px; font-weight: 600; color: rgba(45,40,37,0.35); letter-spacing: 0.05em; transition: color 0.2s; }
+        .strip-c-tool:hover { color: rgba(45,40,37,0.7); }
+    </style>
+</head>
+<body>
+
+    <div class="label">A — Tekst met dividers (donkere achtergrond)</div>
+    <div class="strip-a">
+        <span class="strip-a-label">Gebouwd met</span>
+        <div class="strip-a-tools">
+            <span class="strip-a-tool">Make</span>
+            <span class="strip-a-tool">n8n</span>
+            <span class="strip-a-tool">Claude AI</span>
+            <span class="strip-a-tool">OpenAI</span>
+            <span class="strip-a-tool">Airtable</span>
+            <span class="strip-a-tool">WhatsApp API</span>
+        </div>
+    </div>
+
+    <div class="label">B — Kaartjes met icoonkleur (donkere achtergrond)</div>
+    <div class="strip-b">
+        <span class="strip-b-label">Technologie waarmee wij bouwen</span>
+        <div class="strip-b-tools">
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#FF6B35; color:#fff;">M</div><span class="strip-b-name">Make</span></div>
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#EA4B71; color:#fff;">n</div><span class="strip-b-name">n8n</span></div>
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#CC785C; color:#fff;">C</div><span class="strip-b-name">Claude AI</span></div>
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#10A37F; color:#fff;">AI</div><span class="strip-b-name">OpenAI</span></div>
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#FCB400; color:#fff;">A</div><span class="strip-b-name">Airtable</span></div>
+            <div class="strip-b-tool"><div class="strip-b-icon" style="background:#25D366; color:#fff;">W</div><span class="strip-b-name">WhatsApp</span></div>
+        </div>
+    </div>
+
+    <div class="label">C — Minimaal, enkel tekst (crème achtergrond)</div>
+    <div class="strip-c">
+        <span class="strip-c-label">Gebouwd met</span>
+        <span class="strip-c-tool">Make</span>
+        <span class="strip-c-tool">n8n</span>
+        <span class="strip-c-tool">Claude AI</span>
+        <span class="strip-c-tool">OpenAI</span>
+        <span class="strip-c-tool">Airtable</span>
+        <span class="strip-c-tool">WhatsApp API</span>
+    </div>
+
+</body>
+</html>

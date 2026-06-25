@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Offerte — MHL Installatieservice</title>
+<style>
+    :root {
+        --primary: #1A3D6B;
+        --accent: #E8A020;
+        --text: #1A1A1A;
+        --gray: #666;
+        --light: #F5F7FA;
+        --border: #D8DDE6;
+        --font: 'Arial', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: var(--font);
+        background: #e8e8e8;
+        color: var(--text);
+        padding: 32px 16px 60px;
+    }
+
+    .print-hint {
+        background: var(--primary);
+        color: var(--accent);
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        max-width: 210mm;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @media print {
+        body { background: #fff; padding: 0; }
+        .print-hint { display: none; }
+        .page { box-shadow: none; margin: 0; }
+    }
+
+    .page {
+        width: 210mm;
+        min-height: 297mm;
+        background: #fff;
+        margin: 0 auto;
+        padding: 48px 56px;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        padding-bottom: 28px;
+        border-bottom: 3px solid var(--primary);
+    }
+
+    .logo-area img {
+        height: 56px;
+        display: block;
+    }
+
+    .logo-fallback {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1.2;
+    }
+
+    .logo-fallback span {
+        display: block;
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--gray);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-top: 2px;
+    }
+
+    .company-info {
+        text-align: right;
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.8;
+    }
+
+    .company-info strong {
+        display: block;
+        font-size: 13px;
+        color: var(--text);
+        margin-bottom: 4px;
+    }
+
+    /* ── OFFERTE TITLE ── */
+    .offerte-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+    }
+
+    .offerte-title h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 4px;
+    }
+
+    .offerte-title .offerte-num {
+        font-size: 13px;
+        color: var(--gray);
+        letter-spacing: 0.04em;
+    }
+
+    .offerte-meta {
+        text-align: right;
+        font-size: 13px;
+        color: var(--gray);
+        line-height: 1.9;
+    }
+
+    .offerte-meta strong { color: var(--text); }
+
+    /* ── KLANT & ADRES ── */
+    .address-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        margin-bottom: 36px;
+        background: var(--light);
+        border-radius: 6px;
+        padding: 20px 24px;
+    }
+
+    .address-block p.label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .address-block p {
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.8;
+    }
+
+    /* ── OMSCHRIJVING KLUS ── */
+    .klus-section {
+        margin-bottom: 28px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .klus-desc {
+        font-size: 13px;
+        color: var(--gray);
+        line-height: 1.75;
+        padding: 12px 0;
+    }
+
+    /* ── TABEL ── */
+    .price-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 13px;
+    }
+
+    .price-table thead tr {
+        background: var(--primary);
+        color: white;
+    }
+
+    .price-table thead th {
+        padding: 10px 14px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .price-table thead th.right { text-align: right; }
+
+    .price-table tbody tr {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .price-table tbody tr:nth-child(even) {
+        background: var(--light);
+    }
+
+    .price-table tbody td {
+        padding: 11px 14px;
+        color: var(--text);
+        vertical-align: top;
+    }
+
+    .price-table tbody td.right { text-align: right; }
+    .price-table tbody td.center { text-align: center; }
+
+    .price-table .item-desc {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 3px;
+        line-height: 1.5;
+    }
+
+    /* ── TOTALEN ── */
+    .totals {
+        margin-left: auto;
+        width: 260px;
+        margin-bottom: 32px;
+    }
+
+    .totals-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 0;
+        font-size: 13px;
+        border-bottom: 1px solid var(--border);
+        color: var(--gray);
+    }
+
+    .totals-row:last-child { border-bottom: none; }
+
+    .totals-row.total-final {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary);
+        padding: 12px 0 4px;
+        border-top: 2px solid var(--primary);
+        border-bottom: none;
+        margin-top: 4px;
+    }
+
+    /* ── VOORWAARDEN ── */
+    .voorwaarden {
+        background: var(--light);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 6px 6px 0;
+        padding: 16px 20px;
+        margin-bottom: 32px;
+    }
+
+    .voorwaarden p.label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .voorwaarden ul {
+        list-style: none;
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 2;
+    }
+
+    .voorwaarden ul li::before {
+        content: '→ ';
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    /* ── HANDTEKENING ── */
+    .sig-section {
+        margin-top: auto;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+    }
+
+    .sig-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+    }
+
+    .sig-block p.label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray);
+        margin-bottom: 28px;
+    }
+
+    .sig-line {
+        border-top: 1px solid var(--border);
+        margin-bottom: 8px;
+    }
+
+    .sig-block p.name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .sig-block p.role {
+        font-size: 12px;
+        color: var(--gray);
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+        margin-top: 32px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #aaa;
+        letter-spacing: 0.04em;
+    }
+
+    .accent-bar {
+        height: 3px;
+        background: linear-gradient(to right, var(--accent), transparent);
+        margin: 24px 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Opslaan als PDF: Ctrl+P → Opslaan als PDF → Marges: Geen</div>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo-area">
+            <img src="https://www.mhl-installatieservice.nl/logo.png" alt="MHL Installatieservice"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div class="logo-fallback" style="display:none">
+                MHL Installatieservice
+                <span>Installatie & Loodgietersbedrijf</span>
+            </div>
+        </div>
+        <div class="company-info">
+            <strong>MHL Installatieservice</strong>
+            Amsterdam<br>
+            info@mhl-installatieservice.nl<br>
+            www.mhl-installatieservice.nl<br>
+            KvK: [KvK-nummer]<br>
+            BTW: [BTW-nummer]
+        </div>
+    </div>
+
+    <!-- OFFERTE TITEL -->
+    <div class="offerte-title-row">
+        <div class="offerte-title">
+            <h1>Offerte</h1>
+            <p class="offerte-num">Offertenummer: OFF-[JAAR]-[NUMMER]</p>
+        </div>
+        <div class="offerte-meta">
+            <strong>Datum:</strong> [DD-MM-JJJJ]<br>
+            <strong>Geldig tot:</strong> [DD-MM-JJJJ]<br>
+            <strong>Uitvoering:</strong> [Gewenste datum of "nader te bepalen"]
+        </div>
+    </div>
+
+    <!-- KLANT & LOCATIE -->
+    <div class="address-row">
+        <div class="address-block">
+            <p class="label">Opgesteld voor</p>
+            <p>
+                [Naam klant]<br>
+                [Straat + huisnummer]<br>
+                [Postcode + woonplaats]<br>
+                [Telefoonnummer]<br>
+                [E-mailadres]
+            </p>
+        </div>
+        <div class="address-block">
+            <p class="label">Uitvoeringslocatie</p>
+            <p>
+                [Straat + huisnummer]<br>
+                [Postcode + woonplaats]<br>
+                <br>
+                <em style="font-size:12px; color:#999">(indien afwijkend van bovenstaand adres)</em>
+            </p>
+        </div>
+    </div>
+
+    <!-- OMSCHRIJVING KLUS -->
+    <div class="klus-section">
+        <p class="section-title">Omschrijving werkzaamheden</p>
+        <p class="klus-desc">
+            [Beschrijf hier kort de werkzaamheden die uitgevoerd gaan worden. Bijvoorbeeld: "Het betreft het vervangen van de CV-ketel op het adres [adres]. De huidige ketel vertoont mankementen en wordt vervangen door een nieuwe Intergas HRe ketel inclusief aansluiting en inbedrijfstelling."]
+        </p>
+    </div>
+
+    <!-- PRIJSTABEL -->
+    <div class="klus-section">
+        <p class="section-title">Specificatie</p>
+        <table class="price-table">
+            <thead>
+                <tr>
+                    <th style="width:40%">Omschrijving</th>
+                    <th class="center" style="width:10%">Aantal</th>
+                    <th class="right" style="width:20%">Eenheidsprijs</th>
+                    <th class="right" style="width:15%">BTW</th>
+                    <th class="right" style="width:15%">Totaal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        [Omschrijving post 1]
+                        <div class="item-desc">[Toelichting indien nodig]</div>
+                    </td>
+                    <td class="center">[1]</td>
+                    <td class="right">€ [0,00]</td>
+                    <td class="right">21%</td>
+                    <td class="right">€ [0,00]</td>
+                </tr>
+                <tr>
+                    <td>
+                        [Omschrijving post 2]
+                        <div class="item-desc">[Toelichting indien nodig]</div>
+                    </td>
+                    <td class="center">[1]</td>
+                    <td class="right">€ [0,00]</td>
+                    <td class="right">21%</td>
+                    <td class="right">€ [0,00]</td>
+                </tr>
+                <tr>
+                    <td>
+                        Arbeidskosten
+                        <div class="item-desc">Inclusief voorrijkosten en materiaalverwerking</div>
+                    </td>
+                    <td class="center">[uur]</td>
+                    <td class="right">€ [0,00]</td>
+                    <td class="right">21%</td>
+                    <td class="right">€ [0,00]</td>
+                </tr>
+                <!-- Voeg extra regels toe door bovenstaand blok te kopiëren -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TOTALEN -->
+    <div class="totals">
+        <div class="totals-row">
+            <span>Subtotaal (excl. BTW)</span>
+            <span>€ [0,00]</span>
+        </div>
+        <div class="totals-row">
+            <span>BTW 21%</span>
+            <span>€ [0,00]</span>
+        </div>
+        <div class="totals-row total-final">
+            <span>Totaal incl. BTW</span>
+            <span>€ [0,00]</span>
+        </div>
+    </div>
+
+    <div class="accent-bar"></div>
+
+    <!-- VOORWAARDEN GRID -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+
+        <!-- Betalingsvoorwaarden -->
+        <div class="voorwaarden" style="margin-bottom:0">
+            <p class="label">Betalingsvoorwaarden</p>
+            <ul>
+                <li>Betaling binnen <strong style="color:var(--text)">14 dagen</strong> na factuurdatum</li>
+                <li>Bij opdrachten boven €500 geldt 30% aanbetaling bij akkoord</li>
+                <li>Bij overschrijding van de betalingstermijn wordt wettelijke rente in rekening gebracht</li>
+                <li>Betaling via bankoverschrijving op IBAN: [IBAN-nummer]</li>
+                <li>Op al onze werkzaamheden zijn de algemene voorwaarden van MHL Installatieservice van toepassing</li>
+            </ul>
+        </div>
+
+        <!-- Leveringsgarantie -->
+        <div class="voorwaarden" style="margin-bottom:0">
+            <p class="label">Leveringsgarantie</p>
+            <ul>
+                <li><strong style="color:var(--text)">2 jaar garantie</strong> op uitgevoerde werkzaamheden</li>
+                <li>Fabrieksgarantie op geleverde materialen en apparatuur conform leveranciersvoorwaarden</li>
+                <li>Garantie vervalt bij eigenmachtige wijzigingen door derden</li>
+                <li>Garantie geldt niet voor normale slijtage of onjuist gebruik</li>
+                <li>Storingen binnen garantietermijn worden kosteloos verholpen</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Niet inbegrepen -->
+    <div class="voorwaarden" style="border-left-color: var(--primary)">
+        <p class="label" style="color:var(--primary)">Niet inbegrepen in deze offerte</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 32px;">
+            <ul>
+                <li>Meerwerk buiten de beschreven werkzaamheden</li>
+                <li>Schilderwerk, herstel of afwerking van wanden en plafonds</li>
+                <li>Verborgen lekkages achter wanden, vloeren of plafonds</li>
+                <li>Asbest- of andere gevaarlijke stoffen sanering</li>
+            </ul>
+            <ul>
+                <li>Kosten voor vergunningen of aanvragen bij nutsbedrijven</li>
+                <li>Breek- en herstelwerk aan tegels, stucwerk of vloeren</li>
+                <li>Elektrische aanpassingen tenzij expliciet vermeld</li>
+                <li>Afvoer van gesloopt materiaal tenzij expliciet vermeld</li>
+            </ul>
+        </div>
+        <p style="font-size:11px; color:var(--gray); margin-top:10px; line-height:1.6;">
+            Meerwerk wordt altijd <strong style="color:var(--text)">vooraf overlegd</strong> en schriftelijk bevestigd. Er worden geen kosten voor meerwerk in rekening gebracht zonder expliciete akkoord van de opdrachtgever.
+        </p>
+    </div>
+
+    <!-- HANDTEKENING -->
+    <div class="sig-section">
+        <div class="sig-grid">
+            <div class="sig-block">
+                <p class="label">Akkoord opdrachtgever</p>
+                <div class="sig-line"></div>
+                <p class="name">[Naam klant]</p>
+                <p class="role">Datum: ________________</p>
+            </div>
+            <div class="sig-block">
+                <p class="label">Namens MHL Installatieservice</p>
+                <div class="sig-line"></div>
+                <p class="name">Mohammed Hlalouch</p>
+                <p class="role">Eigenaar · MHL Installatieservice</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="page-footer">
+        <span>MHL Installatieservice · Amsterdam · KvK [nummer]</span>
+        <span>OFF-[JAAR]-[NUMMER]</span>
+    </div>
+
+</div>
+
+</body>
+</html>

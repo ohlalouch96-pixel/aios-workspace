@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Hero — Premium Variaties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #111; font-family: 'Inter', sans-serif; }
+
+        .label {
+            font-size: 11px; font-weight: 600; color: #C9A84C;
+            letter-spacing: 0.35em; text-transform: uppercase;
+            padding: 32px 48px 16px; background: #111;
+        }
+
+
+        /* ─── HERO 1 — Oversized typografie, één krachtige zin ─── */
+        .h1-wrap {
+            min-height: 100vh;
+            background: #0E0E0E;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 80px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #1E1E1E;
+        }
+
+        .h1-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        .h1-wrap::after {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%);
+        }
+
+        .h1-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h1-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(56px, 8vw, 110px);
+            font-weight: 700;
+            line-height: 1.0;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .h1-title em {
+            font-style: italic;
+            color: #C9A84C;
+        }
+
+        .h1-sub {
+            margin-top: 48px;
+            font-size: 16px;
+            color: #666;
+            max-width: 480px;
+            line-height: 1.85;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h1-cta {
+            margin-top: 52px;
+            display: inline-block;
+            background: #C9A84C;
+            color: #000;
+            padding: 16px 40px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h1-bottom {
+            position: absolute;
+            bottom: 48px; left: 80px; right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            z-index: 1;
+        }
+
+        .h1-stat { }
+        .h1-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #C9A84C;
+            line-height: 1;
+        }
+        .h1-stat-label { font-size: 12px; color: #555; margin-top: 6px; }
+
+
+        /* ─── HERO 2 — Split: tekst links, groot statement rechts ─── */
+        .h2-wrap {
+            min-height: 100vh;
+            background: #111111;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #1E1E1E;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .h2-left {
+            padding: 120px 64px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid #1E1E1E;
+            position: relative;
+        }
+
+        .h2-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #C9A84C, transparent);
+        }
+
+        .h2-eyebrow {
+            font-size: 10px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 40px;
+        }
+
+        .h2-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 4vw, 54px);
+            font-weight: 600;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        .h2-title em { font-style: italic; color: #C9A84C; display: block; }
+
+        .h2-text { font-size: 15px; color: #666; line-height: 1.85; margin-bottom: 48px; max-width: 400px; }
+
+        .h2-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #C9A84C;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid rgba(201,168,76,0.3);
+            padding-bottom: 4px;
+            width: fit-content;
+        }
+
+        .h2-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 64px;
+            position: relative;
+            background: #0E0E0E;
+        }
+
+        .h2-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 65%);
+        }
+
+        .h2-big {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(64px, 9vw, 120px);
+            font-weight: 700;
+            line-height: 1.0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h2-big span { display: block; color: #C9A84C; font-style: italic; }
+
+        .h2-tagline {
+            font-size: 13px;
+            color: #444;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* ─── HERO 3 — Minimalistisch, één grote zin, dramatische witruimte ─── */
+        .h3-wrap {
+            min-height: 100vh;
+            background: #0D0D0D;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 80px 160px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #1E1E1E;
+        }
+
+        .h3-wrap::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #C9A84C, transparent);
+        }
+
+        .h3-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 10px;
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h3-eyebrow::before, .h3-eyebrow::after {
+            content: '';
+            width: 48px; height: 1px;
+            background: rgba(201,168,76,0.35);
+        }
+
+        .h3-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(44px, 6.5vw, 88px);
+            font-weight: 700;
+            line-height: 1.08;
+            color: #fff;
+            max-width: 880px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h3-title .gold { color: #C9A84C; font-style: italic; }
+
+        .h3-line {
+            width: 1px;
+            height: 64px;
+            background: linear-gradient(to bottom, #C9A84C, transparent);
+            margin: 56px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h3-sub {
+            font-size: 16px;
+            color: #555;
+            max-width: 520px;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 56px;
+        }
+
+        .h3-cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .h3-cta-primary {
+            background: #C9A84C;
+            color: #000;
+            padding: 16px 40px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+        }
+
+        .h3-cta-secondary {
+            color: #555;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            border-bottom: 1px solid #2A2A2A;
+            padding-bottom: 2px;
+        }
+
+        .h3-bottom {
+            position: absolute;
+            bottom: 52px;
+            display: flex;
+            gap: 64px;
+            z-index: 1;
+        }
+
+        .h3-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #C9A84C;
+        }
+        .h3-stat-label { font-size: 12px; color: #444; margin-top: 4px; text-align: center; }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO 1 -->
+    <p class="label">Variatie 1 — Oversized typografie, links uitgelijnd, stats onderaan</p>
+    <div class="h1-wrap">
+        <p class="h1-eyebrow">AI-automatisering voor ondernemers</p>
+        <h1 class="h1-title">Minder werk.<br><em>Meer resultaat.</em></h1>
+        <p class="h1-sub">Insightance automatiseert de processen die uw tijd kosten, zodat u zich kunt richten op wat uw bedrijf echt verder brengt.</p>
+        <a href="#" class="h1-cta">Kom in contact</a>
+        <div class="h1-bottom">
+            <div class="h1-stat">
+                <div class="h1-stat-num">80%</div>
+                <div class="h1-stat-label">van routinetaken is automatiseerbaar</div>
+            </div>
+            <div class="h1-stat">
+                <div class="h1-stat-num">24/7</div>
+                <div class="h1-stat-label">draait uw systeem door</div>
+            </div>
+            <div class="h1-stat">
+                <div class="h1-stat-num">€0</div>
+                <div class="h1-stat-label">extra personeelskosten</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO 2 -->
+    <p class="label">Variatie 2 — Split layout: tekst links, groot statement rechts</p>
+    <div class="h2-wrap">
+        <div class="h2-left">
+            <p class="h2-eyebrow">Insightance — AI-automatisering</p>
+            <h2 class="h2-title">Inzicht in uw bedrijf.<em>Grip op uw groei.</em></h2>
+            <p class="h2-text">Insightance automatiseert processen binnen uw bedrijf met behulp van AI. Van administratie en communicatie tot sales en planning. Zo heeft u meer tijd voor wat echt telt: strategie en groei.</p>
+            <a href="#" class="h2-cta">Kom in contact →</a>
+        </div>
+        <div class="h2-right">
+            <div class="h2-big">
+                Slim<br><span>werken.</span>
+            </div>
+            <p class="h2-tagline">Opgericht door een zorgverlener</p>
+        </div>
+    </div>
+
+    <!-- HERO 3 -->
+    <p class="label">Variatie 3 — Dramatisch, gecentreerd, verticale lijn als scheiding</p>
+    <div class="h3-wrap">
+        <p class="h3-eyebrow">AI-automatisering voor ondernemers</p>
+        <h1 class="h3-title">Uw bedrijf werkt.<br>Maar werkt het <span class="gold">voor u?</span></h1>
+        <div class="h3-line"></div>
+        <p class="h3-sub">Insightance vervangt handmatige, tijdrovende taken door slimme AI-systemen. Gebouwd voor uw bedrijf. Actief vanaf dag één.</p>
+        <div class="h3-cta-group">
+            <a href="#" class="h3-cta-primary">Kom in contact</a>
+            <a href="#" class="h3-cta-secondary">Bekijk onze diensten</a>
+        </div>
+        <div class="h3-bottom">
+            <div>
+                <div class="h3-stat-num" style="text-align:center">80%</div>
+                <div class="h3-stat-label">van routinetaken automatiseerbaar</div>
+            </div>
+            <div>
+                <div class="h3-stat-num" style="text-align:center">24/7</div>
+                <div class="h3-stat-label">uw systeem draait door</div>
+            </div>
+            <div>
+                <div class="h3-stat-num" style="text-align:center">€0</div>
+                <div class="h3-stat-label">extra personeelskosten</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

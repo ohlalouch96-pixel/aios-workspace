@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>AI Media Intelligence — Insightance x FTUK</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --gold: #C9A84C;
+        --dark: #0D0D10;
+        --cream: #EAE5DC;
+        --text: #2D2825;
+        --gray: #777;
+        --light: #F7F4EF;
+        --border: #E0DAD2;
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Inter', sans-serif;
+    }
+
+    body { font-family: var(--font-body); background: #eee; }
+
+    .print-hint {
+        background: var(--dark);
+        color: var(--gold);
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+    }
+
+    @media print {
+        body { background: #fff; }
+        .print-hint { display: none; }
+        .page { box-shadow: none; margin: 0; page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+
+    .page {
+        width: 210mm;
+        min-height: 297mm;
+        background: #fff;
+        margin: 12px auto;
+        padding: 56px 64px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ── COVER ── */
+    .cover { background: var(--dark); justify-content: space-between; padding: 56px 64px; }
+    .cover-logo { display: flex; align-items: center; gap: 10px; }
+    .cover-logo-text { font-family: var(--font-heading); font-size: 13px; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; }
+    .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 64px 0 48px; }
+    .cover-tag { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .cover-line { width: 36px; height: 1px; background: var(--gold); opacity: 0.5; margin-bottom: 28px; }
+    .cover-title { font-family: var(--font-heading); font-size: 42px; color: var(--cream); line-height: 1.15; margin-bottom: 40px; }
+    .cover-for { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,168,76,0.5); margin-bottom: 8px; }
+    .cover-client { font-family: var(--font-heading); font-size: 22px; color: var(--cream); margin-bottom: 4px; }
+    .cover-contact { font-size: 13px; color: rgba(234,229,220,0.4); }
+    .cover-footer { display: flex; justify-content: space-between; font-size: 11px; color: rgba(234,229,220,0.25); letter-spacing: 0.1em; }
+
+    /* ── CONTENT ── */
+    .page-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+    .page-top-brand { font-size: 10px; letter-spacing: 0.2em; color: var(--gold); font-weight: 600; text-transform: uppercase; }
+    .page-top-num { font-size: 10px; color: #bbb; letter-spacing: 0.1em; }
+
+    .sec-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+    .sec-title { font-family: var(--font-heading); font-size: 28px; color: var(--text); margin-bottom: 10px; line-height: 1.2; }
+    .sec-intro { font-size: 13px; color: var(--gray); line-height: 1.75; margin-bottom: 32px; border-left: 2px solid var(--gold); padding-left: 14px; }
+
+    .simple-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .simple-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--text); line-height: 1.65; }
+    .simple-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+
+    .block { margin-bottom: 28px; }
+    .block-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 10px; letter-spacing: 0.02em; }
+
+    /* ── DELIVERABLES ── */
+    .result-item { padding: 16px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; }
+    .result-item:last-child { border-bottom: none; }
+    .result-num { font-family: var(--font-heading); font-size: 20px; color: var(--gold); flex-shrink: 0; width: 28px; line-height: 1; }
+    .result-body { flex: 1; }
+    .result-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .result-desc { font-size: 12px; color: var(--gray); line-height: 1.65; margin-bottom: 5px; }
+    .result-metric { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+
+    /* ── EXAMPLE OUTPUT BOX ── */
+    .example-wrap { margin: 28px 0 0; }
+    .example-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+    .example-box { background: var(--dark); border-radius: 8px; padding: 22px 26px; }
+    .example-box-header { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,168,76,0.5); margin-bottom: 14px; }
+    .example-insight { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .example-insight:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .example-insight p { font-size: 11.5px; color: rgba(234,229,220,0.75); line-height: 1.7; }
+    .example-insight strong { color: var(--gold); }
+
+    /* ── STEPS ── */
+    .step-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .step-row:last-child { border-bottom: none; }
+    .step-n { font-family: var(--font-heading); font-size: 18px; color: var(--gold); flex-shrink: 0; width: 24px; }
+    .step-body { flex: 1; }
+    .step-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+    .step-time { font-size: 11px; color: var(--gold); font-weight: 600; flex-shrink: 0; align-self: center; }
+
+    /* ── PRICE ── */
+    .price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .price-card { background: var(--light); border: 1px solid var(--border); border-top: 2px solid var(--gold); border-radius: 6px; padding: 20px 22px; }
+    .price-card-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+    .price-card-amount { font-family: var(--font-heading); font-size: 36px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+    .price-card-suffix { font-size: 12px; color: var(--gray); margin-bottom: 12px; }
+    .price-card-items { font-size: 11px; color: var(--gray); line-height: 1.8; }
+
+    .roi-box { background: var(--dark); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px; }
+    .roi-box p { font-size: 12px; color: rgba(234,229,220,0.65); line-height: 1.7; }
+    .roi-box strong { color: var(--gold); }
+
+    /* ── SIGNATURE ── */
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; }
+    .sig-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; margin-bottom: 32px; }
+    .sig-line { border-top: 1px solid var(--border); margin-bottom: 8px; }
+    .sig-name { font-size: 13px; color: var(--text); font-weight: 500; }
+    .sig-role { font-size: 11px; color: var(--gray); }
+    .sig-pre { font-family: 'Georgia', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; font-style: italic; }
+    .voorstel-num { font-size: 10px; letter-spacing: 0.18em; color: rgba(201,168,76,0.6); margin-top: 6px; }
+
+    .questions-box { background: var(--light); border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 0 6px 6px 0; margin-bottom: 28px; }
+    .questions-box p { font-size: 12px; color: var(--gray); line-height: 1.7; }
+    .questions-box strong { color: var(--text); }
+
+    .action-step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .action-step:last-child { border-bottom: none; }
+    .action-num { font-family: var(--font-heading); font-size: 18px; color: var(--gold); flex-shrink: 0; width: 24px; line-height: 1.2; }
+    .action-body .action-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .action-body .action-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+    .gold-bar { height: 2px; background: linear-gradient(to right, var(--gold), transparent); margin: 28px 0; }
+
+    .data-sources { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+    .data-source { background: var(--light); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; text-align: center; }
+    .data-source-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .data-source-desc { font-size: 10px; color: var(--gray); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Opslaan als PDF: Ctrl+P → PDF → Marges: Geen</div>
+
+<!-- PAGINA 1 — COVER -->
+<div class="page cover">
+    <div class="cover-logo">
+        <svg width="24" height="24" viewBox="0 0 44 44" fill="none">
+            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+        <span class="cover-logo-text">Insightance</span>
+    </div>
+    <div class="cover-body">
+        <p class="cover-tag">AI Media Intelligence #002</p>
+        <div class="cover-line"></div>
+        <h1 class="cover-title">Meer uit elke euro.<br>Sneller dan<br>de concurrentie.</h1>
+        <p class="cover-for">Opgesteld voor</p>
+        <p class="cover-client">FTUK</p>
+        <p class="cover-contact">[NAAM EIGENAAR], Eigenaar</p>
+    </div>
+    <div class="cover-footer">
+        <span>7 juni 2026 · Amsterdam</span>
+        <span>Voorstel #002 · Vertrouwelijk</span>
+    </div>
+</div>
+
+<!-- PAGINA 2 — SITUATIE -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">02 / 06</span>
+    </div>
+    <p class="sec-label">01 — Uw situatie</p>
+    <h2 class="sec-title">De data is er. De inzichten niet.</h2>
+    <p class="sec-intro">U investeert €50.000 per maand in advertenties op Meta en Google. U heeft HYROS ingericht voor nauwkeurige attributietracking. En u heeft een extern bureau dat de campagnes beheert. Maar niemand vertaalt die data dagelijks naar concrete beslissingen.</p>
+
+    <div class="block">
+        <p class="block-title">Wat er nu speelt</p>
+        <ul class="simple-list">
+            <li>€50.000 per maand aan adspend loopt volledig via een extern bureau, zonder dat u zelf inzicht heeft in wat werkt en wat niet</li>
+            <li>HYROS verzamelt nauwkeurige data, maar de output wordt niet actief omgezet naar aanbevelingen of beslissingen</li>
+            <li>Er is geen overzicht van welke creatives het beste presteren en waarom, waardoor uw bureau zonder sturing werkt</li>
+            <li>U heeft geen zicht op wat concurrenten adverteren, welke boodschappen zij testen en welke markten zij betreden</li>
+            <li>Kansen in nieuwe geografische markten worden niet gesignaleerd, terwijl anderen ze wel pakken</li>
+        </ul>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <div class="block">
+        <p class="block-title">Wat dit in de praktijk betekent</p>
+        <ul class="simple-list">
+            <li>Uw bureau werkt zonder terugkoppeling van wat echt converteert, waardoor budget naar ondermaatse creatives blijft gaan</li>
+            <li>Bij €50.000 per maand betekent 10% verspilling al €5.000 per maand die onopgemerkt verdwijnt</li>
+            <li>Concurrenten die wél monitoren zien marktkansen eerder en pakken het marktaandeel dat voor u ligt</li>
+        </ul>
+    </div>
+</div>
+
+<!-- PAGINA 3 — WAT U KRIJGT -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">03 / 06</span>
+    </div>
+    <p class="sec-label">02 — Wat u krijgt</p>
+    <h2 class="sec-title">Vijf lagen. Één systeem.</h2>
+    <p class="sec-intro">Geen dashboard dat u zelf moet lezen. Een AI die u elke week vertelt wat er speelt, wat u moet doen en welke kans u als eerste kunt pakken.</p>
+
+    <div class="result-item">
+        <div class="result-num">1</div>
+        <div class="result-body">
+            <p class="result-title">Wekelijkse prestatierapportage</p>
+            <p class="result-desc">Elke maandagochtend een helder overzicht vanuit HYROS en WooCommerce naast elkaar. Werkelijke omzet versus geattribueerde omzet. Zo ziet u direct of de tracking klopt en waar er een gat zit.</p>
+            <p class="result-metric">→ Altijd een betrouwbaar cijfer, ongeacht tracking-issues in HYROS</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">2</div>
+        <div class="result-body">
+            <p class="result-title">Creative intelligence</p>
+            <p class="result-desc">Wekelijks een ranglijst van uw best presterende advertenties. De AI analyseert wat de winnaars gemeen hebben: format, hook, lengte, belofte. En geeft uw bureau concrete instructies voor de volgende creatives om te testen.</p>
+            <p class="result-metric">→ Uw bureau werkt altijd op basis van wat aantoonbaar werkt</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">3</div>
+        <div class="result-body">
+            <p class="result-title">Competitive intelligence</p>
+            <p class="result-desc">Via de publieke Meta Ad Library worden concurrenten wekelijks gemonitord. Welke advertenties draaien zij, hoe lang al, in welke landen. De AI signaleert trends en geeft aan waar concurrenten nieuw bewegen.</p>
+            <p class="result-metric">→ Nooit meer verrast worden door wat de markt al oppikt</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">4</div>
+        <div class="result-body">
+            <p class="result-title">Geo opportunity detection</p>
+            <p class="result-desc">Het systeem combineert geografische prestaties uit uw campagnes met zoektrends per land. Zodra een markt opvalt, zoals dalende kosten per lead in een nieuw land of stijgende interesse in prop trading in een specifieke regio, krijgt u een melding met een concreet voorstel.</p>
+            <p class="result-metric">→ Nieuwe markten zien voordat de concurrent ze betreedt</p>
+        </div>
+    </div>
+    <div class="result-item">
+        <div class="result-num">5</div>
+        <div class="result-body">
+            <p class="result-title">Performance alerts</p>
+            <p class="result-desc">Directe melding via e-mail of WhatsApp bij afwijkingen. Spend spike, ROAS onder drempel, campagne die uitvalt. U bent het eerste die het weet.</p>
+            <p class="result-metric">→ Nooit meer onaangename verrassingen aan het einde van de maand</p>
+        </div>
+    </div>
+</div>
+
+<!-- PAGINA 4 — VOORBEELD OUTPUT -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">04 / 06</span>
+    </div>
+    <p class="sec-label">03 — Zo ziet het eruit</p>
+    <h2 class="sec-title">Niet cijfers. Beslissingen.</h2>
+    <p class="sec-intro">Dit zijn voorbeelden van de wekelijkse inzichten die het systeem genereert. Geen spreadsheet, geen dashboard. Concrete berichten die u direct kunt doorsturen naar uw bureau.</p>
+
+    <div class="example-wrap">
+        <p class="example-label">Voorbeeld weekrapport — maandag 08:00</p>
+        <div class="example-box">
+            <p class="example-box-header">Week 23 · 26 mei – 1 juni 2026 · FTUK</p>
+            <div class="example-insight">
+                <p><strong>Creative winnaar:</strong> Video #14 presteert 41% beter dan het gemiddelde. Kosten per lead: €3,80. Patroon: hook onder 2 seconden, directe vraag aan de kijker, geen muziek. Aanbeveling voor uw bureau: maak 3 varianten met dezelfde structuur maar een andere opening. Test volgende week.</p>
+            </div>
+            <div class="example-insight">
+                <p><strong>Concurrent signaal:</strong> FTMO heeft de afgelopen 10 dagen 8 nieuwe advertenties gelanceerd in Brazilië. Kosten per lead in Brazilië vanuit uw eigen campagnes: €2,10, tegenover €5,40 in Nederland. Brazilië vertoont stijgende zoekvolumes voor "prop trading" (+34% in 30 dagen). Overweeg een gericht testbudget van €3.000 deze maand.</p>
+            </div>
+            <div class="example-insight">
+                <p><strong>Tracking controle:</strong> WooCommerce registreerde €48.200 aan omzet deze week. HYROS attribueert €41.500. Verschil: €6.700 (14%). Mogelijke oorzaak: verhoogd gebruik van ad blockers bij desktop-bezoekers. Aanbeveling: verzoek uw bureau server-side tracking te activeren in HYROS.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <div class="block">
+        <p class="block-title">Databronnen die het systeem combineert</p>
+        <div class="data-sources">
+            <div class="data-source">
+                <p class="data-source-name">HYROS</p>
+                <p class="data-source-desc">Conversieattributie per advertentie</p>
+            </div>
+            <div class="data-source">
+                <p class="data-source-name">WooCommerce</p>
+                <p class="data-source-desc">Werkelijke omzet als verificatielaag</p>
+            </div>
+            <div class="data-source">
+                <p class="data-source-name">Google Ads</p>
+                <p class="data-source-desc">Campagne en creative prestaties</p>
+            </div>
+            <div class="data-source">
+                <p class="data-source-name">Meta Ad Library</p>
+                <p class="data-source-desc">Actieve advertenties van concurrenten</p>
+            </div>
+            <div class="data-source">
+                <p class="data-source-name">Google Trends</p>
+                <p class="data-source-desc">Zoektrends per land en regio</p>
+            </div>
+            <div class="data-source">
+                <p class="data-source-name">Claude AI</p>
+                <p class="data-source-desc">Analyse, aanbevelingen en rapportage</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGINA 5 — AANPAK + INVESTERING -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">05 / 06</span>
+    </div>
+    <p class="sec-label">04 — Aanpak</p>
+    <h2 class="sec-title">Opgeleverd binnen 3 weken</h2>
+    <p class="sec-intro">Van start tot werkend systeem. U hoeft technisch niets te regelen, behalve eenmalig toegang te delen tot HYROS en WooCommerce.</p>
+
+    <div class="step-row">
+        <div class="step-n">1</div>
+        <div class="step-body">
+            <p class="step-title">Koppelingen en data-audit</p>
+            <p class="step-desc">HYROS viewer-toegang en WooCommerce API worden ingesteld. Google Ads koppeling wordt aangevraagd. Bestaande campagnestructuur wordt in kaart gebracht. Concurrenten worden geïdentificeerd voor de monitoring.</p>
+        </div>
+        <span class="step-time">3 dagen</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">2</div>
+        <div class="step-body">
+            <p class="step-title">Rapportage en alert systeem</p>
+            <p class="step-desc">Het geautomatiseerde weekrapport wordt gebouwd en afgestemd op uw campagnestructuur. Performance alerts worden ingesteld op basis van afgesproken drempelwaarden.</p>
+        </div>
+        <span class="step-time">1 week</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">3</div>
+        <div class="step-body">
+            <p class="step-title">Intelligence lagen bouwen</p>
+            <p class="step-desc">Creative analyse, concurrent monitoring via Meta Ad Library en geo opportunity detection worden gebouwd, getest en gekalibreerd op uw markt.</p>
+        </div>
+        <span class="step-time">1 week</span>
+    </div>
+    <div class="step-row">
+        <div class="step-n">4</div>
+        <div class="step-body">
+            <p class="step-title">Oplevering en instructie</p>
+            <p class="step-desc">Volledig systeem wordt opgeleverd. We lopen het samen door zodat u precies begrijpt wat u elke week ontvangt en hoe u de inzichten doorvertaalt naar uw bureau.</p>
+        </div>
+        <span class="step-time">1 dag</span>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <p class="sec-label">05 — Investering</p>
+    <div class="price-cards">
+        <div class="price-card">
+            <p class="price-card-label">Eenmalige setup</p>
+            <p class="price-card-amount">€7.500</p>
+            <p class="price-card-suffix">exclusief BTW</p>
+            <p class="price-card-items">Alle koppelingen · rapportagesysteem · creative intelligence · competitor monitoring · geo detection · instructiesessie</p>
+        </div>
+        <div class="price-card">
+            <p class="price-card-label">Maandelijks abonnement</p>
+            <p class="price-card-amount">€1.250</p>
+            <p class="price-card-suffix">per maand, exclusief BTW</p>
+            <p class="price-card-items">Wekelijkse rapportages · AI-analyse · alerts · onderhoud · doorontwikkeling</p>
+        </div>
+    </div>
+
+    <div class="roi-box">
+        <p><strong>De rekening:</strong> Bij €50.000 per maand adspend is 2,5% efficiëntieverbetering al €1.250 per maand extra rendement. Het abonnement kost zichzelf niets. Eén geïdentificeerde markt zoals Brazilië of één winning creative die tijdig wordt doorgetrokken kan tienduizenden euro's per maand extra opleveren.</p>
+    </div>
+
+    <p style="font-size:12px; color:var(--gray); line-height:1.7;">Betalingsvoorwaarden: <strong style="color:var(--text)">50% bij start, 50% bij oplevering.</strong> Dit voorstel is geldig tot <strong style="color:var(--text)">21 juni 2026</strong>.</p>
+</div>
+
+<!-- PAGINA 6 — VOLGENDE STAP -->
+<div class="page">
+    <div class="page-top">
+        <span class="page-top-brand">Insightance</span>
+        <span class="page-top-num">06 / 06</span>
+    </div>
+    <p class="sec-label">06 — Volgende stap</p>
+    <h2 class="sec-title">Zo gaan we van start</h2>
+    <p class="sec-intro">Vier stappen scheiden u van een volledig werkend AI media intelligence systeem. Het enige wat u technisch hoeft te doen is toegang delen. De rest regelen wij.</p>
+
+    <div class="block">
+        <div class="action-step">
+            <div class="action-num">1</div>
+            <div class="action-body">
+                <p class="action-title">Onderteken dit voorstel en stuur het retour</p>
+                <p class="action-desc">Zet uw handtekening onderaan dit document en mail het terug naar <strong>oussama@insightance.ai</strong>. Vermeld in de onderwerpregel: <em>Akkoord voorstel #002</em>.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">2</div>
+            <div class="action-body">
+                <p class="action-title">Stuur minimaal 3 data's mee voor het startgesprek</p>
+                <p class="action-desc">Voeg bij uw mail minimaal 3 momenten toe waarop u beschikbaar bent voor een startgesprek van 30 minuten. Wij bevestigen binnen 24 uur.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">3</div>
+            <div class="action-body">
+                <p class="action-title">Toegang delen tot HYROS en WooCommerce</p>
+                <p class="action-desc">Tijdens het startgesprek deelt u viewer-toegang tot HYROS en de WooCommerce API-sleutel. Dit zijn de enige twee technische handelingen die van u worden gevraagd. Wij nemen het vanaf dat moment volledig over.</p>
+            </div>
+        </div>
+        <div class="action-step">
+            <div class="action-num">4</div>
+            <div class="action-body">
+                <p class="action-title">Oplevering en slotbetaling</p>
+                <p class="action-desc">U ontvangt het volledige systeem binnen <strong>3 weken</strong> na de startdatum. Bij oplevering wordt het resterende bedrag van 50% gefactureerd. Vanaf dat moment ontvangt u elke maandag uw rapport.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="questions-box">
+        <p><strong>Vragen naar aanleiding van dit voorstel?</strong> Stuur een mail naar <strong>oussama@insightance.ai</strong> met als onderwerp: <em>Vraag voorstel #002</em>. Wij reageren binnen één werkdag.</p>
+    </div>
+
+    <div class="sig-grid">
+        <div>
+            <p class="sig-label">Akkoord opdrachtgever</p>
+            <div class="sig-line"></div>
+            <p class="sig-name">[NAAM EIGENAAR]</p>
+            <p class="sig-role">Eigenaar · FTUK</p>
+        </div>
+        <div>
+            <p class="sig-label">Namens Insightance</p>
+            <p class="sig-pre">O. Hlalouch</p>
+            <div class="sig-line"></div>
+            <p class="sig-name">Oussama Hlalouch</p>
+            <p class="sig-role">Oprichter · Insightance</p>
+            <p class="voorstel-num">Voorstel #002</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Metric — Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #131316;
+            --surface: #181819;
+            --surface-2: #202023;
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888888;
+            --gray-light: #C0C0C0;
+            --border: #252525;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        body { background: #131316; color: var(--white); font-family: var(--font-body); padding: 60px 40px; }
+        h2 { font-family: var(--font-heading); font-size: 22px; color: var(--gold); margin-bottom: 8px; }
+        .label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 32px; }
+        .wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1100px; margin: 0 auto; }
+
+        /* ── HUIDIGE VERSIE ── */
+        .case-result-current {
+            background: rgba(201,168,76,0.05);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 24px;
+        }
+        .num-current { font-family: var(--font-heading); font-size: 42px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; }
+        .txt-current { font-size: 14px; color: var(--gray-light); line-height: 1.6; }
+
+        /* ── NIEUWE VERSIE ── */
+        .case-result-new {
+            margin-top: 24px;
+            padding: 28px 32px;
+            background: rgba(201,168,76,0.04);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-left: 3px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .num-new { font-family: var(--font-heading); font-size: 72px; font-weight: 700; color: var(--gold); line-height: 1; flex-shrink: 0; }
+        .txt-new-title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+        .txt-new-sub { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+        /* Kaart omhulsel */
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+        .card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; opacity: 0.6; }
+        .divider { width: 40px; height: 1px; background: var(--border); margin: 28px 0; }
+    </style>
+</head>
+<body>
+    <div style="max-width:1100px; margin:0 auto 48px;">
+        <h2>Case Metric — Vergelijking</h2>
+        <p class="label">Links: huidig &nbsp;·&nbsp; Rechts: voorstel</p>
+    </div>
+
+    <div class="wrapper">
+
+        <!-- HUIDIGE VERSIE -->
+        <div class="card">
+            <div class="card-label">Huidige versie</div>
+            <p style="font-size:13px; color:var(--gray); line-height:1.7;">... Vroeger/Nu tekst ...</p>
+            <div class="divider"></div>
+
+            <div class="case-result-current">
+                <div class="num-current">90%</div>
+                <div class="txt-current">minder tijd per offerte.<br>Geen handmatig typen meer.</div>
+            </div>
+        </div>
+
+        <!-- NIEUWE VERSIE -->
+        <div class="card">
+            <div class="card-label">Voorstel</div>
+            <p style="font-size:13px; color:var(--gray); line-height:1.7;">... Vroeger/Nu tekst ...</p>
+            <div class="divider"></div>
+
+            <div class="case-result-new">
+                <div class="num-new">90%</div>
+                <div>
+                    <div class="txt-new-title">minder tijd per offerte</div>
+                    <div class="txt-new-sub">Van twintig minuten handmatig werk<br>naar één klik op een knop.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

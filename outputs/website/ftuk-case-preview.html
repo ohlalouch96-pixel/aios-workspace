@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview — FTUK Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #131316;
+            --surface: #181819;
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888888;
+            --gray-light: #C0C0C0;
+            --border: #252525;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #1C1C20;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 80px 0;
+        }
+
+        .preview-bar {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 60px;
+            opacity: 0.6;
+        }
+
+        .section { padding: 80px 60px; max-width: 1160px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            display: block;
+        }
+        .section-label::after {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--gold);
+            margin: 10px auto 20px;
+            opacity: 0.7;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(26px, 3vw, 40px);
+            font-weight: 600;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            color: var(--white);
+            text-align: center;
+        }
+        .section-intro {
+            font-size: 16px;
+            color: var(--gray);
+            text-align: center;
+            max-width: 520px;
+            margin: 0 auto 64px;
+            line-height: 1.8;
+        }
+
+        /* CASE CARD */
+        .case-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: #161619;
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+
+        /* Visual / Dashboard side */
+        .case-visual {
+            background: #0F1117;
+            border-right: 1px solid rgba(201,168,76,0.1);
+            display: flex;
+            flex-direction: column;
+            min-height: 520px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-visual-browser {
+            background: #16192a;
+            border-bottom: 1px solid #2a2d45;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .browser-dot { width: 9px; height: 9px; border-radius: 50%; }
+        .browser-dot:nth-child(1) { background: #FF5F57; }
+        .browser-dot:nth-child(2) { background: #FEBC2E; }
+        .browser-dot:nth-child(3) { background: #28C840; }
+        .browser-url {
+            flex: 1;
+            background: #252836;
+            border-radius: 3px;
+            padding: 4px 10px;
+            font-size: 10px;
+            color: #4a5080;
+            margin-left: 6px;
+            letter-spacing: 0.03em;
+        }
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 9px;
+            color: #00c853;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .live-dot {
+            width: 6px; height: 6px;
+            background: #00c853;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Mini dashboard inside the card */
+        .dash-wrap {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .dash-sidebar {
+            width: 120px;
+            background: #13162a;
+            border-right: 1px solid #2a2d45;
+            padding: 12px 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .dash-logo-area {
+            padding: 0 14px 14px;
+            border-bottom: 1px solid #2a2d45;
+            margin-bottom: 10px;
+        }
+        .dash-logo-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .dash-logo-sub {
+            font-size: 8px;
+            color: #4a5080;
+            letter-spacing: 0.08em;
+            margin-top: 2px;
+        }
+        .dash-nav-item {
+            padding: 6px 14px;
+            font-size: 9.5px;
+            color: #5a6080;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            cursor: default;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .dash-nav-item.active {
+            color: #fff;
+            background: rgba(74,95,212,0.2);
+            border-left-color: #4a5fd4;
+        }
+        .dash-nav-icon { font-size: 10px; opacity: 0.8; }
+        .dash-sidebar-footer {
+            margin-top: auto;
+            padding: 10px 14px;
+            border-top: 1px solid #2a2d45;
+            font-size: 8px;
+            color: #3a4060;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dash-main {
+            flex: 1;
+            padding: 12px 12px 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Top header bar */
+        .dash-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+        .dash-greeting {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .dash-greeting span {
+            display: block;
+            font-size: 9px;
+            font-weight: 400;
+            color: #4a5080;
+            margin-top: 1px;
+        }
+        .dash-date-badge {
+            background: #1a1d2e;
+            border: 1px solid #2a2d45;
+            border-radius: 3px;
+            padding: 3px 8px;
+            font-size: 8px;
+            color: #5a6080;
+        }
+
+        /* KPI row */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        .kpi-card {
+            background: #1a1d2e;
+            border: 1px solid #2a2d45;
+            border-radius: 4px;
+            padding: 7px 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card.highlight {
+            border-color: rgba(201,168,76,0.3);
+            background: rgba(201,168,76,0.05);
+        }
+        .kpi-card-accent {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: #4a5fd4;
+        }
+        .kpi-card.highlight .kpi-card-accent { background: var(--gold); }
+        .kpi-label {
+            font-size: 7.5px;
+            color: #5a6080;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .kpi-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            filter: blur(5px);
+            user-select: none;
+            letter-spacing: -0.02em;
+        }
+        .kpi-card.highlight .kpi-value { color: var(--gold); }
+        .kpi-delta {
+            font-size: 7.5px;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            filter: blur(3.5px);
+        }
+        .kpi-delta.up { color: #00c853; }
+        .kpi-delta.down { color: #ff4444; }
+
+        /* Chart area */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 5px;
+            flex: 1;
+        }
+        .chart-area {
+            background: #1a1d2e;
+            border: 1px solid #2a2d45;
+            border-radius: 4px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .chart-label {
+            font-size: 8px;
+            color: #5a6080;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .chart-total {
+            font-size: 8px;
+            color: #8890b5;
+            filter: blur(4px);
+        }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            flex: 1;
+            min-height: 52px;
+        }
+        .bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .bar {
+            width: 100%;
+            border-radius: 2px 2px 0 0;
+        }
+        .bar-blue { background: linear-gradient(to top, #3a4fc4, #5a6fd4); opacity: 0.8; }
+        .bar-gold { background: linear-gradient(to top, #b8943c, #C9A84C); }
+        .bar-day {
+            font-size: 7px;
+            color: #3a4060;
+            text-align: center;
+        }
+
+        /* Ads table */
+        .ads-table {
+            background: #1a1d2e;
+            border: 1px solid #2a2d45;
+            border-radius: 4px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            overflow: hidden;
+        }
+        .ads-table-header {
+            font-size: 8px;
+            color: #5a6080;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #2a2d45;
+        }
+        .ads-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(42,45,69,0.5);
+            gap: 6px;
+        }
+        .ads-row:last-child { border-bottom: none; }
+        .ads-name {
+            font-size: 8.5px;
+            color: #8890b5;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            filter: blur(3.5px);
+        }
+        .ads-roas {
+            font-size: 8.5px;
+            font-weight: 600;
+            color: #00c853;
+            filter: blur(3.5px);
+            flex-shrink: 0;
+        }
+        .ads-badge {
+            font-size: 7px;
+            background: rgba(201,168,76,0.15);
+            color: var(--gold);
+            border-radius: 2px;
+            padding: 1px 5px;
+            flex-shrink: 0;
+        }
+
+        /* Bottom strips */
+        .bottom-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+        .rec-strip {
+            background: rgba(201,168,76,0.06);
+            border: 1px solid rgba(201,168,76,0.18);
+            border-radius: 4px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .rec-icon { font-size: 10px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+        .rec-text { font-size: 8px; color: #a0a8c0; line-height: 1.45; }
+        .rec-text strong { color: var(--gold); }
+
+        .report-strip {
+            background: rgba(74,95,212,0.08);
+            border: 1px solid rgba(74,95,212,0.2);
+            border-radius: 4px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .report-icon { font-size: 10px; color: #4a5fd4; flex-shrink: 0; margin-top: 1px; }
+        .report-text { font-size: 8px; color: #a0a8c0; line-height: 1.45; }
+        .report-text strong { color: #8890b5; }
+
+        /* Content side */
+        .case-content {
+            padding: 52px 52px 52px 48px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .case-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .case-tag::before {
+            content: '';
+            width: 16px; height: 1px;
+            background: var(--gold);
+            opacity: 0.5;
+        }
+
+        .case-company {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 36px;
+            line-height: 1.2;
+        }
+
+        .case-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 36px; }
+        .case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
+        .case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .case-flow-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.5);
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+        .case-flow-dot.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 8px rgba(201,168,76,0.4);
+        }
+        .case-flow-connector {
+            width: 1px;
+            flex: 1;
+            min-height: 28px;
+            background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+            margin: 4px 0;
+        }
+        .case-flow-body { padding-bottom: 28px; }
+        .case-flow-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+        .case-flow-text {
+            font-size: 14px;
+            color: var(--gray-light);
+            line-height: 1.75;
+        }
+
+        .case-result {
+            background: rgba(201,168,76,0.05);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+        .case-result-number {
+            font-family: var(--font-heading);
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .case-result-text {
+            font-size: 14px;
+            color: var(--gray-light);
+            line-height: 1.6;
+        }
+
+        .case-quote {
+            border-left: 2px solid rgba(201,168,76,0.3);
+            padding-left: 20px;
+            margin-top: auto;
+        }
+        .case-quote p {
+            font-size: 14px;
+            color: var(--gray-light);
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .case-quote cite {
+            font-size: 12px;
+            color: var(--gold);
+            font-style: normal;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<p class="preview-bar">Preview — FTUK Case Study · Insightance.ai</p>
+
+<div class="section">
+    <span class="section-label">Resultaten</span>
+    <h2 class="section-title">Wat we bouwen, werkt</h2>
+    <p class="section-intro">Eén klant. Eén automatisering. Dit is wat er veranderde.</p>
+
+    <div class="case-card">
+
+        <!-- Dashboard visual kant -->
+        <div class="case-visual">
+            <div class="case-visual-browser">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-url">dashboard.ftuk.nl</div>
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    Live
+                </div>
+            </div>
+
+            <div class="dash-wrap">
+                <!-- Sidebar -->
+                <div class="dash-sidebar">
+                    <div class="dash-logo-area">
+                        <div class="dash-logo-name">FTUK</div>
+                        <div class="dash-logo-sub">Business Intelligence</div>
+                    </div>
+                    <div class="dash-nav-item active">
+                        <span class="dash-nav-icon">▦</span> Overzicht
+                    </div>
+                    <div class="dash-nav-item">
+                        <span class="dash-nav-icon">◈</span> Advertenties
+                    </div>
+                    <div class="dash-nav-item">
+                        <span class="dash-nav-icon">↗</span> Omzet
+                    </div>
+                    <div class="dash-nav-item">
+                        <span class="dash-nav-icon">◎</span> Bezoekers
+                    </div>
+                    <div class="dash-nav-item">
+                        <span class="dash-nav-icon">☰</span> Producten
+                    </div>
+                    <div class="dash-nav-item">
+                        <span class="dash-nav-icon">✉</span> Rapporten
+                    </div>
+                    <div class="dash-sidebar-footer">
+                        <span class="live-dot" style="width:5px;height:5px;"></span> Live verbonden
+                    </div>
+                </div>
+
+                <!-- Main content -->
+                <div class="dash-main">
+
+                    <!-- Top bar -->
+                    <div class="dash-topbar">
+                        <div class="dash-greeting">
+                            Goedemorgen, FTUK
+                            <span>Laatste update: zojuist · ververst elke 60 sec.</span>
+                        </div>
+                        <div class="dash-date-badge">di 24 jun 2026</div>
+                    </div>
+
+                    <!-- 4 KPI cards -->
+                    <div class="kpi-row">
+                        <div class="kpi-card highlight">
+                            <div class="kpi-card-accent"></div>
+                            <div class="kpi-label">Omzet vandaag</div>
+                            <div class="kpi-value">€ 3.847</div>
+                            <div class="kpi-delta up">▲ 18% vs gisteren</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-card-accent"></div>
+                            <div class="kpi-label">Kosten p. klant</div>
+                            <div class="kpi-value">€ 12,40</div>
+                            <div class="kpi-delta down">▼ 7% vs vorige week</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-card-accent"></div>
+                            <div class="kpi-label">Conversieratio</div>
+                            <div class="kpi-value">3,8%</div>
+                            <div class="kpi-delta up">▲ 0,4% vs gisteren</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-card-accent"></div>
+                            <div class="kpi-label">Actieve bezoekers</div>
+                            <div class="kpi-value">142</div>
+                            <div class="kpi-delta up">▲ live</div>
+                        </div>
+                    </div>
+
+                    <!-- Chart + Ads table -->
+                    <div class="chart-row">
+                        <div class="chart-area">
+                            <div class="chart-header">
+                                <div class="chart-label">Omzet afgelopen 7 dagen</div>
+                                <div class="chart-total">Totaal: € 22.413</div>
+                            </div>
+                            <div class="chart-bars">
+                                <div class="bar-wrap">
+                                    <div class="bar bar-blue" style="height:55%"></div>
+                                    <div class="bar-day">wo</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-blue" style="height:70%"></div>
+                                    <div class="bar-day">do</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-blue" style="height:48%"></div>
+                                    <div class="bar-day">vr</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-gold" style="height:88%"></div>
+                                    <div class="bar-day">za</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-gold" style="height:82%"></div>
+                                    <div class="bar-day">zo</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-blue" style="height:63%"></div>
+                                    <div class="bar-day">ma</div>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar bar-blue" style="height:74%"></div>
+                                    <div class="bar-day">di</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ads-table">
+                            <div class="ads-table-header">Advertenties — ROAS</div>
+                            <div class="ads-row">
+                                <div class="ads-name">Zomercollectie 2026</div>
+                                <div class="ads-roas">4.8×</div>
+                                <div class="ads-badge">Top</div>
+                            </div>
+                            <div class="ads-row">
+                                <div class="ads-name">Retargeting — bezoekers</div>
+                                <div class="ads-roas">3.2×</div>
+                            </div>
+                            <div class="ads-row">
+                                <div class="ads-name">Lookalike — NL</div>
+                                <div class="ads-roas">2.9×</div>
+                            </div>
+                            <div class="ads-row">
+                                <div class="ads-name">Branding video Q2</div>
+                                <div class="ads-roas">1.7×</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom strips -->
+                    <div class="bottom-row">
+                        <div class="rec-strip">
+                            <span class="rec-icon">◈</span>
+                            <div class="rec-text">
+                                <strong>AI-aanbeveling:</strong> "Zomercollectie 2026" presteert 34% boven gemiddelde. Overweeg budget te verhogen voor optimaal rendement.
+                            </div>
+                        </div>
+                        <div class="report-strip">
+                            <span class="report-icon">✉</span>
+                            <div class="report-text">
+                                <strong>Dagrapport verzonden</strong> · 07:00<br>Afgelopen 24 uur samengevat in je inbox
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Content kant -->
+        <div class="case-content">
+
+            <div class="case-tag">E-commerce & Media</div>
+            <h3 class="case-company">FTUK</h3>
+
+            <div class="case-flow">
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot"></div>
+                        <div class="case-flow-connector"></div>
+                    </div>
+                    <div class="case-flow-body">
+                        <div class="case-flow-label">Vroeger</div>
+                        <div class="case-flow-text">Elke week trok Abdelilah data op uit <strong style="color:#fff;">3 verschillende bronnen</strong>: Meta Ads Manager, zijn webshop-analytics en zijn eigen verkoopoverzichten. Kopiëren naar Excel, handmatig samenvoegen, grafieken bijwerken. Antwoorden die pas na <strong style="color:#fff;">gemiddeld 6 uur handmatig werk</strong> beschikbaar waren — en dan nog vaak <strong style="color:#fff;">2 tot 3 dagen</strong> te laat om op bij te sturen.</div>
+                    </div>
+                </div>
+                <div class="case-flow-item">
+                    <div class="case-flow-line">
+                        <div class="case-flow-dot active"></div>
+                    </div>
+                    <div class="case-flow-body" style="padding-bottom:0;">
+                        <div class="case-flow-label">Nu</div>
+                        <div class="case-flow-text">Abdelilah opent één dashboard. Alle systemen zijn gekoppeld — de data stroomt automatisch binnen en ververst <strong style="color:#fff;">elke minuut</strong>. Omzet per dag, beste advertentie van de week, kosten per nieuwe klant — alles in één overzicht. Het dashboard geeft ook <strong style="color:#fff;">actieve aanbevelingen</strong> en elke ochtend ontvangt hij automatisch een <strong style="color:#fff;">dagrapport</strong> van de afgelopen 24 uur, direct in zijn inbox. Geen Excel, geen handmatig samenvoegen, geen <strong style="color:#fff;">6 uur per week</strong> kwijt aan iets wat een systeem ook kan doen.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-result">
+                <div class="case-result-number">6 uur</div>
+                <div class="case-result-text">per week teruggewonnen.<br>Van handmatig dataverzamelen naar real-time inzicht in 30 seconden.</div>
+            </div>
+
+            <div class="case-quote">
+                <p>"Vroeger wist ik pas op maandag hoe het weekend was gegaan. Nu zie ik het terwijl het gebeurt."</p>
+                <cite>— Abdelilah, FTUK</cite>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav CTA Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #131316;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            border-bottom: 1px solid rgba(201,168,76,0.12);
+            background: rgba(10,10,10,0.96);
+        }
+        .nav-logo { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: #C9A84C; text-transform: uppercase; }
+        .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+        .nav-links a { color: #C0C0C0; text-decoration: none; font-size: 13px; letter-spacing: 0.04em; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .lang { background: none; border: 1px solid #252525; color: #888; padding: 6px 14px; border-radius: 3px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+        .label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #444; text-align: center; padding: 10px 60px; background: #0D0D10; }
+
+        /* C origineel — rand 0.4 */
+        .btn-c-soft {
+            background: transparent;
+            color: #C9A84C;
+            border: 1px solid rgba(201,168,76,0.4);
+            padding: 9px 22px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        .btn-c-soft:hover { background: rgba(201,168,76,0.08); border-color: #C9A84C; color: #E8C97A; }
+
+        /* C voller — rand 0.7 */
+        .btn-c-full {
+            background: transparent;
+            color: #C9A84C;
+            border: 1px solid rgba(201,168,76,0.7);
+            padding: 9px 22px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        .btn-c-full:hover { background: rgba(201,168,76,0.08); border-color: #C9A84C; color: #E8C97A; }
+    </style>
+</head>
+<body>
+
+    <div class="label">C origineel — subtiele rand (0.4 opacity)</div>
+    <div class="navbar">
+        <span class="nav-logo">Insightance</span>
+        <ul class="nav-links">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="lang">EN</button>
+            <a class="btn-c-soft">Plan een gesprek</a>
+        </div>
+    </div>
+
+    <div class="label">C voller — duidelijkere rand (0.7 opacity)</div>
+    <div class="navbar">
+        <span class="nav-logo">Insightance</span>
+        <ul class="nav-links">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="lang">EN</button>
+            <a class="btn-c-full">Plan een gesprek</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #131316; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; gap: 0; }
+
+        .label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #444; text-align: center; padding: 10px; background: #0D0D10; }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: rgba(10,10,10,0.96); border-bottom: 1px solid rgba(201,168,76,0.12); }
+        .logo { font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: #C9A84C; text-transform: uppercase; }
+        .right { display: flex; align-items: center; gap: 16px; }
+        .lang { background: #1A1A1D; border: 1px solid #2A2A2D; border-radius: 100px; padding: 0; display: flex; }
+        .lang span { padding: 6px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #555; }
+        .lang span.active { background: rgba(201,168,76,0.12); color: #C9A84C; border-radius: 100px; }
+        .cta { background: transparent; color: #C9A84C; border: 1px solid rgba(201,168,76,0.7); padding: 9px 22px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; }
+
+        /* NAV LINKS */
+        ul { display: flex; align-items: center; list-style: none; }
+        ul a { color: #C0C0C0; text-decoration: none; font-size: 13px; letter-spacing: 0.04em; transition: color 0.2s; }
+        ul a:hover { color: #C9A84C; }
+
+        /* A — Gouden stippen ertussen */
+        .links-a { gap: 0; }
+        .links-a li { display: flex; align-items: center; }
+        .links-a li + li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(201,168,76,0.4); margin: 0 20px; flex-shrink: 0; }
+
+        /* B — Subtiele verticale lijnen */
+        .links-b { gap: 0; }
+        .links-b li { display: flex; align-items: center; }
+        .links-b li + li::before { content: ''; width: 1px; height: 14px; background: rgba(201,168,76,0.2); margin: 0 20px; flex-shrink: 0; }
+
+        /* C — Links in pills */
+        .links-c { gap: 4px; }
+        .links-c li a { padding: 7px 16px; border-radius: 100px; transition: all 0.2s; }
+        .links-c li a:hover { background: rgba(201,168,76,0.07); color: #C9A84C; }
+
+        /* D — Gouden ster/diamant ertussen */
+        .links-d { gap: 0; }
+        .links-d li { display: flex; align-items: center; }
+        .links-d li + li::before { content: '✦'; font-size: 7px; color: rgba(201,168,76,0.35); margin: 0 18px; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="label">A — Gouden stippen</div>
+    <nav>
+        <span class="logo">Insightance</span>
+        <ul class="links-a">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">AI-systemen</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="right">
+            <div class="lang"><span class="active">NL</span><span>EN</span></div>
+            <a class="cta">Plan een gesprek</a>
+        </div>
+    </nav>
+
+    <div class="label">B — Subtiele verticale lijnen</div>
+    <nav>
+        <span class="logo">Insightance</span>
+        <ul class="links-b">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">AI-systemen</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="right">
+            <div class="lang"><span class="active">NL</span><span>EN</span></div>
+            <a class="cta">Plan een gesprek</a>
+        </div>
+    </nav>
+
+    <div class="label">C — Links in pill-vorm bij hover</div>
+    <nav>
+        <span class="logo">Insightance</span>
+        <ul class="links-c">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">AI-systemen</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="right">
+            <div class="lang"><span class="active">NL</span><span>EN</span></div>
+            <a class="cta">Plan een gesprek</a>
+        </div>
+    </nav>
+
+    <div class="label">D — Gouden ster ertussen</div>
+    <nav>
+        <span class="logo">Insightance</span>
+        <ul class="links-d">
+            <li><a href="#">Diensten</a></li>
+            <li><a href="#">AI-systemen</a></li>
+            <li><a href="#">Tarieven</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="right">
+            <div class="lang"><span class="active">NL</span><span>EN</span></div>
+            <a class="cta">Plan een gesprek</a>
+        </div>
+    </nav>
+
+</body>
+</html>

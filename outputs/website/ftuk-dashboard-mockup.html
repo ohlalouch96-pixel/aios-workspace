@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTUK Business Intelligence Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+      background: #16192a; border-right: 1px solid #2a2d45;
+      display: flex; flex-direction: column;
+    }
+    .sidebar-logo {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid #2a2d45;
+    }
+    .sidebar-logo img { height: 32px; filter: brightness(1.2); }
+    .sidebar-label {
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: #5a6080; margin-top: 6px;
+    }
+    .sidebar-nav { padding: 16px 0; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px; font-size: 13px; color: #8890b5; cursor: pointer;
+      border-left: 3px solid transparent; transition: all 0.15s;
+    }
+    .nav-item:hover { color: #fff; background: rgba(44,52,112,0.3); }
+    .nav-item.active { color: #fff; background: rgba(44,52,112,0.5); border-left-color: #4a5fd4; }
+    .nav-icon { font-size: 15px; width: 20px; text-align: center; }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #2a2d45;
+      font-size: 11px; color: #5a6080;
+    }
+    .status-dot { display: inline-block; width: 6px; height: 6px; background: #00c853; border-radius: 50%; margin-right: 6px; }
+
+    /* Main */
+    .main { margin-left: 220px; padding: 28px 32px; }
+
+    /* Header */
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .header-left h1 { font-size: 20px; font-weight: 600; color: #fff; }
+    .header-left p { font-size: 13px; color: #6070a0; margin-top: 3px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .date-badge {
+      background: #1e2035; border: 1px solid #2a2d45; border-radius: 8px;
+      padding: 8px 14px; font-size: 12px; color: #8890b5;
+    }
+    .refresh-btn {
+      background: #2C3470; border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: 12px; color: #fff; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* KPI Cards */
+    .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+    .kpi-card {
+      background: #16192a; border: 1px solid #2a2d45; border-radius: 12px;
+      padding: 18px; position: relative; overflow: hidden;
+    }
+    .kpi-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .kpi-card.green::before { background: #00c853; }
+    .kpi-card.blue::before { background: #2C3470; }
+    .kpi-card.orange::before { background: #ff6d00; }
+    .kpi-card.red::before { background: #d50000; }
+    .kpi-card.purple::before { background: #7c3aed; }
+    .kpi-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #5a6080; margin-bottom: 8px; }
+    .kpi-value { font-size: 22px; font-weight: 700; color: #fff; }
+    .kpi-value.green { color: #00c853; }
+    .kpi-value.red { color: #ff4444; }
+    .kpi-sub { font-size: 11px; color: #5a6080; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+    .badge-up { color: #00c853; font-size: 10px; }
+    .badge-down { color: #ff4444; font-size: 10px; }
+
+    /* Charts row */
+    .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+    .card {
+      background: #16192a; border: 1px solid #2a2d45; border-radius: 12px; padding: 20px;
+    }
+    .card-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .card-subtitle { font-size: 11px; color: #5a6080; margin-bottom: 18px; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 140px; }
+    .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar { width: 100%; border-radius: 4px 4px 0 0; transition: opacity 0.2s; cursor: pointer; }
+    .bar:hover { opacity: 0.8; }
+    .bar-label { font-size: 9px; color: #5a6080; }
+    .bar-val { font-size: 9px; color: #8890b5; }
+
+    /* Donut chart (CSS) */
+    .donut-wrap { display: flex; align-items: center; gap: 20px; }
+    .donut {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: conic-gradient(#00c853 0% 58%, #ff6d00 58% 74%, #7c3aed 74% 85%, #2C3470 85% 100%);
+      display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;
+    }
+    .donut-inner {
+      width: 65px; height: 65px; background: #16192a; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .donut-pct { font-size: 16px; font-weight: 700; color: #fff; }
+    .donut-lbl { font-size: 8px; color: #5a6080; }
+    .legend { display: flex; flex-direction: column; gap: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #8890b5; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Bottom row */
+    .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #5a6080; padding: 0 0 10px; text-align: left; }
+    .data-table td { font-size: 12px; color: #b0b8d8; padding: 8px 0; border-top: 1px solid #1e2035; }
+    .data-table tr:first-child td { border-top: none; }
+    .product-name { color: #fff; font-weight: 500; }
+    .rank { width: 20px; height: 20px; border-radius: 4px; background: #2a2d45; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: #6070a0; }
+
+    /* Geo bars */
+    .geo-item { margin-bottom: 12px; }
+    .geo-header { display: flex; justify-content: space-between; font-size: 12px; color: #b0b8d8; margin-bottom: 5px; }
+    .geo-bar-bg { height: 6px; background: #1e2035; border-radius: 3px; }
+    .geo-bar-fill { height: 6px; border-radius: 3px; }
+
+    /* Recommendations */
+    .rec-item { display: flex; gap: 10px; margin-bottom: 12px; }
+    .rec-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .rec-text { font-size: 12px; color: #8890b5; line-height: 1.5; }
+    .rec-text strong { color: #c0c8e8; display: block; margin-bottom: 2px; font-size: 12px; }
+
+    /* Tabs */
+    .tab-bar { display: flex; gap: 4px; margin-bottom: 24px; background: #16192a; border: 1px solid #2a2d45; border-radius: 10px; padding: 4px; width: fit-content; }
+    .tab { padding: 8px 18px; border-radius: 7px; font-size: 13px; color: #6070a0; cursor: pointer; transition: all 0.15s; }
+    .tab.active { background: #2C3470; color: #fff; }
+    .tab:hover:not(.active) { color: #a0a8d8; }
+
+    /* Alert strip */
+    .alert-strip {
+      background: rgba(213, 0, 0, 0.1); border: 1px solid rgba(213,0,0,0.3);
+      border-radius: 8px; padding: 10px 14px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px; font-size: 12px; color: #ff8080;
+    }
+
+    /* Last updated */
+    .last-updated { font-size: 11px; color: #3a4060; text-align: right; margin-top: 20px; }
+
+    /* Annotation */
+    .annotation {
+      background: rgba(44,52,112,0.15); border: 1px dashed #3a4070;
+      border-radius: 8px; padding: 10px 14px; font-size: 11px; color: #5a7090;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://ftuk.com/wp-content/uploads/2021/02/Blue-Transparent-Logo.png" alt="FTUK" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('afterbegin','<span style=\'font-size:20px;font-weight:700;color:#fff;\'>FTUK</span>')">
+      <div class="sidebar-label">Business Intelligence</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active"><span class="nav-icon">📊</span> Overzicht</div>
+      <div class="nav-item"><span class="nav-icon">📦</span> Orders</div>
+      <div class="nav-item"><span class="nav-icon">🛒</span> Producten</div>
+      <div class="nav-item"><span class="nav-icon">📣</span> Advertenties</div>
+      <div class="nav-item"><span class="nav-icon">🌍</span> Geo & Attributie</div>
+      <div class="nav-item"><span class="nav-icon">💡</span> Aanbevelingen</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div><span class="status-dot"></span> Live verbinding</div>
+      <div style="margin-top:6px;">Bijgewerkt: 06:00 vandaag</div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+
+    <div class="header">
+      <div class="header-left">
+        <h1>FTUK Business Intelligence</h1>
+        <p>Dagelijks overzicht — Insightance voor FTUK</p>
+      </div>
+      <div class="header-right">
+        <div class="date-badge">📅 dinsdag 17 juni 2026</div>
+        <button class="refresh-btn">↻ Vernieuwen</button>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <div class="tab active">Overzicht</div>
+      <div class="tab">Diepgaande analyse</div>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert-strip">
+      ⚠️ <strong>Risico:</strong>&nbsp; 3 orders in "processing" status langer dan 48 uur — mogelijk verzendprobleem.
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-label">Netto Omzet</div>
+        <div class="kpi-value green">€23.445</div>
+        <div class="kpi-sub"><span class="badge-up">▲ 12%</span> vs gisteren</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">Totaal Orders</div>
+        <div class="kpi-value">147</div>
+        <div class="kpi-sub"><span class="badge-up">▲ 8</span> vs gisteren</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Kortingen</div>
+        <div class="kpi-value" style="color:#ff6d00;">€1.284</div>
+        <div class="kpi-sub">23 kortingscodes gebruikt</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Refunds</div>
+        <div class="kpi-value red">€640</div>
+        <div class="kpi-sub"><span class="badge-down">▲ 3</span> terugbetalingen</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">Google Ads ROAS</div>
+        <div class="kpi-value" style="color:#a78bfa;">—</div>
+        <div class="kpi-sub" style="color:#4a3060;">⏳ Koppeling in aanbouw</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-row">
+      <div class="card">
+        <div class="card-title">Omzet afgelopen 7 dagen</div>
+        <div class="card-subtitle">Netto omzet per dag (excl. kortingen en refunds)</div>
+        <div class="bar-chart">
+          <div class="bar-group">
+            <div class="bar-val">€18.2k</div>
+            <div class="bar" style="height:85px;background:#2C3470;"></div>
+            <div class="bar-label">ma</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€21.1k</div>
+            <div class="bar" style="height:98px;background:#2C3470;"></div>
+            <div class="bar-label">di</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€15.8k</div>
+            <div class="bar" style="height:72px;background:#2C3470;"></div>
+            <div class="bar-label">wo</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€27.3k</div>
+            <div class="bar" style="height:126px;background:#4a5fd4;"></div>
+            <div class="bar-label">do</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€19.6k</div>
+            <div class="bar" style="height:91px;background:#2C3470;"></div>
+            <div class="bar-label">vr</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€22.0k</div>
+            <div class="bar" style="height:102px;background:#2C3470;"></div>
+            <div class="bar-label">za</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-val">€23.4k</div>
+            <div class="bar" style="height:109px;background:#00c853;"></div>
+            <div class="bar-label" style="color:#00c853;">vandaag</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Order status verdeling</div>
+        <div class="card-subtitle">Vandaag — 147 orders totaal</div>
+        <div class="donut-wrap">
+          <div class="donut">
+            <div class="donut-inner">
+              <div class="donut-pct">147</div>
+              <div class="donut-lbl">orders</div>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#00c853;"></div> Afgerond (85)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ff6d00;"></div> Processing (24)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#7c3aed;"></div> On-hold (16)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#2C3470;"></div> Overig (22)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="bottom-row">
+
+      <!-- Top products -->
+      <div class="card">
+        <div class="card-title">Top 5 Producten</div>
+        <div class="card-subtitle">Omzet vandaag</div>
+        <table class="data-table">
+          <thead>
+            <tr><th>#</th><th>Product</th><th>Qty</th><th>Omzet</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank">1</span></td>
+              <td class="product-name">FTUK Elite 100K</td>
+              <td>34</td>
+              <td style="color:#00c853;">€8.840</td>
+            </tr>
+            <tr>
+              <td><span class="rank">2</span></td>
+              <td class="product-name">FTUK Pro 50K</td>
+              <td>51</td>
+              <td style="color:#00c853;">€6.375</td>
+            </tr>
+            <tr>
+              <td><span class="rank">3</span></td>
+              <td class="product-name">FTUK Starter 25K</td>
+              <td>38</td>
+              <td style="color:#00c853;">€3.990</td>
+            </tr>
+            <tr>
+              <td><span class="rank">4</span></td>
+              <td class="product-name">FTUK Reset Fee</td>
+              <td>18</td>
+              <td style="color:#00c853;">€2.160</td>
+            </tr>
+            <tr>
+              <td><span class="rank">5</span></td>
+              <td class="product-name">FTUK Upgrade 200K</td>
+              <td>6</td>
+              <td style="color:#00c853;">€2.070</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Geo -->
+      <div class="card">
+        <div class="card-title">Geografische verdeling</div>
+        <div class="card-subtitle">Top landen naar omzet</div>
+        <div class="geo-item">
+          <div class="geo-header"><span>🇳🇱 Nederland</span><span>€8.240 (35%)</span></div>
+          <div class="geo-bar-bg"><div class="geo-bar-fill" style="width:35%;background:#2C3470;"></div></div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-header"><span>🇬🇧 VK</span><span>€5.180 (22%)</span></div>
+          <div class="geo-bar-bg"><div class="geo-bar-fill" style="width:22%;background:#2C3470;"></div></div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-header"><span>🇩🇪 Duitsland</span><span>€3.760 (16%)</span></div>
+          <div class="geo-bar-bg"><div class="geo-bar-fill" style="width:16%;background:#2C3470;"></div></div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-header"><span>🇺🇸 VS</span><span>€2.820 (12%)</span></div>
+          <div class="geo-bar-bg"><div class="geo-bar-fill" style="width:12%;background:#4a5fd4;"></div></div>
+        </div>
+        <div class="geo-item">
+          <div class="geo-header"><span>🌍 Overig</span><span>€3.445 (15%)</span></div>
+          <div class="geo-bar-bg"><div class="geo-bar-fill" style="width:15%;background:#3a4060;"></div></div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card">
+        <div class="card-title">Aanbevelingen van vandaag</div>
+        <div class="card-subtitle">Gegenereerd door Claude AI</div>
+        <div class="rec-item">
+          <div class="rec-dot" style="background:#00c853;"></div>
+          <div class="rec-text"><strong>Kans: Elite 100K push</strong> 34 verkopen in 1 dag — overweeg een e-mailcampagne naar "Pro" klanten om te upgraden.</div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-dot" style="background:#ff6d00;"></div>
+          <div class="rec-text"><strong>Actie: Processing orders</strong> 24 orders langer dan 24u in processing — check betalingsstatus en voorkom chargebacks.</div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-dot" style="background:#d50000;"></div>
+          <div class="rec-text"><strong>Let op: Kortingsgebruik stijgt</strong> Code "FTUK20" is 18x gebruikt — controleer of dit een lekke code is of bewuste actie.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="last-updated">Laatste update: 06:02:14 — automatisch bijgewerkt elke dag om 06:00</div>
+
+    <!-- Annotation for mockup context -->
+    <div class="annotation" style="margin-top:16px;">
+      <strong style="color:#4a6090;">Dit is een statisch mockup</strong> — cijfers zijn voorbeelddata. De echte versie trekt live data op uit WooCommerce via n8n.
+      Het "Advertenties" ROAS-blok staat klaar maar vult zich zodra de Google Ads koppeling actief is.
+    </div>
+
+  </div>
+
+</body>
+</html>

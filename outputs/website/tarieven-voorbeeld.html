@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarieven Voorbeeld — Insightance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #EDE8DC;
+            font-family: 'Inter', sans-serif;
+            padding: 80px 60px;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.35em;
+            text-transform: uppercase; color: #C9A84C;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            margin-bottom: 20px;
+        }
+        .section-label::after {
+            content: ''; display: block; width: 20px; height: 2px;
+            background: #C9A84C; opacity: 0.7;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 4vw, 50px);
+            font-weight: 700; line-height: 1.1;
+            color: #1A1A1A; margin-bottom: 12px;
+        }
+        .section-sub {
+            font-size: 15px; color: #777; line-height: 1.7;
+            max-width: 520px; margin: 0 auto 0;
+        }
+
+        /* DISCOVERY CALL BANNER */
+        .discovery-banner {
+            background: #fff;
+            border: 1px solid #E0D9CE;
+            border-radius: 12px;
+            padding: 32px 40px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 48px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .discovery-banner::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C);
+        }
+        .discovery-left {}
+        .discovery-badge {
+            display: inline-block;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: #666;
+            background: #F0EBE2; border: 1px solid #DDD6CA;
+            padding: 4px 12px; border-radius: 100px; margin-bottom: 12px;
+        }
+        .discovery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px;
+        }
+        .discovery-sub { font-size: 13px; color: #999; letter-spacing: 0.05em; }
+
+        .discovery-bullets { display: flex; flex-direction: column; gap: 10px; }
+        .discovery-bullets li {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 14px; color: #444; list-style: none;
+        }
+        .discovery-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; }
+
+        .discovery-right { text-align: right; }
+        .discovery-free {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px;
+        }
+        .discovery-btn {
+            display: inline-block;
+            background: #C9A84C; color: #000;
+            padding: 13px 28px; border-radius: 6px;
+            font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+            text-decoration: none; white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .discovery-btn:hover { background: #E8C97A; }
+
+        /* PRICING CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #E0D9CE;
+            border-radius: 12px;
+            padding: 32px 28px;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: #E0D9CE;
+        }
+        .card.featured::before { background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C); }
+
+        .card-badge {
+            display: inline-block; align-self: flex-start;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+            margin-bottom: 16px;
+        }
+        .badge-default { background: #F0EBE2; color: #888; border: 1px solid #DDD6CA; }
+        .badge-featured { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+        .badge-retainer { background: #F0EBE2; color: #888; border: 1px solid #DDD6CA; }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 20px;
+        }
+        .card-vanaf { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #AAA; margin-bottom: 4px; }
+        .card-price {
+            font-size: 40px; font-weight: 700; color: #1A1A1A;
+            line-height: 1; margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+        }
+        .card-price.gold { color: #C9A84C; }
+        .card-price-note { font-size: 12px; color: #AAA; margin-bottom: 24px; line-height: 1.5; }
+
+        .card-divider { height: 1px; background: #EDE8DC; margin-bottom: 20px; }
+
+        .card-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .card-bullets li {
+            display: flex; align-items: flex-start; gap: 9px;
+            font-size: 13px; color: #555; line-height: 1.5;
+        }
+        .card-bullets li::before { content: '✓'; color: #C9A84C; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+        .card-cta {
+            display: block; text-align: center; margin-top: 24px;
+            padding: 12px; border-radius: 6px;
+            font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+            text-transform: uppercase; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cta-outline { border: 1px solid #D0C8BB; color: #888; }
+        .cta-outline:hover { border-color: #C9A84C; color: #C9A84C; }
+        .cta-gold { background: #C9A84C; color: #000; border: 1px solid #C9A84C; }
+        .cta-gold:hover { background: #E8C97A; }
+
+        /* NOTE */
+        .pricing-note {
+            text-align: center; margin-top: 32px;
+            font-size: 12px; color: #AAA; line-height: 1.7;
+        }
+        .pricing-note a { color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="section-header">
+        <p class="section-label">Investering</p>
+        <h2 class="section-title">Inzicht in uw investering.<br>Geen verrassingen.</h2>
+        <p class="section-sub">Vaste prijzen, duidelijke afspraken. U weet vooraf wat het kost en wat u krijgt.</p>
+    </div>
+
+    <!-- DISCOVERY CALL BANNER -->
+    <div class="discovery-banner">
+        <div class="discovery-left">
+            <span class="discovery-badge">Vrijblijvend · Begin hier</span>
+            <h3 class="discovery-title">Discovery Call</h3>
+            <p class="discovery-sub">30 minuten · Vrijblijvend</p>
+        </div>
+        <ul class="discovery-bullets">
+            <li>Analyse van uw grootste tijdverlies</li>
+            <li>Concrete aanbeveling, vrijblijvend</li>
+            <li>U beslist of er een volgende stap is</li>
+        </ul>
+        <div class="discovery-right">
+            <p class="discovery-free">Gratis</p>
+            <a href="#" class="discovery-btn">Plan een kennismaking →</a>
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards-grid">
+
+        <!-- 1. ASSESSMENT -->
+        <div class="card">
+            <span class="card-badge badge-default">Eerste stap</span>
+            <h3 class="card-name">AI Assessment</h3>
+            <p class="card-vanaf">Eenmalig</p>
+            <div class="card-price">€300</div>
+            <p class="card-price-note">Volledig verrekend bij implementatie</p>
+            <div class="card-divider"></div>
+            <ul class="card-bullets">
+                <li>Analyse van uw processen en tools</li>
+                <li>Top 5 AI-kansen geprioriteerd</li>
+                <li>Geschatte tijdsbesparing per kans</li>
+                <li>Aanbevolen vervolgstap met kostenindicatie</li>
+            </ul>
+            <a href="#" class="card-cta cta-outline">Plan een kennismaking</a>
+        </div>
+
+        <!-- 2. LOSSE AUTOMATISERING -->
+        <div class="card">
+            <span class="card-badge badge-default">Losse automation</span>
+            <h3 class="card-name">AI Implementatie</h3>
+            <p class="card-vanaf">Vanaf</p>
+            <div class="card-price">€750</div>
+            <p class="card-price-note">Assessment (€300) volledig verrekend</p>
+            <div class="card-divider"></div>
+            <ul class="card-bullets">
+                <li>Workflow automation of AI agent op maat</li>
+                <li>Vaste prijs, geen uurtje-factuurtje</li>
+                <li>Live binnen 3 weken</li>
+                <li>30 dagen ondersteuning inbegrepen</li>
+            </ul>
+            <a href="#" class="card-cta cta-outline">Plan een kennismaking</a>
+        </div>
+
+        <!-- 3. AIOS SETUP — FEATURED -->
+        <div class="card featured">
+            <span class="card-badge badge-featured">Aanbevolen</span>
+            <h3 class="card-name">AIOS Setup</h3>
+            <p class="card-vanaf">Vanaf</p>
+            <div class="card-price gold">€2.500</div>
+            <p class="card-price-note">Eenmalig · Retainer optioneel</p>
+            <div class="card-divider"></div>
+            <ul class="card-bullets">
+                <li>Meerdere gekoppelde AI-systemen op maat</li>
+                <li>Volledig geïntegreerd in uw bedrijfsprocessen</li>
+                <li>Persoonlijke begeleiding gedurende het traject</li>
+                <li>Getest en fijngesteld voor oplevering</li>
+                <li>Vragen achteraf altijd beantwoord</li>
+            </ul>
+            <a href="#" class="card-cta cta-gold">Plan een kennismaking</a>
+        </div>
+
+        <!-- 4. RETAINER -->
+        <div class="card">
+            <span class="card-badge badge-retainer">Doorlopend beheer</span>
+            <h3 class="card-name">AIOS Retainer</h3>
+            <p class="card-vanaf">Vanaf</p>
+            <div class="card-price">€600<span style="font-size:18px; font-weight:400; color:#AAA;">/mnd</span></div>
+            <p class="card-price-note">Maandelijks opzegbaar</p>
+            <div class="card-divider"></div>
+            <ul class="card-bullets">
+                <li>Maandelijkse monitoring van alle AI-systemen</li>
+                <li>Updates en aanpassingen bij wijzigingen</li>
+                <li>Rapportage: wat loopt, wat spaart, wat verbetert</li>
+                <li>Directe toegang tot Insightance</li>
+            </ul>
+            <a href="#" class="card-cta cta-outline">Plan een kennismaking</a>
+        </div>
+
+    </div>
+
+    <div style="display:flex; justify-content:center; margin-top:28px;">
+        <div style="background:#fff; border:1px solid #E0D9CE; border-radius:8px; padding:18px 32px; display:inline-flex; align-items:center; gap:32px;">
+            <span style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#AAA;">Betaalstructuur</span>
+            <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">1</span>
+                <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> bij aangaan samenwerking</span>
+            </div>
+            <div style="width:1px; height:24px; background:#E0D9CE;"></div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="width:28px; height:28px; border-radius:50%; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#C9A84C; flex-shrink:0;">2</span>
+                <span style="font-size:13px; color:#555;"><strong style="color:#1A1A1A;">50%</strong> bij oplevering</span>
+            </div>
+        </div>
+    </div>
+
+    <p class="pricing-note" style="margin-top:20px;">
+        Alle bedragen zijn exclusief BTW en indicatief. Na een vrijblijvend gesprek ontvangt u altijd een transparant voorstel op maat.<br>
+        <a href="#">Heeft u vragen over de tarieven? Neem contact op →</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hajj Voorbereiding 2027</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      padding: 50px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #e8e0d0;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #1a3a2a;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .header p {
+      color: #7a7a7a;
+      font-size: 14px;
+    }
+
+    .arabic {
+      font-size: 22px;
+      color: #5c8a5c;
+      margin-bottom: 8px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 10px 16px;
+      background: #f0f7f0;
+      border-left: 4px solid #5c8a5c;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .section-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a3a2a;
+    }
+
+    .section-header .period {
+      font-size: 12px;
+      color: #7a9a7a;
+      margin-left: auto;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0 4px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .checklist li:hover {
+      background: #f9f9f9;
+    }
+
+    .checklist li input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      accent-color: #5c8a5c;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checklist li label {
+      font-size: 14px;
+      line-height: 1.5;
+      cursor: pointer;
+      color: #2a2a2a;
+    }
+
+    .checklist li input:checked + label {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .budget-table th {
+      background: #1a3a2a;
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .budget-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .budget-table tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    .budget-table .total td {
+      font-weight: 700;
+      background: #f0f7f0;
+      color: #1a3a2a;
+    }
+
+    .packinglist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      list-style: none;
+      padding: 0 4px;
+    }
+
+    .packinglist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .packinglist li:hover {
+      background: #f9f9f9;
+    }
+
+    .packinglist li input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #5c8a5c;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .packinglist li label {
+      cursor: pointer;
+      color: #2a2a2a;
+    }
+
+    .packinglist li input:checked + label {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #e8e0d0;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; border-radius: 0; padding: 30px; }
+      .checklist li:hover, .packinglist li:hover { background: transparent; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+      <h1>Hajj Voorbereiding 2027</h1>
+      <p>Oussama + Ouders &nbsp;|&nbsp; Checklist van voorbereiding tot vertrek</p>
+    </div>
+
+    <!-- Fase 1 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Nu direct</h2>
+        <span class="period">Juni 2026</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t1"><label for="t1">Controleer geldigheid paspoort van jezelf en ouders (geldig t/m minimaal eind 2027)</label></li>
+        <li><input type="checkbox" id="t2"><label for="t2">Schrijf je in bij minimaal 2-3 erkende Hajj-reisorganisaties</label></li>
+        <li><input type="checkbox" id="t3"><label for="t3">Vraag offertes op voor een 3-persoonspakket</label></li>
+        <li><input type="checkbox" id="t4"><label for="t4">Kies een organisatie en betaal de aanbetaling</label></li>
+        <li><input type="checkbox" id="t5"><label for="t5">Informeer bij je moskee of zij een groepsreis organiseren</label></li>
+      </ul>
+    </div>
+
+    <!-- Fase 2 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Zomer</h2>
+        <span class="period">Juli - Augustus 2026</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t6"><label for="t6">Paspoorten vernieuwen indien nodig (aanvraag duurt 3-6 weken)</label></li>
+        <li><input type="checkbox" id="t7"><label for="t7">Open een aparte spaarrekening specifiek voor de Hajj</label></li>
+        <li><input type="checkbox" id="t8"><label for="t8">Begin met maandelijks een vast bedrag opzijzetten</label></li>
+      </ul>
+    </div>
+
+    <!-- Fase 3 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Herfst</h2>
+        <span class="period">September - November 2026</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t9"><label for="t9">Schrijf je in voor een Hajj-cursus bij je moskee of islamitisch centrum</label></li>
+        <li><input type="checkbox" id="t10"><label for="t10">Leer de rituelen en de achtergrond ervan</label></li>
+        <li><input type="checkbox" id="t11"><label for="t11">Begin fysiek te trainen — dagelijks wandelen, uithoudingsvermogen opbouwen</label></li>
+        <li><input type="checkbox" id="t12"><label for="t12">Regel vaccinaties: meningitis (verplicht), poliovaccinatie checken</label></li>
+      </ul>
+    </div>
+
+    <!-- Fase 4 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Winter</h2>
+        <span class="period">December 2026 - Januari 2027</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t13"><label for="t13">Bevestig je plek bij de reisorganisatie en betaal de tweede termijn</label></li>
+        <li><input type="checkbox" id="t14"><label for="t14">Controleer of alle documenten in orde zijn</label></li>
+        <li><input type="checkbox" id="t15"><label for="t15">Bespreek praktische zaken met ouders: gezondheid, mobiliteit, verwachtingen</label></li>
+        <li><input type="checkbox" id="t16"><label for="t16">Koop basisuitrusting: ihramkleding, comfortabel schoeisel, rugzak</label></li>
+      </ul>
+    </div>
+
+    <!-- Fase 5 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Vroege lente</h2>
+        <span class="period">Februari - Maart 2027</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t17"><label for="t17">Betaal resterende reissom</label></li>
+        <li><input type="checkbox" id="t18"><label for="t18">Ontvang reisdocumenten en Hajj-visum van de organisatie</label></li>
+        <li><input type="checkbox" id="t19"><label for="t19">Volg de laatste lessen van de Hajj-cursus af</label></li>
+        <li><input type="checkbox" id="t20"><label for="t20">Intensieve fysieke voorbereiding — dagelijks 5-10 km lopen</label></li>
+      </ul>
+    </div>
+
+    <!-- Fase 6 -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Een maand voor vertrek</h2>
+        <span class="period">April 2027</span>
+      </div>
+      <ul class="checklist">
+        <li><input type="checkbox" id="t21"><label for="t21">Pak koffers samen aan de hand van de paklijst hieronder</label></li>
+        <li><input type="checkbox" id="t22"><label for="t22">Regel zaken thuis: werk, huis, eventueel huisdieren</label></li>
+        <li><input type="checkbox" id="t23"><label for="t23">Sla medicijnen in voor ouders en jezelf</label></li>
+        <li><input type="checkbox" id="t24"><label for="t24">Zet noodcontacten klaar en deel reisschema met familie</label></li>
+      </ul>
+    </div>
+
+    <!-- Paklijst -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Paklijst essentials</h2>
+        <span class="period">Voor vertrek</span>
+      </div>
+      <ul class="packinglist">
+        <li><input type="checkbox" id="p1"><label for="p1">Ihramkleding (2 sets voor mannen)</label></li>
+        <li><input type="checkbox" id="p2"><label for="p2">Comfortabele wandelschoenen (ingelopen)</label></li>
+        <li><input type="checkbox" id="p3"><label for="p3">Kleine rugzak voor dagtrips</label></li>
+        <li><input type="checkbox" id="p4"><label for="p4">Zonnebescherming en zonnebril</label></li>
+        <li><input type="checkbox" id="p5"><label for="p5">Hoofddeksel / pet</label></li>
+        <li><input type="checkbox" id="p6"><label for="p6">Medicijnen (pijnstillers, maagmiddelen)</label></li>
+        <li><input type="checkbox" id="p7"><label for="p7">Pleisters en EHBO-basis</label></li>
+        <li><input type="checkbox" id="p8"><label for="p8">Reisdocumenten in waterdichte hoes</label></li>
+        <li><input type="checkbox" id="p9"><label for="p9">Powerbank</label></li>
+        <li><input type="checkbox" id="p10"><label for="p10">Flesje voor zamzamwater</label></li>
+        <li><input type="checkbox" id="p11"><label for="p11">Gebedskleding voor vrouwen (moeder)</label></li>
+        <li><input type="checkbox" id="p12"><label for="p12">Kleine Quran / gebedsboekje</label></li>
+      </ul>
+    </div>
+
+    <!-- Budget -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Budget overzicht</h2>
+        <span class="period">Schatting 3 personen</span>
+      </div>
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Post</th>
+            <th>Bedrag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Reispakketten (3 x ca. €6.000)</td><td>~€18.000</td></tr>
+          <tr><td>Vaccinaties</td><td>~€150</td></tr>
+          <tr><td>Uitrusting en kleding</td><td>~€300</td></tr>
+          <tr><td>Zakgeld ter plaatse</td><td>~€500 - €1.000</td></tr>
+          <tr class="total"><td>Totaal (schatting)</td><td>~€19.000 - €20.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <p>Taqabbal Allahu minna wa minkum &nbsp;|&nbsp; Moge Allah uw Hajj accepteren</p>
+      <p style="margin-top:6px;">Opgesteld juni 2026</p>
+    </div>
+
+  </div>
+</body>
+</html>

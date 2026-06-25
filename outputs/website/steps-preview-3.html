@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps Preview 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #131316; }
+
+        .section { background: #EDE8DC; padding: 72px 60px; }
+        .label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #131316; background: rgba(0,0,0,0.06); text-align: center; padding: 10px; }
+
+        .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #C9A84C; text-align: center; margin-bottom: 16px; }
+        .eyebrow::after { content: ''; display: block; width: 20px; height: 2px; background: #C9A84C; margin: 10px auto 0; opacity: 0.7; }
+        .heading { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: #1A1A1A; text-align: center; margin-bottom: 64px; }
+
+        /* Grid met pijl kolommen */
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr;
+            align-items: start;
+        }
+
+        .step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; }
+
+        /* Pijl */
+        .arrow { display: flex; align-items: flex-start; justify-content: center; padding-top: 16px; }
+        .arrow svg { opacity: 0.4; }
+
+        .step-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; line-height: 1; margin-bottom: 20px; }
+        .step-title { font-size: 14px; font-weight: 600; color: #1A1A1A; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+        .step-text { font-size: 12px; color: #777; line-height: 1.75; }
+
+        /* G — Subtiele pijl, gouden cijfer */
+        .g .step-num { color: rgba(201,168,76,0.5); }
+
+        /* H — Subtiele pijl, donker cijfer */
+        .h .step-num { color: rgba(26,26,26,0.18); }
+
+        /* I — Subtiele pijl, cijfer met gouden streep eronder */
+        .i .step-num { color: rgba(201,168,76,0.45); position: relative; padding-bottom: 12px; }
+        .i .step-num::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20px; height: 2px; background: #C9A84C; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <div class="label">G — Gouden cijfers + subtiele pijl</div>
+    <div class="section">
+        <p class="eyebrow">Hoe Insightance werkt</p>
+        <h2 class="heading">Van eerste contact tot werkend systeem</h2>
+        <div class="steps g">
+            <div class="step"><div class="step-num">1</div><h3 class="step-title">Eerste contact</h3><p class="step-text">U neemt contact op via het contactformulier, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">2</div><h3 class="step-title">Discovery call</h3><p class="step-text">30 minuten, vrijblijvend. Een eerlijk gesprek over uw bedrijf en wat er mogelijk is.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">3</div><h3 class="step-title">Voorstel</h3><p class="step-text">Een helder voorstel met wat er gebouwd wordt, de tijdlijn en de prijs.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">4</div><h3 class="step-title">Bouw</h3><p class="step-text">Insightance bouwt het systeem op maat. U wordt op de hoogte gehouden.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">5</div><h3 class="step-title">Oplevering</h3><p class="step-text">Het systeem gaat live. Insightance zorgt dat alles correct werkt.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">6</div><h3 class="step-title">Nazorg</h3><p class="step-text">Vragen achteraf worden altijd beantwoord. Retainer optioneel beschikbaar.</p></div>
+        </div>
+    </div>
+
+    <div class="label">H — Donkere cijfers + subtiele pijl</div>
+    <div class="section">
+        <p class="eyebrow">Hoe Insightance werkt</p>
+        <h2 class="heading">Van eerste contact tot werkend systeem</h2>
+        <div class="steps h">
+            <div class="step"><div class="step-num">1</div><h3 class="step-title">Eerste contact</h3><p class="step-text">U neemt contact op via het contactformulier, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">2</div><h3 class="step-title">Discovery call</h3><p class="step-text">30 minuten, vrijblijvend. Een eerlijk gesprek over uw bedrijf en wat er mogelijk is.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">3</div><h3 class="step-title">Voorstel</h3><p class="step-text">Een helder voorstel met wat er gebouwd wordt, de tijdlijn en de prijs.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">4</div><h3 class="step-title">Bouw</h3><p class="step-text">Insightance bouwt het systeem op maat. U wordt op de hoogte gehouden.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">5</div><h3 class="step-title">Oplevering</h3><p class="step-text">Het systeem gaat live. Insightance zorgt dat alles correct werkt.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">6</div><h3 class="step-title">Nazorg</h3><p class="step-text">Vragen achteraf worden altijd beantwoord. Retainer optioneel beschikbaar.</p></div>
+        </div>
+    </div>
+
+    <div class="label">I — Gouden cijfers + gouden streepje + subtiele pijl</div>
+    <div class="section">
+        <p class="eyebrow">Hoe Insightance werkt</p>
+        <h2 class="heading">Van eerste contact tot werkend systeem</h2>
+        <div class="steps i">
+            <div class="step"><div class="step-num">1</div><h3 class="step-title">Eerste contact</h3><p class="step-text">U neemt contact op via het contactformulier, e-mail of LinkedIn. Insightance reageert binnen 24 uur.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">2</div><h3 class="step-title">Discovery call</h3><p class="step-text">30 minuten, vrijblijvend. Een eerlijk gesprek over uw bedrijf en wat er mogelijk is.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">3</div><h3 class="step-title">Voorstel</h3><p class="step-text">Een helder voorstel met wat er gebouwd wordt, de tijdlijn en de prijs.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">4</div><h3 class="step-title">Bouw</h3><p class="step-text">Insightance bouwt het systeem op maat. U wordt op de hoogte gehouden.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">5</div><h3 class="step-title">Oplevering</h3><p class="step-text">Het systeem gaat live. Insightance zorgt dat alles correct werkt.</p></div>
+            <div class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+            <div class="step"><div class="step-num">6</div><h3 class="step-title">Nazorg</h3><p class="step-text">Vragen achteraf worden altijd beantwoord. Retainer optioneel beschikbaar.</p></div>
+        </div>
+    </div>
+
+</body>
+</html>

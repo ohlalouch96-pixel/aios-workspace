@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Offerte — Insightance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --gold: #C9A84C;
+        --dark: #0D0D10;
+        --cream: #EAE5DC;
+        --text: #2D2825;
+        --gray: #777;
+        --border: #E0DAD2;
+        --light: #F7F4EF;
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Inter', sans-serif;
+    }
+
+    body { font-family: var(--font-body); background: #eee; }
+
+    .print-hint {
+        background: var(--dark);
+        color: var(--gold);
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+    }
+
+    @media print {
+        body { background: #fff; }
+        .print-hint { display: none; }
+        .page { box-shadow: none; margin: 0; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+
+    .page {
+        width: 210mm;
+        min-height: 297mm;
+        background: #fff;
+        margin: 12px auto;
+        padding: 0;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .doc-header {
+        background: var(--dark);
+        padding: 32px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .header-logo { display: flex; align-items: center; gap: 10px; }
+    .header-logo-text {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        letter-spacing: 0.28em;
+        color: var(--gold);
+        text-transform: uppercase;
+    }
+    .header-right { text-align: right; }
+    .header-doc-type {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 4px;
+    }
+    .header-doc-num {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        color: var(--cream);
+        font-weight: 700;
+    }
+
+    /* ── BODY ── */
+    .doc-body { padding: 40px 48px; flex: 1; display: flex; flex-direction: column; }
+
+    /* ── PARTIJEN ── */
+    .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .party-label {
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+    .party-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .party-detail { font-size: 12px; color: var(--gray); line-height: 1.7; }
+
+    /* ── META INFO ── */
+    .meta-bar {
+        background: var(--light);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 14px 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+    .meta-item-label { font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .meta-item-value { font-size: 12px; font-weight: 600; color: var(--text); }
+
+    /* ── SPECIFICATIE TABEL ── */
+    .spec-title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 0; }
+    .spec-table thead tr { background: var(--dark); }
+    .spec-table thead th {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding: 10px 14px;
+        text-align: left;
+    }
+    .spec-table thead th:last-child { text-align: right; }
+    .spec-table tbody tr { border-bottom: 1px solid var(--border); }
+    .spec-table tbody tr:last-child { border-bottom: none; }
+    .spec-table tbody td { padding: 14px; font-size: 12px; color: var(--text); vertical-align: top; }
+    .spec-table tbody td:last-child { text-align: right; font-weight: 600; white-space: nowrap; }
+    .spec-table .td-desc { font-size: 11px; color: var(--gray); margin-top: 3px; line-height: 1.5; }
+
+    /* ── TOTALEN ── */
+    .totals-wrap { display: flex; justify-content: flex-end; margin-top: 0; }
+    .totals-box { width: 240px; }
+    .totals-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text); }
+    .totals-row:last-child { border-bottom: none; }
+    .totals-row.total {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        padding: 12px 0 0;
+        border-top: 2px solid var(--gold);
+        border-bottom: none;
+        margin-top: 4px;
+    }
+    .totals-row .label { color: var(--gray); }
+    .totals-row.total .label { color: var(--text); }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: linear-gradient(to right, var(--gold), transparent); margin: 28px 0; }
+
+    /* ── BETALING ── */
+    .betaling-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    .betaling-card {
+        background: var(--light);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 16px 20px;
+        border-top: 2px solid var(--gold);
+    }
+    .betaling-card-num { font-family: var(--font-heading); font-size: 22px; color: var(--gold); margin-bottom: 4px; }
+    .betaling-card-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .betaling-card-desc { font-size: 11px; color: var(--gray); line-height: 1.6; }
+
+    /* ── VOORWAARDEN ── */
+    .voorwaarden { font-size: 11px; color: var(--gray); line-height: 1.7; margin-bottom: 28px; }
+    .voorwaarden strong { color: var(--text); }
+
+    /* ── HANDTEKENING ── */
+    .sig-title { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .sig-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; margin-bottom: 28px; }
+    .sig-pre { font-family: 'Georgia', serif; font-size: 20px; color: var(--text); font-style: italic; margin-bottom: 4px; }
+    .sig-line { border-top: 1px solid var(--border); margin-bottom: 6px; }
+    .sig-name { font-size: 12px; font-weight: 600; color: var(--text); }
+    .sig-role { font-size: 11px; color: var(--gray); }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+        background: var(--dark);
+        padding: 14px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+    .doc-footer span { font-size: 9px; color: rgba(201,168,76,0.4); letter-spacing: 0.12em; }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Opslaan als PDF: Ctrl+P → PDF → Marges: Geen</div>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="doc-header">
+        <div class="header-logo">
+            <svg width="22" height="22" viewBox="0 0 44 44" fill="none">
+                <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
+                <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+            <span class="header-logo-text">Insightance</span>
+        </div>
+        <div class="header-right">
+            <p class="header-doc-type">Offerte</p>
+            <p class="header-doc-num">#[XXX]</p>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="doc-body">
+
+        <!-- PARTIJEN -->
+        <div class="parties">
+            <div>
+                <p class="party-label">Afzender</p>
+                <p class="party-name">Insightance</p>
+                <p class="party-detail">
+                    Oussama Hlalouch<br>
+                    Amsterdam<br>
+                    oussama@insightance.ai<br>
+                    insightance.ai
+                </p>
+            </div>
+            <div>
+                <p class="party-label">Opgesteld voor</p>
+                <p class="party-name">[BEDRIJFSNAAM]</p>
+                <p class="party-detail">
+                    [NAAM CONTACTPERSOON]<br>
+                    [ADRES]<br>
+                    [E-MAIL]
+                </p>
+            </div>
+        </div>
+
+        <!-- META -->
+        <div class="meta-bar">
+            <div>
+                <p class="meta-item-label">Offerte nummer</p>
+                <p class="meta-item-value">#[XXX]</p>
+            </div>
+            <div>
+                <p class="meta-item-label">Datum</p>
+                <p class="meta-item-value">[DATUM]</p>
+            </div>
+            <div>
+                <p class="meta-item-label">Geldig tot</p>
+                <p class="meta-item-value">[DATUM + 14 DAGEN]</p>
+            </div>
+            <div>
+                <p class="meta-item-label">Gekoppeld voorstel</p>
+                <p class="meta-item-value">Voorstel #[XXX]</p>
+            </div>
+        </div>
+
+        <!-- SPECIFICATIE -->
+        <p class="spec-title">Specificatie</p>
+        <table class="spec-table">
+            <thead>
+                <tr>
+                    <th style="width:40%">Omschrijving</th>
+                    <th style="width:30%">Toelichting</th>
+                    <th style="width:15%">Aantal</th>
+                    <th style="width:15%">Bedrag</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        [NAAM DIENST]
+                        <p class="td-desc">[Korte beschrijving van wat geleverd wordt]</p>
+                    </td>
+                    <td><p class="td-desc">[Toelichting indien nodig]</p></td>
+                    <td>1</td>
+                    <td>€[BEDRAG]</td>
+                </tr>
+                <tr>
+                    <td>
+                        [EVENTUELE TWEEDE POST]
+                        <p class="td-desc">[Beschrijving]</p>
+                    </td>
+                    <td><p class="td-desc">[Toelichting]</p></td>
+                    <td>1</td>
+                    <td>€[BEDRAG]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- TOTALEN -->
+        <div class="totals-wrap">
+            <div class="totals-box">
+                <div class="totals-row">
+                    <span class="label">Subtotaal</span>
+                    <span>€[BEDRAG]</span>
+                </div>
+                <div class="totals-row">
+                    <span class="label">BTW (21%)</span>
+                    <span>€[BTW BEDRAG]</span>
+                </div>
+                <div class="totals-row total">
+                    <span class="label">Totaal</span>
+                    <span>€[TOTAAL]</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- BETALINGSVOORWAARDEN -->
+        <p class="spec-title">Betalingsvoorwaarden</p>
+        <div class="betaling-grid">
+            <div class="betaling-card">
+                <p class="betaling-card-num">50%</p>
+                <p class="betaling-card-title">Aanbetaling bij start</p>
+                <p class="betaling-card-desc">Te voldoen binnen 7 dagen na akkoord op deze offerte. Na ontvangst van de betaling starten wij direct met bouwen.</p>
+            </div>
+            <div class="betaling-card">
+                <p class="betaling-card-num">50%</p>
+                <p class="betaling-card-title">Slotbetaling bij oplevering</p>
+                <p class="betaling-card-desc">Te voldoen binnen 7 dagen na oplevering van het systeem. Na ontvangst is het project officieel afgerond.</p>
+            </div>
+        </div>
+
+        <p class="voorwaarden">
+            <strong>Bankgegevens:</strong> [IBAN] · t.n.v. Insightance · o.v.v. Offerte #[XXX]<br>
+            Deze offerte is geldig tot [DATUM + 14 DAGEN]. Bij akkoord na deze datum kan de prijs worden herzien. Alle bedragen zijn exclusief BTW tenzij anders vermeld.
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- HANDTEKENING -->
+        <p class="sig-title">Akkoord</p>
+        <div class="sig-grid">
+            <div>
+                <p class="sig-label">Akkoord opdrachtgever</p>
+                <div class="sig-line"></div>
+                <p class="sig-name">[NAAM CONTACTPERSOON]</p>
+                <p class="sig-role">[FUNCTIE] · [BEDRIJFSNAAM]</p>
+            </div>
+            <div>
+                <p class="sig-label">Namens Insightance</p>
+                <p class="sig-pre">O. Hlalouch</p>
+                <div class="sig-line"></div>
+                <p class="sig-name">Oussama Hlalouch</p>
+                <p class="sig-role">Oprichter · Insightance</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+        <span>INSIGHTANCE · AMSTERDAM · INSIGHTANCE.AI</span>
+        <span>Offerte #[XXX] · Vertrouwelijk</span>
+    </div>
+
+</div>
+
+</body>
+</html>

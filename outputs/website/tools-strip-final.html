@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools Strip Final</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #131316; font-family: 'Inter', sans-serif; }
+
+        .fake-section {
+            padding: 60px 80px;
+            background: #0F0F12;
+            text-align: center;
+        }
+        .fake-title { font-family: 'Playfair Display', serif; font-size: 36px; color: #EAE5DC; margin-bottom: 10px; }
+        .fake-sub { font-size: 14px; color: #555; }
+        .fake-section-light { padding: 60px 80px; background: #EDE8DC; text-align: center; }
+        .fake-title-dark { font-family: 'Playfair Display', serif; font-size: 36px; color: #2D2825; margin-bottom: 10px; }
+        .fake-sub-dark { font-size: 14px; color: #999; }
+
+        /* ---- MARQUEE STRIP ---- */
+        .tools-strip {
+            background: #EDE8DC;
+            padding: 28px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .tools-strip::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+            z-index: 2;
+        }
+        .tools-strip::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+            z-index: 2;
+        }
+
+        /* Fade edges */
+        .tools-strip .fade-left {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 120px;
+            background: linear-gradient(to right, #EDE8DC, transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .tools-strip .fade-right {
+            position: absolute;
+            top: 0; right: 0; bottom: 0;
+            width: 120px;
+            background: linear-gradient(to left, #EDE8DC, transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .marquee-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        @keyframes marquee {
+            from { transform: translateX(-50%); }
+            to { transform: translateX(0); }
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            white-space: nowrap;
+        }
+
+        .tool-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(45,40,37,0.45);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0 28px;
+            transition: color 0.2s;
+            cursor: default;
+        }
+        .marquee-track:hover .tool-name { color: rgba(45,40,37,0.7); }
+
+        .tool-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.5);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fake-section">
+        <p class="fake-title">Onze diensten</p>
+        <p class="fake-sub">↑ Diensten sectie</p>
+    </div>
+
+    <div class="tools-strip">
+        <div class="fade-left"></div>
+        <div class="fade-right"></div>
+        <div class="marquee-track">
+            <!-- Set 1 -->
+            <div class="tool-item">
+                <span class="tool-name">Make</span><span class="tool-dot"></span>
+                <span class="tool-name">n8n</span><span class="tool-dot"></span>
+                <span class="tool-name">Claude AI</span><span class="tool-dot"></span>
+                <span class="tool-name">OpenAI</span><span class="tool-dot"></span>
+                <span class="tool-name">Airtable</span><span class="tool-dot"></span>
+                <span class="tool-name">Lovable</span><span class="tool-dot"></span>
+                <span class="tool-name">Relevance AI</span><span class="tool-dot"></span>
+            </div>
+            <!-- Set 2 (duplicaat voor naadloze loop) -->
+            <div class="tool-item">
+                <span class="tool-name">Make</span><span class="tool-dot"></span>
+                <span class="tool-name">n8n</span><span class="tool-dot"></span>
+                <span class="tool-name">Claude AI</span><span class="tool-dot"></span>
+                <span class="tool-name">OpenAI</span><span class="tool-dot"></span>
+                <span class="tool-name">Airtable</span><span class="tool-dot"></span>
+                <span class="tool-name">Lovable</span><span class="tool-dot"></span>
+                <span class="tool-name">Relevance AI</span><span class="tool-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fake-section-light">
+        <p class="fake-title-dark">Hoe Insightance werkt</p>
+        <p class="fake-sub-dark">↓ Hoe Insightance werkt sectie</p>
+    </div>
+
+</body>
+</html>

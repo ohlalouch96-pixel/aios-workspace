@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview — Resultaten FINAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C97A;
+            --white: #EAE5DC;
+            --gray: #888;
+            --gray-light: #C0C0C0;
+            --bg: #131316;
+            --surface: #161619;
+            --border: rgba(201,168,76,0.15);
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        body {
+            background: #131316;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .preview-label {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.55;
+            padding: 28px 0 0;
+        }
+
+        .inner { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+
+        /* ── PAGE HEADER ── */
+        .page-header { text-align: center; padding: 64px 0 56px; }
+        .page-kicker {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.35em;
+            text-transform: uppercase; color: var(--gold); display: block;
+        }
+        .page-kicker::after {
+            content: ''; display: block; width: 20px; height: 2px;
+            background: var(--gold); margin: 10px auto 20px; opacity: 0.7;
+        }
+        .page-title {
+            font-family: var(--font-heading);
+            font-size: clamp(26px, 3vw, 42px);
+            font-weight: 600; color: var(--white); margin-bottom: 14px;
+        }
+        .page-intro {
+            font-size: 15px; color: var(--gray);
+            max-width: 460px; margin: 0 auto; line-height: 1.8;
+        }
+
+        /* ── CASE INTRO TEXT ── */
+        .case-intro {
+            margin-bottom: 20px;
+        }
+        .case-intro-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--gold); display: flex;
+            align-items: center; gap: 10px; margin-bottom: 10px;
+        }
+        .case-intro-label::before {
+            content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.4;
+        }
+        .case-intro-text {
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: rgba(234,229,220,0.6);
+            line-height: 1.7;
+            max-width: 680px;
+            font-style: normal;
+        }
+
+        /* ── CASE DIVIDER ── */
+        .case-divider {
+            display: flex; align-items: center; gap: 24px;
+            margin: 72px 0;
+        }
+        .case-divider-line { flex: 1; height: 1px; background: #1e1e22; }
+        .case-divider-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: rgba(201,168,76,0.3); flex-shrink: 0;
+        }
+
+        /* ── FULL CASE CARD ── */
+        .case-card-full {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+        }
+        .case-card-full::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+
+        /* Text side */
+        .full-text {
+            padding: 44px 40px;
+            border-right: 1px solid rgba(201,168,76,0.08);
+            display: flex; flex-direction: column;
+        }
+        .card-tag {
+            font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--gold);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .card-tag::before { content: ''; width: 14px; height: 1px; background: var(--gold); opacity: 0.5; }
+        .card-company {
+            font-family: var(--font-heading); font-size: 24px;
+            font-weight: 600; color: var(--white); line-height: 1.2;
+            margin-top: 10px;
+        }
+        .full-flow { display: flex; flex-direction: column; margin: 24px 0 22px; }
+        .full-flow-item { display: flex; gap: 14px; align-items: flex-start; }
+        .full-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .full-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.4); margin-top: 5px; flex-shrink: 0;
+        }
+        .full-dot.active {
+            background: var(--gold); border-color: var(--gold);
+            box-shadow: 0 0 6px rgba(201,168,76,0.4);
+        }
+        .full-connector {
+            width: 1px; flex: 1; min-height: 22px;
+            background: linear-gradient(to bottom, rgba(201,168,76,0.2), transparent);
+            margin: 4px 0;
+        }
+        .full-body { padding-bottom: 22px; }
+        .full-body.last { padding-bottom: 0; }
+        .full-lbl {
+            font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--gray); margin-bottom: 5px;
+        }
+        .full-txt { font-size: 13px; color: var(--gray-light); line-height: 1.75; }
+        .full-txt strong { color: #fff; }
+        .full-result {
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px; padding: 16px 20px; margin-bottom: 22px;
+        }
+        .full-result-num {
+            font-family: var(--font-heading); font-size: 36px;
+            font-weight: 700; color: var(--gold); flex-shrink: 0; line-height: 1;
+        }
+        .full-result-txt { font-size: 12px; color: var(--gray-light); line-height: 1.55; }
+        .full-quote {
+            border-left: 2px solid rgba(201,168,76,0.25);
+            padding-left: 16px; margin-top: auto;
+        }
+        .full-quote p {
+            font-size: 12px; color: var(--gray-light); font-style: italic;
+            line-height: 1.75; margin-bottom: 6px;
+        }
+        .full-quote cite { font-size: 10.5px; color: var(--gold); font-style: normal; }
+
+        /* Visual side — shared */
+        .full-visual { background: #0c0e18; display: flex; flex-direction: column; overflow: hidden; }
+        .card-browser {
+            background: #13162a; border-bottom: 1px solid #1e2236;
+            padding: 8px 12px; display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+        }
+        .bd { width: 8px; height: 8px; border-radius: 50%; }
+        .bd:nth-child(1) { background: #FF5F57; }
+        .bd:nth-child(2) { background: #FEBC2E; }
+        .bd:nth-child(3) { background: #28C840; }
+        .burl {
+            flex: 1; background: #1e2236; border-radius: 3px;
+            padding: 4px 10px; font-size: 9px; color: #3a4060; margin-left: 6px;
+        }
+        .live-badge {
+            display: flex; align-items: center; gap: 4px;
+            font-size: 8.5px; color: #00c853; letter-spacing: 0.08em;
+            text-transform: uppercase; font-weight: 600;
+        }
+        .live-dot {
+            width: 6px; height: 6px; background: #00c853;
+            border-radius: 50%; animation: pulse 1.5s infinite; display: inline-block;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        /* ── ORIGINELE MHL TEGEL CSS (exact van case-study-preview.html) ── */
+        .orig-case-card {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            background: #161619; border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 14px; overflow: hidden; position: relative;
+        }
+        .orig-case-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to right, #C9A84C, #E8C97A, #C9A84C);
+        }
+        .orig-case-visual {
+            background: #0F0F12; border-left: 1px solid rgba(201,168,76,0.1);
+            display: flex; flex-direction: column; align-items: stretch;
+            justify-content: stretch; position: relative; min-height: 480px; overflow: hidden;
+        }
+        .orig-case-visual-browser {
+            background: #1A1A1E; border-bottom: 1px solid #2A2A2E;
+            padding: 12px 16px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+        }
+        .orig-browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .orig-browser-dot:nth-child(1) { background: #FF5F57; }
+        .orig-browser-dot:nth-child(2) { background: #FEBC2E; }
+        .orig-browser-dot:nth-child(3) { background: #28C840; }
+        .orig-browser-url {
+            flex: 1; background: #252528; border-radius: 4px;
+            padding: 5px 12px; font-size: 11px; color: #555;
+            letter-spacing: 0.03em; margin-left: 8px;
+        }
+        .orig-case-content {
+            padding: 52px 52px 52px 48px; display: flex; flex-direction: column; gap: 0;
+        }
+        .orig-case-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; color: #C9A84C; margin-bottom: 12px;
+        }
+        .orig-case-tag::before {
+            content: ''; width: 16px; height: 1px; background: #C9A84C; opacity: 0.5;
+        }
+        .orig-case-company {
+            font-family: 'Playfair Display', serif; font-size: 26px;
+            font-weight: 600; color: #EAE5DC; margin-bottom: 36px; line-height: 1.2;
+        }
+        .orig-case-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 36px; }
+        .orig-case-flow-item { display: flex; gap: 18px; align-items: flex-start; }
+        .orig-case-flow-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .orig-case-flow-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.5); margin-top: 4px; flex-shrink: 0;
+        }
+        .orig-case-flow-dot.active {
+            background: #C9A84C; border-color: #C9A84C; box-shadow: 0 0 8px rgba(201,168,76,0.4);
+        }
+        .orig-case-flow-connector {
+            width: 1px; flex: 1; min-height: 28px;
+            background: linear-gradient(to bottom, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+            margin: 4px 0;
+        }
+        .orig-case-flow-body { padding-bottom: 28px; }
+        .orig-case-flow-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: #888; margin-bottom: 6px;
+        }
+        .orig-case-flow-text { font-size: 14px; color: #C0C0C0; line-height: 1.75; }
+        .orig-case-result {
+            background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+            border-radius: 8px; padding: 20px 24px;
+            display: flex; align-items: center; gap: 18px; margin-bottom: 32px;
+        }
+        .orig-case-result-number {
+            font-family: 'Playfair Display', serif; font-size: 42px;
+            font-weight: 700; color: #C9A84C; line-height: 1; flex-shrink: 0;
+        }
+        .orig-case-result-text { font-size: 14px; color: #C0C0C0; line-height: 1.6; }
+        .orig-case-quote {
+            border-left: 2px solid rgba(201,168,76,0.3);
+            padding-left: 20px; margin-top: auto;
+        }
+        .orig-case-quote p {
+            font-size: 14px; color: #C0C0C0; line-height: 1.8;
+            font-style: italic; margin-bottom: 10px;
+        }
+        .orig-case-quote cite {
+            font-size: 12px; color: #C9A84C; font-style: normal;
+            letter-spacing: 0.05em; font-weight: 500;
+        }
+
+        /* ── MHL VISUAL ── */
+        .mhl-body { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+        .mhl-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 12px; border-bottom: 1px solid #1e2236;
+        }
+        .mhl-logo { font-size: 13px; font-weight: 800; color: #cc2222; letter-spacing: 0.04em; }
+        .mhl-btns { display: flex; gap: 8px; }
+        .mhl-btn { font-size: 10px; padding: 5px 12px; border-radius: 3px; font-weight: 600; cursor: default; }
+        .mhl-btn.out { border: 1px solid #cc2222; color: #cc2222; background: none; }
+        .mhl-btn.fil { background: #cc2222; color: #fff; border: none; }
+        .mhl-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+        .mhl-field { background: #1a1d2a; border: 1px solid #2a2d3a; border-radius: 4px; padding: 7px 10px; }
+        .mhl-field.wide { grid-column: 1/-1; }
+        .mhl-field-lbl { font-size: 8px; color: #3a4060; margin-bottom: 2px; }
+        .mhl-field-val { font-size: 10px; color: #6070a0; filter: blur(3px); }
+        .mhl-confirm {
+            grid-column: 1/-1;
+            background: rgba(204,34,34,0.08); border: 1px solid rgba(204,34,34,0.2);
+            border-radius: 4px; padding: 8px 12px; text-align: center;
+            font-size: 11px; color: #cc2222; font-weight: 600;
+        }
+        .mhl-footer {
+            font-size: 8.5px; color: #2a3050; letter-spacing: 0.08em;
+            text-transform: uppercase; text-align: center;
+            padding-top: 10px; border-top: 1px solid #1e2236; flex-shrink: 0;
+        }
+
+        /* ── FTUK VISUAL — real dashboard style ── */
+        .ftuk-body { flex: 1; display: flex; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .ftuk-sidebar {
+            width: 140px; background: #12152a; border-right: 1px solid #222640;
+            display: flex; flex-direction: column; flex-shrink: 0; padding: 0;
+        }
+        .ftuk-logo-area { padding: 14px 16px 12px; border-bottom: 1px solid #222640; }
+        .ftuk-logo-name { font-size: 10px; font-weight: 700; color: #fff; letter-spacing: 0.08em; text-transform: uppercase; }
+        .ftuk-logo-sub { font-size: 7.5px; color: #6070a0; margin-top: 2px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .ftuk-nav { flex: 1; padding: 8px 0; }
+        .ftuk-nav-section { font-size: 7.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #3a4060; padding: 10px 16px 4px; }
+        .ftuk-nav-item { padding: 7px 16px; font-size: 11px; color: #6070a0; border-left: 2px solid transparent; display: flex; align-items: center; gap: 8px; }
+        .ftuk-nav-item.active { color: #fff; background: rgba(44,52,112,0.4); border-left-color: #5b6de8; }
+        .ftuk-nav-footer { padding: 10px 16px; border-top: 1px solid #222640; font-size: 9px; color: #3a4060; display: flex; align-items: center; gap: 6px; }
+
+        .ftuk-main { flex: 1; padding: 14px 14px 10px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; background: #0b0d18; }
+        .ftuk-topbar { display: flex; justify-content: space-between; align-items: flex-start; }
+        .ftuk-greeting { font-size: 13px; font-weight: 600; color: #fff; }
+        .ftuk-subline { font-size: 9px; color: #6070a0; margin-top: 2px; }
+        .ftuk-badges { display: flex; gap: 6px; }
+        .ftuk-badge { background: #12152a; border: 1px solid #222640; border-radius: 6px; padding: 3px 8px; font-size: 9px; color: #6070a0; }
+        .ftuk-badge.alert { background: rgba(229,57,53,0.08); border-color: rgba(229,57,53,0.25); color: #ff8a80; }
+
+        .ftuk-kpis { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+        .ftuk-kpi { background: #12152a; border: 1px solid #222640; border-radius: 8px; padding: 10px 10px 8px; position: relative; overflow: hidden; }
+        .ftuk-kpi-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+        .ftuk-kpi-lbl { font-size: 7.5px; color: #6070a0; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; }
+        .ftuk-kpi-val { font-size: 14px; font-weight: 700; color: #fff; filter: blur(5px); line-height: 1; user-select: none; }
+        .ftuk-kpi-delta { font-size: 8px; margin-top: 4px; filter: blur(3.5px); display: flex; align-items: center; gap: 2px; }
+        .up { color: #00c853; } .dn { color: #e53935; }
+
+        .ftuk-mid { display: grid; grid-template-columns: 1.7fr 0.85fr 0.85fr; gap: 8px; flex: 1; min-height: 0; }
+        .ftuk-panel { background: #12152a; border: 1px solid #222640; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; overflow: hidden; }
+        .ftuk-panel-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .ftuk-panel-sub { font-size: 9px; color: #6070a0; margin-bottom: 8px; }
+        .ftuk-panel-sub span { filter: blur(3px); }
+
+        /* Smaller bars */
+        .ftuk-bars { display: flex; align-items: flex-end; gap: 5px; height: 64px; }
+        .ftuk-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+        .ftuk-bar { width: 100%; border-radius: 3px 3px 0 0; }
+        .ftuk-bar.blue { background: #3d4a9e; }
+        .ftuk-bar.navy-light { background: #5b6de8; opacity: 0.8; }
+        .ftuk-bar.gold-b { background: #C9A84C; }
+        .ftuk-bar-lbl { font-size: 7px; color: #3a4060; }
+
+        /* SVG Donut */
+        .ftuk-donut-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; gap: 10px; }
+        .ftuk-donut-svg { width: 70px; height: 70px; flex-shrink: 0; }
+        .ftuk-donut-center-text { text-anchor: middle; dominant-baseline: middle; }
+        .ftuk-legend { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .ftuk-legend-item { display: flex; align-items: center; gap: 6px; font-size: 8.5px; color: #8090b0; }
+        .ftuk-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        .ftuk-geo { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+        .ftuk-geo-row { display: flex; flex-direction: column; gap: 3px; }
+        .ftuk-geo-top { display: flex; justify-content: space-between; font-size: 9px; }
+        .ftuk-geo-country { color: #8090b0; }
+        .ftuk-geo-pct { color: #6070a0; filter: blur(3px); }
+        .ftuk-geo-bar { height: 3px; background: #222640; border-radius: 2px; overflow: hidden; }
+        .ftuk-geo-fill { height: 100%; border-radius: 2px; background: linear-gradient(to right, #3d4a9e, #5b6de8); }
+
+        .ftuk-bot { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+        .ftuk-ads { display: flex; flex-direction: column; }
+        .ftuk-ads-head { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 0 0 5px; border-bottom: 1px solid #222640; font-size: 7.5px; color: #3a4060; text-transform: uppercase; letter-spacing: 0.06em; }
+        .ftuk-ads-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4px; padding: 5px 0; border-bottom: 1px solid rgba(34,38,64,0.6); align-items: center; }
+        .ftuk-ads-row:last-child { border-bottom: none; }
+        .ftuk-ads-name { font-size: 8.5px; color: #8090b0; filter: blur(3.5px); white-space: nowrap; overflow: hidden; }
+        .ftuk-ads-cell { font-size: 8.5px; color: #6070a0; filter: blur(3px); }
+        .ftuk-ads-cell.pos { color: #00c853; }
+        .ftuk-ads-cell.neg { color: #e53935; }
+        .ftuk-ads-badge { font-size: 7.5px; padding: 2px 5px; border-radius: 8px; background: rgba(44,52,112,0.5); color: #a0b0ff; filter: none; text-align: center; }
+
+        .ftuk-ai-panel { display: flex; flex-direction: column; gap: 6px; }
+        .ftuk-ai-title { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+        .ftuk-ai-title::before { content: '◈'; color: #ffc107; font-size: 10px; }
+        .ftuk-rec { background: rgba(44,52,112,0.2); border: 1px solid #222640; border-radius: 6px; padding: 7px 9px; }
+        .ftuk-rec.warn { background: rgba(229,57,53,0.06); border-color: rgba(229,57,53,0.2); }
+        .ftuk-rec-tag { font-size: 7.5px; color: #a0b0ff; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; font-weight: 600; }
+        .ftuk-rec.warn .ftuk-rec-tag { color: #ff8a80; }
+        .ftuk-rec-text { font-size: 8.5px; color: #8090b0; line-height: 1.45; }
+        .ftuk-rec-text strong { color: #c0c8e0; }
+        .ftuk-report { background: rgba(44,52,112,0.15); border: 1px solid #222640; border-radius: 6px; padding: 6px 9px; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+        .ftuk-report-icon { font-size: 11px; color: #5b6de8; flex-shrink: 0; }
+        .ftuk-report-text { font-size: 8.5px; color: #8090b0; line-height: 1.35; }
+        .ftuk-report-text strong { color: #a0b0c0; }
+
+        /* ══════════════════════
+           TEASER B (homepage)
+           ══════════════════════ */
+        .teaser-section {
+            background: #131316;
+            padding: 80px 0;
+            border-top: 1px solid #1a1a1e;
+        }
+        .teaser-header { text-align: center; margin-bottom: 44px; }
+        .teaser-kicker {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.35em;
+            text-transform: uppercase; color: var(--gold); display: block;
+        }
+        .teaser-kicker::after {
+            content: ''; display: block; width: 20px; height: 2px;
+            background: var(--gold); margin: 10px auto 20px; opacity: 0.7;
+        }
+        .teaser-title {
+            font-family: var(--font-heading);
+            font-size: clamp(22px, 2.5vw, 34px);
+            font-weight: 600; color: var(--white); margin-bottom: 12px;
+        }
+        .teaser-intro { font-size: 14px; color: var(--gray); max-width: 400px; margin: 0 auto; line-height: 1.8; }
+
+        .teaser-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; margin: 0 auto; }
+
+        .mini-card {
+            background: #161619; border: 1px solid rgba(201,168,76,0.12);
+            border-radius: 10px; overflow: hidden; display: flex; flex-direction: column;
+            position: relative;
+        }
+        .mini-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+        }
+        .mini-thumb {
+            background: #0c0e18; height: 120px;
+            border-bottom: 1px solid rgba(201,168,76,0.06);
+            overflow: hidden; position: relative;
+        }
+
+        /* MHL mini thumb */
+        .mini-mhl { width: 100%; height: 100%; padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .mini-mhl-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5px; border-bottom: 1px solid #1e2236; }
+        .mini-mhl-logo { font-size: 8px; font-weight: 700; color: #cc2222; }
+        .mini-mhl-btns { display: flex; gap: 3px; }
+        .mini-mhl-btn { font-size: 6.5px; padding: 2px 5px; border-radius: 2px; }
+        .mini-mhl-btn.o { border: 1px solid #cc2222; color: #cc2222; }
+        .mini-mhl-btn.f { background: #cc2222; color: #fff; }
+        .mini-mhl-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; flex: 1; }
+        .mini-mhl-row { background: #1a1d2a; border-radius: 2px; height: 14px; }
+        .mini-mhl-confirm { grid-column: 1/-1; background: rgba(204,34,34,0.1); border: 1px solid rgba(204,34,34,0.2); border-radius: 2px; padding: 3px 6px; font-size: 6.5px; color: #cc2222; text-align: center; }
+
+        /* FTUK mini thumb */
+        .mini-ftuk { width: 100%; height: 100%; display: flex; }
+        .mini-ftuk-side { width: 32px; background: #0f1226; border-right: 1px solid #1e2236; display: flex; flex-direction: column; gap: 4px; padding: 8px 5px; }
+        .mini-ftuk-dot { height: 3px; background: #1e2236; border-radius: 1px; }
+        .mini-ftuk-dot.on { background: #4a6fef; }
+        .mini-ftuk-content { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+        .mini-ftuk-kpis { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+        .mini-ftuk-kpi { background: #13162a; border-radius: 2px; height: 18px; }
+        .mini-ftuk-kpi.g { border-top: 1px solid rgba(201,168,76,0.3); }
+        .mini-ftuk-chart { flex: 1; background: #13162a; border-radius: 2px; display: flex; align-items: flex-end; padding: 3px; gap: 2px; }
+        .mini-ftuk-bar { flex: 1; border-radius: 1px 1px 0 0; }
+        .mini-ftuk-bar.b { background: #4a6fef; opacity: 0.6; }
+        .mini-ftuk-bar.g { background: var(--gold); }
+
+        .mini-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .mini-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+        .mini-name { font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--white); }
+        .mini-desc { font-size: 12px; color: var(--gray-light); line-height: 1.65; }
+        .mini-desc strong { color: #fff; }
+        .mini-stat { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+        .mini-stat-num { font-family: var(--font-heading); font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1; }
+        .mini-stat-txt { font-size: 11px; color: var(--gray-light); line-height: 1.45; }
+        .mini-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; margin-top: 4px; cursor: default; }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     RESULTATEN PAGINA — OPTIE 2
+     ══════════════════════════════════ -->
+<p class="preview-label">Resultaten pagina</p>
+<section style="padding-bottom: 100px;">
+    <div class="inner">
+        <div class="page-header">
+            <span class="page-kicker">Resultaten</span>
+            <h2 class="page-title">Wat we bouwen, werkt</h2>
+            <p class="page-intro">Zo ziet het eruit als handmatig werk verdwijnt.</p>
+        </div>
+
+        <!-- Case 1 intro + card -->
+        <div class="case-intro">
+            <div class="case-intro-label">Case 01</div>
+            <p class="case-intro-text">Een installatiebedrijf verloor wekelijks uren aan het handmatig opstellen en versturen van offertes. Twintig minuten per offerte, keer op keer.</p>
+        </div>
+
+        <!-- ── MHL TEGEL — exact zoals op insightance.ai ── -->
+        <div class="orig-case-card">
+            <!-- LINKS: tekst (Vroeger / Nu) -->
+            <div class="orig-case-content">
+                <div class="orig-case-tag">Technische dienstverlening</div>
+                <h3 class="orig-case-company">MHL Installatieservice</h3>
+                <div class="orig-case-flow">
+                    <div class="orig-case-flow-item">
+                        <div class="orig-case-flow-line">
+                            <div class="orig-case-flow-dot"></div>
+                            <div class="orig-case-flow-connector"></div>
+                        </div>
+                        <div class="orig-case-flow-body">
+                            <div class="orig-case-flow-label">Vroeger</div>
+                            <div class="orig-case-flow-text">Elke offerte begon met een oude Word-offerte openen en de vorige klantgegevens handmatig weghalen. Naam, adres, telefoon opnieuw intypen. Werkzaamheden regel voor regel invullen, prijzen opzoeken, BTW berekenen. Opmaken, controleren, opslaan als PDF. Dan een mail openen, de PDF bijvoegen, een begeleidende tekst schrijven en versturen. Twintig minuten per offerte. Bij meerdere aanvragen per week loopt dat op tot uren verloren tijd.</div>
+                        </div>
+                    </div>
+                    <div class="orig-case-flow-item">
+                        <div class="orig-case-flow-line">
+                            <div class="orig-case-flow-dot active"></div>
+                        </div>
+                        <div class="orig-case-flow-body" style="padding-bottom:0;">
+                            <div class="orig-case-flow-label">Nu</div>
+                            <div class="orig-case-flow-text">Mohammed opent een webformulier, vult de klantgegevens in en kiest het type werkzaamheden. Één druk op de knop. De klant heeft binnen seconden een professionele offerte in zijn inbox, compleet met logo, specificaties, BTW-berekening en betalingsvoorwaarden. Geen Word, geen PDF-export, geen aparte mail.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="orig-case-result">
+                    <div class="orig-case-result-number">90%</div>
+                    <div class="orig-case-result-text">minder tijd per offerte.<br>Van twintig minuten naar één klik.</div>
+                </div>
+            </div>
+            <!-- RECHTS: quote bovenaan + screenshot eronder -->
+            <div class="orig-case-visual">
+                <div style="padding: 40px 40px 28px;">
+                    <p style="font-size:17px; color:#EAE5DC; line-height:1.8; font-style:italic; margin-bottom:16px;">"Vroeger typte ik een offerte handmatig uit en stuurde die via e-mail. Nu vul ik het formulier in en druk op één knop. De klant heeft de offerte meteen in zijn inbox."</p>
+                    <p style="font-size:13px; font-weight:600; color:#C9A84C;">— Mohammed, eigenaar MHL Installatieservice</p>
+                </div>
+                <div style="flex:1; padding: 0 28px 28px; overflow:hidden;">
+                    <img
+                        src="../../docs/images/mhl-demo-preview.jpg"
+                        alt="MHL Installatieservice offerte-maker"
+                        style="width:100%; border-radius:8px; border:1px solid rgba(201,168,76,0.15); display:block;"
+                        onerror="this.style.display='none'"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="case-divider">
+            <div class="case-divider-line"></div>
+            <div class="case-divider-dot"></div>
+            <div class="case-divider-line"></div>
+        </div>
+
+        <!-- Case 2 intro + card -->
+        <div class="case-intro">
+            <div class="case-intro-label">Case 02</div>
+            <p class="case-intro-text">FTUK draaide advertenties op meerdere platforms tegelijk. Maar welke campagne verdiende meer budget? Welk product scoorde het best? Elke week opnieuw: zoeken, samenvoegen, raden. Tot het dashboard er was.</p>
+        </div>
+
+        <div class="case-card-full">
+            <div class="full-text">
+                <div class="card-tag">E-commerce & Media</div>
+                <div class="card-company">FTUK</div>
+                <div class="full-flow">
+                    <div class="full-flow-item">
+                        <div class="full-flow-line"><div class="full-dot"></div><div class="full-connector"></div></div>
+                        <div class="full-body">
+                            <div class="full-lbl">Vroeger</div>
+                            <div class="full-txt">Elke week hetzelfde ritueel: WooCommerce openen voor de orderdata, Meta Ads Manager voor de campagneresultaten, Google Analytics voor het siteverkeer, Klaviyo voor de e-mailcijfers. Alles kopiëren naar Excel, handmatig samenvoegen. <strong>Iedere beslissing werd genomen op data die al twee dagen oud was.</strong> Bijsturen op een advertentie die niet presteerde? Dat ontdekte je altijd te laat.</div>
+                        </div>
+                    </div>
+                    <div class="full-flow-item">
+                        <div class="full-flow-line"><div class="full-dot active"></div></div>
+                        <div class="full-body last">
+                            <div class="full-lbl">Nu</div>
+                            <div class="full-txt">Eén dashboard. Alle systemen zijn gekoppeld, de data stroomt automatisch binnen en ververst <strong>elke minuut</strong>. Omzet per dag, beste advertentie van de week, kosten per nieuwe klant, alles in één overzicht. Het dashboard geeft ook <strong>actieve aanbevelingen</strong> en elke ochtend ontvangt het team automatisch een <strong>dagrapport</strong> van de afgelopen 24 uur, direct in de inbox.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="full-result">
+                    <div class="full-result-num">8 uur</div>
+                    <div class="full-result-txt">per week teruggewonnen.<br>Real-time inzicht in 30 seconden.</div>
+                </div>
+                <div class="full-quote">
+                    <p>"Door middel van dit dashboard zie ik in één oogopslag hoe mijn bedrijf presteert. Het dashboard zorgt voor overzicht, is accuraat en geeft mij erg veel waardevolle informatie, waarop ik direct actie kan ondernemen. Ik heb hierdoor nu al zoveel tijd en energie teruggewonnen, echt geweldig!"</p>
+                    <cite>Forex Trading UK (FTUK)</cite>
+                </div>
+            </div>
+            <div class="full-visual">
+                <div class="card-browser">
+                    <div class="bd"></div><div class="bd"></div><div class="bd"></div>
+                    <div class="burl">dashboard.ftuk.nl / overview</div>
+                    <div class="live-badge"><span class="live-dot"></span> Live</div>
+                </div>
+                <div class="ftuk-body">
+                    <div class="ftuk-sidebar">
+                        <div class="ftuk-logo-area">
+                            <div class="ftuk-logo-name">FTUK</div>
+                            <div class="ftuk-logo-sub">Business Intelligence</div>
+                        </div>
+                        <div class="ftuk-nav">
+                            <div class="ftuk-nav-section">Main</div>
+                            <div class="ftuk-nav-item active">▦ Overview</div>
+                            <div class="ftuk-nav-item">↗ Revenue</div>
+                            <div class="ftuk-nav-item">◈ Ads</div>
+                            <div class="ftuk-nav-item">☰ Orders</div>
+                            <div class="ftuk-nav-item">◎ Visitors</div>
+                            <div class="ftuk-nav-section">Reports</div>
+                            <div class="ftuk-nav-item">✉ Daily Report</div>
+                        </div>
+                        <div class="ftuk-nav-footer"><span style="width:6px;height:6px;background:#00c853;border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span> All systems connected</div>
+                    </div>
+                    <div class="ftuk-main">
+                        <div class="ftuk-topbar">
+                            <div>
+                                <div class="ftuk-greeting">Good morning</div>
+                                <div class="ftuk-subline">Last updated: just now · auto-refresh every 60s · Wed 24 Jun 2026</div>
+                            </div>
+                            <div class="ftuk-badges">
+                                <div class="ftuk-badge">Daily report sent · 07:00</div>
+                            </div>
+                        </div>
+                        <div class="ftuk-kpis">
+                            <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#00c853"></div><div class="ftuk-kpi-lbl">Net Revenue Today</div><div class="ftuk-kpi-val" style="color:#00c853;">£ 3,847</div><div class="ftuk-kpi-delta up">▲ 18% vs yesterday</div></div>
+                            <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#3d4a9e"></div><div class="ftuk-kpi-lbl">Total Orders</div><div class="ftuk-kpi-val">142</div><div class="ftuk-kpi-delta up">▲ 23 vs yesterday</div></div>
+                            <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#e53935"></div><div class="ftuk-kpi-lbl">Refunds</div><div class="ftuk-kpi-val" style="color:#e53935;">£ 214</div><div class="ftuk-kpi-delta dn">▲ 3 this week</div></div>
+                            <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#7c3aed"></div><div class="ftuk-kpi-lbl">Overall ROAS</div><div class="ftuk-kpi-val" style="color:#a78bfa;">4.2×</div><div class="ftuk-kpi-delta up">▲ 0.4 vs last week</div></div>
+                            <div class="ftuk-kpi"><div class="ftuk-kpi-bar" style="background:#ff6d00"></div><div class="ftuk-kpi-lbl">Live Visitors</div><div class="ftuk-kpi-val" style="color:#ff6d00;">89</div><div class="ftuk-kpi-delta" style="color:#6070a0;filter:none;">● real-time</div></div>
+                        </div>
+                        <div class="ftuk-mid">
+                            <!-- Revenue chart — smaller bars -->
+                            <div class="ftuk-panel">
+                                <div class="ftuk-panel-title">Revenue — Last 7 Days</div>
+                                <div class="ftuk-panel-sub">Total: <span>£ 22,413</span></div>
+                                <div class="ftuk-bars">
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar blue" style="height:48%"></div><div class="ftuk-bar-lbl">Mon</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar navy-light" style="height:62%"></div><div class="ftuk-bar-lbl">Tue</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar blue" style="height:41%"></div><div class="ftuk-bar-lbl">Wed</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar navy-light" style="height:55%"></div><div class="ftuk-bar-lbl">Thu</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar gold-b" style="height:85%"></div><div class="ftuk-bar-lbl">Fri</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar gold-b" style="height:100%"></div><div class="ftuk-bar-lbl">Sat</div></div>
+                                    <div class="ftuk-bar-wrap"><div class="ftuk-bar navy-light" style="height:68%"></div><div class="ftuk-bar-lbl">Sun</div></div>
+                                </div>
+                                <!-- Today summary bar -->
+                                <div style="margin-top:8px; background:#12152a; border:1px solid #2a3060; border-radius:6px; padding:7px 12px; display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:9px; font-weight:600; color:#5b6de8;">Today &mdash; 2026-06-24</span>
+                                    <div style="display:flex; gap:20px; align-items:center;">
+                                        <div style="text-align:center;">
+                                            <div style="font-size:11px; font-weight:700; color:#00c853; filter:blur(4px);">£6,806</div>
+                                            <div style="font-size:7.5px; color:#6070a0; margin-top:1px;">Revenue</div>
+                                        </div>
+                                        <div style="text-align:center;">
+                                            <div style="font-size:11px; font-weight:700; color:#fff; filter:blur(4px);">77</div>
+                                            <div style="font-size:7.5px; color:#6070a0; margin-top:1px;">Orders</div>
+                                        </div>
+                                        <div style="text-align:center;">
+                                            <div style="font-size:11px; font-weight:700; color:#fff; filter:blur(4px);">£88</div>
+                                            <div style="font-size:7.5px; color:#6070a0; margin-top:1px;">Avg. order</div>
+                                        </div>
+                                        <div style="text-align:center;">
+                                            <div style="font-size:11px; font-weight:700; color:#6070a0;">—</div>
+                                            <div style="font-size:7.5px; color:#6070a0; margin-top:1px;">vs last week</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- SVG Donut -->
+                            <div class="ftuk-panel">
+                                <div class="ftuk-panel-title">Order Status</div>
+                                <div class="ftuk-panel-sub">Last 30 days</div>
+                                <div class="ftuk-donut-wrap">
+                                    <svg class="ftuk-donut-svg" viewBox="0 0 36 36">
+                                        <circle r="15.9" cx="18" cy="18" fill="none" stroke="#222640" stroke-width="3.5"/>
+                                        <!-- Fulfilled 73% -->
+                                        <circle r="15.9" cx="18" cy="18" fill="none" stroke="#00c853" stroke-width="3.5"
+                                            stroke-dasharray="73 27" stroke-dashoffset="25" stroke-linecap="round"/>
+                                        <!-- Pending 17% -->
+                                        <circle r="15.9" cx="18" cy="18" fill="none" stroke="#ffc107" stroke-width="3.5"
+                                            stroke-dasharray="17 83" stroke-dashoffset="-48" stroke-linecap="round"/>
+                                        <!-- Cancelled 10% -->
+                                        <circle r="15.9" cx="18" cy="18" fill="none" stroke="#e53935" stroke-width="3.5"
+                                            stroke-dasharray="10 90" stroke-dashoffset="-65" stroke-linecap="round"/>
+                                        <text x="18" y="17.5" class="ftuk-donut-center-text" font-size="5.5" font-weight="700" fill="white" style="filter:blur(2.5px)">███</text>
+                                        <text x="18" y="22.5" class="ftuk-donut-center-text" font-size="3.5" fill="#6070a0">orders</text>
+                                    </svg>
+                                    <div class="ftuk-legend">
+                                        <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#00c853"></div>Fulfilled — 73%</div>
+                                        <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#ffc107"></div>Pending — 17%</div>
+                                        <div class="ftuk-legend-item"><div class="ftuk-legend-dot" style="background:#e53935"></div>Cancelled — 10%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Top Markets -->
+                            <div class="ftuk-panel">
+                                <div class="ftuk-panel-title">Top Markets</div>
+                                <div class="ftuk-panel-sub">By revenue share</div>
+                                <div class="ftuk-geo">
+                                    <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇬🇧 United Kingdom</span><span class="ftuk-geo-pct">54%</span></div><div class="ftuk-geo-bar"><div class="ftuk-geo-fill" style="width:54%"></div></div></div>
+                                    <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇦🇺 Australia</span><span class="ftuk-geo-pct">24%</span></div><div class="ftuk-geo-bar"><div class="ftuk-geo-fill" style="width:24%;opacity:.75"></div></div></div>
+                                    <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇿🇦 South Africa</span><span class="ftuk-geo-pct">13%</span></div><div class="ftuk-geo-bar"><div class="ftuk-geo-fill" style="width:13%;opacity:.55"></div></div></div>
+                                    <div class="ftuk-geo-row"><div class="ftuk-geo-top"><span class="ftuk-geo-country">🇩🇪 Germany</span><span class="ftuk-geo-pct">9%</span></div><div class="ftuk-geo-bar"><div class="ftuk-geo-fill" style="width:9%;opacity:.4"></div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftuk-bot">
+                            <div class="ftuk-panel ftuk-ads">
+                                <div class="ftuk-panel-title" style="margin-bottom:8px;">Active Campaigns — ROAS</div>
+                                <div class="ftuk-ads-head"><div>Campaign</div><div>Spend</div><div>Revenue</div><div>ROAS</div></div>
+                                <div class="ftuk-ads-row"><div class="ftuk-ads-name">Summer Drop 2026</div><div class="ftuk-ads-cell">£ ███</div><div class="ftuk-ads-cell pos">£ ████</div><div class="ftuk-ads-badge">4.8×</div></div>
+                                <div class="ftuk-ads-row"><div class="ftuk-ads-name">Retargeting — UK</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell pos">£ ███</div><div class="ftuk-ads-cell pos">3.2×</div></div>
+                                <div class="ftuk-ads-row"><div class="ftuk-ads-name">Lookalike AU/ZA</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell pos">£ ███</div><div class="ftuk-ads-cell pos">2.7×</div></div>
+                                <div class="ftuk-ads-row"><div class="ftuk-ads-name">Brand Awareness DE</div><div class="ftuk-ads-cell">£ ██</div><div class="ftuk-ads-cell neg">£ ██</div><div class="ftuk-ads-cell neg">1.3×</div></div>
+                            </div>
+                            <div class="ftuk-panel ftuk-ai-panel">
+                                <div class="ftuk-ai-title">AI Recommendations</div>
+                                <div class="ftuk-rec">
+                                    <div class="ftuk-rec-tag">↑ Scale</div>
+                                    <div class="ftuk-rec-text"><strong>"Summer Drop 2026"</strong> is 34% above avg. ROAS. Increase daily budget for max return this weekend.</div>
+                                </div>
+                                <div class="ftuk-rec warn">
+                                    <div class="ftuk-rec-tag">⚠ Review</div>
+                                    <div class="ftuk-rec-text"><strong>"Brand Awareness DE"</strong> ROAS below break-even (1.3×). Pause or revise creative before more spend.</div>
+                                </div>
+                                <div class="ftuk-report">
+                                    <span class="ftuk-report-icon">✉</span>
+                                    <div class="ftuk-report-text"><strong>Daily Report sent · 07:00</strong><br>Last 24h summary delivered to inbox</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sluit-CTA -->
+        <div style="text-align:center; padding: 88px 0 20px;">
+            <p style="font-size:13px; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; opacity:0.8;">Herkent u dit?</p>
+            <p style="font-family:var(--font-heading); font-size:clamp(22px, 2.4vw, 32px); font-weight:600; color:var(--white); line-height:1.35; max-width:600px; margin:0 auto 16px;">Veel ondernemers verliezen wekelijks uren aan handmatig werk dat een systeem ook kan doen.</p>
+            <p style="font-size:15px; color:var(--gray); margin-bottom:40px; line-height:1.7;">Wat zou dit voor uw bedrijf opleveren?</p>
+            <a style="display:inline-flex; align-items:center; gap:8px; background:transparent; color:var(--gold); font-size:12px; font-weight:600; letter-spacing:0.08em; padding:11px 28px; border-radius:999px; border:1px solid rgba(201,168,76,0.5); text-decoration:none; cursor:default; transition:all 0.2s;">
+                Plan vrijblijvend een gesprek &nbsp;→
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TEASER B — HOMEPAGE SECTIE
+     ══════════════════════════════════ -->
+<p class="preview-label" style="padding-top:60px;">Teaser op de hoofdpagina</p>
+<section class="teaser-section">
+    <div class="inner">
+        <div class="teaser-header">
+            <span class="teaser-kicker">Resultaten</span>
+            <h2 class="teaser-title">Wat we bouwen, werkt</h2>
+            <p class="teaser-intro">Dit is wat er verandert als een systeem het overneemt.</p>
+        </div>
+        <div class="teaser-cards">
+
+            <!-- MHL mini card -->
+            <div class="mini-card">
+                <div class="mini-thumb" style="padding:0; overflow:hidden;">
+                    <img
+                        src="../../docs/images/mhl-demo-preview.jpg"
+                        alt="MHL Installatieservice offerte-maker"
+                        style="width:100%; height:100%; object-fit:cover; object-position:top left; display:block;"
+                        onerror="this.style.display='none'"
+                    >
+                </div>
+                <div class="mini-body">
+                    <div class="mini-tag">Dienstverlening</div>
+                    <div class="mini-name">MHL Installatieservice</div>
+                    <div class="mini-desc">Van <strong>20 minuten handmatig</strong> per offerte naar één klik. Klant ontvangt de PDF direct in zijn inbox.</div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-num">90%</div>
+                        <div class="mini-stat-txt">minder tijd<br>per offerte</div>
+                    </div>
+                    <a class="mini-cta">Bekijk case study &nbsp;→</a>
+                </div>
+            </div>
+
+            <!-- FTUK mini card -->
+            <div class="mini-card">
+                <div class="mini-thumb" style="padding:0; overflow:hidden; height:120px; display:flex; background:#0b0d18; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+                    <!-- Sidebar -->
+                    <div style="width:56px; background:#12152a; border-right:1px solid #222640; flex-shrink:0; padding:6px 0; display:flex; flex-direction:column;">
+                        <div style="padding:5px 7px 5px; border-bottom:1px solid #222640; margin-bottom:4px;">
+                            <div style="font-size:5.5px; font-weight:700; color:#fff; letter-spacing:.08em;">FTUK</div>
+                            <div style="font-size:3.5px; color:#3a4060; letter-spacing:.05em; margin-top:1px;">BUSINESS<br>INTELLIGENCE</div>
+                        </div>
+                        <div style="font-size:3.5px; color:#3a4060; letter-spacing:.1em; text-transform:uppercase; padding:4px 7px 2px;">Main</div>
+                        <div style="padding:3px 7px; font-size:5px; color:#fff; background:rgba(44,52,112,0.4); border-left:2px solid #5b6de8; display:flex; align-items:center; gap:3px;">▦ Overview</div>
+                        <div style="padding:3px 7px; font-size:5px; color:#4a5580; display:flex; align-items:center; gap:3px;">↗ Revenue</div>
+                        <div style="padding:3px 7px; font-size:5px; color:#4a5580; display:flex; align-items:center; gap:3px;">◈ Ads</div>
+                        <div style="padding:3px 7px; font-size:5px; color:#4a5580; display:flex; align-items:center; gap:3px;">☰ Orders</div>
+                        <div style="padding:3px 7px; font-size:5px; color:#4a5580; display:flex; align-items:center; gap:3px;">◎ Visitors</div>
+                    </div>
+                    <!-- Main -->
+                    <div style="flex:1; padding:7px 8px; display:flex; flex-direction:column; gap:5px; overflow:hidden;">
+                        <!-- Topbar -->
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div style="font-size:9px; font-weight:700; color:#fff;">Good morning</div>
+                                <div style="font-size:4px; color:#3a4060; margin-top:1px;">Last updated: just now · auto-refresh every 60s · Wed 24 Jun 2026</div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:2px 5px; font-size:4px; color:#4a5580; flex-shrink:0;">Daily report sent · 07:00</div>
+                        </div>
+                        <!-- 5 KPI cards -->
+                        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:3px;">
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:3px 4px; position:relative; overflow:hidden;">
+                                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#00c853;"></div>
+                                <div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">NET REVENUE TODAY</div>
+                                <div style="font-size:7px;font-weight:700;color:#00c853;filter:blur(3px);">£3,847</div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:3px 4px; position:relative; overflow:hidden;">
+                                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#3d4a9e;"></div>
+                                <div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">TOTAL ORDERS</div>
+                                <div style="font-size:7px;font-weight:700;color:#fff;filter:blur(3px);">142</div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:3px 4px; position:relative; overflow:hidden;">
+                                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#e53935;"></div>
+                                <div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">REFUNDS</div>
+                                <div style="font-size:7px;font-weight:700;color:#e53935;filter:blur(3px);">£214</div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:3px 4px; position:relative; overflow:hidden;">
+                                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#7c3aed;"></div>
+                                <div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">OVERALL ROAS</div>
+                                <div style="font-size:7px;font-weight:700;color:#a78bfa;filter:blur(3px);">4.2×</div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:3px 4px; position:relative; overflow:hidden;">
+                                <div style="position:absolute;top:0;left:0;right:0;height:1.5px;background:#ff6d00;"></div>
+                                <div style="font-size:3.5px;color:#6070a0;margin-bottom:2px;">LIVE VISITORS</div>
+                                <div style="font-size:7px;font-weight:700;color:#ff6d00;filter:blur(3px);">89</div>
+                            </div>
+                        </div>
+                        <!-- Bottom: chart + order status + markets -->
+                        <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr; gap:3px; flex:1; min-height:0;">
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:4px 5px;">
+                                <div style="font-size:5px; font-weight:600; color:#fff; margin-bottom:1px;">Revenue — Last 7 Days</div>
+                                <div style="font-size:3.5px; color:#6070a0; margin-bottom:3px; filter:blur(2px);">Total: £22,413</div>
+                                <div style="display:flex; align-items:flex-end; gap:2px; height:22px;">
+                                    <div style="flex:1; height:48%; background:#3d4a9e; border-radius:1px 1px 0 0; opacity:.8;"></div>
+                                    <div style="flex:1; height:62%; background:#5b6de8; border-radius:1px 1px 0 0; opacity:.8;"></div>
+                                    <div style="flex:1; height:41%; background:#3d4a9e; border-radius:1px 1px 0 0; opacity:.8;"></div>
+                                    <div style="flex:1; height:55%; background:#5b6de8; border-radius:1px 1px 0 0; opacity:.8;"></div>
+                                    <div style="flex:1; height:91%; background:#C9A84C; border-radius:1px 1px 0 0;"></div>
+                                    <div style="flex:1; height:100%; background:#C9A84C; border-radius:1px 1px 0 0;"></div>
+                                    <div style="flex:1; height:68%; background:#5b6de8; border-radius:1px 1px 0 0; opacity:.8;"></div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; margin-top:2px;">
+                                    <span style="font-size:3px;color:#2a3050;">Mon</span>
+                                    <span style="font-size:3px;color:#2a3050;">Tue</span>
+                                    <span style="font-size:3px;color:#2a3050;">Wed</span>
+                                    <span style="font-size:3px;color:#2a3050;">Thu</span>
+                                    <span style="font-size:3px;color:#2a3050;">Fri</span>
+                                    <span style="font-size:3px;color:#2a3050;">Sat</span>
+                                    <span style="font-size:3px;color:#2a3050;">Sun</span>
+                                </div>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:4px 5px;">
+                                <div style="font-size:5px; font-weight:600; color:#fff; margin-bottom:1px;">Order Status</div>
+                                <div style="font-size:3.5px; color:#6070a0; margin-bottom:3px;">Last 30 days</div>
+                                <svg viewBox="0 0 36 36" style="width:28px;height:28px;display:block;margin:0 auto;">
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#222640" stroke-width="3.5"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#00c853" stroke-width="3.5" stroke-dasharray="73 27" stroke-dashoffset="25"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#ffc107" stroke-width="3.5" stroke-dasharray="17 83" stroke-dashoffset="-48"/>
+                                    <circle r="15.9" cx="18" cy="18" fill="none" stroke="#e53935" stroke-width="3.5" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+                                </svg>
+                            </div>
+                            <div style="background:#12152a; border:1px solid #222640; border-radius:3px; padding:4px 5px;">
+                                <div style="font-size:5px; font-weight:600; color:#fff; margin-bottom:3px;">Top Markets</div>
+                                <div style="margin-bottom:2px;">
+                                    <div style="display:flex;justify-content:space-between;font-size:3.5px;color:#8090b0;margin-bottom:1px;"><span>🇬🇧 United Kingdom</span><span style="filter:blur(2px);">54%</span></div>
+                                    <div style="height:2px;background:#222640;border-radius:1px;overflow:hidden;"><div style="width:54%;height:100%;background:#3d4a9e;"></div></div>
+                                </div>
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;font-size:3.5px;color:#8090b0;margin-bottom:1px;"><span>🇦🇺 Australia</span><span style="filter:blur(2px);">24%</span></div>
+                                    <div style="height:2px;background:#222640;border-radius:1px;overflow:hidden;"><div style="width:24%;height:100%;background:#3d4a9e;opacity:.7;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mini-body">
+                    <div class="mini-tag">E-commerce & Media</div>
+                    <div class="mini-name">FTUK</div>
+                    <div class="mini-desc">Van <strong>minimaal 8 uur per week</strong> aan handmatig dataverzamelen naar een live dashboard met accurate aanbevelingen en een dagelijks rapport.</div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-num">8 uur</div>
+                        <div class="mini-stat-txt">per week<br>teruggewonnen</div>
+                    </div>
+                    <a class="mini-cta">Bekijk case study &nbsp;→</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
