@@ -578,8 +578,11 @@
             var el = document.querySelector(window.location.hash);
             if (el) {
                 setTimeout(function() {
-                    el.scrollIntoView({ behavior: 'instant', block: 'start' });
-                }, 50);
+                    var nav = document.querySelector('nav');
+                    var navH = nav ? nav.offsetHeight : 0;
+                    var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 20;
+                    window.scrollTo(0, top);
+                }, 200);
             }
         });
     }
