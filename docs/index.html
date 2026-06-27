@@ -755,8 +755,18 @@
         .pricing-note a { color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
         @media (max-width: 768px) { .pricing-two-col { grid-template-columns: 1fr; } .discovery-banner { grid-template-columns: 1fr; gap: 20px; } .discovery-right { align-items: flex-start; } }
 
+        /* Mobile title line break */
+        .mobile-break { display: none; }
+
+        /* Tarieven card hover */
+        .card-assessment, .card-custom { transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+        .card-assessment:hover, .card-custom:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); background: #fafaf8; }
+        .discovery-banner { transition: box-shadow 0.2s ease, background 0.2s ease; }
+        .discovery-banner:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.07); background: #fafaf8; }
+
         /* MOBILE */
         @media (max-width: 768px) {
+            .mobile-break { display: block; }
             nav { padding: 18px 24px; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
@@ -1358,17 +1368,17 @@
 
 <!-- TARIEVEN -->
 <div class="strip depth-light" id="tarieven">
-    <div class="section">
+    <div class="section fade-in">
 
         <!-- HEADER -->
-        <div class="fade-in" style="text-align:center; margin-bottom:48px;">
+        <div style="text-align:center; margin-bottom:48px;">
             <p class="section-label" data-nl="Tarieven" data-en="Pricing"></p>
             <h2 class="section-title" data-nl="Klaar om handmatig werk kwijt te raken?" data-en="Ready to get rid of manual work?">Klaar om handmatig werk kwijt te raken?</h2>
             <p style="font-size:15px; color:#777; line-height:1.7; max-width:480px; margin:0 auto;" data-nl="In 30 minuten weten we of en hoe AI past bij uw bedrijf. Altijd een concreet voorstel na het gesprek." data-en="In 30 minutes we'll know if and how AI fits your business. Always a concrete proposal after the call.">In 30 minuten weten we of en hoe AI past bij uw bedrijf. Altijd een concreet voorstel na het gesprek.</p>
         </div>
 
         <!-- DISCOVERY CALL BANNER -->
-        <div class="discovery-banner fade-in">
+        <div class="discovery-banner">
             <div>
                 <span class="discovery-badge" data-nl="Max. 3 nieuwe klanten per maand · Begin hier" data-en="Max. 3 new clients per month · Start here">Max. 3 nieuwe klanten per maand · Begin hier</span>
                 <h3 class="discovery-title" data-nl="Kijk of u in aanmerking komt" data-en="See if you qualify">Kijk of u in aanmerking komt</h3>
@@ -1380,7 +1390,7 @@
         </div>
 
         <!-- TWEE BLOKKEN -->
-        <div class="pricing-two-col fade-in">
+        <div class="pricing-two-col">
 
             <!-- LINKS: Assessment (vaste prijs) -->
             <div class="card-assessment">
@@ -1450,7 +1460,7 @@
         </div>
 
         <!-- ONDERSTE NOTE -->
-        <p class="pricing-note fade-in">
+        <p class="pricing-note">
             <span data-nl="Alle bedragen zijn exclusief BTW." data-en="All amounts are exclusive of VAT.">Alle bedragen zijn exclusief BTW.</span><br>
             <a href="demo.html" style="color:#C9A84C; text-decoration:none; border-bottom:1px solid rgba(201,168,76,0.3);" onmouseover="this.style.borderColor='#C9A84C'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'" data-nl="Wilt u eerst zien hoe het werkt? Bekijk de demo →" data-en="Want to see how it works first? View the demo →">Wilt u eerst zien hoe het werkt? Bekijk de demo →</a>
         </p>
@@ -1462,7 +1472,7 @@
 <div class="strip depth-1" id="about">
     <div class="section fade-in">
         <p class="section-label" data-nl="Over Insightance" data-en="About Insightance"></p>
-        <h2 class="section-title" data-nl="Van zorgverlener naar AI-ondernemer" data-en="From healthcare worker to AI founder"></h2>
+        <h2 class="section-title" data-nl="Van zorgverlener naar<br class='mobile-break'>AI-ondernemer" data-en="From healthcare worker to<br class='mobile-break'>AI founder"></h2>
         <div style="margin-top: 56px; max-width: 760px; margin-left: auto; margin-right: auto; text-align: center;">
                 <div style="margin-bottom: 28px;">
                     <div style="width:240px; height:240px; border-radius:50%; border:2px solid rgba(201,168,76,0.35); overflow:hidden; display:block; margin:0 auto; transform:translateZ(0);">
@@ -1473,8 +1483,8 @@
                 <p class="about-role" data-nl="Oprichter van Insightance" data-en="Founder of Insightance"></p>
                 <div class="gold-line" style="margin: 0 auto 28px;"></div>
                 <p class="about-text" data-nl="Als zorgverlener heb ik jarenlang gewerkt op specialistische afdelingen, zoals de intensive care en de spoedeisende hulp. Een omgeving waar precisie, snelheid en doelgerichtheid geen keuze zijn, maar een vereiste. Die mindset neem ik mee." data-en="As a healthcare professional I worked for years on specialist wards, such as the intensive care and the emergency department. An environment where precision, speed and focus are not a choice, but a requirement. That mindset stays with me."></p>
-                <p class="about-text" data-nl="De vaardigheid om snel te schakelen, processen te analyseren onder druk en doelgericht te handelen, dat vormt de basis van hoe Insightance werkt." data-en="The ability to switch quickly, analyse processes under pressure and act with purpose, that forms the foundation of how Insightance works."></p>
-                <p class="about-text" data-nl="Mijn doel met Insightance is simpel: ondernemers weer ondernemer laten zijn. Te veel ondernemers zitten gevangen in hun eigen bedrijf. Ze doen het werk dat gedaan moet worden, in plaats van het werk dat gedaan zou moeten worden. Door de mogelijkheden van AI kunnen repetitieve, tijdrovende taken uit handen worden genomen. Zodat u eindelijk weer kunt doen waar u goed in bent: ondernemen." data-en="My goal with Insightance is simple: let entrepreneurs be entrepreneurs again. Too many business owners are trapped in their own company. They do the work that needs to be done, instead of the work that should be done. Through the possibilities of AI, repetitive, time-consuming tasks can be taken off their hands. So that you can finally do what you're good at: running your business."></p>
+                <p class="about-text" data-nl="Wat ik in de zorg leerde, zie ik te weinig bij ondernemers: structuur die het werk draagt, niet andersom. Niet door gebrek aan talent, maar door gebrek aan tijd en de juiste systemen. Dat is het probleem dat ik aanpak." data-en="What I learned in healthcare, I rarely see in business: structure that carries the work, not the other way around. Not for lack of talent, but for lack of time and the right systems. That is the problem I solve."></p>
+                <p class="about-text" data-nl="Mijn doel met Insightance is simpel: ondernemers weer ondernemer laten zijn. Te veel ondernemers doen het werk dat gedaan moet worden, in plaats van het werk dat gedaan zou moeten worden. AI neemt die last over. Zodat u kunt doen waar u goed in bent: ondernemen." data-en="My goal with Insightance is simple: let entrepreneurs be entrepreneurs again. Too many business owners do the work that needs to be done, instead of the work that should be done. AI takes over that burden. So you can do what you are good at: running your business."></p>
         </div>
     </div>
 </div>
