@@ -425,11 +425,13 @@
         .steps-row > .step:nth-child(9)  { transition-delay: 0.5s; }
         .steps-row > .step:nth-child(11) { transition-delay: 0.6s; }
 
-        /* CASE DIVIDER - desktop vertical line + dot between MHL and FTUK */
+        /* CASE DIVIDER */
+        .resultaten-case-divider { display: none; }
+        .rcd-line { background: rgba(201,168,76,0.15); }
+        .rcd-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(201,168,76,0.4); flex-shrink: 0; }
         @media (min-width: 769px) {
-            .resultaten-mini-grid { position: relative; }
-            .resultaten-mini-grid::after { content: ''; position: absolute; left: calc(50% - 0.5px); top: 20px; bottom: 20px; width: 1px; background: rgba(201,168,76,0.15); z-index: 1; pointer-events: none; }
-            .resultaten-mini-grid::before { content: ''; position: absolute; left: calc(50% - 3px); top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: rgba(201,168,76,0.4); z-index: 2; pointer-events: none; }
+            .resultaten-case-divider { display: flex !important; flex-direction: column; align-items: center; gap: 12px; padding: 20px 0; align-self: stretch; }
+            .rcd-line { flex: 1; width: 1px; }
         }
 
         /* CASE STUDY */
@@ -792,7 +794,8 @@
             .case-result-text { font-size: 13px; }
             .case-quote p { font-size: 13px; }
             #resultaten { padding-top: 48px !important; padding-bottom: 48px !important; }
-            .resultaten-case-divider { display: flex !important; }
+            .resultaten-case-divider { display: flex !important; flex-direction: row; align-items: center; gap: 20px; padding: 4px 0; }
+            .rcd-line { height: 1px; flex: 1; }
         }
     </style>
 </head>
@@ -1034,7 +1037,7 @@
             <span class="section-label" data-nl="Resultaten" data-en="Results"></span>
             <h2 class="section-title" data-nl="Wat we bouwen, werkt" data-en="What we build, works"></h2>
         </div>
-        <div class="resultaten-mini-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:860px; margin:0 auto;">
+        <div class="resultaten-mini-grid" style="display:grid; grid-template-columns:1fr 1px 1fr; gap:20px; max-width:860px; margin:0 auto;">
 
             <!-- MHL mini card -->
             <div style="background:#161619; border:1px solid rgba(201,168,76,0.12); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; position:relative;">
@@ -1129,10 +1132,10 @@
             </div>
 
             <!-- Divider (alleen mobiel) -->
-            <div class="resultaten-case-divider" style="display:none; align-items:center; gap:20px; padding:4px 0;">
-                <div style="flex:1; height:1px; background:rgba(201,168,76,0.15);"></div>
-                <div style="width:6px; height:6px; border-radius:50%; background:rgba(201,168,76,0.4); flex-shrink:0;"></div>
-                <div style="flex:1; height:1px; background:rgba(201,168,76,0.15);"></div>
+            <div class="resultaten-case-divider">
+                <div class="rcd-line"></div>
+                <div class="rcd-dot"></div>
+                <div class="rcd-line"></div>
             </div>
 
             <!-- FTUK mini card -->
