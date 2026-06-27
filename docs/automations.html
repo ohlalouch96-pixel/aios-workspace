@@ -142,7 +142,7 @@
         .footer-meta-right a { color: #444; text-decoration: none; transition: color 0.2s; }
         .footer-meta-right a:hover { color: var(--gold); }
         @media (max-width: 768px) {
-            footer { padding: 0 24px; padding-right: 90px; }
+            footer { padding: 0 24px; }
             .footer-top { flex-direction: column; gap: 16px; padding: 20px 0; text-align: center; }
             .footer-bottom { flex-direction: column; gap: 8px; padding: 12px 0; text-align: center; }
             .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -167,7 +167,9 @@
             .hero { padding: 48px 20px 0; }
             .stats { margin: 32px 20px 0; }
             .info-box { margin: 20px; }
-            .filters-wrap { padding: 32px 20px 0; }
+            .stat { padding: 20px 10px; }
+            .stat-label { font-size: 10px; letter-spacing: 0; }
+            .filters-wrap { padding: 32px 20px 24px; }
             .grid-wrap { padding: 0 20px 60px; }
             .cards-grid { grid-template-columns: 1fr; }
             .cta-wrap { padding: 40px 20px; }
@@ -207,7 +209,7 @@
 <!-- STATS -->
 <div class="stats fade-up">
     <div class="stat">
-        <div class="stat-num">22</div>
+        <div class="stat-num">23</div>
         <div class="stat-label" data-nl="Beschikbare systemen" data-en="Available systems"></div>
     </div>
     <div class="stat">
@@ -230,8 +232,8 @@
 <!-- FILTERS -->
 <div class="filters-wrap">
     <div class="filters">
-        <button class="filter-btn active" data-filter="all" data-nl="Alle systemen" data-en="All systems">Alle systemen <span class="filter-count">22</span></button>
-        <button class="filter-btn" data-filter="sales"><span class="filter-dot" style="background:#5B8AF0"></span><span data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span> <span class="filter-count">5</span></button>
+        <button class="filter-btn active" data-filter="all" data-nl="Alle systemen" data-en="All systems">Alle systemen <span class="filter-count">23</span></button>
+        <button class="filter-btn" data-filter="sales"><span class="filter-dot" style="background:#5B8AF0"></span><span data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span> <span class="filter-count">6</span></button>
         <button class="filter-btn" data-filter="klant"><span class="filter-dot" style="background:#4ECDC4"></span><span data-nl="Klantcontact" data-en="Customer Contact">Klantcontact</span> <span class="filter-count">4</span></button>
         <button class="filter-btn" data-filter="finance"><span class="filter-dot" style="background:#52C17A"></span><span data-nl="Finance & Admin" data-en="Finance & Admin">Finance & Admin</span> <span class="filter-count">4</span></button>
         <button class="filter-btn" data-filter="hr"><span class="filter-dot" style="background:#9B7FD4"></span><span data-nl="HR & Personeel" data-en="HR & Staff">HR & Personeel</span> <span class="filter-count">3</span></button>
@@ -322,6 +324,22 @@
             <li><span class="card-check">✓</span><span data-nl="Posts inplannen" data-en="Schedule posts"></span></li>
             <li><span class="card-check">✓</span><span data-nl="Reacties monitoren" data-en="Monitor reactions"></span></li>
             <li><span class="card-check">✓</span><span data-nl="Prestaties analyseren" data-en="Analyze performance"></span></li>
+        </ul>
+    </div>
+
+    <div class="card fade-up" data-cat="sales">
+        <div class="card-top">
+            <div class="card-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="21" r="1" stroke="#C9A84C" stroke-width="1.5"/><circle cx="20" cy="21" r="1" stroke="#C9A84C" stroke-width="1.5"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="card-badge"><div class="card-badge-dot" style="background:#5B8AF0"></div><span class="card-badge-label" data-nl="Sales & Marketing" data-en="Sales & Marketing">Sales & Marketing</span></div>
+        </div>
+        <h3 class="card-title" data-nl="Abandoned Cart E-mail Agent" data-en="Abandoned Cart Email Agent"></h3>
+        <p class="card-desc" data-nl="Detecteert verlaten winkelwagens en stuurt automatisch gepersonaliseerde e-mails om de verkoop te herstellen." data-en="Detects abandoned shopping carts and automatically sends personalized emails to recover the sale."></p>
+        <div class="card-divider"></div>
+        <ul class="card-bullets">
+            <li><span class="card-check">✓</span><span data-nl="Abandonment automatisch detecteren" data-en="Automatically detect abandonment"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Gepersonaliseerde e-mail flow" data-en="Personalized email flow"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Timing & A/B optimalisatie" data-en="Timing & A/B optimization"></span></li>
+            <li><span class="card-check">✓</span><span data-nl="Conversie-rapportage" data-en="Conversion reporting"></span></li>
         </ul>
     </div>
 
@@ -613,7 +631,7 @@
     <p class="cta-label" data-nl="Op maat gebouwd" data-en="Custom built"></p>
     <h2 class="cta-title" data-nl="Staat uw situatie er niet bij?" data-en="Don't see your situation?"></h2>
     <p class="cta-text" data-nl="Elk bedrijf is anders. Misschien heeft u een specifiek proces dat u wilt automatiseren, een uitdaging die uniek is voor uw branche, of een combinatie van meerdere systemen. Insightance bouwt volledig op maat. Plan een vrijblijvende kennismaking en ontdek samen wat AI voor uw bedrijf kan betekenen." data-en="Every business is different. Perhaps you have a specific process to automate, a challenge unique to your industry, or a combination of multiple systems. Insightance builds entirely custom. Schedule a no-obligation consultation and discover what AI can mean for your business."></p>
-    <a href="index.html#contact" class="cta-btn" data-nl="Plan een kennismaking" data-en="Schedule a consultation">Plan een kennismaking</a>
+    <a href="index.html#contact" class="cta-btn" data-nl="Plan een gesprek" data-en="Schedule a call">Plan een gesprek</a>
 </div>
 </div>
 
