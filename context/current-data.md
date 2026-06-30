@@ -1,6 +1,7 @@
 # Current Data
 
-> Huidige stand van zaken — metrics, status en voortgang. Handmatig bijhouden tot DataOS geïnstalleerd is.
+> Huidige stand van zaken — metrics, status en voortgang.
+> Laatst bijgewerkt: 2026-06-28
 
 ---
 
@@ -9,35 +10,83 @@
 | Metric | Huidige Waarde | Doel | Notities |
 |---|---|---|---|
 | Betalende klanten | 0 | 1+ | Eerste klant is de prioriteit |
-| Werkende workflows | 1 | 3+ | Kappers afspraken-workflow klaar |
+| Afgeronde pilots | 2 | — | MHL en FTUK (gratis, voor portfolio) |
 | Maandelijks AI-inkomen | €0 | Richting ziekenhuissalaris | |
-| Outreach gedaan | 0 | Starten deze periode | |
-| Maanden actief in AI | ~1,5 | — | Gestart maart 2026 |
-| Potentiële omzet (workflow 1) | €1.500 per klant | — | Eenmalige opzetkosten kappers |
+| Outreach gedaan | 0 verstuurd (13 klaar) | — | Start morgen 29 juni, 4 DMs om 9:00 |
+| Netwerkborrels bezocht | 3 (afgelopen 2 weken) | — | AI-netwerk opbouwen |
+| Maanden actief in AI | ~3 | — | Gestart maart 2026 |
 
 ---
 
-## Huidige Status
+## Projectstatus
 
-**Gereed:**
-- Kappers afspraken-workflow — functioneel en verkoopklaar (€1.500 / ~7 dagen werk)
-- Claude Code workspace opgezet met AIOS Starter Kit
-- Gmail/Calendar MCP gekoppeld
-- Context-laag gebouwd (ContextOS geïnstalleerd)
+### MHL Installatieservice — AFGEROND (2026-06-22)
+- Gratis pilot, vader tevreden
+- Offerte-maker live op insightance.ai/offerte-maker.html
+- Case study live op resultaten.html
 
-**Te doen:**
-- Outreach starten richting kappers
-- Tweede workflow bouwen (beautysalon / nagels)
-- KvK-registratie, pricing en propositie bepalen
-- AIOS-modules verder installeren
+### FTUK — AFGEROND (gratis pilot)
+- Gratis pilot voor portfolio en ervaring
+- Dashboard live op insightance.ai/ftuk/
+- Geen betalende klant
 
 ---
 
-## Data Bronnen
+## Outreach (actief)
 
-- Handmatig bijgehouden (voorlopig)
-- Toekomstig: DataOS installeert scripts die dit automatisch bijhouden vanuit echte databronnen
+- Campagne: e-commerce webshops (Instagram DM)
+- 13 prospects klaar in `outputs/outreach-tracker.csv`
+- DM-flows: `outputs/outreach-instagram-dm-strategie.md`
+- **Start: 29 juni 2026, 4 DMs om 09:00**
+- Daarna: dag 5 follow-up, dag 11 afsluiting per prospect
 
 ---
 
-_Bijwerken na elke klant, deal of mijlpaal. Verouderde data beperkt Claude's waarde als strategische partner._
+## Elevator Pitch
+
+**Nederlands:**
+> "Ik heb een eigen AI-agency. Ik help MKB-ondernemers om handmatige processen te automatiseren met AI — denk aan afspraakopvolging, offertes, klantenservice, dat soort dingen. Op dit moment focus ik me op e-mailautomatisering voor webshops. Als iemand iets in z'n mandje legt maar niet afrekent, zorg ik dat er automatisch een follow-up gaat die dat terugwint. Gemiddeld 10 tot 15 procent meer omzet, zonder dat de ondernemer er iets voor hoeft te doen."
+
+**Engels:**
+> "I run my own AI agency. I help small business owners automate their manual processes using AI — things like appointment follow-ups, quotes, customer communication. Right now I'm focused on email automation for e-commerce stores. When someone adds something to their cart and leaves without buying, I build the systems that automatically win that back. Typically 10 to 15 percent more revenue, fully on autopilot."
+
+---
+
+## Ziekenhuis
+
+- **Gesprek 29 juni 2026** met teamleider: **AKKOORD** — gaat terug naar 2 dagen/week (16 uur)
+- Ingangsdatum: **1 oktober 2026** (eerder kon niet)
+- Tot oktober: nog fulltime werken
+- Daarna: 3 extra dagen/week vrij voor Insightance
+
+---
+
+## Netwerken & Ontwikkeling
+
+- 3 netwerkborrels bezocht in juni 2026 (AI-netwerk)
+- Meerdere workshops over AI bijgewoond
+- Elevator pitch in NL en EN aan het scherpstellen — loopt goed
+
+---
+
+## Website (insightance.ai)
+
+- **index.html** — Homepage, profielfoto toegevoegd, about-tekst aangescherpt (28 juni)
+- **automations.html** — Diensten pagina (live)
+- **resultaten.html** — Cases: MHL + FTUK (live)
+- **offerte-maker.html** — Offerte tool (live)
+- **demo.html** — Demo pagina (live)
+- Insightance.ai staat in Instagram bio van Oussama
+
+---
+
+## LinkedIn
+
+- Profiel: momenteel volledig gericht op OLVG/zorg
+- Plan: dual identity (verpleegkundige + AI-ondernemer) — in uitvoering
+- Concept headline, about en banner al uitgewerkt (zie memory/project_linkedin.md)
+- Status: nog niet gepubliceerd
+
+---
+
+_Bijwerken na elke mijlpaal, deal of statuswijziging._
