@@ -82,10 +82,12 @@
 
 ## LinkedIn
 
-- Profiel: momenteel volledig gericht op OLVG/zorg
-- Plan: dual identity (verpleegkundige + AI-ondernemer) — in uitvoering
-- Concept headline, about en banner al uitgewerkt (zie memory/project_linkedin.md)
-- Status: nog niet gepubliceerd
+- Status: **LIVE** (1 juli 2026)
+- Headline: "From saving lives to saving time | AI Automation · ER Nurse | Insightance.ai"
+- Banner: "U onderneemt. AI doet de rest." — donker, goud, logo links
+- About: bijgewerkt (NL), alinea's, CTA onderaan
+- Ervaring: Insightance toegevoegd als Founder vanaf april 2026
+- Website: insightance.ai toegevoegd aan contactgegevens
 
 ---
 
