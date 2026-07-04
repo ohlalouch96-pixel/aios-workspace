@@ -1,58 +1,74 @@
 # Business Info
 
 > Achtergrond over het bedrijf dat Oussama opbouwt.
+> Laatste update: 2026-07-04
 
 ---
 
 ## Organisatie Overzicht
 
-**Status:** Pre-launch — in opbouw. Nog geen KvK-registratie.
+**Status:** Operationeel — website live, 2 pilots afgerond, outreach actief.
 **Model:** Eenpersoonsbedrijf / freelance agency gericht op AI-automatisering voor MKB.
 **Markt:** Nederland (primair), potentieel uitbreidbaar via digitale dienstverlening.
+**Website:** insightance.ai (live)
 
 ---
 
 ## Wat Het Bedrijf Doet
 
-AI Operating Systems bouwen voor bedrijven en ondernemers. Handmatige, repetitieve processen worden vervangen door AI-gestuurde workflows: afspraken maken, agenda bijhouden, boekingen verwerken, marketing, communicatie en meer.
+AI-systemen bouwen voor MKB-ondernemers. Handmatige, repetitieve processen worden vervangen door geautomatiseerde workflows: e-mailflows, offerte-generatie, klantcommunicatie, data-dashboards en meer.
 
 **De kernbelofte aan de klant:**
 - Sneller dan handmatig of via personeel
 - Minder foutgevoelig
 - Goedkoper dan een medewerker in dienst nemen
-- Toekomstbestendig
 - Geeft de ondernemer tijd terug — voor vrije tijd, strategie of groei
 
 ---
 
-## Bestaand Product (Verkoopklaar)
+## Huidige Focus (Q3 2026)
 
-**Afspraken-workflow voor kappers:**
+**E-commerce email automation — verlaten winkelwagens**
 
 *Hoe het werkt:*
-1. Klant klikt op een link
-2. Vult persoonlijke gegevens in + gewenste datum/tijd
-3. Ondernemer ontvangt bevestigingsmail
-4. Klant ontvangt bevestigingsmail én sms-bevestiging
+1. Bezoeker legt iets in het winkelmandje maar rekent niet af
+2. Systeem pakt dit automatisch op
+3. Gepersonaliseerde follow-up e-mail gaat automatisch uit
+4. Gemiddeld 10 tot 15 procent meer omzet, volledig op autopilot
 
-*Waarom kappers?*
-Laagdrempelig instappunt. Veel kappers missen klanten die online een afspraak willen maken, maar geen goed werkend boekingssysteem of website hebben. Dit lost een direct, concreet probleem op.
+*Waarom e-commerce?*
+Concreet, meetbaar resultaat. Elke webshop heeft dit probleem. Verloren omzet is direct te kwantificeren, dus de ROI is makkelijk uit te leggen aan een klant.
 
-*Prijs:* €1.500 eenmalige opzet
-*Bouwtijd:* ~7 dagen werk
+*Prijs:* Nog te bepalen per klant
+
+---
+
+## Afgeronde Pilots (Portfolio)
+
+| Project | Wat gebouwd | Status |
+|---|---|---|
+| MHL Installatieservice | Offerte-maker (live op insightance.ai/offerte-maker.html) | Afgerond — gratis pilot |
+| FTUK | Data-dashboard (live op insightance.ai/ftuk/) | Afgerond — gratis pilot |
+
+---
+
+## Elevator Pitch
+
+**Nederlands:**
+> "Ik heb een eigen AI-agency. Ik help MKB-ondernemers om handmatige processen te automatiseren met AI — denk aan afspraakopvolging, offertes, klantenservice, dat soort dingen. Op dit moment focus ik me op e-mailautomatisering voor webshops. Als iemand iets in z'n mandje legt maar niet afrekent, zorg ik dat er automatisch een follow-up gaat die dat terugwint. Gemiddeld 10 tot 15 procent meer omzet, zonder dat de ondernemer er iets voor hoeft te doen."
+
+**Engels:**
+> "I run my own AI agency. I help small business owners automate their manual processes using AI — things like appointment follow-ups, quotes, customer communication. Right now I'm focused on email automation for e-commerce stores. When someone adds something to their cart and leaves without buying, I build the systems that automatically win that back. Typically 10 to 15 percent more revenue, fully on autopilot."
 
 ---
 
 ## Doelmarkt & Groeipad
 
-De aanpak is niche-voor-niche opschalen:
-
 | Fase | Doelgroep | Type workflow |
 |---|---|---|
-| Nu | Kappers | Afspraken, boekingen |
-| Kort | Nagels / beautysalons | Afspraken, boekingen |
-| Middellang | Kleine ondernemers (breed) | Divers per niche |
-| Uiteindelijk | Tandartsen, fysiotherapeuten, ziekenhuizen | Complexe zorg-workflows |
+| Nu | E-commerce webshops | Cart abandonment email automation |
+| Kort | Breed MKB (kleine ondernemers) | Divers per niche |
+| Eindstation | Zorgsector (tandartsen, fysiotherapeuten, ziekenhuizen) | Complexe zorg-workflows |
 
 **Waarom zorg als eindstation?** Oussama ziet dagelijks in zijn eigen werk hoeveel tijd verloren gaat aan handmatige processen. Hij kent de sector van binnenuit.
 
@@ -60,16 +76,14 @@ De aanpak is niche-voor-niche opschalen:
 
 ## Differentiatie
 
-Nog in ontwikkeling — Oussama is nieuw in de markt. Sterke persoonlijke kenmerken die hem onderscheiden:
-- Stressbestendig en doelgericht (bewezen via een zware medische opleiding en IC-werk)
+- Stressbestendig en doelgericht (bewezen via een zware medische opleiding en IC/SEH-werk)
 - Mensgericht: begrijpt de klant omdat hij zelf werkt met mensen in hoge druk situaties
-- Gedreven om te groeien en uitdagingen aan te gaan — geen oppervlakkige hobbyist
 - Insider-kennis van de zorgsector als unieke toekomstige niche
+- Authentiek verhaal: van SEH-verpleegkundige naar AI-ondernemer
 
 ---
 
 ## Businessmodel (Huidig)
 
-- **Prijsmodel:** Eenmalige opzetkosten per workflow
-- **Huidig tarief:** €1.500 voor afspraken-workflow kappers
+- **Prijsmodel:** Project-gebaseerd (eenmalig per workflow)
 - **Open vraag:** Toevoegen van maandelijks onderhoud/retainer?
