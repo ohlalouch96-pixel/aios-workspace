@@ -107,7 +107,7 @@ Een paar dagen geleden stuurde ik je een berichtje over [winkelnaam].
 
 Wist je dat webshops gemiddeld 70% van hun bezoekers verliezen zonder follow-up? Ik heb vrijblijvend alvast iets uitgewerkt voor jullie.
 
-Mag ik het je sturen?
+Mocht je benieuwd zijn, laat het mij vooral weten!
 ```
 
 ---
