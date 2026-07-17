@@ -64,26 +64,30 @@ def section_outreach(conn):
     if not table_exists(conn, "outreach"):
         return []
     lines = ["## Outreach Status"]
-    row = query_one(conn, "SELECT * FROM outreach ORDER BY date DESC LIMIT 1")
     totals = query_one(conn, """
         SELECT
             COUNT(*) as totaal,
-            SUM(CASE WHEN status = 'benaderd' THEN 1 ELSE 0 END) as benaderd,
-            SUM(CASE WHEN status = 'gereageerd' THEN 1 ELSE 0 END) as gereageerd,
-            SUM(CASE WHEN status = 'deal' THEN 1 ELSE 0 END) as deals,
-            SUM(CASE WHEN status = 'afgewezen' THEN 1 ELSE 0 END) as afgewezen
+            SUM(CASE WHEN status = 'Te versturen' THEN 1 ELSE 0 END) as te_versturen,
+            SUM(CASE WHEN status = 'Verstuurd' THEN 1 ELSE 0 END) as verstuurd,
+            SUM(CASE WHEN status = 'DM2 verstuurd' THEN 1 ELSE 0 END) as dm2_verstuurd,
+            SUM(CASE WHEN status = 'Gereageerd' THEN 1 ELSE 0 END) as gereageerd,
+            SUM(CASE WHEN status = 'Afgerond' THEN 1 ELSE 0 END) as afgerond,
+            SUM(CASE WHEN status = 'Afgewezen' THEN 1 ELSE 0 END) as afgewezen
         FROM outreach
     """)
     if totals:
         lines.append("| Metric | Waarde |")
         lines.append("|--------|--------|")
-        lines.append(f"| Totaal benaderd | {totals['totaal'] or 0} |")
+        lines.append(f"| Totaal prospects | {totals['totaal'] or 0} |")
+        lines.append(f"| Te versturen | {totals['te_versturen'] or 0} |")
+        lines.append(f"| DM1 verstuurd | {totals['verstuurd'] or 0} |")
+        lines.append(f"| DM2 verstuurd | {totals['dm2_verstuurd'] or 0} |")
         lines.append(f"| Gereageerd | {totals['gereageerd'] or 0} |")
-        lines.append(f"| Deals gesloten | {totals['deals'] or 0} |")
+        lines.append(f"| Afgerond (alle DM's verstuurd) | {totals['afgerond'] or 0} |")
         lines.append(f"| Afgewezen | {totals['afgewezen'] or 0} |")
         if totals['totaal'] and totals['totaal'] > 0:
-            conv = (totals['deals'] or 0) / totals['totaal'] * 100
-            lines.append(f"| Conversieratio | {conv:.1f}% |")
+            resp_rate = (totals['gereageerd'] or 0) / totals['totaal'] * 100
+            lines.append(f"| Reactieratio | {resp_rate:.1f}% |")
     lines.append("")
     return lines
 
