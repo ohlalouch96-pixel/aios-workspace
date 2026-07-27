@@ -1,32 +1,32 @@
 # Key Metrics
 
-> Auto-gegenereerd vanuit database. Laatste update: 2026-07-17
+> Auto-gegenereerd vanuit database. Laatste update: 2026-07-27
 > Bron: `data/data.db` | Vernieuwen: `python scripts/generate_metrics.py`
 
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 49 |
-| Te versturen | 16 |
-| DM1 verstuurd | 8 |
-| DM2 verstuurd | 14 |
+| Totaal prospects | 197 |
+| Te versturen | 164 |
+| DM1 verstuurd | 0 |
+| DM2 verstuurd | 1 |
 | Gereageerd | 0 |
-| Afgerond (alle DM's verstuurd) | 11 |
+| Afgerond (alle DM's verstuurd) | 32 |
 | Afgewezen | 0 |
 | Reactieratio | 0.0% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
 |--------|-------|-------|
-| AUD | 1.6362 | 2026-07-16 |
-| CAD | 1.6082 | 2026-07-16 |
-| GBP | 0.8487 | 2026-07-16 |
-| USD | 1.1467 | 2026-07-16 |
+| AUD | 1.6271 | 2026-07-27 |
+| CAD | 1.6064 | 2026-07-27 |
+| GBP | 0.8552 | 2026-07-27 |
+| USD | 1.1389 | 2026-07-27 |
 
 ## Data Versheid
 | Bron | Laatste Record | Status |
 |------|----------------|--------|
-| fx_rates | 2026-07-16 | Verbonden |
+| fx_rates | 2026-07-27 | Verbonden |
 | meetings | — | Leeg |
-| outreach | 2026-07-17 | Verbonden |
+| outreach | 2026-07-27 | Verbonden |
 | staff_registry | — | Leeg |
