@@ -42,6 +42,8 @@ Het viel mij op dat jullie een aanmeldpop-up hebben, maar daarna stopt het.
 [ZONDER aanmeldpop-up]:
 Het viel mij op dat jullie geen follow-up sturen naar bezoekers die hun mandje verlaten.
 
+De meeste shops verliezen zo 70% van de bezoekers die net niet doorklikken naar de kassa.
+
 Ik bouw e-mailautomatiseringen en heb vrijblijvend alvast iets voor jullie uitgewerkt.
 
 Indien je benieuwd bent, laat het mij weten, dan stuur ik het op :)

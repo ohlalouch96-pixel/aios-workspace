@@ -39,8 +39,9 @@
 > Verstuur vanuit oussama@insightance.ai
 >
 > Zelfde filosofie als DM 1: nieuwsgierigheid wekken, niet pitchen.
-> Geen cijfers, geen call-verzoek, geen prijs. Alleen enthousiast maken
-> en vragen of ze het willen zien.
+> Geen call-verzoek, geen prijs. Eén concreet pijnpunt (70%-statistiek)
+> mag wel, dat maakt de pijn tastbaar zonder al de oplossing weg te geven.
+> Verder alleen enthousiast maken en vragen of ze het willen zien.
 
 ```
 Onderwerp: Vraag over [winkelnaam]
@@ -57,6 +58,9 @@ niks meer volgt.
 [ZONDER aanmeldpop-up]:
 Het viel me op dat jullie geen follow-up sturen naar bezoekers die hun
 mandje verlaten.
+
+De meeste shops verliezen zo 70% van de bezoekers die net niet
+doorklikken naar de kassa.
 
 Ik bouw e-mailautomatiseringen voor webshops en heb vrijblijvend alvast
 iets uitgewerkt voor [winkelnaam].
