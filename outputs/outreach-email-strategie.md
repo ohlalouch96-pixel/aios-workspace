@@ -59,7 +59,7 @@ niks meer volgt.
 Het viel me op dat jullie geen follow-up sturen naar bezoekers die hun
 mandje verlaten.
 
-De meeste shops verliezen zo 70% van de bezoekers die net niet
+De meeste shops verliezen zo'n 70% van de bezoekers die net niet
 doorklikken naar de kassa.
 
 Ik bouw e-mailautomatiseringen voor webshops en heb vrijblijvend alvast
