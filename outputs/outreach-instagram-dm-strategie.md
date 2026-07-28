@@ -36,15 +36,12 @@ Hey!
 
 Ik keek op [winkelnaam], [beschrijving product/niche].
 
-[MET aanmeldpop-up]:
-Het viel mij op dat jullie een aanmeldpop-up hebben, maar daarna stopt het.
+[MET aanmeldpop-up]: Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna niks meer volgt.
+[ZONDER aanmeldpop-up]: Het viel me op dat jullie geen follow-up sturen naar bezoekers die hun mandje verlaten.
 
-[ZONDER aanmeldpop-up]:
-Het viel mij op dat jullie geen follow-up sturen naar bezoekers die hun mandje verlaten.
+Wist je dat de meeste shops daardoor zo'n 70% van die bezoekers mislopen?
 
-De meeste shops verliezen zo'n 70% van de bezoekers die net niet doorklikken naar de kassa.
-
-Mocht je benieuwd zijn, ik bouw e-mailautomatiseringen en heb vrijblijvend alvast iets voor jullie uitgewerkt. Laat het mij weten, dan stuur ik het op :)
+Ik bouw e-mailautomatiseringen en heb vrijblijvend alvast een voorbeeldmail voor je uitgewerkt, mail 1 van een flow van 3. Benieuwd hoe dit eruit ziet? Laat het me weten, dan stuur ik het op :)
 ```
 
 ---
