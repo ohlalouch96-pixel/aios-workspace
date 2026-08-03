@@ -50,7 +50,7 @@ def collect():
         creds = Credentials.from_service_account_file(str(full_creds_path), scopes=SCOPES)
         service = build("sheets", "v4", credentials=creds)
 
-        range_name = f"{sheet_tab}!A:N"
+        range_name = f"{sheet_tab}!A:O"
         result = service.spreadsheets().values().get(
             spreadsheetId=sheet_id,
             range=range_name
@@ -104,7 +104,8 @@ def update_sheet(bedrijfsnaam, kolom, waarde):
         "bedrijfsnaam": "A", "instagram handle": "B", "url": "C",
         "naam eigenaar": "D", "product / niche": "E", "platform": "F",
         "heeft popup?": "G", "geschat orderbedrag": "H", "bedrag voor dm2": "I",
-        "status": "J", "datum dm 1": "K", "datum dm 2": "L", "datum dm 3": "M", "notities": "N"
+        "status": "J", "datum dm 1": "K", "datum dm 2": "L", "datum dm 3": "M", "notities": "N",
+        "gereageerd?": "O"
     }
 
     kolom_letter = KOLOM_MAP.get(kolom.lower())
@@ -149,10 +150,15 @@ def write(conn, result, date):
             datum_dm2 TEXT,
             datum_dm3 TEXT,
             notities TEXT,
+            gereageerd TEXT,
             collected_at TEXT,
             UNIQUE(naam)
         )
     """)
+
+    existing_cols = {row[1] for row in conn.execute("PRAGMA table_info(outreach)").fetchall()}
+    if "gereageerd" not in existing_cols:
+        conn.execute("ALTER TABLE outreach ADD COLUMN gereageerd TEXT")
 
     if result.get("status") != "success":
         conn.commit()
@@ -176,8 +182,8 @@ def write(conn, result, date):
         conn.execute("""
             INSERT OR REPLACE INTO outreach
             (naam, instagram_handle, url, contactpersoon, niche, platform, heeft_popup,
-             omzet_potentieel, bedrag_dm2, status, datum_dm1, datum_dm2, datum_dm3, notities, collected_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             omzet_potentieel, bedrag_dm2, status, datum_dm1, datum_dm2, datum_dm3, notities, gereageerd, collected_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             naam,
             row.get("instagram handle", ""),
@@ -193,6 +199,7 @@ def write(conn, result, date):
             row.get("datum dm 2 (+5 dagen)", ""),
             row.get("datum dm 3 (+11 dagen)", ""),
             row.get("notities", ""),
+            row.get("gereageerd?", ""),
             collected_at
         ))
         records += 1

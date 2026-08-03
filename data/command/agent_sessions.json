@@ -1,13 +1,4 @@
 {
-  "general": {
-    "session_id": "079cb200-46db-40f5-b9fe-87934bc664ec",
-    "model": "sonnet",
-    "created": "2026-04-26T05:42:30.039116+00:00",
-    "name": "General",
-    "total_cost": 0.0227688,
-    "total_turns": 2,
-    "last_input_tokens": 3
-  },
   "18": {
     "session_id": "2fb540ef-c431-461e-8d64-34388a9fe5c2",
     "model": "sonnet",
@@ -15,6 +6,15 @@
     "name": "Agent — Apr 26 05:48AM UTC",
     "total_cost": 0.6193746,
     "total_turns": 21,
+    "last_input_tokens": 3
+  },
+  "general": {
+    "session_id": "01185003-7ba2-47c9-b60f-bebe0519d80b",
+    "model": "sonnet",
+    "created": "2026-07-29T11:30:15.965071+00:00",
+    "name": "General",
+    "total_cost": 0.27493345,
+    "total_turns": 11,
     "last_input_tokens": 3
   }
 }

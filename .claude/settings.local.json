@@ -20,7 +20,9 @@
       "PowerShell(Get-Command claude -ErrorAction SilentlyContinue)",
       "PowerShell(Get-Command node -ErrorAction SilentlyContinue)",
       "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); node --version; npm --version)",
-      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); npm install -g @anthropic-ai/claude-code 2>&1 | Select-Object -Last 5)"
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); npm install -g @anthropic-ai/claude-code 2>&1 | Select-Object -Last 5)",
+      "Bash(git add *)",
+      "Bash(git commit -m *)"
     ]
   }
 }

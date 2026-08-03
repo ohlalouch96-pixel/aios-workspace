@@ -70,7 +70,7 @@ def section_outreach(conn):
             SUM(CASE WHEN status = 'Te versturen' THEN 1 ELSE 0 END) as te_versturen,
             SUM(CASE WHEN status = 'Verstuurd' THEN 1 ELSE 0 END) as verstuurd,
             SUM(CASE WHEN status = 'DM2 verstuurd' THEN 1 ELSE 0 END) as dm2_verstuurd,
-            SUM(CASE WHEN status = 'Gereageerd' THEN 1 ELSE 0 END) as gereageerd,
+            SUM(CASE WHEN gereageerd = 'Ja' THEN 1 ELSE 0 END) as gereageerd,
             SUM(CASE WHEN status = 'Afgerond' THEN 1 ELSE 0 END) as afgerond,
             SUM(CASE WHEN status = 'Afgewezen' THEN 1 ELSE 0 END) as afgewezen
         FROM outreach

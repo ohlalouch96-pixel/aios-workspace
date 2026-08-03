@@ -36,11 +36,11 @@
 
 ## Actieve Outreach Campagne
 
-- **Doelgroep:** E-commerce webshops (Instagram DM)
-- **Volume:** 13 prospects klaar in `outputs/outreach-tracker.csv`
+- **Doelgroep:** E-commerce webshops (Instagram DM), niche: sportkleding/sportvoeding/supplementen
+- **Volume:** 86 prospects in de Google Sheet-tracker (per 27-07-2026)
 - **Flows:** `outputs/outreach-instagram-dm-strategie.md`
 - **Gestart:** eind juni 2026
-- **Cadans:** 4 DMs per dag, dag 5 follow-up, dag 11 afsluiting
+- **Cadans:** 10 DMs per dag (opgeschaald vanaf 28-07-2026, was 4/dag), dag 5 follow-up, dag 11 afsluiting
 
 ---
 
