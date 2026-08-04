@@ -8,12 +8,12 @@
 |--------|--------|
 | Totaal prospects | 197 |
 | Te versturen | 141 |
-| DM1 verstuurd | 14 |
+| DM1 verstuurd | 13 |
 | DM2 verstuurd | 9 |
-| Gereageerd | 5 |
-| Afgerond (alle DM's verstuurd) | 33 |
+| Gereageerd | 6 |
+| Afgerond (alle DM's verstuurd) | 34 |
 | Afgewezen | 0 |
-| Reactieratio | 2.5% |
+| Reactieratio | 3.0% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
