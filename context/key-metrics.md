@@ -7,8 +7,8 @@
 | Metric | Waarde |
 |--------|--------|
 | Totaal prospects | 197 |
-| Te versturen | 141 |
-| DM1 verstuurd | 12 |
+| Te versturen | 136 |
+| DM1 verstuurd | 17 |
 | DM2 verstuurd | 9 |
 | Gereageerd | 6 |
 | Afgerond (alle DM's verstuurd) | 35 |
