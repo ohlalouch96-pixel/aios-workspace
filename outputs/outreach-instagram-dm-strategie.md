@@ -96,15 +96,15 @@ Wanneer schikt het volgende week?
 ### Follow-up — Dag 5
 
 > Andere invalshoek. Kort. Niet dezelfde tekst herhalen.
+> DM1 geeft de 70%-statistiek al als waarde, dus die hier niet herhalen.
+> Nieuw cijfer (10-15% terugwinpercentage) + nadruk op de al-klaarliggende voorbeeldmail.
 
 ```
-Hey!
+Hey! Iets dat ik in mijn vorige bericht nog niet had genoemd:
 
-Een paar dagen geleden stuurde ik je een berichtje over [winkelnaam].
+Shops die zo'n flow aanzetten winnen gemiddeld 10-15% van hun verlaten mandjes terug. Dat is geld dat nu gewoon blijft liggen.
 
-Wist je dat webshops gemiddeld 70% van hun bezoekers verliezen zonder follow-up? Ik heb vrijblijvend alvast iets uitgewerkt voor jullie.
-
-Mocht je benieuwd zijn, laat het mij vooral weten!
+Ik heb 'm al klaarstaan, kost je een paar seconden om te bekijken.
 ```
 
 ---

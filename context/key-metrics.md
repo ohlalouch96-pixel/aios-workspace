@@ -8,8 +8,8 @@
 |--------|--------|
 | Totaal prospects | 197 |
 | Te versturen | 136 |
-| DM1 verstuurd | 18 |
-| DM2 verstuurd | 1 |
+| DM1 verstuurd | 6 |
+| DM2 verstuurd | 13 |
 | Gereageerd | 6 |
 | Afgerond (alle DM's verstuurd) | 42 |
 | Afgewezen | 0 |
