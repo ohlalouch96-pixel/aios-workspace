@@ -30,6 +30,13 @@
 
 > Voorbereiding: zoek hun naam, hoofdproduct en prijs op via hun website.
 > Kijk of ze een aanmeldpop-up hebben — kies dan de juiste variant hieronder.
+>
+> Let op: of een shop een cart-recovery flow heeft is van buitenaf niet te zien
+> (dat zie je alleen door zelf iets in het mandje te leggen en dagenlang te
+> wachten). Daarom is de ZONDER-popup variant een vraag, geen bewering —
+> anders loop je het risico dat de prospect "dat doen we allang" terugstuurt
+> en je onprofessioneel overkomt (gebeurd bij RunBites.nl en Cois Cycling
+> Legacy). De MET-popup variant is wel een observatie, want dat is echt gezien.
 
 ```
 Hey!
@@ -37,9 +44,10 @@ Hey!
 Ik keek op [winkelnaam], [beschrijving product/niche].
 
 [MET aanmeldpop-up]: Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna niks meer volgt.
-[ZONDER aanmeldpop-up]: Het viel me op dat jullie geen follow-up sturen naar bezoekers die hun mandje verlaten.
+[ZONDER aanmeldpop-up]: Stuur je eigenlijk al iets automatisch naar bezoekers die hun mandje verlaten, of staat dat nog niet?
 
-Wist je dat de meeste shops daardoor zo'n 70% van die bezoekers mislopen?
+[MET aanmeldpop-up]: Wist je dat de meeste shops daardoor zo'n 70% van die bezoekers mislopen?
+[ZONDER aanmeldpop-up]: Wist je dat shops zonder zo'n flow gemiddeld 70% van die bezoekers mislopen?
 
 Ik bouw e-mailautomatiseringen en heb vrijblijvend alvast een voorbeeldmail voor je uitgewerkt, mail 1 van een flow van 3. Benieuwd hoe dit eruit ziet? Laat het me weten, dan stuur ik het op :)
 ```
