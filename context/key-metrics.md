@@ -10,10 +10,10 @@
 | Te versturen | 128 |
 | DM1 verstuurd | 8 |
 | DM2 verstuurd | 18 |
-| Gereageerd | 7 |
+| Gereageerd | 8 |
 | Afgerond (alle DM's verstuurd) | 43 |
 | Afgewezen | 0 |
-| Reactieratio | 3.6% |
+| Reactieratio | 4.1% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
