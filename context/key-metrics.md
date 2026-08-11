@@ -1,14 +1,14 @@
 # Key Metrics
 
-> Auto-gegenereerd vanuit database. Laatste update: 2026-08-10
+> Auto-gegenereerd vanuit database. Laatste update: 2026-08-11
 > Bron: `data/data.db` | Vernieuwen: `python scripts/generate_metrics.py`
 
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
 | Totaal prospects | 197 |
-| Te versturen | 136 |
-| DM1 verstuurd | 6 |
+| Te versturen | 132 |
+| DM1 verstuurd | 10 |
 | DM2 verstuurd | 12 |
 | Gereageerd | 7 |
 | Afgerond (alle DM's verstuurd) | 43 |
@@ -28,5 +28,5 @@
 |------|----------------|--------|
 | fx_rates | 2026-07-27 | Verbonden |
 | meetings | — | Leeg |
-| outreach | 2026-08-10 | Verbonden |
+| outreach | 2026-08-11 | Verbonden |
 | staff_registry | — | Leeg |
