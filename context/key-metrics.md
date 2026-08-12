@@ -6,14 +6,14 @@
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 197 |
-| Te versturen | 124 |
+| Totaal prospects | 192 |
+| Te versturen | 119 |
 | DM1 verstuurd | 10 |
 | DM2 verstuurd | 19 |
 | Gereageerd | 9 |
 | Afgerond (alle DM's verstuurd) | 44 |
 | Afgewezen | 0 |
-| Reactieratio | 4.6% |
+| Reactieratio | 4.7% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |

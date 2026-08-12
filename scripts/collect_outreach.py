@@ -50,7 +50,7 @@ def collect():
         creds = Credentials.from_service_account_file(str(full_creds_path), scopes=SCOPES)
         service = build("sheets", "v4", credentials=creds)
 
-        range_name = f"{sheet_tab}!A:O"
+        range_name = f"{sheet_tab}!A:K"
         result = service.spreadsheets().values().get(
             spreadsheetId=sheet_id,
             range=range_name
@@ -102,10 +102,9 @@ def update_sheet(bedrijfsnaam, kolom, waarde):
     # Kolomnamen → kolomletter
     KOLOM_MAP = {
         "bedrijfsnaam": "A", "instagram handle": "B", "url": "C",
-        "naam eigenaar": "D", "product / niche": "E", "platform": "F",
-        "heeft popup?": "G", "geschat orderbedrag": "H", "bedrag voor dm2": "I",
-        "status": "J", "datum dm 1": "K", "datum dm 2": "L", "datum dm 3": "M", "notities": "N",
-        "gereageerd?": "O"
+        "product / niche": "D", "bedrag voor dm2": "E",
+        "status": "F", "datum dm 1": "G", "datum dm 2": "H", "datum dm 3": "I", "notities": "J",
+        "gereageerd?": "K"
     }
 
     kolom_letter = KOLOM_MAP.get(kolom.lower())
@@ -139,11 +138,7 @@ def write(conn, result, date):
             naam TEXT NOT NULL,
             instagram_handle TEXT,
             url TEXT,
-            contactpersoon TEXT,
             niche TEXT,
-            platform TEXT,
-            heeft_popup TEXT,
-            omzet_potentieel REAL,
             bedrag_dm2 TEXT,
             status TEXT,
             datum_dm1 TEXT,
@@ -155,10 +150,6 @@ def write(conn, result, date):
             UNIQUE(naam)
         )
     """)
-
-    existing_cols = {row[1] for row in conn.execute("PRAGMA table_info(outreach)").fetchall()}
-    if "gereageerd" not in existing_cols:
-        conn.execute("ALTER TABLE outreach ADD COLUMN gereageerd TEXT")
 
     if result.get("status") != "success":
         conn.commit()
@@ -173,26 +164,15 @@ def write(conn, result, date):
         if not naam:
             continue
 
-        omzet_raw = row.get("geschat orderbedrag (€)", "").strip().replace("€", "").replace(",", ".")
-        try:
-            omzet = float(omzet_raw) if omzet_raw else None
-        except ValueError:
-            omzet = None
-
         conn.execute("""
             INSERT OR REPLACE INTO outreach
-            (naam, instagram_handle, url, contactpersoon, niche, platform, heeft_popup,
-             omzet_potentieel, bedrag_dm2, status, datum_dm1, datum_dm2, datum_dm3, notities, gereageerd, collected_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (naam, instagram_handle, url, niche, bedrag_dm2, status, datum_dm1, datum_dm2, datum_dm3, notities, gereageerd, collected_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             naam,
             row.get("instagram handle", ""),
             row.get("url", ""),
-            row.get("naam eigenaar", ""),
             row.get("product / niche", ""),
-            row.get("platform", ""),
-            row.get("heeft popup?", ""),
-            omzet,
             row.get("bedrag voor dm2 (extra/mnd)", ""),
             row.get("status", ""),
             row.get("datum dm 1", ""),
