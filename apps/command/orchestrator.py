@@ -130,6 +130,54 @@ def _escape_html(text: str) -> str:
     return text
 
 
+# ── Git Sync ──────────────────────────────────────────────────────────────────
+# Keeps the workspace in sync between wherever CommandOS runs (laptop or VPS)
+# and the laptop's VS Code copy, so changes made via Telegram show up locally
+# and vice versa. Secrets (.env, credentials/) and data/*.db are gitignored
+# and do NOT sync this way — those must be copied manually per machine.
+
+git_log = get_logger("git-sync")
+
+
+async def _run_git(workspace_dir: str, *args: str) -> tuple[int, str]:
+    proc = await asyncio.create_subprocess_exec(
+        "git", *args,
+        cwd=workspace_dir,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
+    )
+    stdout, _ = await proc.communicate()
+    return proc.returncode or 0, stdout.decode(errors="replace").strip()
+
+
+async def _git_pull(workspace_dir: str) -> None:
+    """Best-effort pull before running the agent, so it sees the latest state."""
+    try:
+        code, out = await _run_git(workspace_dir, "pull", "--rebase", "--autostash")
+        if code != 0:
+            git_log.warning("git pull failed: %s", out[:300])
+    except Exception as e:
+        git_log.warning("git pull error: %s", e)
+
+
+async def _git_push(workspace_dir: str) -> None:
+    """Best-effort commit + push of any changes the agent made this turn."""
+    try:
+        code, status = await _run_git(workspace_dir, "status", "--porcelain")
+        if code != 0 or not status:
+            return
+        await _run_git(workspace_dir, "add", "-A")
+        await _run_git(
+            workspace_dir, "commit", "-m",
+            "CommandOS: sync na Telegram-bericht\n\nCo-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>",
+        )
+        code, out = await _run_git(workspace_dir, "push")
+        if code != 0:
+            git_log.warning("git push failed: %s", out[:300])
+    except Exception as e:
+        git_log.warning("git push error: %s", e)
+
+
 # ── Orchestrator ─────────────────────────────────────────────────────────────
 
 
@@ -307,6 +355,10 @@ class Orchestrator:
             )
             self.cost_tracker.log_inline(topic_key, prime_result.cost_usd)
 
+        # Sync with GitHub before the agent starts, so it sees the latest
+        # state from the laptop (or vice versa).
+        await _git_pull(self.config.workspace_dir)
+
         # Save photos to disk and add Read tool instructions
         effective_text = text
         if photos:
@@ -387,6 +439,9 @@ class Orchestrator:
             )
 
         self.cost_tracker.log_inline(topic_key, result.cost_usd)
+
+        # Push any changes the agent made, so the laptop can pull them later.
+        await _git_push(self.config.workspace_dir)
 
     # ── Send Created Files ───────────────────────────────────────────────────
 
