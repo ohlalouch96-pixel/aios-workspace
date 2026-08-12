@@ -41,10 +41,8 @@
 ```
 Hey!
 
-Ik keek op [winkelnaam], [beschrijving product/niche].
-
-[MET aanmeldpop-up]: Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna niks meer volgt.
-[ZONDER aanmeldpop-up]: Stuur je eigenlijk al iets automatisch naar bezoekers die hun mandje verlaten, of staat dat nog niet?
+[MET aanmeldpop-up]: Ik keek op [winkelnaam]. Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna niks meer volgt.
+[ZONDER aanmeldpop-up]: Ik keek op [winkelnaam] en vroeg me af: stuur je eigenlijk al iets automatisch naar bezoekers die hun mandje verlaten, of staat dat nog niet?
 
 [MET aanmeldpop-up]: Wist je dat de meeste shops daardoor zo'n 70% van die bezoekers mislopen?
 [ZONDER aanmeldpop-up]: Wist je dat shops zonder zo'n flow gemiddeld 70% van die bezoekers mislopen?
