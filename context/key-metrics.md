@@ -1,6 +1,6 @@
 # Key Metrics
 
-> Auto-gegenereerd vanuit database. Laatste update: 2026-08-12
+> Auto-gegenereerd vanuit database. Laatste update: 2026-08-13
 > Bron: `data/data.db` | Vernieuwen: `python scripts/generate_metrics.py`
 
 ## Outreach Status
@@ -28,5 +28,5 @@
 |------|----------------|--------|
 | fx_rates | 2026-07-27 | Verbonden |
 | meetings | — | Leeg |
-| outreach | 2026-08-12 | Verbonden |
+| outreach | 2026-08-13 | Verbonden |
 | staff_registry | — | Leeg |
