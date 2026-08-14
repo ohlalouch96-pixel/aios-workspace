@@ -33,15 +33,17 @@
 >
 > Let op: of een shop een cart-recovery flow heeft is van buitenaf niet te zien
 > (dat zie je alleen door zelf iets in het mandje te leggen en dagenlang te
-> wachten). Daarom is de ZONDER-popup variant een vraag, geen bewering —
-> anders loop je het risico dat de prospect "dat doen we allang" terugstuurt
-> en je onprofessioneel overkomt (gebeurd bij RunBites.nl en Cois Cycling
-> Legacy). De MET-popup variant is wel een observatie, want dat is echt gezien.
+> wachten). Zowel de MET- als de ZONDER-popup variant zijn daarom een vraag,
+> geen bewering — anders loop je het risico dat de prospect "dat doen we
+> allang" terugstuurt en je onprofessioneel overkomt (gebeurd bij RunBites.nl,
+> Cois Cycling Legacy en in de follow-up bij Onemorewear.nl). De pop-up zelf
+> mag je wel als observatie noemen, want die is echt gezien — alleen de claim
+> dat er daarna niks gebeurt niet.
 
 ```
 Hey!
 
-[MET aanmeldpop-up]: Ik keek op [winkelnaam]. Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna niks meer volgt.
+[MET aanmeldpop-up]: Ik keek op [winkelnaam]. Het viel me op dat jullie een aanmeldpop-up hebben, ik was benieuwd of daar al een flow achter zit voor bezoekers die niet afrekenen.
 [ZONDER aanmeldpop-up]: Ik keek op [winkelnaam] en vroeg me af: stuur je eigenlijk al iets automatisch naar bezoekers die hun mandje verlaten, of staat dat nog niet?
 
 [MET aanmeldpop-up]: Wist je dat de meeste shops daardoor zo'n 70% van die bezoekers mislopen?
