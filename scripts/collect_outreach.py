@@ -50,7 +50,7 @@ def collect():
         creds = Credentials.from_service_account_file(str(full_creds_path), scopes=SCOPES)
         service = build("sheets", "v4", credentials=creds)
 
-        range_name = f"{sheet_tab}!A:K"
+        range_name = f"{sheet_tab}!A:J"
         result = service.spreadsheets().values().get(
             spreadsheetId=sheet_id,
             range=range_name
@@ -102,9 +102,9 @@ def update_sheet(bedrijfsnaam, kolom, waarde):
     # Kolomnamen → kolomletter
     KOLOM_MAP = {
         "bedrijfsnaam": "A", "instagram handle": "B", "url": "C",
-        "product / niche": "D", "bedrag voor dm2": "E",
-        "status": "F", "datum dm 1": "G", "datum dm 2": "H", "datum dm 3": "I", "notities": "J",
-        "gereageerd?": "K"
+        "product / niche": "D",
+        "status": "E", "datum dm 1": "F", "datum dm 2": "G", "datum dm 3": "H", "notities": "I",
+        "gereageerd?": "J"
     }
 
     kolom_letter = KOLOM_MAP.get(kolom.lower())
@@ -139,7 +139,6 @@ def write(conn, result, date):
             instagram_handle TEXT,
             url TEXT,
             niche TEXT,
-            bedrag_dm2 TEXT,
             status TEXT,
             datum_dm1 TEXT,
             datum_dm2 TEXT,
@@ -166,14 +165,13 @@ def write(conn, result, date):
 
         conn.execute("""
             INSERT OR REPLACE INTO outreach
-            (naam, instagram_handle, url, niche, bedrag_dm2, status, datum_dm1, datum_dm2, datum_dm3, notities, gereageerd, collected_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (naam, instagram_handle, url, niche, status, datum_dm1, datum_dm2, datum_dm3, notities, gereageerd, collected_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             naam,
             row.get("instagram handle", ""),
             row.get("url", ""),
             row.get("product / niche", ""),
-            row.get("bedrag voor dm2 (extra/mnd)", ""),
             row.get("status", ""),
             row.get("datum dm 1", ""),
             row.get("datum dm 2 (+5 dagen)", ""),
