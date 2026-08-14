@@ -104,11 +104,21 @@ Wanneer schikt het volgende week?
 > Andere invalshoek. Kort. Niet dezelfde tekst herhalen.
 > DM1 geeft de 70%-statistiek al als waarde, dus die hier niet herhalen.
 > Nieuw cijfer (10-15% terugwinpercentage) + nadruk op de al-klaarliggende voorbeeldmail.
+>
+> Let op: net als bij DM1 is van buitenaf niet te zien of een shop al een
+> cart-recovery flow heeft. Beweer dus niet dat de pop-up/het bericht "niks
+> deed" of "niks meer volgde" — dat kun je niet bewijzen. Verwoord het als
+> nieuwsgierigheid ("ik was benieuwd of daar al een flow achter zit"), niet
+> als bewering (gebeurde bij Onemorewear.nl, 14-08-2026).
+>
+> Let op: als het langer dan een week geleden is sinds DM1, gebruik dan
+> "een tijdje geleden" in plaats van "vorige week" — anders klopt de
+> tijdsaanduiding niet meer.
 
 ```
-Hey! Iets dat ik in mijn vorige bericht nog niet had genoemd:
+Hey! Een tijdje geleden stuurde ik een bericht over de aanmeldpop-up bij [winkelnaam], ik was benieuwd of daar al een flow achter zit.
 
-Shops die zo'n flow aanzetten winnen gemiddeld 10-15% van hun verlaten mandjes terug. Dat is geld dat nu gewoon blijft liggen.
+Shops die zo'n flow aanzetten winnen gemiddeld 10-15% van hun verlaten mandjes terug. Dat is geld dat anders blijft liggen.
 
 Ik heb 'm al klaarstaan, kost je een paar seconden om te bekijken.
 ```
