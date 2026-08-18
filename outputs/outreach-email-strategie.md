@@ -42,6 +42,11 @@
 > Geen call-verzoek, geen prijs. Eén concreet pijnpunt (70%-statistiek)
 > mag wel, dat maakt de pijn tastbaar zonder al de oplossing weg te geven.
 > Verder alleen enthousiast maken en vragen of ze het willen zien.
+>
+> Let op: of een shop een cart-recovery flow heeft is van buitenaf niet
+> te zien, dus beide varianten zijn een vraag, geen bewering (zelfde les
+> als bij de DM-strategie). De pop-up zelf mag je wel noemen, want die
+> is echt gezien.
 
 ```
 Onderwerp: Vraag over [winkelnaam]
@@ -52,8 +57,8 @@ Ik kwam net langs op [winkelnaam] en [compliment: iets specifieks over
 hun shop, product of insta-feed].
 
 [MET aanmeldpop-up]:
-Het viel me op dat jullie een aanmeldpop-up hebben, maar dat er daarna
-niks meer volgt.
+Het viel me op dat jullie een aanmeldpop-up hebben, ik was benieuwd of
+daar al een flow achter zit voor bezoekers die niet afrekenen.
 
 [ZONDER aanmeldpop-up]:
 Het viel me op dat jullie geen follow-up sturen naar bezoekers die hun
