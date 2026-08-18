@@ -12,17 +12,17 @@
         REAGEERT                          REAGEERT NIET
               │                                  │
               ▼                                  ▼
-     [ Reageer + plan call ]            [ Dag 4: Email 2 ]
+     [ Reageer + plan call ]            [ +4 dagen: Email 2 ]
               │                                  │
         Call ingepland                    Reageert niet
                                                  │
                                                  ▼
-                                         [ Dag 9: Email 3 ]
+                                       [ +9 dagen: Email 3 ]
                                                  │
                                           Reageert niet
                                                  │
                                                  ▼
-                                        [ Dag 16: Email 4 ]
+                                      [ +16 dagen: Email 4 ]
                                                  │
                                          Prospect sluiten
 ```
@@ -95,7 +95,13 @@ Oussama
 
 ## PAD RECHTS — Prospect reageert niet
 
-### Email 2 — Dag 4 (follow-up)
+### Email 2 — +4 dagen (follow-up)
+
+> Alle dagaanduidingen in deze strategie tellen vanaf Email 1, net als
+> "+5 dagen" en "+11 dagen" bij de DM-strategie. Bewust dezelfde
+> tijdslijn als de DM's aanhouden hoeft niet, maar hoeft ook niet
+> anders te zijn, dit is gewoon een vaste keuze zodat het niet steeds
+> een vraag oplevert.
 
 ```
 Onderwerp: Re: [Winkelnaam] — korte follow-up
@@ -118,7 +124,7 @@ Oussama
 
 ---
 
-### Email 3 — Dag 9 (sociaal bewijs)
+### Email 3 — +9 dagen (sociaal bewijs)
 
 ```
 Onderwerp: Wat we voor een Nederlandse webshop hebben gebouwd
@@ -141,7 +147,7 @@ insightance.ai
 
 ---
 
-### Email 4 — Dag 16 (afsluiting)
+### Email 4 — +16 dagen (afsluiting)
 
 ```
 Onderwerp: Laatste bericht van mij
