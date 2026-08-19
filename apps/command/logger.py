@@ -237,7 +237,8 @@ def print_system_checks(checks: list[SystemCheck]) -> None:
 
 def print_separator() -> None:
     """Print a visual separator line."""
-    print(f"   {_C.GREY}{'\u2500' * 46}{_C.RESET}", flush=True)
+    line = "\u2500" * 46
+    print(f"   {_C.GREY}{line}{_C.RESET}", flush=True)
 
 
 def print_ready() -> None:
