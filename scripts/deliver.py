@@ -149,7 +149,7 @@ async def _get_or_create_topic(bot, group_id, topic_name="📊 Daily Brief"):
     """
     if TOPIC_CACHE_PATH.exists():
         try:
-            cache = json.loads(TOPIC_CACHE_PATH.read_text())
+            cache = json.loads(TOPIC_CACHE_PATH.read_text(encoding="utf-8"))
             cached_id = cache.get("topic_id")
             if cached_id:
                 return cached_id

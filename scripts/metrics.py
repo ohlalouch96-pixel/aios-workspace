@@ -57,17 +57,18 @@ def parse_funnel(funnel_path=None):
     if not path or not path.exists():
         return None
 
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     result = {"currency": "USD", "stages": [], "targets": {}}
 
-    # Extract currency
-    currency_match = re.search(r"## Currency\s*\n(\w+)", text)
+    # Extract currency (supports Dutch "## Valuta" and English "## Currency")
+    currency_match = re.search(r"## (?:Currency|Valuta)\s*\n(\w+)", text)
     if currency_match:
         result["currency"] = currency_match.group(1).strip()
 
     # Extract stages
+    targets_heading = r"## (?:Monthly Targets|Targets|Maandelijkse Doelen)"
     stage_pattern = re.compile(
-        r"### \d+\.\s*(.+?)\n(.*?)(?=### \d+\.|## Monthly Targets|## Targets|\Z)",
+        r"### \d+\.\s*(.+?)\n(.*?)(?=### \d+\.|" + targets_heading + r"|\Z)",
         re.DOTALL,
     )
     for match in stage_pattern.finditer(text):
@@ -84,17 +85,44 @@ def parse_funnel(funnel_path=None):
             if not line or line.startswith("#"):
                 continue
 
-            # Match metric lines: "- Label → table.column" or "- Label (table)"
-            metric_match = re.match(
-                r"^-\s*(.+?)\s*→\s*(\w+)\.(\w+)\s*$", line
-            )
-            if metric_match:
+            # Format A: "- Label → table.column" (pre-aggregated daily snapshot table)
+            col_match = re.match(r"^-\s*(.+?)\s*→\s*(\w+)\.(\w+)\s*$", line)
+            if col_match:
                 metrics.append({
-                    "label": metric_match.group(1).strip(),
-                    "table": metric_match.group(2).strip(),
-                    "column": metric_match.group(3).strip(),
+                    "label": col_match.group(1).strip(),
+                    "kind": "column",
+                    "table": col_match.group(2).strip(),
+                    "column": col_match.group(3).strip(),
                 })
-            elif not metrics and not description:
+                continue
+
+            # Format B: "- Label → table (COUNT WHERE ...)" or "(SUM col WHERE ...)"
+            # Live aggregate query — no daily snapshot table needed.
+            agg_match = re.match(r"^-\s*(.+?)\s*→\s*(\w+)\s*\((.+?)\)\s*$", line)
+            if agg_match:
+                label, table, expr = (
+                    agg_match.group(1).strip(),
+                    agg_match.group(2).strip(),
+                    agg_match.group(3).strip(),
+                )
+                expr_match = re.match(
+                    r"^(COUNT|SUM)\s*(\w+)?\s*(?:WHERE\s+(.+))?$", expr, re.IGNORECASE
+                )
+                if expr_match:
+                    fn = expr_match.group(1).upper()
+                    col = expr_match.group(2)
+                    where = expr_match.group(3) or ""
+                    sql_expr = f"SUM({col})" if fn == "SUM" and col else "COUNT(*)"
+                    metrics.append({
+                        "label": label,
+                        "kind": "aggregate",
+                        "table": table,
+                        "sql_expr": sql_expr,
+                        "where": where,
+                    })
+                continue
+
+            if not metrics and not description:
                 # First non-metric line is the description
                 description = line.lstrip("- ").strip()
 
@@ -104,9 +132,9 @@ def parse_funnel(funnel_path=None):
             "metrics": metrics,
         })
 
-    # Extract targets
+    # Extract targets (supports Dutch "## Maandelijkse Doelen")
     targets_match = re.search(
-        r"## (?:Monthly )?Targets\s*\n(.*?)(?=##|\Z)", text, re.DOTALL
+        targets_heading + r"\s*\n(.*?)(?=##|\Z)", text, re.DOTALL
     )
     if targets_match:
         for line in targets_match.group(1).strip().split("\n"):
@@ -151,6 +179,18 @@ def _get_latest_value(conn, table, column):
         return None, None
     except Exception:
         return None, None
+
+
+def _get_aggregate_value(conn, table, sql_expr, where):
+    """Run a live COUNT/SUM aggregate query, e.g. for snapshot tables with no date column."""
+    try:
+        sql = f"SELECT {sql_expr} as v FROM {table}"
+        if where:
+            sql += f" WHERE {where}"
+        row = conn.execute(sql).fetchone()
+        return dict(row)["v"] if row else None
+    except Exception:
+        return None
 
 
 def _get_7day_avg(conn, table, column, end_date):
@@ -227,20 +267,28 @@ def build_funnel_metrics(conn, target_date=None):
             if not _table_exists(conn, metric["table"]):
                 continue
 
-            # Try target date first, fall back to latest
-            value = _get_metric_value(
-                conn, metric["table"], metric["column"], target_date
-            )
-            date_used = target_date
-
-            if value is None:
-                value, date_used = _get_latest_value(
-                    conn, metric["table"], metric["column"]
+            if metric.get("kind") == "aggregate":
+                # Live COUNT/SUM over a snapshot table — no date dimension to trend against.
+                value = _get_aggregate_value(
+                    conn, metric["table"], metric["sql_expr"], metric["where"]
                 )
+                date_used = target_date
+                avg_7d = None
+            else:
+                # Try target date first, fall back to latest
+                value = _get_metric_value(
+                    conn, metric["table"], metric["column"], target_date
+                )
+                date_used = target_date
 
-            avg_7d = _get_7day_avg(
-                conn, metric["table"], metric["column"], date_used or target_date
-            )
+                if value is None:
+                    value, date_used = _get_latest_value(
+                        conn, metric["table"], metric["column"]
+                    )
+
+                avg_7d = _get_7day_avg(
+                    conn, metric["table"], metric["column"], date_used or target_date
+                )
 
             # Determine direction vs average
             direction = "on_par"
@@ -336,7 +384,11 @@ if __name__ == "__main__":
         for s in funnel["stages"]:
             print(f"  {s['name']}: {len(s['metrics'])} metrics")
             for m in s["metrics"]:
-                print(f"    - {m['label']} → {m['table']}.{m['column']}")
+                if m.get("kind") == "aggregate":
+                    where = f" WHERE {m['where']}" if m["where"] else ""
+                    print(f"    - {m['label']} → {m['table']} ({m['sql_expr']}{where})")
+                else:
+                    print(f"    - {m['label']} → {m['table']}.{m['column']}")
     else:
         print("No funnel.md found. Run DataOS setup first.")
         print("Checked: context/funnel.md, context/group/funnel.md")

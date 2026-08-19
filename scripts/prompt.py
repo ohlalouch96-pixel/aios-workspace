@@ -107,7 +107,7 @@ def load_business_context():
             loaded.add(filename)
 
             try:
-                content = full_path.read_text()
+                content = full_path.read_text(encoding="utf-8")
                 if content.strip():
                     blocks.append(f"=== {rel_path} ===\n{content}")
             except Exception:

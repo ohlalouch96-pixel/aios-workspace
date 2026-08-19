@@ -9,22 +9,21 @@ EUR
 ## Fases
 
 ### 1. Outreach
-Kappers, beautysalons en andere kleine ondernemers benaderen via Instagram, WhatsApp, LinkedIn of persoonlijk contact.
-- Totaal benaderd → outreach (COUNT WHERE status != '')
-- Benaderd deze week → outreach (COUNT WHERE status = 'benaderd')
+Webshops benaderen via Instagram DM voor cart-recovery e-mailautomatisering.
+- Totaal benaderd → outreach (COUNT WHERE status != 'Te versturen')
+- Benaderd deze week → outreach (COUNT WHERE substr(datum_dm1,7,4)||'-'||substr(datum_dm1,4,2)||'-'||substr(datum_dm1,1,2) >= date('now','-7 days'))
 
 ### 2. Respons
 Prospects die reageren op de outreach.
-- Gereageerd → outreach (COUNT WHERE status = 'gereageerd')
+- Gereageerd → outreach (COUNT WHERE gereageerd = 'Ja')
 
 ### 3. Deal
-Klanten die akkoord gaan met een AI-workflow voor €1.500 eenmalig.
-- Deals gesloten → outreach (COUNT WHERE status = 'deal')
-- Omzet potentieel → outreach (SUM omzet_potentieel WHERE status = 'deal')
+Klanten die akkoord gaan met een AI-workflow.
+- Deals gesloten → outreach (COUNT WHERE status = 'Deal')
 
 ### 4. Afgewezen
 Prospects die niet geïnteresseerd zijn.
-- Afgewezen → outreach (COUNT WHERE status = 'afgewezen')
+- Afgewezen → outreach (COUNT WHERE status = 'Afgewezen')
 
 ## Conversie
 - Doel conversieratio: 10-20% van benaderd naar deal

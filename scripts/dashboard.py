@@ -153,7 +153,6 @@ def generate_dashboard_image(metrics, width=600, save_path=None):
         ax.axhline(
             y=y_pos, xmin=0.04, xmax=0.96,
             color="#2a2a4e", linewidth=0.5,
-            transform=ax.transAxes,
         )
         y_pos -= 0.02
 
