@@ -157,11 +157,13 @@ def write(conn, result, date):
     rows = result["data"].get("rows", [])
     collected_at = datetime.now(timezone.utc).isoformat()
     records = 0
+    namen_in_sheet = []
 
     for row in rows:
         naam = row.get("bedrijfsnaam", "").strip()
         if not naam:
             continue
+        namen_in_sheet.append(naam)
 
         conn.execute("""
             INSERT OR REPLACE INTO outreach
@@ -181,6 +183,11 @@ def write(conn, result, date):
             collected_at
         ))
         records += 1
+
+    # Verwijder prospects die niet meer in de sheet staan (voorkomt spook-rijen)
+    if namen_in_sheet:
+        placeholders = ",".join("?" for _ in namen_in_sheet)
+        conn.execute(f"DELETE FROM outreach WHERE naam NOT IN ({placeholders})", namen_in_sheet)
 
     conn.commit()
     return records

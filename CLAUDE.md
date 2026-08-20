@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Dit is de **AIOS-workspace van Oussama Hlalouch** — een AI Operating System in opbouw, gericht op het bouwen en verkopen van AI-automatiseringsoplossingen voor MKB-ondernemers in Nederland. Oussama bouwt AI-workflows die handmatige processen vervangen, te beginnen met een afspraken-systeem voor kappers.
+Dit is de **AIOS-workspace van Oussama Hlalouch** — een AI Operating System in opbouw, gericht op het bouwen en verkopen van AI-automatiseringsoplossingen voor MKB-ondernemers in Nederland. Oussama bouwt AI-workflows die handmatige processen vervangen, momenteel gericht op cart abandonment e-mailautomatisering voor e-commerce webshops.
 
 **This file (CLAUDE.md) is the foundation.** It is automatically loaded at the start of every session. Keep it current — it is the single source of truth for how Claude should understand and operate within this workspace.
 
@@ -18,8 +18,8 @@ Dit is de **AIOS-workspace van Oussama Hlalouch** — een AI Operating System in
 
 **Wie:** Oussama Hlalouch, 29, Amsterdam. SEH-verpleegkundige bij OLVG. Bouwt AI-bedrijf om uit de zorg te stappen.
 **Bedrijf:** Pre-launch AI-agency — bouwt en verkoopt AI Operating Systems voor MKB (afspraken, boekingen, marketing, automatisering).
-**Huidig product:** Kappers afspraken-workflow — functioneel, verkoopklaar, €1.500 eenmalig.
-**Huidige focus:** Eerste betalende klant binnenhalen. Daarna: portfolio uitbreiden, bedrijf opzetten, ziekenhuisbaan opzeggen.
+**Huidig product:** Cart abandonment e-mailautomatisering voor e-commerce webshops — gemiddeld 10-15% omzetherstel, prijs per klant nog te bepalen.
+**Huidige focus:** Instagram DM-outreach naar e-commerce webshops (sportkleding/sportvoeding/supplementen) om eerste betalende klant binnen te halen. Daarna: portfolio uitbreiden, bedrijf opzetten, ziekenhuisbaan opzeggen (per 1 oktober 2026 terug naar 2 dagen/week).
 **Noord-ster metric:** Eerste betalende klant → daarna maandelijks AI-inkomen richting ziekenhuissalaris.
 
 ---
