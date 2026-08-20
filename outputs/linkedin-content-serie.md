@@ -1,73 +1,88 @@
 # LinkedIn Content Strategie — Insightance
 
-> Platform: LinkedIn. Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
+> Platform: LinkedIn, in het **Engels** (groter bereik dan alleen NL/BE).
+> Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
 > Ritme: 1-2 posts per week, afgewisseld tussen de twee onderstaande pijlers.
 > Focus: bredere MKB (niet webshops — dat loopt via Instagram outreach).
 
 ---
 
-## Serienaam: "AI in gewone taal"
+## Gouden regel: de eerste zin moet raak zijn
 
-Vaste afsluiter/herkenning onder elke aflevering, bijvoorbeeld:
-> Dit was aflevering [X] van AI in gewone taal — elke week een stukje AI/automatisering, zonder jargon.
+LinkedIn knipt elke post af achter "...meer weergeven" na een paar regels. Die eerste zin is het enige wat iemand ziet voordat hij besluit door te scrollen of te blijven lezen. Dit geldt voor **elke post, door wie dan ook geschreven** (Oussama zelf of Claude):
+
+- De eerste zin moet op zichzelf kunnen staan — geen opwarmertje, geen "Vandaag wil ik het hebben over...".
+- Kort, concreet, herkenbaar of verrassend. Iets waar iemand bij denkt "wacht, dit gaat over mij" of "hè, dat wist ik niet".
+- Test: zou deze ene zin, los van de rest, iemand doen stoppen met scrollen? Zo niet, herschrijven.
 
 ---
 
-## Pijler 1 — Kennisserie ("AI in gewone taal")
+## Serienaam: "Automation Simplified"
+
+Vaste afsluiter/herkenning onder elke aflevering, bijvoorbeeld:
+> Episode [X] of Automation Simplified — one piece of AI/automation a week, no jargon.
+
+**Sjabloon voor de post-afbeelding:** een herbruikbare generator (vraag bovenaan, gouden lijn, antwoord eronder, jouw echte Insightance-logo) staat klaar als Claude-artifact. Vraag Claude om 'm opnieuw te openen of te vernieuwen als je een volgende post gaat maken — typ de vraag en het antwoord in, rechtsklik de afbeelding, kopiëren, klaar.
+
+---
+
+## Pijler 1 — Kennisserie ("Automation Simplified")
 
 Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een herkenbare situatie.
 
-1. Wat is AI eigenlijk? (uitgelegd met een herkenbaar voorbeeld, bijv. een agenda die zelf reageert)
-2. Automatisering vs AI — het verschil, want mensen gooien dit vaak door elkaar
-3. 3 taken die je vandaag al kan automatiseren zonder dat het iets kost
-4. Nee, een robot neemt je baan niet over — wat AI wél en niet doet
-5. Wat een "workflow" eigenlijk is (in mensentaal)
-6. Hoe weet je of een taak geschikt is om te automatiseren?
-7. Het verschil tussen een chatbot en een automatisering
-8. Waarom klein beginnen beter werkt dan in één keer alles automatiseren
+1. What is AI, actually?
+2. AI vs. automation — the difference (people mix these up constantly)
+3. 3 tasks you could automate today, for free
+4. No, AI is not coming for your job — here's what it actually does
+5. What a "workflow" actually means, in plain English
+6. How to know if a task is worth automating
+7. Chatbot vs. automation — not the same thing
+8. Why starting small beats automating everything at once
 
 ---
 
 ## Pijler 2 — Herkenbare pijn
 
-Kort, een klein herkenbaar ongemak beschrijven dat kleine ondernemers (zonder webshop) kennen.
+Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-woord — puur herkenning, zodat de lezer zelf de stap zet om te reageren.
 
-1. Offertes elke keer opnieuw met de hand typen
-2. Planning bijhouden via WhatsApp-berichten die je kwijtraakt
-3. Klanten die drie keer moeten bellen voor een simpele vraag
-4. Facturen los versturen en achteraf handmatig bijhouden wie betaald heeft
-5. Dubbele boekingen omdat de agenda niet centraal staat
-6. Een avond kwijt aan het overtypen van handgeschreven notities
-7. Vragen van klanten die blijven liggen omdat er geen tijd voor is
-8. Dezelfde vraag steeds opnieuw beantwoorden aan de telefoon
+1. Typing out the same quote from scratch, every single time.
+2. Your calendar is three WhatsApp chats and a sticky note.
+3. A customer calls. Then calls again. Then calls a third time. Same question.
+4. Chasing which invoice got paid, from memory.
+5. Two clients booked for the same hour. Again.
+6. A notebook full of notes nobody will ever type up.
+7. A message sitting unanswered for four days because there just wasn't time.
+8. Answering "what are your hours" for the tenth time today.
 
 ---
 
 ## Pijler 3 — Praktijkbewijs (later, zodra er meer cases zijn)
 
-Nu alleen MHL en FTUK beschikbaar — bewaren tot er meer klanten zijn, dan pas structureel inzetten.
+Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren als actief) — bewaren tot er betalende klanten zijn, dan pas structureel inzetten.
 
 ---
 
 ## Eerste post — klaar om te posten
 
-**Aflevering 1 — Wat is AI eigenlijk?**
+**Episode 01 — What is AI, actually?**
 
 ```
-Wat is AI eigenlijk?
+What is AI, actually?
 
-Geen robot die je baan overneemt. Geen sciencefiction.
+Not a robot coming for your job. Not science fiction.
 
-Simpel gezegd: AI is een systeem dat patronen herkent en daarop reageert, zonder dat een mens elke stap hoeft te doen.
+Simply put: AI is a system that recognizes patterns and responds to them, without a human doing every step by hand.
 
-Een voorbeeld uit de praktijk: een klant stuurt een berichtje. Vroeger typte iemand daar handmatig een antwoord op. Nu herkent AI de vraag en stuurt automatisch het juiste antwoord terug.
+A real example: a customer sends a message. Used to be, someone typed a reply by hand. Now AI recognizes the question and sends the right answer automatically.
 
-Dat is het. Geen magie, gewoon slim werk uit handen nemen.
+That's it. No magic, just smart work taken off your plate.
 
-Dit was aflevering 1 van AI in gewone taal — elke week een stukje AI/automatisering, zonder jargon.
+Episode 1 of Automation Simplified — one piece of AI/automation a week, no jargon.
 ```
 
-**Beeld-suggestie:** simpele, rustige afbeelding — geen stockfoto van robots. Denk aan een schematische "voor → na"-visual (bijv. een volle inbox vs. een opgeruimde inbox) of een foto van jezelf met een korte quote-overlay.
+**Beeld:** gemaakt met de post-afbeelding generator (zie hierboven) — vraag "What is AI, actually?", antwoord "Not a robot. Not science fiction."
+
+**Let op de openingszin:** "What is AI, actually?" werkt als vraag-hook. Bij volgende posts: begin niet met de vraag als die te generiek aanvoelt — mag ook een herkenbare uitspraak zijn (zie Pijler 2 voorbeelden), zolang hij zelfstandig overeind blijft vóór de afkap.
 
 ---
 
