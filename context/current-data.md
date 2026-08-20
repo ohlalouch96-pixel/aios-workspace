@@ -1,7 +1,7 @@
 # Current Data
 
 > Huidige stand van zaken — metrics, status en voortgang.
-> Laatst bijgewerkt: 2026-06-28
+> Laatst bijgewerkt: 2026-08-20
 
 ---
 
@@ -12,9 +12,10 @@
 | Betalende klanten | 0 | 1+ | Eerste klant is de prioriteit |
 | Afgeronde pilots | 2 | — | MHL en FTUK (gratis, voor portfolio) |
 | Maandelijks AI-inkomen | €0 | Richting ziekenhuissalaris | |
-| Outreach gedaan | 0 verstuurd (13 klaar) | — | Start morgen 29 juni, 4 DMs om 9:00 |
-| Netwerkborrels bezocht | 3 (afgelopen 2 weken) | — | AI-netwerk opbouwen |
-| Maanden actief in AI | ~3 | — | Gestart maart 2026 |
+| Outreach benaderd | 120 van 181 prospects | — | 61 nog te versturen, zie `context/key-metrics.md` voor live cijfers |
+| Reactieratio | 9.2% | — | Van benaderde prospects (11 reacties / 120 benaderd) |
+| Netwerkborrels bezocht | Onbekend sinds juni 2026 | — | Laatst genoemd: 3 in twee weken tijd (juni) — niet meer bijgehouden |
+| Maanden actief in AI | ~5 | — | Gestart maart 2026 |
 
 ---
 
@@ -34,11 +35,12 @@
 
 ## Outreach (actief)
 
-- Campagne: e-commerce webshops (Instagram DM)
-- 13 prospects klaar in `outputs/outreach-tracker.csv`
+- Campagne: e-commerce webshops (Instagram DM), niche sportkleding/sportvoeding/supplementen
+- 181 prospects in de Google Sheet-tracker (bron van waarheid, gesynchroniseerd naar `data/data.db`)
 - DM-flows: `outputs/outreach-instagram-dm-strategie.md`
-- **Start: 29 juni 2026, 4 DMs om 09:00**
-- Daarna: dag 5 follow-up, dag 11 afsluiting per prospect
+- **Gestart: 29 juni 2026**
+- Cadans: 10 DMs per dag (opgeschaald vanaf 28-07-2026, was 4/dag), dag 5 follow-up, dag 11 afsluiting
+- Stand per 20-08-2026: 120 benaderd, 61 nog te versturen, 60 volledige reeks doorlopen, 11 reacties (9.2%)
 
 ---
 
@@ -63,9 +65,9 @@
 
 ## Netwerken & Ontwikkeling
 
-- 3 netwerkborrels bezocht in juni 2026 (AI-netwerk)
-- Meerdere workshops over AI bijgewoond
-- Elevator pitch in NL en EN aan het scherpstellen — loopt goed
+- Laatst bekende stand (juni 2026): 3 netwerkborrels bezocht, meerdere AI-workshops bijgewoond
+- Niet bijgehouden sinds juni — vraag Oussama naar de huidige stand als dit relevant wordt
+- Elevator pitch in NL en EN — loopt goed (laatst bevestigd juni 2026)
 
 ---
 
