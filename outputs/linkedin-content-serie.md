@@ -50,6 +50,8 @@ Dus maximaal 4 regels/alinea's totaal, niet een reeks korte blokjes met witruimt
 - Zie de `writing-style` skill voor de volledige lijst — altijd toepassen bij het schrijven van post-teksten
 - Blijf kort en krachtig: deze regels zijn om AI-tics te vermijden, niet om langer te schrijven
 
+**Feitencheck-regel:** elke feitelijke claim (cijfers, statistieken, beweringen over "de meeste bedrijven/tools") moet kloppen en het liefst herleidbaar zijn naar een bron. Geen vage overstatements als "most" als de data dat niet dekt — een concreet, correct cijfer is sterker én controleerbaar. Voorbeeld: niet "most tools calling themselves AI are just automation", wel "40% of self-proclaimed 'AI startups' turned out to have barely any AI at all" (bron: MMC Ventures-onderzoek onder 2.830 Europese AI-startups). Bij twijfel: opzoeken voordat het de post in gaat.
+
 ---
 
 ## Pijler 1 — Kennisserie ("Automation Simplified")
@@ -113,12 +115,12 @@ Is AI the same thing as automation?
 
 Not quite, though people use the words interchangeably all the time. Automation follows a fixed set of rules, doing the same thing every time no matter what, while AI looks at the situation first and decides what to do next. Example: an automation sends the same reminder email to everyone on day three, while AI decides which customers actually need that reminder today and writes a different message for each one. One follows a script, the other makes a judgment call.
 
-Which one does your business actually need right now?
+40% of self-proclaimed "AI startups" turned out to have barely any AI at all. Just automation with better marketing.
 
 Episode 2 of "Automation Simplified" ⚡
 ```
 
-**Beeld:** gemaakt met de post-afbeelding generator — vraag "Is AI the same thing as automation?", antwoord "Not quite. Automation follows the rules. AI makes the call."
+**Beeld:** gemaakt met de post-afbeelding generator — vraag "Is AI the same thing as automation?", antwoord "AI looks first, automation follows."
 
 ---
 
