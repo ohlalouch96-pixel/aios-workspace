@@ -19,10 +19,26 @@ LinkedIn knipt elke post af achter "...meer weergeven" na een paar regels. Die e
 
 ## Serienaam: "Automation Simplified"
 
-Vaste afsluiter/herkenning onder elke aflevering, bijvoorbeeld:
-> Episode [X] of Automation Simplified — one piece of AI/automation a week, no jargon.
+Vaste afsluiter/herkenning onder elke aflevering:
+> Episode [X] of Automation Simplified ⚡
+
+De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen. Geen ✨ (spreekt "no magic" uit de posts tegen).
 
 **Sjabloon voor de post-afbeelding:** een herbruikbare generator (vraag bovenaan, gouden lijn, antwoord eronder, jouw echte Insightance-logo) staat klaar als Claude-artifact. Vraag Claude om 'm opnieuw te openen of te vernieuwen als je een volgende post gaat maken — typ de vraag en het antwoord in, rechtsklik de afbeelding, kopiëren, klaar.
+
+---
+
+## Vaste opbouw per post (de rode lijn)
+
+Elke post in de kennisserie volgt dezelfde structuur — dit is het herkenbare patroon, niet alleen het onderwerp:
+
+1. **Statement** — een mythe ontkrachten of een aanname wegnemen (bijv. "Not a robot coming for your job. Not science fiction.")
+2. **Simply put** — de uitleg in doodgewone taal, geen jargon
+3. **Een concreet voorbeeld** — verplicht in elke post, geen post zonder
+4. **Afsluiter** — een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
+5. **Episode-tag** — "Episode [X] of Automation Simplified ⚡"
+
+**Terugkerende ondertoon:** de AI-angstmythe ontkrachten (mensen denken dat AI hun baan overneemt, dat is niet zo) — niet alleen in aflevering 4, mag als ondertoon in meerdere afleveringen terugkomen.
 
 ---
 
@@ -77,7 +93,9 @@ A real example: a customer sends a message. Used to be, someone typed a reply by
 
 That's it. No magic, just smart work taken off your plate.
 
-Episode 1 of Automation Simplified — one piece of AI/automation a week, no jargon.
+Still think AI is just hype? I'll change your mind, one post at a time.
+
+Episode 1 of Automation Simplified ⚡
 ```
 
 **Beeld:** gemaakt met de post-afbeelding generator (zie hierboven) — vraag "What is AI, actually?", antwoord "Not a robot. Not science fiction."
