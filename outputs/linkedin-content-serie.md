@@ -20,7 +20,7 @@ LinkedIn knipt elke post af achter "...meer weergeven" na een paar regels. Die e
 ## Serienaam: "Automation Simplified"
 
 Vaste afsluiter/herkenning onder elke aflevering:
-> Episode [X] of Automation Simplified ⚡
+> Episode [X] of "Automation Simplified" ⚡
 
 De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen. Geen ✨ (spreekt "no magic" uit de posts tegen).
 
@@ -33,10 +33,9 @@ De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen
 Elke post in de kennisserie volgt dezelfde structuur — dit is het herkenbare patroon, niet alleen het onderwerp:
 
 1. **Statement** — een mythe ontkrachten of een aanname wegnemen (bijv. "Not a robot coming for your job. Not science fiction.")
-2. **Simply put** — de uitleg in doodgewone taal, geen jargon
-3. **Een concreet voorbeeld** — verplicht in elke post, geen post zonder
-4. **Afsluiter** — een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
-5. **Episode-tag** — "Episode [X] of Automation Simplified ⚡"
+2. **Simply put + voorbeeld, als één blok** — de uitleg in doodgewone taal, direct gevolgd door "A real example: ..." zónder witregel ertussen (wel witregels vóór en ná dit blok). Een concreet voorbeeld is verplicht in elke post.
+3. **Afsluiter** — een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
+4. **Episode-tag** — "Episode [X] of "Automation Simplified" ⚡" (aanhalingstekens om de serienaam)
 
 **Terugkerende ondertoon:** de AI-angstmythe ontkrachten (mensen denken dat AI hun baan overneemt, dat is niet zo) — niet alleen in aflevering 4, mag als ondertoon in meerdere afleveringen terugkomen.
 
@@ -78,9 +77,9 @@ Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren
 
 ---
 
-## Eerste post — klaar om te posten
+## Klaar om te posten
 
-**Episode 01 — What is AI, actually?**
+**Episode 01 — What is AI, actually? (dinsdag)**
 
 ```
 What is AI, actually?
@@ -88,19 +87,41 @@ What is AI, actually?
 Not a robot coming for your job. Not science fiction.
 
 Simply put: AI is a system that recognizes patterns and responds to them, without a human doing every step by hand.
-
 A real example: a customer sends a message. Used to be, someone typed a reply by hand. Now AI recognizes the question and sends the right answer automatically.
 
 That's it. No magic, just smart work taken off your plate.
 
 Still think AI is just hype? I'll change your mind, one post at a time.
 
-Episode 1 of Automation Simplified ⚡
+Episode 1 of "Automation Simplified" ⚡
 ```
 
-**Beeld:** gemaakt met de post-afbeelding generator (zie hierboven) — vraag "What is AI, actually?", antwoord "Not a robot. Not science fiction."
+**Beeld:** gemaakt met de post-afbeelding generator — vraag "What is AI, actually?", antwoord "Not a robot. Not science fiction."
 
-**Let op de openingszin:** "What is AI, actually?" werkt als vraag-hook. Bij volgende posts: begin niet met de vraag als die te generiek aanvoelt — mag ook een herkenbare uitspraak zijn (zie Pijler 2 voorbeelden), zolang hij zelfstandig overeind blijft vóór de afkap.
+---
+
+**Episode 02 — AI vs. automation, the difference (donderdag)**
+
+```
+Is AI the same thing as automation?
+
+Not quite. Automation follows the rules. AI makes the call.
+
+Simply put: automation does the same thing every time, no matter what. AI looks at the situation first, then decides what to do.
+A real example: automation sends the same reminder email to everyone on day 3. AI decides which customers actually need a reminder today, and writes a different message for each one.
+
+That's the real difference — one follows a script, the other makes a judgment call.
+
+Which one does your business actually need right now?
+
+Episode 2 of "Automation Simplified" ⚡
+```
+
+**Beeld:** gemaakt met de post-afbeelding generator — vraag "Is AI the same thing as automation?", antwoord "Not quite. Automation follows the rules. AI makes the call."
+
+---
+
+**Let op de openingszin:** werkt zowel als vraag-hook (ep. 1, 2) als als herkenbare uitspraak (zie Pijler 2 voorbeelden) — zolang hij zelfstandig overeind blijft vóór de afkap.
 
 ---
 
