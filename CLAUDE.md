@@ -123,6 +123,8 @@ These are how you know your AIOS is working:
 │   └── _templates/          # Sjablonen voor nieuwe docs
 ├── module-installs/         # AIOS modules — drop module folders here, install with /install
 ├── plans/                   # Implementation plans created by /create-plan
+├── todo/                    # Geparkeerde ideeën en taken — nog niet actief opgepakt
+│   └── README.md            # De backlog zelf
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -157,6 +159,7 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | `context/import/`  | Drop any docs here (business plans, ChatGPT exports, etc.) for Claude to analyze.      |
 | `module-installs/` | AIOS modules go here. Install them with `/install module-installs/{module-name}`.      |
 | `plans/`           | Detailed implementation plans. Created by `/create-plan`, executed by `/implement`.    |
+| `todo/`            | Geparkeerde ideeën en taken — nog niet actief opgepakt. Zie `todo/README.md`.          |
 | `docs/`            | **LIVE WEBSITE** — GitHub Pages serveert dit. Altijd hier bewerken voor website-aanpassingen. |
 | `outputs/website/` | Oude previews en drafts. Nooit kopiëren naar `docs/`. Nooit als bron gebruiken voor live aanpassingen. |
 | `outputs/`         | Deliverables, analyses, reports, and work products.                                    |

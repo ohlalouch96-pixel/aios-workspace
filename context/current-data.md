@@ -65,8 +65,8 @@
 
 ## Netwerken & Ontwikkeling
 
-- Laatst bekende stand (juni 2026): 3 netwerkborrels bezocht, meerdere AI-workshops bijgewoond
-- Niet bijgehouden sinds juni — vraag Oussama naar de huidige stand als dit relevant wordt
+- 4 netwerkborrels bezocht totaal: 3 in juni 2026, plus 1 op 19-08-2026
+- Meerdere AI-workshops bijgewoond (stand juni 2026)
 - Elevator pitch in NL en EN — loopt goed (laatst bevestigd juni 2026)
 
 ---
