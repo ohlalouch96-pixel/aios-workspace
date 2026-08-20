@@ -32,12 +32,21 @@ De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen
 
 Elke post in de kennisserie volgt dezelfde structuur — dit is het herkenbare patroon, niet alleen het onderwerp:
 
-1. **Statement** — een mythe ontkrachten of een aanname wegnemen (bijv. "Not a robot coming for your job. Not science fiction.")
-2. **Simply put + voorbeeld, als één blok** — de uitleg in doodgewone taal, direct gevolgd door "A real example: ..." zónder witregel ertussen (wel witregels vóór en ná dit blok). Een concreet voorbeeld is verplicht in elke post.
+1. **Statement** — een mythe of aanname wegnemen, als één doorlopende zin (geen fragmenten achter elkaar, zie schrijfregels hieronder)
+2. **Uitleg in gewone taal**, gevolgd door een apart, kort gelabeld **"Example: ..."** — dit label is een bewuste, vaste rode lijn en blijft in elke post staan, ook al is de rest van de opbouw losser
 3. **Afsluiter** — een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
-4. **Episode-tag** — "Episode [X] of "Automation Simplified" ⚡" (aanhalingstekens om de serienaam)
+4. **Episode-tag** — `Episode [X] of "Automation Simplified" ⚡` (aanhalingstekens om de serienaam)
 
 **Terugkerende ondertoon:** de AI-angstmythe ontkrachten (mensen denken dat AI hun baan overneemt, dat is niet zo) — niet alleen in aflevering 4, mag als ondertoon in meerdere afleveringen terugkomen.
+
+**Schrijfregels — moet niet als AI-tekst overkomen:**
+- Geen "Not X. Not Y." of andere korte fragmenten achter elkaar (bijv. niet "Not a robot. Not science fiction." — wel: "People picture a robot coming for their job, or something out of a sci-fi movie. It's neither.")
+- Geen em dashes. Komma's of punten.
+- Geen "Simply put" en andere AI-woorden (simply, robust, seamless, leverage, enz.)
+- Geen afsluitende mini-fragmenten als "That's it."
+- Wissel zinslengte af, nooit drie zinnen van ongeveer dezelfde lengte achter elkaar
+- Zie de `writing-style` skill voor de volledige lijst — altijd toepassen bij het schrijven van post-teksten
+- Blijf kort en krachtig: deze regels zijn om AI-tics te vermijden, niet om langer te schrijven
 
 ---
 
@@ -84,12 +93,13 @@ Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren
 ```
 What is AI, actually?
 
-Not a robot coming for your job. Not science fiction.
+People picture a robot coming for their job, or something out of a sci-fi movie. It's neither.
 
-Simply put: AI is a system that recognizes patterns and responds to them, without a human doing every step by hand.
-A real example: a customer sends a message. Used to be, someone typed a reply by hand. Now AI recognizes the question and sends the right answer automatically.
+AI is a system that recognizes patterns and responds to them, without a person doing every step by hand.
 
-That's it. No magic, just smart work taken off your plate.
+Example: a customer sends a message. Instead of someone typing a reply by hand, AI reads the question and sends the right answer automatically.
+
+No magic. Just smart work taken off your plate.
 
 Still think AI is just hype? I'll change your mind, one post at a time.
 
@@ -105,12 +115,13 @@ Episode 1 of "Automation Simplified" ⚡
 ```
 Is AI the same thing as automation?
 
-Not quite. Automation follows the rules. AI makes the call.
+Not quite, though people use the words interchangeably all the time.
 
-Simply put: automation does the same thing every time, no matter what. AI looks at the situation first, then decides what to do.
-A real example: automation sends the same reminder email to everyone on day 3. AI decides which customers actually need a reminder today, and writes a different message for each one.
+Automation follows a fixed set of rules: do X, then Y, every time, no matter what. AI looks at the situation first and decides what to do next.
 
-That's the real difference — one follows a script, the other makes a judgment call.
+Example: an automation sends the same reminder email to everyone on day three. AI decides which customers actually need that reminder today, and writes a different message for each one.
+
+One follows a script. The other makes a judgment call.
 
 Which one does your business actually need right now?
 
