@@ -32,10 +32,12 @@ De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen
 
 Elke post in de kennisserie volgt dezelfde structuur — dit is het herkenbare patroon, niet alleen het onderwerp:
 
-1. **Statement** — een mythe of aanname wegnemen, als één doorlopende zin (geen fragmenten achter elkaar, zie schrijfregels hieronder)
-2. **Uitleg in gewone taal**, gevolgd door een apart, kort gelabeld **"Example: ..."** — dit label is een bewuste, vaste rode lijn en blijft in elke post staan, ook al is de rest van de opbouw losser
-3. **Afsluiter** — een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
-4. **Episode-tag** — `Episode [X] of "Automation Simplified" ⚡` (aanhalingstekens om de serienaam)
+1. **Openingszin** — staat altijd alleen, op zijn eigen regel (de vraag-hook, zie gouden regel hierboven)
+2. **Eén lopende alinea** — statement (mythe/aanname wegnemen) + uitleg in gewone taal + **"Example: ..."** vloeien in elkaar over, zonder witregels ertussen. Het "Example:"-label blijft altijd staan (bewuste, vaste rode lijn), maar dan middenin de lopende tekst, niet als apart blokje
+3. **Afsluiter** — op zijn eigen regel: een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
+4. **Episode-tag** — op zijn eigen regel: `Episode [X] of "Automation Simplified" ⚡` (aanhalingstekens om de serienaam)
+
+Dus maximaal 4 regels/alinea's totaal, niet een reeks korte blokjes met witruimte ertussen — dat laatste is precies het patroon waar AI-tekst aan herkenbaar is.
 
 **Terugkerende ondertoon:** de AI-angstmythe ontkrachten (mensen denken dat AI hun baan overneemt, dat is niet zo) — niet alleen in aflevering 4, mag als ondertoon in meerdere afleveringen terugkomen.
 
@@ -93,13 +95,7 @@ Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren
 ```
 What is AI, actually?
 
-People picture a robot coming for their job, or something out of a sci-fi movie. It's neither.
-
-AI is a system that recognizes patterns and responds to them, without a person doing every step by hand.
-
-Example: a customer sends a message. Instead of someone typing a reply by hand, AI reads the question and sends the right answer automatically.
-
-No magic. Just smart work taken off your plate.
+People picture a robot coming for their job, or something out of a sci-fi movie. It's neither. AI is a system that recognizes patterns and responds to them, without a person doing every step by hand. Example: a customer sends a message, and instead of someone typing a reply by hand, AI reads the question and sends the right answer automatically. No magic, just smart work taken off your plate.
 
 Still think AI is just hype? I'll change your mind, one post at a time.
 
@@ -115,13 +111,7 @@ Episode 1 of "Automation Simplified" ⚡
 ```
 Is AI the same thing as automation?
 
-Not quite, though people use the words interchangeably all the time.
-
-Automation follows a fixed set of rules: do X, then Y, every time, no matter what. AI looks at the situation first and decides what to do next.
-
-Example: an automation sends the same reminder email to everyone on day three. AI decides which customers actually need that reminder today, and writes a different message for each one.
-
-One follows a script. The other makes a judgment call.
+Not quite, though people use the words interchangeably all the time. Automation follows a fixed set of rules, doing the same thing every time no matter what, while AI looks at the situation first and decides what to do next. Example: an automation sends the same reminder email to everyone on day three, while AI decides which customers actually need that reminder today and writes a different message for each one. One follows a script, the other makes a judgment call.
 
 Which one does your business actually need right now?
 
