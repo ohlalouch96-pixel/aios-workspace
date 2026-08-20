@@ -60,7 +60,13 @@ def table_exists(conn, name):
 
 
 def section_outreach(conn):
-    """Outreach-tracker — kappers en andere prospects."""
+    """Outreach-tracker — kappers en andere prospects.
+
+    Status is een pipeline-stage (waar een prospect NU staat), geen log van welke
+    DM's ooit verstuurd zijn. Een prospect met status 'Afgerond' heeft dus ook een
+    DM1 en DM2 gehad, maar telt niet mee als 'Verstuurd'. Daarom cumulatief tellen:
+    iedereen die niet meer op 'Te versturen' staat, heeft minstens een DM1 gehad.
+    """
     if not table_exists(conn, "outreach"):
         return []
     lines = ["## Outreach Status"]
@@ -68,26 +74,27 @@ def section_outreach(conn):
         SELECT
             COUNT(*) as totaal,
             SUM(CASE WHEN status = 'Te versturen' THEN 1 ELSE 0 END) as te_versturen,
-            SUM(CASE WHEN status = 'Verstuurd' THEN 1 ELSE 0 END) as verstuurd,
-            SUM(CASE WHEN status = 'DM2 verstuurd' THEN 1 ELSE 0 END) as dm2_verstuurd,
+            SUM(CASE WHEN status != 'Te versturen' THEN 1 ELSE 0 END) as dm1_ontvangen,
+            SUM(CASE WHEN status IN ('DM2 verstuurd', 'Afgerond') THEN 1 ELSE 0 END) as dm2_ontvangen,
             SUM(CASE WHEN gereageerd = 'Ja' THEN 1 ELSE 0 END) as gereageerd,
             SUM(CASE WHEN status = 'Afgerond' THEN 1 ELSE 0 END) as afgerond,
             SUM(CASE WHEN status = 'Afgewezen' THEN 1 ELSE 0 END) as afgewezen
         FROM outreach
     """)
     if totals:
+        dm1_ontvangen = totals['dm1_ontvangen'] or 0
         lines.append("| Metric | Waarde |")
         lines.append("|--------|--------|")
         lines.append(f"| Totaal prospects | {totals['totaal'] or 0} |")
-        lines.append(f"| Te versturen | {totals['te_versturen'] or 0} |")
-        lines.append(f"| DM1 verstuurd | {totals['verstuurd'] or 0} |")
-        lines.append(f"| DM2 verstuurd | {totals['dm2_verstuurd'] or 0} |")
+        lines.append(f"| Nog te benaderen | {totals['te_versturen'] or 0} |")
+        lines.append(f"| Benaderd (DM1 ontvangen, cumulatief) | {dm1_ontvangen} |")
+        lines.append(f"| DM2 ontvangen (cumulatief) | {totals['dm2_ontvangen'] or 0} |")
+        lines.append(f"| Volledige DM-reeks doorlopen (Afgerond) | {totals['afgerond'] or 0} |")
         lines.append(f"| Gereageerd | {totals['gereageerd'] or 0} |")
-        lines.append(f"| Afgerond (alle DM's verstuurd) | {totals['afgerond'] or 0} |")
         lines.append(f"| Afgewezen | {totals['afgewezen'] or 0} |")
-        if totals['totaal'] and totals['totaal'] > 0:
-            resp_rate = (totals['gereageerd'] or 0) / totals['totaal'] * 100
-            lines.append(f"| Reactieratio | {resp_rate:.1f}% |")
+        if dm1_ontvangen > 0:
+            resp_rate = (totals['gereageerd'] or 0) / dm1_ontvangen * 100
+            lines.append(f"| Reactieratio (van benaderde prospects) | {resp_rate:.1f}% |")
     lines.append("")
     return lines
 

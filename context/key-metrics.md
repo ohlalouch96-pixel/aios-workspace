@@ -7,13 +7,13 @@
 | Metric | Waarde |
 |--------|--------|
 | Totaal prospects | 181 |
-| Te versturen | 61 |
-| DM1 verstuurd | 41 |
-| DM2 verstuurd | 19 |
+| Nog te benaderen | 61 |
+| Benaderd (DM1 ontvangen, cumulatief) | 120 |
+| DM2 ontvangen (cumulatief) | 79 |
+| Volledige DM-reeks doorlopen (Afgerond) | 60 |
 | Gereageerd | 11 |
-| Afgerond (alle DM's verstuurd) | 60 |
 | Afgewezen | 0 |
-| Reactieratio | 6.1% |
+| Reactieratio (van benaderde prospects) | 9.2% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
