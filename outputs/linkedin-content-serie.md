@@ -100,11 +100,13 @@ Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-
 
 **Beeldstijl:** decision-tree/vork-diagram, geïnspireerd op een viral LinkedIn-voorbeeld (1.762 likes, 287 reposts). Structuur: "If you [actie]" splitst naar twee mogelijke uitkomsten, tegenover "if you don't/wait/etc." dat uitkomt op één blijvend gevoel. Bewust in een handgeschreven/notitiestijl (crème papier, zwarte tekst, groen/oranje accentkleur) — geen zwart-gouden merkstijl zoals Pijler 1, want dit moet juist niet als gepolijste bedrijfscontent aanvoelen.
 
+**Feitencheck toegepast (2026-08-21):** in onderwerp #2 stond eerst "it fails and costs you nothing" — dat is feitelijk onjuist, want ook een kleine, mislukte poging kost altijd tijd en energie. Aangepast naar "it fails, but costs little". Let op dit type fout bij toekomstige onderwerpen: een woord als "forever" is geoorloofde stijl-overdrijving (net als in het origineel), maar "nothing"/"niets" is een harde, checkbare bewering en moet kloppen.
+
 **10 onderwerpen, klaar om uit te werken:**
 1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(pilot, al gebouwd)*
-2. Start small vs. wait — start with one task → it works and you scale it / it fails and costs nothing. Wait for the "big" project → you never start at all.
-3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever.
-4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck.
+2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gecorrigeerd, al gebouwd)*
+3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(al gebouwd)*
+4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(al gebouwd)*
 5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
 6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
 7. Hire vs. automate — automate the repeatable work → costs stay flat as you grow. Hire for it → costs grow every time.
