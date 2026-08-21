@@ -32,9 +32,6 @@
 
 ---
 
-## LinkedIn Pijler 2 ("Herkenbare pijn") fine-tunen
+## ~~LinkedIn Pijler 2 ("Herkenbare pijn") fine-tunen~~ — afgerond 2026-08-21
 
-**Status:** Geparkeerd sinds 2026-08-21
-**Waarom geparkeerd:** Focus lag op het afronden van Pijler 1 (kennisserie) en Pijler 3 ("The Fork") — deze pijler stond al inhoudelijk in `outputs/linkedin-content-serie.md`, maar moet nog verder worden aangescherpt.
-**Wat er nog moet gebeuren:** Bepalen of er wel/geen CTA bij hoort (nog open, zie Pijler 1 en 3 die dit al wel hebben vastgelegd), en de opbouw/toon verder verfijnen zoals bij de andere twee pijlers is gebeurd.
-**Trigger om op te pakken:** Wanneer Oussama er zelf op terugkomt.
+Hernoemd naar "The Other Shift", volledig uitgewerkt: wekelijks woensdag 11:00, geen CTA, geen afbeelding, hashtag-regel, 4 posts klaar. Zie `outputs/linkedin-content-serie.md`.
