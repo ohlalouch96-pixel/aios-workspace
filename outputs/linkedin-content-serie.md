@@ -2,7 +2,7 @@
 
 > Platform: LinkedIn, in het **Engels** (groter bereik dan alleen NL/BE).
 > Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
-> Ritme: dinsdag + donderdag afgewisseld tussen Pijler 1 en 2, plus "The Fork" (Pijler 3) los daarvan 2x per maand op woensdag.
+> Ritme: dinsdag + donderdag = Pijler 1 (kennisserie). Woensdag 11:00 wekelijks = Pijler 2 ("The Other Shift"). Woensdag 16:00, 2x per maand = Pijler 3 ("The Fork").
 > Focus: bredere MKB (niet webshops — dat loopt via Instagram outreach).
 
 ---
@@ -36,8 +36,9 @@ Elke post in de kennisserie volgt dezelfde structuur — dit is het herkenbare p
 2. **Eén lopende alinea** — statement (mythe/aanname wegnemen) + uitleg in gewone taal + **"Example: ..."** vloeien in elkaar over, zonder witregels ertussen. Het "Example:"-label blijft altijd staan (bewuste, vaste rode lijn), maar dan middenin de lopende tekst, niet als apart blokje
 3. **Afsluiter** — op zijn eigen regel: een korte vraag ÓF een lichte prikkel/opmerking, wissel dit af. Niet altijd een vraag: mensen reageren daar toch niet altijd op, dus variatie houdt het levendig
 4. **Episode-tag** — op zijn eigen regel: `Episode [X] of "Automation Simplified" ⚡` (aanhalingstekens om de serienaam)
+5. **Hashtags** — op zijn eigen regel, onder de episode-tag: `#Entrepreneurship #AIAutomation #AutomationSimplified` (breed + niche + eigen merk). Uit 2026-onderzoek (Metricool, 673.658 posts): posts met minstens 1 hashtag krijgen 85% meer weergaven. 3-5 hashtags is het advies, 10+ werkt averechts.
 
-Dus maximaal 4 regels/alinea's totaal, niet een reeks korte blokjes met witruimte ertussen — dat laatste is precies het patroon waar AI-tekst aan herkenbaar is.
+Dus maximaal 5 regels/alinea's totaal, niet een reeks korte blokjes met witruimte ertussen — dat laatste is precies het patroon waar AI-tekst aan herkenbaar is.
 
 **Terugkerende ondertoon:** de AI-angstmythe ontkrachten (mensen denken dat AI hun baan overneemt, dat is niet zo) — niet alleen in aflevering 4, mag als ondertoon in meerdere afleveringen terugkomen.
 
@@ -69,10 +70,21 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 
 ---
 
-## Pijler 2 — Herkenbare pijn
+## Pijler 2 — "The Other Shift"
 
-Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-woord — puur herkenning, zodat de lezer zelf de stap zet om te reageren.
+**Doel:** herkenbaarheid via twee vormen die onder dezelfde pijler vallen — generieke herkenbare-pijn-momenten (hoe het is als ondernemer zonder webshop) én persoonlijke oprichters-reis-momenten (hoe het is om Insightance te bouwen naast een fulltime ziekenhuisbaan). Geen les (Pijler 1), geen puur bereik-mechaniek (Pijler 3) — dit is de menselijke, herkenbare stem ertussenin.
 
+**Naam:** "The Other Shift" — woordspeling op Oussama's verpleegkundige-diensten én op het "verschuiven" naar een nieuwe carrière. Bewust gekozen boven generieke namen ("Founder's Notes", "The Build Log") omdat niemand anders deze naam authentiek kan gebruiken.
+
+**Ritme:** wekelijks op **woensdag, 11:00-11:30 uur**. Bewust een vast wekelijks ritme naast dinsdag/donderdag (Pijler 1), niet ingevoegd als vervanging — Oussama wilde dat volgers weten waar ze aan toe zijn (vaste dagen per pijler), met The Fork (Pijler 3, ook op woensdag maar dan 16:00, 2x/maand) als verrassingselement daarbovenop.
+
+**Vorm:** geen afbeelding — bewuste keuze voor afwisseling, want Pijler 1 en 3 gebruiken beide al beeld. Kort: 1-2 zinnen, geen "Entry 01 — Titel 🌙"-achtige opmaak (te gemaakt bevonden, paste niet bij het dagboek-gevoel). In plaats daarvan: 3 hashtags onderaan als enige herkenningspunt.
+
+**Hashtags:** `#TheOtherShift #Entrepreneurship #AIAutomation` — breed + niche + eigen merk, zelfde 2026-onderbouwing als Pijler 1 (85% meer weergaven met minstens 1 hashtag).
+
+**Toon:** geen uitleg, geen oplossing, geen "AI"-woord, puur het moment neerzetten — zelfde basisregel als voorheen. Mag humor/zelfspot bevatten, vooral bij de persoonlijke oprichters-reis-momenten. **Geen CTA.**
+
+**Generieke herkenbare-pijn-onderwerpen (fallback/afwisseling):**
 1. Typing out the same quote from scratch, every single time.
 2. Your calendar is three WhatsApp chats and a sticky note.
 3. A customer calls. Then calls again. Then calls a third time. Same question.
@@ -81,6 +93,40 @@ Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-
 6. A notebook full of notes nobody will ever type up.
 7. A message sitting unanswered for four days because there just wasn't time.
 8. Answering "what are your hours" for the tenth time today.
+
+**Persoonlijke oprichters-reis-momenten, klaar om in te plannen (4 weken):**
+
+Week 1 — opener/kickoff:
+```
+Thought starting a business would be simple.
+Turns out it's a bit more complicated than that.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 2:
+```
+Sent my first automation to a client at midnight after a night shift.
+Still figuring out if that's dedication or a bad habit.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 3:
+```
+Told a friend I was quitting nursing to build AI tools for small businesses.
+He asked if I'd lost my mind. Fair question.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 4:
+```
+Spent my day off building something nobody asked for yet.
+That's most of what building a business actually looks like.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
 
 ---
 
@@ -91,6 +137,8 @@ Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-
 **Ritme:** 2x per maand, los van het dinsdag/donderdag-ritme van de andere twee pijlers. **Woensdag 16:00 uur** — het best presterende individuele tijdslot van de hele week volgens 2026-data (Buffer, Sprout Social, Hootsuite, SocialPilot; gezamenlijk 8M+ posts geanalyseerd). Past ook inhoudelijk goed: rond dat tijdstip scrollen mensen passief (forensen naar huis, avond), precies het "kijk-en-herken"-moment dat dit format nodig heeft — in tegenstelling tot de kennisserie, die actieve leesaandacht vraagt en daarom 's ochtends staat.
 
 **Rode lijn (kernthema):** herkenbare twijfels en onzekerheden blootleggen die zowel kleine als grote ondernemers hebben — niet per se altijd specifiek over automatiseren. Doel: de lezer denkt "haha, ja, dat speelt bij mij ook."
+
+**Geen hashtags, bewust.** In tegenstelling tot Pijler 1 en 2 krijgt The Fork geen hashtags. Dit format groeit via reposts/shares (mensen delen het als hún eigen inzicht), niet via hashtag-zoekopdrachten — dat is een fundamenteel ander bereikmechanisme dan de andere twee pijlers. Zelfs een paar kleine hashtags zouden het net iets te veel als "content" laten aanvoelen in plaats van een spontaan gedeelde gedachte. Alleen de afbeelding plus de ene bijschriftregel, verder niets.
 
 **Vorm — omgekeerd t.o.v. Pijler 1:** bij de kennisserie is de tekst leidend en het beeld ondersteunend. Bij The Fork is het **beeld leidend**; de begeleidende LinkedIn-tekst is minimaal — één woord, een paar woorden, of maximaal één korte zin. Het beeld moet alles al zeggen.
 
@@ -134,6 +182,7 @@ People picture a robot coming for their job, or something out of a sci-fi movie.
 Still think AI is just hype? I'll change your mind, one post at a time.
 
 Episode 1 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
 **Beeld:** gemaakt met de post-afbeelding generator — vraag "What is AI, actually?", antwoord "Not a robot. Not science fiction."
@@ -150,6 +199,7 @@ Not quite, though people use the words interchangeably all the time. Automation 
 40% of self-proclaimed "AI startups" turned out to have barely any AI at all. Just automation with better marketing.
 
 Episode 2 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
 **Beeld:** gemaakt met de post-afbeelding generator — vraag "Is AI the same thing as automation?", antwoord "AI looks first, automation follows."
