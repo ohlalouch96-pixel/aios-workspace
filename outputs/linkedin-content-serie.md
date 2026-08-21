@@ -2,7 +2,7 @@
 
 > Platform: LinkedIn, in het **Engels** (groter bereik dan alleen NL/BE).
 > Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
-> Ritme: 1-2 posts per week, afgewisseld tussen de twee onderstaande pijlers.
+> Ritme: dinsdag + donderdag afgewisseld tussen Pijler 1 en 2, plus "The Fork" (Pijler 3) los daarvan 2x per maand op woensdag.
 > Focus: bredere MKB (niet webshops — dat loopt via Instagram outreach).
 
 ---
@@ -84,7 +84,37 @@ Kort, één herkenbaar ongemak per post. Geen uitleg, geen oplossing, geen "AI"-
 
 ---
 
-## Pijler 3 — Praktijkbewijs (later, zodra er meer cases zijn)
+## Pijler 3 — "The Fork" (bereik-format)
+
+**Doel:** puur bereik. Dit is het enige format specifiek gebouwd om buiten je eigen netwerk te komen via reposts en shares — niet om te onderwijzen (Pijler 1) en niet om herkenning te triggeren (Pijler 2).
+
+**Ritme:** 2x per maand, los van het dinsdag/donderdag-ritme van de andere twee pijlers. **Woensdag 16:00 uur** — het best presterende individuele tijdslot van de hele week volgens 2026-data (Buffer, Sprout Social, Hootsuite, SocialPilot; gezamenlijk 8M+ posts geanalyseerd). Past ook inhoudelijk goed: rond dat tijdstip scrollen mensen passief (forensen naar huis, avond), precies het "kijk-en-herken"-moment dat dit format nodig heeft — in tegenstelling tot de kennisserie, die actieve leesaandacht vraagt en daarom 's ochtends staat.
+
+**Rode lijn (kernthema):** herkenbare twijfels en onzekerheden blootleggen die zowel kleine als grote ondernemers hebben — niet per se altijd specifiek over automatiseren. Doel: de lezer denkt "haha, ja, dat speelt bij mij ook."
+
+**Vorm — omgekeerd t.o.v. Pijler 1:** bij de kennisserie is de tekst leidend en het beeld ondersteunend. Bij The Fork is het **beeld leidend**; de begeleidende LinkedIn-tekst is minimaal — één woord, een paar woorden, of maximaal één korte zin. Het beeld moet alles al zeggen.
+
+**Geen CTA, nooit.** Bewuste keuze: de kracht van dit format zit erin dat mensen het delen als hún eigen inzicht. Zodra er een oproep tot actie bijstaat, wordt het reclame, en reclame deelt niemand als zijn eigen mening. (Pijler 1 heeft via de wisselende afsluiter al een zachte vorm van uitnodiging — dat hoeft hier niet nog eens.)
+
+**Toon:** mag een beetje grens opzoeken, een beetje wrijving of discussie uitlokken (dat is precies wat gedeeld wordt), met een knipoog of luchtige humor. Maar: **altijd de waarheid.** Bij dit format is de feitencheck-regel nog belangrijker dan bij de andere twee pijlers, juist omdat er bewust een beetje geprikkeld wordt.
+
+**Beeldstijl:** decision-tree/vork-diagram, geïnspireerd op een viral LinkedIn-voorbeeld (1.762 likes, 287 reposts). Structuur: "If you [actie]" splitst naar twee mogelijke uitkomsten, tegenover "if you don't/wait/etc." dat uitkomt op één blijvend gevoel. Bewust in een handgeschreven/notitiestijl (crème papier, zwarte tekst, groen/oranje accentkleur) — geen zwart-gouden merkstijl zoals Pijler 1, want dit moet juist niet als gepolijste bedrijfscontent aanvoelen.
+
+**10 onderwerpen, klaar om uit te werken:**
+1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(pilot, al gebouwd)*
+2. Start small vs. wait — start with one task → it works and you scale it / it fails and costs nothing. Wait for the "big" project → you never start at all.
+3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever.
+4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck.
+5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
+6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
+7. Hire vs. automate — automate the repeatable work → costs stay flat as you grow. Hire for it → costs grow every time.
+8. Threat vs. tool — see AI as competition → you spend your energy resisting it. See it as a tool → you spend that energy getting ahead.
+9. One hour now vs. busy forever — spend one hour fixing the process → get that hour back every week after. Stay "too busy" to fix it → stay too busy, forever.
+10. Small business vs. "automation is for big companies" — think it's only for big companies → you fall further behind. Think it's for anyone with a repeatable task → you're already ahead.
+
+---
+
+## Pijler 4 — Praktijkbewijs (later, zodra er meer cases zijn)
 
 Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren als actief) — bewaren tot er betalende klanten zijn, dan pas structureel inzetten.
 

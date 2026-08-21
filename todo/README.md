@@ -29,3 +29,12 @@
 **Status:** Geparkeerd — moet nog steeds gebeuren
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
 **Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel.
+
+---
+
+## LinkedIn Pijler 2 ("Herkenbare pijn") fine-tunen
+
+**Status:** Geparkeerd sinds 2026-08-21
+**Waarom geparkeerd:** Focus lag op het afronden van Pijler 1 (kennisserie) en Pijler 3 ("The Fork") — deze pijler stond al inhoudelijk in `outputs/linkedin-content-serie.md`, maar moet nog verder worden aangescherpt.
+**Wat er nog moet gebeuren:** Bepalen of er wel/geen CTA bij hoort (nog open, zie Pijler 1 en 3 die dit al wel hebben vastgelegd), en de opbouw/toon verder verfijnen zoals bij de andere twee pijlers is gebeurd.
+**Trigger om op te pakken:** Wanneer Oussama er zelf op terugkomt.
