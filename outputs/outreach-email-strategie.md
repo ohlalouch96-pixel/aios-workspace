@@ -104,7 +104,7 @@ Oussama
 > een vraag oplevert.
 
 ```
-Onderwerp: Re: [Winkelnaam] — korte follow-up
+Onderwerp: Re: [Winkelnaam], korte follow-up
 
 Hey [naam],
 
@@ -135,7 +135,7 @@ Ik heb onlangs voor een e-commerce klant een volledige
 email flow gebouwd. Ze sturen nu automatisch drie emails
 naar iedereen die het winkelmandje verlaat.
 
-Geen extra advertentiebudget — alleen meer halen uit
+Geen extra advertentiebudget, alleen meer halen uit
 de bezoekers die ze al hebben.
 
 Zou zoiets ook voor [winkelnaam] werken?
@@ -156,7 +156,7 @@ Hey [naam],
 
 Ik stuur je na dit geen berichten meer over dit onderwerp.
 
-Als de timing nu niet goed is — geen probleem. Mocht je
+Als de timing nu niet goed is, geen probleem. Mocht je
 ooit willen weten hoeveel [winkelnaam] laat liggen,
 weet je me te vinden.
 
@@ -175,3 +175,4 @@ insightance.ai
 - **Winkelnaam + specifiek product in email 1** — bewijst dat je echt hebt gekeken
 - **Reageer binnen enkele uren** op een reactie — momentum vasthouden
 - **Nooit bcc of bulk sturen** — elke mail voelt individueel
+- **Geen gedachtestreepjes (—) in de berichttekst zelf** — klinkt AI-matig, gebruik een punt of komma
