@@ -125,6 +125,10 @@ These are how you know your AIOS is working:
 ├── plans/                   # Implementation plans created by /create-plan
 ├── todo/                    # Geparkeerde ideeën en taken — nog niet actief opgepakt
 │   └── README.md            # De backlog zelf
+├── tools/                   # WAT-tools — deterministieke Python-scripts (herbruikbaar, buiten scripts/collect-flow om)
+│   └── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
+├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
+│   └── source_prospects.md  # SOP bij tools/source_prospects.py
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -165,6 +169,8 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | `outputs/`         | Deliverables, analyses, reports, and work products.                                    |
 | `reference/`       | Helpful docs, templates and patterns to assist in various workflows.                   |
 | `scripts/`         | Automation scripts — added by modules as you install them.                             |
+| `tools/`           | WAT-tools — deterministische Python-scripts voor herhaalbare taken (bv. prospect-sourcing). |
+| `workflows/`       | WAT-workflows — SOP's die beschrijven wanneer/hoe een `tools/`-script aan te roepen.    |
 | `shares/`          | Packaged systems for sharing. Created by `/share`, ready to hand off.                  |
 
 ---
