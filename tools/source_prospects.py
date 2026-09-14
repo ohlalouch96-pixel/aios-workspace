@@ -91,14 +91,23 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 #     "flag_domain_mismatch" in de output) als signaal, maar wijst niet
 #     automatisch af — het is een aanwijzing, geen garantie.
 #   - Marketplace-only / reseller-shops vermijden (geen eigen merk).
+#   - Groot merk / veel volgers vermijden. Voorbeeld: BRUNA The Label (247k+
+#     IG-volgers) kwam door alle mechanische checks heen (eigen merk, geen
+#     domein-mismatch, geen reseller) maar is qua schaal waarschijnlijk al
+#     professioneel geautomatiseerd en dus geen goede fit. Dit script checkt
+#     GEEN volgersaantal (staat niet in de HTML van de webshop zelf) — dit
+#     blijft een handmatige Instagram-check door de agent vlak voor het
+#     versturen van het bericht, niet iets wat de verificatie-pipeline vangt.
 #
 # Land is GEEN afwijzingscriterium meer sinds de campagne internationaal is
 # (2026-09-14). Het wordt alleen informatief in de Notities-kolom gezet.
 SCREENING_REMINDER = (
     "Herinnering: dit script filtert alleen bereikbaarheid, kanaal en dedup. "
     "Loop de 'qualified' resultaten nog handmatig door op laag-ticket niches, "
-    "borderline food-niches (honing/kruiden/azijn), parent-company/schaal-signalen "
-    "en marketplace/reseller-shops voordat je --append gebruikt."
+    "borderline food-niches (honing/kruiden/azijn), parent-company/schaal-signalen, "
+    "marketplace/reseller-shops, EN check het Instagram-volgersaantal (grote merken "
+    "zoals BRUNA The Label met 247k+ volgers zijn waarschijnlijk al professioneel "
+    "geautomatiseerd) voordat je --append gebruikt."
 )
 
 

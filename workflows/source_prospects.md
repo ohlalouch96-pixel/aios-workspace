@@ -36,9 +36,12 @@ kandidaten. Alleen bij een afwijkend land wordt dit in de Notities-kolom gezet.
 Pas hier ook de **screeningcriteria** grofweg toe voordat je een kandidaat
 meeneemt (zie `tools/source_prospects.py`, bovenaan het bestand, voor de
 volledige lijst en voorbeelden — laag-ticket niches, borderline food-niches,
-marketplace/reseller-shops, parent-company-schaal). Het script filtert alleen
-het mechanische deel (bereikbaarheid, kanaal, dedup) — deze judgment calls
-blijven aan de agent.
+marketplace/reseller-shops, parent-company-schaal, groot-merk/volgersaantal).
+Het script filtert alleen het mechanische deel (bereikbaarheid, kanaal, dedup)
+— deze judgment calls blijven aan de agent. Check het Instagram-volgersaantal
+in het bijzonder pas vlak vóór het versturen (niet alleen tijdens sourcing) —
+dat staat niet in de HTML van de webshop en is dus makkelijk te missen
+(voorbeeld: BRUNA The Label, 247k+ volgers, pas na verzending opgemerkt).
 
 ### 2. Verifiëren (dry-run, standaardgedrag)
 
