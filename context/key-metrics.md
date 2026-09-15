@@ -6,27 +6,27 @@
 ## Outreach Status
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 622 |
-| Nog te benaderen | 269 |
-| Benaderd (DM1 ontvangen, cumulatief) | 353 |
-| DM2 ontvangen (cumulatief) | 257 |
-| Volledige DM-reeks doorlopen (Afgerond) | 228 |
-| Gereageerd | 33 |
+| Totaal prospects | 620 |
+| Nog te benaderen | 259 |
+| Benaderd (DM1 ontvangen, cumulatief) | 361 |
+| DM2 ontvangen (cumulatief) | 260 |
+| Volledige DM-reeks doorlopen (Afgerond) | 242 |
+| Gereageerd | 36 |
 | Afgewezen | 1 |
-| Reactieratio (van benaderde prospects) | 9.3% |
+| Reactieratio (van benaderde prospects) | 10.0% |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
 |--------|-------|-------|
-| AUD | 1.6202 | 2026-09-14 |
-| CAD | 1.6041 | 2026-09-14 |
-| GBP | 0.8560 | 2026-09-14 |
-| USD | 1.1551 | 2026-09-14 |
+| AUD | 1.6194 | 2026-09-15 |
+| CAD | 1.6062 | 2026-09-15 |
+| GBP | 0.8558 | 2026-09-15 |
+| USD | 1.1539 | 2026-09-15 |
 
 ## Data Versheid
 | Bron | Laatste Record | Status |
 |------|----------------|--------|
-| fx_rates | 2026-09-14 | Verbonden |
+| fx_rates | 2026-09-15 | Verbonden |
 | meetings | — | Leeg |
 | outreach | 2026-09-15 | Verbonden |
 | staff_registry | — | Leeg |

@@ -20,8 +20,19 @@ op prospects met een offerte-gerelateerd pijnpunt (loodgieters, installateurs, a
 en breid pas uit naar andere pijnpunten (chatbot, boekingssysteem) zodra daar ook een
 werkende demo voor bestaat.
 
-**Toon:** iets formeler dan de webshop-DM's — "Dag [naam]" in plaats van "Hey", passend bij
-een zakelijker doelgroep dan Instagram-webshops.
+**Toon:** iets formeler dan de webshop-DM's, passend bij een zakelijker doelgroep dan
+Instagram-webshops. **Aanhef is tijdsafhankelijk**: "Goedemorgen," / "Goedemiddag," /
+"Goedenavond," in plaats van een vaste "Dag [naam]," — kies op basis van het moment van
+versturen.
+
+**Openingsvraag blijft bewust breed.** Niet aannemen welk proces handmatig gaat (bv. "jullie
+maken vast nog handmatig offertes" als bewering) — dat is een onbewezen claim en kan
+verkeerd overkomen als het niet klopt. In plaats daarvan een open vraag met 2-4 herkenbare
+voorbeelden (bv. offertes opstellen, klantenservice, facturatie, onderhoudsherinneringen),
+zodat de prospect zelf herkent welk voorbeeld bij hen speelt. Zelfde "vraag, geen bewering"-
+principe als bij de webshop-templates. Het bewijs (MHL) hoeft niet aan te sluiten op één van
+de genoemde voorbeelden — het dient alleen als concreet bewijs dat het werk echt gedaan wordt,
+niet als belofte dat dit specifieke voorbeeld hún pijnpunt is.
 
 **Bewijs (echte, geverifieerde cijfers, staan op `docs/resultaten.html`):**
 - MHL Installatieservice: 90% minder tijd per offerte, van twintig minuten handmatig werk
@@ -32,6 +43,14 @@ een zakelijker doelgroep dan Instagram-webshops.
 
 Gebruik altijd het échte cijfer bij een case, nooit een geschatte/verzonnen waarde.
 
+**Algemeen (niet-klant-specifiek) cijfer voor bericht 2:** bedrijven die een paar
+processen automatiseren winnen doorgaans 10-15 uur per week terug (bewust het
+realistische "typische" cijfer, niet het opgeklopte maximum van "tot 20 uur" dat ook
+rondgaat). Bron: McKinsey Global AI Survey 2025 / Business.com 2026 Small Business AI
+Outlook Report. Bewust géén klantnaam noemen in bericht 2 (Oussama's voorkeur, 2026-09-15)
+— voorkomt dat het overkomt alsof er maar één klant is, en een breed onderzoekscijfer
+werkt hier beter dan een enkele case.
+
 ---
 
 ## Berichtenreeks (3 e-mails, 11 dagen totaal)
@@ -39,17 +58,36 @@ Gebruik altijd het échte cijfer bij een case, nooit een geschatte/verzonnen waa
 ### Bericht 1 — Dag 1 (opener)
 
 ```
-Dag [naam],
+[Goedemorgen/Goedemiddag/Goedenavond],
 
-Ik kwam [bedrijfsnaam] tegen en zag dat [specifieke observatie]. Dat kost vermoedelijk
-best wat tijd, [herkenbaar probleem, bv. telkens handmatig offertes uitrekenen en versturen].
+Ik kwam [bedrijfsnaam] tegen, [specifiek, geverifieerd detail over het bedrijf, bv.
+"mooi dat jullie als familiebedrijf al sinds [jaar] actief zijn in [plaats]"]. Ik was
+benieuwd of jullie binnen het bedrijf nog veel processen handmatig doen, denk aan
+offertes opstellen, klantenservice, facturatie of onderhoudsherinneringen.
 
-Ik bouw automatiseringen voor ondernemers en heb laatst voor [vergelijkbaar bedrijf] zoiets
-gemaakt: [concreet gebouwd ding, bv. een tool die in een paar klikken een offerte samenstelt]
+Ik bouw automatiseringen voor ondernemers en heb bijvoorbeeld laatst voor [vergelijkbaar
+bedrijf] een tool gemaakt die in een paar klikken een offerte samenstelt, in plaats van
+uren handmatig werk.
+
+Zou zoiets ook voor jullie kunnen werken? Laat het me weten indien je benieuwd bent,
+dan denk ik vrijblijvend met je mee over welke mogelijkheden er zijn voor [bedrijfsnaam].
+```
+
+Voorbeeld (B van Erve, installatiebedrijf sinds 1932, Amsterdam):
+
+```
+Goedemiddag,
+
+Ik kwam B van Erve tegen, mooi dat jullie als familiebedrijf al sinds 1932 actief zijn
+in Amsterdam. Ik was benieuwd of jullie binnen het bedrijf nog veel processen handmatig
+doen, denk aan offertes opstellen, klantenservice, facturatie of onderhoudsherinneringen.
+
+Ik bouw automatiseringen voor ondernemers en heb bijvoorbeeld laatst voor MHL
+Installatieservice een tool gemaakt die in een paar klikken een offerte samenstelt,
 in plaats van uren handmatig werk.
 
-Zou zoiets ook voor jullie kunnen werken? Laat het me weten, dan denk ik vrijblijvend met
-je mee over hoe dat er voor [bedrijfsnaam] uit zou kunnen zien.
+Zou zoiets ook voor jullie kunnen werken? Laat het me weten indien je benieuwd bent,
+dan denk ik vrijblijvend met je mee over welke mogelijkheden er zijn voor B van Erve.
 ```
 
 Geen ondertekening nodig — de standaard e-mailhandtekening vangt dat al af.
@@ -63,13 +101,13 @@ Geen ondertekening nodig — de standaard e-mailhandtekening vangt dat al af.
 ```
 Onderwerp: Re: [Bedrijfsnaam], korte follow-up
 
-Dag [naam],
+[Goedemorgen/Goedemiddag/Goedenavond],
 
 Korte follow-up op mijn vorige mail.
 
-Bij MHL Installatieservice scheelde de tool die ik gebouwd heb 90% van de tijd: van
-twintig minuten handmatig werk naar één klik. Vergelijkbare tijdswinst zit vaak ook
-ergens in andere bedrijven verstopt.
+Onderzoek naar automatisering bij MKB-bedrijven laat zien dat bedrijven gemiddeld 10
+tot 15 uur per week terugwinnen zodra ze een paar handmatige processen automatiseren.
+Vergelijkbare tijdswinst zit vaak ook ergens in andere bedrijven verstopt.
 
 Is dit iets wat bij jullie ook speelt?
 ```
@@ -83,7 +121,7 @@ Is dit iets wat bij jullie ook speelt?
 ```
 Onderwerp: Laatste bericht van mij
 
-Dag [naam],
+[Goedemorgen/Goedemiddag/Goedenavond],
 
 Ik zal je hierna geen berichten meer sturen over dit onderwerp.
 
