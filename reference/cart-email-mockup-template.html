@@ -1,0 +1,196 @@
+<!--
+Cart-recovery e-mail mockup — herbruikbaar Claude-artifact-sjabloon.
+Zie outputs/outreach-instagram-dm-strategie.md (DM2) en
+outputs/outreach-email-strategie.md voor de volledige workflow.
+
+Gebruik: vraag Claude dit sjabloon te openen en in te vullen met:
+- [Winkelnaam], [voornaam], [Productnaam]
+- het échte logo van de prospect (data:image/...;base64, opgehaald van hun site)
+- een échte productfoto van de prospect (idem)
+- hun merkkleur (uit logo/CSS) als --brand hieronder in plaats van #7C9986
+
+Daarna publiceren als Artifact, Win+Shift+S om alleen het mailkaartje te
+snippen, plakken als afbeelding in de DM/e-mail.
+-->
+<title>Cart Email Mockup</title>
+<style>
+  :root {
+    --chrome-bg: #EDEDEF;
+    --chrome-border: #DADADD;
+    --card-bg: #FFFFFF;
+    --ink: #17171A;
+    --muted: #6B6B72;
+    --faint: #A6A6AC;
+    --line: #EAEAEC;
+    --brand: #17171A;
+    --page-bg: #f5f5f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    padding: 40px 20px 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .intro { max-width: 640px; text-align: center; margin-bottom: 28px; }
+  .intro h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    font-size: 21px;
+    margin: 0 0 6px;
+    color: #222;
+  }
+  .intro p { font-size: 13px; color: #777; margin: 0; }
+
+  .frame {
+    width: 480px;
+    background: var(--chrome-bg);
+    border: 1px solid var(--chrome-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  }
+  .chrome-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--chrome-border);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot.r { background: #FF5F57; }
+  .dot.y { background: #FEBC2E; }
+  .dot.g { background: #28C840; }
+
+  .meta {
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid var(--chrome-border);
+  }
+  .meta-row { display: flex; font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+  .meta-row .lbl { width: 62px; flex-shrink: 0; white-space: nowrap; color: var(--faint); }
+  .meta-row .val { color: var(--ink); font-weight: 500; }
+
+  .email-body {
+    background: var(--card-bg);
+    padding: 36px 36px 34px;
+  }
+
+  .brand-logo { height: 30px; margin-bottom: 30px; display: block; }
+  .brand-word {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    margin-bottom: 30px;
+  }
+
+  .greeting {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.35;
+  }
+  .lead {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #FAFAFA;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 24px;
+  }
+  .cart-thumb {
+    width: 60px; height: 60px;
+    border-radius: 7px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #e4e4e7, #cfcfd4);
+  }
+  .cart-info .cart-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .cart-info .cart-status { font-size: 12px; color: var(--faint); margin-top: 2px; }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--brand);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 14px 0;
+    border-radius: 8px;
+    margin-bottom: 28px;
+  }
+
+  .sign {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .divider { height: 1px; background: var(--line); margin: 28px 0 16px; }
+  .footer {
+    font-size: 10.5px;
+    color: var(--faint);
+    line-height: 1.6;
+  }
+
+  .label-strip {
+    width: 480px;
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #8a8a90;
+  }
+</style>
+
+<div class="intro">
+  <h1>Cart-recovery mail — sjabloon</h1>
+  <p>Vervang [Winkelnaam]/[voornaam]/[Productnaam]. Vervang bij voorkeur ook .brand-word door een echt logo (&lt;img class="brand-logo" src="data:image/...;base64,..."&gt;) en --brand door de echte merkkleur van de prospect. Win+Shift+S om alleen het kaartje te snippen.</p>
+</div>
+
+<div class="frame">
+  <div class="chrome-bar">
+    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+  </div>
+  <div class="meta">
+    <div class="meta-row subject"><span class="lbl">Van</span><span class="val">[Winkelnaam]</span></div>
+    <div class="meta-row subject"><span class="lbl">Onderw.</span><span class="val">Je liet iets achter, [voornaam]</span></div>
+  </div>
+  <div class="email-body">
+    <div class="brand-word">[Winkelnaam]</div>
+    <div class="greeting">Hey [voornaam], dit lag nog in je mandje.</div>
+    <div class="lead">Je was er bijna. [Productnaam] staat nog voor je klaar, maar je bent vertrokken voordat je afrekende.</div>
+
+    <div class="cart-item">
+      <div class="cart-thumb"></div>
+      <div class="cart-info">
+        <div class="cart-name">[Productnaam]</div>
+        <div class="cart-status">Nog beschikbaar in je mandje</div>
+      </div>
+    </div>
+
+    <div class="cta">Ga terug naar je mandje</div>
+
+    <div class="sign">Team [Winkelnaam]</div>
+
+    <div class="divider"></div>
+    <div class="footer">Dit is mail 1 van 3 in een automatische flow. [Winkelnaam] · Uitschrijven</div>
+  </div>
+</div>
+<div class="label-strip"><span>Preview — zo ziet mail 1 eruit bij de klant</span><span>1 / 3</span></div>

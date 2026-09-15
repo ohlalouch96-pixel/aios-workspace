@@ -78,6 +78,17 @@ insightance.ai
 
 ---
 
+### Reactie ontvangen — Toon een voorbeeld
+
+> Als iemand vraagt om iets te zien (zoals bij DM2), stuur dan GEEN platte
+> tekst. Zie `outputs/outreach-instagram-dm-strategie.md` (DM2) voor de
+> volledige uitleg waarom — samengevat: platte tekst met een ASCII-kader
+> oogt als een sjabloon en leidde tot een "is dit een grap?"-reactie
+> (Plantpowders, 2026-09-14). Gebruik in plaats daarvan
+> `reference/cart-email-mockup-template.html`, liefst met het échte logo,
+> een productfoto en de merkkleur van de prospect erin verwerkt. Publiceer
+> als Artifact, snip met Win+Shift+S, stuur als afbeelding.
+
 ### Reactie ontvangen — Plan de call
 
 > Reageer snel (binnen enkele uren). Stel twee concrete tijden voor.

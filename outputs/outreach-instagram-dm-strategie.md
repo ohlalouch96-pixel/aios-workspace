@@ -58,26 +58,34 @@ Ik bouw e-mailautomatiseringen en heb vrijblijvend alvast een voorbeeldmail voor
 
 > Stuur dit zodra ze ja zeggen of interesse tonen.
 
+**Sinds 2026-09-15: stuur een visuele screenshot, geen platte tekst.** De
+oude platte-tekst-versie (ASCII-kader met streepjes) oogde als een sjabloon
+dat iedereen kan typen en leidde tot een "is dit een grap?"-reactie van een
+prospect (Plantpowders, e-mailtrack) — precies het tegenovergestelde van
+"professioneel automatiseringswerk" verkopen. Zie [[project_outreach_ecommerce]]
+voor de volledige diagnose.
+
+**Werkwijze:**
+1. Open `reference/cart-email-mockup-template.html` (of vraag Claude erom),
+   vervang `[Winkelnaam]`/`[voornaam]`/`[Productnaam]`.
+2. Haal bij voorkeur het échte logo, een productfoto en de merkkleur van de
+   prospect's eigen website op (logo meestal in de header/og:image, kleur uit
+   het logo of CSS) en verwerk die in het sjabloon — dit is wat het bericht
+   echt persoonlijk maakt, niet alleen de naam.
+3. Publiceer als Artifact, snip met Win+Shift+S (alleen het mailkaartje),
+   plak als afbeelding in de DM.
+4. Dit kost een paar minuten extra per keer — bewust alleen doen zodra iemand
+   al interesse toont (DM2-moment), niet standaard bij elke DM1.
+
+Begeleidende tekst bij de afbeelding:
+
 ```
 Wat leuk dat je reageert!
 
-Dit is hoe email 1 eruit zou zien voor [winkelnaam]:
+Dit is hoe mail 1 eruit zou zien voor [winkelnaam], zie de screenshot hierboven.
 
-────────────────────────────────────
-ONDERWERP: "Je liet iets achter, [voornaam]"
-
-Hey [voornaam], je had iets gevonden op [winkelnaam]
-maar bent vertrokken voordat je afrekende.
-
-[Productnaam] ligt nog op je te wachten.
-
-→ Ga terug naar mijn mandje
-
-Team [winkelnaam]
-────────────────────────────────────
-
-Dit is email 1 van 3. Zulke flows zijn geheel automatisch en winnen gemiddeld
-10-15% van verlaten mandjes terug, van mensen die al interesse hadden.
+Zulke flows zijn geheel automatisch en winnen gemiddeld 10-15% van verlaten
+mandjes terug, van mensen die al interesse hadden.
 
 Zal ik even een ruwe schatting maken van wat dit voor jullie specifiek oplevert?
 ```

@@ -7,11 +7,11 @@
 | Metric | Waarde |
 |--------|--------|
 | Totaal prospects | 622 |
-| Nog te benaderen | 279 |
-| Benaderd (DM1 ontvangen, cumulatief) | 343 |
-| DM2 ontvangen (cumulatief) | 256 |
-| Volledige DM-reeks doorlopen (Afgerond) | 217 |
-| Gereageerd | 32 |
+| Nog te benaderen | 269 |
+| Benaderd (DM1 ontvangen, cumulatief) | 353 |
+| DM2 ontvangen (cumulatief) | 257 |
+| Volledige DM-reeks doorlopen (Afgerond) | 228 |
+| Gereageerd | 33 |
 | Afgewezen | 1 |
 | Reactieratio (van benaderde prospects) | 9.3% |
 
