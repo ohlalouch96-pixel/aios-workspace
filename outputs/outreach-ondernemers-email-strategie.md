@@ -57,37 +57,42 @@ werkt hier beter dan een enkele case.
 
 ### Bericht 1 — Dag 1 (opener)
 
+> **Sinds 2026-09-28**: "een klant" i.p.v. een klantnaam noemen (bewust, ook in bericht 1
+> — voorkomt dat verschillende prospects in dezelfde branche elkaar tegenkomen met exact
+> dezelfde naam-drop). Zelfintroductie ("ik bouw automatiseringen...") blijft in dezelfde
+> zin als het bewijs, nooit als losse, op zichzelf staande claim (zie Regels).
+
 ```
 [Goedemorgen/Goedemiddag/Goedenavond],
 
 Ik kwam [bedrijfsnaam] tegen, [specifiek, geverifieerd detail over het bedrijf, bv.
 "mooi dat jullie als familiebedrijf al sinds [jaar] actief zijn in [plaats]"]. Ik was
-benieuwd of jullie binnen het bedrijf nog veel processen handmatig doen, denk aan
-offertes opstellen, klantenservice, facturatie of onderhoudsherinneringen.
+benieuwd of jullie nog veel processen handmatig uitvoeren, denk aan offertes opstellen,
+klantenservice, facturatie of onderhoudsherinneringen.
 
-Ik bouw automatiseringen voor ondernemers en heb bijvoorbeeld laatst voor [vergelijkbaar
-bedrijf] een tool gemaakt die in een paar klikken een offerte samenstelt, in plaats van
-uren handmatig werk.
+Ik bouw namelijk automatiseringen voor ondernemers, en heb bijvoorbeeld laatst voor een
+klant een tool gemaakt die in een paar klikken een offerte samenstelt, dat scheelde ze
+90% van de tijd. Zou zoiets ook voor jullie kunnen werken?
 
-Zou zoiets ook voor jullie kunnen werken? Laat het me weten indien je benieuwd bent,
-dan denk ik vrijblijvend met je mee over welke mogelijkheden er zijn voor [bedrijfsnaam].
+Laat het weten indien je benieuwd bent, dan denk ik vrijblijvend met je mee over welke
+mogelijkheden er zijn voor [bedrijfsnaam].
 ```
 
-Voorbeeld (B van Erve, installatiebedrijf sinds 1932, Amsterdam):
+Voorbeeld (Installatiebedrijf Knibbeler, familiebedrijf sinds 1941, Hoensbroek):
 
 ```
 Goedemiddag,
 
-Ik kwam B van Erve tegen, mooi dat jullie als familiebedrijf al sinds 1932 actief zijn
-in Amsterdam. Ik was benieuwd of jullie binnen het bedrijf nog veel processen handmatig
-doen, denk aan offertes opstellen, klantenservice, facturatie of onderhoudsherinneringen.
+Ik kwam Installatiebedrijf Knibbeler tegen, mooi dat jullie als familiebedrijf al sinds
+1941 actief zijn in Hoensbroek. Ik was benieuwd of jullie nog veel processen handmatig
+uitvoeren, denk aan offertes opstellen, klantenservice, facturatie of onderhoudsherinneringen.
 
-Ik bouw automatiseringen voor ondernemers en heb bijvoorbeeld laatst voor MHL
-Installatieservice een tool gemaakt die in een paar klikken een offerte samenstelt,
-in plaats van uren handmatig werk.
+Ik bouw namelijk automatiseringen voor ondernemers, en heb bijvoorbeeld laatst voor een
+klant een tool gemaakt die in een paar klikken een offerte samenstelt, dat scheelde ze
+90% van de tijd. Zou zoiets ook voor jullie kunnen werken?
 
-Zou zoiets ook voor jullie kunnen werken? Laat het me weten indien je benieuwd bent,
-dan denk ik vrijblijvend met je mee over welke mogelijkheden er zijn voor B van Erve.
+Laat het weten indien je benieuwd bent, dan denk ik vrijblijvend met je mee over welke
+mogelijkheden er zijn voor Installatiebedrijf Knibbeler.
 ```
 
 Geen ondertekening nodig — de standaard e-mailhandtekening vangt dat al af.
@@ -156,16 +161,38 @@ Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag even verbinden.
 
 ### Bericht 1 — opener (na verbinden, of direct als al verbonden)
 
+> **Sinds 2026-09-28**: definitieve versie, gespiegeld aan de e-mailversie (compliment →
+> open vraag met voorbeelden → zelfintro + bewijs, "een klant" i.p.v. klantnaam → CTA met
+> bedrijfsnaam genoemd), alleen ingekort per zin voor het LinkedIn-tempo. Compliment en
+> vraag staan in dezelfde alinea (geen enter ertussen).
+
 ```
 Dag [naam],
 
-Mooi wat jullie bij [bedrijfsnaam] doen. Ik bouw automatiseringen voor ondernemers,
-denk aan offertes, klantenservice of facturatie die nu nog handmatig gaan.
+Mooi wat jullie bij [bedrijfsnaam] doen, [compliment, iets specifieks]. Ik was benieuwd
+of jullie nog veel handmatig doen, denk aan offertes, klantenservice, facturatie of
+onderhoudsherinneringen.
 
-Bij [vergelijkbaar bedrijf] heb ik bijvoorbeeld een tool gebouwd die een offerte in
-een paar klikken samenstelt.
+Ik bouw automatiseringen voor ondernemers, en heb bijvoorbeeld voor een klant een tool
+gebouwd die een offerte in een paar klikken samenstelt, dat scheelde ze 90% van de tijd.
 
-Zou zoiets ook iets voor jullie kunnen zijn? Laat het gerust weten.
+Zou zoiets ook voor [bedrijfsnaam] kunnen werken? Ik kijk het graag vrijblijvend met je door.
+```
+
+Voorbeeld (Root BV Loodgietersbedrijf, opgericht 1980, Amsterdam):
+
+```
+Dag [naam],
+
+Mooi wat jullie bij Root BV Loodgietersbedrijf doen, al sinds 1980 actief in Amsterdam.
+Ik was benieuwd of jullie nog veel handmatig doen, denk aan offertes, klantenservice,
+facturatie of onderhoudsherinneringen.
+
+Ik bouw automatiseringen voor ondernemers, en heb bijvoorbeeld voor een klant een tool
+gebouwd die een offerte in een paar klikken samenstelt, dat scheelde ze 90% van de tijd.
+
+Zou zoiets ook voor Root BV Loodgietersbedrijf kunnen werken? Ik kijk het graag
+vrijblijvend met je door.
 ```
 
 ### ↓ 5 dagen wachten, geen reactie ↓
