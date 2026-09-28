@@ -133,6 +133,67 @@ Succes met [bedrijfsnaam]!
 
 ---
 
+---
+
+## LinkedIn-variant (vastgelegd 2026-09-28)
+
+Zelfde structuur en inhoud als de e-mailreeks hierboven, maar korter en directer —
+LinkedIn-berichten worden gescand, niet gelezen zoals een e-mail. Zelfde regels gelden
+onverkort: open vraag i.p.v. aanname, geen klantnaam in bericht 2, alleen echte cijfers.
+
+**Kanaalvoorkeur:** LinkedIn heeft de voorkeur boven e-mail, maar ALLEEN als er een
+vindbare persoon is (eigenaar/medewerker) — een bedrijfspagina heeft geen DM-inbox en
+telt niet. Geen persoon vindbaar → gewoon e-mail, geen tijd verspillen aan LinkedIn.
+
+### Connectieverzoek (alleen als nog niet verbonden, max ~300 tekens)
+
+> Houd dit bewust licht en niet-salesy — het doel is alleen een geaccepteerde
+> connectie, niet meteen pitchen. Pitchen verlaagt de acceptatiekans.
+
+```
+Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag even verbinden.
+```
+
+### Bericht 1 — opener (na verbinden, of direct als al verbonden)
+
+```
+Dag [naam],
+
+Mooi wat jullie bij [bedrijfsnaam] doen. Ik bouw automatiseringen voor ondernemers,
+denk aan offertes, klantenservice of facturatie die nu nog handmatig gaan.
+
+Bij [vergelijkbaar bedrijf] heb ik bijvoorbeeld een tool gebouwd die een offerte in
+een paar klikken samenstelt.
+
+Zou zoiets ook iets voor jullie kunnen zijn? Laat het gerust weten.
+```
+
+### ↓ 5 dagen wachten, geen reactie ↓
+
+### Bericht 2 — follow-up + sociaal bewijs
+
+```
+Dag [naam],
+
+Nog even opvolgend: onderzoek laat zien dat bedrijven gemiddeld 10-15 uur per week
+terugwinnen door een paar processen te automatiseren.
+
+Speelt dit ook bij jullie?
+```
+
+### ↓ 5 dagen wachten, geen reactie ↓
+
+### Bericht 3 — afsluiting
+
+```
+Dag [naam],
+
+Laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant
+worden, je weet me te vinden. Succes met [bedrijfsnaam]!
+```
+
+---
+
 ## Regels
 
 - **Geen gedachtestreepjes (—) in de berichttekst zelf** — klinkt AI-matig, gebruik een punt of komma.
@@ -146,8 +207,8 @@ Succes met [bedrijfsnaam]!
 
 ## Nog te doen
 
-- LinkedIn-variant: zelfde structuur, maar korter/krachtiger, meer als DM-toon (nog niet uitgewerkt).
-- Sourcing-methode voor prospects: gratis Nederlandse bedrijvengidsen (geen Google Maps
-  API, kost geld) — nog niet gebouwd, alleen als plan vastgelegd.
+- Sourcing-methode voor prospects: WebSearch + curl-verificatie werkt (bevestigd
+  2026-09-15), gratis Nederlandse bedrijvengidsen bleken onbetrouwbaar (geen
+  consistente eigen-website-link) — nog niet opgeschaald tot een grote wachtrij.
 - Tweede demo (bijv. chatbot) nodig voordat de outreach breder dan offerte-gerelateerde
   pijnpunten kan gaan.
