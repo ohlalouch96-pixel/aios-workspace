@@ -108,13 +108,12 @@ Onderwerp: Re: [Bedrijfsnaam], korte follow-up
 
 [Goedemorgen/Goedemiddag/Goedenavond],
 
-Korte follow-up op mijn vorige mail.
+Korte follow-up op mijn vorige mail. Onderzoek naar automatisering bij ondernemers
+laat zien dat ze gemiddeld 10 tot 15 uur per week terugwinnen zodra ze een paar
+handmatige processen automatiseren. Er valt vaak meer te automatiseren dan
+ondernemers zelf denken.
 
-Onderzoek naar automatisering bij MKB-bedrijven laat zien dat bedrijven gemiddeld 10
-tot 15 uur per week terugwinnen zodra ze een paar handmatige processen automatiseren.
-Vergelijkbare tijdswinst zit vaak ook ergens in andere bedrijven verstopt.
-
-Is dit iets wat bij jullie ook speelt?
+Denk je dat dit ook bij jullie speelt? Laat het gerust weten, dan denk ik met je mee.
 ```
 
 ---
@@ -128,10 +127,9 @@ Onderwerp: Laatste bericht van mij
 
 [Goedemorgen/Goedemiddag/Goedenavond],
 
-Ik zal je hierna geen berichten meer sturen over dit onderwerp.
-
-Mocht je ooit benieuwd zijn hoeveel tijd én geld automatisering jullie kan schelen,
-je weet me te vinden.
+Ik zal je hierna geen berichten meer sturen over dit onderwerp. Mocht je ooit
+benieuwd zijn hoeveel tijd én geld automatisering jullie kan schelen, dan weet je
+me te vinden.
 
 Succes met [bedrijfsnaam]!
 ```
@@ -202,10 +200,10 @@ vrijblijvend met je door.
 ```
 Dag [naam],
 
-Nog even opvolgend: onderzoek laat zien dat bedrijven gemiddeld 10-15 uur per week
-terugwinnen door een paar processen te automatiseren.
+Nog even opvolgend: ondernemers winnen gemiddeld 10-15 uur per week terug door een
+paar processen te automatiseren. Vaak valt er meer te automatiseren dan je zou denken.
 
-Speelt dit ook bij jullie?
+Denk je dat dit ook bij jullie speelt? Laat het gerust weten, dan denk ik met je mee.
 ```
 
 ### ↓ 5 dagen wachten, geen reactie ↓
@@ -216,7 +214,7 @@ Speelt dit ook bij jullie?
 Dag [naam],
 
 Laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant
-worden, je weet me te vinden. Succes met [bedrijfsnaam]!
+worden, dan weet je me te vinden. Succes met [bedrijfsnaam]!
 ```
 
 ---
