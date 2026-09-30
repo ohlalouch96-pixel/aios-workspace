@@ -2,7 +2,7 @@
 
 > Platform: LinkedIn, in het **Engels** (groter bereik dan alleen NL/BE).
 > Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
-> Ritme: dinsdag + donderdag = Pijler 1 (kennisserie). Woensdag 11:00 wekelijks = Pijler 2 ("The Other Shift"). Woensdag 16:00, 2x per maand = Pijler 3 ("The Fork").
+> Ritme: dinsdag + donderdag 10:30 = Pijler 1 (kennisserie). Woensdag 11:00 wekelijks = Pijler 2 ("The Other Shift"). Woensdag 16:00, 2x per maand = Pijler 3 ("The Fork"). Zaterdag 9:30 wekelijks = Pijler 4 ("Myth Check").
 > Focus: bredere MKB (niet webshops — dat loopt via Instagram outreach).
 
 ---
@@ -24,7 +24,13 @@ Vaste afsluiter/herkenning onder elke aflevering:
 
 De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen. Geen ✨ (spreekt "no magic" uit de posts tegen).
 
-**Sjabloon voor de post-afbeelding:** een herbruikbare generator (vraag bovenaan, gouden lijn, antwoord eronder, jouw echte Insightance-logo) staat klaar als Claude-artifact. Vraag Claude om 'm opnieuw te openen of te vernieuwen als je een volgende post gaat maken — typ de vraag en het antwoord in, rechtsklik de afbeelding, kopiëren, klaar.
+**Visuele variatie (vastgelegd 2026-09-30):** de vaste vraag/antwoord-kaart werd na een tijdje té herkenbaar (zelfde beeld, elke post). In plaats daarvan wisselt de afbeeldingsstijl nu **per week** tussen drie vormen, in een vaste cyclus van 3 weken (geldt voor beide posts die week, dinsdag én donderdag samen):
+
+1. **Week 1 — tekst-only:** geen afbeelding, gewoon de posttekst plaatsen. Geen sjabloon nodig.
+2. **Week 2 — scene-kaart:** `reference/linkedin-post-scene-template.html`. Zelfde zwart-gouden merkstijl (Georgia-serif, goud #C2A059, donkere achtergrond), maar in plaats van het tekstblok een klein icoon-scenebeeld met CAPTION (het antwoord) en SUBANSWER (korte ondertitel) eronder.
+3. **Week 3 — carrousel:** `reference/linkedin-post-carousel-template.html`. 3 swipe-slides (SLIDE1 = hook, SLIDE2 = uitleg, SLIDE3 = afsluiter + merk), elk apart snippen en in volgorde uploaden als LinkedIn-document.
+
+Na week 3 weer terug naar week 1 (tekst-only), enzovoort. Vraag Claude om het juiste sjabloon te openen en in te vullen als er een post klaargezet moet worden — CAPTION/SUBANSWER of SLIDE1/2/3 vervangen, publiceren als Artifact, Win+Shift+S. Geldt alleen voor Pijler 1 — Pijler 3 heeft al een eigen, bewust andere beeldstijl (zie verderop) en blijft ongewijzigd.
 
 ---
 
@@ -56,6 +62,8 @@ Dus maximaal 5 regels/alinea's totaal, niet een reeks korte blokjes met witruimt
 ---
 
 ## Pijler 1 — Kennisserie ("Automation Simplified")
+
+**Ritme:** dinsdag + donderdag, **10:30 uur** (vastgelegd 2026-08-27). Ochtend bewust gekozen omdat deze serie actieve leesaandacht vraagt, in tegenstelling tot bijvoorbeeld The Fork dat juist op een passief scroll-moment staat (woensdag 16:00). Onderbouwd met 2026-data (Sprout Social, Buffer, SocialPilot): 10:00-12:00 is een sterk venster op dinsdag/donderdag.
 
 Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een herkenbare situatie.
 
@@ -164,7 +172,44 @@ That's most of what building a business actually looks like.
 
 ---
 
-## Pijler 4 — Praktijkbewijs (later, zodra er meer cases zijn)
+## Pijler 4 — "Myth Check"
+
+**Ontstaan:** idee kwam van Oussama via mobiel (2026-08-27), los van de andere drie pijlers. Doel: mythes rondom AI-automatisering ontkrachten, elke week één mythe die ondernemers (klein én groot, geen specifieke doelgroep benoemd) daadwerkelijk hardop zeggen — niet abstracte "AI neemt de wereld over"-mythes, maar iets waarbij de lezer denkt "hè, dat zeg ik ook weleens."
+
+**Ritme:** wekelijks op **zaterdag, 9:30 uur**. Vult bewust het gat vrijdag-maandag op, naast dinsdag/donderdag (Pijler 1) en woensdag (Pijler 2 en 3). Onderbouwd met 2026-data (Sprout Social, Buffer, SocialPilot, 4,8M+ posts): zondag is de zwakste dag van de week (50-70% lagere engagement dan doordeweeks), maar zaterdagochtend rond 9-10 uur is een uitzondering specifiek voor content in de hoek van ondernemerschap/persoonlijke ontwikkeling, omdat er dan 50% minder gepost wordt (minder concurrentie om aandacht).
+
+**Vorm:** geen afbeelding. **Eén mythe per post**, niet meerdere. Toon mag informeler/losser dan de andere pijlers, past bij een zaterdagochtend-moment waarop niemand op zware kost zit te wachten.
+
+**Vaste opbouw:**
+1. **Openingszin** — de mythe zelf, als quote, op zijn eigen regel (dat is meteen de eigenstandige hook)
+2. **Eén lopende alinea** — kort benoemen dat dit vaak gehoord wordt + de ontkrachting. Let op: de ontkrachting moet het achterliggende punt raken, niet alleen de bewering herhalen in andere woorden (voorbeeld van een zwakke ontkrachting die is afgekeurd: "you don't need to be ready, it runs in the background" — dat is geen argument, dat is de bewering herformuleren)
+3. **CTA** — wisselt per post, sluit aan bij de mythe van die week (dus geen vaste herhaalde zin zoals bij Pijler 1's afsluiter-variatie, maar per week specifiek op maat geschreven)
+4. **Hashtags** — `#Business #AIAutomation #MythCheck` (breed + niche + eigen merk, geen doelgroep-specifieke tag zoals #SmallBusiness, want de mythes gelden voor bedrijven van elke omvang)
+
+**Terminologie-check (2026-08-27):** LinkedIn gebruikt zelf "DM"/"direct message", niet "PM" (dat hoort meer bij Facebook/Reddit) — "DM me" in een CTA is dus correct LinkedIn-taalgebruik, geen Instagram-term.
+
+**Week 1, klaar om te posten:**
+```
+"I'm not ready for this yet."
+
+Fair, but ready for what exactly? You don't need to understand how any of it works, and you're not the one building it. It runs quietly in the background while your day looks exactly the same. The businesses already doing this aren't more ready than you, they just stopped waiting.
+
+Feel like you're not ready? Let's find out together. No strings attached. DM me.
+
+#Business #AIAutomation #MythCheck
+```
+
+**Onderwerpen-voorraad, volgende weken (nog uit te werken tot volledige post):**
+- Week 2: "AI automation isn't secure enough."
+- Week 3: "It costs me too much time and energy."
+- Week 4: "It costs me too much money."
+- Week 5: "I already have this, my platform sends abandoned cart reminders by default."
+- Week 6: "This will make my customer contact feel impersonal."
+- Week 7: "I tried something like this once, it didn't work."
+
+---
+
+## Pijler 5 — Praktijkbewijs (later, zodra er meer cases zijn)
 
 Nu alleen MHL en FTUK beschikbaar (FTUK: gesloten project, niet meer presenteren als actief) — bewaren tot er betalende klanten zijn, dan pas structureel inzetten.
 
