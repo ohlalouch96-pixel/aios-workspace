@@ -92,15 +92,71 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 
 **Toon:** geen uitleg, geen oplossing, geen "AI"-woord, puur het moment neerzetten — zelfde basisregel als voorheen. Mag humor/zelfspot bevatten, vooral bij de persoonlijke oprichters-reis-momenten. **Geen CTA.**
 
-**Generieke herkenbare-pijn-onderwerpen (fallback/afwisseling):**
-1. Typing out the same quote from scratch, every single time.
-2. Your calendar is three WhatsApp chats and a sticky note.
-3. A customer calls. Then calls again. Then calls a third time. Same question.
-4. Chasing which invoice got paid, from memory.
-5. Two clients booked for the same hour. Again.
-6. A notebook full of notes nobody will ever type up.
-7. A message sitting unanswered for four days because there just wasn't time.
-8. Answering "what are your hours" for the tenth time today.
+**Generieke herkenbare-pijn-momenten, klaar om in te plannen (8 weken, aansluitend op de 4 persoonlijke weken hierboven):**
+
+Week 5:
+```
+Typing out the same quote from scratch, every single time.
+Same numbers, different day.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 6:
+```
+Your calendar is three WhatsApp chats and a sticky note.
+Somehow it still works. Somehow.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 7:
+```
+A customer calls. Then calls again. Then calls a third time.
+Same question, every time.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 8:
+```
+Chasing which invoice got paid, from memory.
+Spreadsheet says one thing. Bank says another.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 9:
+```
+Two clients booked for the same hour. Again.
+The calendar did not book itself.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 10:
+```
+A notebook full of notes nobody will ever type up.
+Somewhere in there is a good idea.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 11:
+```
+A message sitting unanswered for four days because there just wasn't time.
+It's still sitting there.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
+
+Week 12:
+```
+Answering "what are your hours" for the tenth time today.
+Every business owner's least favorite trivia question.
+
+#TheOtherShift #Entrepreneurship #AIAutomation
+```
 
 **Persoonlijke oprichters-reis-momenten, klaar om in te plannen (4 weken):**
 
@@ -199,13 +255,53 @@ Feel like you're not ready? Let's find out together. No strings attached. DM me.
 #Business #AIAutomation #MythCheck
 ```
 
-**Onderwerpen-voorraad, volgende weken (nog uit te werken tot volledige post):**
-- Week 2: "AI automation isn't secure enough."
-- Week 3: "It costs me too much time and energy."
-- Week 4: "It costs me too much money."
-- Week 5: "I already have this, my platform sends abandoned cart reminders by default."
-- Week 6: "This will make my customer contact feel impersonal."
-- Week 7: "I tried something like this once, it didn't work."
+**Onderwerpen-voorraad, volgende weken:**
+- Week 2: "AI automation isn't secure enough." *(nog uit te werken)*
+- Week 3: "It costs me too much time and energy." *(nog uit te werken)*
+
+Week 4, klaar om te posten:
+```
+"It costs me too much money."
+
+Usually said before anyone's actually gotten a quote. A small, targeted automation costs a fraction of what most business owners assume, often less than a single month of the manual labor it replaces. The real cost comparison isn't automation versus free, it's automation versus paying someone, every week, forever, to do the same repetitive task.
+
+Curious what it would actually cost for your specific process? DM me, no obligation, just real numbers.
+
+#Business #AIAutomation #MythCheck
+```
+
+Week 5, klaar om te posten:
+```
+"I already have this, my platform sends abandoned cart reminders by default."
+
+Sounds right, until you check what "default" actually means. Most platforms send exactly one generic email, not personalized, not tested, easy to miss in a crowded inbox. A real flow is three emails, timed differently, each doing a different job, built around your actual products. One default email and a real flow aren't the same thing wearing different names.
+
+Not sure which one you actually have running? DM me, I'll help you check in five minutes.
+
+#Business #AIAutomation #MythCheck
+```
+
+Week 6, klaar om te posten:
+```
+"This will make my customer contact feel impersonal."
+
+The instinct makes sense, nobody wants to sound like a robot. But most of what gets automated is the boring first draft, not the relationship. A message written to actually match a customer's name, their product, their exact moment in the process reads more personal than the generic "Dear customer" template a lot of businesses send by hand today. Automation done right removes the boring parts, not the personal ones.
+
+Want to see what a personalized version actually looks like? DM me, happy to show you.
+
+#Business #AIAutomation #MythCheck
+```
+
+Week 7, klaar om te posten:
+```
+"I tried something like this once, it didn't work."
+
+Usually true, and usually not really about automation itself. A lot of first attempts fail because of a generic template nobody adjusted to fit the actual business, or a tool that was more complicated to run than the manual process it replaced. That's a bad implementation, not proof the idea doesn't work. The businesses getting real results this year are running the second or third version, not the first.
+
+What went wrong the first time around? DM me, let's figure out if it's fixable.
+
+#Business #AIAutomation #MythCheck
+```
 
 ---
 
