@@ -41,7 +41,20 @@ Het script filtert alleen het mechanische deel (bereikbaarheid, kanaal, dedup)
 — deze judgment calls blijven aan de agent. Check het Instagram-volgersaantal
 in het bijzonder pas vlak vóór het versturen (niet alleen tijdens sourcing) —
 dat staat niet in de HTML van de webshop en is dus makkelijk te missen
-(voorbeeld: BRUNA The Label, 247k+ volgers, pas na verzending opgemerkt).
+(voorbeelden: BRUNA The Label, 247k+ volgers, pas na verzending opgemerkt;
+MATE the Label/Fleuron Paris/Ateliers Auguste, 500k+/140k+/116k volgers,
+herhaling van dezelfde fout op 2026-10-01 omdat deze stap werd overgeslagen
+bij het klaarzetten van een batch).
+
+**Verplichte stap, elke keer voordat een batch met nieuwe berichten aan
+Oussama wordt gepresenteerd:** voor elke kandidaat met een Instagram-kanaal,
+check het volgersaantal via `WebSearch` met de query `"<handle>" instagram
+followers` — directe `curl` naar instagram.com-profielpagina's werkt niet
+(geeft een lege, client-side-gerenderde shell terug zonder volgersdata,
+getest 2026-10-01). Richtlijn: **boven ~50k volgers uitsluiten** (heeft
+waarschijnlijk al een eigen marketing/development-team of bureau) — bij
+twijfel rond die grens, Oussama laten meebeslissen in plaats van zelf te
+filteren.
 
 ### 2. Verifiëren (dry-run, standaardgedrag)
 
