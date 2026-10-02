@@ -154,7 +154,7 @@ telt niet. Geen persoon vindbaar → gewoon e-mail, geen tijd verspillen aan Lin
 > connectie, niet meteen pitchen. Pitchen verlaagt de acceptatiekans.
 
 ```
-Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag even verbinden.
+Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag verbinden.
 ```
 
 ### Bericht 1 — opener (na verbinden, of direct als al verbonden)
