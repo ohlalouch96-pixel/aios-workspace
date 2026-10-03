@@ -73,8 +73,8 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 4. No, AI is not coming for your job — here's what it actually does *(gepost)*
 5. What a "workflow" actually means, in plain English *(klaar, Week 1 van de rotatie — tekst-only)*
 6. How to know if a task is worth automating *(klaar, zelfde rotatieweek — tekst-only)*
-7. Chatbot vs. automation — not the same thing
-8. Why starting small beats automating everything at once
+7. Chatbot vs. automation — not the same thing *(klaar, week 13 okt — scene-kaart)*
+8. Why starting small beats automating everything at once *(klaar, zelfde rotatieweek — scene-kaart)*
 
 ---
 
@@ -217,8 +217,8 @@ That's most of what building a business actually looks like.
 **10 onderwerpen, klaar om uit te werken:**
 1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(gepost, als "Automation, in one picture")*
 2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gepost, als "Progress, in one picture")*
-3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(klaar om te posten, afbeelding gebouwd — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA)*
-4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(al gebouwd)*
+3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(klaar om te posten, afbeelding gebouwd — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA — nog niet ingepland, zie onder)*
+4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(ingepland voor woensdag 7 okt 16:00, al in LinkedIn's planner gezet voordat topic 3 werd gebouwd)*
 5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
 6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
 7. Hire vs. automate — automate the repeatable work → costs stay flat as you grow. Hire for it → costs grow every time.
@@ -405,6 +405,40 @@ What's something you do constantly that you've never actually timed?
 Episode 6 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
+
+---
+
+**Episode 07 — Chatbot vs. automation, not the same thing — klaar om te posten, week van 13 okt = Week 2 van de rotatie (scene-kaart)**
+
+```
+People think a chatbot and automation are the same thing.
+
+A chatbot is one specific tool, something a visitor types into and gets an answer back from. Automation is much bigger than that, it's any process that runs on its own once it's set up, a chatbot included, but also reminder emails, lead routing, invoice follow-ups, dozens of things that have nothing to do with typing into a box. Example: a chatbot answering "what are your hours" is automation, but so is the invoice reminder that goes out automatically three days late, with nobody typing anything at all.
+
+Which one does your business actually need, a thing people talk to, or a thing that just quietly works?
+
+Episode 7 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** scene-kaart, CAPTION "A chatbot is one tool.", SUBANSWER "Automation is everything else."
+
+---
+
+**Episode 08 — Why starting small beats automating everything at once — klaar om te posten, zelfde rotatieweek als Episode 7 (scene-kaart)**
+
+```
+Trying to automate everything at once usually backfires.
+
+Start with one task, the most repetitive, most annoying one, and get that working first. You learn what actually matters for your business along the way, instead of guessing upfront. Example: automating just your cart-recovery emails first teaches you more about what your customers respond to than building ten different automations at once ever would, and if something breaks, you're fixing one thing instead of hunting through ten.
+
+What's the one task you'd automate first, if you only got to pick one?
+
+Episode 8 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** scene-kaart, CAPTION "Start with one.", SUBANSWER "Not ten at once."
 
 ---
 
