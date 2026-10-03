@@ -28,7 +28,9 @@ De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen
 
 1. **Week 1 — tekst-only:** geen afbeelding, gewoon de posttekst plaatsen. Geen sjabloon nodig.
 2. **Week 2 — scene-kaart:** `reference/linkedin-post-scene-template.html`. Zelfde zwart-gouden merkstijl (Georgia-serif, goud #C2A059, donkere achtergrond), maar in plaats van het tekstblok een klein icoon-scenebeeld met CAPTION (het antwoord) en SUBANSWER (korte ondertitel) eronder. **Belangrijk (sinds 2026-10-03):** de dinsdag- en donderdagpost van dezelfde week gebruiken allebei een scene-kaart, maar niet hetzelfde icoon — elke scene wordt apart ontworpen, passend bij het onderwerp van die aflevering. Het standaard sjabloon-icoon (cirkel-cirkel-vinkje) is alleen een startpunt, niet de vaste afbeelding voor elke scene-kaart-week.
-3. **Week 3 — carrousel:** `reference/linkedin-post-carousel-template.html`. 3 swipe-slides (SLIDE1 = hook, SLIDE2 = uitleg, SLIDE3 = afsluiter + merk), elk apart snippen en in volgorde uploaden als LinkedIn-document.
+3. **Week 3 — quote-kaart:** *(vervangt carrousel, zie hieronder)*. Grote, typografische kaart zonder icoon: een uitvergroot aanhalingsteken als vormgevend element, met de sterkste regel uit de post groot uitgelicht erover. Zelfde zwart-gouden merkstijl, maar typografie-geleid in plaats van icoon-geleid — bewust een heel andere compositie dan de scene-kaart.
+
+**Carrousel afgeschaft (2026-10-10):** bleek niet te plannen via de tool waarmee Oussama zijn LinkedIn-posts inplant — die ondersteunt alleen tekst + één afbeelding, geen meerdere documentslides. De quote-kaart hierboven is de vervanging voor Week 3 van de rotatie, ook enkele afbeelding, geen carrousel meer gebruiken.
 
 Na week 3 weer terug naar week 1 (tekst-only), enzovoort. Vraag Claude om het juiste sjabloon te openen en in te vullen als er een post klaargezet moet worden — CAPTION/SUBANSWER of SLIDE1/2/3 vervangen, publiceren als Artifact, Win+Shift+S. Geldt alleen voor Pijler 1 — Pijler 3 heeft al een eigen, bewust andere beeldstijl (zie verderop) en blijft ongewijzigd.
 
@@ -75,8 +77,8 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 6. How to know if a task is worth automating *(klaar, zelfde rotatieweek — tekst-only)*
 7. Chatbot vs. automation — not the same thing *(klaar, week 13 okt — scene-kaart)*
 8. Why starting small beats automating everything at once *(klaar, zelfde rotatieweek — scene-kaart)*
-9. What happens when an automation breaks? *(nieuw, klaar voor week 20 okt — carrousel)*
-10. The real reason most automation projects fail *(nieuw, klaar voor week 20 okt — carrousel)*
+9. What happens when an automation breaks? *(nieuw, klaar voor week 20 okt — quote-kaart)*
+10. The real reason most automation projects fail *(nieuw, klaar voor week 20 okt — quote-kaart)*
 
 ---
 
@@ -444,7 +446,7 @@ Episode 8 of "Automation Simplified" ⚡
 
 ---
 
-**Episode 09 — What happens when an automation breaks? — klaar om te posten, week van 20 okt = Week 3 van de rotatie (carrousel), nieuw onderwerp**
+**Episode 09 — What happens when an automation breaks? — klaar om te posten, week van 20 okt = Week 3 van de rotatie (quote-kaart), nieuw onderwerp**
 
 ```
 What happens when an automation breaks?
@@ -457,11 +459,11 @@ Episode 9 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** carrousel, SLIDE1 "What happens when an automation breaks?", SLIDE2 "A human gets notified the moment it happens. Good automation isn't a black box, it's built with a fallback.", SLIDE3 "A heads up, fast. Not silence for weeks."
+**Beeld:** quote-kaart, uitgelichte regel "Good automation isn't a black box. It's built with a fallback."
 
 ---
 
-**Episode 10 — The real reason most automation projects fail — klaar om te posten, zelfde rotatieweek als Episode 9 (carrousel), nieuw onderwerp**
+**Episode 10 — The real reason most automation projects fail — klaar om te posten, zelfde rotatieweek als Episode 9 (quote-kaart), nieuw onderwerp**
 
 ```
 Most automation projects don't fail because of the technology.
@@ -474,7 +476,7 @@ Episode 10 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** carrousel, SLIDE1 "Most automation projects don't fail because of the technology.", SLIDE2 "They fail because the process underneath was already broken. Automating a mess just makes it move faster.", SLIDE3 "Fix the process first. Then automate it."
+**Beeld:** quote-kaart, uitgelichte regel "Fix the process first. Then automate it."
 
 ---
 

@@ -1,0 +1,90 @@
+<title>LinkedIn Post — Quote Card</title>
+<style>
+  :root {
+    --bg: #16151a;
+    --ink: #ECE8E0;
+    --muted: #8B8880;
+    --accent: #C2A059;
+    --page-bg: #0a0a0c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .intro { max-width: 640px; text-align: center; margin-bottom: 28px; }
+  .intro h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400; font-size: 21px; margin: 0 0 6px; color: #ECE8E0;
+  }
+  .intro p { font-size: 13px; color: #77757c; margin: 0; }
+
+  .post {
+    width: 480px; height: 600px;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    padding: 44px;
+    color: var(--ink);
+    box-shadow: 0 0 0 1px #262530;
+    position: relative;
+    overflow: hidden;
+  }
+  .eyebrow {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--accent); opacity: 0.7; }
+
+  .mark {
+    font-family: Georgia, serif;
+    font-size: 150px;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.28;
+    position: absolute;
+    top: 88px;
+    left: 36px;
+    user-select: none;
+  }
+
+  .quote-wrap { flex: 1; display: flex; align-items: center; }
+  .quote {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 34px; font-weight: 600; line-height: 1.32;
+    text-wrap: balance;
+    position: relative;
+    z-index: 1;
+  }
+
+  .rule { width: 46px; height: 2px; background: var(--accent); margin-bottom: 18px; }
+  .brand {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #57565c;
+  }
+
+  .hint {
+    margin-top: 20px; font-size: 12px; color: #57565c; text-align: center; max-width: 480px;
+  }
+</style>
+
+<div class="intro">
+  <h1>LinkedIn post — quote-kaart</h1>
+  <p>Herbruikbare "Week 3"-stijl, vervangt carrousel (niet te plannen via Oussama's tool). Vul QUOTE hieronder in met de sterkste regel uit de post, publiceer als Artifact, snip met Win+Shift+S.</p>
+</div>
+
+<div class="post">
+  <div class="eyebrow">Automation Simplified</div>
+  <div class="mark">&ldquo;</div>
+  <div class="quote-wrap">
+    <div class="quote">QUOTE — de sterkste regel uit de post, groot uitgelicht</div>
+  </div>
+  <div class="rule"></div>
+  <div class="brand">Insightance</div>
+</div>
+<div class="hint">Snip alleen het kaartje hierboven (niet deze hint-tekst). Pas .quote font-size iets aan (28-38px) als de tekst langer of korter is dan dit voorbeeld.</div>
