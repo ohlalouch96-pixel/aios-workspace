@@ -79,6 +79,8 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 8. Why starting small beats automating everything at once *(klaar, zelfde rotatieweek — scene-kaart)*
 9. What happens when an automation breaks? *(nieuw, klaar voor week 20 okt — quote-kaart)*
 10. The real reason most automation projects fail *(nieuw, klaar voor week 20 okt — quote-kaart)*
+11. Automation vs. hiring more people *(nieuw, klaar voor week 27 okt — tekst-only, nieuwe rotatiecyclus)*
+12. You don't need to understand the technology to use it *(nieuw, klaar voor week 27 okt — tekst-only)*
 
 ---
 
@@ -221,7 +223,7 @@ That's most of what building a business actually looks like.
 **10 onderwerpen, klaar om uit te werken:**
 1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(gepost, als "Automation, in one picture")*
 2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gepost, als "Progress, in one picture")*
-3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(klaar om te posten, afbeelding gebouwd — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA — nog niet ingepland, zie onder)*
+3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(ingepland voor woensdag 28 okt 16:00 — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA)*
 4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(ingepland voor woensdag 7 okt 16:00, al in LinkedIn's planner gezet voordat topic 3 werd gebouwd)*
 5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
 6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
@@ -477,6 +479,36 @@ Episode 10 of "Automation Simplified" ⚡
 ```
 
 **Beeld:** quote-kaart, uitgelichte regel "Fix the process first. Then automate it."
+
+---
+
+**Episode 11 — Automation vs. hiring more people — klaar om te posten, week van 27 okt = nieuwe rotatiecyclus, Week 1 (tekst-only), nieuw onderwerp**
+
+```
+At some point, every growing business asks the same question: hire, or automate?
+
+Hiring makes sense when the work needs judgment, a conversation, a decision only a person can make. Automating makes sense when the work is the same every time, the same email, the same reminder, the same five questions. Example: hiring a part-time assistant to answer repetitive questions costs more every single month as you grow, while automating those same questions costs roughly the same whether you have ten customers or a thousand.
+
+Which one of your repeated tasks still needs a person, and which one just needs a system?
+
+Episode 11 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+---
+
+**Episode 12 — You don't need to understand the technology to use it — klaar om te posten, zelfde rotatieweek als Episode 11 (tekst-only), nieuw onderwerp**
+
+```
+You don't need to understand how AI works to actually use it.
+
+Nobody expects a driver to understand a combustion engine before getting in the car, automation works the same way. You describe the problem, someone else builds the system, you just use it. Example: a business owner doesn't need to know what an API is to get an automatic reply sent to a customer, they just need to know the reply goes out and works.
+
+I spent years in healthcare before touching a line of code. The technology was never the hard part.
+
+Episode 12 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
 
 ---
 
