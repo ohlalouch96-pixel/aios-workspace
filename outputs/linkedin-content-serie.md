@@ -27,7 +27,7 @@ De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen
 **Visuele variatie (vastgelegd 2026-09-30):** de vaste vraag/antwoord-kaart werd na een tijdje té herkenbaar (zelfde beeld, elke post). In plaats daarvan wisselt de afbeeldingsstijl nu **per week** tussen drie vormen, in een vaste cyclus van 3 weken (geldt voor beide posts die week, dinsdag én donderdag samen):
 
 1. **Week 1 — tekst-only:** geen afbeelding, gewoon de posttekst plaatsen. Geen sjabloon nodig.
-2. **Week 2 — scene-kaart:** `reference/linkedin-post-scene-template.html`. Zelfde zwart-gouden merkstijl (Georgia-serif, goud #C2A059, donkere achtergrond), maar in plaats van het tekstblok een klein icoon-scenebeeld met CAPTION (het antwoord) en SUBANSWER (korte ondertitel) eronder.
+2. **Week 2 — scene-kaart:** `reference/linkedin-post-scene-template.html`. Zelfde zwart-gouden merkstijl (Georgia-serif, goud #C2A059, donkere achtergrond), maar in plaats van het tekstblok een klein icoon-scenebeeld met CAPTION (het antwoord) en SUBANSWER (korte ondertitel) eronder. **Belangrijk (sinds 2026-10-03):** de dinsdag- en donderdagpost van dezelfde week gebruiken allebei een scene-kaart, maar niet hetzelfde icoon — elke scene wordt apart ontworpen, passend bij het onderwerp van die aflevering. Het standaard sjabloon-icoon (cirkel-cirkel-vinkje) is alleen een startpunt, niet de vaste afbeelding voor elke scene-kaart-week.
 3. **Week 3 — carrousel:** `reference/linkedin-post-carousel-template.html`. 3 swipe-slides (SLIDE1 = hook, SLIDE2 = uitleg, SLIDE3 = afsluiter + merk), elk apart snippen en in volgorde uploaden als LinkedIn-document.
 
 Na week 3 weer terug naar week 1 (tekst-only), enzovoort. Vraag Claude om het juiste sjabloon te openen en in te vullen als er een post klaargezet moet worden — CAPTION/SUBANSWER of SLIDE1/2/3 vervangen, publiceren als Artifact, Win+Shift+S. Geldt alleen voor Pijler 1 — Pijler 3 heeft al een eigen, bewust andere beeldstijl (zie verderop) en blijft ongewijzigd.
@@ -423,7 +423,7 @@ Episode 7 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** scene-kaart, CAPTION "A chatbot is one tool.", SUBANSWER "Automation is everything else."
+**Beeld:** scene-kaart, eigen scene (geen hergebruikte progress-icon van het sjabloon) — een spreekbubbel die uitwaaiert naar een klein verbonden netwerk van knooppunten, CAPTION "A chatbot is one tool.", SUBANSWER "Automation is everything else."
 
 ---
 
@@ -440,7 +440,7 @@ Episode 8 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** scene-kaart, CAPTION "Start with one.", SUBANSWER "Not ten at once."
+**Beeld:** scene-kaart, eigen scene (bewust anders dan Episode 7, zelfde week) — één grote gouden cirkel tegenover een wolk van kleine, verspreide grijze stipjes, CAPTION "Start with one.", SUBANSWER "Not ten at once."
 
 ---
 
