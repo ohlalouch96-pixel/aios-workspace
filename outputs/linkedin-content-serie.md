@@ -75,6 +75,8 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 6. How to know if a task is worth automating *(klaar, zelfde rotatieweek — tekst-only)*
 7. Chatbot vs. automation — not the same thing *(klaar, week 13 okt — scene-kaart)*
 8. Why starting small beats automating everything at once *(klaar, zelfde rotatieweek — scene-kaart)*
+9. What happens when an automation breaks? *(nieuw, klaar voor week 20 okt — carrousel)*
+10. The real reason most automation projects fail *(nieuw, klaar voor week 20 okt — carrousel)*
 
 ---
 
@@ -439,6 +441,40 @@ Episode 8 of "Automation Simplified" ⚡
 ```
 
 **Beeld:** scene-kaart, CAPTION "Start with one.", SUBANSWER "Not ten at once."
+
+---
+
+**Episode 09 — What happens when an automation breaks? — klaar om te posten, week van 20 okt = Week 3 van de rotatie (carrousel), nieuw onderwerp**
+
+```
+What happens when an automation breaks?
+
+Good automation isn't a black box running blind, it's built with a fallback, so a human gets notified the moment something fails instead of finding out three weeks later from an angry customer. Example: if a cart-recovery email fails to send, the system flags it right away, instead of silently skipping that customer with nobody noticing for a month.
+
+The version people are afraid of, something quietly breaking with nobody noticing, isn't how a properly built automation actually works.
+
+Episode 9 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** carrousel, SLIDE1 "What happens when an automation breaks?", SLIDE2 "A human gets notified the moment it happens. Good automation isn't a black box, it's built with a fallback.", SLIDE3 "A heads up, fast. Not silence for weeks."
+
+---
+
+**Episode 10 — The real reason most automation projects fail — klaar om te posten, zelfde rotatieweek als Episode 9 (carrousel), nieuw onderwerp**
+
+```
+Most automation projects don't fail because of the technology.
+
+They fail because the process underneath was already broken, and automating a broken process just makes the mess move faster. Example: automating a sloppy follow-up process that skips half your leads doesn't fix anything, it just skips them faster and with more confidence. The fix has to happen before the automation does, not after.
+
+Before automating something, have you actually checked if the process itself still makes sense?
+
+Episode 10 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** carrousel, SLIDE1 "Most automation projects don't fail because of the technology.", SLIDE2 "They fail because the process underneath was already broken. Automating a mess just makes it move faster.", SLIDE3 "Fix the process first. Then automate it."
 
 ---
 
