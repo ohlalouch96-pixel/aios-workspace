@@ -67,11 +67,11 @@ Dus maximaal 5 regels/alinea's totaal, niet een reeks korte blokjes met witruimt
 
 Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een herkenbare situatie.
 
-1. What is AI, actually?
-2. AI vs. automation — the difference (people mix these up constantly)
-3. 3 tasks you could automate today, for free
-4. No, AI is not coming for your job — here's what it actually does
-5. What a "workflow" actually means, in plain English
+1. What is AI, actually? *(gepost)*
+2. AI vs. automation — the difference (people mix these up constantly) *(gepost)*
+3. 3 tasks you could automate today, for free *(gepost)*
+4. No, AI is not coming for your job — here's what it actually does *(gepost)*
+5. What a "workflow" actually means, in plain English *(klaar, Week 1 van de rotatie — tekst-only)*
 6. How to know if a task is worth automating
 7. Chatbot vs. automation — not the same thing
 8. Why starting small beats automating everything at once
@@ -158,7 +158,7 @@ Every business owner's least favorite trivia question.
 #TheOtherShift #Entrepreneurship #AIAutomation
 ```
 
-**Persoonlijke oprichters-reis-momenten, klaar om in te plannen (4 weken):**
+**Persoonlijke oprichters-reis-momenten (4 weken) — alle vier gepost, week 5 hierboven is de eerstvolgende:**
 
 Week 1 — opener/kickoff:
 ```
@@ -215,9 +215,9 @@ That's most of what building a business actually looks like.
 **Feitencheck toegepast (2026-08-21):** in onderwerp #2 stond eerst "it fails and costs you nothing" — dat is feitelijk onjuist, want ook een kleine, mislukte poging kost altijd tijd en energie. Aangepast naar "it fails, but costs little". Let op dit type fout bij toekomstige onderwerpen: een woord als "forever" is geoorloofde stijl-overdrijving (net als in het origineel), maar "nothing"/"niets" is een harde, checkbare bewering en moet kloppen.
 
 **10 onderwerpen, klaar om uit te werken:**
-1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(pilot, al gebouwd)*
-2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gecorrigeerd, al gebouwd)*
-3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(al gebouwd)*
+1. Automate vs. don't — automate → save hours / spot what's broken. Don't → wonder "what if" forever. *(gepost, als "Automation, in one picture")*
+2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gepost, als "Progress, in one picture")*
+3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(klaar om te posten, afbeelding gebouwd — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA)*
 4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(al gebouwd)*
 5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
 6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
@@ -244,7 +244,9 @@ That's most of what building a business actually looks like.
 
 **Terminologie-check (2026-08-27):** LinkedIn gebruikt zelf "DM"/"direct message", niet "PM" (dat hoort meer bij Facebook/Reddit) — "DM me" in een CTA is dus correct LinkedIn-taalgebruik, geen Instagram-term.
 
-**Week 1, klaar om te posten:**
+**Week 1, 2 en 3 staan live. Week 4 hieronder is de eerstvolgende, al klaar om in te plannen.**
+
+**Week 1, gepost:**
 ```
 "I'm not ready for this yet."
 
@@ -255,11 +257,10 @@ Feel like you're not ready? Let's find out together. No strings attached. DM me.
 #Business #AIAutomation #MythCheck
 ```
 
-**Onderwerpen-voorraad, volgende weken:**
-- Week 2: "AI automation isn't secure enough." *(nog uit te werken)*
-- Week 3: "It costs me too much time and energy." *(nog uit te werken)*
+Week 2, gepost: "AI automation isn't secure enough."
+Week 3, gepost: "It costs me too much time and energy."
 
-Week 4, klaar om te posten:
+Week 4, eerstvolgende, klaar om te posten:
 ```
 "It costs me too much money."
 
@@ -344,6 +345,51 @@ Episode 2 of "Automation Simplified" ⚡
 ```
 
 **Beeld:** gemaakt met de post-afbeelding generator — vraag "Is AI the same thing as automation?", antwoord "AI looks first, automation follows."
+
+---
+
+**Episode 03 — 3 tasks you could automate today, for free — gepost (oude vaste kaart)**
+
+```
+Think you need to spend money to automate anything?
+
+You don't, not for everything. Most email tools already let you set up an instant reply so nobody's left wondering if their message went through. Your calendar app can send appointment reminders on its own, no extra tool needed. And a lot of website builders let you turn on a basic FAQ bot for free. Example: someone asks about your opening hours at midnight, and instead of waiting until morning, they get an answer right away, from something you're probably already paying for anyway.
+
+Which one of these are you still doing by hand?
+
+Episode 3 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+---
+
+**Episode 04 — No, AI is not coming for your job — gepost (oude vaste kaart, laatste met dit format)**
+
+```
+People keep asking me if AI is going to replace them.
+
+It's not, at least not the way people picture it. AI takes over the repetitive, predictable part of a job, not the judgment calls or the relationships built around it. Example: in a hospital, a system can flag which patients need attention first based on their vitals, but a nurse still decides how to actually treat them. The tasks disappear, the job usually doesn't.
+
+I've seen both sides of this, and the fear is real even when the job loss isn't.
+
+Episode 4 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+---
+
+**Episode 05 — What a "workflow" actually means, in plain English — klaar om te posten, Week 1 van de rotatie (tekst-only, geen afbeelding)**
+
+```
+People hear "workflow" and picture something complicated.
+
+It's really just the order something happens in, written down once instead of carried around in your head. Example: a new lead comes in, gets added to your list, gets a welcome email, and three days later gets a follow-up if they haven't replied yet. That's a workflow. Nothing technical about the word itself, just steps that used to depend on someone remembering to do them.
+
+Chances are you already have three or four of these running in your head right now, just not written down.
+
+Episode 5 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
 
 ---
 
