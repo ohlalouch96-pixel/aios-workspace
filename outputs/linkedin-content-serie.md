@@ -72,7 +72,7 @@ Concreet en toegepast, geen droge definities. Elke aflevering ophangen aan een h
 3. 3 tasks you could automate today, for free *(gepost)*
 4. No, AI is not coming for your job — here's what it actually does *(gepost)*
 5. What a "workflow" actually means, in plain English *(klaar, Week 1 van de rotatie — tekst-only)*
-6. How to know if a task is worth automating
+6. How to know if a task is worth automating *(klaar, zelfde rotatieweek — tekst-only)*
 7. Chatbot vs. automation — not the same thing
 8. Why starting small beats automating everything at once
 
@@ -388,6 +388,21 @@ It's really just the order something happens in, written down once instead of ca
 Chances are you already have three or four of these running in your head right now, just not written down.
 
 Episode 5 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+---
+
+**Episode 06 — How to know if a task is worth automating — klaar om te posten, zelfde rotatieweek als Episode 5 (tekst-only)**
+
+```
+Not every repetitive task is worth automating.
+
+The quick test: how often does it happen, and how much does getting it wrong actually cost you? Something you do five times a day with real consequences if it's late or missed is worth fixing. Something you do once a month and barely think about usually isn't. Example: chasing late invoices every week is worth automating, forgetting to update your holiday hours twice a year probably isn't, that second one just doesn't happen often enough to justify building something around it.
+
+What's something you do constantly that you've never actually timed?
+
+Episode 6 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
