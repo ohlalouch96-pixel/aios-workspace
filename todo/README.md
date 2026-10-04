@@ -56,6 +56,17 @@
 
 ---
 
+## OLVG SEH-rooster met AI (constraint solver + roosteraar)
+
+**Status:** Geparkeerd sinds 2026-10-04
+**Waarom geparkeerd:** Hersenspinsel van Oussama over het SEH-rooster bij OLVG, waar het team ontevreden over is (40-uurs roosteraar, trage/foutgevoelige handmatige planning). Nog te vroeg: eerste prioriteit blijft de eerste betalende e-commerce-klant, en dit project (eigen werkgever, patiëntveiligheid, nul foutmarge) is qua complexiteit en risico een flinke stap boven wat Oussama tot nu toe gebouwd heeft.
+**Wat het is:** AI-ondersteund roostersysteem voor de SEH. Geen LLM die direct een rooster genereert (dat gaat fout bij harde regels zoals rusttijd/arbeidstijdenwet), maar een constraint solver (bijv. Google OR-Tools) als deterministische kern, met AI als laag eromheen voor het verzamelen van voorkeuren en het toelichten van de uitkomst. Roosteraar blijft eindverantwoordelijk voor de check (±2 uur in plaats van 40 uur/week).
+**Kansen:** Als het bij OLVG werkt, is het een sterke case study richting andere ziekenhuizen/zorgorganisaties. Het is een erkend, veelvoorkomend probleem (het "Nurse Scheduling Problem" in de operations research).
+**Risico's om vooraf te dekken:** patiëntveiligheid (fout rooster op de SEH is geen kleinigheid), privacy/IT-governance van personeelsgegevens, en de politieke gevoeligheid van het mogelijk overbodig maken van de roosteraarsfunctie (beter positioneren als hulpmiddel dan als vervanging).
+**Trigger om op te pakken:** Oussama gooit zelf het balletje op bij OLVG ICT zodra het relevant voelt, bijvoorbeeld na de eerste succesvolle klantlevering in de e-commerce-outreach. Geen actie van Claude nodig tot dat moment.
+
+---
+
 ## ~~LinkedIn Pijler 2 ("Herkenbare pijn") fine-tunen~~ — afgerond 2026-08-21
 
 Hernoemd naar "The Other Shift", volledig uitgewerkt: wekelijks woensdag 11:00, geen CTA, geen afbeelding, hashtag-regel, 4 posts klaar. Zie `outputs/linkedin-content-serie.md`.
