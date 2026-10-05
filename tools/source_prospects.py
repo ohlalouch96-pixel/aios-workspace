@@ -194,9 +194,9 @@ ESP_RE = re.compile(
 # ============================================================================
 IG_RE = re.compile(r"instagram\.com/([a-zA-Z0-9._-]+)", re.I)
 # Generieke/niet-profiel paths die instagram.com/... kunnen volgen.
-BAD_IG_PATHS = {"p", "reel", "reels", "o1", "explore", "accounts", "directory", "tv", "stories"}
+BAD_IG_PATHS = {"p", "reel", "reels", "o1", "explore", "accounts", "directory", "tv", "stories", "rsrc.php"}
 # Placeholder-handles die thema's/CMS'en tonen bij een niet-geconfigureerde social-knop.
-PLACEHOLDER_IG_HANDLES = {"shopify", "yourusername", "youraccountname", "username", "yourprofile", "youraccount"}
+PLACEHOLDER_IG_HANDLES = {"shopify", "squarespace", "wix", "yourusername", "youraccountname", "username", "yourprofile", "youraccount"}
 
 CONTACT_PATHS = [
     "/contact", "/over-ons", "/pages/contact", "/pages/over-ons",
@@ -230,7 +230,9 @@ EMAIL_JUNK_TLDS = {"png", "jpg", "jpeg", "gif", "svg", "webp", "js", "css", "wof
 # scrapers, en Sentry-foutmeldingsadressen die per ongeluk in HTML terechtkomen.
 HONEYPOT_EMAIL_RE = re.compile(
     r"(techaro\.lol|sentry\.io|sentry-next|wixpress\.com|example\.com|"
-    r"noreply@|no-reply@|donotreply@)",
+    r"noreply@|no-reply@|donotreply@|"
+    # Placeholder-adressen uit thema-formulieren (gezien 2026-10-05).
+    r"@domain\.com|@email\.com|^your@|^you@|^name@|^email@)",
     re.I,
 )
 

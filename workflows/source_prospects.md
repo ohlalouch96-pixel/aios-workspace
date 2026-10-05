@@ -147,6 +147,19 @@ en bij e-mail-kanaal ook `E-mail: [adres].`
   startrij altijd als `huidig_aantal_rijen + 1`, opnieuw opgevraagd vlak
   vóór het schrijven.
 
+- **Placeholder-e-mailadressen** (`user@domain.com`, `your@email.com`) uit
+  thema-formulieren werden als echt adres opgepikt. Sinds 2026-10-05 gefilterd.
+- **Verkeerd Instagram-account**: het script pakt de eerste instagram-link op
+  de pagina, en dat is soms niet van de shop zelf (gezien: A Folk Tale gaf
+  `skechersidn`, Canndle gaf een Perzisch account, Jacqlins gaf `rsrc.php`).
+  Kijk bij de volgerscheck via WebSearch ook of het gevonden account echt bij
+  het merk hoort. Zo niet, corrigeer het handle of laat de shop vallen.
+- **Volgerscheck al tijdens het sourcen** (sinds 2026-10-05): doe de check
+  vóór `--append` in plaats van pas bij het klaarzetten van een batch. Dan
+  komen te grote shops niet eens in de sheet. Reken op ongeveer 25% uitval bij
+  mode/lifestyle-lijstjes uit tijdschriften (die merken zijn vaak groot), en
+  veel minder bij kleine makers (kaarsen, messen, honden, leer).
+
 ## Yield-verwachting
 
 De opbrengst daalt naarmate een niche/regio verzadigd raakt — dit is een
