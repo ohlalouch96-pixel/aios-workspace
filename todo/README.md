@@ -6,9 +6,9 @@
 
 ---
 
-## E-mail-follow-ups als concept in Gmail klaarzetten (DEZE WEEK)
+## E-mail-follow-ups als concept in Gmail klaarzetten
 
-**Status:** Gepland voor de week van 2026-10-06, nog niet opgepakt
+**Status:** Geparkeerd sinds 2026-10-06 ("een andere keer"), wel hoge prioriteit zodra er tijd is
 **Waarom:** Door de outreach-volumes lopen follow-ups snel op (elke nieuwe DM = 3 berichten, elke nieuwe mail = 4). E-mail is het enige kanaal dat veilig te automatiseren is.
 **Stap 1 (nu):** Claude zet de e-mail-follow-ups (webshops mail 2/3/4 + ondernemers bericht 2/3) als concept klaar in Gmail via de Gmail-koppeling. Oussama klikt alleen op versturen.
 **Stap 2 (later, na vertrouwen):** Volledig automatisch versturen via n8n, binnen het dagmaximum.
