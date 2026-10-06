@@ -6,6 +6,16 @@
 
 ---
 
+## E-mail-follow-ups als concept in Gmail klaarzetten (DEZE WEEK)
+
+**Status:** Gepland voor de week van 2026-10-06, nog niet opgepakt
+**Waarom:** Door de outreach-volumes lopen follow-ups snel op (elke nieuwe DM = 3 berichten, elke nieuwe mail = 4). E-mail is het enige kanaal dat veilig te automatiseren is.
+**Stap 1 (nu):** Claude zet de e-mail-follow-ups (webshops mail 2/3/4 + ondernemers bericht 2/3) als concept klaar in Gmail via de Gmail-koppeling. Oussama klikt alleen op versturen.
+**Stap 2 (later, na vertrouwen):** Volledig automatisch versturen via n8n, binnen het dagmaximum.
+**Randvoorwaarde:** Dagmaximum aanhouden: ~40 Instagram + ~40 e-mail per dag (nieuw + follow-ups samen).
+
+---
+
 ## n8n Docker-image bijwerken
 
 **Status:** Geparkeerd sinds 2026-08-19
