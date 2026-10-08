@@ -1,141 +1,946 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacybeleid | Insightance</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%23C9A84C'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%23E8C97A' stroke-width='2' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3Ccircle cx='8' cy='36' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3Ccircle cx='36' cy='8' r='2.5' fill='%23E8C97A' opacity='0.8'/%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --bg: #131316; --surface: #181819; --gold: #C9A84C; --gold-light: #E8C97A;
-            --white: #FFFFFF; --gray: #888; --gray-light: #C0C0C0; --border: #252528;
-            --font-heading: 'Playfair Display', serif; --font-body: 'Inter', sans-serif;
-        }
-        body { background: var(--bg); color: var(--white); font-family: var(--font-body); line-height: 1.7; }
-        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold) 40%, var(--gold-light) 50%, var(--gold) 60%, transparent); z-index: 200; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacybeleid | Insightance</title>
+<meta name="description" content="Hoe Insightance omgaat met je persoonsgegevens.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%2317345F'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%231F5EFF' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='36' r='2.8' fill='%231F5EFF'/%3E%3Ccircle cx='36' cy='8' r='2.8' fill='%231F5EFF'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: block; src: url('fonts/inter-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; font-display: block; src: url('fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 500 700; font-display: block; src: url('fonts/playfair-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 500 700; font-display: block; src: url('fonts/playfair-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>
+<style>
+  :root {
+    color-scheme: light;
+    --navy: #17345F; --mid: #3D6AA8; --bright: #1F5EFF; --bright-hover: #1449D6; --mid-on-dark: #9DBBE3;
+    --tint: #EAF1FB; --soft: #F5F8FC; --white: #FFFFFF; --ink: #1B2638; --muted: #465369; --faint: #5E6C84; --line: #C9D5E4;
+    --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ease: cubic-bezier(.22,.7,.2,1);
+    --c-sales: #4A7BF7; --c-klant: #25B5A8; --c-finance: #2FAE68; --c-hr: #8B6CF0; --c-data: #F0953A; --c-intern: #E25C5C;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 140px; }
+  body { margin: 0; background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  [hidden] { display: none !important; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--serif); color: var(--navy); font-weight: 600; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  :focus-visible { outline: 2px solid var(--bright); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding-inline: 24px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--bright); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--bright); color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; padding: 14px 26px; border-radius: 100px; border: 0; cursor: pointer; font-family: inherit; box-shadow: 0 8px 22px -10px rgba(31,94,255,.7); transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s; white-space: nowrap; }
+  .btn:hover { background: var(--bright-hover); transform: translateY(-2px); box-shadow: 0 14px 28px -12px rgba(31,94,255,.75); }
+  .btn.sm { padding: 10px 20px; font-size: 14px; }
 
-        nav { position: sticky; top: 2px; background: rgba(19,19,22,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .nav-logo-text { font-size: 15px; font-weight: 600; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
-        .nav-back { font-size: 13px; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
-        .nav-back:hover { color: var(--gold); }
+  .testbar { background: var(--navy); color: #fff; font-size: 13px; text-align: center; padding: 8px 16px; }
+  .testbar b { color: var(--mid-on-dark); font-weight: 600; }
 
-        .hero { padding: 80px 60px 56px; border-bottom: 1px solid var(--border); }
-        .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-        .hero-title { font-family: var(--font-heading); font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 16px; }
-        .hero-sub { font-size: 14px; color: var(--gray); }
+  /* navigatie (gelijk aan de homepage) */
+  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(255,255,255,.84); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+  .nav.scrolled { border-color: var(--line); box-shadow: 0 6px 24px -18px rgba(23,52,95,.35); }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo svg { width: 34px; height: 34px; flex-shrink: 0; }
+  .logo span { font-size: 15px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--navy); }
+  .back { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color .2s; }
+  .back:hover { color: var(--navy); }
+  .back span { transition: transform .25s var(--ease); }
+  .back:hover span { transform: translateX(-3px); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 100px; overflow: hidden; font-size: 11px; font-weight: 600; letter-spacing: .1em; cursor: pointer; }
+  .lang span { padding: 6px 11px; color: var(--muted); transition: background .2s, color .2s; }
+  .lang span.on { background: var(--tint); color: var(--navy); }
 
-        .content { max-width: 760px; margin: 0 auto; padding: 72px 60px; }
-        .content h2 { font-family: var(--font-heading); font-size: 22px; font-weight: 600; color: var(--white); margin: 48px 0 16px; padding-top: 48px; border-top: 1px solid var(--border); }
-        .content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
-        .content p { font-size: 15px; color: var(--gray-light); line-height: 1.85; margin-bottom: 16px; }
-        .content ul { margin: 12px 0 16px 20px; display: flex; flex-direction: column; gap: 8px; }
-        .content ul li { font-size: 15px; color: var(--gray-light); line-height: 1.7; }
-        .content ul li::marker { color: var(--gold); }
-        .content a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
-        .content a:hover { border-color: var(--gold); }
-        .content strong { color: var(--white); font-weight: 600; }
+  /* hero */
+  .hero { position: relative; overflow: hidden; padding-block: 64px 48px; background: radial-gradient(90% 80% at 85% 0%, var(--tint) 0%, rgba(234,241,251,0) 60%), var(--white); }
+  .bgflow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+  .hero-copy { display: grid; gap: 16px; }
+  .eyebrow-lines { display: inline-flex; align-items: center; gap: 12px; }
+  .eyebrow-lines::before, .eyebrow-lines::after { content: ""; width: 20px; height: 1.5px; background: currentColor; opacity: .55; }
+  .hero h1 { font-size: clamp(32px, 4.2vw, 48px); line-height: 1.08; }
+  .hero h1 em { font-style: italic; font-weight: 500; }
+  .hero-copy > p { font-size: 17px; color: var(--muted); max-width: 56ch; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.85); backdrop-filter: blur(6px); overflow: hidden; }
+  .stat { padding: 20px 18px; display: grid; gap: 4px; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: 0; }
+  .stat b { font-family: var(--serif); font-size: 34px; line-height: 1; color: var(--navy); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat > span { font-size: 13px; color: var(--muted); line-height: 1.35; hyphens: auto; -webkit-hyphens: auto; }
 
-        footer { border-top: 1px solid var(--border); padding: 32px 60px; text-align: center; font-size: 13px; color: var(--gray); }
-        footer a { color: var(--gold); text-decoration: none; }
+  /* systeemkiezer (C2): zoeken + onderwerpen links, groot voorbeeld rechts */
+  .explorer { padding-block: 48px 60px; }
+  .ex-intro { font-size: 15px; color: var(--muted); max-width: 72ch; margin-bottom: 24px; }
+  .ex { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 22px; align-items: stretch; }
+  .ex-side { align-self: start; }
+  .ex-side { display: grid; gap: 14px; position: sticky; top: calc(96px + env(safe-area-inset-top, 0px)); }
+  .search { position: relative; display: block; }
+  .search input { width: 100%; font: inherit; font-size: 14.5px; color: var(--ink); padding: 12px 38px 12px 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--soft); transition: border-color .2s, box-shadow .2s, background .2s; }
+  .search input::placeholder { color: var(--faint); }
+  .search input:focus { outline: none; background: var(--white); border-color: var(--bright); box-shadow: 0 0 0 4px rgba(31,94,255,.12); }
+  .search > svg { position: absolute; left: 13px; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; color: var(--faint); pointer-events: none; }
+  .search .clr { position: absolute; right: 8px; top: 50%; width: 26px; height: 26px; margin-top: -13px; border-radius: 50%; border: 0; background: var(--tint); color: var(--navy); font-size: 15px; line-height: 1; cursor: pointer; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; transition: opacity .3s; }
+  .tiles.dim { opacity: .45; }
+  .tile { position: relative; display: grid; gap: 8px; text-align: left; font: inherit; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 12px; cursor: pointer; overflow: hidden; transition: border-color .25s, transform .25s var(--ease), box-shadow .25s, background .25s; }
+  .tile .ti { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 12%, white); color: var(--c); transition: background .25s, color .25s, transform .3s var(--ease); }
+  .tile .ti svg { width: 16px; height: 16px; }
+  .tile span { font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.25; }
+  .tile b { position: absolute; top: 10px; right: 12px; font-size: 11px; color: var(--faint); }
+  .tile:hover { border-color: var(--c); transform: translateY(-3px); box-shadow: 0 14px 26px -18px var(--c); }
+  .tile:hover .ti { transform: rotate(-8deg) scale(1.08); }
+  .tile.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 7%, white); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
+  .tile.on .ti { background: var(--c); color: #fff; }
+  .pills { display: grid; gap: 6px; }
+  .pills > small { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .pill { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; font: inherit; font-size: 14px; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; cursor: pointer; transition: all .25s var(--ease); }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c); flex-shrink: 0; }
+  .pill::after { content: "→"; margin-left: auto; color: var(--c); opacity: 0; transform: translateX(-6px); transition: all .25s var(--ease); }
+  .pill:hover { border-color: var(--c); }
+  .pill:hover::after, .pill.on::after { opacity: 1; transform: none; }
+  .pill.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .pill.on .dot { box-shadow: 0 0 0 3px rgba(255,255,255,.25); }
+  .pill mark { background: color-mix(in srgb, var(--bright) 18%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+  .pill.on mark { background: rgba(255,255,255,.22); }
+  .none { font-size: 14px; color: var(--muted); padding: 6px 4px; }
+  .acc-body { display: none; }
 
-        @media (max-width: 768px) {
-            nav { padding: 16px 24px; }
-            .hero { padding: 56px 24px 40px; }
-            .content { padding: 48px 24px; }
-            footer { padding: 24px; }
-        }
-    </style>
+  /* groot voorbeeld rechts */
+  .view { position: relative; border-radius: 20px; padding: 32px; display: grid; gap: 14px; align-content: center; background: var(--white); border: 1px solid var(--line); overflow: hidden; isolation: isolate; min-height: 100%; transition: border-color .3s, box-shadow .3s; }
+  .view::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(440px circle at var(--mx, 85%) var(--my, 0%), color-mix(in srgb, var(--c) 18%, transparent), transparent 60%); }
+  .view:hover { border-color: color-mix(in srgb, var(--c) 45%, var(--line)); box-shadow: 0 30px 60px -40px color-mix(in srgb, var(--c) 70%, transparent); }
+  .vin { display: grid; gap: 14px; animation: pop .45s var(--ease) both; }
+  .vtop { display: flex; align-items: center; gap: 16px; }
+  .vic { position: relative; width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; background: var(--c); color: #fff; flex-shrink: 0; box-shadow: 0 12px 26px -10px var(--c); }
+  .vic svg { width: 28px; height: 28px; }
+  .vic::before, .vic::after { content: ""; position: absolute; inset: -6px; border-radius: 22px; border: 2px solid var(--c); opacity: 0; animation: ring 2.6s ease-out infinite; }
+  .vic::after { animation-delay: 1.3s; }
+  @keyframes ring { 0% { opacity: .55; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.35); } }
+  .vcat { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .vcat .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+  .ai { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--c); background: color-mix(in srgb, var(--c) 12%, white); border-radius: 100px; padding: 3px 9px; }
+  .ai i { width: 6px; height: 6px; border-radius: 50%; background: var(--c); animation: blink 1.4s infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .view h2 { font-size: clamp(26px, 2.6vw, 32px); }
+  .view p.d { font-size: 16px; color: var(--muted); max-width: 56ch; }
+  .run { display: grid; gap: 8px; margin-top: 4px; }
+  .run > small { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .rstep { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; padding: 10px 14px 10px 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.85); font-size: 15px; transition: border-color .4s, background .4s; }
+  .rstep .n { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--line); color: var(--faint); font-size: 12px; font-weight: 700; transition: all .4s var(--ease); }
+  .rstep .st { font-size: 11px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .rstep.act { border-color: color-mix(in srgb, var(--c) 50%, var(--line)); background: color-mix(in srgb, var(--c) 7%, white); }
+  .rstep.act .n { border-color: var(--c); color: var(--c); }
+  .rstep.act .st::after { content: ""; display: inline-block; width: 10px; height: 10px; margin-left: 6px; border-radius: 50%; border: 2px solid var(--c); border-right-color: transparent; vertical-align: -1px; animation: spin .8s linear infinite; }
+  .rstep.done .n { background: var(--c); border-color: var(--c); color: #fff; }
+  .rstep.done .st { color: var(--c); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .vgo { justify-self: start; margin-top: 6px; }
+
+  /* mobiel: onderwerpen blijven bovenaan, systemen klappen open (optie B) */
+  @media (max-width: 860px) {
+    .ex { grid-template-columns: 1fr; }
+    .ex-side { position: static; }
+    .view { display: none; }
+    .pill { border-radius: 14px; }
+    .pill::after { content: "+"; opacity: 1; transform: none; font-size: 18px; transition: transform .3s var(--ease); }
+    .pill.on::after { transform: rotate(45deg); }
+    .acc-body { display: block; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; margin-top: -10px; padding: 18px 16px 16px; background: radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--c) 10%, white), var(--white) 60%); }
+    .acc-body[hidden] { display: none; }
+    .acc-body .vin { gap: 12px; }
+    .acc-body .vtop { display: none; }
+    .acc-body .vcat { display: flex; }
+    .acc-body p.d { font-size: 15px; }
+    .acc-body .rstep { font-size: 14px; }
+  }
+
+  /* afsluiter */
+  .closing { position: relative; overflow: hidden; padding-block: 60px; background: radial-gradient(80% 70% at 10% 100%, var(--tint) 0%, rgba(234,241,251,0) 60%), var(--white); }
+  .closing .wrap { position: relative; }
+  .closing-box { display: grid; grid-template-columns: minmax(0, 1.3fr) auto; gap: 32px; align-items: center; padding: 36px 40px; border-radius: 20px; background: rgba(255,255,255,.9); border: 1px solid var(--line); box-shadow: 0 30px 60px -40px rgba(23,52,95,.4); }
+  .closing-box > div { display: grid; gap: 12px; }
+  .closing-box h2 { font-size: clamp(26px, 3vw, 34px); }
+  .closing-box p { color: var(--muted); max-width: 62ch; }
+  .closing-box .acts { display: grid; gap: 8px; justify-items: center; }
+  .closing-box .acts small { font-size: 13px; color: var(--muted); }
+
+  footer { background: var(--navy); color: rgba(255,255,255,.75); padding-block: 44px 32px; font-size: 14px; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .logo span { color: #fff; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot-links a { color: rgba(255,255,255,.85); text-decoration: none; transition: color .2s; }
+  .foot-links a:hover { color: #fff; }
+  .foot-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; font-size: 13px; color: rgba(255,255,255,.6); }
+
+  .chatfab { position: fixed; z-index: 41; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer; background: var(--bright); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(31,94,255,.65); opacity: 0; transform: translateY(16px) scale(.9); pointer-events: none; transition: opacity .35s, transform .35s var(--ease), background .2s; }
+  .chatfab svg { width: 22px; height: 22px; }
+  .chatfab.show { opacity: 1; transform: none; pointer-events: auto; }
+  .chattip { position: fixed; z-index: 41; right: 20px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); background: var(--navy); color: #fff; font-size: 13px; padding: 9px 13px; border-radius: 10px; }
+
+  .rv.play { animation: rise .8s var(--ease) both; animation-delay: var(--d, 0s); }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 28px; }
+    .closing-box { grid-template-columns: 1fr; }
+    .closing-box .acts { justify-items: start; }
+  }
+  @media (max-width: 820px) {
+    .nav-right .btn { display: none; }
+    .foot-top, .foot-bot { flex-direction: column; align-items: center; text-align: center; }
+    .foot-links { justify-content: center; }
+    .chatfab { width: 46px; height: 46px; right: 16px; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding-inline: 18px; }
+    .hero { padding-block: 40px 32px; }
+    .stat { padding: 14px 12px; }
+    .stat b { font-size: 26px; }
+    .closing { padding-block: 44px; }
+    .closing-box { padding: 24px; }
+  }
+
+  /* cijferblok en afsluiter, strakker */
+  .stat > span { font-size: 13px; }
+  .stat .dots { display: flex; gap: 4px; margin-top: 4px; font-style: normal; }
+  .stat .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); animation: dotpulse 3s ease-in-out infinite; }
+  .stat .dots i:nth-child(2) { animation-delay: .2s; } .stat .dots i:nth-child(3) { animation-delay: .4s; } .stat .dots i:nth-child(4) { animation-delay: .6s; } .stat .dots i:nth-child(5) { animation-delay: .8s; } .stat .dots i:nth-child(6) { animation-delay: 1s; }
+  @keyframes dotpulse { 0%, 70%, 100% { transform: scale(1); opacity: .85; } 35% { transform: scale(1.35); opacity: 1; } }
+  .closing-box { grid-template-columns: minmax(0, 1fr) 260px; }
+  .closing-box .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; justify-items: start; margin-top: 4px; }
+  .own { position: relative; display: grid; gap: 12px; justify-items: center; text-align: center; padding: 26px 20px; border-radius: 18px; border: 2px dashed color-mix(in srgb, var(--bright) 40%, var(--line)); background: color-mix(in srgb, var(--bright) 4%, white); transition: border-color .3s, transform .3s var(--ease); }
+  .closing-box:hover .own { border-color: var(--bright); transform: translateY(-3px); }
+  .own-plus { position: relative; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: var(--bright); color: #fff; box-shadow: 0 12px 26px -10px rgba(31,94,255,.8); }
+  .own-plus svg { width: 24px; height: 24px; }
+  .own-plus::after { content: ""; position: absolute; inset: -6px; border-radius: 20px; border: 2px solid var(--bright); opacity: 0; animation: ownring 2.4s ease-out infinite; }
+  @keyframes ownring { 0% { opacity: .5; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.35); } }
+  .own b { font-family: var(--serif); font-size: 18px; color: var(--navy); font-weight: 600; }
+  .own-lines { display: grid; gap: 6px; width: 100%; }
+  .own-lines i { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--tint), color-mix(in srgb, var(--bright) 22%, white), var(--tint)); background-size: 200% 100%; animation: shimmer 2.2s linear infinite; }
+  .own-lines i:nth-child(2) { width: 80%; justify-self: center; animation-delay: .2s; } .own-lines i:nth-child(3) { width: 60%; justify-self: center; animation-delay: .4s; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  /* terug-link: op mobiel kort "Terug" */
+  .back .short { display: none; }
+  @media (max-width: 560px) { .back b { display: none; } .back .short { display: inline; } }
+
+  /* afsluiter: donkerblauw blok, ruimte tot het overzicht kleiner */
+  .explorer { padding-bottom: 28px; }
+  .closing { padding-block: 0 60px; background: none; overflow: visible; }
+  .cbox { position: relative; overflow: hidden; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 40px; align-items: center; padding: 40px 44px; border-radius: 22px; background: var(--navy); color: #fff; }
+  .cbox::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(60% 80% at 100% 0%, rgba(31,94,255,.45), transparent 70%), radial-gradient(50% 70% at 0% 100%, rgba(61,106,168,.4), transparent 70%); }
+  .cflow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+  .ctext { display: grid; gap: 12px; }
+  .cbox .eyebrow { color: var(--mid-on-dark); }
+  .cbox h2 { color: #fff; font-size: clamp(26px, 2.6vw, 32px); font-weight: 500; }
+  .cbox p { color: rgba(255,255,255,.8); max-width: 54ch; }
+  .cbox .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 6px; }
+  .cbox .acts small { font-size: 13px; color: rgba(255,255,255,.65); }
+  .own { position: relative; display: grid; gap: 12px; justify-items: center; text-align: center; padding: 26px 20px 22px; border-radius: 18px; border: 2px dashed rgba(157,187,227,.55); background: rgba(255,255,255,.06); color: #fff; text-decoration: none; cursor: pointer; transition: border-color .3s, background .3s, transform .35s var(--ease), box-shadow .35s; }
+  .own:hover { border-color: #fff; background: rgba(255,255,255,.1); transform: translateY(-4px); box-shadow: 0 24px 40px -24px rgba(31,94,255,.9); }
+  .own-plus { position: relative; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; background: var(--bright); color: #fff; box-shadow: 0 12px 26px -8px rgba(31,94,255,.9); transition: transform .35s var(--ease); }
+  .own:hover .own-plus { transform: rotate(90deg); }
+  .own-plus svg { width: 24px; height: 24px; }
+  .own-plus::after { content: ""; position: absolute; inset: -6px; border-radius: 20px; border: 2px solid #6F9BFF; opacity: 0; animation: ownring 2.4s ease-out infinite; }
+  .own b { font-family: var(--serif); font-size: 19px; font-weight: 600; color: #fff; }
+  .own-lines { display: grid; gap: 6px; width: 100%; }
+  .own-lines i { height: 7px; border-radius: 4px; background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(157,187,227,.45), rgba(255,255,255,.08)); background-size: 200% 100%; animation: shimmer 2.2s linear infinite; }
+  .own-lines i:nth-child(2) { width: 78%; justify-self: center; animation-delay: .2s; } .own-lines i:nth-child(3) { width: 56%; justify-self: center; animation-delay: .4s; }
+  .own-go { font-size: 13px; font-weight: 600; color: var(--mid-on-dark); display: inline-flex; align-items: center; gap: 6px; transition: color .25s; }
+  .own-go::after { content: "→"; transition: transform .25s var(--ease); }
+  .own:hover .own-go { color: #fff; }
+  .own:hover .own-go::after { transform: translateX(4px); }
+  @media (max-width: 980px) { .cbox { grid-template-columns: 1fr; } .own { display: grid; } }
+  @media (max-width: 560px) { .cbox { padding: 28px 22px; gap: 24px; } .closing { padding-bottom: 44px; } }
+
+  /* gelijk aan de homepage: lettergroottes */
+  .hero h1 { font-size: clamp(30px, 3.4vw, 40px); }
+  .view h2 { font-size: 26px; }
+  .view p.d { font-size: 15.5px; }
+  .rstep { font-size: 14.5px; }
+
+  /* doorlopende lijn (rode draad) */
+  .dataline { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 3; overflow: visible; }
+  .dataline .track { stroke: var(--line); stroke-width: 1.5; fill: none; }
+  .dataline .draw { stroke: var(--bright); stroke-width: 2; fill: none; stroke-linecap: round; }
+  .dataline .head { fill: var(--bright); animation: dlblink 1.6s ease-in-out infinite; }
+  .dataline .halo { fill: var(--bright); transform-box: fill-box; transform-origin: center; animation: dlhalo 1.6s ease-out infinite; }
+  #dl-dot { transition: opacity .3s; }
+  @keyframes dlblink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  @keyframes dlhalo { 0% { transform: scale(.5); opacity: .45; } 100% { transform: scale(2.2); opacity: 0; } }
+  main { position: relative; }
+  @media (max-width: 1100px) { .dataline { display: none; } }
+
+  /* netwerk met onderwerpen (rustig, geen draaien) */
+  .net { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 26px; align-items: center; padding: 18px 22px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.85); backdrop-filter: blur(6px); box-shadow: 0 24px 50px -40px rgba(23,52,95,.45); }
+  .net-viz { position: relative; width: 240px; height: 240px; }
+  .net-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .net-lines .ln { stroke: var(--line); stroke-width: 1.5; }
+  .net-lines .sig { stroke: var(--c); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 18 200; stroke-dashoffset: 18; opacity: 0; }
+  .net-lines .sig.go { animation: sig 1.1s var(--ease) forwards; }
+  @keyframes sig { 0% { stroke-dashoffset: 18; opacity: 1; } 90% { opacity: 1; } 100% { stroke-dashoffset: -110; opacity: 0; } }
+  .net-core { position: absolute; left: 50%; top: 50%; width: 104px; height: 104px; margin: -52px; border-radius: 50%; background: var(--white); border: 1px solid var(--line); box-shadow: 0 16px 34px -18px rgba(23,52,95,.5); display: grid; place-items: center; align-content: center; text-align: center; z-index: 2; }
+  .net-core::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1.5px solid color-mix(in srgb, var(--bright) 30%, transparent); animation: corepulse 3.2s ease-in-out infinite; }
+  @keyframes corepulse { 0%, 100% { transform: scale(1); opacity: .6; } 50% { transform: scale(1.06); opacity: 1; } }
+  .net-core .num { font-family: var(--serif); font-size: 38px; font-weight: 600; color: var(--navy); line-height: 1; }
+  .net-core small { font-size: 12px; color: var(--muted); }
+  .node { position: absolute; width: 34px; height: 34px; margin: -17px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: color-mix(in srgb, var(--c) 16%, white); color: var(--c); display: grid; place-items: center; z-index: 2; transition: background .3s, color .3s, transform .3s var(--ease), box-shadow .3s; }
+  .node svg { width: 16px; height: 16px; }
+  .node:hover, .node.on { background: var(--c); color: #fff; transform: scale(1.12); box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 20%, transparent); }
+  .net-side { display: grid; gap: 12px; min-width: 0; }
+  .net-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .net-list button { width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; font: inherit; font-size: 14px; color: var(--ink); background: none; border: 0; border-radius: 9px; padding: 5px 8px; cursor: pointer; transition: background .25s, color .25s; }
+  .net-list button i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); transition: box-shadow .25s; }
+  .net-list button b { margin-left: auto; font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .net-list button:hover, .net-list button.on { background: color-mix(in srgb, var(--c) 9%, white); color: var(--navy); }
+  .net-list button.on i { box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
+  .net-tick { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 7px 12px; border-radius: 10px; background: var(--soft); border: 1px solid var(--line); font-size: 13.5px; color: var(--navy); overflow: hidden; }
+  .net-tick .tk-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--bright)); flex-shrink: 0; animation: blink 1.4s infinite; }
+  .net-tick .tk-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .net-tick .tk-name.swap { animation: tkin .45s var(--ease); }
+  @keyframes tkin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .made { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--navy); background: var(--white); border: 1px solid var(--line); border-radius: 100px; padding: 6px 14px 6px 8px; box-shadow: 0 8px 18px -14px rgba(23,52,95,.5); }
+  .made svg { width: 20px; height: 20px; padding: 4px; border-radius: 50%; background: var(--bright); color: #fff; }
+  .hero .wrap { align-items: center; }
+  @media (max-width: 1180px) { .hero .wrap { grid-template-columns: 1fr; } .net { justify-self: start; } }
+  @media (max-width: 560px) { .net { grid-template-columns: 1fr; justify-items: center; justify-self: stretch; padding: 16px; } .net-viz { width: 220px; height: 220px; } .net-side { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+
+  /* ===== resultatenpagina ===== */
+  .rhero { position: relative; overflow: hidden; padding-block: 56px 40px; background: radial-gradient(90% 80% at 85% 0%, var(--tint) 0%, rgba(234,241,251,0) 60%), var(--white); }
+  .rhero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .rhero h1 { font-size: clamp(30px, 3.4vw, 40px); line-height: 1.08; }
+  .rhero h1 em { font-style: italic; font-weight: 500; }
+  .rhero-copy { display: grid; gap: 16px; }
+  .rhero-copy > p { font-size: 17px; color: var(--muted); max-width: 52ch; }
+  .legend { display: grid; gap: 10px; }
+  .legend > small { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .lg-item { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 16px; align-items: center; text-decoration: none; color: inherit; background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; transition: border-color .25s, transform .3s var(--ease), box-shadow .3s; }
+  .lg-item:hover { border-color: var(--c); transform: translateX(4px); box-shadow: 0 16px 30px -22px var(--c); }
+  .lg-item .ic { grid-row: span 2; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 12%, white); color: var(--c); transition: background .25s, color .25s; }
+  .lg-item:hover .ic { background: var(--c); color: #fff; }
+  .lg-item .ic svg { width: 20px; height: 20px; }
+  .lg-item small { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--c); }
+  .lg-item b { font-size: 16px; color: var(--navy); }
+  .lg-item .num { grid-row: span 2; font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .lg-item .num span { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--muted); display: block; text-align: right; }
+
+  .cases-wrap { padding-block: 28px 60px; display: grid; gap: 28px; }
+  .rcase { scroll-margin-top: 0; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 30px 32px; display: grid; gap: 22px; box-shadow: 0 30px 60px -48px rgba(23,52,95,.45); }
+  .rcase-head { display: grid; gap: 6px; }
+  .rcase-head h2 { font-size: clamp(24px, 2.6vw, 30px); }
+  .rcase-head p { color: var(--muted); max-width: 70ch; }
+  .rcase-main { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+  .story { display: grid; gap: 16px; }
+  .seg3 { display: inline-grid; grid-template-columns: repeat(3, 1fr); padding: 4px; border-radius: 100px; background: var(--soft); border: 1px solid var(--line); position: relative; justify-self: start; }
+  .seg3 .pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / 3); border-radius: 100px; background: var(--old); transition: transform .45s var(--ease), background .45s; }
+  .seg3 button { position: relative; z-index: 1; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted); background: none; border: 0; padding: 9px 16px; min-width: 112px; border-radius: 100px; cursor: pointer; transition: color .3s; }
+  .seg3 button:hover:not(.on) { color: var(--navy); }
+  .seg3 button.on { color: #fff; }
+  .prog { position: absolute; left: 14px; right: 14px; bottom: 3px; height: 2px; border-radius: 2px; overflow: hidden; }
+  .prog i { display: block; height: 100%; width: 0; background: currentColor; opacity: .7; }
+  .running .prog i { animation: fill 4.5s linear forwards; }
+  @keyframes fill { to { width: 100%; } }
+  .sbody { min-height: 104px; font-size: 16px; color: var(--ink); }
+  .sbody.q { font-weight: 500; }
+  .sbody cite { display: block; margin-top: 8px; font-style: normal; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .snum { display: flex; align-items: baseline; gap: 12px; }
+  .snum .big { font-family: var(--serif); font-size: 46px; font-weight: 600; line-height: 1; transition: color .4s; font-variant-numeric: tabular-nums; }
+  .snum span { color: var(--muted); font-size: 14px; }
+  .fade { animation: fadein .45s var(--ease); }
+  @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .vis { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; border: 1px solid var(--line); background: var(--oldbg); }
+  .vis .layer { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity .55s, transform .55s var(--ease); }
+  .vis .layer.on { opacity: 1; transform: none; }
+  .vis .mess { display: grid; place-items: center; }
+  .mess-in { position: relative; width: 82%; height: 74%; }
+  .mess-in span { position: absolute; padding: 8px 12px; border-radius: 10px; background: #fff; border: 1px solid #F0DCD3; font-size: 13px; box-shadow: 0 8px 18px -12px rgba(0,0,0,.3); white-space: nowrap; animation: wobble 4s ease-in-out infinite; animation-delay: var(--d, 0s); }
+  @keyframes wobble { 50% { transform: translateY(-4px) rotate(var(--r, 0deg)); } }
+  .vis .tool { background: #fff; }
+  .vis .tool img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .vis .res { display: grid; place-items: center; align-content: center; gap: 6px; text-align: center; background: radial-gradient(80% 80% at 50% 30%, #fff, var(--tint)); }
+  .vis .res .big { font-family: var(--serif); font-size: 72px; font-weight: 600; color: var(--bright); line-height: 1; }
+  .vis .res span { color: var(--muted); }
+  .dash { position: absolute; inset: 0; display: grid; grid-template-columns: 22% 1fr; color: #E6ECF5; font-size: 11px; }
+  .dash-side { background: #0B1A30; padding: 16px 12px; display: grid; gap: 8px; align-content: start; }
+  .dash-side b { font-size: 12px; letter-spacing: .1em; }
+  .dash-side span { color: #8FA3C0; padding: 5px 8px; border-radius: 5px; } .dash-side span.on { background: rgba(31,94,255,.25); color: #fff; }
+  .dash-main { background: #0F2140; padding: 16px; display: grid; gap: 12px; align-content: start; }
+  .dash-row { display: flex; justify-content: space-between; align-items: center; } .dash-row b { font-size: 15px; } .dash-row em { font-style: normal; color: #6FE0A4; font-size: 10px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .kpi { background: rgba(255,255,255,.06); border-radius: 7px; padding: 9px; border-top: 2px solid var(--c); display: grid; gap: 3px; }
+  .kpi small { color: #8FA3C0; font-size: 8.5px; letter-spacing: .05em; } .kpi b { font-size: 16px; font-variant-numeric: tabular-nums; }
+  .bars { display: flex; align-items: flex-end; gap: 7px; height: 110px; background: rgba(255,255,255,.05); border-radius: 8px; padding: 10px; }
+  .bars i { flex: 1; height: var(--h); background: linear-gradient(to top, #1F5EFF, #6F9BFF); border-radius: 3px 3px 0 0; }
+  .bars i:last-child { background: linear-gradient(to top, #6FE0A4, #B8F0D2); }
+  .rcase .sector { display: inline-flex; align-items: center; gap: 8px; }
+  .rcase .sector i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+
+  @media (max-width: 980px) { .rhero .wrap, .rcase-main { grid-template-columns: 1fr; gap: 28px; } }
+  @media (max-width: 560px) { .rhero { padding-block: 36px 24px; } .rcase { padding: 22px 18px; } .seg3 { justify-self: stretch; } .seg3 button { min-width: 0; padding: 9px 8px; font-size: 13px; } .snum .big { font-size: 38px; } .vis .res .big { font-size: 56px; } .kpis { grid-template-columns: repeat(2, 1fr); } .cases-wrap { padding-bottom: 44px; } }
+  :root { --old: #3D6AA8; --oldbg: #F3F5F8; }
+  /* verbeteringen van de homepage: rustig beeld, gecentreerde kaartjes, vergelijkingsbalken, zelfde lettergroottes */
+  .lg-item .go { grid-row: span 2; font-size: 20px; color: var(--c); transition: transform .3s var(--ease); }
+  .lg-item:hover .go { transform: translateX(4px); }
+  .vis { background: linear-gradient(160deg, var(--tint), var(--soft)); }
+  .vis .mess, .vis .cmpb { background: transparent; }
+  .mess-in { position: static; width: 90%; height: auto; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 10px 12px; }
+  .mess-in span { position: static; transform: rotate(var(--r)); font-size: 12.5px; padding: 7px 11px; border-color: var(--line); animation: floaty 4s ease-in-out infinite; animation-delay: var(--d, 0s); }
+  @keyframes floaty { 0%, 100% { transform: rotate(var(--r)) translateY(0); } 50% { transform: rotate(var(--r)) translateY(-5px); } }
+  .vis .cmpb { display: grid; place-items: center; }
+  .cmpb-in { width: 84%; display: grid; gap: 16px; }
+  .cb-row { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; }
+  .cb-row span { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .cb-row.old span { color: var(--old); } .cb-row.new span { color: var(--bright); }
+  .cb-track { height: 16px; border-radius: 8px; background: rgba(23,52,95,.08); overflow: hidden; }
+  .cb-track i { display: block; height: 100%; width: 0; border-radius: 8px; transition: width 1.3s var(--ease); }
+  .cb-row.old i { background: linear-gradient(90deg, #8FAED6, var(--old)); }
+  .cb-row.new i { background: var(--bright); transition-delay: .5s; }
+  .layer.on .cb-track i { width: var(--w); }
+  .cb-row b { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--navy); white-space: nowrap; min-width: 74px; text-align: right; }
+  .cmpb-in small { justify-self: center; font-size: 13px; color: var(--muted); }
+  .rcase-head h2 { font-size: clamp(22px, 2.2vw, 26px); }
+  .rcase-head p { font-size: 15px; }
+  .sbody { font-size: 15px; min-height: 92px; }
+  .snum .big { font-size: 40px; }
+  .snum span { font-size: 13.5px; }
+  .seg3 button { font-size: 13.5px; padding: 8px 14px; min-width: 104px; }
+  .rcase-main { gap: 28px; }
+  /* volledig verhaal per case (ingeklapt) */
+  .more { justify-self: center; display: inline-flex; align-items: center; gap: 10px; font: inherit; font-size: 14.5px; font-weight: 600; color: var(--navy); background: var(--white); border: 1.5px solid var(--line); border-radius: 100px; padding: 10px 20px; cursor: pointer; transition: border-color .25s, color .25s, transform .25s var(--ease); }
+  .more:hover { border-color: var(--bright); color: var(--bright); transform: translateY(-2px); }
+  .more i { width: 22px; height: 22px; border-radius: 50%; background: var(--tint); display: grid; place-items: center; font-style: normal; font-size: 15px; transition: transform .35s var(--ease), background .3s, color .3s; }
+  .more[aria-expanded="true"] i { transform: rotate(45deg); background: var(--bright); color: #fff; }
+  .full { overflow: hidden; transition: height .5s var(--ease); }
+  .full-in { display: grid; gap: 22px; padding-top: 6px; }
+  .vn { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch; }
+  .vn-card { border-radius: 16px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+  .vn-card p { font-size: 15px; line-height: 1.6; color: var(--ink); }
+  .vn-card.was { background: var(--soft); border: 1px solid var(--line); }
+  .vn-card.now { background: var(--tint); border: 1px solid #CFDDF2; }
+  .vn-l { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .was .vn-l { color: var(--old); } .now .vn-l { color: var(--bright); }
+  .vn-arrow { align-self: center; width: 40px; height: 40px; border-radius: 50%; background: var(--bright); color: #fff; display: grid; place-items: center; font-size: 18px; box-shadow: 0 10px 22px -10px rgba(31,94,255,.8); }
+  .built { display: grid; gap: 12px; padding: 20px 22px; border-radius: 16px; border: 1px solid var(--line); }
+  .built h3 { font-size: 19px; }
+  .built ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+  .built li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; }
+  .built li svg { width: 18px; height: 18px; padding: 3px; border-radius: 50%; background: var(--tint); color: var(--bright); flex-shrink: 0; margin-top: 2px; }
+  .built .tagline { font-family: var(--serif); font-size: 18px; color: var(--navy); font-style: italic; }
+  .xl { background: #0F2140; border-radius: 16px; padding: 14px; display: grid; gap: 12px; color: #E6ECF5; }
+  .xl-top { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+  .xl-dots { display: flex; gap: 5px; } .xl-dots i { width: 9px; height: 9px; border-radius: 50%; background: #E25C5C; } .xl-dots i:nth-child(2) { background: #F0B03A; } .xl-dots i:nth-child(3) { background: #2FAE68; }
+  .xl-url { flex: 1; color: #8FA3C0; background: rgba(255,255,255,.05); border-radius: 6px; padding: 4px 10px; }
+  .xl-live { color: #6FE0A4; font-weight: 600; }
+  .xl-grid { display: grid; grid-template-columns: 1.1fr 1.2fr .9fr; gap: 10px; }
+  .xl-box { background: rgba(255,255,255,.05); border-radius: 10px; padding: 12px; display: grid; gap: 8px; align-content: start; font-size: 12.5px; }
+  .xl-box > b { font-size: 12px; color: #fff; }
+  .xl-row { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .xl-h { color: #8FA3C0; font-size: 11px; }
+  .up { color: #6FE0A4; } .down { color: #F08A8A; }
+  .xl-rec { display: grid; gap: 4px; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,.04); border-left: 3px solid currentColor; }
+  .xl-rec em { font-style: normal; font-weight: 700; font-size: 11.5px; }
+  .xl-rec span { color: #CFDAEA; line-height: 1.45; }
+  .mk { display: grid; grid-template-columns: 1fr 40px; gap: 4px 8px; align-items: center; }
+  .mk span { grid-column: 1 / -1; font-size: 12px; }
+  .mk i { display: block; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #1F5EFF, #6F9BFF); width: var(--w); }
+  .mk .flag { width: 20px; height: 13px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; box-shadow: 0 0 0 1px rgba(255,255,255,.15); }
+  .mk em { font-style: normal; font-size: 11.5px; color: #8FA3C0; text-align: right; }
+  .xl-cap { font-size: 12px; color: #8FA3C0; }
+  @media (max-width: 860px) { .vn { grid-template-columns: 1fr; } .vn-arrow { justify-self: center; transform: rotate(90deg); } .built ul { grid-template-columns: 1fr; } .xl-grid { grid-template-columns: 1fr; } }
+
+  /* sectorknoppen: witte tegel met dikke marineblauwe rand */
+  .lg-item { background: var(--white); border: 2.5px solid var(--mid); color: var(--ink); grid-template-rows: auto auto; }
+  .lg-item b { color: var(--navy); font-size: 16px; }
+  .lg-item small { color: var(--muted); font-size: 11.5px; letter-spacing: .06em; text-transform: none; font-weight: 500; }
+  .lg-item .ic { background: color-mix(in srgb, var(--c) 14%, white); color: var(--c); }
+  .lg-item .go { color: var(--navy); }
+  .lg-item:hover { border-color: var(--bright); box-shadow: 0 16px 30px -20px rgba(31,94,255,.6); }
+  .lg-item:hover .ic { background: var(--c); color: #fff; }
+  .lg-item:hover .go { color: var(--bright); }
+
+
+  .foot-bot a { color: inherit; text-decoration: none; }
+  .foot-bot a:hover { color: #fff; text-decoration: underline; }
+  /* zelfde ritme als de homepage: 80px tussen onderwerpen (mobiel 64), 40px boven de footer (mobiel 32) */
+  .closing { padding-bottom: 40px; }
+  @media (max-width: 560px) { .closing { padding-bottom: 32px; } }
+  @media (max-width: 560px) { .cases-wrap { padding-bottom: 44px; } }
+
+  /* sectorknoppen: ronde knoppen onder elkaar, alleen de sector (optie B) */
+  .lg-item { position: relative; overflow: hidden; grid-template-columns: auto 1fr auto; grid-template-rows: auto; gap: 14px; padding: 10px 12px 10px 10px; border-radius: 100px; background: var(--white); border: 1.5px solid var(--line); box-shadow: 0 14px 28px -24px rgba(23,52,95,.5); transition: border-color .25s, box-shadow .3s, transform .3s var(--ease); }
+  .lg-item::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 10%, white), transparent 70%); transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+  .lg-item > * { position: relative; }
+  .lg-item .ic, .lg-item:hover .ic { grid-row: auto; width: 48px; height: 48px; border-radius: 50%; background: var(--c); color: #fff; }
+  .lg-item .ic svg { width: 21px; height: 21px; }
+  .lg-item b { font-size: 16px; color: var(--navy); }
+  .lg-item .go { grid-row: auto; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 16px; background: var(--soft); color: var(--navy); transition: background .25s, color .25s; }
+  .lg-item:hover { border-color: var(--c); transform: translateX(4px); box-shadow: 0 18px 30px -20px var(--c); }
+  .lg-item:hover::before { transform: scaleX(1); }
+  .lg-item:hover .go { background: var(--c); color: #fff; transform: none; }
+
+  /* tegels in balans: beeld rechts lager op laptop en groter, zodat er minder wit naast de tekst staat */
+  @media (min-width: 981px) { .rcase .vis { aspect-ratio: 16 / 9; } }
+
+  /* feedback ronde 2: zelfde letters als de homepage (schreefletter alleen voor de grote koppen, geen cursief) */
+  :root { --serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  h1, h2 { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+  em, cite, blockquote, h1 em, h2 em, h3 em, .sbody.q, .q { font-style: normal !important; }
+  main h3 { font-weight: 600; }
+  .snum .big, .vis .res .big, .cb-row b, .kpi b, .stat b, .finish b, .net-c b { font-weight: 600 !important; letter-spacing: -.025em; }
+  .snum .big { font-size: 36px; }
+  .cb-row b { font-size: 19px; }
+  /* WhatsApp-knop in plaats van de chat */
+  .chatfab.wa { background: #25D366; box-shadow: 0 10px 24px -8px rgba(37,211,102,.7); }
+  .chatfab.wa:hover { background: #1EBE5A; }
+  .chatfab.wa svg { width: 26px; height: 26px; }
+  .mess-in span { animation: none !important; }
+
+  /* Middenweg-witruimte */
+  .closing { padding-bottom: 72px; }
+  @media (max-width: 560px) { .closing { padding-bottom: 48px; } }
+  .cases-wrap { padding-bottom: 88px; }
+  @media (max-width: 560px) { .cases-wrap { padding-bottom: 60px; } }
+
+  /* paginalinks onderin de footer */
+  .foot-pages { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+  .foot-pages a { color: rgba(255,255,255,.75); text-decoration: none; }
+  .foot-pages a:hover { color: #fff; text-decoration: underline; }
+  @media (max-width: 820px) { .foot-pages { justify-content: center; } }
+
+  /* kleine telefoons (iPhone SE/mini): menubalk past binnen het scherm */
+  @media (max-width: 400px) { .nav .logo { gap: 8px; } .nav .logo span { font-size: 13px; letter-spacing: .14em; } .nav-in { gap: 12px; } .nav-right { gap: 10px; } }
+  @media (max-width: 340px) { .nav .logo span { display: none; } }
+
+  /* kleine telefoons: casekaarten niet breder dan het scherm */
+  @media (max-width: 560px) {
+    .cases-wrap, .rcase { grid-template-columns: minmax(0, 1fr) !important; }
+    .rcase, .rcase > * { min-width: 0; }
+  }
+
+  @media (max-width: 560px) {
+    .hc-main, .hc-story, .rcase-main, .story { grid-template-columns: minmax(0, 1fr) !important; }
+    .hc-main > *, .hc-story > *, .rcase-main > *, .story > * { min-width: 0; }
+    .seg3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    .seg3 button { min-width: 0 !important; }
+  }
+  @media (max-width: 360px) { .seg3 button { padding-inline: 4px !important; font-size: 12.5px !important; } }
+
+  /* ===== privacybeleid ===== */
+  .phero { position: relative; overflow: hidden; padding-block: 52px 36px; background: radial-gradient(90% 80% at 85% 0%, var(--tint) 0%, rgba(234,241,251,0) 60%), var(--white); }
+  .phero .wrap { position: relative; display: grid; gap: 14px; }
+  .phero h1 { font-size: clamp(32px, 3.6vw, 44px); line-height: 1.08; }
+  .updated { font-size: 14px; color: var(--muted); }
+  .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+  .sum { display: grid; grid-template-columns: 42px 1fr; gap: 14px; align-items: start; background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: border-color .25s, transform .3s var(--ease), box-shadow .3s; }
+  .sum:hover { border-color: color-mix(in srgb, var(--bright) 45%, var(--line)); transform: translateY(-3px); box-shadow: 0 18px 32px -24px rgba(31,94,255,.6); }
+  .sum .s-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--tint); color: var(--bright); }
+  .sum .s-ic svg { width: 20px; height: 20px; }
+  .sum > div { line-height: 1.45; }
+  .sum b { display: block; font-size: 15px; color: var(--navy); margin-bottom: 3px; }
+  .sum span { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  .pbody { padding-block: 24px 40px; }
+  .pbody .wrap { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 56px; align-items: start; }
+  .toc { position: sticky; top: calc(96px + env(safe-area-inset-top, 0px)); display: grid; gap: 2px; }
+  .toc small { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+  .toc a { display: grid; grid-template-columns: 24px 1fr; gap: 6px; font-size: 14px; color: var(--muted); text-decoration: none; padding: 6px 10px; border-left: 2px solid var(--line); transition: color .2s, border-color .2s, background .2s; }
+  .toc a i { font-style: normal; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--navy); background: var(--soft); }
+  .toc a.on { color: var(--navy); font-weight: 600; border-left-color: var(--bright); background: var(--soft); }
+  .toc a.on i { color: var(--bright); }
+
+  /* inhoudsopgave op mobiel: klein uitklapblok */
+  .mtoc { display: none; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--soft); }
+  .mtoc summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; font-size: 14px; font-weight: 600; color: var(--navy); }
+  .mtoc summary::-webkit-details-marker { display: none; }
+  .mtoc summary i { width: 9px; height: 9px; border-right: 2px solid var(--bright); border-bottom: 2px solid var(--bright); transform: rotate(45deg) translateY(-3px); transition: transform .25s var(--ease); }
+  .mtoc[open] summary i { transform: rotate(-135deg) translateY(-2px); }
+  .mtoc-list { display: grid; padding: 0 8px 10px; }
+  .mtoc-list a { display: grid; grid-template-columns: 26px 1fr; gap: 4px; padding: 8px; font-size: 14px; color: var(--ink); text-decoration: none; border-radius: 8px; }
+  .mtoc-list a i { font-style: normal; color: var(--bright); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .mtoc-list a:hover { background: #fff; }
+  .doc { display: grid; gap: 0; max-width: 72ch; }
+  .doc section { padding: 26px 0; border-top: 1px solid var(--line); scroll-margin-top: 100px; }
+  .doc section:first-child { border-top: 0; padding-top: 0; }
+  .doc h2 { font-size: 24px; margin-bottom: 12px; display: flex; gap: 12px; align-items: baseline; }
+  .doc h2 i { font-style: normal; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--bright); background: var(--tint); border-radius: 100px; padding: 2px 9px; transform: translateY(-3px); }
+  .doc p { color: var(--ink); font-size: 16px; line-height: 1.7; }
+  .doc p + p, .doc p + ul, .doc ul + p, .doc .svc + p, .doc .addr + p { margin-top: 12px; }
+  .doc ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+  .doc li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.6; }
+  .doc li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F5EFF' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 10px no-repeat; }
+  .doc li b { color: var(--navy); }
+  .addr { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin-top: 12px; padding: 16px 18px; background: var(--soft); border: 1px solid var(--line); border-radius: 14px; font-size: 15px; }
+  .addr span { color: var(--faint); }
+  .addr b { color: var(--navy); font-weight: 600; }
+  .addr a { color: var(--bright); text-decoration: none; font-weight: 600; }
+  .addr a:hover { text-decoration: underline; }
+  .svc { display: grid; gap: 10px; margin-top: 14px; }
+  .svc div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; align-items: baseline; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); transition: border-color .25s; }
+  .svc div:hover { border-color: color-mix(in srgb, var(--bright) 40%, var(--line)); }
+  .svc b { color: var(--navy); font-size: 15px; }
+  .svc span { color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .doc a.inl { color: var(--bright); font-weight: 600; text-decoration: none; }
+  .doc a.inl:hover { text-decoration: underline; }
+
+  .ask { max-width: 72ch; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 30px; padding: 24px 26px; border-radius: 18px; background: var(--navy); color: #fff; }
+  .ask b { display: block; font-family: var(--serif); font-size: 22px; font-weight: 600; }
+  .ask span { color: var(--mid-on-dark); font-size: 15px; }
+  .ask .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+  .ask .btn.ghost { background: transparent; border: 1.5px solid rgba(255,255,255,.4); box-shadow: none; }
+  .ask .btn.ghost:hover { background: rgba(255,255,255,.08); }
+
+  .foot-bot a { color: inherit; text-decoration: none; }
+  .foot-bot a:hover { color: #fff; text-decoration: underline; }
+
+  @media (max-width: 980px) {
+    .summary { grid-template-columns: 1fr; }
+    .pbody .wrap { grid-template-columns: 1fr; gap: 0; }
+    .toc { display: none; }
+    .mtoc { display: block; }
+  }
+  @media (max-width: 560px) {
+    .phero { padding-block: 36px 24px; }
+    .pbody { padding-block: 12px 32px; }
+    .doc h2 { font-size: 21px; }
+    .doc p, .doc li { font-size: 15px; }
+    .svc div { grid-template-columns: 1fr; gap: 4px; }
+    .addr { grid-template-columns: 1fr; gap: 2px; }
+    .addr span { margin-top: 6px; }
+    .ask { padding: 22px 20px; }
+    .ask .acts { display: grid; grid-template-columns: 1fr; width: 100%; }
+    .ask .acts .btn { width: 100%; }
+  }
+
+  /* Middenweg-witruimte */
+  .pbody { padding-bottom: 72px; }
+  @media (max-width: 560px) { .pbody { padding-bottom: 48px; } }
+
+
+  /* cookiemelding */
+  .ck { position: fixed; z-index: 60; left: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); max-width: 440px; display: grid; gap: 12px; padding: 18px 20px; background: #fff; color: var(--navy, #17345F); border: 1px solid var(--line, #C9D5E4); border-radius: 16px; box-shadow: 0 24px 48px -20px rgba(23,52,95,.35); font-size: 14px; line-height: 1.55; }
+  .ck[hidden] { display: none; }
+  .ck p { margin: 0; color: var(--muted, #465369); }
+  .ck p a { color: var(--bright, #1F5EFF); }
+  .ck-b { display: flex; gap: 10px; justify-content: flex-end; }
+  .ck-b button { font: 600 14px/1 "Inter", system-ui, sans-serif; border-radius: 100px; padding: 10px 18px; cursor: pointer; border: 1px solid var(--line, #C9D5E4); background: #fff; color: var(--navy, #17345F); }
+  .ck-b button.ok { background: var(--bright, #1F5EFF); border-color: var(--bright, #1F5EFF); color: #fff; }
+  @media (max-width: 560px) { .ck { left: 12px; right: 12px; max-width: none; } }
+  body.ck-open .chatfab, body.ck-open .sticky { display: none !important; }
+</style>
 </head>
 <body>
+<template id="logo-svg">
+  <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+    <rect x="19" y="6" width="6" height="32" rx="1" class="bar"/>
+    <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke-width="2.6" fill="none" stroke-linecap="round" class="curve"/>
+    <circle cx="8" cy="36" r="2.8" class="dot"/>
+    <circle cx="36" cy="8" r="2.8" class="dot"/>
+  </svg>
+</template>
 
-<nav>
-    <a href="index.html" class="nav-logo">
-        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
-            <rect x="19" y="6" width="6" height="32" rx="1" fill="#C9A84C"/>
-            <path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#E8C97A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-            <circle cx="8" cy="36" r="2.5" fill="#E8C97A" opacity="0.5"/>
-            <circle cx="36" cy="8" r="2.5" fill="#E8C97A" opacity="0.5"/>
-        </svg>
-        <span class="nav-logo-text">Insightance</span>
-    </a>
-    <a href="index.html" class="nav-back">← Terug naar Insightance</a>
-</nav>
 
-<div class="hero">
-    <p class="hero-label">Juridisch</p>
-    <h1 class="hero-title">Privacybeleid</h1>
-    <p class="hero-sub">Laatst bijgewerkt: mei 2026</p>
-</div>
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="./" data-bar="#17345F" data-curve="#3D6AA8"><span>Insightance</span></a>
+    <a class="back" href="./"><span>←</span><b data-i18n>Terug naar homepage</b><i class="short" data-i18n style="font-style:normal">Terug</i></a>
+    <div class="nav-right">
+      <div class="lang" role="button" tabindex="0" aria-label="Taal"><span class="on" data-l="nl">NL</span><span data-l="en">EN</span></div>
+      <a class="btn sm" href="./#contact" data-i18n>Plan een gesprek</a>
+    </div>
+  </div>
+</header>
 
-<div class="content">
+<main>
+  <svg class="dataline" id="dataline" aria-hidden="true"><path class="track" id="dl-track"/><path class="draw" id="dl-draw"/><g id="dl-dot"><circle class="halo" r="10"/><circle class="head" r="4.5"/></g></svg>
+  <section class="phero">
+    <canvas class="bgflow"></canvas>
+    <div class="wrap">
+      <div class="eyebrow eyebrow-lines" data-i18n>Juridisch</div>
+      <h1 data-i18n>Privacybeleid</h1>
+      <p class="updated" id="updated">Laatst bijgewerkt: 8 oktober 2026</p>
+      <div class="summary" id="summary"><div class="sum"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg></span><div><b>Wat we verzamelen</b><span>Alleen wat je zelf invult in het contactformulier of de agenda, of ons stuurt via e-mail of WhatsApp.</span></div></div><div class="sum"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span><div><b>Waarvoor</b><span>Om contact met je op te nemen en een gesprek in te plannen. We verkopen je gegevens nooit.</span></div></div><div class="sum"><span class="s-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path><path d="M10 11v5M14 11v5"></path></svg></span><div><b>Laten verwijderen</b><span>Eén mail naar info@insightance.ai is genoeg. We reageren binnen 30 dagen.</span></div></div></div>
+    </div>
+  </section>
 
-    <h2>1. Wie zijn wij</h2>
-    <p>Insightance is een eenmanszaak gespecialiseerd in AI-automatiseringsoplossingen voor het midden- en kleinbedrijf. Insightance is gevestigd in Amsterdam, Nederland.</p>
-    <p><strong>Contactgegevens:</strong><br>
-    Insightance<br>
-    Amsterdam, Nederland<br>
-    E-mail: <a href="mailto:info@insightance.ai">info@insightance.ai</a><br>
-    WhatsApp: <a href="https://wa.me/31653340362">+31 6 53340362</a></p>
-
-    <h2>2. Welke gegevens verzamelen wij</h2>
-    <p>Wij verzamelen uitsluitend persoonsgegevens die u zelf aan ons verstrekt via het contactformulier op onze website. Dit betreft:</p>
-    <ul>
-        <li>Voor- en achternaam</li>
-        <li>Bedrijfsnaam</li>
-        <li>E-mailadres</li>
-        <li>Telefoonnummer</li>
-        <li>Aantal medewerkers</li>
-        <li>Uw bericht of vraag</li>
-    </ul>
-    <p>Wij verzamelen geen bijzondere persoonsgegevens zoals gegevens over gezondheid, politieke opvattingen of religie.</p>
-
-    <h2>3. Waarvoor gebruiken wij uw gegevens</h2>
-    <p>Uw gegevens worden uitsluitend gebruikt om:</p>
-    <ul>
-        <li>Contact met u op te nemen naar aanleiding van uw aanvraag</li>
-        <li>Een kennismakingsgesprek in te plannen</li>
-        <li>U te informeren over onze diensten, indien u hier toestemming voor heeft gegeven</li>
-    </ul>
-    <p>Wij verkopen uw gegevens nooit aan derden en delen deze niet met externe partijen, tenzij dit wettelijk verplicht is.</p>
-
-    <h2>4. Grondslag voor verwerking</h2>
-    <p>Wij verwerken uw persoonsgegevens op basis van uw toestemming (artikel 6 lid 1 sub a AVG) of ter uitvoering van een overeenkomst waarbij u partij bent (artikel 6 lid 1 sub b AVG).</p>
-
-    <h2>5. Hoe lang bewaren wij uw gegevens</h2>
-    <p>Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk voor het doel waarvoor ze zijn verstrekt. In de praktijk betekent dit dat wij gegevens van niet-klanten maximaal 12 maanden bewaren na uw laatste contact. Gegevens van klanten bewaren wij gedurende de looptijd van onze samenwerking en maximaal 7 jaar daarna, conform de wettelijke bewaarplicht.</p>
-
-    <h2>6. Beveiliging</h2>
-    <p>Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beschermen tegen verlies, misbruik en ongeautoriseerde toegang. Communicatie via onze website verloopt via een beveiligde HTTPS-verbinding.</p>
-
-    <h2>7. Cookies</h2>
-    <p>Onze website maakt gebruik van functionele cookies. Deze cookies zijn noodzakelijk voor het correct functioneren van de website en vereisen geen toestemming. Wij gebruiken geen tracking- of advertentiecookies van derden.</p>
-    <p>U kunt cookies uitschakelen via de instellingen van uw browser. Houd er rekening mee dat sommige functies van de website dan mogelijk niet naar behoren werken.</p>
-
-    <h2>8. Uw rechten</h2>
-    <p>Op grond van de Algemene Verordening Gegevensbescherming (AVG) heeft u de volgende rechten:</p>
-    <ul>
-        <li><strong>Recht op inzage</strong> — U heeft het recht te weten welke gegevens wij van u verwerken.</li>
-        <li><strong>Recht op rectificatie</strong> — U kunt ons verzoeken onjuiste gegevens te corrigeren.</li>
-        <li><strong>Recht op verwijdering</strong> — U kunt ons verzoeken uw gegevens te verwijderen.</li>
-        <li><strong>Recht op bezwaar</strong> — U kunt bezwaar maken tegen de verwerking van uw gegevens.</li>
-        <li><strong>Recht op dataportabiliteit</strong> — U kunt uw gegevens opvragen in een gestructureerd, gangbaar formaat.</li>
-    </ul>
-    <p>Om gebruik te maken van uw rechten kunt u contact opnemen via <a href="mailto:info@insightance.ai">info@insightance.ai</a>. Wij reageren binnen 30 dagen op uw verzoek.</p>
-
-    <h2>9. Klacht indienen</h2>
-    <p>Indien u van mening bent dat wij uw gegevens niet correct verwerken, heeft u het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens via <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank">autoriteitpersoonsgegevens.nl</a>.</p>
-
-    <h2>10. Wijzigingen</h2>
-    <p>Wij behouden ons het recht voor dit privacybeleid te wijzigen. De meest actuele versie is altijd te vinden op deze pagina. Wij raden u aan deze pagina periodiek te raadplegen.</p>
-
-</div>
+  <section class="pbody">
+    <div class="wrap">
+      <nav class="toc" id="toc" aria-label="Inhoud"><small>Inhoud</small><a href="#p1" class="on"><i>1.</i>Wie zijn wij</a><a href="#p2"><i>2.</i>Welke gegevens verzamelen we</a><a href="#p3"><i>3.</i>Waarvoor gebruiken we je gegevens</a><a href="#p4"><i>4.</i>Diensten die we gebruiken</a><a href="#p5"><i>5.</i>Grondslag voor verwerking</a><a href="#p6"><i>6.</i>Hoe lang bewaren we je gegevens</a><a href="#p7"><i>7.</i>Beveiliging</a><a href="#p8"><i>8.</i>Cookies</a><a href="#p9"><i>9.</i>Jouw rechten</a><a href="#p10"><i>10.</i>Klacht indienen</a><a href="#p11"><i>11.</i>Wijzigingen</a></nav>
+      <div>
+        <details class="mtoc" id="mtoc-wrap"><summary><span id="mtoc-t">Inhoud</span><i aria-hidden="true"></i></summary><div class="mtoc-list" id="mtoc"><a href="#p1"><i>1.</i>Wie zijn wij</a><a href="#p2"><i>2.</i>Welke gegevens verzamelen we</a><a href="#p3"><i>3.</i>Waarvoor gebruiken we je gegevens</a><a href="#p4"><i>4.</i>Diensten die we gebruiken</a><a href="#p5"><i>5.</i>Grondslag voor verwerking</a><a href="#p6"><i>6.</i>Hoe lang bewaren we je gegevens</a><a href="#p7"><i>7.</i>Beveiliging</a><a href="#p8"><i>8.</i>Cookies</a><a href="#p9"><i>9.</i>Jouw rechten</a><a href="#p10"><i>10.</i>Klacht indienen</a><a href="#p11"><i>11.</i>Wijzigingen</a></div></details>
+        <article class="doc" id="doc"><section id="p1"><h2><i>1</i>Wie zijn wij</h2><p>Insightance is een eenmanszaak die AI-automatiseringen bouwt voor het midden- en kleinbedrijf. Insightance is gevestigd in Amsterdam, Nederland.</p>
+          <div class="addr"><span>Bedrijf</span><b>Insightance</b><span>Plaats</span><b>Amsterdam, Nederland</b><span>E-mail</span><a href="mailto:info@insightance.ai">info@insightance.ai</a><span>WhatsApp</span><b>+31 6 53340362</b></div></section><section id="p2"><h2><i>2</i>Welke gegevens verzamelen we</h2><p>We verzamelen alleen persoonsgegevens die je zelf aan ons geeft, via het contactformulier, de agenda, per e-mail of via WhatsApp. Dit zijn:</p>
+          <ul><li>Voor- en achternaam</li><li>Bedrijfsnaam</li><li>E-mailadres</li><li>Telefoonnummer, als je dat invult</li><li>Je bericht of vraag</li></ul>
+          <p>We verzamelen geen bijzondere persoonsgegevens, zoals gegevens over gezondheid, politieke opvattingen of religie.</p></section><section id="p3"><h2><i>3</i>Waarvoor gebruiken we je gegevens</h2><p>Je gegevens worden alleen gebruikt om:</p>
+          <ul><li>contact met je op te nemen naar aanleiding van je aanvraag</li><li>een kennismakingsgesprek in te plannen</li><li>je te informeren over onze diensten, als je daar toestemming voor hebt gegeven</li></ul>
+          <p>We verkopen je gegevens nooit aan derden.</p></section><section id="p4"><h2><i>4</i>Diensten die we gebruiken</h2><p>Voor een aantal onderdelen van de website gebruiken we diensten van andere bedrijven. Zij verwerken je gegevens alleen in onze opdracht en niet voor eigen doeleinden.</p>
+          <div class="svc"><div><b>Formspree</b><span>Verwerkt de berichten die je via het contactformulier verstuurt en stuurt ze door naar onze mailbox.</span></div><div><b>Google Workspace</b><span>Onze e-mail. Je berichten aan ons komen hier binnen.</span></div><div><b>WhatsApp</b><span>Stuur je ons een bericht via WhatsApp, dan verloopt dat via WhatsApp van Meta.</span></div><div><b>Calendly</b><span>Plan je een gesprek via onze agenda, dan verwerkt Calendly je naam, e-mailadres, het gekozen tijdstip en wat je eventueel invult. Het gesprek zelf verloopt via Google Meet.</span></div></div>
+          <p>Sommige van deze diensten zijn gevestigd buiten de Europese Unie, bijvoorbeeld in de Verenigde Staten. Daarvoor gelden passende waarborgen, zoals de standaardcontractbepalingen van de Europese Commissie of het EU-VS Data Privacy Framework.</p>
+          <p>Verder delen we je gegevens met niemand, tenzij de wet ons daartoe verplicht.</p></section><section id="p5"><h2><i>5</i>Grondslag voor verwerking</h2><p>We verwerken je persoonsgegevens op basis van je toestemming (artikel 6 lid 1 sub a AVG) of om een overeenkomst uit te voeren waarbij je partij bent (artikel 6 lid 1 sub b AVG).</p></section><section id="p6"><h2><i>6</i>Hoe lang bewaren we je gegevens</h2><p>We bewaren je persoonsgegevens niet langer dan nodig is voor het doel waarvoor je ze hebt gegeven. In de praktijk bewaren we gegevens van niet-klanten maximaal 12 maanden na je laatste contact. Gegevens van klanten bewaren we zolang we samenwerken en maximaal 7 jaar daarna, vanwege de wettelijke bewaarplicht.</p></section><section id="p7"><h2><i>7</i>Beveiliging</h2><p>We nemen passende technische en organisatorische maatregelen om je persoonsgegevens te beschermen tegen verlies, misbruik en toegang door onbevoegden. Communicatie via onze website verloopt via een beveiligde HTTPS-verbinding.</p></section><section id="p8"><h2><i>8</i>Cookies</h2><p>Onze website gebruikt alleen functionele cookies en vergelijkbare technieken. Die zijn nodig om de website goed te laten werken, bijvoorbeeld om je taalkeuze te onthouden. Hiervoor is geen toestemming nodig. We gebruiken geen trackingcookies of advertentiecookies.</p>
+          <p>Open je de agenda om een gesprek te plannen, dan plaatst Calendly eigen cookies. Voor cookies die niet nodig zijn, vraagt Calendly je daar zelf om toestemming. Meer daarover lees je in het privacybeleid van Calendly.</p>
+          <p>Je kunt cookies uitschakelen via de instellingen van je browser. Sommige onderdelen van de website werken dan mogelijk niet goed.</p></section><section id="p9"><h2><i>9</i>Jouw rechten</h2><p>Op grond van de Algemene Verordening Gegevensbescherming (AVG) heb je de volgende rechten:</p>
+          <ul><li><b>Recht op inzage:</b> je mag weten welke gegevens we van je verwerken.</li><li><b>Recht op correctie:</b> je kunt ons vragen onjuiste gegevens aan te passen.</li><li><b>Recht op verwijdering:</b> je kunt ons vragen je gegevens te verwijderen.</li><li><b>Recht op bezwaar:</b> je kunt bezwaar maken tegen de verwerking van je gegevens.</li><li><b>Recht op overdracht:</b> je kunt je gegevens opvragen in een gangbaar bestandsformaat.</li><li><b>Toestemming intrekken:</b> heb je toestemming gegeven, dan kun je die altijd weer intrekken.</li></ul>
+          <p>Wil je een van deze rechten gebruiken? Stuur dan een mail naar <a class="inl" href="mailto:info@insightance.ai">info@insightance.ai</a>. We reageren binnen 30 dagen.</p></section><section id="p10"><h2><i>10</i>Klacht indienen</h2><p>Vind je dat we niet goed met je gegevens omgaan? Dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens via <a class="inl" href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>. We stellen het op prijs als je eerst contact met ons opneemt, zodat we het samen kunnen oplossen.</p></section><section id="p11"><h2><i>11</i>Wijzigingen</h2><p>We kunnen dit privacybeleid aanpassen. De meest actuele versie staat altijd op deze pagina. Bovenaan zie je wanneer het voor het laatst is bijgewerkt.</p></section></article>
+        <div class="ask rv">
+          <div><b id="ask-t">Vragen over je gegevens?</b><span id="ask-s">Neem gerust contact op, we helpen je graag.</span></div>
+          <div class="acts"><a class="btn" href="mailto:info@insightance.ai">info@insightance.ai</a><a class="btn ghost" href="https://wa.me/31653340362" target="_blank" rel="noopener">WhatsApp</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  // ===== privacybeleid: inhoud in NL en EN =====
+  const MAIL = '<a class="inl" href="mailto:info@insightance.ai">info@insightance.ai</a>';
+  const P = {
+    nl: {
+      updated: 'Laatst bijgewerkt: 8 oktober 2026',
+      toc: 'Inhoud',
+      sum: [['Wat we verzamelen', 'Alleen wat je zelf invult in het contactformulier of de agenda, of ons stuurt via e-mail of WhatsApp.'], ['Waarvoor', 'Om contact met je op te nemen en een gesprek in te plannen. We verkopen je gegevens nooit.'], ['Laten verwijderen', 'Eén mail naar info@insightance.ai is genoeg. We reageren binnen 30 dagen.']],
+      ask: ['Vragen over je gegevens?', 'Neem gerust contact op, we helpen je graag.'],
+      s: [
+        ['Wie zijn wij', `<p>Insightance is een eenmanszaak die AI-automatiseringen bouwt voor het midden- en kleinbedrijf. Insightance is gevestigd in Amsterdam, Nederland.</p>
+          <div class="addr"><span>Bedrijf</span><b>Insightance</b><span>Plaats</span><b>Amsterdam, Nederland</b><span>E-mail</span><a href="mailto:info@insightance.ai">info@insightance.ai</a><span>WhatsApp</span><b>+31 6 53340362</b></div>`],
+        ['Welke gegevens verzamelen we', `<p>We verzamelen alleen persoonsgegevens die je zelf aan ons geeft, via het contactformulier, de agenda, per e-mail of via WhatsApp. Dit zijn:</p>
+          <ul><li>Voor- en achternaam</li><li>Bedrijfsnaam</li><li>E-mailadres</li><li>Telefoonnummer, als je dat invult</li><li>Je bericht of vraag</li></ul>
+          <p>We verzamelen geen bijzondere persoonsgegevens, zoals gegevens over gezondheid, politieke opvattingen of religie.</p>`],
+        ['Waarvoor gebruiken we je gegevens', `<p>Je gegevens worden alleen gebruikt om:</p>
+          <ul><li>contact met je op te nemen naar aanleiding van je aanvraag</li><li>een kennismakingsgesprek in te plannen</li><li>je te informeren over onze diensten, als je daar toestemming voor hebt gegeven</li></ul>
+          <p>We verkopen je gegevens nooit aan derden.</p>`],
+        ['Diensten die we gebruiken', `<p>Voor een aantal onderdelen van de website gebruiken we diensten van andere bedrijven. Zij verwerken je gegevens alleen in onze opdracht en niet voor eigen doeleinden.</p>
+          <div class="svc"><div><b>Formspree</b><span>Verwerkt de berichten die je via het contactformulier verstuurt en stuurt ze door naar onze mailbox.</span></div><div><b>Google Workspace</b><span>Onze e-mail. Je berichten aan ons komen hier binnen.</span></div><div><b>WhatsApp</b><span>Stuur je ons een bericht via WhatsApp, dan verloopt dat via WhatsApp van Meta.</span></div><div><b>Calendly</b><span>Plan je een gesprek via onze agenda, dan verwerkt Calendly je naam, e-mailadres, het gekozen tijdstip en wat je eventueel invult. Het gesprek zelf verloopt via Google Meet.</span></div></div>
+          <p>Sommige van deze diensten zijn gevestigd buiten de Europese Unie, bijvoorbeeld in de Verenigde Staten. Daarvoor gelden passende waarborgen, zoals de standaardcontractbepalingen van de Europese Commissie of het EU-VS Data Privacy Framework.</p>
+          <p>Verder delen we je gegevens met niemand, tenzij de wet ons daartoe verplicht.</p>`],
+        ['Grondslag voor verwerking', `<p>We verwerken je persoonsgegevens op basis van je toestemming (artikel 6 lid 1 sub a AVG) of om een overeenkomst uit te voeren waarbij je partij bent (artikel 6 lid 1 sub b AVG).</p>`],
+        ['Hoe lang bewaren we je gegevens', `<p>We bewaren je persoonsgegevens niet langer dan nodig is voor het doel waarvoor je ze hebt gegeven. In de praktijk bewaren we gegevens van niet-klanten maximaal 12 maanden na je laatste contact. Gegevens van klanten bewaren we zolang we samenwerken en maximaal 7 jaar daarna, vanwege de wettelijke bewaarplicht.</p>`],
+        ['Beveiliging', `<p>We nemen passende technische en organisatorische maatregelen om je persoonsgegevens te beschermen tegen verlies, misbruik en toegang door onbevoegden. Communicatie via onze website verloopt via een beveiligde HTTPS-verbinding.</p>`],
+        ['Cookies', `<p>Onze website gebruikt alleen functionele cookies en vergelijkbare technieken. Die zijn nodig om de website goed te laten werken, bijvoorbeeld om je taalkeuze te onthouden. Hiervoor is geen toestemming nodig. We gebruiken geen trackingcookies of advertentiecookies.</p>
+          <p>Open je de agenda om een gesprek te plannen, dan plaatst Calendly eigen cookies. Voor cookies die niet nodig zijn, vraagt Calendly je daar zelf om toestemming. Meer daarover lees je in het privacybeleid van Calendly.</p>
+          <p>Je kunt cookies uitschakelen via de instellingen van je browser. Sommige onderdelen van de website werken dan mogelijk niet goed.</p>`],
+        ['Jouw rechten', `<p>Op grond van de Algemene Verordening Gegevensbescherming (AVG) heb je de volgende rechten:</p>
+          <ul><li><b>Recht op inzage:</b> je mag weten welke gegevens we van je verwerken.</li><li><b>Recht op correctie:</b> je kunt ons vragen onjuiste gegevens aan te passen.</li><li><b>Recht op verwijdering:</b> je kunt ons vragen je gegevens te verwijderen.</li><li><b>Recht op bezwaar:</b> je kunt bezwaar maken tegen de verwerking van je gegevens.</li><li><b>Recht op overdracht:</b> je kunt je gegevens opvragen in een gangbaar bestandsformaat.</li><li><b>Toestemming intrekken:</b> heb je toestemming gegeven, dan kun je die altijd weer intrekken.</li></ul>
+          <p>Wil je een van deze rechten gebruiken? Stuur dan een mail naar ${MAIL}. We reageren binnen 30 dagen.</p>`],
+        ['Klacht indienen', `<p>Vind je dat we niet goed met je gegevens omgaan? Dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens via <a class="inl" href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>. We stellen het op prijs als je eerst contact met ons opneemt, zodat we het samen kunnen oplossen.</p>`],
+        ['Wijzigingen', `<p>We kunnen dit privacybeleid aanpassen. De meest actuele versie staat altijd op deze pagina. Bovenaan zie je wanneer het voor het laatst is bijgewerkt.</p>`],
+      ],
+    },
+    en: {
+      updated: 'Last updated: 8 October 2026',
+      toc: 'Contents',
+      sum: [['What we collect', 'Only what you fill in yourself in the contact form or the calendar, or send us by email or WhatsApp.'], ['What for', 'To get in touch with you and schedule a call. We never sell your data.'], ['Having it deleted', 'One email to info@insightance.ai is enough. We reply within 30 days.']],
+      ask: ['Questions about your data?', "Feel free to get in touch, we're happy to help."],
+      s: [
+        ['Who we are', `<p>Insightance is a sole proprietorship that builds AI automations for small and medium-sized businesses. Insightance is based in Amsterdam, the Netherlands.</p>
+          <div class="addr"><span>Company</span><b>Insightance</b><span>Location</span><b>Amsterdam, the Netherlands</b><span>Email</span><a href="mailto:info@insightance.ai">info@insightance.ai</a><span>WhatsApp</span><b>+31 6 53340362</b></div>`],
+        ['What data we collect', `<p>We only collect personal data that you give us yourself, through the contact form, the calendar, by email or via WhatsApp. This is:</p>
+          <ul><li>First and last name</li><li>Company name</li><li>Email address</li><li>Phone number, if you fill it in</li><li>Your message or question</li></ul>
+          <p>We do not collect special categories of personal data, such as data about health, political opinions or religion.</p>`],
+        ['What we use your data for', `<p>We only use your data to:</p>
+          <ul><li>get in touch with you about your enquiry</li><li>schedule an introductory call</li><li>tell you about our services, if you have agreed to this</li></ul>
+          <p>We never sell your data to third parties.</p>`],
+        ['Services we use', `<p>For some parts of the website we use services from other companies. They only process your data on our behalf, never for their own purposes.</p>
+          <div class="svc"><div><b>Formspree</b><span>Handles the messages you send through the contact form and forwards them to our inbox.</span></div><div><b>Google Workspace</b><span>Our email. Your messages to us arrive here.</span></div><div><b>WhatsApp</b><span>If you message us on WhatsApp, that runs through WhatsApp by Meta.</span></div><div><b>Calendly</b><span>If you book a call through our calendar, Calendly processes your name, email address, the chosen time and anything else you fill in. The call itself takes place on Google Meet.</span></div></div>
+          <p>Some of these services are based outside the European Union, for example in the United States. Appropriate safeguards apply, such as the European Commission's standard contractual clauses or the EU-US Data Privacy Framework.</p>
+          <p>We do not share your data with anyone else, unless the law requires us to.</p>`],
+        ['Legal basis', `<p>We process your personal data based on your consent (Article 6(1)(a) GDPR) or to perform a contract to which you are a party (Article 6(1)(b) GDPR).</p>`],
+        ['How long we keep your data', `<p>We keep your personal data no longer than needed for the purpose you gave it for. In practice, we keep data from non-clients for up to 12 months after your last contact. We keep client data for as long as we work together and up to 7 years afterwards, because of the statutory retention period.</p>`],
+        ['Security', `<p>We take appropriate technical and organisational measures to protect your personal data against loss, misuse and unauthorised access. Communication through our website runs over a secure HTTPS connection.</p>`],
+        ['Cookies', `<p>Our website only uses functional cookies and similar techniques. These are needed for the website to work properly, for example to remember your language choice. They do not require consent. We do not use tracking or advertising cookies.</p>
+          <p>If you open the calendar to book a call, Calendly sets its own cookies. For cookies that aren't strictly needed, Calendly asks for your consent itself. You can read more about this in Calendly's privacy policy.</p>
+          <p>You can turn off cookies in your browser settings. Some parts of the website may then not work properly.</p>`],
+        ['Your rights', `<p>Under the General Data Protection Regulation (GDPR) you have the following rights:</p>
+          <ul><li><b>Right of access:</b> you may know which of your data we process.</li><li><b>Right to rectification:</b> you can ask us to correct inaccurate data.</li><li><b>Right to erasure:</b> you can ask us to delete your data.</li><li><b>Right to object:</b> you can object to the processing of your data.</li><li><b>Right to data portability:</b> you can request your data in a common file format.</li><li><b>Withdrawing consent:</b> if you have given consent, you can withdraw it at any time.</li></ul>
+          <p>Want to use one of these rights? Send an email to ${MAIL}. We reply within 30 days.</p>`],
+        ['Making a complaint', `<p>If you feel we are not handling your data properly, you can file a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens) at <a class="inl" href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>. We would appreciate it if you contacted us first, so we can try to resolve it together.</p>`],
+        ['Changes', `<p>We may update this privacy policy. The latest version is always on this page. At the top you can see when it was last updated.</p>`],
+      ],
+    },
+  };
+  const SUM_IC = [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/><path d="M10 11v5M14 11v5"/></svg>',
+  ];
+  function renderPrivacy() {
+    let lg = 'nl'; try { lg = LANG; } catch (e) {}
+    const d = P[lg];
+    document.getElementById('updated').textContent = d.updated;
+    document.getElementById('summary').innerHTML = d.sum.map((s, k) => `<div class="sum"><span class="s-ic">${SUM_IC[k]}</span><div><b>${s[0]}</b><span>${s[1]}</span></div></div>`).join('');
+    document.getElementById('toc').innerHTML = `<small>${d.toc}</small>` + d.s.map((s, k) => `<a href="#p${k + 1}"><i>${k + 1}.</i>${s[0]}</a>`).join('');
+    document.getElementById('mtoc-t').textContent = d.toc;
+    document.getElementById('mtoc').innerHTML = d.s.map((s, k) => `<a href="#p${k + 1}"><i>${k + 1}.</i>${s[0]}</a>`).join('');
+    document.getElementById('doc').innerHTML = d.s.map((s, k) => `<section id="p${k + 1}"><h2><i>${k + 1}</i>${s[0]}</h2>${s[1]}</section>`).join('');
+    document.getElementById('ask-t').textContent = d.ask[0];
+    document.getElementById('ask-s').textContent = d.ask[1];
+    document.querySelectorAll('#toc a, #mtoc a').forEach((a) => a.addEventListener('click', (e) => {
+      const mw = document.getElementById('mtoc-wrap'); if (mw && a.closest('#mtoc')) mw.open = false;
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href')), navH = document.getElementById('nav').getBoundingClientRect().height;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - navH - 20, behavior: reduce ? 'auto' : 'smooth' });
+      setTimeout(() => { document.documentElement.style.scrollBehavior = ''; }, 900);
+    }));
+    spy();
+    if (window.rebuildLine) window.rebuildLine();
+  }
+  // inhoudsopgave: markeer het hoofdstuk dat in beeld is
+  function spy() {
+    const secs = [...document.querySelectorAll('#doc section')], links = [...document.querySelectorAll('#toc a')];
+    if (!secs.length) return;
+    const navH = document.getElementById('nav').getBoundingClientRect().height + 40;
+    let cur = 0; secs.forEach((s, k) => { if (s.getBoundingClientRect().top - navH <= 0) cur = k; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = secs.length - 1;
+    links.forEach((a, k) => a.classList.toggle('on', k === cur));
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  renderPrivacy();
+</script>
 
 <footer>
-    <span>© 2026 Insightance · Amsterdam · <a href="privacybeleid.html">Privacybeleid</a></span>
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="logo" data-bar="#FFFFFF" data-curve="#9DBBE3"><span>Insightance</span></span>
+      <div class="foot-links"><a href="mailto:info@insightance.ai">info@insightance.ai</a><a href="https://wa.me/31653340362" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.linkedin.com/in/oussama-hlalouch-49915514a" target="_blank" rel="noopener">LinkedIn</a></div>
+    </div>
+    <div class="foot-bot"><span>© 2026 Insightance · Amsterdam</span><nav class="foot-pages" aria-label="Footer"><a href="index.html">Home</a><a href="automations.html">Automations</a><a href="resultaten.html" data-i18n>Resultaten</a><a href="demo.html">Demo</a><a href="privacybeleid.html" data-i18n>Privacybeleid</a></nav></div>
+  </div>
 </footer>
 
+<a class="chatfab wa" id="chatfab" href="https://wa.me/31653340362" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36A9.43 9.43 0 0 1 2.55 12C2.56 6.78 6.8 2.55 12.05 2.55c2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.22-4.25 9.47-9.48 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.04.63C5.77.63.66 5.73.66 12c0 2 .52 3.96 1.52 5.69L.57 23.37l5.81-1.52a11.36 11.36 0 0 0 5.66 1.44h.01c6.27 0 11.38-5.1 11.38-11.37 0-3.04-1.18-5.9-3.33-8.05z"/></svg></a>
+
+<script>
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
+  if (!location.hash) {
+    const toTop = () => { window.scrollTo(0, 0); try { document.documentElement.scrollIntoView({ block: 'start', behavior: 'instant' }); } catch (e) { document.documentElement.scrollIntoView(true); } };
+    toTop(); document.addEventListener('DOMContentLoaded', toTop); window.addEventListener('load', toTop); setTimeout(toTop, 300);
+  }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
+  const I18N = {"Juridisch": "Legal", "Privacybeleid": "Privacy Policy", "Resultaten": "Results", "Terug naar homepage": "Back to homepage", "Terug": "Back", "Plan een gesprek": "Schedule a call"};
+  const H1_EN = 'Watch AI <em>take over the work</em>, live';
+  let LANG = 'nl';
+
+  // logo
+  const tpl = document.getElementById('logo-svg');
+  document.querySelectorAll('.logo[data-bar]').forEach(el => {
+    const svg = tpl.content.firstElementChild.cloneNode(true);
+    svg.querySelector('.bar').setAttribute('fill', el.dataset.bar);
+    svg.querySelector('.curve').setAttribute('stroke', el.dataset.curve);
+    svg.querySelectorAll('.dot').forEach(d => d.setAttribute('fill', el.dataset.curve));
+    el.prepend(svg);
+  });
+
+
+  // taal
+  function setLang(l) {
+    LANG = l; document.documentElement.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(el => { if (el.dataset.nl === undefined) el.dataset.nl = el.textContent; el.textContent = l === 'en' ? (I18N[el.dataset.nl] || el.dataset.nl) : el.dataset.nl; });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => { if (el.dataset.nl === undefined) el.dataset.nl = el.innerHTML; el.innerHTML = l === 'en' ? H1_EN : el.dataset.nl; });
+    document.querySelectorAll('.lang span').forEach(sp => sp.classList.toggle('on', sp.dataset.l === l));
+    renderPrivacy();
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  }
+  document.querySelector('.lang').addEventListener('click', e => { const sp = e.target.closest('span[data-l]'); setLang(sp ? sp.dataset.l : (LANG === 'nl' ? 'en' : 'nl')); });
+  renderPrivacy();
+  try { if (localStorage.getItem('lang') === 'en') setLang('en'); } catch (e) {}
+
+  // golvende achtergrond bovenaan + in het blauwe blok
+  function waves(cv, dark) {
+    const ctx = cv.getContext('2d'); let w = 0, h = 0;
+    function size() { const r = cv.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1); w = r.width; h = r.height; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); }
+    const yAt = (i, x, t) => h * (dark ? .3 + i * .12 : .25 + i * .1) + Math.sin(x / 160 + t / 2700 + i * .7) * (16 + i * 5) + Math.cos(x / 300 - t / 4000 + i) * 8;
+    function draw(t) { ctx.clearRect(0, 0, w, h); for (let i = 0; i < (dark ? 5 : 6); i++) { ctx.beginPath(); for (let x = 0; x <= w; x += 10) { const y = yAt(i, x, t); x ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.strokeStyle = dark ? '#9DBBE3' : (i % 3 === 0 ? '#1F5EFF' : '#3D6AA8'); ctx.globalAlpha = dark ? .08 + i * .03 : .045 + i * .014; ctx.lineWidth = 1.2; ctx.stroke(); } ctx.globalAlpha = 1; }
+    size(); window.addEventListener('resize', size);
+    if (reduce) { draw(0); return; }
+    (function loop(t) { if (inView(cv)) draw(t); requestAnimationFrame(loop); })(0);
+  }
+  document.querySelectorAll('canvas.bgflow').forEach(cv => waves(cv, false));
+  document.querySelectorAll('canvas.cflow').forEach(cv => waves(cv, true));
+
+  // rode draad: start bij de datum, loopt in de rechterrand naast de tekst en eindigt in het blauwe vragenblok
+  (function () {
+    const main = document.querySelector('main'), dl = document.getElementById('dataline'), track = document.getElementById('dl-track'), drawP = document.getElementById('dl-draw'), dot = document.getElementById('dl-dot');
+    let len = 0, on = false;
+    function build() {
+      on = window.innerWidth > 1100; if (!on) return;
+      const W = main.clientWidth, H = main.offsetHeight, mt = main.getBoundingClientRect().top + window.scrollY, Y = r => r + window.scrollY - mt;
+      dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const gut = Math.max(36, (W - 1280) / 2 - 44), R = W - gut;
+      const lb = document.querySelector('.updated').getBoundingClientRect(), cb = document.querySelector('.ask').getBoundingClientRect();
+      const a0 = Y(lb.top) + lb.height / 2, y2 = Y(cb.top) + cb.height / 2;
+      const d = `M ${R} ${a0} L ${R} ${y2 - 60} C ${R} ${y2 - 10}, ${R - 20} ${y2}, ${cb.right - 1} ${y2}`;
+      track.setAttribute('d', d); drawP.setAttribute('d', d); len = drawP.getTotalLength(); drawP.style.strokeDasharray = len; update();
+    }
+    function lenAtY(yy) { let lo = 0, hi = len; for (let k = 0; k < 22; k++) { const m = (lo + hi) / 2; if (drawP.getPointAtLength(m).y < yy) lo = m; else hi = m; } return lo; }
+    function update() {
+      if (!on || !len) return;
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const yStart = drawP.getPointAtLength(0).y, yEnd = drawP.getPointAtLength(len).y, k = Math.max(1, (yEnd - yStart) / (max * .95));
+      const yHead = yStart + window.scrollY * k;
+      const l = reduce ? len : (window.scrollY <= 0 ? 0 : (yHead >= yEnd ? len : lenAtY(yHead)));
+      drawP.style.strokeDashoffset = len - l; const pt = drawP.getPointAtLength(l);
+      dot.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); }); dot.style.opacity = l > 2 ? 1 : 0;
+    }
+    window.rebuildLine = build;
+    window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', build); window.addEventListener('load', build);
+    if (document.fonts) document.fonts.ready.then(build);
+    let lastH = 0; setInterval(() => { const h = main.offsetHeight; if (h !== lastH) { lastH = h; build(); } }, 800);
+    build();
+  })();
+
+  // "Terug": naar de plek op de homepage waar de bezoeker vandaan kwam
+  document.querySelectorAll('a.back, a.logo[href="./"]').forEach(a => a.addEventListener('click', e => {
+    let y = null; try { y = sessionStorage.getItem('homeY'); } catch (er) {}
+    if (y === null) return;
+    e.preventDefault(); try { sessionStorage.setItem('restoreHome', y); } catch (er) {}
+    location.href = './';
+  }));
+
+  // nav-rand en chatknop
+  const nav = document.getElementById('nav'), hero = document.querySelector('.phero'), fab = document.getElementById('chatfab');
+  let lastY = window.scrollY, up = false;
+  function onScroll() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+    if (window.scrollY < lastY - 2) up = true; else if (window.scrollY > lastY + 2) up = false; lastY = window.scrollY;
+    const pastHero = hero.getBoundingClientRect().bottom < 0, atFooter = document.querySelector('footer').getBoundingClientRect().top < window.innerHeight - 40;
+    fab.classList.toggle('show', pastHero && !atFooter && (window.innerWidth > 820 || up));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // blokken schuiven zacht in beeld
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('play'); e.target.addEventListener('animationend', () => e.target.classList.remove('play'), { once: true }); }), { rootMargin: '0px 0px 6% 0px' });
+    document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight * .9) io.observe(el); });
+  }
+</script>
+
+<div class="ck" id="ck" role="dialog" aria-live="polite" hidden>
+  <p id="ck-t"></p>
+  <div class="ck-b"><button type="button" id="ck-no"></button><button type="button" class="ok" id="ck-ok"></button></div>
+</div>
+<script>
+  // cookiemelding: zelfde sleutel als de oude site, dus wie al akkoord gaf ziet hem niet opnieuw
+  (function () {
+    const box = document.getElementById('ck'); if (!box) return;
+    let seen = null; try { seen = localStorage.getItem('cookie_consent'); } catch (e) {}
+    const T = {
+      nl: ['Insightance gebruikt functionele cookies om de website goed te laten werken. <a href="privacybeleid.html">Meer informatie</a>', 'Sluiten', 'Akkoord'],
+      en: ['Insightance uses functional cookies to make the website work properly. <a href="privacybeleid.html">More information</a>', 'Close', 'Accept'],
+    };
+    const fill = () => { const t = T[document.documentElement.lang === 'en' ? 'en' : 'nl']; document.getElementById('ck-t').innerHTML = t[0]; document.getElementById('ck-no').textContent = t[1]; document.getElementById('ck-ok').textContent = t[2]; };
+    new MutationObserver(fill).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    const close = (v) => { box.hidden = true; document.body.classList.remove('ck-open'); if (v) { try { localStorage.setItem('cookie_consent', v); } catch (e) {} } };
+    document.getElementById('ck-ok').addEventListener('click', () => close('accepted'));
+    document.getElementById('ck-no').addEventListener('click', () => close(null));
+    if (!seen) { fill(); setTimeout(() => { box.hidden = false; document.body.classList.add('ck-open'); }, 800); }
+  })();
+</script>
 </body>
 </html>

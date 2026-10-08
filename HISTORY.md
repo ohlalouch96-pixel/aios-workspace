@@ -8,6 +8,28 @@
 
 ---
 
+## 2026-10-08
+
+### Insightance Website — Nieuwe Website Live (licht/blauw redesign)
+
+**Nieuwe look op alle pagina's** (homepage, automations, resultaten, demo, privacybeleid)
+- Van donker/goud naar licht/blauw, met de doorlopende blauwe lijn ("rode draad")
+- Overal je-vorm, rustigere letters (Playfair alleen voor koppen), meer witruimte tussen secties
+- Lettertypes staan nu op de eigen site (`docs/fonts/`), geen Google Fonts meer
+- Nieuwe demo-pagina met 4 afspeelbare scenario's, resultatenpagina met sectorkeuze
+
+**Inhoud**
+- Werkwijze in 4 stappen met per stap wat de klant krijgt, 50/50-betaling benoemd
+- AI-assessment van €300 geschrapt: na het gesprek een gratis voorstel met vaste prijs
+- WhatsApp-knop in plaats van chat, Calendly-agenda als pop-up bij Contact
+- Contactformulier verstuurt via Formspree (telefoon optioneel), cookiemelding behouden
+- Privacybeleid vernieuwd (Calendly, WhatsApp), datum 8 oktober 2026
+- MHL-schermafbeelding vervangen door versie met onleesbare klantgegevens
+
+**Back-up oude site:** `outputs/website-backup-live-2026-10-08/`
+
+---
+
 ## 2026-06-25
 
 ### Insightance Website — Subpagina's Gesynchroniseerd & UX Verbeterd
