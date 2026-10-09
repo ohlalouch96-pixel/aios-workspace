@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Klantcases | Insightance</title>
 <meta name="description" content="Echte bedrijven, echte tijdwinst. Zie hoe MHL Installatieservice en FTUK uren per week terugwonnen met AI.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' fill='none'%3E%3Crect x='19' y='6' width='6' height='32' rx='1' fill='%2317345F'/%3E%3Cpath d='M8 36 Q14 28 22 22 Q30 16 36 8' stroke='%231F5EFF' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='36' r='2.8' fill='%231F5EFF'/%3E%3Ccircle cx='36' cy='8' r='2.8' fill='%231F5EFF'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -542,6 +545,14 @@
   .ck-b button.ok { background: var(--bright, #1F5EFF); border-color: var(--bright, #1F5EFF); color: #fff; }
   @media (max-width: 560px) { .ck { left: 12px; right: 12px; max-width: none; } }
   body.ck-open .chatfab, body.ck-open .sticky { display: none !important; }
+
+  /* 2026-10-09: klantcases op mobiel: hoger vlak, kleinere wolkjes, dashboard schaalt als geheel mee */
+  @media (max-width: 560px) {
+    .hc .vis { aspect-ratio: 4 / 3; }
+    .hc .mess-in, .rcase .mess-in { width: 94%; gap: 7px 8px; }
+    .hc .mess-in span, .rcase .mess-in span { font-size: 11.5px; padding: 6px 9px; }
+    .hc .mess-in span:nth-child(n+7), .rcase .mess-in span:nth-child(n+7) { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -853,6 +864,23 @@
     const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('play'); e.target.addEventListener('animationend', () => e.target.classList.remove('play'), { once: true }); }), { rootMargin: '0px 0px 6% 0px' });
     document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight * .9) io.observe(el); });
   }
+
+  // 2026-10-09: dashboard in de klantcases: op smalle schermen als geheel verkleinen, zodat alles zichtbaar is
+  (function () {
+    const BASE = 480;
+    function fitDash() {
+      document.querySelectorAll('.vis .dash').forEach(d => {
+        const v = d.closest('.vis'); if (!v) return;
+        const cw = v.clientWidth, ch = v.clientHeight;
+        if (!cw || cw >= BASE) { d.style.width = d.style.height = d.style.transform = d.style.transformOrigin = d.style.right = d.style.bottom = ''; return; }
+        const k = cw / BASE;
+        Object.assign(d.style, { width: BASE + 'px', height: (ch / k) + 'px', right: 'auto', bottom: 'auto', transform: 'scale(' + k + ')', transformOrigin: '0 0' });
+      });
+    }
+    fitDash(); window.addEventListener('resize', fitDash); window.addEventListener('load', fitDash);
+    if ('ResizeObserver' in window) { const ro = new ResizeObserver(fitDash); document.querySelectorAll('.vis').forEach(v => ro.observe(v)); }
+    if (document.fonts) document.fonts.ready.then(fitDash);
+  })();
 </script>
 
 <div class="ck" id="ck" role="dialog" aria-live="polite" hidden>

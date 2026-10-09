@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-10-09
+
+### Insightance Website — Verbeteringen na de lancering
+
+- Echte favicon-bestanden (navy logo), zodat Google het logo kan tonen in plaats van een wereldbol
+- "Hoe Insightance werkt" en "Tarieven" samengevoegd tot één sectie "Werkwijze": 5 stappen met wat elke stap kost (gratis kennismaking en voorstel, 50% bij akkoord, 50% als alles werkt), menu aangepast
+- Over Insightance: nieuwe tekst ("goed werk begint bij goede systemen") en de zin over het werk dat gedaan zou moeten worden onder de quote
+- Klantcases op mobiel: wolkjes en FTUK-dashboard passen nu in het vlak (homepage en resultaten)
+- Demo-pagina: blauwe lijn loopt altijd door tot onderaan
+- Voor wie: pagina verspringt niet meer op mobiel; FAQ: één vraag tegelijk open
+- Contactformulier: bedrijfsnaam optioneel; demo-links heten "Bekijk een demo"
+
+---
+
 ## 2026-10-08
 
 ### Insightance Website — Nieuwe Website Live (licht/blauw redesign)
