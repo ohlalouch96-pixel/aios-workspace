@@ -16,6 +16,16 @@
 
 ---
 
+## E-maillijst / nieuwsbrief via de website
+
+**Status:** Geparkeerd sinds 2026-10-11
+**Idee van Oussama:** welkomstpop-up waarmee bezoekers zich aanmelden voor een nieuwsbrief, om een community op te bouwen en daaruit klanten te halen.
+**Waarom nog niet:** nog weinig bezoekers, er staat al een cookiemelding (twee pop-ups is opdringerig, Google straft pop-ups op mobiel af), en korting (bijv. 50% op de eerste automation) botst met "vaste prijs" en "max. 3 klanten per maand".
+**Beter alternatief later:** rustig aanmeldblok onderaan de site met iets nuttigs gratis (bijv. "5 taken die elke ondernemer vandaag kan automatiseren"), privacybeleid aanpassen, afmeldlink.
+**Trigger om op te pakken:** zodra de bezoekersteller (Cloudflare Web Analytics) laat zien dat er genoeg verkeer is.
+
+---
+
 ## n8n Docker-image bijwerken
 
 **Status:** Geparkeerd sinds 2026-08-19
@@ -58,8 +68,8 @@
 
 ## Visitekaartjes laten drukken
 
-**Status:** Geparkeerd sinds 2026-10-04
-**Waarom geparkeerd:** Website en logo (kleur) worden nog aangepast, wachten tot dat vastligt voor consistente kleuren op het kaartje.
+**Status:** Ontwerp klaar op 2026-10-09 (ontwerp A: navy voorkant, witte achterkant zonder telefoonnummer, QR naar insightance.ai). Drukbestanden in `outputs/visitekaartje-2026/DRUK-*` (88x58 mm incl. afloop). BESTELD op 2026-10-09 via Vistaprint: 500 stuks voor ca. EUR 30 (definitieve bestanden: `outputs/visitekaartje-2026/VISITEKAARTJE-*`). Verwachte levering: rond 2026-10-23 (ca. twee weken na bestellen).
+**Waarom eerder geparkeerd:** Website en logo (kleur) worden nog aangepast, wachten tot dat vastligt voor consistente kleuren op het kaartje.
 **Wat er moet gebeuren:** Visitekaartje ontwerpen en bestellen in de nieuwe huisstijlkleuren, zodra het nieuwe logo en de website live staan.
 **Waar:** Vistaprint of Drukwerkdeal (prijs/kwaliteit vergeleken op 2026-10-04, zie gesprekshistorie).
 **Trigger om op te pakken:** Zodra de vernieuwde website (met nieuw logo) live staat op insightance.ai — Claude moet Oussama hier dan actief aan herinneren.

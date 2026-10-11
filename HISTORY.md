@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-10-11
+
+### Insightance Website — WhatsApp terug en frisse-blik-screening
+
+- WhatsApp-knop, WhatsApp-links en telefoonnummer weer zichtbaar (tijdelijk verborgen geweest voor de voor/na-story)
+- Volledige screening live site: geen fouten, kapotte links of afbeeldingen op desktop en mobiel
+- Linkvoorbeeld toegevoegd: bij delen op LinkedIn/WhatsApp verschijnt een navy kaart met logo en kopregel (`docs/images/og-insightance.png`, bron `outputs/logo-2026/_maak_og.py`)
+- Sitemap, robots.txt en bedrijfsgegevens voor Google; klanttools (MHL, FTUK) uit de zoekresultaten gehouden
+- Eigen 404-pagina in de huisstijl
+- Oude previewpagina's en 30 testscreenshots uit de bouwfase verwijderd
+- Pop-up/nieuwsbrief-idee geparkeerd in `todo/README.md` tot er bezoekerscijfers zijn
+
+---
+
 ## 2026-10-09
 
 ### Insightance Website — Verbeteringen na de lancering
