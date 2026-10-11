@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /offerte-maker.html
+Disallow: /offerte-maker-demo.html
+Disallow: /review-tool-mhl.html
+Disallow: /ftuk/
+
+Sitemap: https://insightance.ai/sitemap.xml
