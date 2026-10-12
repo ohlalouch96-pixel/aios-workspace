@@ -650,6 +650,13 @@
   .ck-b button.ok { background: var(--bright, #1F5EFF); border-color: var(--bright, #1F5EFF); color: #fff; }
   @media (max-width: 560px) { .ck { left: 12px; right: 12px; max-width: none; } }
   body.ck-open .chatfab, body.ck-open .sticky { display: none !important; }
+
+  /* touchscreens: grotere tikvlakken rond kleine links, zonder dat de opmaak verschuift */
+  @media (pointer: coarse) {
+    .foot-pages { row-gap: 24px; }
+    .foot-links a, .foot-pages a, a.link, a.case-tag, a.li-link, a.back, .addr a { position: relative; }
+    .foot-links a::after, .foot-pages a::after, a.link::after, a.case-tag::after, a.li-link::after, a.back::after, .addr a::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
+  }
 </style>
 </head>
 <body>
@@ -857,6 +864,7 @@
   // taal
   function setLang(l) {
     LANG = l; document.documentElement.lang = l;
+    { const TT = window.__tt || (window.__tt = [document.title, (document.querySelector('meta[property="og:title"]') || {}).content || document.title]); document.title = l === 'en' ? TT[1] : TT[0]; }
     document.querySelectorAll('[data-i18n]').forEach(el => { if (el.dataset.nl === undefined) el.dataset.nl = el.textContent; el.textContent = l === 'en' ? (I18N[el.dataset.nl] || el.dataset.nl) : el.dataset.nl; });
     document.querySelectorAll('[data-i18n-html]').forEach(el => { if (el.dataset.nl === undefined) el.dataset.nl = el.innerHTML; el.innerHTML = l === 'en' ? H1_EN : el.dataset.nl; });
     document.querySelectorAll('.lang span').forEach(sp => sp.classList.toggle('on', sp.dataset.l === l));
@@ -868,7 +876,8 @@
   { let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
     // geen eigen keuze: toestel met Nederlands als eerste taal krijgt NL, alle andere EN
     const browserNl = /^nl/i.test((navigator.languages && navigator.languages[0]) || navigator.language || '');
-    if (saved === 'en' || (!saved && !browserNl)) setLang('en'); }
+    const isBot = /bot|crawl|spider|slurp|lighthouse|facebookexternalhit|embedly|preview/i.test(navigator.userAgent);
+    if (saved === 'en' || (!saved && !browserNl && !isBot)) setLang('en'); }
 
   // golvende achtergrond bovenaan + in het blauwe blok
   function waves(cv, dark) {
