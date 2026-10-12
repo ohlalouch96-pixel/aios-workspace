@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-10-13
+
+### Insightance Website — Tweede kritische ronde
+
+- Zoekmachines (Googlebot e.d.) krijgen altijd de Nederlandse versie; bezoekers nog steeds hun eigen taal
+- FAQ "Wat gebeurt er met mijn gegevens?" eerlijker: gegevens gaan alleen langs de diensten waarop het systeem draait (AI, beveiligde server)
+- Naam in het browsertabblad wisselt mee met NL/EN
+- Grotere tikvlakken rond kleine links op touchscreens (footer, demo-/case-links, Terug), zonder zichtbare verandering
+- Bewust niet gedaan: bronnen bij de cijfers in "Het probleem", prijsindicatie, Nederlandse Calendly; KvK-nummer volgt na inschrijving
+
+---
+
 ## 2026-10-12
 
 ### Insightance — Engels voor internationaal
