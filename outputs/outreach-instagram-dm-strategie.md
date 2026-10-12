@@ -87,8 +87,25 @@ Dit is hoe mail 1 eruit zou zien voor [winkelnaam], zie de screenshot hierboven.
 Zulke flows zijn geheel automatisch en winnen gemiddeld 10-15% van verlaten
 mandjes terug, van mensen die al interesse hadden.
 
-Zal ik even een ruwe schatting maken van wat dit voor jullie specifiek oplevert?
+Wil je zien wat dit voor [winkelnaam] oplevert? Reken het hier zelf uit: insightance.ai/webshops
 ```
+
+Engels:
+
+```
+Thanks for getting back to me!
+
+This is what email 1 would look like for [store name], see the screenshot above.
+
+Flows like this run fully on autopilot and win back an average of 10-15% of
+abandoned carts, from people who were already interested.
+
+Want to see what this could mean for [store name]? Run the numbers here: insightance.ai/webshops
+```
+
+> Link (insightance.ai/webshops) alleen in DM2, dus pas nadat iemand heeft
+> gereageerd. Nooit in DM1, de follow-up op dag 5 of de afsluiter:
+> onbeantwoorde berichtverzoeken met een link worden sneller als spam gezien.
 
 ---
 

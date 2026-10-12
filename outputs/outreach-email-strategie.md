@@ -73,8 +73,41 @@ iets uitgewerkt voor [winkelnaam].
 Ben je benieuwd? Laat het me weten, dan stuur ik het door.
 
 Oussama
-insightance.ai
+insightance.ai/webshops
 ```
+
+Engels:
+
+```
+Subject: Question about [store name]
+
+Hey,
+
+I came across [store name] and [compliment: something specific about
+their shop, product or Instagram feed].
+
+[WITH signup pop-up]:
+I noticed you have a signup pop-up, I was wondering if there's already
+a flow behind it for visitors who don't check out.
+
+[WITHOUT signup pop-up]:
+I was wondering: do you already send something automatic to visitors
+who abandon their cart, or is that not set up yet?
+
+Most shops lose around 70% of the visitors who get right up to checkout
+and then leave.
+
+I build email automations for online stores and have already put
+together something for [store name], free of charge.
+
+Curious to see it? Let me know and I'll send it over.
+
+Oussama
+insightance.ai/webshops
+```
+
+> Geen losse link in de tekst van mail 1 (koude eerste mail, slecht voor de
+> bezorging). De link staat alleen in de ondertekening.
 
 ---
 
@@ -126,9 +159,33 @@ van [€prijs] en 400 bezoekers per maand laten jullie
 waarschijnlijk zo'n €[bedrag] per maand liggen aan
 verlaten mandjes.
 
+Reken het zelf uit voor [winkelnaam]: insightance.ai/webshops
+
 Dat is geld van mensen die al interesse hadden.
 
 Is dit iets wat bij jullie speelt?
+
+Oussama
+```
+
+Engels:
+
+```
+Subject: Re: [Store name], quick follow-up
+
+Hey,
+
+Quick follow-up on my last email.
+
+Some quick math for [store name]: with an average order of
+[£price] and 400 visitors a month, you're likely leaving
+around £[amount] a month behind in abandoned carts.
+
+Run the numbers for [store name] yourself: insightance.ai/webshops
+
+That's money from people who were already interested.
+
+Is this something you're running into?
 
 Oussama
 ```
@@ -153,7 +210,28 @@ Zou zoiets ook voor [winkelnaam] werken?
 Ik kijk het graag vrijblijvend met je door.
 
 Oussama
-insightance.ai
+insightance.ai/webshops
+```
+
+Engels:
+
+```
+Subject: Something I recently built for an online store
+
+Hey,
+
+I recently built a complete email flow for an e-commerce client.
+They now automatically send three emails to everyone who abandons
+their cart.
+
+No extra ad spend, just getting more out of the visitors they
+already have.
+
+Could something like that work for [store name]? Happy to walk
+you through it, no strings attached.
+
+Oussama
+insightance.ai/webshops
 ```
 
 ---
@@ -174,7 +252,26 @@ weet je me te vinden.
 Succes met [winkelnaam].
 
 Oussama
-insightance.ai
+insightance.ai/webshops
+```
+
+Engels:
+
+```
+Subject: Last message from me
+
+Hey,
+
+I won't message you about this again after this one.
+
+If the timing isn't right, no problem at all. If you ever want
+to know how much [store name] is leaving behind, feel free to
+reach out anytime.
+
+All the best with [store name].
+
+Oussama
+insightance.ai/webshops
 ```
 
 ---
