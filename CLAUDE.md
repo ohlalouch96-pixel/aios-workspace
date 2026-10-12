@@ -18,7 +18,7 @@ Dit is de **AIOS-workspace van Oussama Hlalouch** — een AI Operating System in
 
 **Wie:** Oussama Hlalouch, 29, Amsterdam. SEH-verpleegkundige bij OLVG. Bouwt AI-bedrijf om uit de zorg te stappen.
 **Bedrijf:** Pre-launch AI-agency — bouwt en verkoopt AI Operating Systems voor MKB (afspraken, boekingen, marketing, automatisering).
-**Huidig product:** Cart abandonment e-mailautomatisering voor e-commerce webshops — gemiddeld 10-15% omzetherstel. Prijs (sinds 2026-10-12): €150 / £150 / $175 eenmalig, alleen te betalen als de flow binnen 30 dagen aantoonbaar meer terugwint.
+**Huidig product:** Cart abandonment e-mailautomatisering voor e-commerce webshops — gemiddeld 10-15% omzetherstel. Prijs (sinds 2026-10-12): €149 / £149 / $179 eenmalig, alleen te betalen als de flow binnen 30 dagen aantoonbaar meer terugwint.
 **Huidige focus:** Instagram DM-outreach naar e-commerce webshops (sportkleding/sportvoeding/supplementen) om eerste betalende klant binnen te halen. Daarna: portfolio uitbreiden, bedrijf opzetten, ziekenhuisbaan opzeggen (per 1 oktober 2026 terug naar 2 dagen/week).
 **Noord-ster metric:** Eerste betalende klant → daarna maandelijks AI-inkomen richting ziekenhuissalaris.
 
