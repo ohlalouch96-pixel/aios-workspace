@@ -203,7 +203,7 @@ insightance.ai
 ### DM 1 — Klaviyo-shops (Klaviyo bevestigd in de site-broncode)
 
 ```
-Ik keek op [winkelnaam]. Ik zag dat jullie Klaviyo gebruiken, dus waarschijnlijk staat er al een e-mailflow, ik was benieuwd hoe tevreden jullie daarover zijn. Ik heb alvast een voorbeeldmail voor [winkelnaam] gemaakt waarvan ik denk dat hij die van jullie verslaat. Leg ze naast elkaar: haalt mijn flow in 30 dagen niet meer mandjes terug, dan betaal je niks.
+Ik keek op [winkelnaam]. Ik zag dat jullie Klaviyo gebruiken, dus waarschijnlijk staat er al een e-mailflow, ik was benieuwd hoe tevreden jullie daarover zijn. Ik heb een voorbeeldmail voor [winkelnaam] gemaakt waarvan ik denk dat hij die van jullie verslaat. Leg ze naast elkaar: haalt mijn flow in 30 dagen niet meer mandjes terug, dan betaal je niks.
 
 Benieuwd? Laat het me weten, dan stuur ik hem op :)
 ```
