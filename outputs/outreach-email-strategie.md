@@ -187,3 +187,47 @@ insightance.ai
 - **Reageer binnen enkele uren** op een reactie — momentum vasthouden
 - **Nooit bcc of bulk sturen** — elke mail voelt individueel
 - **Geen gedachtestreepjes (—) in de berichttekst zelf** — klinkt AI-matig, gebruik een punt of komma
+
+---
+
+## Aanbod & Klaviyo-variant (sinds 2026-10-12)
+
+> Aanleiding: analyse 12-10 van 50 reacties op 600 webshops, 0 klanten. Bijna de helft
+> zei "hebben we al" (vaak Klaviyo-shops), en ~7 geïnteresseerden vielen stil na de
+> voorbeeldmail omdat er geen concrete volgende stap of prijs was.
+> Prijs: €149 / £149 / $179 eenmalig, alleen te betalen als de flow binnen 30 dagen
+> aantoonbaar meer terugwint (zichtbaar in de flow-rapportage van Klaviyo/Shopify).
+> Nooit bluffen (niet claimen dat we iets getest hebben). Geen kritiek op hun huidige
+> flow, want die hebben we niet gezien: daag ze uit om te vergelijken.
+
+### DM 1 — Klaviyo-shops (Klaviyo bevestigd in de site-broncode)
+
+```
+Ik keek op [winkelnaam]. Jullie draaien op Klaviyo, dus waarschijnlijk staat er al een flow voor verlaten mandjes.
+
+Ik heb alvast een voorbeeldmail voor [winkelnaam] gemaakt waarvan ik denk dat hij die van jullie verslaat. Leg ze naast elkaar: haalt mijn flow in 30 dagen niet meer mandjes terug, dan betaal je niks.
+
+Benieuwd? Laat het me weten, dan stuur ik hem op :)
+```
+
+```
+I checked out [shop name]. You're on Klaviyo, so you've probably got an abandoned cart flow running already.
+
+I've put together a sample email for [shop name] that I think beats it. Put them side by side: if my flow doesn't win back more carts within 30 days, you pay nothing.
+
+Curious? Let me know and I'll send it over :)
+```
+
+### Aanbod — direct na het versturen van de voorbeeldmail
+
+```
+Dit is mail 1 van de flow. Om het je makkelijk te maken: ik bouw de complete flow van 3 mails gratis in jullie [Klaviyo/Shopify]. Je betaalt pas €149 als hij binnen 30 dagen meer dan €149 aan verlaten mandjes heeft teruggehaald. Lukt dat niet, dan betaal je niks en mag je hem gewoon houden.
+
+Zal ik ermee aan de slag gaan?
+```
+
+```
+That's email 1 of the flow. To make it an easy yes: I'll build the full 3-email flow in your [Klaviyo/Shopify], free to start. You only pay £149 if it's won back more than £149 in abandoned carts within 30 days. If it hasn't, you pay nothing and keep it anyway.
+
+Shall I get started?
+```
