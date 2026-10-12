@@ -55,7 +55,7 @@ CSS = r'''
   .mail-body > p { font-size: 14px; color: var(--ink2); margin: 0; text-align: center; line-height: 1.55; }
   .item { display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid #ECE6DB; border-bottom: 1px solid #ECE6DB; }
   .item .ph { width: 84px; height: 96px; border-radius: 6px; background: linear-gradient(160deg, var(--sand), var(--sand2)); display: grid; place-items: center; overflow: hidden; }
-  .item .ph svg { width: 66px; height: 66px; }
+  .item .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .item b { font-size: 14px; color: var(--shop); display: block; font-weight: 600; }
   .item small { display: block; font-size: 12.5px; color: #8A877F; margin-top: 2px; }
   .item .pr { font-weight: 600; color: var(--shop); font-size: 14.5px; font-variant-numeric: tabular-nums; }
@@ -232,13 +232,13 @@ MAIN = f'''<main>
           <div class="mail-body">
             <h3 data-i18n>Je bent iets vergeten</h3>
             <p data-i18n>Hoi Lotte, je overhemd ligt nog voor je klaar. We houden je maat nog even voor je vast.</p>
-            <div class="item"><span class="ph"><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M22 9 L10 15 L5 27 L13 30 L15 25 V57 H49 V25 L51 30 L59 27 L54 15 L42 9 C40 14 36 16 32 16 C28 16 24 14 22 9 Z" fill="#F7F3EC" stroke="#B9AB95" stroke-width="1.3" stroke-linejoin="round"/><path d="M22 9 C24 14 28 16 32 16 C36 16 40 14 42 9" stroke="#B9AB95" stroke-width="1.3" fill="none"/><path d="M32 16 V57" stroke="#D9CDB9" stroke-width="1"/><circle cx="32" cy="24" r="1" fill="#B9AB95"/><circle cx="32" cy="32" r="1" fill="#B9AB95"/><circle cx="32" cy="40" r="1" fill="#B9AB95"/><circle cx="32" cy="48" r="1" fill="#B9AB95"/><path d="M38 26 h6 v5 h-6 z" stroke="#D9CDB9" stroke-width="1" fill="none"/></svg></span><div><b data-i18n>Linnen overhemd Ravi</b><small data-i18n>Kleur: zand · Maat M</small><small data-i18n>Aantal: 1</small></div><span class="pr">€ 69,95</span></div>
+            <div class="item"><span class="ph"><img src="images/saelvo-overhemd.jpg" alt="" width="84" height="96" loading="lazy"></span><div><b data-i18n>Linnen overhemd Ravi</b><small data-i18n>Kleur: ecru · Maat M</small><small data-i18n>Aantal: 1</small></div><span class="pr">€ 69,95</span></div>
             <div class="tot"><span data-i18n>Verzending</span><b data-i18n>Gratis</b></div>
             <span class="mail-btn" data-i18n>Rond je bestelling af</span>
             <span class="mail-foot" data-i18n>Gratis verzending en retour · Vragen? Antwoord gewoon op deze mail</span>
           </div>
         </div>
-        <div class="mailcap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span><b data-i18n>Dit is een voorbeeld van een verzonnen webshop.</b> <span data-i18n>Jouw mails krijgen je eigen logo, kleuren, producten en toon.</span></span></div>
+        <div class="mailcap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span><b data-i18n>Dit is een voorbeeld.</b> <span data-i18n>Jouw mails krijgen je eigen logo, kleuren, producten en toon.</span></span></div>
       </div>
     </div>
   </section>
@@ -473,12 +473,12 @@ I18N = {
  "Je bent iets vergeten": "You forgot something",
  "Hoi Lotte, je overhemd ligt nog voor je klaar. We houden je maat nog even voor je vast.": "Hi Lotte, your shirt is still waiting for you. We're holding your size for a little longer.",
  "Linnen overhemd Ravi": "Ravi linen shirt",
- "Kleur: zand · Maat M": "Colour: sand · Size M",
+ "Kleur: ecru · Maat M": "Colour: ecru · Size M",
  "Aantal: 1": "Qty: 1",
  "Verzending": "Shipping",
  "Rond je bestelling af": "Complete your order",
  "Gratis verzending en retour · Vragen? Antwoord gewoon op deze mail": "Free shipping and returns · Questions? Just reply to this email",
- "Dit is een voorbeeld van een verzonnen webshop.": "This is an example from a made-up store.",
+ "Dit is een voorbeeld.": "This is an example.",
  "Jouw mails krijgen je eigen logo, kleuren, producten en toon.": "Your emails get your own logo, colours, products and tone of voice.",
  "Met een reeks automatische mails haal je een deel van die klanten alsnog binnen. Zonder extra advertentiebudget, in jouw huisstijl, en het loopt vanzelf.": "A series of automated emails brings part of those customers back. No extra ad spend, in your brand style, and it runs on its own.",
  "Onderwerp:": "Subject:",

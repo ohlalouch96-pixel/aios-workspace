@@ -10,7 +10,7 @@ assert 'id="rekentool"' not in s, 'rekentool staat er al in'
 
 CSS = r'''
   /* ===== rekentool: hoeveel tijd kun jij terugwinnen (2026-10-13) ===== */
-  #rekentool { padding-block: 72px; scroll-margin-top: 20px; }
+  #rekentool { padding-block: 72px; }
   .rt { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); border-radius: 24px; overflow: hidden; border: 1px solid var(--line); background: var(--white); box-shadow: 0 50px 90px -60px rgba(23,52,95,.55); }
   .rt-in { padding: 34px 36px 30px; display: grid; gap: 26px; align-content: start; }
   .rt-step { display: grid; gap: 14px; }
@@ -90,7 +90,7 @@ CSS = r'''
   .rt-cta .acts small { font-size: 13px; color: rgba(255,255,255,.6); }
   @media (max-width: 1080px) { .rt { grid-template-columns: 1fr; } }
   @media (max-width: 560px) {
-    #rekentool { padding-block: 48px !important; scroll-margin-top: 44px; }
+    #rekentool { padding-block: 48px !important; }
     .rt-in, .rt-out { padding: 24px 18px; }
     .rt-grid { grid-template-columns: 1fr; }
     .rt-step-h small { display: none; }
