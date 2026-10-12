@@ -55,6 +55,11 @@
 - **Adres:** bezoekadres van een eenmanszaak mag je zonder reden laten afschermen, maar dan moet er een openbaar postadres komen (bijv. postadres-service of adres van familie met hun toestemming). Gebruik je een ander adres als vestiging, dan heb je bewijs nodig dat je het mag gebruiken.
 - **Kleineondernemersregeling (KOR):** geen btw rekenen, maar ook geen btw terugvragen. Bij zakelijke klanten maakt btw voor hen niet uit (zij vragen het terug).
 - **Zakelijke rekening:** niet verplicht voor een eenmanszaak, kan later. Wel handig om privé en zakelijk gescheiden te houden.
+**Volgorde bij de eerste klant:**
+1. Klant zegt ja → direct KvK-afspraak inplannen.
+2. Tweede gesprek: voorstel laten zien en akkoord krijgen, nog zonder factuur.
+3. Btw-nummer binnen → pas dan de factuur voor de eerste betaling sturen.
+**Kosten:** domein, Workspace, Claude, server mogen via de privérekening. Facturen bewaren (later op te voeren als bedrijfskosten), vanaf inschrijving op bedrijfsnaam laten zetten.
 **Daarna:** KvK-nummer doorgeven aan Claude, zodat het in de footer van de (nieuwe) website komt. "KVK: volgt" is in het nieuwe ontwerp weggehaald tot het nummer er is.
 
 ---
