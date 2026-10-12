@@ -10,6 +10,15 @@
 
 ## 2026-10-13
 
+### Insightance Website — Landingspagina voor webshops
+
+- Nieuwe pagina insightance.ai/webshops (NL/EN, automatische taalkeuze), bedoeld als bestemming voor de webshop-outreach; niet in het menu, wel in de footer ("Voor webshops") en de sitemap
+- Kop "7 van de 10 winkelmandjes worden nooit afgerekend. Haal die omzet terug." met een realistische voorbeeldmail van een verzonnen webshop (Saelvo) en de uitleg dat het in de eigen huisstijl komt
+- Rekentool: bestellingen per maand x orderbedrag, 70% verlaten mandjes, 5-10% terug te halen (voorzichtig gerekend)
+- Hoe het werkt (3 mails), wat je krijgt (Klaviyo; Shopify, WooCommerce e.a.), bewijs met de reeks in beeld en quotes van MHL en FTUK, werkwijze zoals op de homepage, FAQ
+- Bron: `outputs/landingspagina-webshops/_maak_webshops.py`
+- Advies outreach: link in mail 2-4 en ondertekening, op Instagram pas na een reactie
+
 ### Insightance Website — Tweede kritische ronde
 
 - Zoekmachines (Googlebot e.d.) krijgen altijd de Nederlandse versie; bezoekers nog steeds hun eigen taal
