@@ -46,9 +46,15 @@
 
 ## KvK-registratie
 
-**Status:** Geparkeerd — moet nog steeds gebeuren
+**Status:** Geparkeerd, bewuste keuze op 2026-10-12: wachten tot de eerste klant ja zegt
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
-**Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel.
+**Trigger om op te pakken:** Zodra een klant ja zegt (bijv. Millenaar | Peijnenburg na het eerste gesprek). Dan direct een afspraak inplannen, niet pas na de betaling.
+**Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel. Online formulier via DigiD (ca. 15 min), daarna afspraak op een KvK-kantoor met ID. Kosten 2026: €85,15 eenmalig.
+**Tijdlijn:** KvK-nummer krijg je bij de afspraak. Het btw-nummer komt per post van de Belastingdienst, normaal binnen 10 werkdagen, soms langer. Een factuur moet een btw-nummer hebben, dus de eerste factuur pas sturen als dat binnen is.
+**Keuzes om vooraf te maken:**
+- **Adres:** bezoekadres van een eenmanszaak mag je zonder reden laten afschermen, maar dan moet er een openbaar postadres komen (bijv. postadres-service of adres van familie met hun toestemming). Gebruik je een ander adres als vestiging, dan heb je bewijs nodig dat je het mag gebruiken.
+- **Kleineondernemersregeling (KOR):** geen btw rekenen, maar ook geen btw terugvragen. Bij zakelijke klanten maakt btw voor hen niet uit (zij vragen het terug).
+- **Zakelijke rekening:** niet verplicht voor een eenmanszaak, kan later. Wel handig om privé en zakelijk gescheiden te houden.
 **Daarna:** KvK-nummer doorgeven aan Claude, zodat het in de footer van de (nieuwe) website komt. "KVK: volgt" is in het nieuwe ontwerp weggehaald tot het nummer er is.
 
 ---
