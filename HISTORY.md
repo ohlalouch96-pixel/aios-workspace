@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-10-12
+
+### Insightance — Engels voor internationaal
+
+- Website kiest zelf de taal: toestel met Nederlands als eerste taal krijgt NL, alle andere EN; eigen keuze via NL/EN-knop blijft onthouden
+- Linkvoorbeeld (tegel + titel/tekst) in het Engels: "Less manual work. More room to grow."
+- Engelse LinkedIn-banner gemaakt (`outputs/linkedin-banner-2026/linkedin-banner-navy-EN-UPLOAD.png`); Engelse websitekop blijft bewust "Manual work disappears. Growth takes over."
+- LinkedIn voor/na-post met BEFORE/AFTER-afbeelding (`outputs/website-metamorfose/post/linkedin-voor-na-mobiel.png`)
+
+---
+
 ## 2026-10-11
 
 ### Insightance Website — WhatsApp terug en frisse-blik-screening
