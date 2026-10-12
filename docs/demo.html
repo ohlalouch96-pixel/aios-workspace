@@ -290,7 +290,7 @@
   @keyframes dlblink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
   @keyframes dlhalo { 0% { transform: scale(.5); opacity: .45; } 100% { transform: scale(2.2); opacity: 0; } }
   main { position: relative; }
-  @media (max-width: 1100px) { .dataline { display: none; } }
+  @media (max-width: 1300px) { .dataline { display: none; } }
 
   /* netwerk met onderwerpen (rustig, geen draaien) */
   .net { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 26px; align-items: center; padding: 18px 22px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,.85); backdrop-filter: blur(6px); box-shadow: 0 24px 50px -40px rgba(23,52,95,.45); }
@@ -1120,7 +1120,7 @@
     const main = document.querySelector('main'), dl = document.getElementById('dataline'), track = document.getElementById('dl-track'), drawP = document.getElementById('dl-draw'), dot = document.getElementById('dl-dot');
     let len = 0, on = false;
     function build() {
-      on = window.innerWidth > 1100; if (!on) return;
+      on = window.innerWidth > 1300; if (!on) return;
       const W = main.clientWidth, H = main.offsetHeight, mt = main.getBoundingClientRect().top + window.scrollY, Y = r => r + window.scrollY - mt;
       dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const gut = Math.max(36, (W - 1280) / 2 - 44), R = W - gut;

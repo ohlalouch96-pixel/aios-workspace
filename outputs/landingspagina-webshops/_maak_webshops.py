@@ -230,7 +230,7 @@ MAIN = f'''<main>
           <div class="mail-meta"><span><span data-i18n>Van:</span> <b>Saelvo</b></span><span><span data-i18n>Onderwerp:</span> <b data-i18n>Lotte, je mandje staat nog klaar</b></span></div>
           <div class="mail-brand">SAELVO</div>
           <div class="mail-body">
-            <h3 data-i18n>Nog even twijfelen?</h3>
+            <h3 data-i18n>Je bent iets vergeten</h3>
             <p data-i18n>Hoi Lotte, je overhemd ligt nog voor je klaar. We houden je maat nog even voor je vast.</p>
             <div class="item"><span class="ph"><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M22 9 L10 15 L5 27 L13 30 L15 25 V57 H49 V25 L51 30 L59 27 L54 15 L42 9 C40 14 36 16 32 16 C28 16 24 14 22 9 Z" fill="#F7F3EC" stroke="#B9AB95" stroke-width="1.3" stroke-linejoin="round"/><path d="M22 9 C24 14 28 16 32 16 C36 16 40 14 42 9" stroke="#B9AB95" stroke-width="1.3" fill="none"/><path d="M32 16 V57" stroke="#D9CDB9" stroke-width="1"/><circle cx="32" cy="24" r="1" fill="#B9AB95"/><circle cx="32" cy="32" r="1" fill="#B9AB95"/><circle cx="32" cy="40" r="1" fill="#B9AB95"/><circle cx="32" cy="48" r="1" fill="#B9AB95"/><path d="M38 26 h6 v5 h-6 z" stroke="#D9CDB9" stroke-width="1" fill="none"/></svg></span><div><b data-i18n>Linnen overhemd Ravi</b><small data-i18n>Kleur: zand · Maat M</small><small data-i18n>Aantal: 1</small></div><span class="pr">€ 69,95</span></div>
             <div class="tot"><span data-i18n>Verzending</span><b data-i18n>Gratis</b></div>
@@ -470,7 +470,7 @@ I18N = {
  "Voor webshops": "For online stores",
  "Van:": "From:",
  "Lotte, je mandje staat nog klaar": "Lotte, your cart is still waiting",
- "Nog even twijfelen?": "Still thinking it over?",
+ "Je bent iets vergeten": "You forgot something",
  "Hoi Lotte, je overhemd ligt nog voor je klaar. We houden je maat nog even voor je vast.": "Hi Lotte, your shirt is still waiting for you. We're holding your size for a little longer.",
  "Linnen overhemd Ravi": "Ravi linen shirt",
  "Kleur: zand · Maat M": "Colour: sand · Size M",
