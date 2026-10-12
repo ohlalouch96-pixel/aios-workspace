@@ -8,14 +8,15 @@
 <link rel="canonical" href="https://insightance.ai/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Insightance">
-<meta property="og:locale" content="nl_NL">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:url" content="https://insightance.ai/">
-<meta property="og:title" content="Insightance | AI-automatisering voor ondernemers">
-<meta property="og:description" content="Insightance bouwt AI-systemen die het handmatige werk uit je bedrijf halen: offertes, administratie en klantcontact. Plan een vrijblijvend gesprek.">
+<meta property="og:title" content="Insightance | AI automation for business owners">
+<meta property="og:description" content="Insightance builds AI systems that take the manual work out of your business: quotes, admin and customer contact. Book a no-obligation call.">
 <meta property="og:image" content="https://insightance.ai/images/og-insightance.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Insightance: Handmatig werk verdwijnt. Groei neemt het over.">
+<meta property="og:image:alt" content="Insightance: Less manual work. More room to grow.">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Insightance", "url": "https://insightance.ai/", "logo": "https://insightance.ai/favicon-512.png", "image": "https://insightance.ai/images/og-insightance.png", "description": "Insightance bouwt AI-systemen die het handmatige werk uit je bedrijf halen: offertes, administratie en klantcontact. Plan een vrijblijvend gesprek.", "email": "info@insightance.ai", "telephone": "+31653340362", "address": {"@type": "PostalAddress", "addressLocality": "Amsterdam", "addressCountry": "NL"}, "areaServed": "NL", "founder": {"@type": "Person", "name": "Oussama Hlalouch", "jobTitle": "Oprichter"}, "sameAs": ["https://www.linkedin.com/in/oussama-hlalouch-49915514a"]}</script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -1929,7 +1930,10 @@
   document.querySelectorAll('.lang').forEach(t => t.addEventListener('click', e => {
     const sp = e.target.closest('span[data-l]'); setLang(sp ? sp.dataset.l : (window.LANG === 'nl' ? 'en' : 'nl'));
   }));
-  try { if (localStorage.getItem('lang') === 'en') setLang('en'); } catch (e) {}
+  { let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
+    // geen eigen keuze: toestel met Nederlands als eerste taal krijgt NL, alle andere EN
+    const browserNl = /^nl/i.test((navigator.languages && navigator.languages[0]) || navigator.language || '');
+    if (saved === 'en' || (!saved && !browserNl)) setLang('en'); }
 
   // plek onthouden als iemand naar de automations-pagina gaat
   document.querySelectorAll('a[href="automations.html"], a[href="resultaten.html"], a[href="demo.html"], a[href="privacybeleid.html"]').forEach(a => a.addEventListener('click', () => { try { sessionStorage.setItem('homeY', String(Math.round(window.scrollY))); } catch (e) {} }));

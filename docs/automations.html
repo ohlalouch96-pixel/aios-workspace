@@ -8,14 +8,15 @@
 <link rel="canonical" href="https://insightance.ai/automations.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Insightance">
-<meta property="og:locale" content="nl_NL">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:url" content="https://insightance.ai/automations.html">
 <meta property="og:title" content="Automations & agents | Insightance">
-<meta property="og:description" content="Voorbeelden van AI-systemen die we op jouw bedrijf afstemmen, van klantcontact tot finance en HR.">
+<meta property="og:description" content="Examples of AI systems we tailor to your business, from customer contact to finance and HR.">
 <meta property="og:image" content="https://insightance.ai/images/og-insightance.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Insightance: Handmatig werk verdwijnt. Groei neemt het over.">
+<meta property="og:image:alt" content="Insightance: Less manual work. More room to grow.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -628,7 +629,10 @@
   document.querySelector('.lang').addEventListener('click', e => { const sp = e.target.closest('span[data-l]'); setLang(sp ? sp.dataset.l : (LANG === 'nl' ? 'en' : 'nl')); });
   if (mobile()) sel = -1;
   render();
-  try { if (localStorage.getItem('lang') === 'en') setLang('en'); } catch (e) {}
+  { let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
+    // geen eigen keuze: toestel met Nederlands als eerste taal krijgt NL, alle andere EN
+    const browserNl = /^nl/i.test((navigator.languages && navigator.languages[0]) || navigator.language || '');
+    if (saved === 'en' || (!saved && !browserNl)) setLang('en'); }
 
   // golvende lijntjes in het donkerblauwe blok
   (function () {
