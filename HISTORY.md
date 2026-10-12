@@ -8,7 +8,7 @@
 
 ---
 
-## 2026-10-13
+## 2026-10-12
 
 ### Insightance Website — Rekentool op de homepage
 
@@ -34,10 +34,6 @@
 - Naam in het browsertabblad wisselt mee met NL/EN
 - Grotere tikvlakken rond kleine links op touchscreens (footer, demo-/case-links, Terug), zonder zichtbare verandering
 - Bewust niet gedaan: bronnen bij de cijfers in "Het probleem", prijsindicatie, Nederlandse Calendly; KvK-nummer volgt na inschrijving
-
----
-
-## 2026-10-12
 
 ### Insightance — Engels voor internationaal
 
