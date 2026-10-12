@@ -10,6 +10,14 @@
 
 ## 2026-10-13
 
+### Insightance Website — Rekentool op de homepage
+
+- Nieuwe sectie "Hoeveel tijd kun jij terugwinnen?" tussen Klantcases en Werkwijze: taken aanklikken (incl. eigen taak) met uren per week, uurwaarde-schuif, resultaat als dashboard (meter met legenda, jaarbedrag, 3 cijfertegels), rekent met 50-70% automatiseerbaar en 46 werkweken
+- "Rekentool" in het menu, verwijzingen bij "Het probleem" en "Wat levert het je op?"; deelbare link insightance.ai/#rekentool
+- Blauwe lijn verborgen onder 1300px op homepage, automations en demo (liep daar door tekst)
+- Webshop-voorbeeldmail: kop "Je bent iets vergeten"
+- Bron: `outputs/rekentool/_maak_rekentool.py`
+
 ### Insightance Website — Landingspagina voor webshops
 
 - Nieuwe pagina insightance.ai/webshops (NL/EN, automatische taalkeuze), bedoeld als bestemming voor de webshop-outreach; niet in het menu, wel in de footer ("Voor webshops") en de sitemap
