@@ -1,7 +1,7 @@
 # Current Data
 
 > Huidige stand van zaken — metrics, status en voortgang.
-> Laatst bijgewerkt: 2026-08-20
+> Laatst bijgewerkt: 2026-10-13 (website-sectie)
 
 ---
 
@@ -30,6 +30,18 @@
 - Gratis pilot voor portfolio en ervaring
 - Dashboard live op insightance.ai/ftuk/
 - Geen betalende klant
+
+---
+
+## Website insightance.ai (stand 2026-10-13)
+
+- Volledig vernieuwd (licht/blauw) en live sinds 8 oktober; NL/EN met automatische taalkeuze
+- Twee landingspagina's voor de outreach: insightance.ai/webshops (cart-mails, Klaviyo) en insightance.ai/vakbedrijven (offertetool, "probeer het zelf", MHL-case, alleen NL)
+- Rekentool op de homepage (insightance.ai/#rekentool)
+- Contact laagdrempelig: Calendly, WhatsApp, formulier, e-mail, LinkedIn
+- LinkedIn: rekentool-post 13-10 15:00, MHL-case-post (NL) 14-10 11:00; Uitgelicht = FTUK-case + website-upgrade
+- Wacht op: Calendly-trial ~22-10, visitekaartjes ~23-10, KvK-nummer (dan Google Bedrijfsprofiel + reviews MHL/FTUK)
+- Bewust niet: video, schermopname, nieuwsbrief-pop-up; kennisbank geparkeerd
 
 ---
 
