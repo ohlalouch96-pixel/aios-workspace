@@ -20,6 +20,14 @@
 - Alle pagina's: blokken schuiven één keer zacht in zonder eerst te verspringen; menubalk sluit aan op de bovenrand (homepage had een 8px rand) en de knoppen onderin staan dichter bij de rand op iPhone
 - Bronnen: `outputs/landingspagina-vakbedrijven/_maak_vakbedrijven.py` en `_maak_og_vakbedrijven.py`
 
+### Insightance Website — Kritische ronde: vasthouden van bezoekers
+
+- Homepage: onder "Voor wie" links "Speciaal voor jouw branche" naar Vakbedrijven en Webshops
+- Resultaten: onder elke case "Zoiets ook voor jouw bedrijf?" met Plan een gesprek (MHL ook "Probeer de offertetool")
+- Profielfoto 411 KB -> 13 KB (oussama.webp)
+- Mobiel (homepage): werkwijze-stappen inklapbaar, extra rekentooltaken achter "Meer taken tonen", categorie-tegels weg, Voor wie scrolt naar sectiebegin en klapt dicht bij tweede tik, overal 48px tussen secties (17,2 -> 16,2 schermen)
+- LinkedIn: MHL-case-post (NL) ingepland 14-10 11:00 (`outputs/linkedin-mhl-case/`)
+
 ---
 
 ## 2026-10-12
