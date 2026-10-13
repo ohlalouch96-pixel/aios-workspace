@@ -8,6 +8,20 @@
 
 ---
 
+## 2026-10-13
+
+### Insightance Website — Landingspagina voor vakbedrijven
+
+- Nieuwe pagina insightance.ai/vakbedrijven (alleen NL), bestemming voor de ondernemers-outreach; niet in het menu, wel in de footer ("Voor vakbedrijven") en de sitemap
+- Kop "Offertes in één klik. Zonder Word, Excel of overtypen." met een voorbeeldofferte van een verzonnen bedrijf (Klaverveld), cv-ketelprijs middenin de marktprijs (€ 2.202,20 incl. btw)
+- "Probeer het zelf"-offertetool (4 klussen, 9%/21% btw per regel, verstuur-bevestiging als demo) en een rekentool (offertes x minuten, 90% van MHL, 46 werkweken)
+- Bewijs: één grote MHL-tegel met de quote van Mohammed; daarnaast "Dit kan ook", werkwijze, FAQ
+- Eigen Nederlands linkvoorbeeld (`docs/images/og-vakbedrijven.png`)
+- Alle pagina's: blokken schuiven één keer zacht in zonder eerst te verspringen; menubalk sluit aan op de bovenrand (homepage had een 8px rand) en de knoppen onderin staan dichter bij de rand op iPhone
+- Bronnen: `outputs/landingspagina-vakbedrijven/_maak_vakbedrijven.py` en `_maak_og_vakbedrijven.py`
+
+---
+
 ## 2026-10-12
 
 ### Insightance Website — Rekentool op de homepage
