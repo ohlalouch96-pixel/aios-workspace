@@ -299,14 +299,16 @@ insightance.ai/webshops
 
 ### DM 1 — Klaviyo-shops (Klaviyo bevestigd in de site-broncode)
 
+> Sinds 13-10: geen prijs of 30-dagen-garantie in DM 1. Eerst de kleine ja ("wil je hem zien?"), pas na het voorbeeld het aanbod.
+
 ```
-Ik keek op [winkelnaam]. Ik zag dat jullie Klaviyo gebruiken, dus waarschijnlijk staat er al een e-mailflow, ik was benieuwd hoe tevreden jullie daarover zijn. Ik heb een voorbeeldmail voor [winkelnaam] gemaakt waarvan ik denk dat hij die van jullie verslaat. Leg ze naast elkaar: haalt mijn flow in 30 dagen niet meer mandjes terug, dan betaal je niks.
+Ik keek op [winkelnaam]. Ik zag dat jullie Klaviyo gebruiken, dus waarschijnlijk staat er al een e-mailflow, ik was benieuwd hoe tevreden jullie daarover zijn. Ik heb een voorbeeldmail voor [winkelnaam] gemaakt waarvan ik denk dat hij die van jullie verslaat. Hij staat klaar en je hebt hem in een minuutje bekeken.
 
 Benieuwd? Laat het me weten, dan stuur ik hem op :)
 ```
 
 ```
-I checked out [shop name]. I noticed you're using Klaviyo, so you've probably got an email flow set up already, I was wondering how happy you are with it. I've put together a sample email for [shop name] that I think beats it. Put them side by side: if my flow doesn't win back more carts within 30 days, you pay nothing.
+I checked out [shop name]. I noticed you're using Klaviyo, so you've probably got an email flow set up already, I was wondering how happy you are with it. I've put together a sample email for [shop name] that I think beats it. It's ready to go and only takes a minute to look at.
 
 Curious? Let me know and I'll send it over :)
 ```
