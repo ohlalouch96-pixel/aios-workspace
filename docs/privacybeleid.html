@@ -199,8 +199,8 @@
   .chatfab.show { opacity: 1; transform: none; pointer-events: auto; }
   .chattip { position: fixed; z-index: 41; right: 20px; bottom: max(80px, calc(60px + env(safe-area-inset-bottom, 0px))); background: var(--navy); color: #fff; font-size: 13px; padding: 9px 13px; border-radius: 10px; }
 
-  .rv.play { animation: rise .8s var(--ease) both; animation-delay: var(--d, 0s); }
-  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  .rv.rv-wait { opacity: 0; transform: translateY(18px); }
+  .rv.rv-wait.rv-in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: var(--d, 0s); }
 
   @media (max-width: 980px) {
     .hero .wrap { grid-template-columns: 1fr; gap: 28px; }
@@ -832,7 +832,7 @@
       <span class="logo" data-bar="#FFFFFF" data-curve="#9DBBE3"><span>Insightance</span></span>
       <div class="foot-links"><a href="mailto:info@insightance.ai">info@insightance.ai</a><a href="https://wa.me/31653340362" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.linkedin.com/in/oussama-hlalouch-49915514a" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
-    <div class="foot-bot"><span>© 2026 Insightance · Amsterdam</span><nav class="foot-pages" aria-label="Footer"><a href="index.html">Home</a><a href="automations.html">Automations</a><a href="resultaten.html" data-i18n>Resultaten</a><a href="demo.html">Demo</a><a href="webshops.html" data-i18n>Voor webshops</a><a href="privacybeleid.html" data-i18n>Privacybeleid</a></nav></div>
+    <div class="foot-bot"><span>© 2026 Insightance · Amsterdam</span><nav class="foot-pages" aria-label="Footer"><a href="index.html">Home</a><a href="automations.html">Automations</a><a href="resultaten.html" data-i18n>Resultaten</a><a href="demo.html">Demo</a><a href="webshops.html" data-i18n>Voor webshops</a><a href="vakbedrijven.html" data-i18n>Voor vakbedrijven</a><a href="privacybeleid.html" data-i18n>Privacybeleid</a></nav></div>
   </div>
 </footer>
 
@@ -846,7 +846,7 @@
   }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
-  const I18N = {"Voor webshops": "For online stores", "Juridisch": "Legal", "Privacybeleid": "Privacy Policy", "Resultaten": "Results", "Terug naar homepage": "Back to homepage", "Terug": "Back", "Plan een gesprek": "Schedule a call"};
+  const I18N = {"Voor webshops": "For online stores", "Voor vakbedrijven": "For trades", "Juridisch": "Legal", "Privacybeleid": "Privacy Policy", "Resultaten": "Results", "Terug naar homepage": "Back to homepage", "Terug": "Back", "Plan een gesprek": "Schedule a call"};
   const H1_EN = 'Watch AI <em>take over the work</em>, live';
   let LANG = 'nl';
 
@@ -944,8 +944,8 @@
 
   // blokken schuiven zacht in beeld
   if (!reduce && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('play'); e.target.addEventListener('animationend', () => e.target.classList.remove('play'), { once: true }); }), { rootMargin: '0px 0px 6% 0px' });
-    document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight * .9) io.observe(el); });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('rv-in'); setTimeout(() => e.target.classList.remove('rv-wait', 'rv-in'), 1200); }), { rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('rv-wait'); io.observe(el); } });
   }
 </script>
 

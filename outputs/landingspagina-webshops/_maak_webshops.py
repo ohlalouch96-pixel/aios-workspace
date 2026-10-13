@@ -397,6 +397,7 @@ MAIN = f'''<main>
 I18N = {
  "Terug naar homepage": "Back to homepage", "Terug": "Back", "Plan een gesprek": "Book a call", "Resultaten": "Results", "Privacybeleid": "Privacy policy",
  "Voor webshops": "For online stores",
+ "Voor vakbedrijven": "For trades",
  "Zo’n 70% van de winkelmandjes wordt nooit afgerekend. Met een reeks automatische mails haal je een deel van die klanten alsnog binnen, zonder extra advertentiebudget.": "Around 70% of shopping carts are never checked out. A short series of automated emails brings part of those customers back, without spending more on ads.",
  "Bereken wat je laat liggen": "See what you're missing", "Plan een gesprek →": "Book a call →",
  "Gebouwd in Klaviyo · werkt met": "Built in Klaviyo · works with", "en meer": "and more",
@@ -608,8 +609,8 @@ JS = '''<script>
 
   // blokken schuiven zacht in beeld
   if (!reduce && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('play'); e.target.addEventListener('animationend', () => e.target.classList.remove('play'), { once: true }); }), { threshold: .15 });
-    document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight * .9) io.observe(el); });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('rv-in'); setTimeout(() => e.target.classList.remove('rv-wait', 'rv-in'), 1200); }), { rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(el => { if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('rv-wait'); io.observe(el); } });
   }
 
   // taal
