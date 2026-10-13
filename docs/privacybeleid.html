@@ -59,7 +59,7 @@
   .testbar b { color: var(--mid-on-dark); font-weight: 600; }
 
   /* navigatie (gelijk aan de homepage) */
-  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(255,255,255,.84); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+  .nav { position: sticky; top: 0; padding-top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(255,255,255,.84); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
   .nav.scrolled { border-color: var(--line); box-shadow: 0 6px 24px -18px rgba(23,52,95,.35); }
   .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; }
   .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -194,10 +194,10 @@
   .foot-links a:hover { color: #fff; }
   .foot-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; font-size: 13px; color: rgba(255,255,255,.6); }
 
-  .chatfab { position: fixed; z-index: 41; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer; background: var(--bright); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(31,94,255,.65); opacity: 0; transform: translateY(16px) scale(.9); pointer-events: none; transition: opacity .35s, transform .35s var(--ease), background .2s; }
+  .chatfab { position: fixed; z-index: 41; right: 20px; bottom: max(20px, env(safe-area-inset-bottom, 0px)); width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer; background: var(--bright); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(31,94,255,.65); opacity: 0; transform: translateY(16px) scale(.9); pointer-events: none; transition: opacity .35s, transform .35s var(--ease), background .2s; }
   .chatfab svg { width: 22px; height: 22px; }
   .chatfab.show { opacity: 1; transform: none; pointer-events: auto; }
-  .chattip { position: fixed; z-index: 41; right: 20px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); background: var(--navy); color: #fff; font-size: 13px; padding: 9px 13px; border-radius: 10px; }
+  .chattip { position: fixed; z-index: 41; right: 20px; bottom: max(80px, calc(60px + env(safe-area-inset-bottom, 0px))); background: var(--navy); color: #fff; font-size: 13px; padding: 9px 13px; border-radius: 10px; }
 
   .rv.play { animation: rise .8s var(--ease) both; animation-delay: var(--d, 0s); }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
@@ -641,7 +641,7 @@
 
 
   /* cookiemelding */
-  .ck { position: fixed; z-index: 60; left: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); max-width: 440px; display: grid; gap: 12px; padding: 18px 20px; background: #fff; color: var(--navy, #17345F); border: 1px solid var(--line, #C9D5E4); border-radius: 16px; box-shadow: 0 24px 48px -20px rgba(23,52,95,.35); font-size: 14px; line-height: 1.55; }
+  .ck { position: fixed; z-index: 60; left: 20px; bottom: max(20px, env(safe-area-inset-bottom, 0px)); max-width: 440px; display: grid; gap: 12px; padding: 18px 20px; background: #fff; color: var(--navy, #17345F); border: 1px solid var(--line, #C9D5E4); border-radius: 16px; box-shadow: 0 24px 48px -20px rgba(23,52,95,.35); font-size: 14px; line-height: 1.55; }
   .ck[hidden] { display: none; }
   .ck p { margin: 0; color: var(--muted, #465369); }
   .ck p a { color: var(--bright, #1F5EFF); }
