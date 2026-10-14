@@ -327,35 +327,41 @@ def normalize_domain(url):
 
 
 def get_existing_identifiers():
-    """Haalt bestaande naam/domein op uit de sheet, voor dedup op meer dan alleen de naam.
+    """Haalt bestaande naam/domein/e-mail op uit de sheet, voor dedup op meer dan alleen de naam.
 
     Bug gevonden 2026-10-14: dedup matchte uitsluitend op exacte bedrijfsnaam-string.
     Dezelfde ondernemer met een net iets andere naam-extractie (bv. "Hollemandak
     Dakdekkers Loodgieters Utrecht" vs "Holleman Dakdekkers & Loodgieters", zelfde
     website) werd daardoor niet als duplicaat herkend, met dubbel verstuurde
     bericht-1-mails tot gevolg. Domein is een stabielere sleutel dan de vrij
-    getypte bedrijfsnaam.
+    getypte bedrijfsnaam. E-mail wordt apart gebruikt na verificatie (zie
+    dedup_qualified_by_email), omdat het e-mailadres van een kandidaat pas na
+    check_one() bekend is.
     """
     service, sheet_id = _get_sheet_service()
     result = service.spreadsheets().values().get(
         spreadsheetId=sheet_id, range=f"{SHEET_TAB}!A:C"
     ).execute()
     values = result.get("values", [])
-    names, domains = set(), set()
+    names, domains, emails = set(), set(), set()
     for row in values[1:]:
         if not row:
             continue
         if row[0].strip():
             names.add(row[0].strip().lower())
+        if len(row) > 1 and row[1]:
+            email = extract_email(row[1])
+            if email:
+                emails.add(email.lower())
         if len(row) > 2 and row[2]:
             domain = normalize_domain(row[2])
             if domain:
                 domains.add(domain)
-    return names, domains
+    return names, domains, emails
 
 
 def dedup_candidates(candidates):
-    existing_names, existing_domains = get_existing_identifiers()
+    existing_names, existing_domains, _existing_emails = get_existing_identifiers()
     new, duplicates = [], []
     seen_names, seen_domains = set(), set()
     for c in candidates:
@@ -372,6 +378,27 @@ def dedup_candidates(candidates):
             seen_names.add(name_key)
             if domain_key:
                 seen_domains.add(domain_key)
+    return new, duplicates
+
+
+def dedup_qualified_by_email(qualified):
+    """Tweede dedup-pas, NA verificatie: het e-mailadres is pas bekend zodra
+    check_one() de website heeft gecheckt, dus dit kan niet in dedup_candidates().
+    Vangt gevallen op waar naam EN domein verschillen maar het e-mailadres
+    (bv. een gedeeld info@-adres, of een nieuw domein van een bestaande klant)
+    al in de sheet staat. Gebruik dit altijd vlak voor --append."""
+    _existing_names, _existing_domains, existing_emails = get_existing_identifiers()
+    new, duplicates = [], []
+    seen_emails = set()
+    for c in qualified:
+        email_key = c.get("email", "").strip().lower()
+        if email_key and (email_key in existing_emails or email_key in seen_emails):
+            c = dict(c, status="dropped", reason="e-mailadres staat al in de sheet")
+            duplicates.append(c)
+        else:
+            new.append(c)
+            if email_key:
+                seen_emails.add(email_key)
     return new, duplicates
 
 
@@ -463,6 +490,11 @@ def main():
     results = verify_candidates(new_candidates, workers=args.workers)
     qualified = [r for r in results if r["status"] == "qualified"]
     dropped = [r for r in results if r["status"] == "dropped"]
+
+    qualified, email_duplicates = dedup_qualified_by_email(qualified)
+    if email_duplicates:
+        print(f"Na e-mail-dedup (na verificatie): {len(email_duplicates)} extra duplicaat(en) overgeslagen (e-mailadres al in de sheet)")
+        duplicates = duplicates + email_duplicates
 
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
