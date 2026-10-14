@@ -157,14 +157,16 @@ Ik heb 'm al klaarstaan, kost je een paar seconden om te bekijken.
 > Na dit geen contact meer. Deur vriendelijk op een kier laten.
 
 ```
-Hey!
-
-Laat je na dit bericht met rust.
-
-Als je ooit benieuwd bent hoeveel [winkelnaam] laat liggen, je weet me te vinden.
-
-Succes!
+Hey! Ik laat je na dit bericht met rust. Als je ooit benieuwd bent hoeveel je laat liggen aan verlaten mandjes, je weet me te vinden. Succes!
 ```
+
+Engels:
+
+```
+Hey! I'll leave it here and won't message you about this again. If you're ever curious how much you're missing out on from abandoned carts, feel free to reach out anytime. Best of luck!
+```
+
+> Sinds 14-10: alles in één alinea, geen enters. Losse regels onder elkaar oogt als AI.
 
 ---
 
