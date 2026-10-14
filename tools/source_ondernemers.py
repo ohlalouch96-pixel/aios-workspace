@@ -316,27 +316,62 @@ def _get_sheet_service():
     return service, sheet_id
 
 
-def get_existing_names():
+def normalize_domain(url):
+    """Normaliseer een URL naar een vergelijkbaar domein (geen scheme/www/pad/trailing slash)."""
+    if not url:
+        return None
+    domain = re.sub(r"^https?://", "", url.strip(), flags=re.I)
+    domain = re.sub(r"^www\.", "", domain, flags=re.I)
+    domain = domain.split("/")[0].lower()
+    return domain or None
+
+
+def get_existing_identifiers():
+    """Haalt bestaande naam/domein op uit de sheet, voor dedup op meer dan alleen de naam.
+
+    Bug gevonden 2026-10-14: dedup matchte uitsluitend op exacte bedrijfsnaam-string.
+    Dezelfde ondernemer met een net iets andere naam-extractie (bv. "Hollemandak
+    Dakdekkers Loodgieters Utrecht" vs "Holleman Dakdekkers & Loodgieters", zelfde
+    website) werd daardoor niet als duplicaat herkend, met dubbel verstuurde
+    bericht-1-mails tot gevolg. Domein is een stabielere sleutel dan de vrij
+    getypte bedrijfsnaam.
+    """
     service, sheet_id = _get_sheet_service()
     result = service.spreadsheets().values().get(
-        spreadsheetId=sheet_id, range=f"{SHEET_TAB}!A:A"
+        spreadsheetId=sheet_id, range=f"{SHEET_TAB}!A:C"
     ).execute()
     values = result.get("values", [])
-    names = {row[0].strip().lower() for row in values[1:] if row and row[0].strip()}
-    return names
+    names, domains = set(), set()
+    for row in values[1:]:
+        if not row:
+            continue
+        if row[0].strip():
+            names.add(row[0].strip().lower())
+        if len(row) > 2 and row[2]:
+            domain = normalize_domain(row[2])
+            if domain:
+                domains.add(domain)
+    return names, domains
 
 
 def dedup_candidates(candidates):
-    existing = get_existing_names()
+    existing_names, existing_domains = get_existing_identifiers()
     new, duplicates = [], []
-    seen_in_batch = set()
+    seen_names, seen_domains = set(), set()
     for c in candidates:
-        key = c["name"].strip().lower()
-        if key in existing or key in seen_in_batch:
+        name_key = c["name"].strip().lower()
+        domain_key = normalize_domain(c.get("url", ""))
+        is_dup = (
+            name_key in existing_names or name_key in seen_names
+            or (domain_key and (domain_key in existing_domains or domain_key in seen_domains))
+        )
+        if is_dup:
             duplicates.append(c)
         else:
             new.append(c)
-            seen_in_batch.add(key)
+            seen_names.add(name_key)
+            if domain_key:
+                seen_domains.add(domain_key)
     return new, duplicates
 
 
