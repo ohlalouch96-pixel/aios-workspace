@@ -76,32 +76,21 @@ Oussama
 insightance.ai/webshops
 ```
 
-Engels:
+Engels (sinds 15-10: tijdsafhankelijke aanhef, zinnen in alinea's, "Best," voor de naam):
 
 ```
 Subject: Question about [store name]
 
-Hey,
+Good morning / Good afternoon / Good evening,
 
-I came across [store name] and [compliment: something specific about
-their shop, product or Instagram feed].
+I came across [store name] and [compliment: something specific about their shop, product or Instagram feed]. [WITH pop-up: I noticed you have a signup pop-up, I was wondering if there's already a flow behind it for visitors who don't check out.] [WITHOUT pop-up: I was wondering: do you already send something automatic to visitors who abandon their cart, or is that not set up yet?]
 
-[WITH signup pop-up]:
-I noticed you have a signup pop-up, I was wondering if there's already
-a flow behind it for visitors who don't check out.
-
-[WITHOUT signup pop-up]:
-I was wondering: do you already send something automatic to visitors
-who abandon their cart, or is that not set up yet?
-
-Most shops lose around 70% of the visitors who get right up to checkout
-and then leave.
-
-I build email automations for online stores and have already put
-together something for [store name], free of charge.
+Most shops lose around 70% of the visitors who get right up to checkout and then leave.
+I build email automations for online stores and have already put together something for [store name], free of charge.
 
 Curious to see it? Let me know and I'll send it over.
 
+Best,
 Oussama
 insightance.ai/webshops
 ```
