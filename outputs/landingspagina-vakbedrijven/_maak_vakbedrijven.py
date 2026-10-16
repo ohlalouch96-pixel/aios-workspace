@@ -537,7 +537,7 @@ JS = r'''<script>
       const mt = main.getBoundingClientRect().top + window.scrollY;
       const yStart = drawP.getPointAtLength(0).y, yEnd = drawP.getPointAtLength(len).y;
       const yHead = window.scrollY + window.innerHeight * .6 - mt;
-      const l = reduce ? len : (yHead <= yStart ? 0 : (yHead >= yEnd ? len : lenAtY(yHead)));
+      const l = yHead <= yStart ? 0 : (yHead >= yEnd ? len : lenAtY(yHead));
       drawP.style.strokeDashoffset = len - l; const pt = drawP.getPointAtLength(l);
       dot.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); }); dot.style.opacity = l > 2 ? 1 : 0;
     }

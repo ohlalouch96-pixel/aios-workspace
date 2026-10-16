@@ -1806,7 +1806,8 @@
   function drawLine() {
     if (!dlOn || !dlLen) return;
     const mTop = main.getBoundingClientRect().top + window.scrollY;
-    const target = reduce ? dlEnd - mTop : Math.min(dlEnd, window.scrollY + window.innerHeight * .62) - mTop;
+    // de lijn volgt het scrollen, ook als animaties uit staan: die beweging maakt de bezoeker zelf
+    const target = Math.min(dlEnd, window.scrollY + window.innerHeight * .62) - mTop;
     const len = target <= dlStart - mTop ? 0 : lenAtY(target);
     dDraw.style.strokeDashoffset = dlLen - len;
     const p = dDraw.getPointAtLength(len);

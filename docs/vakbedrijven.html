@@ -348,6 +348,12 @@
   .cases-wrap { padding-block: 28px 60px; display: grid; gap: 28px; }
   .rcase { scroll-margin-top: 0; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 30px 32px; display: grid; gap: 22px; box-shadow: 0 30px 60px -48px rgba(23,52,95,.45); }
   .rcase-head { display: grid; gap: 6px; }
+  /* knop onder elke case: wie overtuigd is, hoeft niet verder te scrollen */
+  .case-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 16px 20px; border-radius: 16px; background: var(--soft); border: 1px solid var(--line); }
+  .case-cta b { font-size: 16px; color: var(--navy); font-weight: 600; }
+  .case-cta .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+  .case-cta .lnk { color: var(--bright); font-weight: 600; font-size: 14.5px; text-decoration: none; }
+  .case-cta .lnk:hover { text-decoration: underline; }
   .rcase-head h2 { font-size: clamp(24px, 2.6vw, 30px); }
   .rcase-head p { color: var(--muted); max-width: 70ch; }
   .rcase-main { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; align-items: center; }
@@ -1173,7 +1179,7 @@
       const mt = main.getBoundingClientRect().top + window.scrollY;
       const yStart = drawP.getPointAtLength(0).y, yEnd = drawP.getPointAtLength(len).y;
       const yHead = window.scrollY + window.innerHeight * .6 - mt;
-      const l = reduce ? len : (yHead <= yStart ? 0 : (yHead >= yEnd ? len : lenAtY(yHead)));
+      const l = yHead <= yStart ? 0 : (yHead >= yEnd ? len : lenAtY(yHead));
       drawP.style.strokeDashoffset = len - l; const pt = drawP.getPointAtLength(l);
       dot.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); }); dot.style.opacity = l > 2 ? 1 : 0;
     }
