@@ -522,10 +522,11 @@ JS = r'''<script>
     function build() {
       // alleen als er rechts genoeg lege marge is, zodat de lijn nooit door tekst loopt
       on = window.innerWidth > 1100 && (main.clientWidth - 1280) / 2 > 56; dl.style.display = on ? '' : 'none'; if (!on) return;
-      const W = main.clientWidth, H = main.offsetHeight, mt = main.getBoundingClientRect().top + window.scrollY, Y = r => r + window.scrollY - mt;
+      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1, sy = window.scrollY / Z, zr = el => { const r = el.getBoundingClientRect(); return { top: r.top / Z, bottom: r.bottom / Z, left: r.left / Z, right: r.right / Z, height: r.height / Z, width: r.width / Z }; };  // zoom op grote schermen: alles in tekenmaat
+      const W = main.clientWidth, H = main.offsetHeight, mt = zr(main).top + sy, Y = r => r + sy - mt;
       dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const R = W - Math.max(36, (W - 1280) / 2 - 44);
-      const hero = document.querySelector('.rhero').getBoundingClientRect(), cb = document.querySelector('.cbox').getBoundingClientRect();
+      const hero = zr(document.querySelector('.rhero')), cb = zr(document.querySelector('.cbox'));
       const a0 = Y(hero.bottom) - 30, y2 = Y(cb.top) + cb.height / 2;
       const d = `M ${R} ${a0} L ${R} ${y2 - 60} C ${R} ${y2 - 10}, ${R - 20} ${y2}, ${cb.right - 1} ${y2}`;
       track.setAttribute('d', d); drawP.setAttribute('d', d); len = drawP.getTotalLength(); drawP.style.strokeDasharray = len; update();
@@ -534,9 +535,9 @@ JS = r'''<script>
     function update() {
       if (!on || !len) return;
       // de kop van de lijn staat steeds op 60% van de schermhoogte: hij beweegt precies even snel als de pagina
-      const mt = main.getBoundingClientRect().top + window.scrollY;
+      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1;
       const yStart = drawP.getPointAtLength(0).y, yEnd = drawP.getPointAtLength(len).y;
-      const yHead = window.scrollY + window.innerHeight * .6 - mt;
+      const yHead = (window.innerHeight * .6 - main.getBoundingClientRect().top) / Z;
       const l = yHead <= yStart ? 0 : (yHead >= yEnd ? len : lenAtY(yHead));
       drawP.style.strokeDashoffset = len - l; const pt = drawP.getPointAtLength(l);
       dot.querySelectorAll('circle').forEach(c => { c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); }); dot.style.opacity = l > 2 ? 1 : 0;

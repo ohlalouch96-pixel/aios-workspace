@@ -1263,6 +1263,10 @@
   .branch a i { font-style: normal; color: var(--bright); }
   .branch a:hover { border-color: var(--bright); color: var(--bright); transform: translateY(-1px); }
   .rt-promo.in-panel { justify-self: start; margin-top: 14px; }
+
+  /* heel brede schermen (vanaf 1800px): alles 10-15% groter, zodat de site het scherm beter vult; kleinere schermen ongewijzigd */
+  @media (min-width: 1800px) { html { zoom: 1.1; } }
+  @media (min-width: 2400px) { html { zoom: 1.15; } }
 </style>
 
 <template id="logo-svg">
@@ -1807,7 +1811,8 @@
     if (!dlOn || !dlLen) return;
     const mTop = main.getBoundingClientRect().top + window.scrollY;
     // de lijn volgt het scrollen, ook als animaties uit staan: die beweging maakt de bezoeker zelf
-    const target = Math.min(dlEnd, window.scrollY + window.innerHeight * .62) - mTop;
+    const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1;  // zoom op grote schermen
+    const target = Math.min(dlEnd - mTop, (window.scrollY + window.innerHeight * .62 - mTop) / Z);
     const len = target <= dlStart - mTop ? 0 : lenAtY(target);
     dDraw.style.strokeDashoffset = dlLen - len;
     const p = dDraw.getPointAtLength(len);

@@ -380,6 +380,10 @@
     .foot-links a, .foot-pages a, a.link, a.case-tag, a.li-link, a.back, .addr a { position: relative; }
     .foot-links a::after, .foot-pages a::after, a.link::after, a.case-tag::after, a.li-link::after, a.back::after, .addr a::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
   }
+
+  /* heel brede schermen (vanaf 1800px): alles 10-15% groter, zodat de site het scherm beter vult; kleinere schermen ongewijzigd */
+  @media (min-width: 1800px) { html { zoom: 1.1; } }
+  @media (min-width: 2400px) { html { zoom: 1.15; } }
 </style>
 </head>
 <body>
@@ -660,11 +664,12 @@
     let len = 0, on = false;
     function build() {
       on = window.innerWidth > 1300; if (!on) return;
-      const W = main.clientWidth, H = main.offsetHeight, mt = main.getBoundingClientRect().top + window.scrollY;
+      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1, sy = window.scrollY / Z, zr = el => { const r = el.getBoundingClientRect(); return { top: r.top / Z, bottom: r.bottom / Z, left: r.left / Z, right: r.right / Z, height: r.height / Z, width: r.width / Z }; };  // zoom op grote schermen: alles in tekenmaat
+      const W = main.clientWidth, H = main.offsetHeight, mt = zr(main).top + sy;
       dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const gut = Math.max(36, (W - 1280) / 2 - 44), R = W - gut, L = gut;
-      const stats = document.querySelector('.net').getBoundingClientRect(), exg = document.querySelector('.ex').getBoundingClientRect(), cb = document.querySelector('.cbox').getBoundingClientRect();
-      const yA = stats.bottom + window.scrollY - mt + 14, yB = exg.top + window.scrollY - mt - 14, y2 = cb.top + window.scrollY - mt + cb.height / 2, k = (yB - yA) * .6;
+      const stats = zr(document.querySelector('.net')), exg = zr(document.querySelector('.ex')), cb = zr(document.querySelector('.cbox'));
+      const yA = stats.bottom + sy - mt + 14, yB = exg.top + sy - mt - 14, y2 = cb.top + sy - mt + cb.height / 2, k = (yB - yA) * .6;
       // oversteken alleen in de lege ruimte tussen cijferblok en overzicht; daarna langs de linkermarge naar het blauwe blok
       const d = `M ${R} ${yA} C ${R} ${yA + k}, ${L} ${yB - k}, ${L} ${yB} L ${L} ${y2 - 60} C ${L} ${y2 - 10}, ${L + 20} ${y2}, ${cb.left + 1} ${y2}`;
       track.setAttribute('d', d); drawP.setAttribute('d', d); len = drawP.getTotalLength(); drawP.style.strokeDasharray = len; update();

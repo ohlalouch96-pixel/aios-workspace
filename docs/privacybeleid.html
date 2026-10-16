@@ -657,6 +657,10 @@
     .foot-links a, .foot-pages a, a.link, a.case-tag, a.li-link, a.back, .addr a { position: relative; }
     .foot-links a::after, .foot-pages a::after, a.link::after, a.case-tag::after, a.li-link::after, a.back::after, .addr a::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
   }
+
+  /* heel brede schermen (vanaf 1800px): alles 10-15% groter, zodat de site het scherm beter vult; kleinere schermen ongewijzigd */
+  @media (min-width: 1800px) { html { zoom: 1.1; } }
+  @media (min-width: 2400px) { html { zoom: 1.15; } }
 </style>
 </head>
 <body>

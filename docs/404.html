@@ -28,6 +28,10 @@ p { color: var(--muted); font-size: 17px; line-height: 1.6; }
 .btn.s { border: 1px solid var(--line); color: var(--navy); background: #fff; }
 .btn.s:hover { border-color: var(--navy); }
 svg.line { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 160px; pointer-events: none; }
+
+  /* heel brede schermen (vanaf 1800px): alles 10-15% groter, zodat de site het scherm beter vult; kleinere schermen ongewijzigd */
+  @media (min-width: 1800px) { html { zoom: 1.1; } }
+  @media (min-width: 2400px) { html { zoom: 1.15; } }
 </style>
 </head>
 <body>

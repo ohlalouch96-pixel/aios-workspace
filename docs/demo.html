@@ -779,6 +779,10 @@
     .foot-links a, .foot-pages a, a.link, a.case-tag, a.li-link, a.back, .addr a { position: relative; }
     .foot-links a::after, .foot-pages a::after, a.link::after, a.case-tag::after, a.li-link::after, a.back::after, .addr a::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
   }
+
+  /* heel brede schermen (vanaf 1800px): alles 10-15% groter, zodat de site het scherm beter vult; kleinere schermen ongewijzigd */
+  @media (min-width: 1800px) { html { zoom: 1.1; } }
+  @media (min-width: 2400px) { html { zoom: 1.15; } }
 </style>
 </head>
 <body>
@@ -1121,10 +1125,11 @@
     let len = 0, on = false;
     function build() {
       on = window.innerWidth > 1300; if (!on) return;
-      const W = main.clientWidth, H = main.offsetHeight, mt = main.getBoundingClientRect().top + window.scrollY, Y = r => r + window.scrollY - mt;
+      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1, sy = window.scrollY / Z, zr = el => { const r = el.getBoundingClientRect(); return { top: r.top / Z, bottom: r.bottom / Z, left: r.left / Z, right: r.right / Z, height: r.height / Z, width: r.width / Z }; };  // zoom op grote schermen: alles in tekenmaat
+      const W = main.clientWidth, H = main.offsetHeight, mt = zr(main).top + sy, Y = r => r + sy - mt;
       dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const gut = Math.max(36, (W - 1280) / 2 - 44), R = W - gut;
-      const lb = document.querySelector('.xlabel').getBoundingClientRect(), cb = document.querySelector('.cbox').getBoundingClientRect();
+      const lb = zr(document.querySelector('.xlabel')), cb = zr(document.querySelector('.cbox'));
       const a0 = Y(lb.top) + lb.height / 2, y2 = Y(cb.top) + cb.height / 2;
       const d = `M ${R} ${a0} L ${R} ${y2 - 60} C ${R} ${y2 - 10}, ${R - 20} ${y2}, ${cb.right - 1} ${y2}`;
       track.setAttribute('d', d); drawP.setAttribute('d', d); len = drawP.getTotalLength(); drawP.style.strokeDasharray = len; update();
