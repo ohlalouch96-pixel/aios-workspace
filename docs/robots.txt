@@ -3,5 +3,6 @@ Disallow: /offerte-maker.html
 Disallow: /offerte-maker-demo.html
 Disallow: /review-tool-mhl.html
 Disallow: /ftuk/
+Disallow: /voorbeeld/
 
 Sitemap: https://insightance.ai/sitemap.xml
