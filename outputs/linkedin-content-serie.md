@@ -262,9 +262,9 @@ Feel like you're not ready? Let's find out together. No strings attached. DM me.
 Week 2, gepost: "AI automation isn't secure enough."
 Week 3, gepost: "It costs me too much time and energy."
 
-**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan: Week 4 op za 24 okt, Week 5 op za 31 okt, Week 6 op za 7 nov, Week 7 op za 14 nov — allemaal al kant-en-klaar hieronder, gewoon opnieuw oppakken. Week 8 (za 21 nov) en Week 9 (za 28 nov) hebben nog geen onderwerp.
+**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan opgesteld: Week 4 (24 okt), Week 5 (31 okt), Week 6 (7 nov), Week 7 (14 nov) — tekst voor alle vier staat klaar hieronder. **Let op, les geleerd dezelfde dag:** "staat in het document" betekent niet automatisch "staat ook echt in LinkedIn's planner" — dat bleek bij Week 6 en 7 niet het geval, Oussama had ze niet gezien/ingepland. Nooit meer "ingepland" noteren zonder expliciete bevestiging dat het ook echt gebeurd is. Week 8 (za 21 nov) en Week 9 (za 28 nov) hebben nog geen onderwerp.
 
-Week 4, klaar om te posten, ingepland voor 24 okt:
+Week 4, klaar om in te plannen (24 okt was het voorstel, niet bevestigd dat dit ook echt gepost is):
 ```
 "It costs me too much money."
 
@@ -275,7 +275,7 @@ Curious what it would actually cost for your specific process? DM me, no obligat
 #Business #AIAutomation #MythCheck
 ```
 
-Week 5, klaar om te posten, ingepland voor 31 okt:
+Week 5, klaar om in te plannen (31 okt was het voorstel, niet bevestigd):
 ```
 "I already have this, my platform sends abandoned cart reminders by default."
 
@@ -286,7 +286,7 @@ Not sure which one you actually have running? DM me, I'll help you check in five
 #Business #AIAutomation #MythCheck
 ```
 
-Week 6, klaar om te posten, ingepland voor 7 nov:
+Week 6, klaar om in te plannen voor za 7 nov (bevestigd 23-10: stond nog niet echt in LinkedIn's planner):
 ```
 "This will make my customer contact feel impersonal."
 
@@ -297,7 +297,7 @@ Want to see what a personalized version actually looks like? DM me, happy to sho
 #Business #AIAutomation #MythCheck
 ```
 
-Week 7, klaar om te posten, ingepland voor 14 nov:
+Week 7, klaar om in te plannen voor za 14 nov (bevestigd 23-10: stond nog niet echt in LinkedIn's planner):
 ```
 "I tried something like this once, it didn't work."
 
