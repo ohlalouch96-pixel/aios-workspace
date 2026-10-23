@@ -128,7 +128,7 @@ Spreadsheet says one thing. Bank says another.
 #TheOtherShift #Entrepreneurship #AIAutomation
 ```
 
-Week 9:
+Week 9, ingepland voor woensdag 4 nov:
 ```
 Two clients booked for the same hour. Again.
 The calendar did not book itself.
@@ -136,7 +136,7 @@ The calendar did not book itself.
 #TheOtherShift #Entrepreneurship #AIAutomation
 ```
 
-Week 10:
+Week 10, ingepland voor woensdag 11 nov:
 ```
 A notebook full of notes nobody will ever type up.
 Somewhere in there is a good idea.
@@ -144,7 +144,7 @@ Somewhere in there is a good idea.
 #TheOtherShift #Entrepreneurship #AIAutomation
 ```
 
-Week 11:
+Week 11, ingepland voor woensdag 18 nov:
 ```
 A message sitting unanswered for four days because there just wasn't time.
 It's still sitting there.
@@ -152,7 +152,7 @@ It's still sitting there.
 #TheOtherShift #Entrepreneurship #AIAutomation
 ```
 
-Week 12:
+Week 12, ingepland voor woensdag 25 nov:
 ```
 Answering "what are your hours" for the tenth time today.
 Every business owner's least favorite trivia question.
@@ -221,8 +221,8 @@ That's most of what building a business actually looks like.
 2. Start small vs. wait — start with one task → it works and you scale it / it fails, but costs little. Wait for the "big" project → you never start at all. *(gepost, als "Progress, in one picture")*
 3. Fix vs. ignore — fix the process → save hours every week / find the real problem underneath. Ignore it → keep paying for it, quietly, forever. *(ingepland voor woensdag 28 okt 16:00 — bijschrift "Fixing it, in one picture.", geen hashtags, geen CTA)*
 4. Delegate vs. do it yourself — let a system handle the repeatable part → get your time back / find out it wasn't your job. Keep doing it yourself → stay the bottleneck. *(ingepland voor woensdag 7 okt 16:00, al in LinkedIn's planner gezet voordat topic 3 werd gebouwd)*
-5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out.
-6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere.
+5. Ask vs. assume — ask "is this worth automating" → it's worth it and you just saved hours / it isn't and now you know for sure. Assume it's too small → you never find out. *(ingepland voor woensdag 11 nov 16:00 — bijschrift "Finding out, in one picture.", geen hashtags, geen CTA)*
+6. Instant reply vs. "when I get to it" — a system replies instantly → the customer stays / you learn exactly where they drop off. They wait for you → they quietly go elsewhere. *(ingepland voor woensdag 25 nov 16:00 — bijschrift "Timing, in one picture.", geen hashtags, geen CTA)*
 7. Hire vs. automate — automate the repeatable work → costs stay flat as you grow. Hire for it → costs grow every time.
 8. Threat vs. tool — see AI as competition → you spend your energy resisting it. See it as a tool → you spend that energy getting ahead.
 9. One hour now vs. busy forever — spend one hour fixing the process → get that hour back every week after. Stay "too busy" to fix it → stay too busy, forever.
