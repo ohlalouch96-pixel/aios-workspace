@@ -262,7 +262,7 @@ Feel like you're not ready? Let's find out together. No strings attached. DM me.
 Week 2, gepost: "AI automation isn't secure enough."
 Week 3, gepost: "It costs me too much time and energy."
 
-**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan opgesteld: Week 4 (24 okt), Week 5 (31 okt), Week 6 (7 nov), Week 7 (14 nov) — tekst voor alle vier staat klaar hieronder. **Let op, les geleerd dezelfde dag:** "staat in het document" betekent niet automatisch "staat ook echt in LinkedIn's planner" — dat bleek bij Week 6 en 7 niet het geval, Oussama had ze niet gezien/ingepland. Nooit meer "ingepland" noteren zonder expliciete bevestiging dat het ook echt gebeurd is. Week 8 (za 21 nov) en Week 9 (za 28 nov) hebben nog geen onderwerp.
+**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan opgesteld: Week 4 (24 okt), Week 5 (31 okt), Week 6 (7 nov), Week 7 (14 nov) — tekst voor alle vier staat klaar hieronder. **Let op, les geleerd dezelfde dag:** "staat in het document" betekent niet automatisch "staat ook echt in LinkedIn's planner" — dat bleek bij Week 6 en 7 niet het geval, Oussama had ze niet gezien/ingepland. Nooit meer "ingepland" noteren zonder expliciete bevestiging dat het ook echt gebeurd is. Week 8 (za 21 nov) en Week 9 (za 28 nov) zijn inmiddels ook uitgewerkt en bevestigd — heel november staat nu vol voor Myth Check.
 
 Week 4, klaar om in te plannen (24 okt was het voorstel, niet bevestigd dat dit ook echt gepost is):
 ```
@@ -304,6 +304,28 @@ Week 7, klaar om in te plannen voor za 14 nov (bevestigd 23-10: stond nog niet e
 Usually true, and usually not really about automation itself. A lot of first attempts fail because of a generic template nobody adjusted to fit the actual business, or a tool that was more complicated to run than the manual process it replaced. That's a bad implementation, not proof the idea doesn't work. The businesses getting real results this year are running the second or third version, not the first.
 
 What went wrong the first time around? DM me, let's figure out if it's fixable.
+
+#Business #AIAutomation #MythCheck
+```
+
+Week 8, ingepland voor za 21 nov (bevestigd door Oussama):
+```
+"I don't have enough customers for this to matter."
+
+Said by almost everyone with under a thousand customers, and it's backwards. A small list means every single recovered sale is a bigger share of your week's revenue, not a smaller one. You don't need volume for this to be worth it, you need the sales you're already losing to matter to you.
+
+Curious what this would actually be worth with your current traffic? DM me, I'll do the math with your real numbers.
+
+#Business #AIAutomation #MythCheck
+```
+
+Week 9, ingepland voor za 28 nov (bevestigd door Oussama — eerste versie ging te veel over cart-recovery/e-commerce, dat is Instagram-doelgroep niet LinkedIn; herschreven voor de bredere MKB-doelgroep van LinkedIn, zoals vakbedrijven):
+```
+"I know all my customers personally, I don't need this."
+
+Said by owners who still remember every customer's name, and that's exactly the point worth protecting. The paperwork around that relationship, the quote, the appointment reminder, the follow-up call, is what eats the time you'd rather spend on the actual job. Automating the admin doesn't touch the relationship, it protects the hours you have left for it.
+
+Curious which part of your week is admin instead of actual work? DM me, let's find out.
 
 #Business #AIAutomation #MythCheck
 ```
@@ -653,3 +675,5 @@ Episode 20 of "Automation Simplified" ⚡
 ---
 
 _Bijwerken naarmate posts geplaatst worden — aflevering afvinken, nieuwe onderwerpen toevoegen zodra de lijst opraakt._
+
+**Status 2026-10-23: november compleet.** Alle vier pijlers staan voor de hele maand klaar en door Oussama bevestigd als ingepland: Automation Simplified (episode 13-20), The Other Shift (week 9-12), The Fork (topic 5-6), Myth Check (week 6-9). December nog niet opgestart.
