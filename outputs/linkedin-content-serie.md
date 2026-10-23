@@ -24,15 +24,11 @@ Vaste afsluiter/herkenning onder elke aflevering:
 
 De ⚡ is een bewust, consequent handtekening-element — niet per post wisselen. Geen ✨ (spreekt "no magic" uit de posts tegen).
 
-**Visuele variatie (vastgelegd 2026-09-30):** de vaste vraag/antwoord-kaart werd na een tijdje té herkenbaar (zelfde beeld, elke post). In plaats daarvan wisselt de afbeeldingsstijl nu **per week** tussen drie vormen, in een vaste cyclus van 3 weken (geldt voor beide posts die week, dinsdag én donderdag samen):
+**Visuele variatie — geschiedenis en huidige regel (bijgewerkt 2026-10-23):** de vaste vraag/antwoord-kaart werd na een tijdje té herkenbaar (zelfde beeld, elke post). Eerst vastgelegd als vaste 3-weekse cyclus (tekst-only / scene-kaart / quote-kaart, zwart-goud), maar dat voelde zelf ook weer te herhalend aan. **Huidige regel: geen vaste cyclus of vast sjabloon meer.** Elke aflevering krijgt een eigen, bij het onderwerp passend beeld (of bewust geen beeld), in de actuele huisstijlkleuren van dat moment. Variatie is het doel, niet een vaste afwisseling tussen drie vormen. Werkwijze per aflevering: eerst het onderwerp en de tekst laten goedkeuren, dan pas een bijpassend beeld bedenken en bouwen, publiceren als Artifact, Win+Shift+S. Geldt alleen voor Pijler 1 — Pijler 3 heeft al een eigen, bewust andere beeldstijl (crème/groen/oranje, zie verderop) en blijft daarin ongewijzigd, ook na een huisstijl-wissel van de website.
 
-1. **Week 1 — tekst-only:** geen afbeelding, gewoon de posttekst plaatsen. Geen sjabloon nodig.
-2. **Week 2 — scene-kaart:** `reference/linkedin-post-scene-template.html`. Zelfde zwart-gouden merkstijl (Georgia-serif, goud #C2A059, donkere achtergrond), maar in plaats van het tekstblok een klein icoon-scenebeeld met CAPTION (het antwoord) en SUBANSWER (korte ondertitel) eronder. **Belangrijk (sinds 2026-10-03):** de dinsdag- en donderdagpost van dezelfde week gebruiken allebei een scene-kaart, maar niet hetzelfde icoon — elke scene wordt apart ontworpen, passend bij het onderwerp van die aflevering. Het standaard sjabloon-icoon (cirkel-cirkel-vinkje) is alleen een startpunt, niet de vaste afbeelding voor elke scene-kaart-week.
-3. **Week 3 — quote-kaart:** *(vervangt carrousel, zie hieronder)*. Grote, typografische kaart zonder icoon: een uitvergroot aanhalingsteken als vormgevend element, met de sterkste regel uit de post groot uitgelicht erover. Zelfde zwart-gouden merkstijl, maar typografie-geleid in plaats van icoon-geleid — bewust een heel andere compositie dan de scene-kaart.
+**Huisstijl-wissel (2026-10-23):** de website ging op 8 oktober live in een nieuw licht/navy-blauw ontwerp (zie [[project_website]]), maar de LinkedIn-afbeeldingen gebruikten tot 23 oktober nog de oude zwart-gouden stijl. Vanaf nu: navy `#17345F`, middenblauw `#3D6AA8`, helderblauw `#1F5EFF` (accent/knoppen), lichte vlakken `#EAF1FB`/`#F5F8FC`, wit als hoofdachtergrond, Playfair Display (koppen) + Inter (tekst) — exact de kleuren en het logo van de huidige live site. Logo-vorm zelf is ongewijzigd (balk + curve + 2 stipjes), alleen herkleurd.
 
-**Carrousel afgeschaft (2026-10-10):** bleek niet te plannen via de tool waarmee Oussama zijn LinkedIn-posts inplant — die ondersteunt alleen tekst + één afbeelding, geen meerdere documentslides. De quote-kaart hierboven is de vervanging voor Week 3 van de rotatie, ook enkele afbeelding, geen carrousel meer gebruiken.
-
-Na week 3 weer terug naar week 1 (tekst-only), enzovoort. Vraag Claude om het juiste sjabloon te openen en in te vullen als er een post klaargezet moet worden — CAPTION/SUBANSWER of SLIDE1/2/3 vervangen, publiceren als Artifact, Win+Shift+S. Geldt alleen voor Pijler 1 — Pijler 3 heeft al een eigen, bewust andere beeldstijl (zie verderop) en blijft ongewijzigd.
+**Carrousel afgeschaft (2026-10-10):** bleek niet te plannen via de tool waarmee Oussama zijn LinkedIn-posts inplant — die ondersteunt alleen tekst + één afbeelding, geen meerdere documentslides. Niet meer gebruiken.
 
 ---
 
@@ -511,6 +507,142 @@ I spent years in healthcare before touching a line of code. The technology was n
 Episode 12 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
+
+---
+
+**Episode 13 — The hidden cost of free automation tools — klaar om te posten, week van 3 nov = Week 2 van de rotatie (scene-kaart), nieuw onderwerp**
+
+```
+Free automation tools aren't actually free.
+
+The subscription might say €0, but the real cost shows up somewhere else, a feature locked behind a paywall right when you need it, a support ticket that never gets answered, or a tool that quietly breaks and nobody notices until a customer complains. Example: a free email tool caps you at 500 sends a month, fine until the exact week you run a promotion and suddenly need 600.
+
+What's the actual price of the "free" tool you're relying on right now?
+
+Episode 13 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** ijsberg boven/onder de waterlijn, navy/middenblauw thema (herbouwd na huisstijl-wissel 23-10), CAPTION "The real cost is below the line.", SUBANSWER "Not on the pricing page." Snippen via: https://claude.ai/artifact/WSRCHQTEAuktrHBQsKgxcQ
+
+---
+
+**Let op (2026-10-23):** Episode 14, 16, 18 en 20 hieronder zijn de donderdag-afleveringen van november, nog niet besproken in de nieuwe ronde. Teksten en onderwerpen staan er nog zoals eerder bedacht, maar de afbeeldingen zijn nog in de OUDE zwart-gouden huisstijl (de site is intussen navy/blauw) en de vaste 3-weekse rotatie (tekst-only/scene/quote) geldt niet meer als vast format — Oussama wil juist afwisseling, per aflevering een passend, eigen beeld. Bij de donderdag-sessie opnieuw langslopen, net als bij de dinsdagen is gedaan.
+
+**Episode 14 — Automation isn't "set and forget" — nog te herzien (donderdag 5 nov)**
+
+```
+People assume automation means building it once and never touching it again.
+
+That's mostly true, but not completely. A good system runs on its own day to day, but your business changes, prices go up, products get added, a supplier switches, and the automation needs a small update to keep matching reality. Example: a cart-recovery flow built around last year's product line still works, it just recommends the wrong things until someone updates it.
+
+The maintenance is small, skipping it entirely is what actually breaks things.
+
+Episode 14 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** scene-kaart, eigen scene — een tandwiel met een cirkelpijl eromheen, CAPTION "Small check-ins. Not a one-time build.", SUBANSWER "Your business keeps changing." Snippen via: https://claude.ai/artifact/Md1JnRLeDpeTHTL918sFvC
+
+---
+
+**Episode 15 — What happens to your data when you automate something — klaar om te posten, dinsdag 10 nov, onderwerp gewisseld op verzoek Oussama (23-10)**
+
+```
+People rarely ask what happens to their data until something goes wrong.
+
+With a cart-recovery flow, it's simple: the automation only touches what your store already collects, an email address, a cart, an order. Nothing new gets created, nothing gets sold or shared outside the tools you already use. Example: the system reads that someone left a product in their cart, sends the reminder through your existing email platform, and that's the entire journey, no third party ever sees it.
+
+Automation isn't a new place for your data to live, it's a faster way to use the place it already lives.
+
+Episode 15 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** donker navy kaartje, gesloten datacirkel (envelop binnen een lus), CAPTION "It stays where it already was.", SUBANSWER "Nothing new, nowhere else." Snippen via: https://claude.ai/artifact/XnPjqd3SVD3w9g2CeiNJbF
+
+---
+
+**Episode 16 — The 80/20 of your busywork — nog te herzien (donderdag 12 nov)**
+
+```
+Eighty percent of your repetitive work probably comes from twenty percent of your tasks.
+
+Most business owners try to automate everything evenly, a little bit of this, a little bit of that. The better approach is finding the two or three tasks eating the most time and starting there, everything else can wait. Example: if replying to the same five questions takes four hours a week and updating your price list takes ten minutes a month, automating the first one matters a lot more than the second.
+
+I'd rather fix one real bottleneck than automate ten things nobody notices.
+
+Episode 16 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** quote-kaart, uitgelichte regel "Fix one real bottleneck, not ten things nobody notices." Snippen via: https://claude.ai/artifact/FZXU1WMZT5YvnTdrZVTTAe
+
+---
+
+**Episode 17 — What working with someone like me actually looks like — klaar om te posten, dinsdag 17 nov**
+
+```
+People picture a scary technical project when they hear "automation build."
+
+It's usually a short call where you describe the annoying task, a few days of building on my end, and a quick look together before it goes live. No code to learn, no new software to manage, you just get a system that works. Example: with the cart-recovery flow, the whole process from first call to live automation was under two weeks, most of that waiting on product photos, not building.
+
+That first call is usually the easiest part of the whole thing.
+
+Episode 17 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** witte kaart, horizontale 3-stappen-strook (Call → Build → Live, korte iconen, geen lange tekst, bewust ingekort na feedback 23-10). Snippen via: https://claude.ai/artifact/1uoyHWcJHtWq5JbDDYEcjY
+
+---
+
+**Episode 18 — A spreadsheet hack isn't a system — nog te herzien (donderdag 19 nov)**
+
+```
+A lot of businesses run on a spreadsheet duct-taped to a reminder app.
+
+It works, until it doesn't, a formula breaks, someone forgets to update a cell, or the one person who understands it goes on holiday. A real system doesn't depend on someone remembering to check it. Example: a spreadsheet tracking which customers need a follow-up only works if someone opens it every day, an automated flow sends the follow-up whether anyone opens anything or not.
+
+If one sick day could break your process, it was never really a system.
+
+Episode 18 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+---
+
+**Episode 19 — How long does building an automation actually take? — klaar om te posten, dinsdag 24 nov**
+
+```
+People expect automation to take months to build.
+
+Most small business automations take days, not months, because they're solving one specific, well-defined problem instead of trying to overhaul everything at once. Example: setting up an automatic reply for repeat customer questions usually takes a few days from first conversation to live, most of the time going into getting the wording right, not the actual technical setup.
+
+If it only took a few days, what's actually been holding you back?
+
+Episode 19 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** witte kaart, balkjesvergelijking "What people expect: Months" vs "What it actually takes: A few days", CAPTION "Days, not months." Snippen via: https://claude.ai/artifact/WSWS6v6tGSJsjJXRUnPdp4
+
+---
+
+**Episode 20 — Before you automate anything, ask this one question — nog te herzien (donderdag 26 nov)**
+
+```
+Before automating anything, ask yourself one question: would I still do this task by hand if I had unlimited time?
+
+If the honest answer is yes, that's probably not the task to automate first, it might actually matter that a person does it. If the answer is no, if you'd pay someone else to do it the moment you could afford to, that's your starting point. Example: answering a genuinely complex customer question is probably a yes, sending the tenth reminder about the same FAQ is almost always a no.
+
+That one question has saved me from automating the wrong thing more than once.
+
+Episode 20 of "Automation Simplified" ⚡
+#Entrepreneurship #AIAutomation #AutomationSimplified
+```
+
+**Beeld:** scene-kaart, eigen scene — vier taakvakjes op een rij, één uitgelicht in goud met een vinkje, CAPTION "Would I still do this by hand?", SUBANSWER "That's the only question that matters." Snippen via: https://claude.ai/artifact/5UhmSQNZ3QF1MipcqxAWQn
 
 ---
 
