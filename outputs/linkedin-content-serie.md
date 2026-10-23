@@ -677,3 +677,12 @@ Episode 20 of "Automation Simplified" ⚡
 _Bijwerken naarmate posts geplaatst worden — aflevering afvinken, nieuwe onderwerpen toevoegen zodra de lijst opraakt._
 
 **Status 2026-10-23: november compleet.** Alle vier pijlers staan voor de hele maand klaar en door Oussama bevestigd als ingepland: Automation Simplified (episode 13-20), The Other Shift (week 9-12), The Fork (topic 5-6), Myth Check (week 6-9). December nog niet opgestart.
+
+**Eenmalige losse post, za 24 okt 9:30, buiten alle pijlers om:** actualiteiten-post over AI-ontslagen bij grote bedrijven versus banengroei bij kleine bedrijven, op Oussama's verzoek ("iets wat schuurt, actueel, los van elke serie"). Feitencheck uitgevoerd op 2026-10-23: Barclays 5.000 banen (22-10, "AI-driven efficiency push" in de pers, al nuanceerde de CEO zelf dat AI maar een deel van de reden is), FICO 15% (okt, SEC-filing noemt AI-product-ontwikkeling), U.S. Chamber "Empowering Small Business"-rapport (2-10-2026): "47% say AI is creating jobs today" / "6% say it is enabling headcount reductions" (rapport specificeert zelf niet de exacte steekproefbasis). Ingepland door Oussama.
+```
+Barclays cut 5,000 jobs this month in what it called an AI-driven efficiency push. FICO cut 15% of its workforce, citing AI in its SEC filing.
+
+Meanwhile, the U.S. Chamber's 2026 small business report found 47% of small businesses say AI is creating jobs. Only 6% say it's cutting them.
+
+Same technology, a very different story depending on how big you already are.
+```
