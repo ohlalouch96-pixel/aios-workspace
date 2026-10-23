@@ -523,13 +523,13 @@ Episode 13 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** ijsberg boven/onder de waterlijn, navy/middenblauw thema (herbouwd na huisstijl-wissel 23-10), CAPTION "The real cost is below the line.", SUBANSWER "Not on the pricing page." Snippen via: https://claude.ai/artifact/WSRCHQTEAuktrHBQsKgxcQ
+**Beeld:** ijsberg boven/onder de waterlijn, navy/middenblauw thema, CAPTION "The real cost is below the line.", SUBANSWER "Not on the pricing page." Bestand: `outputs/linkedin-images/episode-13-hidden-cost.png`
 
 ---
 
-**Let op (2026-10-23):** Episode 14, 16, 18 en 20 hieronder zijn de donderdag-afleveringen van november, nog niet besproken in de nieuwe ronde. Teksten en onderwerpen staan er nog zoals eerder bedacht, maar de afbeeldingen zijn nog in de OUDE zwart-gouden huisstijl (de site is intussen navy/blauw) en de vaste 3-weekse rotatie (tekst-only/scene/quote) geldt niet meer als vast format — Oussama wil juist afwisseling, per aflevering een passend, eigen beeld. Bij de donderdag-sessie opnieuw langslopen, net als bij de dinsdagen is gedaan.
+Episode 14, 16, 18 en 20 hieronder zijn de donderdag-afleveringen van november, herzien op 2026-10-23: nieuwe navy/blauwe huisstijl, elk een eigen passend beeld (geen vaste rotatie meer), als losse PNG-bestanden in `outputs/linkedin-images/` in plaats van screenshot-artifacts.
 
-**Episode 14 — Automation isn't "set and forget" — nog te herzien (donderdag 5 nov)**
+**Episode 14 — Automation isn't "set and forget" — klaar om te posten, donderdag 5 nov**
 
 ```
 People assume automation means building it once and never touching it again.
@@ -542,7 +542,7 @@ Episode 14 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** scene-kaart, eigen scene — een tandwiel met een cirkelpijl eromheen, CAPTION "Small check-ins. Not a one-time build.", SUBANSWER "Your business keeps changing." Snippen via: https://claude.ai/artifact/Md1JnRLeDpeTHTL918sFvC
+**Beeld:** navy kaartje, kiemplantje met waterdruppel, CAPTION "Still needs a little water." Bestand: `outputs/linkedin-images/episode-14-set-and-forget.png`
 
 ---
 
@@ -559,11 +559,11 @@ Episode 15 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** donker navy kaartje, gesloten datacirkel (envelop binnen een lus), CAPTION "It stays where it already was.", SUBANSWER "Nothing new, nowhere else." Snippen via: https://claude.ai/artifact/XnPjqd3SVD3w9g2CeiNJbF
+**Beeld:** donker navy kaartje, gesloten datacirkel (envelop binnen een lus), CAPTION "It stays where it already was.", SUBANSWER "Nothing new, nowhere else." Bestand: `outputs/linkedin-images/episode-15-your-data.png`
 
 ---
 
-**Episode 16 — The 80/20 of your busywork — nog te herzien (donderdag 12 nov)**
+**Episode 16 — The 80/20 of your busywork — klaar om te posten, donderdag 12 nov**
 
 ```
 Eighty percent of your repetitive work probably comes from twenty percent of your tasks.
@@ -576,7 +576,7 @@ Episode 16 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** quote-kaart, uitgelichte regel "Fix one real bottleneck, not ten things nobody notices." Snippen via: https://claude.ai/artifact/FZXU1WMZT5YvnTdrZVTTAe
+**Beeld:** wit kaartje, taartdiagram met 20% uitgelicht in helderblauw, CAPTION "That's where 80% of it comes from." Bestand: `outputs/linkedin-images/episode-16-eighty-twenty.png`
 
 ---
 
@@ -593,11 +593,11 @@ Episode 17 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** witte kaart, horizontale 3-stappen-strook (Call → Build → Live, korte iconen, geen lange tekst, bewust ingekort na feedback 23-10). Snippen via: https://claude.ai/artifact/1uoyHWcJHtWq5JbDDYEcjY
+**Beeld:** witte kaart, horizontale 3-stappen-strook (Call → Build → Live, korte iconen, geen lange tekst). Bestand: `outputs/linkedin-images/episode-17-working-together.png`
 
 ---
 
-**Episode 18 — A spreadsheet hack isn't a system — nog te herzien (donderdag 19 nov)**
+**Episode 18 — A spreadsheet hack isn't a system — klaar om te posten, donderdag 19 nov**
 
 ```
 A lot of businesses run on a spreadsheet duct-taped to a reminder app.
@@ -609,6 +609,8 @@ If one sick day could break your process, it was never really a system.
 Episode 18 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
+
+**Beeld:** wit kaartje, gebarsten spreadsheet-rooster in amber, CAPTION "One sick day away from broken." Bestand: `outputs/linkedin-images/episode-18-spreadsheet-hack.png`
 
 ---
 
@@ -625,11 +627,11 @@ Episode 19 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** witte kaart, balkjesvergelijking "What people expect: Months" vs "What it actually takes: A few days", CAPTION "Days, not months." Snippen via: https://claude.ai/artifact/WSWS6v6tGSJsjJXRUnPdp4
+**Beeld:** witte kaart, balkjesvergelijking "What people expect: Months" vs "What it actually takes: A few days", CAPTION "Days, not months." Bestand: `outputs/linkedin-images/episode-19-days-not-months.png`
 
 ---
 
-**Episode 20 — Before you automate anything, ask this one question — nog te herzien (donderdag 26 nov)**
+**Episode 20 — Before you automate anything, ask this one question — klaar om te posten, donderdag 26 nov**
 
 ```
 Before automating anything, ask yourself one question: would I still do this task by hand if I had unlimited time?
@@ -642,7 +644,7 @@ Episode 20 of "Automation Simplified" ⚡
 #Entrepreneurship #AIAutomation #AutomationSimplified
 ```
 
-**Beeld:** scene-kaart, eigen scene — vier taakvakjes op een rij, één uitgelicht in goud met een vinkje, CAPTION "Would I still do this by hand?", SUBANSWER "That's the only question that matters." Snippen via: https://claude.ai/artifact/5UhmSQNZ3QF1MipcqxAWQn
+**Beeld:** navy kaartje, oplichtend vraagteken in een cirkel, met drie vage stipjes eromheen, CAPTION "Just one question." Bestand: `outputs/linkedin-images/episode-20-one-question.png`
 
 ---
 
