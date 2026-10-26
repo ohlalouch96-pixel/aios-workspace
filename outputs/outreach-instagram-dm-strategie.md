@@ -221,3 +221,29 @@ That's email 1 of the flow. To make it an easy yes: I'll build the full 3-email 
 
 Shall I get started?
 ```
+
+---
+
+## DM 1 — Concreet-variant (test sinds 2026-10-27)
+
+> Aanleiding: 26-10 kreeg Oussama een koude AI-salesmail die hem bijna liet reageren. Wat we
+> overnemen: meteen concreet laten zien dat er al werk is gedaan (echt product + echte prijs van
+> de shop) en korter (3 zinnen i.p.v. ~6). Wat we bewust NIET overnemen: "reply yes" (schreeuwt
+> massaproductie/verkoop) en verzonnen social proof. CTA blijft "Let me know and I'll send it over".
+>
+> Geldt voor niet-Klaviyo-shops. Klaviyo-shops houden de Klaviyo-DM1 (lopende test sinds 13-10,
+> niet twee dingen tegelijk veranderen). Pop-up-observatie vervalt in deze variant.
+> Product + prijs ophalen via /products.json (Shopify) of de homepage. Notitie in sheet:
+> "Variant: DM1-concreet (27-10)" zodat we na ~2 weken het reactiepercentage kunnen vergelijken.
+
+```
+Hey! I put together a sample abandoned cart email for [shop name], using your [product] at [price]. It goes out automatically when someone leaves it in their cart, and shops usually win back 10-15% of those sales that way.
+
+Curious how it looks? Let me know and I'll send it over :)
+```
+
+```
+Hey! Ik heb een voorbeeldmail voor verlaten mandjes gemaakt voor [winkelnaam], met jullie [product] van [prijs]. Hij gaat automatisch de deur uit zodra iemand het in zijn mandje laat liggen, en shops halen zo gemiddeld 10-15% van die verkopen terug.
+
+Benieuwd hoe hij eruitziet? Laat het me weten, dan stuur ik hem op :)
+```
