@@ -72,6 +72,24 @@ SCREENING_REMINDER = (
 )
 
 # ============================================================================
+# Fallback-kanaal zonder e-mail (toegevoegd 2026-10-27)
+# ============================================================================
+# Tot deze wijziging werd een kandidaat zonder vindbaar e-mailadres altijd
+# gedropt met reason "geen e-mailadres gevonden" — ook als er wel een
+# telefoonnummer of een naam+functie (eigenaar/directeur/oprichter/
+# zaakvoerder, voor LinkedIn-contact) op de site stond. Dat liet bruikbare
+# prospects onterecht wegvallen (66 kandidaten in de ronde van 14-10/27-10).
+#
+# Sinds nu: een kandidaat is ook "qualified" als er GEEN e-mailadres is maar
+# er WEL een telefoonnummer (via PHONE_RE/extract_phone) of een
+# persoon+functie (via extract_persoon_signaal, als LinkedIn-signaal)
+# gevonden wordt. Alleen als GEEN van de drie iets opleverde, wordt gedropt
+# met reason "geen e-mailadres, telefoonnummer of persoon gevonden".
+# E-mail blijft de voorkeursroute: zodra een e-mailadres gevonden wordt,
+# verandert er niets aan het bestaande gedrag (build_kanaal_contact/
+# build_notities geven dan nog steeds hetzelfde resultaat als voorheen).
+
+# ============================================================================
 # Fetch (curl-based)
 # ============================================================================
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
@@ -152,6 +170,58 @@ def extract_email(html):
         if HONEYPOT_EMAIL_RE.search(addr):
             continue
         return addr
+    return None
+
+
+# ============================================================================
+# Telefoonnummer-lookup (fallback-kanaal zonder e-mail)
+# ============================================================================
+# Matcht NL vaste nummers (0XX-XXXXXXX, 0XX XXX XX XX), NL mobiel (06-XXXXXXXX)
+# en internationaal (+31 6 XXXXXXXX / 0031...). De regex zelf is ruim (losse
+# cijferreeksen met spaties/punten/streepjes/haakjes ertussen) — de echte
+# validatie zit in _normalize_nl_phone(): na het strippen van alle
+# scheidingstekens moet er exact een 10-cijferig NL-nummer overblijven dat
+# met 0 begint. Dat filtert ruis zoals postcodes (4 cijfers + letters, breekt
+# de match al af) en KvK-nummers (8 cijfers, worden geen 10 na normalisatie).
+PHONE_CHUNK_RE = re.compile(r"(?:\+?\d[\d\s().\-]{7,16}\d)")
+
+
+def _normalize_nl_phone(raw):
+    """Strip scheidingstekens en normaliseer naar '0XXXXXXXXX' (10 cijfers), of None."""
+    digits_plus = re.sub(r"[^\d+]", "", raw)
+    s = digits_plus
+    if s.startswith("+31"):
+        rest = s[3:]
+        if rest.startswith("0"):
+            rest = rest[1:]
+        s = "0" + rest
+    elif s.startswith("0031"):
+        rest = s[4:]
+        if rest.startswith("0"):
+            rest = rest[1:]
+        s = "0" + rest
+    elif s.startswith("+"):
+        return None
+
+    if not s.isdigit() or len(s) != 10 or not s.startswith("0"):
+        return None
+    return s
+
+
+def _format_nl_phone(s):
+    """Leesbare weergave. Benadering (geen area-code-tabel) — 06 krijgt 06-XXXXXXXX,
+    vaste nummers 0XX-XXXXXXX (niet altijd exact op de echte regio-codegrens)."""
+    if s[1] == "6":
+        return f"{s[:2]}-{s[2:]}"
+    return f"{s[:3]}-{s[3:]}"
+
+
+def extract_phone(html):
+    text = re.sub(r"<[^>]+>", " ", html)
+    for m in PHONE_CHUNK_RE.finditer(text):
+        normalized = _normalize_nl_phone(m.group(0))
+        if normalized:
+            return _format_nl_phone(normalized)
     return None
 
 
@@ -273,8 +343,17 @@ def check_one(candidate):
     result["spoedservice_signaal"] = bool(SPOED_RE.search(combined_html))
 
     if not email:
-        result["status"] = "dropped"
-        result["reason"] = "geen e-mailadres gevonden"
+        telefoon = extract_phone(combined_html)
+        if not telefoon and not persoon:
+            result["status"] = "dropped"
+            result["reason"] = "geen e-mailadres, telefoonnummer of persoon gevonden"
+            return result
+        result["status"] = "qualified"
+        result["telefoon"] = telefoon
+        result["detail"] = detail
+        result["plaats"] = plaats
+        result["persoon"] = persoon
+        result["functie"] = functie
         return result
 
     result["status"] = "qualified"
@@ -415,19 +494,48 @@ def build_notities(c):
     if detail_bits:
         parts.append(" ".join(detail_bits))
 
-    if c.get("persoon"):
-        parts.append(f"Kanaal: LinkedIn (persoon: {c['persoon']}, {c.get('functie', '')}).")
-    else:
-        parts.append("Kanaal: E-mail.")
-    parts.append(f"E-mail: {c['email']}.")
+    email = c.get("email")
+    persoon = c.get("persoon")
+    functie = c.get("functie", "")
+    telefoon = c.get("telefoon")
+
+    if email:
+        # Bestaand gedrag (e-mail gevonden) — ongewijzigd.
+        if persoon:
+            parts.append(f"Kanaal: LinkedIn (persoon: {persoon}, {functie}).")
+        else:
+            parts.append("Kanaal: E-mail.")
+        parts.append(f"E-mail: {email}.")
+    elif persoon:
+        # Fallback: LinkedIn-signaal zonder e-mail.
+        parts.append(f"Kanaal: LinkedIn (persoon: {persoon}, {functie}) - geen e-mailadres gevonden.")
+        if telefoon:
+            parts.append(f"Tel: {telefoon}.")
+    elif telefoon:
+        # Fallback: alleen telefoonnummer.
+        parts.append("Kanaal: Telefoon (geen e-mailadres of LinkedIn-persoon gevonden).")
+        parts.append(f"Tel: {telefoon}.")
 
     return " ".join(parts)
 
 
 def build_kanaal_contact(c):
-    if c.get("persoon"):
-        return f"LinkedIn: {c['persoon']} ({c.get('functie', '')}) + E-mail: {c['email']}"
-    return f"E-mail: {c['email']}"
+    email = c.get("email")
+    persoon = c.get("persoon")
+    functie = c.get("functie", "")
+    telefoon = c.get("telefoon")
+
+    if email and persoon:
+        return f"LinkedIn: {persoon} ({functie}) + E-mail: {email}"
+    if email:
+        return f"E-mail: {email}"
+    if persoon and telefoon:
+        return f"LinkedIn: {persoon} ({functie}) + Tel: {telefoon} (geen e-mail gevonden)"
+    if persoon:
+        return f"LinkedIn: {persoon} ({functie}) (geen e-mail gevonden)"
+    if telefoon:
+        return f"Tel: {telefoon} (geen e-mail/LinkedIn gevonden)"
+    return ""
 
 
 def build_sheet_row(c):
