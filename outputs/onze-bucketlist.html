@@ -1,0 +1,525 @@
+<title>Onze Bucketlist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* layout: single centered column, header + add-bar + filter tabs + card list, stacks naturally on phone width */
+  :root{
+    --bg:#f6f0e4;
+    --surface:#fffdf8;
+    --surface-2:#fbf4e6;
+    --fg:#2b2316;
+    --fg-dim:#7a6c54;
+    --accent:#bd7f2e;
+    --accent-ink:#fffaf0;
+    --line:#e3d6bc;
+    --done:#3f7265;
+    --danger:#a8432f;
+    --radius:14px;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141b2b;
+      --surface:#1c2740;
+      --surface-2:#212c47;
+      --fg:#ece3cf;
+      --fg-dim:#9aa3bd;
+      --accent:#e0a94f;
+      --accent-ink:#1c1407;
+      --line:#2b3755;
+      --done:#5fae99;
+      --danger:#e2816d;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141b2b;
+    --surface:#1c2740;
+    --surface-2:#212c47;
+    --fg:#ece3cf;
+    --fg-dim:#9aa3bd;
+    --accent:#e0a94f;
+    --accent-ink:#1c1407;
+    --line:#2b3755;
+    --done:#5fae99;
+    --danger:#e2816d;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Karla',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    padding-left:max(16px, env(safe-area-inset-left,0px));
+    padding-right:max(16px, env(safe-area-inset-right,0px));
+    padding-block:2.5rem 4rem;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+
+  header{margin-bottom:2rem;}
+  .eyebrow{
+    font:700 0.72rem/1 'Karla',sans-serif;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 0.6rem;
+  }
+  h1{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:600;
+    font-size:clamp(2rem,6vw,2.75rem);
+    line-height:1.05;
+    margin:0 0 0.9rem;
+    text-wrap:balance;
+  }
+  .progress{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    color:var(--fg-dim);
+    font-size:0.92rem;
+  }
+  .progress-bar{
+    flex:1;
+    height:6px;
+    border-radius:999px;
+    background:var(--line);
+    overflow:hidden;
+    min-width:0;
+  }
+  .progress-bar > div{
+    height:100%;
+    background:var(--done);
+    border-radius:999px;
+    transition:width 0.3s ease;
+  }
+  .progress-num{font-variant-numeric:tabular-nums;white-space:nowrap;}
+
+  .banner{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:0.85rem 1rem;
+    font-size:0.88rem;
+    color:var(--fg-dim);
+    margin-bottom:1.5rem;
+  }
+  .banner strong{color:var(--fg);}
+
+  form.add{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1rem;
+    margin-bottom:1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.6rem;
+  }
+  .add-row{
+    display:flex;
+    gap:0.6rem;
+    flex-wrap:wrap;
+  }
+  .add-row input[type=text]{flex:2;min-width:160px;}
+  .add-row select{flex:1;min-width:120px;}
+  input[type=text], select{
+    font:inherit;
+    font-size:0.95rem;
+    padding:0.6rem 0.7rem;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--bg);
+    color:var(--fg);
+  }
+  input[type=text]::placeholder{color:var(--fg-dim);}
+  .note-input{width:100%;}
+  button{font:inherit;cursor:pointer;}
+  .btn-add{
+    background:var(--accent);
+    color:var(--accent-ink);
+    border:none;
+    border-radius:10px;
+    padding:0.6rem 1.1rem;
+    font-weight:700;
+    font-size:0.95rem;
+    white-space:nowrap;
+  }
+  .btn-add:disabled{opacity:0.5;cursor:default;}
+  .add-error{color:var(--danger);font-size:0.85rem;}
+
+  .tabs{
+    display:flex;
+    gap:0.4rem;
+    margin-bottom:1.1rem;
+  }
+  .tab{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--fg-dim);
+    border-radius:999px;
+    padding:0.4rem 0.9rem;
+    font-size:0.86rem;
+    font-weight:700;
+  }
+  .tab[aria-pressed="true"]{
+    background:var(--fg);
+    color:var(--bg);
+    border-color:var(--fg);
+  }
+
+  .list{display:flex;flex-direction:column;gap:0.7rem;}
+  .empty{
+    text-align:center;
+    color:var(--fg-dim);
+    font-size:0.95rem;
+    padding:2.5rem 1rem;
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+  }
+
+  .item{
+    display:flex;
+    gap:0.8rem;
+    align-items:flex-start;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:0.9rem 1rem;
+    min-width:0;
+  }
+  .check{
+    flex:none;
+    width:26px;height:26px;
+    border-radius:50%;
+    border:2px solid var(--line);
+    background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:0.1rem;
+    color:var(--bg);
+    font-size:0.8rem;
+    line-height:1;
+  }
+  .item.done .check{background:var(--done);border-color:var(--done);color:var(--accent-ink);}
+  .item-body{flex:1;min-width:0;}
+  .item-title{
+    font-weight:700;
+    font-size:1rem;
+    word-wrap:break-word;
+  }
+  .item.done .item-title{color:var(--fg-dim);text-decoration:line-through;text-decoration-color:var(--fg-dim);}
+  .item-note{
+    color:var(--fg-dim);
+    font-size:0.88rem;
+    margin-top:0.2rem;
+    word-wrap:break-word;
+  }
+  .item-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    align-items:center;
+    margin-top:0.5rem;
+    font-size:0.78rem;
+    color:var(--fg-dim);
+  }
+  .pill{
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:0.15rem 0.6rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    font-weight:700;
+    font-size:0.7rem;
+  }
+  .item-del{
+    flex:none;
+    background:transparent;
+    border:none;
+    color:var(--fg-dim);
+    font-size:1.1rem;
+    line-height:1;
+    padding:0.2rem 0.3rem;
+    border-radius:6px;
+  }
+  .item-del:hover{color:var(--danger);}
+
+  footer{
+    margin-top:2.5rem;
+    text-align:center;
+    color:var(--fg-dim);
+    font-size:0.8rem;
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Karla:wght@400;700&display=swap">
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Gedeeld, alleen voor ons twee</p>
+    <h1>Onze Bucketlist</h1>
+    <div class="progress">
+      <span class="progress-num" id="progressNum">0 / 0 gedaan</span>
+      <div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <form class="add" id="addForm">
+    <div class="add-row">
+      <input type="text" id="titleInput" placeholder="Wat willen jullie nog doen?" maxlength="120" required>
+      <select id="categoryInput">
+        <option value="reizen">Reizen</option>
+        <option value="avontuur">Avontuur</option>
+        <option value="ervaring">Ervaring</option>
+        <option value="overig">Overig</option>
+      </select>
+      <button type="submit" class="btn-add" id="addBtn">Toevoegen</button>
+    </div>
+    <input type="text" class="note-input" id="noteInput" placeholder="Notitie (optioneel)" maxlength="200">
+    <div class="add-error" id="addError" hidden></div>
+  </form>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" data-filter="open" aria-pressed="true">Te doen</button>
+    <button class="tab" data-filter="done" aria-pressed="false">Gedaan</button>
+    <button class="tab" data-filter="all" aria-pressed="false">Alles</button>
+  </div>
+
+  <div class="list" id="list">
+    <div class="empty">Lijst wordt geladen...</div>
+  </div>
+
+  <footer>Alles wat jullie hier toevoegen blijft bewaard, voor jullie samen.</footer>
+</div>
+
+<script>
+(function(){
+  const CATEGORY_LABEL = {reizen:"Reizen", avontuur:"Avontuur", ervaring:"Ervaring", overig:"Overig"};
+  let db = null, userCap = null, myId = null;
+  let items = [];
+  let profileCache = {};
+  let filter = "open";
+  let writeAllowed = true;
+
+  const listEl = document.getElementById('list');
+  const bannerEl = document.getElementById('banner');
+  const addForm = document.getElementById('addForm');
+  const titleInput = document.getElementById('titleInput');
+  const categoryInput = document.getElementById('categoryInput');
+  const noteInput = document.getElementById('noteInput');
+  const addBtn = document.getElementById('addBtn');
+  const addError = document.getElementById('addError');
+  const progressNum = document.getElementById('progressNum');
+  const progressFill = document.getElementById('progressFill');
+
+  function showBanner(html){
+    bannerEl.innerHTML = html;
+    bannerEl.hidden = false;
+  }
+
+  function fmtDate(iso){
+    if(!iso) return '';
+    try{ return new Date(iso).toLocaleDateString('nl-NL', {day:'numeric', month:'short', year:'numeric'}); }
+    catch(e){ return ''; }
+  }
+
+  async function resolveNames(ids){
+    const unique = [...new Set(ids.filter(Boolean))];
+    if(!unique.length || !userCap) return {};
+    try{
+      profileCache = await userCap.profiles(unique);
+    }catch(e){ /* leave cache as-is */ }
+    return profileCache;
+  }
+
+  function render(){
+    const total = items.length;
+    const doneCount = items.filter(i => i.done).length;
+    progressNum.textContent = doneCount + ' / ' + total + ' gedaan';
+    progressFill.style.width = total ? Math.round((doneCount/total)*100) + '%' : '0%';
+
+    let shown = items;
+    if(filter === 'open') shown = items.filter(i => !i.done);
+    if(filter === 'done') shown = items.filter(i => i.done);
+
+    shown = shown.slice().sort((a,b) => {
+      if(a.done !== b.done) return a.done ? 1 : -1;
+      return (a.createdAt||'').localeCompare(b.createdAt||'');
+    });
+
+    if(!shown.length){
+      const msg = total === 0
+        ? 'Nog niks op de lijst. Voeg hierboven jullie eerste avontuur toe.'
+        : (filter === 'done' ? 'Nog niks afgevinkt.' : 'Alles afgevinkt, mooi werk.');
+      listEl.innerHTML = '<div class="empty">' + msg + '</div>';
+      return;
+    }
+
+    listEl.innerHTML = '';
+    shown.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'item' + (item.done ? ' done' : '');
+
+      const check = document.createElement('button');
+      check.className = 'check';
+      check.type = 'button';
+      check.setAttribute('aria-label', item.done ? 'Markeer als niet gedaan' : 'Markeer als gedaan');
+      check.textContent = item.done ? '✓' : '';
+      check.addEventListener('click', () => toggleDone(item));
+
+      const body = document.createElement('div');
+      body.className = 'item-body';
+
+      const title = document.createElement('div');
+      title.className = 'item-title';
+      title.textContent = item.title;
+      body.appendChild(title);
+
+      if(item.note){
+        const note = document.createElement('div');
+        note.className = 'item-note';
+        note.textContent = item.note;
+        body.appendChild(note);
+      }
+
+      const meta = document.createElement('div');
+      meta.className = 'item-meta';
+
+      const pill = document.createElement('span');
+      pill.className = 'pill';
+      pill.textContent = CATEGORY_LABEL[item.category] || 'Overig';
+      meta.appendChild(pill);
+
+      const addedName = item.addedBy && profileCache[item.addedBy] ? (profileCache[item.addedBy].name || '') : '';
+      const who = addedName ? addedName : null;
+      const metaText = document.createElement('span');
+      let line = '';
+      if(who) line += 'toegevoegd door ' + who;
+      if(item.done && item.doneAt){
+        line += (line ? ' · ' : '') + 'gedaan op ' + fmtDate(item.doneAt);
+      } else if(item.createdAt){
+        line += (line ? ' · ' : '') + fmtDate(item.createdAt);
+      }
+      metaText.textContent = line;
+      meta.appendChild(metaText);
+
+      body.appendChild(meta);
+
+      const del = document.createElement('button');
+      del.className = 'item-del';
+      del.type = 'button';
+      del.setAttribute('aria-label', 'Verwijder');
+      del.textContent = '×';
+      del.addEventListener('click', () => deleteItem(item));
+
+      div.appendChild(check);
+      div.appendChild(body);
+      div.appendChild(del);
+      listEl.appendChild(div);
+    });
+  }
+
+  async function toggleDone(item){
+    if(!db) return;
+    const newDone = !item.done;
+    try{
+      await db.doc('items/' + item.id).update({
+        done: newDone,
+        doneAt: newDone ? new Date().toISOString() : null
+      });
+    }catch(e){
+      showBanner('Kon dit item niet bijwerken. <strong>' + (e && e.message ? e.message : 'Probeer het nog eens.') + '</strong>');
+    }
+  }
+
+  async function deleteItem(item){
+    if(!db) return;
+    try{
+      await db.doc('items/' + item.id).delete();
+    }catch(e){
+      showBanner('Kon dit item niet verwijderen.');
+    }
+  }
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filter = btn.dataset.filter;
+      document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      render();
+    });
+  });
+
+  addForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = titleInput.value.trim();
+    if(!title || !db) return;
+    addBtn.disabled = true;
+    addError.hidden = true;
+    try{
+      await db.collection('items').add({
+        title: title,
+        category: categoryInput.value,
+        note: noteInput.value.trim(),
+        done: false,
+        addedBy: myId,
+        createdAt: new Date().toISOString(),
+        doneAt: null
+      });
+      titleInput.value = '';
+      noteInput.value = '';
+      titleInput.focus();
+    }catch(err){
+      addError.textContent = 'Kon niet toevoegen. ' + (err && err.code === 'invalid_argument' ? 'Je hebt mogelijk geen bewerktoegang tot deze lijst.' : 'Probeer het nog eens.');
+      addError.hidden = false;
+    }finally{
+      addBtn.disabled = false;
+    }
+  });
+
+  async function start(){
+    try{
+      db = await claude.use('db');
+    }catch(e){ db = null; }
+    try{
+      userCap = await claude.use('user');
+    }catch(e){ userCap = null; }
+
+    if(!db){
+      showBanner('Deze lijst kan nu niet geladen worden. Open de pagina opnieuw, of vraag om toegang.');
+      listEl.innerHTML = '<div class="empty">Lijst niet beschikbaar.</div>';
+      addBtn.disabled = true;
+      return;
+    }
+
+    if(userCap){
+      try{
+        myId = await userCap.id();
+        const can = await userCap.can('data.write');
+        if(can === false){
+          writeAllowed = false;
+          showBanner('Je kunt deze lijst bekijken, maar niet bewerken. Vraag om bewerktoegang via het deelmenu.');
+          addBtn.disabled = true;
+        }
+      }catch(e){ /* keep defaults */ }
+    }
+
+    db.collection('items').onSnapshot((snap) => {
+      items = snap.docs.map(d => Object.assign({id: d.id}, d.data()));
+      resolveNames(items.map(i => i.addedBy)).then(render);
+      render();
+    }, (err) => {
+      showBanner('Verbinding met de gedeelde lijst verbroken. Herlaad de pagina om opnieuw te verbinden.');
+    });
+  }
+
+  if(window.claude && window.claude.hot){
+    window.claude.hot.ready ? window.claude.hot.ready(start) : start();
+  } else {
+    start();
+  }
+})();
+</script>
