@@ -27,7 +27,7 @@ Prospects die niet geïnteresseerd zijn.
 
 ## Conversie
 - Doel conversieratio: 10-20% van benaderd naar deal
-- Huidig product: Afspraken-workflow voor kappers — €1.500 eenmalig, ~7 dagen werk
+- Huidig doel: de eerste betalende klant. Branche of product maakt niet uit, er moet betaald worden.
 
 ## Maandelijkse Doelen
 - Benaderd: 20+ per maand
