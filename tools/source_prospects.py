@@ -38,7 +38,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -345,41 +345,141 @@ def check_one(candidate):
     return result
 
 
+STALL_TIMEOUT = 180  # sec zonder voortgang -> resterende kandidaten overslaan
+
+
 def verify_candidates(candidates, workers=10):
+    # Sommige sites laten curl ondanks --max-time hangen (gezien 2026-10-30),
+    # waardoor de hele ronde nooit afrondde. Na STALL_TIMEOUT zonder voortgang
+    # worden de resterende kandidaten als "hangt" gedropt.
     results = []
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        futures = {ex.submit(check_one, c): c for c in candidates}
-        for fut in as_completed(futures):
+    ex = ThreadPoolExecutor(max_workers=workers)
+    pending = {ex.submit(check_one, c): c for c in candidates}
+    while pending:
+        done, _ = wait(pending, timeout=STALL_TIMEOUT, return_when=FIRST_COMPLETED)
+        if not done:
+            for c in pending.values():
+                results.append({**c, "status": "dropped", "reason": "onbereikbaar (hangt)"})
+                print(f"[DROP] {c['name']} - onbereikbaar (hangt)")
+            break
+        for fut in done:
+            pending.pop(fut)
             res = fut.result()
             results.append(res)
             tag = "OK" if res["status"] == "qualified" else "DROP"
             extra = res.get("instagram") or res.get("email") or res.get("reason", "")
-            print(f"[{tag}] {res['name']} - {extra}")
+            print(f"[{tag}] {res['name']} - {extra}", flush=True)
+    ex.shutdown(wait=False, cancel_futures=True)
     return results
 
 
 # ============================================================================
 # Dedup tegen bestaande sheet
 # ============================================================================
-def get_existing_names():
+# Sinds 2026-10-30 (op verzoek van Oussama, na dubbelen als Izzy's en Krista's
+# die er op naam-only doorheen glipten) dedupliceren we op naam, domein,
+# Instagram-handle en e-mailadres. Vervangt het besluit van 12-10.
+TWO_LEVEL_SUFFIXES = {"co.uk", "org.uk", "me.uk", "com.au", "net.au", "co.nz", "com.br", "co.za", "com.sg", "co.jp", "com.mx"}
+SHOP_SUBDOMAINS = {"www", "shop", "webshop", "store", "winkel", "en", "nl", "uk", "eu"}
+NAME_STOPWORDS = {"the", "co", "company", "ltd", "limited", "shop", "store", "studio", "official", "bv", "and"}
+
+
+def site_key(url):
+    """Merknaam uit het domein: 'https://webshop.kristas.nl' -> 'kristas',
+    'blok-knives.co.uk' -> 'blokknives'. Zelfde merk op .com en .co.uk telt als dubbel."""
+    host = urlparse(url if "://" in url else "https://" + url).netloc.lower().split(":")[0]
+    parts = [p for p in host.split(".") if p]
+    if len(parts) >= 3 and ".".join(parts[-2:]) in TWO_LEVEL_SUFFIXES:
+        parts = parts[:-2]
+    elif len(parts) >= 2:
+        parts = parts[:-1]
+    while len(parts) > 1 and parts[0] in SHOP_SUBDOMAINS:
+        parts = parts[1:]
+    return re.sub(r"[^a-z0-9]", "", parts[-1]) if parts else ""
+
+
+def name_key(name):
+    words = re.findall(r"[a-z0-9]+", name.lower().replace("&", " and "))
+    return "".join(w for w in words if w not in NAME_STOPWORDS)
+
+
+def handle_key(handle):
+    return (handle or "").strip().lstrip("@").lower()
+
+
+def get_existing_keys():
     result = collect_outreach_sheet()
     if result.get("status") != "success":
         raise RuntimeError(f"Kon sheet niet lezen voor dedup: {result.get('reason')}")
-    rows = result["data"].get("rows", [])
-    return {row.get("bedrijfsnaam", "").strip().lower() for row in rows if row.get("bedrijfsnaam", "").strip()}
+    keys = {"name": {}, "site": {}, "handle": {}, "email": {}}
+    for row in result["data"].get("rows", []):
+        naam = row.get("bedrijfsnaam", "").strip()
+        if not naam:
+            continue
+        if name_key(naam):
+            keys["name"][name_key(naam)] = naam
+        if row.get("url", "").strip() and site_key(row["url"]):
+            keys["site"][site_key(row["url"])] = naam
+        h = handle_key(row.get("instagram handle", ""))
+        if h and " " not in h:
+            keys["handle"][h] = naam
+        for addr in EMAIL_RE.findall(row.get("notities", "")):
+            keys["email"][addr.lower()] = naam
+    return keys
 
 
-def dedup_candidates(candidates):
-    """Filtert kandidaten die op naam al in de sheet staan, VOORDAT er tijd
-    aan verificatie wordt besteed."""
-    existing = get_existing_names()
+def _match(c, keys):
+    """Geeft (soort, bestaande naam) terug als de kandidaat al in de sheet staat."""
+    checks = [("naam", "name", name_key(c["name"])), ("domein", "site", site_key(c["url"]))]
+    if c.get("instagram"):
+        checks.append(("instagram", "handle", handle_key(c["instagram"])))
+    if c.get("email"):
+        checks.append(("e-mail", "email", c["email"].lower()))
+    for label, kind, key in checks:
+        if key and key in keys[kind]:
+            return label, keys[kind][key]
+    return None
+
+
+def _remember(c, keys):
+    keys["name"][name_key(c["name"])] = c["name"]
+    keys["site"][site_key(c["url"])] = c["name"]
+    if c.get("instagram"):
+        keys["handle"][handle_key(c["instagram"])] = c["name"]
+    if c.get("email"):
+        keys["email"][c["email"].lower()] = c["name"]
+
+
+def dedup_candidates(candidates, keys):
+    """Filtert kandidaten die op naam of domein al in de sheet (of eerder in
+    deze lijst) staan, VOORDAT er tijd aan verificatie wordt besteed."""
     new, duplicates = [], []
     for c in candidates:
-        if c["name"].strip().lower() in existing:
-            duplicates.append(c)
+        hit = _match(c, keys)
+        if hit:
+            duplicates.append({**c, "duplicate_of": f"{hit[1]} ({hit[0]})"})
         else:
             new.append(c)
+            _remember(c, keys)
     return new, duplicates
+
+
+def dedup_qualified(qualified, keys):
+    """Tweede pas NA verificatie: vangt dubbelen die pas zichtbaar worden via
+    het gevonden Instagram-account of e-mailadres (andere naam, ander domein)."""
+    kept, duplicates = [], []
+    for c in qualified:
+        hit = None
+        if c.get("instagram") and handle_key(c["instagram"]) in keys["handle"]:
+            hit = ("instagram", keys["handle"][handle_key(c["instagram"])])
+        elif c.get("email") and c["email"].lower() in keys["email"]:
+            hit = ("e-mail", keys["email"][c["email"].lower()])
+        if hit and hit[1] != c["name"]:
+            duplicates.append({**c, "duplicate_of": f"{hit[1]} ({hit[0]})"})
+        else:
+            kept.append(c)
+            _remember(c, keys)
+    return kept, duplicates
 
 
 # ============================================================================
@@ -511,12 +611,19 @@ def main():
         candidates = json.load(f)
     print(f"Kandidaten geladen: {len(candidates)}")
 
-    new_candidates, duplicates = dedup_candidates(candidates)
-    print(f"Na dedup tegen sheet: {len(new_candidates)} nieuw, {len(duplicates)} al aanwezig (overgeslagen)")
+    keys = get_existing_keys()
+    new_candidates, duplicates = dedup_candidates(candidates, keys)
+    print(f"Na dedup op naam/domein: {len(new_candidates)} nieuw, {len(duplicates)} dubbel (overgeslagen)")
 
     results = verify_candidates(new_candidates, workers=args.workers)
     qualified = [r for r in results if r["status"] == "qualified"]
     dropped = [r for r in results if r["status"] == "dropped"]
+
+    qualified, late_dups = dedup_qualified(qualified, keys)
+    duplicates += late_dups
+    print(f"Na dedup op Instagram/e-mail: {len(late_dups)} extra dubbel (overgeslagen)")
+    for d in duplicates:
+        print(f"  [DUBBEL] {d['name']} -> al in sheet als {d['duplicate_of']}")
 
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -549,3 +656,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Hangende worker-threads (zie verify_candidates) zouden het afsluiten blokkeren.
+    sys.stdout.flush()
+    os._exit(0)

@@ -20,6 +20,16 @@ scripts elke ronde — de pipeline zit nu vast in `tools/source_prospects.py`.
 ### 1. Kandidaten vinden (agent, geen tool)
 
 Dit is handmatig/web-research werk van de agent — de tool sourcet niet zelf.
+
+**Snelste route (ronde 2026-10-30, 260 nieuwe in één sessie):** zoek via web
+search naar lijstartikelen en merkengidsen ("small independent UK candle
+brands", "artisanfounder.com/brands/category/...", Stylist, SheerLuxe,
+Country & Town House, Fashion Journal AU, Good On You, Elle.be, Bart's
+Boekje), haal die pagina's met curl op en extraheer de externe links. Dat levert
+per artikel 10-60 merkdomeinen op i.p.v. 3-5 namen per zoekopdracht. Filter
+daarna handmatig ruis (winkelketens, tijdschriften, affiliate-redirects,
+grote merken, conceptstores die andermans merken verkopen).
+
 Zoek webshops binnen de opgegeven niche(s) via web search, en verzamel per
 kandidaat: bedrijfsnaam, URL, korte niche-omschrijving, en (bij internationale
 kandidaten) het land. Sla dit op als JSON-array:
@@ -63,8 +73,15 @@ python tools/source_prospects.py <candidates.json>
 ```
 
 Dit draait automatisch:
-1. **Dedup** tegen de huidige sheet (op exacte bedrijfsnaam, case-insensitive)
-   — voordat er tijd aan verificatie wordt besteed.
+1. **Dedup** tegen de huidige sheet én binnen de kandidatenlijst zelf, in twee
+   passes (sinds 2026-10-30, op verzoek van Oussama: "ik wil geen dubbele
+   webshops"; vervangt het besluit van 12-10 om alleen op naam te checken):
+   - vóór verificatie: genormaliseerde naam (zonder "the/co/shop/&" e.d.) en
+     merknaam uit het domein (`webshop.kristas.nl` = `kristas`, zelfde merk op
+     .com en .co.uk telt als dubbel);
+   - na verificatie: gevonden Instagram-handle en e-mailadres (ook adressen in
+     de Notities-kolom).
+   Elke dubbel wordt geprint met de rij waar hij al in staat.
 2. **Bereikbaarheidscheck** per resterende kandidaat (parallel, via
    `ThreadPoolExecutor`).
 3. **Popup/ESP-detectie** (Klaviyo, Mailchimp, Privy, Justuno, Omnisend,
@@ -120,6 +137,15 @@ gevolgd door `Land: [land].` (alleen als land afwijkt van Nederland/België),
 en bij e-mail-kanaal ook `E-mail: [adres].`
 
 ## Bekende valkuilen / edge cases
+
+- **Hangende sites (2026-10-30)**: één site (Daily Flame) liet curl ondanks
+  `--max-time` hangen, waardoor de hele ronde nooit afrondde en er geen
+  resultaten werden opgeslagen. De tool dropt nu resterende kandidaten na
+  3 minuten zonder voortgang ("onbereikbaar (hangt)") en sluit hard af.
+- **Verkeerde Instagram-handle**: de scraper pakt soms een willekeurige
+  IG-link uit de footer (bv. `skechersidn`, `kompascom`, `AITOTO`) of het
+  account van de oprichter. Handles die niet op de merknaam lijken handmatig
+  schrappen of naar het e-mailspoor zetten.
 
 - **Cloudflare TLS-fingerprinting**: Python's `requests`-library wordt
   structureel geblokkeerd. Het script gebruikt daarom `curl` via subprocess
