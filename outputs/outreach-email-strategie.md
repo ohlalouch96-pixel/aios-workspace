@@ -76,12 +76,16 @@ Oussama
 insightance.ai/webshops
 ```
 
-Engels (sinds 15-10: tijdsafhankelijke aanhef, zinnen in alinea's, "Best," voor de naam):
+Engels (sinds 15-10: zinnen in alinea's, "Best," voor de naam). Aanhef sinds 30-10:
+"Hi [store name] team," in plaats van "Good morning/afternoon/evening", omdat
+internationale shops in een andere tijdzone zitten (ochtend hier = nacht in de VS/AU).
+Geldt voor mail 1 t/m 4. NL/BE-mails houden "Goedemorgen/Goedemiddag/Goedenavond"
+(zelfde tijdzone).
 
 ```
 Subject: Question about [store name]
 
-Good morning / Good afternoon / Good evening,
+Hi [store name] team,
 
 I came across [store name] and [compliment: something specific about their shop, product or Instagram feed]. [WITH pop-up: I noticed you have a signup pop-up, I was wondering if there's already a flow behind it for visitors who don't check out.] [WITHOUT pop-up: I was wondering: do you already send something automatic to visitors who abandon their cart, or is that not set up yet?]
 
