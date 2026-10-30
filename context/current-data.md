@@ -1,7 +1,7 @@
 # Current Data
 
 > Huidige stand van zaken — metrics, status en voortgang.
-> Laatst bijgewerkt: 2026-10-13 (website-sectie)
+> Laatst bijgewerkt: 2026-10-30 (outreach-cijfers)
 
 ---
 
@@ -12,8 +12,9 @@
 | Betalende klanten | 0 | 1+ | Eerste klant is de prioriteit |
 | Afgeronde pilots | 2 | — | MHL en FTUK (gratis, voor portfolio) |
 | Maandelijks AI-inkomen | €0 | Richting ziekenhuissalaris | |
-| Outreach benaderd | 120 van 181 prospects | — | 61 nog te versturen, zie `context/key-metrics.md` voor live cijfers |
-| Reactieratio | 9.2% | — | Van benaderde prospects (11 reacties / 120 benaderd) |
+| Outreach benaderd | 1.169 van 1.537 prospects | — | Webshops 825/1.065, ondernemers 344/472; live cijfers in `context/key-metrics.md` |
+| Reactieratio | Webshops 8,0%, ondernemers 4,1% | — | Webshops 66 reacties (6 warm, 15 afgewezen), ondernemers 14 (allemaal afgewezen) |
+| Warme leads | 6 | — | Alle 6 webshops: Rolla Granola, Born of Necessity, Simpel Zeep, The Victorian Candle Co, Perlei, pinqponq |
 | Netwerkborrels bezocht | Onbekend sinds juni 2026 | — | Laatst genoemd: 3 in twee weken tijd (juni) — niet meer bijgehouden |
 | Maanden actief in AI | ~5 | — | Gestart maart 2026 |
 
@@ -47,12 +48,17 @@
 
 ## Outreach (actief)
 
-- Campagne: e-commerce webshops (Instagram DM), niche sportkleding/sportvoeding/supplementen
-- 181 prospects in de Google Sheet-tracker (bron van waarheid, gesynchroniseerd naar `data/data.db`)
-- DM-flows: `outputs/outreach-instagram-dm-strategie.md`
-- **Gestart: 29 juni 2026**
-- Cadans: 10 DMs per dag (opgeschaald vanaf 28-07-2026, was 4/dag), dag 5 follow-up, dag 11 afsluiting
-- Stand per 20-08-2026: 120 benaderd, 61 nog te versturen, 60 volledige reeks doorlopen, 11 reacties (9.2%)
+Twee tracks, allebei in dezelfde Google Sheet (bron van waarheid), dagelijks gesynchroniseerd naar `data/data.db` via `scripts/collect.py`.
+
+**Webshops** (tabblad uit `OUTREACH_SHEET_TAB`, tabel `outreach`)
+- Instagram DM + e-mail (dual-track), NL/BE in het Nederlands, internationaal in het Engels sinds 14-09
+- Niches inmiddels breed: sieraden, kleding, homeware, kaarsen, koffie, huidverzorging e.d.
+- Dagmaximum: IG ~40 + e-mail ~40 (nieuw + follow-ups); reeks DM1, DM2 (+5 dagen), afsluiter (+11 dagen)
+- Stand 30-10-2026: 1.065 prospects, 825 benaderd, 240 te versturen, 673 reeks afgerond, 66 reacties (8,0%), 6 warm, 15 afgewezen
+
+**Ondernemers / vakbedrijven** (tabblad `ondernemers-tracker`, tabel `ondernemers`)
+- E-mail (3 berichten) + bellen (ma-do); installateurs, loodgieters, hoveniers, aannemers, elektrotechniek e.d.
+- Stand 30-10-2026: 472 prospects, 344 benaderd (324 gemaild, 20 alleen gebeld), 128 te versturen, 110 reeks afgerond, 4 onbereikbaar, 14 reacties (7 per mail, 7 aan de telefoon), allemaal afgewezen
 
 ---
 

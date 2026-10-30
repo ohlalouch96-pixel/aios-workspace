@@ -59,43 +59,131 @@ def table_exists(conn, name):
     return r is not None
 
 
-def section_outreach(conn):
-    """Outreach-tracker — kappers en andere prospects.
+# Reactie-uitkomsten staan als vrije tekst in de kolom "Gereageerd?", bv.
+# "Ja - positief", "Ja, afgewezen (heeft al flow)". Alleen exact "Ja" tellen mist
+# het grootste deel, dus classificeren op trefwoorden. Negatief eerst checken,
+# anders telt "geen interesse" als positief.
+NEGATIEF = ("afgewezen", "geen interesse", "nee", "al een flow", "al flow", "niet nodig", "uitschrijven")
+WARM = ("positief", "voorbeeld", "bekijkt", "doorgestuurd", "interesse")
 
-    Status is een pipeline-stage (waar een prospect NU staat), geen log van welke
-    DM's ooit verstuurd zijn. Een prospect met status 'Afgerond' heeft dus ook een
-    DM1 en DM2 gehad, maar telt niet mee als 'Verstuurd'. Daarom cumulatief tellen:
-    iedereen die niet meer op 'Te versturen' staat, heeft minstens een DM1 gehad.
+
+def classify_reply(gereageerd, status=""):
+    """Geeft None (geen reactie), 'afgewezen', 'warm' of 'onbekend' terug."""
+    g = (gereageerd or "").strip().lower()
+    if status == "Afgewezen":
+        return "afgewezen"
+    if not g.startswith("ja"):
+        return None
+    if any(k in g for k in NEGATIEF):
+        return "afgewezen"
+    if any(k in g for k in WARM):
+        return "warm"
+    return "onbekend"
+
+
+def parse_date(value):
+    """Webshop-tracker gebruikt dd-mm-jjjj, ondernemers-tracker jjjj-mm-dd."""
+    v = (value or "").strip()
+    for fmt in ("%d-%m-%Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(v, fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
+def sent(value, today):
+    """Een datum telt als verstuurd als hij vandaag of eerder is; latere datums zijn gepland."""
+    d = parse_date(value)
+    return d is not None and d <= today
+
+
+def track_stats(rows, today):
+    """rows: dicts met naam, status, d1, d2, gereageerd."""
+    stats = {"totaal": len(rows), "te_versturen": 0, "benaderd": 0, "bericht2": 0,
+             "afgerond": 0, "onbereikbaar": 0, "reacties": 0, "afgewezen": 0,
+             "onbekend": 0, "warm": [], "vandaag": 0}
+    for r in rows:
+        status = r["status"]
+        if status == "Te versturen":
+            stats["te_versturen"] += 1
+            continue
+        stats["benaderd"] += 1
+        if sent(r["d2"], today):
+            stats["bericht2"] += 1
+        if parse_date(r["d1"]) == today:
+            stats["vandaag"] += 1
+        if status == "Afgerond":
+            stats["afgerond"] += 1
+        if status == "Onbereikbaar":
+            stats["onbereikbaar"] += 1
+        uitkomst = classify_reply(r["gereageerd"], status)
+        if uitkomst:
+            stats["reacties"] += 1
+            if uitkomst == "warm":
+                stats["warm"].append(f"{r['naam']} ({r['gereageerd'].strip()})")
+            else:
+                stats[uitkomst] += 1
+    return stats
+
+
+def rate(part, whole):
+    return f"{part / whole * 100:.1f}%" if whole else "—"
+
+
+def section_outreach(conn):
+    """Outreach — webshops (outreach-tabel) en ondernemers/vakbedrijven (ondernemers-tabel).
+
+    Status is een pipeline-stage (waar een prospect NU staat), geen log. Daarom:
+    benaderd = alles behalve 'Te versturen'; bericht 2 = datum ingevuld en niet in
+    de toekomst (de webshop-e-mailreeks heeft eigen statussen als 'Email 2 verstuurd').
+    Bij ondernemers telt een afwijzing aan de telefoon (status 'Afgewezen', geen
+    'Ja' in Gereageerd?) ook als reactie.
     """
-    if not table_exists(conn, "outreach"):
+    today = datetime.now().date()
+    tracks = []
+    if table_exists(conn, "outreach"):
+        rows = query_all(conn, "SELECT naam, status, datum_dm1 AS d1, datum_dm2 AS d2, gereageerd FROM outreach")
+        tracks.append(("Webshops", "DM1/mail 1", "DM2/mail 2", track_stats(rows, today)))
+    if table_exists(conn, "ondernemers"):
+        rows = query_all(conn, "SELECT naam, status, datum_bericht1 AS d1, datum_bericht2 AS d2, gereageerd FROM ondernemers")
+        tracks.append(("Ondernemers (vakbedrijven)", "bericht 1 of gebeld", "bericht 2", track_stats(rows, today)))
+    if not tracks:
         return []
-    lines = ["## Outreach Status"]
-    totals = query_one(conn, """
-        SELECT
-            COUNT(*) as totaal,
-            SUM(CASE WHEN status = 'Te versturen' THEN 1 ELSE 0 END) as te_versturen,
-            SUM(CASE WHEN status != 'Te versturen' THEN 1 ELSE 0 END) as dm1_ontvangen,
-            SUM(CASE WHEN status IN ('DM2 verstuurd', 'Afgerond') THEN 1 ELSE 0 END) as dm2_ontvangen,
-            SUM(CASE WHEN gereageerd = 'Ja' THEN 1 ELSE 0 END) as gereageerd,
-            SUM(CASE WHEN status = 'Afgerond' THEN 1 ELSE 0 END) as afgerond,
-            SUM(CASE WHEN status = 'Afgewezen' THEN 1 ELSE 0 END) as afgewezen
-        FROM outreach
-    """)
-    if totals:
-        dm1_ontvangen = totals['dm1_ontvangen'] or 0
+
+    lines = []
+    for titel, b1, b2, st in tracks:
+        lines.append(f"## Outreach: {titel}")
         lines.append("| Metric | Waarde |")
         lines.append("|--------|--------|")
-        lines.append(f"| Totaal prospects | {totals['totaal'] or 0} |")
-        lines.append(f"| Nog te benaderen | {totals['te_versturen'] or 0} |")
-        lines.append(f"| Benaderd (DM1 ontvangen, cumulatief) | {dm1_ontvangen} |")
-        lines.append(f"| DM2 ontvangen (cumulatief) | {totals['dm2_ontvangen'] or 0} |")
-        lines.append(f"| Volledige DM-reeks doorlopen (Afgerond) | {totals['afgerond'] or 0} |")
-        lines.append(f"| Gereageerd | {totals['gereageerd'] or 0} |")
-        lines.append(f"| Afgewezen | {totals['afgewezen'] or 0} |")
-        if dm1_ontvangen > 0:
-            resp_rate = (totals['gereageerd'] or 0) / dm1_ontvangen * 100
-            lines.append(f"| Reactieratio (van benaderde prospects) | {resp_rate:.1f}% |")
-    lines.append("")
+        lines.append(f"| Totaal prospects | {st['totaal']} |")
+        lines.append(f"| Nog te benaderen | {st['te_versturen']} |")
+        lines.append(f"| Benaderd ({b1}, cumulatief) | {st['benaderd']} |")
+        lines.append(f"| Vandaag voor het eerst benaderd | {st['vandaag']} |")
+        lines.append(f"| {b2[0].upper() + b2[1:]} ontvangen (cumulatief) | {st['bericht2']} |")
+        lines.append(f"| Volledige reeks doorlopen (Afgerond) | {st['afgerond']} |")
+        if st["onbereikbaar"]:
+            lines.append(f"| Onbereikbaar (bounce) | {st['onbereikbaar']} |")
+        lines.append(f"| Reacties (alle uitkomsten) | {st['reacties']} |")
+        lines.append(f"| Reactieratio (van benaderd) | {rate(st['reacties'], st['benaderd'])} |")
+        lines.append(f"| Afgewezen | {st['afgewezen']} |")
+        lines.append(f"| Warme leads | {len(st['warm'])} |")
+        lines.append(f"| Reactie zonder vastgelegde uitkomst | {st['onbekend']} |")
+        lines.append("")
+        if st["warm"]:
+            lines.append("**Warme leads:** " + "; ".join(st["warm"]))
+            lines.append("")
+
+    if len(tracks) > 1:
+        lines.append("## Outreach: Totaal")
+        lines.append("| Metric | Waarde |")
+        lines.append("|--------|--------|")
+        for key, label in [("totaal", "Totaal prospects"), ("benaderd", "Benaderd"),
+                           ("te_versturen", "Nog te benaderen"), ("reacties", "Reacties"),
+                           ("afgewezen", "Afgewezen")]:
+            lines.append(f"| {label} | {sum(t[3][key] for t in tracks)} |")
+        lines.append(f"| Warme leads | {sum(len(t[3]['warm']) for t in tracks)} |")
+        lines.append("")
     return lines
 
 

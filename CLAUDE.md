@@ -103,7 +103,8 @@ These are how you know your AIOS is working:
 │   └── data.db              # SQLite database — alle metrics, dagelijkse snapshots
 ├── scripts/                 # Automation scripts
 │   ├── collect.py           # DataOS orchestrator — dagelijkse data collectie
-│   ├── collect_outreach.py  # Outreach tracker (Google Sheets)
+│   ├── collect_outreach.py  # Outreach tracker webshops (Google Sheets)
+│   ├── collect_ondernemers.py # Outreach tracker ondernemers/vakbedrijven (tabblad ondernemers-tracker)
 │   ├── collect_fx_rates.py  # Wisselkoersen
 │   ├── generate_metrics.py  # Genereert key-metrics.md
 │   ├── db.py                # Database framework
@@ -146,7 +147,8 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 **Verbonden bronnen:**
 | Bron | Collector | Wat het bijhoudt |
 |------|-----------|-----------------|
-| Google Sheets | `collect_outreach.py` | Outreach-prospects, deals, conversie |
+| Google Sheets | `collect_outreach.py` | Webshop-outreach (tabel `outreach`) |
+| Google Sheets | `collect_ondernemers.py` | Ondernemers/vakbedrijven-outreach (tabel `ondernemers`) |
 | Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
 | Fathom | `intel/collect_fathom.py` | Meeting-opnames en transcripts |
 

@@ -8,6 +8,18 @@
 
 ---
 
+## 2026-10-30
+
+### DataOS: ondernemers-track in de metrics en eerlijke reactietelling
+
+- Nieuwe collector `scripts/collect_ondernemers.py` leest het tabblad "ondernemers-tracker" (alleen lezen) naar tabel `ondernemers` en draait automatisch mee met `collect.py`
+- `generate_metrics.py`: aparte secties voor webshops, ondernemers en totaal; reacties tellen nu alle "Ja ..."-varianten mee (was alleen exact "Ja"), met afwijzingen en warme leads bij naam; bericht 2 telt op datum zodat de webshop-e-mailreeks meetelt
+- `/prime` haalt voortaan eerst verse data op en rapporteert beide tracks
+- Stand 30-10: webshops 825/1.065 benaderd, 66 reacties (8,0%), 6 warm; ondernemers 344/472 benaderd, 14 reacties (4,1%), allemaal afgewezen
+- current-data.md en strategy.md bijgewerkt met deze cijfers
+
+---
+
 ## 2026-10-13
 
 ### Insightance Website — Landingspagina voor vakbedrijven
