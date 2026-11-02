@@ -138,20 +138,46 @@ Succes met [bedrijfsnaam]!
 
 ---
 
-## LinkedIn-variant (vastgelegd 2026-09-28)
+## LinkedIn-variant (vastgelegd 2026-09-28, herzien 2026-11-02)
 
-Zelfde structuur en inhoud als de e-mailreeks hierboven, maar korter en directer —
-LinkedIn-berichten worden gescand, niet gelezen zoals een e-mail. Zelfde regels gelden
-onverkort: open vraag i.p.v. aanname, geen klantnaam in bericht 2, alleen echte cijfers.
+**Sinds 02-11**: volledig herschreven op verzoek van Oussama, bewust nog korter en
+directer dan de versie van 28-09 — combinatie van het belscript (directe, "brutale"
+toon, geen bewijs/enthousiasmeren) en de e-mailreeks (het 10-15 uur-cijfer, de
+afsluit-opbouw). Geen compliment/personalisatie meer in bericht 1 (dat gebeurt al in
+het connectieverzoek, dus geen dubbeling). Call-to-action is nu een directe,
+gepersonaliseerde vraag i.p.v. een vrijblijvende "laat het weten".
+
+**Vaste opmaakregels (02-11):**
+- Nooit "[naam]" invullen — altijd kaal "Dag," (Oussama vult de naam zelf in bij het
+  kopiëren, voorkomt dat een vergeten haakje wordt verstuurd). "[bedrijfsnaam]" mag
+  wel als placeholder blijven staan.
+- Aanhef altijd "Dag," — geen "Hey/Hi" (te informeel voor deze doelgroep) en geen
+  "Goedemorgen/middag/avond" (een DM wordt vaak uren/dagen later gelezen, dan klopt
+  het tijdstip niet meer; e-mail wordt doorgaans wel dezelfde dag gelezen, vandaar het
+  verschil met de e-mailreeks).
+- Regelafbreking: enters zonder lege regel ertussen (geen witruimte), zie de
+  code-blokken hieronder exact zo overnemen.
 
 **Kanaalvoorkeur:** LinkedIn heeft de voorkeur boven e-mail, maar ALLEEN als er een
 vindbare persoon is (eigenaar/medewerker) — een bedrijfspagina heeft geen DM-inbox en
 telt niet. Geen persoon vindbaar → gewoon e-mail, geen tijd verspillen aan LinkedIn.
+Sinds 02-11 zoekt Oussama zelf handmatig op trefwoorden (loodgieter, stukadoor,
+aannemer, makelaar, etc.) i.p.v. via de sourcing-tool — geen vaste volgorde nodig.
+
+**Sales Navigator InMail (ontdekt 02-11):** Oussama verstuurt via LinkedIn Sales
+Navigator, niet via een gewone DM. Dat heeft twee gevolgen:
+- **Onderwerpregel verplicht** — gebruik: "Automatisering voor [bedrijfsnaam]".
+- **Tegoedpunten-limiet**: 50 InMails per maand. Eerst deze 50 versturen, daarna
+  overschakelen op gewone connectieverzoeken (geen credit-limiet, wel eerst moeten
+  verbinden voor je een bericht kunt sturen).
+- Geen ondertekening onderaan de berichten (Oussama's keuze 02-11, ook niet bij
+  bericht 1, ondanks dat LinkedIn geen automatische handtekening heeft zoals Gmail).
 
 ### Connectieverzoek (alleen als nog niet verbonden, max ~300 tekens)
 
 > Houd dit bewust licht en niet-salesy — het doel is alleen een geaccepteerde
-> connectie, niet meteen pitchen. Pitchen verlaagt de acceptatiekans.
+> connectie, niet meteen pitchen. Pitchen verlaagt de acceptatiekans. Ongewijzigd
+> sinds 28-09.
 
 ```
 Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag verbinden.
@@ -159,62 +185,29 @@ Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag verbinden.
 
 ### Bericht 1 — opener (na verbinden, of direct als al verbonden)
 
-> **Sinds 2026-09-28**: definitieve versie, gespiegeld aan de e-mailversie (compliment →
-> open vraag met voorbeelden → zelfintro + bewijs, "een klant" i.p.v. klantnaam → CTA met
-> bedrijfsnaam genoemd), alleen ingekort per zin voor het LinkedIn-tempo. Compliment en
-> vraag staan in dezelfde alinea (geen enter ertussen).
-
 ```
-Dag [naam],
-
-Mooi wat jullie bij [bedrijfsnaam] doen, [compliment, iets specifieks]. Ik was benieuwd
-of jullie nog veel handmatig doen, denk aan offertes, klantenservice, facturatie of
-onderhoudsherinneringen.
-
-Ik bouw automatiseringen voor ondernemers, en heb bijvoorbeeld voor een klant een tool
-gebouwd die een offerte in een paar klikken samenstelt, dat scheelde ze 90% van de tijd.
-
-Zou zoiets ook voor [bedrijfsnaam] kunnen werken? Ik kijk het graag vrijblijvend met je door.
+Dag,
+Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes. Denk aan calculaties, offertes, facturatie. Ik heb al meerdere installatiebedrijven geholpen flink wat tijd te besparen. Bekijk hier een voorbeeld van een offertetool: insightance.ai/vakbedrijven.
+Sta je ervoor open om eens te kijken wat de mogelijkheden zijn voor [bedrijfsnaam]?
 ```
 
-Voorbeeld (Root BV Loodgietersbedrijf, opgericht 1980, Amsterdam):
+### ↓ wachten, geen reactie ↓
+
+### Bericht 2 — follow-up, drempel verlagen
 
 ```
-Dag [naam],
-
-Mooi wat jullie bij Root BV Loodgietersbedrijf doen, al sinds 1980 actief in Amsterdam.
-Ik was benieuwd of jullie nog veel handmatig doen, denk aan offertes, klantenservice,
-facturatie of onderhoudsherinneringen.
-
-Ik bouw automatiseringen voor ondernemers, en heb bijvoorbeeld voor een klant een tool
-gebouwd die een offerte in een paar klikken samenstelt, dat scheelde ze 90% van de tijd.
-
-Zou zoiets ook voor Root BV Loodgietersbedrijf kunnen werken? Ik kijk het graag
-vrijblijvend met je door.
+Dag,
+Korte follow-up op mijn vorige bericht. Ondernemers die een paar taken automatiseren winnen gemiddeld 10 tot 15 uur per week terug, vaak valt er meer te automatiseren dan veel mensen denken.
+Zullen we een kort, vrijblijvend moment inplannen? Puur om te kijken of dat ook voor [bedrijfsnaam] iets oplevert. Kost je 10 minuten, verder niets.
 ```
 
-### ↓ 5 dagen wachten, geen reactie ↓
-
-### Bericht 2 — follow-up + sociaal bewijs
-
-```
-Dag [naam],
-
-Nog even opvolgend: ondernemers winnen gemiddeld 10-15 uur per week terug door een
-paar processen te automatiseren. Vaak valt er meer te automatiseren dan je zou denken.
-
-Denk je dat dit ook bij jullie speelt? Laat het gerust weten, dan denk ik met je mee.
-```
-
-### ↓ 5 dagen wachten, geen reactie ↓
+### ↓ wachten, geen reactie ↓
 
 ### Bericht 3 — afsluiting
 
 ```
-Dag [naam],
-
-Laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant
-worden, dan weet je me te vinden. Succes met [bedrijfsnaam]!
+Dag,
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden. Succes met [bedrijfsnaam]!
 ```
 
 ---

@@ -5,19 +5,24 @@
 
 ---
 
-## Belangrijk vooraf: wettelijke check
-
-Controleer per bedrijf de rechtsvorm via kvk.nl voordat je belt. Sinds 1 juli 2026 mag je zonder voorafgaande toestemming alleen nog ongevraagd bellen naar een **rechtspersoon** (BV, NV, stichting, vereniging, coöperatie). Een **eenmanszaak, VOF of maatschap** mag je niet zonder toestemming bellen, ook niet bij een eerdere klantrelatie.
-
----
-
 ## Het opener-script
 
 > "Goedemorgen, u spreekt met Oussama van Insightance."
 >
 > *(wacht op een reactie, bijvoorbeeld "goedemorgen")*
 >
-> "Ik bel even omdat ik met mijn bedrijf installatiebedrijven help met het automatiseren van tijdrovende klusjes. Denk bijvoorbeeld aan offertes of planning. Zo heb ik laatst voor MHL Installatieservice, een allround loodgietersbedrijf, een offertetool gebouwd waarmee ze nu in plaats van 20 minuten 1 minuut spenderen aan het opstellen en versturen van een offerte. Dit is erg goed bevallen. Dus ik vroeg me eigenlijk af: hoe gaat dit bij jullie? Maken jullie offertes nog met de hand, of hebben jullie daar al iets voor geregeld?"
+> "Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals offertes, planning of facturatie — ik heb inmiddels al meerdere bedrijven geholpen flink wat tijd per week terug te winnen, dus ik was benieuwd of automatisering al een rol speelt binnen jullie bedrijf."
+>
+> *(wacht op antwoord)*
+>
+> - Antwoord "nee, nog niet" / "speelt geen rol": "Oké, en hoe pakken jullie offertes of planning dan nu aan?" → leidt naar scenario 2 hieronder (offertes met de hand).
+> - Antwoord "ja, we doen er al iets mee": ga naar scenario 3 hieronder ("We hebben daar al iets voor").
+
+**Sinds 28-10**: afsluitvraag vervangen door een open, diagnostische vraag ("of automatisering al een rol speelt binnen jullie bedrijf") in plaats van een vraag die om instemming vraagt ("denk dat het de moeite waard is"). Verschil: een "nee" op de instemmingsvraag is een harde afwijzing van het gesprek, een "nee, speelt geen rol" op de diagnostische vraag is gewoon informatie, dus lichter voor de prospect om te beantwoorden en makkelijker voor Oussama om op door te vragen. Vervolgvraag bij "nee" toegevoegd die direct doorschakelt naar scenario 2.
+
+**Sinds 26-10**: geen specifiek klantvoorbeeld (bijv. MHL) meer in de opener — dat voelt bij een telefonisch eerste contact als een verkooppraatje en leidt af van de vraag. Een concreet voorbeeld komt pas ter sprake zodra iemand interesse toont (zie scenario 2 hieronder). In plaats daarvan: generiek, meervoudig bewijs ("meerdere bedrijven geholpen") voor wat gewicht zonder pitch-gevoel.
+
+**Sinds 20-10**: 3 zinnen i.p.v. 5 vóór de eerste vraag — te veel monoloog voordat de prospect weer aan het woord komt.
 
 ---
 
@@ -33,7 +38,7 @@ Blijft het nee:
 
 > "Helder, bedankt voor uw tijd. Fijne dag nog."
 
-Noteer deze prospect meteen als "niet bellen" voor de toekomst, verplicht volgens de regels die we net bespraken.
+Noteer deze prospect meteen als "niet bellen" voor de toekomst.
 
 ### 2. "Ja, wij maken offertes ook nog met de hand"
 
@@ -49,7 +54,15 @@ Nieuwsgierig blijven, niet meteen afhaken, er zit vaak nog een gat.
 
 > "Oké, mooi dat jullie daar al iets voor hebben. Hoe bevalt dat, is dat nog steeds wat omslachtig of werkt het eigenlijk prima?"
 
-Blijkt er toch frictie: terug naar de MHL-case en een vrijblijvend gesprek voorstellen. Blijkt het echt goed te werken:
+Blijkt er toch frictie: terug naar de case en een vrijblijvend gesprek voorstellen. Blijkt het echt goed te werken: eerst een bruggetje proberen naar een ander proces, pas daarna evt. toestemming vragen voor later.
+
+> "Mooi dat offertes al geregeld zijn. Even een andere hoek: hoe gaat het met facturatie, of met opvolging na een klus, denk aan onderhoudsherinneringen of klantcontact? Daar zit vaak nog net zoveel tijd in als in offertes."
+
+**Directe variant** (sneller, zonder de tussenstap "hoe bevalt dat?") — handig als iemand meteen kort "ja, al geregeld" zegt zonder verder uit te weiden:
+
+> "Er valt vaak meer te automatiseren dan je zou denken. Denk bijvoorbeeld aan facturatie, klantcontact na een klus, of onderhoudsherinneringen. Zit daar nog handmatig werk in?"
+
+Landt geen van beide bruggetjes:
 
 > "Fijn om te horen. Mocht er ooit iets veranderen, mag ik dan uw gegevens noteren om een andere keer nog eens te bellen?"
 
