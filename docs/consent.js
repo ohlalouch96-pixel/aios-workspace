@@ -8,9 +8,12 @@
   const get = () => { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
   const set = (v) => { try { localStorage.setItem(KEY, v); } catch (e) {} };
 
+  // herkenbare bots (linkcheckers van Meta/LinkedIn, headless browsers) niet meetellen
+  const isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|externalhit|meta-external|lighthouse|pingdom|monitor/i.test(navigator.userAgent);
+
   let gaLoaded = false;
   function loadGA() {
-    if (gaLoaded || !/^G-[A-Z0-9]+$/.test(GA_ID) || GA_ID === 'G-XXXXXXXXXX') return;
+    if (gaLoaded || isBot || !/^G-[A-Z0-9]+$/.test(GA_ID) || GA_ID === 'G-XXXXXXXXXX') return;
     gaLoaded = true;
     const s = document.createElement('script');
     s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;

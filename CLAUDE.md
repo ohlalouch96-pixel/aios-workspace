@@ -128,9 +128,11 @@ These are how you know your AIOS is working:
 ├── todo/                    # Geparkeerde ideeën en taken — nog niet actief opgepakt
 │   └── README.md            # De backlog zelf
 ├── tools/                   # WAT-tools — deterministieke Python-scripts (herbruikbaar, buiten scripts/collect-flow om)
-│   └── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
+│   ├── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
+│   └── ga4_weekly_report.py # Wekelijkse websitecijfers uit Google Analytics 4 (bronnen, UTM, pagina's, acties)
 ├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
-│   └── source_prospects.md  # SOP bij tools/source_prospects.py
+│   ├── source_prospects.md  # SOP bij tools/source_prospects.py
+│   └── ga4_weekly_report.md # SOP wekelijkse GA4-samenvatting (elke maandag)
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -152,6 +154,7 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | Google Sheets | `collect_ondernemers.py` | Ondernemers/vakbedrijven-outreach (tabel `ondernemers`) |
 | Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
 | Fathom | `intel/collect_fathom.py` | Meeting-opnames en transcripts |
+| Google Analytics 4 | `tools/ga4_weekly_report.py` | Websitebezoek insightance.ai: bronnen, UTM-links, pagina's, acties (wekelijks, niet in data.db) |
 
 **IntelOS — Meeting Intelligence:**
 - Database tabel: `meetings` (in `data/data.db`)
