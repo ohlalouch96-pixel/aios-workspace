@@ -2,7 +2,7 @@
 // GA4 laadt pas na "Akkoord". Keuze staat in localStorage "cookie_consent": 'all' of 'functional'.
 // Oude waarde 'accepted' (alleen functioneel gevraagd) telt niet als akkoord, die bezoekers zien de melding opnieuw.
 (function () {
-  const GA_ID = 'G-XXXXXXXXXX'; // Measurement ID uit GA4: Beheer > Gegevensstromen > webstream
+  const GA_ID = 'G-K1EFV00ZCN'; // Measurement ID uit GA4: Beheer > Gegevensstromen > webstream
   const KEY = 'cookie_consent';
 
   const get = () => { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
