@@ -37,9 +37,9 @@ Zelfde opbouw, maar `utm_medium` zegt waar de link staat.
 
 | Waar                         | Link |
 | ---------------------------- | ---- |
-| Instagram-bio                | `insightance.ai/?utm_source=instagram&utm_medium=bio` |
+| Instagram-bio                | `insightance.ai/ig` (korte link, stuurt door naar `insightance.ai/?utm_source=instagram&utm_medium=bio`) |
 | Instagram-story (linksticker) | `insightance.ai/?utm_source=instagram&utm_medium=story&utm_campaign=<onderwerp>` |
-| LinkedIn-profiel (website/uitgelicht) | `insightance.ai/?utm_source=linkedin&utm_medium=profiel` |
+| LinkedIn-profiel (website/uitgelicht) | `insightance.ai/li` (korte link, stuurt door naar `insightance.ai/?utm_source=linkedin&utm_medium=profiel`) |
 | LinkedIn-post                | `insightance.ai/<pagina>?utm_source=linkedin&utm_medium=post&utm_campaign=<onderwerp>` |
 | QR visitekaartje (bij herdruk) | `insightance.ai/?utm_source=visitekaartje&utm_medium=qr` |
 
