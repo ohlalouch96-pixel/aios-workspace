@@ -91,7 +91,8 @@ These are how you know your AIOS is working:
 │       ├── implement.md     # /implement — execute plans
 │       ├── share.md         # /share — package systems for sharing
 │       ├── explore.md       # /explore — idee uitwerken naar concreet concept
-│       └── brainstorm.md    # /brainstorm — workspace scannen voor automatiseer-kansen
+│       ├── brainstorm.md    # /brainstorm — workspace scannen voor automatiseer-kansen
+│       └── analytics.md     # /analytics — websitecijfers insightance.ai uit GA4 samenvatten
 ├── context/                 # Background context about the user and business
 │   ├── business-info.md     # What the business does
 │   ├── personal-info.md     # Who you are, your role
@@ -237,6 +238,12 @@ Example: `/explore een automatisch opvolgbericht na een kapper-demo`
 **Purpose:** Workspace scanner and opportunity finder. Scans your tasks, processes, and current setup to find manual work that could be automated. Ranks opportunities by impact and feasibility, deep-dives the top picks, and points you to `/explore` or `/implement` for the next step. Run without arguments to scan everything, or with a topic to focus on a specific area.
 
 Example: `/brainstorm outreach` of gewoon `/brainstorm`
+
+### /analytics [periode]
+
+**Purpose:** Websitecijfers van insightance.ai uit Google Analytics 4 ophalen en samenvatten in gewone taal: bezoekers (en verschil met vorige week), bronnen, welke outreach- of profiellink het meest opleverde, populairste pagina's, acties en één concrete tip. Draait `tools/ga4_weekly_report.py`. Vaste review elke maandag.
+
+Example: `/analytics` of `/analytics 2026-11-15`
 
 ---
 
