@@ -1,8 +1,8 @@
 # Workflow — Wekelijkse GA4-samenvatting (insightance.ai)
 
-**Status:** Actief sinds 03-11-2026. Eerste echte review: dinsdag 10-11-2026.
+**Status:** Actief sinds 03-11-2026. Eerste review: maandag 09-11-2026 (korter dan een week, prima).
 **Tool:** `tools/ga4_weekly_report.py`
-**Wanneer:** elke maandag (of bij de eerste sessie van de week), over de 7 dagen t/m gisteren.
+**Wanneer:** vaste review elke **maandag**, over de 7 dagen t/m gisteren (ma t/m zo). Oussama start de sessie zelf en vraagt om de stand; bij /prime hoeft het niet naar voren te komen.
 
 ## Doel
 
@@ -19,8 +19,9 @@ acties ze doen, met toe- of afname ten opzichte van de week ervoor.
    - top 3 bronnen, en welke UTM-link (`mail2`, `dm2`, `bio`, ...) het meeste opleverde
    - welke pagina's het meest bekeken werden en waar mensen het langst bleven
    - acties (gesprek ingepland, WhatsApp, rekentool, offertetool-demo) en via welke bron
-   - één concrete suggestie (bv. "DM2 levert bezoekers op maar niemand gebruikt de rekentool")
+   - precies één concrete tip (bv. "DM2 levert bezoekers op maar niemand gebruikt de rekentool")
 3. Geen tabellen dumpen tenzij Oussama erom vraagt.
+4. Daarna eventueel samen aanpassingen doen (links, pagina's, berichten).
 
 ## Om rekening mee te houden
 
