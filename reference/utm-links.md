@@ -31,6 +31,25 @@ Welke landingspagina (webshops of vakbedrijven) staat al in de URL, dus die hoef
 | Voorbeeldmail via Instagram                | `insightance.ai/voorbeeld/<shop>.html?utm_source=instagram&utm_medium=outreach&utm_campaign=voorbeeld` |
 | Voorbeeldmail via e-mail                   | `insightance.ai/voorbeeld/<shop>.html?utm_source=email&utm_medium=outreach&utm_campaign=voorbeeld` |
 
+## Eigen kanalen (geen outreach)
+
+Zelfde opbouw, maar `utm_medium` zegt waar de link staat.
+
+| Waar                         | Link |
+| ---------------------------- | ---- |
+| Instagram-bio                | `insightance.ai/?utm_source=instagram&utm_medium=bio` |
+| Instagram-story (linksticker) | `insightance.ai/?utm_source=instagram&utm_medium=story&utm_campaign=<onderwerp>` |
+| LinkedIn-profiel (website/uitgelicht) | `insightance.ai/?utm_source=linkedin&utm_medium=profiel` |
+| LinkedIn-post                | `insightance.ai/<pagina>?utm_source=linkedin&utm_medium=post&utm_campaign=<onderwerp>` |
+| QR visitekaartje (bij herdruk) | `insightance.ai/?utm_source=visitekaartje&utm_medium=qr` |
+
+`<onderwerp>` kort en in kleine letters, bv. `rekentool`, `mhl-case`, `myth-check`.
+De visitekaartjes van oktober 2026 hebben een QR naar `insightance.ai` zonder label; die scans tellen in GA4 als "direct".
+
+## Acties die GA4 meet (sinds 2026-11-03)
+
+`gesprek_ingepland` (Calendly-afspraak geboekt), `contactformulier_verstuurd`, `whatsapp_klik`, `email_klik` (deze vier als sleutelgebeurtenis), plus `agenda_geopend`, `contact_knop_klik`, `rekentool_gebruikt`, `offertetool_demo_gebruikt`. Code in `docs/consent.js`.
+
 ## Regels
 
 - Kleine letters, geen spaties. Een afwijkende schrijfwijze (`Email` i.p.v. `email`) wordt in GA4 een aparte bron.

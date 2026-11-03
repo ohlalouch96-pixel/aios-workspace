@@ -2150,7 +2150,7 @@
       try {
         const r = await fetch('https://formspree.io/f/xvzygweb', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) });
         if (!r.ok) throw new Error(r.status);
-        form.reset(); say('Bedankt! Je bericht is verstuurd. Insightance reageert binnen 24 uur.', "Thank you! Your message has been sent. Insightance replies within 24 hours.", 'sent');
+        form.reset(); window.insTrack && insTrack('contactformulier_verstuurd'); say('Bedankt! Je bericht is verstuurd. Insightance reageert binnen 24 uur.', "Thank you! Your message has been sent. Insightance replies within 24 hours.", 'sent');
       } catch (err) {
         say('Versturen lukte niet. Mail naar info@insightance.ai of stuur een WhatsApp.', "Sending didn't work. Email info@insightance.ai or send a WhatsApp message.", 'bad');
       } finally { btn.disabled = false; }

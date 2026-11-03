@@ -72,6 +72,31 @@
     setTimeout(() => { b.hidden = false; document.body.classList.add('ck-open'); }, delay);
   }
 
+  // acties meten (alleen als GA na akkoord geladen is). Sleutelgebeurtenissen in GA4 aanvinken:
+  // gesprek_ingepland, contactformulier_verstuurd, whatsapp_klik, email_klik
+  function track(name, params) { if (gaLoaded && window.gtag) gtag('event', name, params || {}); }
+  window.insTrack = track;
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '';
+    if (/calendly\.com/.test(h) || a.classList.contains('bk-open')) track('agenda_geopend');
+    else if (/wa\.me|whatsapp\.com/.test(h)) track('whatsapp_klik');
+    else if (/^mailto:/.test(h)) track('email_klik');
+    else if (/#contact$/.test(h)) track('contact_knop_klik');
+  }, true);
+
+  // Calendly meldt een geboekte afspraak via postMessage
+  window.addEventListener('message', (e) => {
+    if (/calendly\.com$/.test((e.origin || '').replace(/^https?:\/\//, '')) && e.data && e.data.event === 'calendly.event_scheduled') track('gesprek_ingepland');
+  });
+
+  let calcDone = false;
+  const onCalc = (e) => { if (!calcDone && e.target.closest && e.target.closest('#rekentool')) { calcDone = true; track('rekentool_gebruikt'); } };
+  document.addEventListener('input', onCalc, true);
+  document.addEventListener('change', onCalc, true);
+  document.addEventListener('submit', (e) => { if (e.target.id === 'tform') track('offertetool_demo_gebruikt'); }, true);
+
   // keuze later wijzigen, bv. via de link in het privacybeleid
   window.insightanceCookies = () => open(0);
 
