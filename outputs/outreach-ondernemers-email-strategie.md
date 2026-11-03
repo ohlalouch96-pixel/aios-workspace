@@ -113,8 +113,14 @@ laat zien dat ze gemiddeld 10 tot 15 uur per week terugwinnen zodra ze een paar
 handmatige processen automatiseren. Er valt vaak meer te automatiseren dan
 ondernemers zelf denken.
 
+Hier een voorbeeld van zo'n offertetool: insightance.ai/vakbedrijven?utm_source=email&utm_medium=outreach&utm_campaign=mail2
+
 Denk je dat dit ook bij jullie speelt? Laat het gerust weten, dan denk ik met je mee.
 ```
+
+> **Sinds 03-11**: link met UTM-parameters (`utm_source=email&utm_medium=outreach&
+> utm_campaign=mail2`), zie `reference/utm-links.md`. Exact kopiëren, kleine letters,
+> geen leesteken direct na de link.
 
 ---
 
