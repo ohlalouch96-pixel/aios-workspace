@@ -119,6 +119,7 @@ These are how you know your AIOS is working:
 │   ├── automations.html     # Automatiseringen pagina
 │   ├── resultaten.html      # Resultaten / case studies
 │   ├── offerte-maker.html   # Offerte tool
+│   ├── consent.js           # Cookiemelding + Google Analytics 4 (laadt pas na akkoord), op alle pagina's
 │   ├── images/              # Afbeeldingen voor de website
 │   ├── _index.md            # Documentatie-index
 │   └── _templates/          # Sjablonen voor nieuwe docs
@@ -170,6 +171,7 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | `outputs/website/` | Oude previews en drafts. Nooit kopiëren naar `docs/`. Nooit als bron gebruiken voor live aanpassingen. |
 | `outputs/`         | Deliverables, analyses, reports, and work products.                                    |
 | `reference/`       | Helpful docs, templates and patterns to assist in various workflows.                   |
+| `reference/utm-links.md` | Vaste UTM-codes voor alle outreach-links naar insightance.ai (GA4-meting).       |
 | `scripts/`         | Automation scripts — added by modules as you install them.                             |
 | `tools/`           | WAT-tools — deterministische Python-scripts voor herhaalbare taken (bv. prospect-sourcing). |
 | `workflows/`       | WAT-workflows — SOP's die beschrijven wanneer/hoe een `tools/`-script aan te roepen.    |

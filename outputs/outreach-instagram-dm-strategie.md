@@ -87,7 +87,7 @@ Dit is hoe mail 1 eruit zou zien voor [winkelnaam], zie de screenshot hierboven.
 Zulke flows zijn geheel automatisch en winnen gemiddeld 10-15% van verlaten
 mandjes terug, van mensen die al interesse hadden.
 
-Wil je zien wat dit voor [winkelnaam] oplevert? Reken het hier zelf uit: insightance.ai/webshops
+Wil je zien wat dit voor [winkelnaam] oplevert? Reken het hier zelf uit: insightance.ai/webshops?utm_source=instagram&utm_medium=outreach&utm_campaign=dm2
 ```
 
 Engels:
@@ -100,7 +100,7 @@ This is what email 1 would look like for [store name], see the screenshot above.
 Flows like this run fully on autopilot and win back an average of 10-15% of
 abandoned carts, from people who were already interested.
 
-Want to see what this could mean for [store name]? Run the numbers here: insightance.ai/webshops
+Want to see what this could mean for [store name]? Run the numbers here: insightance.ai/webshops?utm_source=instagram&utm_medium=outreach&utm_campaign=dm2
 ```
 
 > Link (insightance.ai/webshops) alleen in DM2, dus pas nadat iemand heeft

@@ -73,7 +73,7 @@ iets uitgewerkt voor [winkelnaam].
 Ben je benieuwd? Laat het me weten, dan stuur ik het door.
 
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail1
 ```
 
 Engels (sinds 15-10: zinnen in alinea's, "Best," voor de naam). Aanhef sinds 30-10:
@@ -96,7 +96,7 @@ Curious to see it? Let me know and I'll send it over.
 
 Best,
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail1
 ```
 
 > Geen losse link in de tekst van mail 1 (koude eerste mail, slecht voor de
@@ -152,7 +152,7 @@ van [€prijs] en 400 bezoekers per maand laten jullie
 waarschijnlijk zo'n €[bedrag] per maand liggen aan
 verlaten mandjes.
 
-Reken het zelf uit voor [winkelnaam]: insightance.ai/webshops
+Reken het zelf uit voor [winkelnaam]: insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail2
 
 Dat is geld van mensen die al interesse hadden.
 
@@ -174,7 +174,7 @@ Some quick math for [store name]: with an average order of
 [£price] and 400 visitors a month, you're likely leaving
 around £[amount] a month behind in abandoned carts.
 
-Run the numbers for [store name] yourself: insightance.ai/webshops
+Run the numbers for [store name] yourself: insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail2
 
 That's money from people who were already interested.
 
@@ -203,7 +203,7 @@ Zou zoiets ook voor [winkelnaam] werken?
 Ik kijk het graag vrijblijvend met je door.
 
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail3
 ```
 
 Engels:
@@ -224,7 +224,7 @@ Could something like that work for [store name]? Happy to walk
 you through it, no strings attached.
 
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail3
 ```
 
 ---
@@ -245,7 +245,7 @@ weet je me te vinden.
 Succes met [winkelnaam].
 
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail4
 ```
 
 Engels:
@@ -264,7 +264,7 @@ reach out anytime.
 All the best with [store name].
 
 Oussama
-insightance.ai/webshops
+insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail4
 ```
 
 ---

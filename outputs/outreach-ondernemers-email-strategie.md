@@ -187,7 +187,7 @@ Dag [naam], ik kwam [bedrijfsnaam] tegen en wilde graag verbinden.
 
 ```
 Dag,
-Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes. Denk aan calculaties, offertes, facturatie. Ik heb al meerdere installatiebedrijven geholpen flink wat tijd te besparen. Bekijk hier een voorbeeld van een offertetool: insightance.ai/vakbedrijven.
+Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes. Denk aan calculaties, offertes, facturatie. Ik heb al meerdere installatiebedrijven geholpen flink wat tijd te besparen. Bekijk hier een voorbeeld van een offertetool: insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li1
 Sta je ervoor open om eens te kijken wat de mogelijkheden zijn voor [bedrijfsnaam]?
 ```
 

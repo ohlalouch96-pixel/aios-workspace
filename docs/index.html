@@ -2238,23 +2238,7 @@
   <p id="ck-t"></p>
   <div class="ck-b"><button type="button" id="ck-no"></button><button type="button" class="ok" id="ck-ok"></button></div>
 </div>
-<script>
-  // cookiemelding: zelfde sleutel als de oude site, dus wie al akkoord gaf ziet hem niet opnieuw
-  (function () {
-    const box = document.getElementById('ck'); if (!box) return;
-    let seen = null; try { seen = localStorage.getItem('cookie_consent'); } catch (e) {}
-    const T = {
-      nl: ['Insightance gebruikt functionele cookies om de website goed te laten werken. <a href="privacybeleid.html">Meer informatie</a>', 'Sluiten', 'Akkoord'],
-      en: ['Insightance uses functional cookies to make the website work properly. <a href="privacybeleid.html">More information</a>', 'Close', 'Accept'],
-    };
-    const fill = () => { const t = T[document.documentElement.lang === 'en' ? 'en' : 'nl']; document.getElementById('ck-t').innerHTML = t[0]; document.getElementById('ck-no').textContent = t[1]; document.getElementById('ck-ok').textContent = t[2]; };
-    new MutationObserver(fill).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
-    const close = (v) => { box.hidden = true; document.body.classList.remove('ck-open'); if (v) { try { localStorage.setItem('cookie_consent', v); } catch (e) {} } };
-    document.getElementById('ck-ok').addEventListener('click', () => close('accepted'));
-    document.getElementById('ck-no').addEventListener('click', () => close(null));
-    if (!seen) { fill(); setTimeout(() => { box.hidden = false; document.body.classList.add('ck-open'); }, 800); }
-  })();
-</script>
+<script src="consent.js"></script>
 
 <script>
   // rekentool: uren per taak x uurwaarde, 50 tot 70% te automatiseren, 46 werkweken per jaar
