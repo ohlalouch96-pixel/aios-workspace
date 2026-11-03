@@ -41,6 +41,9 @@ Zelfde opbouw, maar `utm_medium` zegt waar de link staat.
 | Instagram-story (linksticker) | `insightance.ai/?utm_source=instagram&utm_medium=story&utm_campaign=<onderwerp>` |
 | LinkedIn-profiel (website/uitgelicht) | `insightance.ai/li` (korte link, `docs/li/index.html`, stuurt door naar `insightance.ai/?utm_source=linkedin&utm_medium=profiel`) |
 | LinkedIn-post                | `insightance.ai/<pagina>?utm_source=linkedin&utm_medium=post&utm_campaign=<onderwerp>` |
+| WhatsApp Business-profiel    | `insightance.ai/wa` (korte link, `docs/wa/index.html`, stuurt door naar `insightance.ai/?utm_source=whatsapp&utm_medium=profiel`) |
+| Gmail-handtekening           | zichtbaar `insightance.ai`, link `insightance.ai/?utm_source=email&utm_medium=handtekening` (bron: `outputs/logo-2026/handtekening-kopieren.html`) |
+| LinkedIn-post rekentool (geboost, okt) | `https://insightance.ai/?utm_source=linkedin&utm_medium=post&utm_campaign=rekentool#rekentool` |
 | QR visitekaartje (bij herdruk) | `insightance.ai/?utm_source=visitekaartje&utm_medium=qr` |
 
 `<onderwerp>` kort en in kleine letters, bv. `rekentool`, `mhl-case`, `myth-check`.
@@ -54,6 +57,6 @@ De visitekaartjes van oktober 2026 hebben een QR naar `insightance.ai` zonder la
 
 - Kleine letters, geen spaties. Een afwijkende schrijfwijze (`Email` i.p.v. `email`) wordt in GA4 een aparte bron.
 - Geen punt direct achter de link zetten: sommige apps nemen die mee in de link.
-- De Gmail-handtekening (insightance.ai) blijft zonder UTM.
+- Gmail-handtekening heeft sinds 03-11 een onzichtbaar UTM-label (`utm_medium=handtekening`), los van de link in de mailtekst.
 - Terugzien in GA4: Rapporten > Acquisitie > Verkeersacquisitie, dimensie "Sessiebron/-medium" of "Sessiecampagne".
 - Bezoekers die de cookiemelding weigeren worden niet gemeten. De cijfers zijn dus een ondergrens.
