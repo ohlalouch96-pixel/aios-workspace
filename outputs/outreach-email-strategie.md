@@ -114,6 +114,11 @@ insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail1
 > `reference/cart-email-mockup-template.html`, liefst met het échte logo,
 > een productfoto en de merkkleur van de prospect erin verwerkt. Publiceer
 > als Artifact, snip met Win+Shift+S, stuur als afbeelding.
+>
+> Sinds 22-10 gaat het voorbeeld als link (insightance.ai/voorbeeld/<shop>.html,
+> noindex). Sinds 03-11 met UTM-parameters (zie `reference/utm-links.md`), via e-mail:
+> `insightance.ai/voorbeeld/<shop>.html?utm_source=email&utm_medium=outreach&utm_campaign=voorbeeld`
+> Kleine letters, geen punt of ander leesteken direct achter de link.
 
 ### Reactie ontvangen — Plan de call
 

@@ -106,6 +106,11 @@ Want to see what this could mean for [store name]? Run the numbers here: insight
 > Link (insightance.ai/webshops) alleen in DM2, dus pas nadat iemand heeft
 > gereageerd. Nooit in DM1, de follow-up op dag 5 of de afsluiter:
 > onbeantwoorde berichtverzoeken met een link worden sneller als spam gezien.
+>
+> Sinds 03-11-2026 krijgt elke link naar insightance.ai UTM-parameters (zie
+> `reference/utm-links.md`). Voorbeeldmail als link (sinds 22-10) via Instagram:
+> `insightance.ai/voorbeeld/<shop>.html?utm_source=instagram&utm_medium=outreach&utm_campaign=voorbeeld`
+> Kleine letters, geen punt of ander leesteken direct achter de link.
 
 ---
 
