@@ -1,7 +1,7 @@
 # Workflow — Instagram-content @insightance.ai
 
 **Status:** In bouw sinds 04-11-2026. Plan: `plans/2026-11-04-instagram-contentagent.md`.
-**Tools:** `tools/instagram/` (bron_inlezen, wachtrij, render_carrousel, render_kaart, render_tekst_reel; later demo-opnames, Telegram)
+**Tools:** `tools/instagram/` (bron_inlezen, wachtrij, render_carrousel, render_kaart, render_tekst_reel, opname_demo; later Telegram)
 **Fase 1:** de agent maakt concepten, Oussama keurt elke post goed via Telegram en plaatst zelf. Niets gaat online zonder ✅.
 
 ## Doel
@@ -69,9 +69,18 @@ Send me a DM and I'll show you which tasks AI could take over first in your busi
 | Losse afbeelding | The Fork | af en toe |
 | Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
 
+## Muziekadvies (bij elk concept met video)
+
+Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bij inhoud én kleur. Voorbeelden: navy/uitleg → rustige lo-fi of zachte piano; zwart/rood Myth Check → strakke, licht spannende beat; groen stappenplan → luchtig, positief akoestisch; actualiteit → neutraal, licht nieuwsachtig ritme. Geen specifiek nummer verzinnen; type/sfeer en eventueel een zoekterm voor de Instagram-muziekbibliotheek. Oussama voegt de muziek zelf toe bij het plaatsen.
+
 ## Demo-reels
 
 Fictieve bedrijven en gegevens, maar alleen functionaliteit die echt gebouwd kan worden. Onderwerpen: offerte-maker, dashboard, binnenkomende factuur, WhatsApp-bericht, klantenservice-chat, rekentool, calculaties. Zonder n8n.
+
+- Demo-pagina's: `tools/instagram/demos/<naam>.html` + standaardscript `<naam>.json` (klik/typ/wacht/js-stappen). Klaar: `offerte` (Brightline Installations), `dashboard` (Northfield Coffee Co.).
+- Opnemen: `python tools/instagram/opname_demo.py tools/instagram/demos/offerte.json` → reel.mp4 + cover.jpg. Frame voor frame (scherp), ±45 sec renderen.
+- Nieuwe demo: zelfde opbouw (`_demo.css`/`_demo.js`), velden via `focusVeld`/`typLetter`, animaties via CSS of `animeer()`. Geen native `<select>` (popup komt niet in beeld), gebruik een eigen lijst.
+- Fictieve namen: generiek, geen bestaande merken, e-mail/domein op `.example` of een algemeen voorbeeldadres.
 
 ## Stappen per concept
 

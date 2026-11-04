@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — webshop dashboard (fictief)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+.inhoud { position: absolute; left: 0; right: 0; top: 110px; bottom: 0; padding: 26px 34px; background: #f9fafb; }
+.balk2 { display: flex; align-items: center; margin-bottom: 20px; }
+.tabs { display: flex; background: #eaecf0; border-radius: 16px; padding: 6px; gap: 4px; }
+.tab { padding: 14px 26px; border-radius: 12px; font: 600 25px Inter; color: #475467; transition: background .25s, color .25s, box-shadow .25s; }
+.tab.actief { background: #fff; color: #101828; box-shadow: 0 2px 6px rgba(16,24,40,.12); }
+.live { margin-left: auto; display: flex; align-items: center; gap: 10px; font: 600 23px Inter; color: #067647; }
+.live i { width: 14px; height: 14px; border-radius: 50%; background: #17b26a; box-shadow: 0 0 0 6px rgba(23,178,106,.2); }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.kpi { background: #fff; border: 1px solid #eaecf0; border-radius: 20px; padding: 16px 24px; }
+.kpi small { display: block; font: 600 21px Inter; color: #667085; }
+.kpi b { display: block; font: 800 40px Inter; letter-spacing: -.02em; margin: 6px 0 4px; color: #101828; }
+.kpi span { font: 600 20px Inter; color: #067647; background: #ecfdf3; padding: 4px 10px; border-radius: 20px; }
+.kaart { background: #fff; border: 1px solid #eaecf0; border-radius: 20px; padding: 18px 24px; margin-bottom: 16px; }
+.kaart h3 { font: 700 25px Inter; color: #101828; margin-bottom: 10px; display: flex; justify-content: space-between; }
+.kaart h3 small { font: 500 21px Inter; color: #667085; }
+.prod { display: grid; grid-template-columns: 1fr 210px 80px; align-items: center; gap: 16px; padding: 10px 10px; border-radius: 12px; font: 500 23px Inter; transition: background .2s; }
+.prod.hover { background: #eef4ff; }
+.prod .bar { height: 14px; border-radius: 7px; background: #eaecf0; overflow: hidden; } .prod .bar i { display: block; height: 100%; background: #1F5EFF; border-radius: 7px; }
+.prod .n { text-align: right; font-weight: 700; }
+.prod .waarschuw { color: #b42318; font: 700 18px Inter; margin-left: 8px; }
+#paneel { position: absolute; left: 0; right: 0; bottom: 0; height: 560px; background: #fff; border-radius: 30px 30px 0 0; box-shadow: 0 -20px 50px rgba(16,24,40,.2);
+  padding: 34px 38px; transform: translateY(105%); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#paneel.open { transform: none; }
+#paneel .greep { width: 80px; height: 8px; border-radius: 4px; background: #d0d5dd; margin: -14px auto 22px; }
+#paneel h4 { font: 800 34px Inter; margin-bottom: 18px; }
+.mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.mini div { background: #f9fafb; border-radius: 16px; padding: 16px 18px; font: 600 20px Inter; color: #667085; }
+.mini b { display: block; font: 800 34px Inter; color: #101828; margin-top: 4px; }
+.alert { display: flex; gap: 16px; align-items: center; background: #fef3f2; border: 1px solid #fecdca; border-radius: 16px; padding: 18px 20px; font: 600 23px/1.35 Inter; color: #912018; margin-bottom: 20px; }
+.knop { height: 82px; border-radius: 18px; background: #1F5EFF; color: #fff; font: 700 30px Inter; display: flex; align-items: center; justify-content: center; transition: background .3s; }
+.knop.klaar { background: #12b76a; }
+</style></head>
+<body style="--hookbg:#17345F">
+<div id="hook"></div>
+<div class="app">
+  <div class="appbar"><div class="applogo" style="background:#7c4a2d">N</div><div class="appnaam">Northfield Coffee Co.<small>Store dashboard</small></div><div class="rechts">SR</div></div>
+  <div class="inhoud">
+    <div class="balk2"><div class="tabs"><div class="tab actief" id="p7">7 days</div><div class="tab" id="p30">30 days</div><div class="tab" id="p90">90 days</div></div><div class="live"><i></i>Live</div></div>
+    <div class="kpis">
+      <div class="kpi"><small>Revenue</small><b id="k-omzet">€0</b><span id="d-omzet">+0%</span></div>
+      <div class="kpi"><small>Orders</small><b id="k-orders">0</b><span id="d-orders">+0%</span></div>
+      <div class="kpi"><small>Avg. order value</small><b id="k-aov">€0</b><span id="d-aov">+0%</span></div>
+      <div class="kpi"><small>Returning customers</small><b id="k-terug">0%</b><span id="d-terug">+0 pts</span></div>
+    </div>
+    <div class="kaart"><h3>Revenue <small id="grafiek-label">last 7 days</small></h3>
+      <svg width="850" height="150" viewBox="0 0 850 190" preserveAspectRatio="none"><defs><linearGradient id="vul" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F5EFF" stop-opacity=".25"/><stop offset="1" stop-color="#1F5EFF" stop-opacity="0"/></linearGradient></defs>
+        <g stroke="#f2f4f7" stroke-width="2"><line x1="0" y1="45" x2="850" y2="45"/><line x1="0" y1="95" x2="850" y2="95"/><line x1="0" y1="145" x2="850" y2="145"/></g>
+        <path id="vlak" fill="url(#vul)"/><path id="lijn" fill="none" stroke="#1F5EFF" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+    <div class="kaart"><h3>Top products <small>units sold</small></h3><div id="producten"></div></div>
+  </div>
+  <div id="paneel"><div class="greep"></div><h4 id="pn-naam">-</h4>
+    <div class="mini"><div>Sold<b id="pn-sold">-</b></div><div>In stock<b id="pn-stock">-</b></div><div>Per day<b id="pn-dag">-</b></div></div>
+    <div class="alert"><span style="font-size:34px">⚠️</span><span>Low stock: at this pace you run out in about <b>5 days</b>. Suggested reorder: 120 units.</span></div>
+    <div class="knop" id="bestel">Create reorder</div></div>
+  <div class="toast" id="t-order" style="top:130px;bottom:auto"><div class="ico" style="background:#1F5EFF">🛒</div><div>New order #1048 · €42.50<small>Yirgacheffe 250g × 2 · just now</small></div></div>
+  <div class="toast" id="t-bestel" style="top:130px;bottom:auto"><div class="ico">✓</div><div>Reorder sent to supplier<small>120 units · Ethiopia Yirgacheffe 250g</small></div></div>
+</div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+// fictieve cijfers; gemiddelde orderwaarde = omzet / orders
+const DATA = {
+  7:  { omzet: 4820,  orders: 112,  terug: 38, d: ["+9%", "+6%", "+3%", "+2 pts"], label: "last 7 days",
+        punten: [520, 610, 580, 700, 640, 760, 1010],
+        prod: [["Ethiopia Yirgacheffe 250g", 74], ["House Espresso 1kg", 61], ["Colombia Huila 250g", 45], ["Decaf Swiss Water 250g", 27]] },
+  30: { omzet: 19640, orders: 451,  terug: 41, d: ["+14%", "+11%", "+3%", "+4 pts"], label: "last 30 days",
+        punten: [430, 520, 610, 560, 690, 650, 720, 810, 760, 880, 940, 1020],
+        prod: [["Ethiopia Yirgacheffe 250g", 312], ["House Espresso 1kg", 254], ["Colombia Huila 250g", 198], ["Decaf Swiss Water 250g", 121]] },
+  90: { omzet: 55310, orders: 1268, terug: 44, d: ["+22%", "+19%", "+3%", "+6 pts"], label: "last 90 days",
+        punten: [380, 450, 430, 520, 600, 580, 650, 720, 700, 810, 900, 980],
+        prod: [["Ethiopia Yirgacheffe 250g", 868], ["House Espresso 1kg", 742], ["Colombia Huila 250g", 571], ["Decaf Swiss Water 250g", 349]] },
+};
+let huidig = { omzet: 0, orders: 0, terug: 0, punten: Array(12).fill(0), prod: [0, 0, 0, 0] }, periode = 7;
+const getal = (n) => Math.round(n).toLocaleString("en-GB");
+
+function pad(ptn) {
+  const n = ptn.length, max = 1100;
+  const xy = ptn.map((v, i) => [i * 850 / (n - 1), 180 - (v / max) * 160]);
+  const d = "M" + xy.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L");
+  return [d, d + " L850,190 L0,190 Z"];
+}
+function herbemonster(ptn, n) { // naar n punten, zodat 7 en 12 punten in elkaar overlopen
+  return Array.from({ length: n }, (_, i) => { const t = i * (ptn.length - 1) / (n - 1), a = Math.floor(t), b = Math.min(a + 1, ptn.length - 1); return ptn[a] + (ptn[b] - ptn[a]) * (t - a); });
+}
+
+function toonPeriode(p, duur) {
+  const d = DATA[p], oud = huidig, doel = herbemonster(d.punten, 12);
+  periode = p;
+  ["p7", "p30", "p90"].forEach((id) => document.getElementById(id).classList.toggle("actief", id === "p" + p));
+  document.getElementById("grafiek-label").textContent = d.label;
+  ["omzet", "orders", "aov", "terug"].forEach((k, i) => (document.getElementById("d-" + k).textContent = d.d[i]));
+  const max = d.prod[0][1];
+  document.getElementById("producten").innerHTML = d.prod.map(([naam], i) =>
+    `<div class="prod" id="prod-${i}"><span>${naam}${i === 0 ? '<span class="waarschuw">● low stock</span>' : ""}</span><div class="bar"><i id="bar-${i}" style="width:${(oud.prod[i] / Math.max(1, oud.max || max)) * 100}%"></i></div><span class="n" id="n-${i}">${getal(oud.prod[i])}</span></div>`).join("");
+  document.getElementById("prod-0").addEventListener("click", openPaneel);
+  animeer(duur, (t) => {
+    const om = oud.omzet + (d.omzet - oud.omzet) * t, or = oud.orders + (d.orders - oud.orders) * t;
+    document.getElementById("k-omzet").textContent = euro(om);
+    document.getElementById("k-orders").textContent = getal(or);
+    document.getElementById("k-aov").textContent = or ? "€" + (om / or).toFixed(2) : "€0";
+    document.getElementById("k-terug").textContent = Math.round(oud.terug + (d.terug - oud.terug) * t) + "%";
+    const [l, v] = pad(oud.punten.map((x, i) => x + (doel[i] - x) * t));
+    document.getElementById("lijn").setAttribute("d", l);
+    document.getElementById("vlak").setAttribute("d", v);
+    d.prod.forEach(([, n], i) => {
+      const w = oud.prod[i] + (n - oud.prod[i]) * t;
+      document.getElementById("bar-" + i).style.width = (w / max) * 100 + "%";
+      document.getElementById("n-" + i).textContent = getal(w);
+    });
+  });
+  huidig = { omzet: d.omzet, orders: d.orders, terug: d.terug, punten: doel, prod: d.prod.map((x) => x[1]), max };
+}
+
+function openPaneel() {
+  const d = DATA[periode], n = d.prod[0][1];
+  document.getElementById("pn-naam").textContent = d.prod[0][0];
+  document.getElementById("pn-sold").textContent = getal(n);
+  document.getElementById("pn-stock").textContent = "48";
+  document.getElementById("pn-dag").textContent = (n / periode).toFixed(1);
+  document.getElementById("paneel").classList.add("open");
+}
+document.getElementById("bestel").addEventListener("click", () => {
+  const k = document.getElementById("bestel");
+  k.classList.add("klaar"); k.textContent = "✓ Reorder created";
+  document.getElementById("t-bestel").classList.add("aan");
+});
+["7", "30", "90"].forEach((p) => document.getElementById("p" + p).addEventListener("click", () => toonPeriode(+p, 1000)));
+window.nieuweOrder = () => document.getElementById("t-order").classList.add("aan");
+window.verbergOrder = () => document.getElementById("t-order").classList.remove("aan");
+toonPeriode(7, 1200);
+</script>
+</body></html>

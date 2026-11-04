@@ -1,0 +1,32 @@
+/* Gedeelde opmaak demo-pagina's: 1080x1920, hookbalk bovenin, app in het midden, handle onderin. */
+@font-face { font-family: Inter; font-weight: 100 900; src: url('../fonts/inter-latin.woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; background: var(--hookbg, #17345F); color: #101828; }
+
+#hook { position: absolute; left: 70px; right: 70px; top: 200px; height: 230px; display: flex; align-items: center;
+  font-weight: 800; font-size: 76px; line-height: 1.04; letter-spacing: -.03em; color: var(--hookfg, #fff); opacity: 0; transform: translateY(30px);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+#hook.aan { opacity: 1; transform: none; }
+#hook em { font-style: normal; color: var(--hookacc, #5B8CFF); }
+
+.app { position: absolute; left: 50px; right: 50px; top: 470px; height: 1110px; background: #fff; border-radius: 36px; overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,.35); }
+.appbar { height: 110px; display: flex; align-items: center; gap: 20px; padding: 0 40px; border-bottom: 1px solid #eaecf0; background: #fcfcfd; }
+.applogo { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; color: #fff; font: 800 30px Inter; }
+.appnaam { font: 700 32px Inter; color: #101828; }
+.appnaam small { display: block; font: 500 22px Inter; color: #667085; margin-top: 2px; }
+.appbar .rechts { margin-left: auto; width: 54px; height: 54px; border-radius: 50%; background: #e4e7ec; display: grid; place-items: center; font: 700 22px Inter; color: #475467; }
+
+.voet { position: absolute; left: 0; right: 0; top: 1630px; display: flex; justify-content: center; align-items: center; gap: 14px;
+  font: 600 30px Inter; color: rgba(255,255,255,.8); }
+
+.__ripple { position: fixed; width: 60px; height: 60px; border-radius: 50%; background: rgba(31,94,255,.35); z-index: 9998; pointer-events: none;
+  animation: __rip .6s ease-out forwards; }
+@keyframes __rip { from { transform: scale(.3); opacity: 1; } to { transform: scale(2.4); opacity: 0; } }
+
+.toast { position: absolute; left: 40px; right: 40px; bottom: 40px; padding: 30px 34px; border-radius: 24px; background: #101828; color: #fff;
+  display: flex; align-items: center; gap: 22px; font: 600 28px/1.3 Inter; opacity: 0; transform: translateY(40px);
+  transition: opacity .4s ease, transform .4s cubic-bezier(.2,.8,.2,1); }
+.toast.aan { opacity: 1; transform: none; }
+.toast .ico { width: 54px; height: 54px; border-radius: 50%; background: #12b76a; display: grid; place-items: center; flex: none; font-size: 30px; }
+.toast small { display: block; font: 500 22px Inter; color: #98a2b3; }

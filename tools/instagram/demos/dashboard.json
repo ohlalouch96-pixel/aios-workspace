@@ -1,0 +1,13 @@
+{"demo":"dashboard","kleurenset":"zwart","hook":"Your whole webshop. *One screen.*",
+"stappen":[
+ {"doe":"wacht","s":1.6},
+ {"doe":"klik","sel":"#p30"},
+ {"doe":"wacht","s":1.7},
+ {"doe":"js","code":"nieuweOrder()"},
+ {"doe":"wacht","s":2.0},
+ {"doe":"js","code":"verbergOrder()"},
+ {"doe":"wacht","s":0.4},
+ {"doe":"klik","sel":"#prod-0"},
+ {"doe":"wacht","s":1.8},
+ {"doe":"klik","sel":"#bestel"},
+ {"doe":"wacht","s":2.8}]}

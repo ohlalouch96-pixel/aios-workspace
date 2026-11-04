@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — quote builder (fictief)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+.scherm { position: absolute; left: 0; right: 0; top: 110px; bottom: 0; padding: 28px 40px; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+#s2 { transform: translateX(105%); background: #f2f4f7; }
+.weg #s1 { transform: translateX(-105%); } .weg #s2 { transform: none; }
+h2 { font: 800 38px Inter; letter-spacing: -.02em; margin-bottom: 16px; }
+.veld { margin-bottom: 14px; position: relative; }
+.veld label { display: block; font: 600 21px Inter; color: #475467; margin-bottom: 6px; }
+.inp { height: 70px; border: 2px solid #d0d5dd; border-radius: 16px; padding: 0 24px; display: flex; align-items: center; font: 500 30px Inter; color: #101828; background: #fff; }
+.inp.focus { border-color: #1F5EFF; box-shadow: 0 0 0 6px rgba(31,94,255,.15); }
+.inp .ph { color: #98a2b3; }
+.inp .caret { display: inline-block; width: 3px; height: 34px; background: #1F5EFF; margin-left: 2px; }
+.rij2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+#klus .pijl { margin-left: auto; color: #667085; }
+#klus-lijst { position: absolute; left: 0; right: 0; top: 104px; background: #fff; border: 2px solid #d0d5dd; border-radius: 16px; box-shadow: 0 20px 40px rgba(16,24,40,.15);
+  z-index: 5; opacity: 0; transform: translateY(-10px); transition: opacity .25s, transform .25s; pointer-events: none; }
+#klus-lijst.open { opacity: 1; transform: none; }
+#klus-lijst div { padding: 22px 24px; font: 500 28px Inter; border-bottom: 1px solid #f2f4f7; }
+#klus-lijst div:last-child { border: 0; }
+#klus-lijst div.hover { background: #eef4ff; color: #1F5EFF; }
+.items { border: 1px solid #eaecf0; border-radius: 16px; overflow: hidden; margin-bottom: 14px; min-height: 56px; }
+.items .kop, .items .regel { display: grid; grid-template-columns: 1fr 90px 150px; padding: 13px 22px; font: 500 24px Inter; }
+.items .kop { background: #f9fafb; color: #667085; font-weight: 600; font-size: 21px; }
+.items .regel { border-top: 1px solid #f2f4f7; opacity: 0; transform: translateX(-30px); transition: opacity .35s, transform .35s; }
+.items .regel.aan { opacity: 1; transform: none; }
+.items span:nth-child(2), .items span:nth-child(3) { text-align: right; }
+.totaal { background: #f9fafb; border-radius: 16px; padding: 14px 24px; margin-bottom: 16px; }
+.totaal div { display: flex; justify-content: space-between; font: 500 24px Inter; color: #475467; padding: 2px 0; }
+.totaal .groot { font: 800 36px Inter; color: #101828; border-top: 1px solid #eaecf0; margin-top: 6px; padding-top: 8px; }
+.knop { height: 86px; border-radius: 18px; background: #1F5EFF; color: #fff; font: 700 32px Inter; display: flex; align-items: center; justify-content: center; gap: 14px; transition: background .3s, transform .15s; }
+.knop.druk { transform: scale(.97); }
+.knop.klaar { background: #12b76a; }
+.doc { background: #fff; border-radius: 22px; padding: 38px 40px; box-shadow: 0 12px 30px rgba(16,24,40,.08); }
+.doc .kopdoc { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #101828; padding-bottom: 20px; margin-bottom: 22px; }
+.doc .bedrijf { font: 800 32px Inter; } .doc .bedrijf small { display: block; font: 500 20px Inter; color: #667085; margin-top: 4px; }
+.doc .nr { text-align: right; font: 700 26px Inter; } .doc .nr small { display: block; font: 500 20px Inter; color: #667085; }
+.doc .aan-klant { font: 500 23px/1.4 Inter; color: #475467; margin-bottom: 18px; } .doc .aan-klant b { color: #101828; }
+.doc .r { display: flex; justify-content: space-between; font: 500 24px Inter; padding: 10px 0; border-bottom: 1px solid #f2f4f7; }
+.doc .eind { display: flex; justify-content: space-between; font: 800 34px Inter; padding-top: 18px; }
+.doc .geldig { font: 500 20px Inter; color: #667085; margin-top: 14px; }
+#s2 .knop { margin-top: 26px; }
+.spin { width: 34px; height: 34px; border: 4px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: draai .8s linear infinite; }
+@keyframes draai { to { transform: rotate(360deg); } }
+</style></head>
+<body style="--hookbg:#17345F">
+<div id="hook"></div>
+<div class="app">
+  <div class="appbar"><div class="applogo" style="background:#ea580c">B</div><div class="appnaam">Brightline Installations<small>Quote builder</small></div><div class="rechts">MK</div></div>
+  <div id="schermen">
+    <div class="scherm" id="s1">
+      <h2>New quote</h2>
+      <div class="rij2">
+        <div class="veld"><label>Customer</label><div class="inp" id="naam" data-ph="Full name"><span class="ph">Full name</span></div></div>
+        <div class="veld"><label>Email</label><div class="inp" id="email" data-ph="name@email.com"><span class="ph">name@email.com</span></div></div>
+      </div>
+      <div class="veld"><label>Job</label><div class="inp" id="klus"><span class="ph">Choose a job type</span><span class="pijl">▾</span></div>
+        <div id="klus-lijst"><div data-v="boiler">Boiler replacement</div><div data-v="heatpump">Heat pump install</div><div data-v="bath">Bathroom renovation</div></div></div>
+      <div class="items" id="items"><div class="kop"><span>Item</span><span>Qty</span><span>Price</span></div></div>
+      <div class="veld"><label>Labour (hours × €65)</label><div class="inp" id="uren" data-ph="0"><span class="ph">0</span></div></div>
+      <div class="totaal"><div><span>Subtotal</span><span id="sub">€0</span></div><div><span>VAT 21%</span><span id="btw">€0</span></div><div class="groot"><span>Total</span><span id="tot">€0</span></div></div>
+      <div class="knop" id="maak">Generate quote</div>
+    </div>
+    <div class="scherm" id="s2">
+      <div class="doc">
+        <div class="kopdoc"><div class="bedrijf">Brightline Installations<small>Unit 4, Mill Lane · info@brightline.example</small></div><div class="nr">Q-2026-0142<small>4 Nov 2026</small></div></div>
+        <div class="aan-klant">Prepared for <b id="d-naam">-</b><br><span id="d-email">-</span></div>
+        <div id="d-items"></div>
+        <div class="r"><span>VAT 21%</span><span id="d-btw">-</span></div>
+        <div class="eind"><span>Total</span><span id="d-tot">-</span></div>
+        <div class="geldig">Valid for 30 days · Work can start within 5 working days</div>
+      </div>
+      <div class="knop" id="stuur">Send to customer</div>
+    </div>
+  </div>
+  <div class="toast" id="t1"><div class="ico">✓</div><div>Quote sent to <span id="t-email"></span><small>with PDF attached · just now</small></div></div>
+  <div class="toast" id="t2" style="bottom:170px"><div class="ico" style="background:#1F5EFF">👁</div><div><span id="t-naam"></span> opened your quote<small>2 minutes after sending</small></div></div>
+</div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+const KLUSSEN = {
+  boiler: [["Combi boiler 28 kW", 1, 1450], ["Flue & fittings kit", 1, 185], ["System flush", 1, 120]],
+  heatpump: [["Air-source heat pump 8 kW", 1, 6400], ["Buffer tank 100 L", 1, 640], ["Electrical connection", 1, 380]],
+  bath: [["Walk-in shower set", 1, 980], ["Wall & floor tiling (m²)", 14, 75], ["Vanity unit", 1, 540]],
+};
+let gekozen = null, totaal = { sub: 0, btw: 0, tot: 0 };
+const waarde = {};
+
+// velden: de opname-tool typt via typ(id, tekst)
+window.focusVeld = function (id) {
+  document.querySelectorAll(".inp").forEach((e) => e.classList.remove("focus"));
+  const el = document.getElementById(id);
+  el.classList.add("focus");
+  toon(id);
+};
+function toon(id) {
+  const el = document.getElementById(id), v = waarde[id] || "";
+  el.innerHTML = (v ? v : `<span class="ph">${el.dataset.ph}</span>`) + (el.classList.contains("focus") ? '<span class="caret"></span>' : "");
+}
+window.typLetter = function (id, ch) {
+  waarde[id] = (waarde[id] || "") + ch;
+  toon(id);
+  if (id === "uren") herbereken();
+};
+window.blurAlles = function () {
+  document.querySelectorAll(".inp").forEach((e) => { e.classList.remove("focus"); if (e.dataset.ph) toon(e.id); });
+};
+
+document.getElementById("klus").addEventListener("click", () => { blurAlles(); document.getElementById("klus-lijst").classList.add("open"); });
+document.querySelectorAll("#klus-lijst div").forEach((o) => o.addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  gekozen = o.dataset.v;
+  document.getElementById("klus-lijst").classList.remove("open");
+  document.getElementById("klus").innerHTML = o.textContent + '<span class="pijl">▾</span>';
+  const box = document.getElementById("items");
+  box.querySelectorAll(".regel").forEach((r) => r.remove());
+  KLUSSEN[gekozen].forEach(([naam, n, prijs], i) => {
+    const r = document.createElement("div");
+    r.className = "regel";
+    r.innerHTML = `<span>${naam}</span><span>${n}</span><span>${euro(n * prijs)}</span>`;
+    box.appendChild(r);
+    animeer(140 * (i + 1), () => {}, () => r.classList.add("aan"));
+  });
+  herbereken();
+}));
+
+function herbereken() {
+  const items = gekozen ? KLUSSEN[gekozen].reduce((s, [, n, p]) => s + n * p, 0) : 0;
+  const sub = items + (parseFloat(waarde.uren) || 0) * 65, btw = sub * 0.21, tot = sub + btw;
+  const oud = { ...totaal };
+  totaal = { sub, btw, tot };
+  telOp(document.getElementById("sub"), oud.sub, sub, 700, euro);
+  telOp(document.getElementById("btw"), oud.btw, btw, 700, euro);
+  telOp(document.getElementById("tot"), oud.tot, tot, 900, euro);
+}
+
+document.getElementById("maak").addEventListener("click", () => {
+  blurAlles();
+  document.getElementById("d-naam").textContent = waarde.naam;
+  document.getElementById("d-email").textContent = waarde.email;
+  const uren = parseFloat(waarde.uren) || 0;
+  document.getElementById("d-items").innerHTML = KLUSSEN[gekozen].map(([n, q, p]) => `<div class="r"><span>${n}${q > 1 ? " × " + q : ""}</span><span>${euro(q * p)}</span></div>`).join("")
+    + `<div class="r"><span>Labour, ${uren} hours</span><span>${euro(uren * 65)}</span></div>`;
+  document.getElementById("d-btw").textContent = euro(totaal.btw);
+  document.getElementById("d-tot").textContent = euro(totaal.tot);
+  document.getElementById("schermen").classList.add("weg");
+});
+
+document.getElementById("stuur").addEventListener("click", () => {
+  const k = document.getElementById("stuur");
+  k.innerHTML = '<div class="spin"></div>Sending…';
+  animeer(1100, () => {}, () => {
+    k.classList.add("klaar");
+    k.innerHTML = "✓ Sent";
+    document.getElementById("t-email").textContent = waarde.email;
+    document.getElementById("t1").classList.add("aan");
+    animeer(2200, () => {}, () => {
+      document.getElementById("t-naam").textContent = waarde.naam.split(" ")[0];
+      document.getElementById("t2").classList.add("aan");
+    });
+  });
+});
+</script>
+</body></html>
