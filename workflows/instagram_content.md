@@ -35,11 +35,11 @@ Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanu
 
 ## Afsluiter
 
-Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Tekst (vastgesteld 04-11): geen witregel tussen de twee zinnen, geen belgesprek noemen (Oussama peilt eerst via DM of iemand echt interesse heeft), altijd eindigen op ⚡ als herkenningsteken (zelfde als in de bio).
+Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Tekst (vastgesteld 04-11): geen witregel tussen de twee zinnen, geen "Curious?" en geen belgesprek noemen (Oussama peilt eerst via DM of iemand echt interesse heeft), altijd eindigen op ⚡ als herkenningsteken (zelfde als in de bio).
 
 ```
 I build AI systems for business owners, so you and your team can focus on the work that actually matters.
-I'll show you which tasks AI could take over first in your business. Curious? Send me a DM ⚡
+I'll show you which tasks AI could take over first in your business. Send me a DM ⚡
 ```
 
 ## Actualiteiten: dubbele controle

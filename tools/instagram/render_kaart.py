@@ -37,6 +37,7 @@ import random
 import sys
 from pathlib import Path
 
+from PIL import Image
 from playwright.sync_api import sync_playwright
 
 HIER = Path(__file__).resolve().parent
@@ -266,7 +267,7 @@ SCENE_CSS = {
     "whiteboard": """
 .s{background:linear-gradient(180deg,#e9e6e1,#dcd8d1);--ink:#1b2a59;--acc:#d92d20;--neg:#d92d20;--font:Hand}
 .bord{position:absolute;left:40px;top:110px;width:1000px;height:990px;border-radius:10px;background:linear-gradient(135deg,#fdfdfd,#f1f3f5 60%,#e9ecef);box-shadow:inset 0 0 0 16px #c5c9cf,inset 0 0 0 18px #9aa0a8,0 30px 60px rgba(0,0,0,.18)}
-.bord:after{content:'';position:absolute;left:30px;right:30px;top:30px;bottom:30px;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.25) 36%,transparent 42%);pointer-events:none}
+.bord:after{content:'';position:absolute;left:30px;right:30px;top:30px;bottom:30px;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.12) 36%,transparent 42%);pointer-events:none}
 .papier{position:absolute;left:50px;top:70px;width:900px;height:860px}
 .goot{position:absolute;left:120px;right:120px;top:1100px;height:30px;border-radius:0 0 8px 8px;background:linear-gradient(#b9bec5,#8f959d)}
 .marker{position:absolute;top:1072px;width:170px;height:30px;border-radius:15px 6px 6px 15px}
@@ -328,6 +329,11 @@ def pagina(spec, scene):
             f'<div class="s">{scene_html(scene, spec)}<div class="handle">@insightance.ai</div></div></body></html>')
 
 
+def scherp(pad):
+    """Op dubbele resolutie gerenderd, netjes terug naar 1080x1350: strakkere letters en lijnen."""
+    Image.open(pad).resize((1080, 1350), Image.LANCZOS).save(pad, optimize=True)
+
+
 def render(spec, uit, scene=None):
     scene = scene or spec.get("scene") or random.choice(SCENES)
     uit.parent.mkdir(parents=True, exist_ok=True)
@@ -338,11 +344,12 @@ def render(spec, uit, scene=None):
             browser = p.chromium.launch(channel="chrome")
         except Exception:
             browser = p.chromium.launch()
-        pg = browser.new_page(viewport={"width": 1080, "height": 1350})
+        pg = browser.new_page(viewport={"width": 1080, "height": 1350}, device_scale_factor=2)
         pg.goto(tmp.as_uri())
         pg.evaluate("document.fonts.ready")
         pg.wait_for_timeout(200)
         pg.locator(".s").screenshot(path=str(uit))
+        scherp(uit)
         browser.close()
     tmp.unlink()
     return uit

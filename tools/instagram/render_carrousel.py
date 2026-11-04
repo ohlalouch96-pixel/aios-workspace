@@ -33,6 +33,7 @@ import re
 import sys
 from pathlib import Path
 
+from PIL import Image
 from playwright.sync_api import sync_playwright
 
 HIER = Path(__file__).resolve().parent
@@ -131,6 +132,11 @@ def slide_html(sl, k, serie, i, n):
             f'<div class="bot"><span class="brand">{logo(bar, curve)}@insightance.ai</span>{swipe}</div></div>')
 
 
+def scherp(pad):
+    """Op dubbele resolutie gerenderd, netjes terug naar 1080x1350: strakkere letters en lijnen."""
+    Image.open(pad).resize((1080, 1350), Image.LANCZOS).save(pad, optimize=True)
+
+
 def render(spec, uit):
     k = KLEUREN[spec.get("kleurenset", "navy")]
     uit.mkdir(parents=True, exist_ok=True)
@@ -142,7 +148,7 @@ def render(spec, uit):
             browser = p.chromium.launch(channel="chrome")
         except Exception:
             browser = p.chromium.launch()
-        pg = browser.new_page(viewport={"width": 1080, "height": 1350})
+        pg = browser.new_page(viewport={"width": 1080, "height": 1350}, device_scale_factor=2)
         tmp = uit / "_tmp.html"
         for i, sl in enumerate(spec["slides"], 1):
             tmp.write_text(f'<html><head><meta charset="utf-8"><style>{stijl}</style></head><body>{slide_html(sl, k, spec["serie"], i, n)}</body></html>', encoding="utf-8")
@@ -150,6 +156,7 @@ def render(spec, uit):
             pg.evaluate("document.fonts.ready")
             pad = uit / f"slide-{i}.png"
             pg.locator(".s").screenshot(path=str(pad))
+            scherp(pad)
             paden.append(pad)
         tmp.unlink()
         browser.close()
