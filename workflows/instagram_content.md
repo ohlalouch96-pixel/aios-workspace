@@ -1,7 +1,7 @@
 # Workflow — Instagram-content @insightance.ai
 
 **Status:** In bouw sinds 04-11-2026. Plan: `plans/2026-11-04-instagram-contentagent.md`.
-**Tools:** `tools/instagram/` (bron_inlezen, wachtrij, render_carrousel; later reels, demo-opnames, Telegram)
+**Tools:** `tools/instagram/` (bron_inlezen, wachtrij, render_carrousel, render_kaart, render_tekst_reel; later demo-opnames, Telegram)
 **Fase 1:** de agent maakt concepten, Oussama keurt elke post goed via Telegram en plaatst zelf. Niets gaat online zonder ✅.
 
 ## Doel
@@ -39,7 +39,7 @@ Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aa
 
 ```
 I build AI systems for business owners, so you and your team can focus on the work that actually matters.
-I'll show you which tasks AI could take over first in your business. Send me a DM ⚡
+Send me a DM and I'll show you which tasks AI could take over first in your business ⚡
 ```
 
 ## Actualiteiten: dubbele controle
@@ -57,7 +57,7 @@ I'll show you which tasks AI could take over first in your business. Send me a D
 - **Kleurregel:** navy is de basis, ongeveer 2 op de 3 posts. Af en toe een andere set (zwart, blauw, groen, creme, rood, paars) om te verrassen. Geen kleurenfestijn, geen vast patroon, nooit twee keer dezelfde niet-navy set achter elkaar. `wachtrij.py kleur` kiest volgens deze regel.
 - **Out of the box mag ook.** Niet alles hoeft een carrousel. Af en toe een losse afbeelding in een heel andere stijl, bijvoorbeeld de handgeschreven notitiekaart op een bureau (`tools/instagram/render_kaart.py`: Venn-diagram of splitsing). The Fork gebruikt deze kaart. Wissel ook de ondergrond af: bureau, kantoor, ipad, scherm, krant (zwart-wit), whiteboard, servet (café). En wissel de schets zelf af: venn, fork, lijst (afvinken), voor_na, stappen, grafiek, loop (kringloop). Nooit twee keer achter elkaar dezelfde ondergrond of schets; nieuwe ondergronden mogen erbij (alle kanten op).
 - Nooit de oude zwart-gouden LinkedIn-afbeeldingen. Elke post krijgt nieuw beeld.
-- Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil).
+- Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil). Tekst-reel: `tools/instagram/render_tekst_reel.py` (beats van 2-4 sec, 12-16 sec totaal, levert ook cover.jpg). Rendert ±1 min per reel; vereist imageio-ffmpeg.
 
 ## Contentmix (±5 posts per week, geen vaste dagen of tijden)
 
