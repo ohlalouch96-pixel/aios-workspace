@@ -1,7 +1,7 @@
 """
 Instagram — "out of the box"-beeld: schets op een wisselende ondergrond
 
-Losse afbeelding van 1080x1350 met een schets (Venn-diagram of splitsing) en
+Losse afbeelding van 1080x1350 met een schets (zie de soorten hieronder) en
 een titel, op steeds een andere ondergrond, zodat deze posts niet op elkaar
 gaan lijken:
     bureau   notitiekaart op een houten bureau, koffie en groene stift
@@ -9,6 +9,8 @@ gaan lijken:
     ipad     iPad met notitie-app en pencil op een donker bureau
     scherm   whiteboard-app op een monitor
     krant    zwart-wit krantenpagina met de schets als illustratie
+    whiteboard  whiteboard op kantoor met markers en magneten
+    servet   servetje in een café met koffie en een balpen
 Bedoeld als afwisseling naast de strakke carrousels, en voor The Fork.
 
 Spec:
@@ -16,6 +18,11 @@ Spec:
      "links": "Tasks you repeat every week", "rechts": "Tasks that follow clear rules", "midden": "start here"}
     {"type": "fork", "scene": "ipad", "titel": "...",
      "keuze_a": "...", "uitkomst_a": ["...", "..."], "keuze_b": "...", "uitkomst_b": "..."}
+    {"type": "lijst", "items": [{"tekst": "...", "ok": true}, {"tekst": "...", "ok": false}]}
+    {"type": "voor_na", "links_kop": "Before", "links": ["..."], "rechts_kop": "After", "rechts": ["..."]}
+    {"type": "stappen", "stappen": ["...", "...", "..."]}             (3 of 4)
+    {"type": "grafiek", "lijn": "stijgend", "notitie": "...", "x": "...", "y": "..."}
+    {"type": "loop", "stappen": ["...", "...", "..."], "midden": "optioneel"}
 Zonder "scene" wordt er willekeurig een gekozen.
 
 Gebruik (CLI):
@@ -35,7 +42,7 @@ from playwright.sync_api import sync_playwright
 HIER = Path(__file__).resolve().parent
 FONTS = (HIER / "fonts").as_uri()
 TMP = HIER.parent.parent / ".tmp" / "instagram"
-SCENES = ["bureau", "kantoor", "ipad", "scherm", "krant"]
+SCENES = ["bureau", "kantoor", "ipad", "scherm", "krant", "whiteboard", "servet"]
 
 
 def cirkel(cx, cy, r, seed):
@@ -80,9 +87,116 @@ def fork(spec):
             f'<div class="hw neg" style="left:580px;top:495px;width:300px;{links}">{html.escape(spec["uitkomst_b"])}</div>')
 
 
+def lijn(punten, seed, wiebel=3):
+    """Handgetekende lijn door punten: kleine afwijkingen per tussenpunt."""
+    rnd = random.Random(seed)
+    d = []
+    for (x1, y1), (x2, y2) in zip(punten, punten[1:]):
+        stappen = max(2, int(math.hypot(x2 - x1, y2 - y1) / 40))
+        for i in range(stappen + 1):
+            t = i / stappen
+            x, y = x1 + (x2 - x1) * t, y1 + (y2 - y1) * t
+            if 0 < i < stappen:
+                x, y = x + rnd.uniform(-wiebel, wiebel), y + rnd.uniform(-wiebel, wiebel)
+            d.append(f"{x:.1f},{y:.1f}")
+    return "M" + " L".join(d)
+
+
+def pijlpunt(x, y, hoek, maat=20):
+    a1, a2 = hoek + 2.6, hoek - 2.6
+    return f'<path d="M{x + maat * math.cos(a1):.1f} {y + maat * math.sin(a1):.1f} L{x} {y} L{x + maat * math.cos(a2):.1f} {y + maat * math.sin(a2):.1f}" {INK}/>'
+
+
+def svg(inhoud):
+    return f'<svg width="900" height="710" viewBox="0 0 900 710" style="position:absolute;left:0;top:0">{inhoud}</svg>'
+
+
+def lijst(spec):
+    """Afvinklijst: vakjes met vinkje (ok) of kruisje."""
+    items = spec["items"][:5]
+    stap = 600 / max(len(items), 1)
+    teken, tekst = "", ""
+    for i, it in enumerate(items):
+        y = 40 + i * stap
+        teken += f'<path d="{lijn([(120, y), (176, y), (176, y + 56), (120, y + 56), (120, y)], i)}" {INK}/>'
+        if it.get("ok", True):
+            teken += f'<path d="M128 {y + 26} L146 {y + 48} L196 {y - 12}" style="stroke:var(--acc)" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>'
+        else:
+            teken += f'<path d="M128 {y + 6} L170 {y + 50} M170 {y + 6} L128 {y + 50}" style="stroke:var(--neg)" fill="none" stroke-width="7" stroke-linecap="round"/>'
+        tekst += f'<div class="hw{"" if it.get("ok", True) else " neg"}" style="left:220px;top:{y - 2}px;width:620px;text-align:left">{html.escape(it["tekst"])}</div>'
+    return svg(teken) + tekst
+
+
+def voor_na(spec):
+    """Twee kolommen: links (doorgestreept) tegenover rechts."""
+    teken = f'<path d="{lijn([(450, 20), (450, 660)], 7, 4)}" {INK}/>'
+    teken += (f'<path d="{lijn([(60, 110), (400, 110)], 8)}" style="stroke:var(--neg)" fill="none" stroke-width="4"/>'
+              f'<path d="{lijn([(500, 110), (840, 110)], 9)}" style="stroke:var(--acc)" fill="none" stroke-width="4"/>')
+    tekst = (f'<div class="hw neg" style="left:40px;top:30px;width:380px;font-size:1.2em">{html.escape(spec["links_kop"])}</div>'
+             f'<div class="hw acc" style="left:480px;top:30px;width:380px;font-size:1.2em">{html.escape(spec["rechts_kop"])}</div>')
+    for i, t in enumerate(spec["links"][:5]):
+        y = 150 + i * 122
+        tekst += f'<div class="hw" style="left:50px;top:{y}px;width:360px">{html.escape(t)}</div>'
+        teken += f'<path d="{lijn([(80, y + 32), (380, y + 26)], 20 + i, 2)}" style="stroke:var(--neg)" fill="none" stroke-width="4" opacity=".8"/>'
+    for i, t in enumerate(spec["rechts"][:5]):
+        tekst += f'<div class="hw" style="left:490px;top:{150 + i * 122}px;width:360px">{html.escape(t)}</div>'
+    return svg(teken) + tekst
+
+
+def stappen(spec):
+    """Genummerde stappen als kaders met pijlen ertussen (zigzag)."""
+    st = spec["stappen"][:4]
+    pos = [(70, 30), (480, 190), (70, 350), (480, 510)][:len(st)]
+    teken, tekst = "", ""
+    for i, (x, y) in enumerate(pos):
+        teken += f'<path d="{lijn([(x, y), (x + 350, y), (x + 350, y + 140), (x, y + 140), (x, y)], 30 + i)}" {INK}/>'
+        tekst += (f'<div class="hw acc" style="left:{x + 14}px;top:{y + 8}px;width:60px;font-size:1.3em;text-align:left">{i + 1}</div>'
+                  f'<div class="hw" style="left:{x + 60}px;top:{y + 22}px;width:280px;text-align:left">{html.escape(st[i])}</div>')
+        if i + 1 < len(pos):
+            x2, y2 = pos[i + 1]
+            a, b = ((x + 350, y + 100), (x2 + 40, y2)) if x < x2 else ((x, y + 100), (x2 + 310, y2))
+            teken += f'<path d="{lijn([a, b], 40 + i, 2)}" {INK}/>' + pijlpunt(b[0], b[1], math.atan2(b[1] - a[1], b[0] - a[0]))
+    return svg(teken) + tekst
+
+
+def grafiek(spec):
+    """Handgetekende grafiek: assen, een stijgende of dalende lijn en een notitie bij de knik."""
+    teken = f'<path d="{lijn([(110, 40), (110, 600), (840, 600)], 50)}" {INK}/>' + pijlpunt(110, 40, -math.pi / 2) + pijlpunt(840, 600, 0)
+    stijgend = spec.get("lijn", "stijgend") == "stijgend"
+    pts = [(140, 560 if stijgend else 120), (330, 520 if stijgend else 170), (470, 470 if stijgend else 260),
+           (580, 330 if stijgend else 430), (800, 100 if stijgend else 560)]
+    teken += (f'<path d="M{pts[0][0]} {pts[0][1]} ' + " ".join(f"T{x} {y}" for x, y in pts[1:])
+              + '" style="stroke:var(--acc)" fill="none" stroke-width="7" stroke-linecap="round"/>')
+    kx, ky = pts[2]
+    teken += (f'<circle cx="{kx}" cy="{ky}" r="12" style="fill:var(--neg)"/>'
+              f'<path d="{lijn([(kx - 60, ky - 160), (kx - 10, ky - 24)], 52, 2)}" {INK}/>' + pijlpunt(kx - 10, ky - 24, math.atan2(136, 50)))
+    return (svg(teken) + f'<div class="hw" style="left:{kx - 300}px;top:{ky - 270}px;width:340px">{html.escape(spec["notitie"])}</div>'
+            f'<div class="hw" style="left:540px;top:615px;width:320px;text-align:right;font-size:.85em">{html.escape(spec["x"])}</div>'
+            f'<div class="hw" style="left:130px;top:20px;width:260px;text-align:left;font-size:.85em">{html.escape(spec["y"])}</div>')
+
+
+def loop(spec):
+    """Kringloop: 3 of 4 punten rond een cirkel met pijlen ertussen."""
+    st = spec["stappen"][:4]
+    n, cx, cy, r = len(st), 450, 345, 245
+    teken, tekst = "", ""
+    for i in range(n):
+        a1 = -math.pi / 2 + 2 * math.pi * i / n + 0.62
+        a2 = -math.pi / 2 + 2 * math.pi * (i + 1) / n - 0.62
+        boog = [(cx + r * math.cos(a1 + (a2 - a1) * t / 12), cy + r * math.sin(a1 + (a2 - a1) * t / 12)) for t in range(13)]
+        teken += f'<path d="{lijn(boog, 60 + i, 2)}" {INK}/>' + pijlpunt(boog[-1][0], boog[-1][1], a2 + math.pi / 2)
+        a = -math.pi / 2 + 2 * math.pi * i / n
+        x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+        tekst += f'<div class="hw{" acc" if i == 0 else ""}" style="left:{x - 150:.0f}px;top:{y - 40:.0f}px;width:300px">{html.escape(st[i])}</div>'
+    if spec.get("midden"):
+        tekst += f'<div class="hw acc" style="left:300px;top:{cy - 30}px;width:300px;font-size:1.2em">{html.escape(spec["midden"])}</div>'
+    return svg(teken) + tekst
+
+
 def vlak(spec):
     """Het tekenvlak (900x860): titel bovenaan, schets eronder."""
-    inhoud = venn(spec) if spec["type"] == "venn" else fork(spec)
+    makers = {"venn": venn, "fork": fork, "lijst": lijst, "voor_na": voor_na, "stappen": stappen, "grafiek": grafiek, "loop": loop}
+    inhoud = makers[spec["type"]](spec)
     return f'<div class="vlak"><div class="titel">{html.escape(spec["titel"])}</div><div class="schets">{inhoud}</div></div>'
 
 
@@ -149,6 +263,25 @@ SCENE_CSS = {
 .krantvlak .hw{font-style:italic;font-weight:600}
 .onder{margin-top:24px;border-top:1px solid #111;padding-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .handle{display:none}""",
+    "whiteboard": """
+.s{background:linear-gradient(180deg,#e9e6e1,#dcd8d1);--ink:#1b2a59;--acc:#d92d20;--neg:#d92d20;--font:Hand}
+.bord{position:absolute;left:40px;top:110px;width:1000px;height:990px;border-radius:10px;background:linear-gradient(135deg,#fdfdfd,#f1f3f5 60%,#e9ecef);box-shadow:inset 0 0 0 16px #c5c9cf,inset 0 0 0 18px #9aa0a8,0 30px 60px rgba(0,0,0,.18)}
+.bord:after{content:'';position:absolute;left:30px;right:30px;top:30px;bottom:30px;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.25) 36%,transparent 42%);pointer-events:none}
+.papier{position:absolute;left:50px;top:70px;width:900px;height:860px}
+.goot{position:absolute;left:120px;right:120px;top:1100px;height:30px;border-radius:0 0 8px 8px;background:linear-gradient(#b9bec5,#8f959d)}
+.marker{position:absolute;top:1072px;width:170px;height:30px;border-radius:15px 6px 6px 15px}
+.marker.m1{left:300px;background:linear-gradient(#24356b,#1b2a59)} .marker.m2{left:520px;background:linear-gradient(#e84a3f,#b42318);transform:rotate(-3deg)}
+.magneet{position:absolute;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd84d,#e0a800);box-shadow:3px 6px 8px rgba(0,0,0,.25)}
+.handle{color:rgba(27,42,89,.55)}""",
+    "servet": """
+.s{background:radial-gradient(ellipse at 60% 40%,#5a3b28,#2e1d13 80%);--ink:#16307a;--acc:#16307a;--neg:#16307a;--font:Hand}
+.kopje{position:absolute;right:-90px;top:-70px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#c79a6b 0 20%,#7a4a2a 34% 48%,#f4efe6 49% 62%,#e5ddd0 63% 66%,transparent 67%);box-shadow:-20px 30px 40px rgba(0,0,0,.4)}
+.papier{position:absolute;left:80px;top:230px;width:920px;height:920px;transform:rotate(3deg);padding:30px 10px;
+  background:radial-gradient(circle at 30% 70%,rgba(0,0,0,.05),transparent 40%),linear-gradient(90deg,transparent 49.6%,rgba(0,0,0,.06) 50%,transparent 50.4%),linear-gradient(transparent 49.6%,rgba(0,0,0,.06) 50%,transparent 50.4%),#fbfaf7;
+  box-shadow:inset 0 0 0 26px #fbfaf7,inset 0 0 0 30px #ece8e1,0 24px 50px rgba(0,0,0,.45)}
+.pen{position:absolute;left:60px;bottom:90px;width:20px;height:400px;transform:rotate(-58deg);border-radius:10px;background:linear-gradient(90deg,#d8dbe0,#fff 45%,#c2c6cc);box-shadow:8px 14px 20px rgba(0,0,0,.4)}
+.pen:before{content:'';position:absolute;left:3px;right:3px;top:-28px;height:32px;clip-path:polygon(50% 0,100% 100%,0 100%);background:#9aa0a8}
+.handle{color:rgba(255,240,220,.55)}""",
 }
 
 BASIS_CSS = f"""
@@ -182,6 +315,11 @@ def scene_html(scene, spec):
                 f'<div class="datum"><span>AUTOMATION EDITION</span><span>@INSIGHTANCE.AI</span></div>'
                 f'<div class="kolommen"><div class="kol">{nep_tekst(56, 100, 1)}</div><div class="krantvlak">{v}<div class="art kol">{nep_tekst(22, 100, 6)}</div></div><div class="kol">{nep_tekst(56, 100, 2)}</div></div>'
                 f'<div class="onder"><div class="kol">{nep_tekst(6, 100, 3)}</div><div class="kol">{nep_tekst(6, 100, 4)}</div><div class="kol">{nep_tekst(6, 100, 5)}</div></div></div>')
+    if scene == "whiteboard":
+        return (f'<div class="bord"><div class="papier">{v}</div></div><div class="magneet" style="left:110px;top:150px"></div>'
+                f'<div class="magneet" style="left:930px;top:170px"></div><div class="goot"></div><div class="marker m1"></div><div class="marker m2"></div>')
+    if scene == "servet":
+        return f'<div class="kopje"></div><div class="papier">{v}</div><div class="pen"></div>'
     raise ValueError(f"Onbekende scene: {scene}")
 
 

@@ -35,12 +35,11 @@ Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanu
 
 ## Afsluiter
 
-Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Tekst (04-11, zonder emoji; slotzin DM-variant is Claude's advies, wacht op bevestiging):
+Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Tekst (vastgesteld 04-11): geen witregel tussen de twee zinnen, geen belgesprek noemen (Oussama peilt eerst via DM of iemand echt interesse heeft), altijd eindigen op ⚡ als herkenningsteken (zelfde als in de bio).
 
 ```
 I build AI systems for business owners, so you and your team can focus on the work that actually matters.
-
-In a 30-minute call, I'll show you which tasks AI could take over first in your business. Send me a DM to set it up.
+I'll show you which tasks AI could take over first in your business. Curious? Send me a DM ⚡
 ```
 
 ## Actualiteiten: dubbele controle
@@ -56,7 +55,7 @@ In a 30-minute call, I'll show you which tasks AI could take over first in your 
 - Carrousel 1080×1350 via `tools/instagram/render_carrousel.py` (stijl goedgekeurd 04-11, zie `outputs/instagram-stijl/_overzicht-v2.png`).
   Cover: groot vet Inter, kernwoord in accentkleur. Binnenslides licht met label-pil en markering. Cijferslide: groot Playfair-cijfer. Myth Check: aanhalingsteken + Playfair-citaat.
 - **Kleurregel:** navy is de basis, ongeveer 2 op de 3 posts. Af en toe een andere set (zwart, blauw, groen, creme, rood, paars) om te verrassen. Geen kleurenfestijn, geen vast patroon, nooit twee keer dezelfde niet-navy set achter elkaar. `wachtrij.py kleur` kiest volgens deze regel.
-- **Out of the box mag ook.** Niet alles hoeft een carrousel. Af en toe een losse afbeelding in een heel andere stijl, bijvoorbeeld de handgeschreven notitiekaart op een bureau (`tools/instagram/render_kaart.py`: Venn-diagram of splitsing). The Fork gebruikt deze kaart. Wissel ook de ondergrond af: bureau, kantoor, ipad, scherm, krant (zwart-wit). Nooit twee keer achter elkaar dezelfde ondergrond; nieuwe ondergronden mogen erbij (alle kanten op).
+- **Out of the box mag ook.** Niet alles hoeft een carrousel. Af en toe een losse afbeelding in een heel andere stijl, bijvoorbeeld de handgeschreven notitiekaart op een bureau (`tools/instagram/render_kaart.py`: Venn-diagram of splitsing). The Fork gebruikt deze kaart. Wissel ook de ondergrond af: bureau, kantoor, ipad, scherm, krant (zwart-wit), whiteboard, servet (café). En wissel de schets zelf af: venn, fork, lijst (afvinken), voor_na, stappen, grafiek, loop (kringloop). Nooit twee keer achter elkaar dezelfde ondergrond of schets; nieuwe ondergronden mogen erbij (alle kanten op).
 - Nooit de oude zwart-gouden LinkedIn-afbeeldingen. Elke post krijgt nieuw beeld.
 - Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil).
 
