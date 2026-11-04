@@ -1,0 +1,76 @@
+# Workflow — Instagram-content @insightance.ai
+
+**Status:** In bouw sinds 04-11-2026. Plan: `plans/2026-11-04-instagram-contentagent.md`.
+**Tools:** `tools/instagram/` (bron_inlezen, wachtrij, render_carrousel; later reels, demo-opnames, Telegram)
+**Fase 1:** de agent maakt concepten, Oussama keurt elke post goed via Telegram en plaatst zelf. Niets gaat online zonder ✅.
+
+## Doel
+
+Volgers, exposure en bekendheid voor Insightance opbouwen op een aparte merkpagina. Leads komen later.
+Geen nieuwe onderwerpen verzinnen: bron is `outputs/linkedin-content-serie.md`, aangevuld met actualiteiten.
+
+## Harde regels
+
+- **Engels.** Natuurlijk, idiomatisch, nooit letterlijk vertaald.
+- **Nooit klantnamen** (MHL, FTUK of andere echte klanten), niet in tekst en niet in beeld. Cases anoniem ("an installation company").
+- **Niets aan de live website (`docs/`) veranderen.** Demo's leven in `tools/instagram/demos/`.
+- **Elke claim klopt en is herleidbaar.** Cijfers altijd online verifiëren voordat ze in een concept komen. Bij twijfel: weglaten.
+- **Geen gezicht.** Naam alleen in de bio.
+
+## Richting en toon
+
+"AI without the hype." Eerlijk over wat AI wel en niet kan; prikt door hype én angst. Informatief, niet formeel.
+Mag schuren en uitdagen, maar altijd vanuit deskundigheid: nooit klinken als iemand die maar wat roept.
+Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanuit "wat betekent dit echt voor jouw bedrijf?".
+
+## Tekst (caption en slides)
+
+1. **Eerste zin = scroll-stopper.** Dat is bij elke post het hoofddoel. Schurend, verrassend of herkenbaar. Test: zou deze zin alleen iemand laten stoppen? Zo niet, herschrijven.
+2. **Compact, korter dan LinkedIn.** Hook + maximaal 2 korte alinea's + afsluiter. Geen lappen tekst.
+3. **Geen AI-toon** (writing-style skill): geen gedachtestreepjes, geen "Not X. Not Y."-reeksen, geen woorden als simply/seamless/leverage/robust, geen "That's it."-afsluiters, zinslengte afwisselen, niet elke zin op een eigen regel.
+4. **Slides:** één gedachte per slide, kort. Cover = de hook. Laatste slide = afsluiter of zachte uitnodiging ("Follow for AI without the hype ⚡" of een variant, niet elke keer dezelfde).
+5. **Hashtags: 3 tot 5, steeds anders.** Passend bij het onderwerp, geen vaste set. Nooit dezelfde hashtag als in de vorige post (`wachtrij.py hashtags` geeft de recente). Actualiteit: een hashtag over dat nieuws (tool, bedrijf, onderwerp). The Fork: geen hashtags.
+6. Bron-teksten van LinkedIn zijn het vertrekpunt, niet de eindtekst: herschrijven voor een informeler, scrollend publiek.
+
+## Actualiteiten: dubbele controle
+
+1. Zoek nieuws dat relevant is voor ondernemers (niet puur voor techneuten).
+2. **Controle 1:** lees de oorspronkelijke bron zelf (persbericht, onderzoek, officiële blog), niet alleen een samenvatting. Leg de kern vast.
+3. **Controle 2:** zoek een tweede, onafhankelijke bron die hetzelfde bevestigt. Loop datum, cijfers en namen na.
+4. Faalt een van de twee: onderwerp vervalt, geen concept naar Oussama.
+5. In Telegram altijd **beide bronlinks** meesturen, zodat Oussama zelf kan controleren voordat hij goedkeurt.
+
+## Beeld
+
+- Carrousel 1080×1350 via `tools/instagram/render_carrousel.py` (stijl goedgekeurd 04-11, zie `outputs/instagram-stijl/_overzicht-v2.png`).
+  Cover: groot vet Inter, kernwoord in accentkleur. Binnenslides licht met label-pil en markering. Cijferslide: groot Playfair-cijfer. Myth Check: aanhalingsteken + Playfair-citaat.
+- **Kleurregel:** navy is de basis, ongeveer 2 op de 3 posts. Af en toe een andere set (zwart, blauw, groen, creme, rood, paars) om te verrassen. Geen kleurenfestijn, geen vast patroon, nooit twee keer dezelfde niet-navy set achter elkaar. `wachtrij.py kleur` kiest volgens deze regel.
+- Nooit de oude zwart-gouden LinkedIn-afbeeldingen. Elke post krijgt nieuw beeld.
+- Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil).
+
+## Contentmix (±5 posts per week, geen vaste dagen of tijden)
+
+| Soort | Inhoud | Hoe vaak |
+|---|---|---|
+| Carrousel | Automation Simplified, Myth Check, anonieme cases | 2 à 3 per week |
+| Reel | Bewegende tekst, of fictieve demo-schermopname | samen ±2 per week |
+| Actualiteit | AI-nieuws, dubbel gecheckt | ±1 per week |
+| Losse afbeelding | The Fork | af en toe |
+| Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
+
+## Demo-reels
+
+Fictieve bedrijven en gegevens, maar alleen functionaliteit die echt gebouwd kan worden. Onderwerpen: offerte-maker, dashboard, binnenkomende factuur, WhatsApp-bericht, klantenservice-chat, rekentool, calculaties. Zonder n8n.
+
+## Stappen per concept
+
+1. `python tools/instagram/wachtrij.py volgende` → onderwerp uit de bron (of een actualiteit, zie boven).
+2. Tekst schrijven volgens de regels hierboven; feiten checken.
+3. `python tools/instagram/wachtrij.py kleur` en `... hashtags` voor kleurenset en recent gebruikte hashtags.
+4. Spec (JSON) maken en renderen: `python tools/instagram/render_carrousel.py spec.json`.
+5. Vastleggen: `python tools/instagram/wachtrij.py opslaan spec.json`.
+6. Naar Telegram ter goedkeuring (volgt in stap 6 van het plan).
+
+## Geleerd
+
+(Hier aanvullen als er iets misgaat of beter blijkt te werken.)
