@@ -29,8 +29,13 @@ Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanu
 2. **Compact, korter dan LinkedIn.** Hook + maximaal 2 korte alinea's + afsluiter. Geen lappen tekst.
 3. **Geen AI-toon** (writing-style skill): geen gedachtestreepjes, geen "Not X. Not Y."-reeksen, geen woorden als simply/seamless/leverage/robust, geen "That's it."-afsluiters, zinslengte afwisselen, niet elke zin op een eigen regel.
 4. **Slides:** één gedachte per slide, kort. Cover = de hook. Laatste slide = afsluiter of zachte uitnodiging ("Follow for AI without the hype ⚡" of een variant, niet elke keer dezelfde).
-5. **Hashtags: 3 tot 5, steeds anders.** Passend bij het onderwerp, geen vaste set. Nooit dezelfde hashtag als in de vorige post (`wachtrij.py hashtags` geeft de recente). Actualiteit: een hashtag over dat nieuws (tool, bedrijf, onderwerp). The Fork: geen hashtags.
+5. **Hashtags: 3 tot 6, steeds anders.** Ook het aantal wisselt: nooit twee posts achter elkaar met hetzelfde aantal (dus niet steeds 3). Passend bij het onderwerp, geen vaste set, nooit dezelfde hashtag als in de vorige post (`wachtrij.py hashtags` geeft de recente). Actualiteit: een hashtag over dat nieuws (tool, bedrijf, onderwerp). The Fork: geen hashtags.
+7. **Vaste afsluiter** onder de vraag, boven de hashtags, op bijna elke post (niet bij The Fork). Volgorde: tekst → vraag → afsluiter → hashtags. Tekst: zie "Afsluiter" hieronder.
 6. Bron-teksten van LinkedIn zijn het vertrekpunt, niet de eindtekst: herschrijven voor een informeler, scrollend publiek.
+
+## Afsluiter
+
+Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Definitieve tekst: (wacht op keuze Oussama, 04-11).
 
 ## Actualiteiten: dubbele controle
 
@@ -45,6 +50,7 @@ Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanu
 - Carrousel 1080×1350 via `tools/instagram/render_carrousel.py` (stijl goedgekeurd 04-11, zie `outputs/instagram-stijl/_overzicht-v2.png`).
   Cover: groot vet Inter, kernwoord in accentkleur. Binnenslides licht met label-pil en markering. Cijferslide: groot Playfair-cijfer. Myth Check: aanhalingsteken + Playfair-citaat.
 - **Kleurregel:** navy is de basis, ongeveer 2 op de 3 posts. Af en toe een andere set (zwart, blauw, groen, creme, rood, paars) om te verrassen. Geen kleurenfestijn, geen vast patroon, nooit twee keer dezelfde niet-navy set achter elkaar. `wachtrij.py kleur` kiest volgens deze regel.
+- **Out of the box mag ook.** Niet alles hoeft een carrousel. Af en toe een losse afbeelding in een heel andere stijl, bijvoorbeeld de handgeschreven notitiekaart op een bureau (`tools/instagram/render_kaart.py`: Venn-diagram of splitsing). The Fork gebruikt deze kaart.
 - Nooit de oude zwart-gouden LinkedIn-afbeeldingen. Elke post krijgt nieuw beeld.
 - Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil).
 
