@@ -20,6 +20,7 @@ Geen nieuwe onderwerpen verzinnen: bron is `outputs/linkedin-content-serie.md`, 
 ## Richting en toon
 
 "AI without the hype." Eerlijk over wat AI wel en niet kan; prikt door hype én angst. Informatief, niet formeel.
+**Mix van informatie én bewijs (04-11):** niet alleen uitleg, ook laten zien wat AI concreet oplevert en wat er mogelijk is (demo's van offertes, dashboards, rekentool, klantenservice, resultaten). Bewijs is wat mensen willen zien. Reken op ongeveer de helft informatief, de helft bewijs/mogelijkheden.
 Mag schuren en uitdagen, maar altijd vanuit deskundigheid: nooit klinken als iemand die maar wat roept.
 Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanuit "wat betekent dit echt voor jouw bedrijf?".
 
@@ -64,7 +65,7 @@ Send me a DM and I'll show you which tasks AI could take over first in your busi
 | Soort | Inhoud | Hoe vaak |
 |---|---|---|
 | Carrousel | Automation Simplified, Myth Check, anonieme cases | 2 à 3 per week |
-| Reel | Bewegende tekst, of fictieve demo-schermopname | samen ±2 per week |
+| Reel | Fictieve demo-schermopname (bewijs) of bewegende tekst | samen ±2 à 3 per week, demo's vaker dan tekst |
 | Actualiteit | AI-nieuws, dubbel gecheckt | ±1 per week |
 | Losse afbeelding | The Fork | af en toe |
 | Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
@@ -75,9 +76,9 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 
 ## Demo-reels
 
-Fictieve bedrijven en gegevens, maar alleen functionaliteit die echt gebouwd kan worden. Onderwerpen: offerte-maker, dashboard, binnenkomende factuur, WhatsApp-bericht, klantenservice-chat, rekentool, calculaties. Zonder n8n.
+**Zo echt mogelijk (04-11):** desktop-software op een echt beeldscherm, met inzoomen op waar geklikt wordt, herkenbare situaties uit de praktijk (bijv. cv-ketel vervangen, ROAS per advertentiekanaal), realistische cijfers die onderling kloppen. Doel: de kijker denkt "dit gaat over mij". Fictieve bedrijven en gegevens, maar alleen functionaliteit die echt gebouwd kan worden. Onderwerpen: offerte-maker, dashboard, binnenkomende factuur, WhatsApp-bericht, klantenservice-chat, rekentool, calculaties. Zonder n8n.
 
-- Demo-pagina's: `tools/instagram/demos/<naam>.html` + standaardscript `<naam>.json` (klik/typ/wacht/js-stappen). Klaar: `offerte` (Brightline Installations), `dashboard` (Northfield Coffee Co.).
+- Demo-pagina's: `tools/instagram/demos/<naam>.html` + standaardscript `<naam>.json` (klik/typ/wacht/js-stappen). Klaar: `offerte` (Brightline Heating, cv-ketel vervangen, UK/£), `dashboard` (Northfield Coffee, omzet/ROAS per kanaal). Desktop-app (1280x800) op een beeldscherm; stappen `zoom` (camera) en `ondertitel` (uitleg onder het scherm) per moment.
 - Opnemen: `python tools/instagram/opname_demo.py tools/instagram/demos/offerte.json` → reel.mp4 + cover.jpg. Frame voor frame (scherp), ±45 sec renderen.
 - Nieuwe demo: zelfde opbouw (`_demo.css`/`_demo.js`), velden via `focusVeld`/`typLetter`, animaties via CSS of `animeer()`. Geen native `<select>` (popup komt niet in beeld), gebruik een eigen lijst.
 - Fictieve namen: generiek, geen bestaande merken, e-mail/domein op `.example` of een algemeen voorbeeldadres.

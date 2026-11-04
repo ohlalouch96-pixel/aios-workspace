@@ -1,167 +1,178 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Demo — quote builder (fictief)</title>
+<title>Demo — quote software installatiebedrijf (fictief)</title>
 <link rel="stylesheet" href="_demo.css">
 <style>
-.scherm { position: absolute; left: 0; right: 0; top: 110px; bottom: 0; padding: 28px 40px; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
-#s2 { transform: translateX(105%); background: #f2f4f7; }
-.weg #s1 { transform: translateX(-105%); } .weg #s2 { transform: none; }
-h2 { font: 800 38px Inter; letter-spacing: -.02em; margin-bottom: 16px; }
-.veld { margin-bottom: 14px; position: relative; }
-.veld label { display: block; font: 600 21px Inter; color: #475467; margin-bottom: 6px; }
-.inp { height: 70px; border: 2px solid #d0d5dd; border-radius: 16px; padding: 0 24px; display: flex; align-items: center; font: 500 30px Inter; color: #101828; background: #fff; }
-.inp.focus { border-color: #1F5EFF; box-shadow: 0 0 0 6px rgba(31,94,255,.15); }
+.werk { position: absolute; left: 0; right: 0; top: 62px; bottom: 0; padding: 18px 22px; display: grid; grid-template-columns: 1fr 290px; gap: 18px; }
+.kaart { background: #fff; border: 1px solid #eaecf0; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; position: relative; }
+.kaart h3 { font-size: 13px; font-weight: 700; color: #475467; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+.velden { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.veld label { display: block; font-size: 12px; font-weight: 600; color: #667085; margin-bottom: 4px; }
+.inp { height: 36px; border: 1px solid #d0d5dd; border-radius: 8px; padding: 0 11px; display: flex; align-items: center; font-size: 14px; background: #fff; white-space: nowrap; overflow: hidden; }
+.inp.focus { border-color: #1F5EFF; box-shadow: 0 0 0 3px rgba(31,94,255,.15); }
 .inp .ph { color: #98a2b3; }
-.inp .caret { display: inline-block; width: 3px; height: 34px; background: #1F5EFF; margin-left: 2px; }
-.rij2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-#klus .pijl { margin-left: auto; color: #667085; }
-#klus-lijst { position: absolute; left: 0; right: 0; top: 104px; background: #fff; border: 2px solid #d0d5dd; border-radius: 16px; box-shadow: 0 20px 40px rgba(16,24,40,.15);
-  z-index: 5; opacity: 0; transform: translateY(-10px); transition: opacity .25s, transform .25s; pointer-events: none; }
-#klus-lijst.open { opacity: 1; transform: none; }
-#klus-lijst div { padding: 22px 24px; font: 500 28px Inter; border-bottom: 1px solid #f2f4f7; }
-#klus-lijst div:last-child { border: 0; }
-#klus-lijst div.hover { background: #eef4ff; color: #1F5EFF; }
-.items { border: 1px solid #eaecf0; border-radius: 16px; overflow: hidden; margin-bottom: 14px; min-height: 56px; }
-.items .kop, .items .regel { display: grid; grid-template-columns: 1fr 90px 150px; padding: 13px 22px; font: 500 24px Inter; }
-.items .kop { background: #f9fafb; color: #667085; font-weight: 600; font-size: 21px; }
-.items .regel { border-top: 1px solid #f2f4f7; opacity: 0; transform: translateX(-30px); transition: opacity .35s, transform .35s; }
-.items .regel.aan { opacity: 1; transform: none; }
-.items span:nth-child(2), .items span:nth-child(3) { text-align: right; }
-.totaal { background: #f9fafb; border-radius: 16px; padding: 14px 24px; margin-bottom: 16px; }
-.totaal div { display: flex; justify-content: space-between; font: 500 24px Inter; color: #475467; padding: 2px 0; }
-.totaal .groot { font: 800 36px Inter; color: #101828; border-top: 1px solid #eaecf0; margin-top: 6px; padding-top: 8px; }
-.knop { height: 86px; border-radius: 18px; background: #1F5EFF; color: #fff; font: 700 32px Inter; display: flex; align-items: center; justify-content: center; gap: 14px; transition: background .3s, transform .15s; }
-.knop.druk { transform: scale(.97); }
-.knop.klaar { background: #12b76a; }
-.doc { background: #fff; border-radius: 22px; padding: 38px 40px; box-shadow: 0 12px 30px rgba(16,24,40,.08); }
-.doc .kopdoc { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #101828; padding-bottom: 20px; margin-bottom: 22px; }
-.doc .bedrijf { font: 800 32px Inter; } .doc .bedrijf small { display: block; font: 500 20px Inter; color: #667085; margin-top: 4px; }
-.doc .nr { text-align: right; font: 700 26px Inter; } .doc .nr small { display: block; font: 500 20px Inter; color: #667085; }
-.doc .aan-klant { font: 500 23px/1.4 Inter; color: #475467; margin-bottom: 18px; } .doc .aan-klant b { color: #101828; }
-.doc .r { display: flex; justify-content: space-between; font: 500 24px Inter; padding: 10px 0; border-bottom: 1px solid #f2f4f7; }
-.doc .eind { display: flex; justify-content: space-between; font: 800 34px Inter; padding-top: 18px; }
-.doc .geldig { font: 500 20px Inter; color: #667085; margin-top: 14px; }
-#s2 .knop { margin-top: 26px; }
-.spin { width: 34px; height: 34px; border: 4px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: draai .8s linear infinite; }
-@keyframes draai { to { transform: rotate(360deg); } }
+.inp .caret { display: inline-block; width: 1.5px; height: 17px; background: #1F5EFF; margin-left: 1px; }
+.lijst { position: absolute; left: 0; right: 0; top: 64px; background: #fff; border: 1px solid #d0d5dd; border-radius: 10px; box-shadow: 0 14px 30px rgba(16,24,40,.14);
+  z-index: 10; opacity: 0; transform: translateY(-6px); transition: opacity .2s, transform .2s; }
+.lijst.open { opacity: 1; transform: none; }
+.lijst div { padding: 9px 12px; font-size: 14px; border-bottom: 1px solid #f2f4f7; }
+.lijst div small { display: block; font-size: 12px; color: #667085; }
+.lijst div.hover { background: #eef4ff; }
+.rel { position: relative; }
+.regels { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.regels th { text-align: left; font-size: 11.5px; color: #667085; font-weight: 600; padding: 7px 8px; background: #f9fafb; border-bottom: 1px solid #eaecf0; }
+.regels td { padding: 8px; border-bottom: 1px solid #f2f4f7; }
+.regels .r { text-align: right; } .regels th.r { text-align: right; }
+.regels tr.nieuw { opacity: 0; } .regels tr.nieuw.aan { opacity: 1; transition: opacity .35s; }
+.regels td small { color: #667085; }
+.leeg { padding: 16px 8px; color: #98a2b3; font-size: 13px; }
+.sam div { display: flex; justify-content: space-between; font-size: 14px; color: #475467; padding: 5px 0; }
+.sam .tot { font-size: 22px; font-weight: 800; color: #101828; border-top: 1px solid #eaecf0; margin-top: 6px; padding-top: 10px; }
+.sam .dep { font-size: 13px; color: #067647; background: #ecfdf3; border-radius: 8px; padding: 8px 10px; margin-top: 10px; }
+.tijd #tijdlijn > div { display: flex; gap: 10px; font-size: 13px; padding: 6px 0; color: #344054; }
+.tijd #tijdlijn > div i { width: 9px; height: 9px; border-radius: 50%; background: #98a2b3; margin-top: 5px; flex: none; }
+.tijd #tijdlijn > div small { margin-left: auto; color: #98a2b3; }
+.tijd .nieuw { opacity: 0; transform: translateX(-8px); transition: opacity .35s, transform .35s; } .tijd .nieuw.aan { opacity: 1; transform: none; }
+#modal { position: absolute; inset: 0; background: rgba(16,24,40,.45); z-index: 40; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .25s; }
+#modal.open { opacity: 1; }
+.dlg { width: 560px; background: #fff; border-radius: 14px; padding: 20px 22px; box-shadow: 0 30px 60px rgba(0,0,0,.3); transform: translateY(14px) scale(.98); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+#modal.open .dlg { transform: none; }
+.dlg h2 { font-size: 18px; margin-bottom: 14px; }
+.dlg .regel { display: flex; gap: 10px; font-size: 13.5px; padding: 8px 0; border-bottom: 1px solid #f2f4f7; } .dlg .regel span { width: 64px; color: #667085; }
+.dlg .bericht { font-size: 13.5px; line-height: 1.55; color: #344054; padding: 12px 0; }
+.dlg .bijlage { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; border: 1px solid #eaecf0; border-radius: 8px; padding: 7px 10px; margin-bottom: 14px; }
+.dlg .bijlage b { background: #fee4e2; color: #b42318; font-size: 11px; padding: 2px 5px; border-radius: 4px; }
+.dlg .knoppen { display: flex; justify-content: flex-end; gap: 10px; }
 </style></head>
 <body style="--hookbg:#17345F">
 <div id="hook"></div>
-<div class="app">
-  <div class="appbar"><div class="applogo" style="background:#ea580c">B</div><div class="appnaam">Brightline Installations<small>Quote builder</small></div><div class="rechts">MK</div></div>
-  <div id="schermen">
-    <div class="scherm" id="s1">
-      <h2>New quote</h2>
-      <div class="rij2">
-        <div class="veld"><label>Customer</label><div class="inp" id="naam" data-ph="Full name"><span class="ph">Full name</span></div></div>
-        <div class="veld"><label>Email</label><div class="inp" id="email" data-ph="name@email.com"><span class="ph">name@email.com</span></div></div>
-      </div>
-      <div class="veld"><label>Job</label><div class="inp" id="klus"><span class="ph">Choose a job type</span><span class="pijl">▾</span></div>
-        <div id="klus-lijst"><div data-v="boiler">Boiler replacement</div><div data-v="heatpump">Heat pump install</div><div data-v="bath">Bathroom renovation</div></div></div>
-      <div class="items" id="items"><div class="kop"><span>Item</span><span>Qty</span><span>Price</span></div></div>
-      <div class="veld"><label>Labour (hours × €65)</label><div class="inp" id="uren" data-ph="0"><span class="ph">0</span></div></div>
-      <div class="totaal"><div><span>Subtotal</span><span id="sub">€0</span></div><div><span>VAT 21%</span><span id="btw">€0</span></div><div class="groot"><span>Total</span><span id="tot">€0</span></div></div>
-      <div class="knop" id="maak">Generate quote</div>
+<div class="monitor"><div class="scherm"><div id="camera"><div id="desk">
+  <div class="venster">
+    <div class="zijbalk">
+      <div class="merk"><i style="background:#ea580c">B</i>Brightline Heating</div>
+      <a><b></b>Dashboard</a><a class="actief"><b></b>Quotes</a><a><b></b>Jobs</a><a><b></b>Invoices</a><a><b></b>Customers</a><a><b></b>Price book</a><a><b></b>Settings</a>
+      <div class="gebruiker"><i>MK</i>Mark Kelly<br>Owner</div>
     </div>
-    <div class="scherm" id="s2">
-      <div class="doc">
-        <div class="kopdoc"><div class="bedrijf">Brightline Installations<small>Unit 4, Mill Lane · info@brightline.example</small></div><div class="nr">Q-2026-0142<small>4 Nov 2026</small></div></div>
-        <div class="aan-klant">Prepared for <b id="d-naam">-</b><br><span id="d-email">-</span></div>
-        <div id="d-items"></div>
-        <div class="r"><span>VAT 21%</span><span id="d-btw">-</span></div>
-        <div class="eind"><span>Total</span><span id="d-tot">-</span></div>
-        <div class="geldig">Valid for 30 days · Work can start within 5 working days</div>
+    <div class="hoofd">
+      <div class="kopbalk"><h1>New quote</h1><span style="color:#98a2b3;font-size:14px">Q-2026-0142</span><span class="pil" id="status">Draft</span>
+        <div class="rechts"><span class="btn">Preview PDF</span><span class="btn primair" id="verstuur">Send quote</span></div></div>
+      <div class="werk">
+        <div>
+          <div class="kaart"><h3>Customer</h3>
+            <div class="velden">
+              <div class="veld"><label>Name</label><div class="inp" id="naam" data-ph="Full name"><span class="ph">Full name</span></div></div>
+              <div class="veld"><label>Email</label><div class="inp" id="email" data-ph="name@email.com"><span class="ph">name@email.com</span></div></div>
+              <div class="veld"><label>Phone</label><div class="inp" id="tel" data-ph="07…"><span class="ph">07…</span></div></div>
+              <div class="veld rel"><label>Address</label><div class="inp" id="adres" data-ph="Start typing an address"><span class="ph">Start typing an address</span></div>
+                <div class="lijst" id="adres-lijst"><div id="adres-optie">14 Elm Grove, Bristol BS6 7XY<small>Semi-detached house · 3 bedrooms</small></div><div>14 Elm Close, Bristol BS16 2LN<small>Terraced house</small></div></div></div>
+            </div>
+          </div>
+          <div class="kaart"><h3>Job</h3>
+            <div class="rel" style="margin-bottom:10px"><div class="inp" id="sjabloon" style="justify-content:space-between"><span class="ph">Choose a job template…</span><span style="color:#667085">▾</span></div>
+              <div class="lijst" id="sjabloon-lijst" style="top:42px">
+                <div id="opt-ketel">Boiler replacement<small>Combi swap, flush, filter, controls</small></div><div>Annual boiler service<small>Service + safety check</small></div><div>Radiator replacement<small>Per radiator, incl. valves</small></div></div></div>
+            <table class="regels"><thead><tr><th>Description</th><th class="r">Qty</th><th class="r">Unit price</th><th class="r">Total</th></tr></thead>
+              <tbody id="regels"><tr><td colspan="4" class="leeg">Pick a template or add lines from your price book</td></tr></tbody></table>
+          </div>
+        </div>
+        <div>
+          <div class="kaart sam"><h3>Summary</h3>
+            <div><span>Subtotal</span><span id="sub">£0.00</span></div><div><span>VAT 20%</span><span id="btw">£0.00</span></div>
+            <div class="tot"><span>Total</span><span id="tot">£0.00</span></div>
+            <div class="dep">20% deposit on acceptance: <b id="dep">£0.00</b></div>
+            <div style="font-size:12px;color:#98a2b3;margin-top:10px">Valid for 30 days · 10-year boiler warranty</div></div>
+          <div class="kaart tijd"><h3>Activity</h3><div id="tijdlijn"><div><i></i>Draft created<small>09:12</small></div></div></div>
+        </div>
       </div>
-      <div class="knop" id="stuur">Send to customer</div>
+      <div class="toast" id="toast"><div class="ico" id="toast-ico">✓</div><div><span id="toast-titel"></span><small id="toast-sub"></small></div></div>
+      <div id="modal"><div class="dlg"><h2>Send quote to James Carter</h2>
+        <div class="regel"><span>To</span>james.carter@email.com</div>
+        <div class="regel"><span>Subject</span>Your quote for a new boiler · Q-2026-0142</div>
+        <div class="bericht">Hi James,<br><br>Thanks for having us over this morning. As discussed, here's your quote for replacing the boiler, including the powerflush and the smart thermostat. You can accept it online with one click and we'll book you in.<br><br>Mark, Brightline Heating</div>
+        <div class="bijlage"><b>PDF</b>Q-2026-0142.pdf · 182 KB</div>
+        <div class="knoppen"><span class="btn">Cancel</span><span class="btn primair" id="stuur">Send</span></div></div></div>
     </div>
   </div>
-  <div class="toast" id="t1"><div class="ico">✓</div><div>Quote sent to <span id="t-email"></span><small>with PDF attached · just now</small></div></div>
-  <div class="toast" id="t2" style="bottom:170px"><div class="ico" style="background:#1F5EFF">👁</div><div><span id="t-naam"></span> opened your quote<small>2 minutes after sending</small></div></div>
-</div>
+</div></div></div></div>
+<div class="voetstuk"></div>
+<div id="ondertitel"></div>
 <div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
 <script src="_demo.js"></script>
 <script>
-const KLUSSEN = {
-  boiler: [["Combi boiler 28 kW", 1, 1450], ["Flue & fittings kit", 1, 185], ["System flush", 1, 120]],
-  heatpump: [["Air-source heat pump 8 kW", 1, 6400], ["Buffer tank 100 L", 1, 640], ["Electrical connection", 1, 380]],
-  bath: [["Walk-in shower set", 1, 980], ["Wall & floor tiling (m²)", 14, 75], ["Vanity unit", 1, 540]],
-};
-let gekozen = null, totaal = { sub: 0, btw: 0, tot: 0 };
+const KETEL = [
+  ["Remove & dispose of old boiler", 1, 180],
+  ["Supply & fit 30 kW combi boiler <small>· 10-year warranty</small>", 1, 1650],
+  ["Magnetic system filter", 1, 145],
+  ["Powerflush <small>· up to 10 radiators</small>", 1, 420],
+  ["Smart thermostat, supplied & fitted", 1, 210],
+  ["Gas Safe certificate & Building Regs notification", 1, 85],
+  ["Labour <small>· 2 engineers, 1 day</small>", 16, 45],
+];
+const pond = (n) => geld(n, "£", 2);
 const waarde = {};
+let bedrag = { sub: 0, btw: 0, tot: 0, dep: 0 };
 
-// velden: de opname-tool typt via typ(id, tekst)
-window.focusVeld = function (id) {
-  document.querySelectorAll(".inp").forEach((e) => e.classList.remove("focus"));
-  const el = document.getElementById(id);
-  el.classList.add("focus");
-  toon(id);
-};
-function toon(id) {
-  const el = document.getElementById(id), v = waarde[id] || "";
-  el.innerHTML = (v ? v : `<span class="ph">${el.dataset.ph}</span>`) + (el.classList.contains("focus") ? '<span class="caret"></span>' : "");
-}
-window.typLetter = function (id, ch) {
-  waarde[id] = (waarde[id] || "") + ch;
-  toon(id);
-  if (id === "uren") herbereken();
-};
-window.blurAlles = function () {
-  document.querySelectorAll(".inp").forEach((e) => { e.classList.remove("focus"); if (e.dataset.ph) toon(e.id); });
-};
+window.focusVeld = (id) => { blurAlles(); document.getElementById(id).classList.add("focus"); toon(id); };
+function toon(id) { const el = document.getElementById(id), v = waarde[id] || ""; el.innerHTML = (v || `<span class="ph">${el.dataset.ph}</span>`) + (el.classList.contains("focus") ? '<span class="caret"></span>' : ""); }
+window.typLetter = (id, ch) => { waarde[id] = (waarde[id] || "") + ch; toon(id); if (id === "adres" && waarde.adres.length >= 6) document.getElementById("adres-lijst").classList.add("open"); };
+window.blurAlles = () => document.querySelectorAll(".inp.focus").forEach((e) => { e.classList.remove("focus"); toon(e.id); });
 
-document.getElementById("klus").addEventListener("click", () => { blurAlles(); document.getElementById("klus-lijst").classList.add("open"); });
-document.querySelectorAll("#klus-lijst div").forEach((o) => o.addEventListener("click", (ev) => {
+document.getElementById("adres-optie").addEventListener("click", () => {
+  waarde.adres = "14 Elm Grove, Bristol BS6 7XY"; blurAlles(); toon("adres"); document.getElementById("adres-lijst").classList.remove("open");
+});
+document.getElementById("sjabloon").addEventListener("click", () => { blurAlles(); document.getElementById("sjabloon-lijst").classList.add("open"); });
+document.getElementById("opt-ketel").addEventListener("click", (ev) => {
   ev.stopPropagation();
-  gekozen = o.dataset.v;
-  document.getElementById("klus-lijst").classList.remove("open");
-  document.getElementById("klus").innerHTML = o.textContent + '<span class="pijl">▾</span>';
-  const box = document.getElementById("items");
-  box.querySelectorAll(".regel").forEach((r) => r.remove());
-  KLUSSEN[gekozen].forEach(([naam, n, prijs], i) => {
-    const r = document.createElement("div");
-    r.className = "regel";
-    r.innerHTML = `<span>${naam}</span><span>${n}</span><span>${euro(n * prijs)}</span>`;
-    box.appendChild(r);
-    animeer(140 * (i + 1), () => {}, () => r.classList.add("aan"));
+  document.getElementById("sjabloon-lijst").classList.remove("open");
+  document.getElementById("sjabloon").innerHTML = 'Boiler replacement <span style="color:#667085">▾</span>';
+  const tb = document.getElementById("regels");
+  tb.innerHTML = "";
+  let sub = 0;
+  KETEL.forEach(([omschr, n, prijs], i) => {
+    const tr = document.createElement("tr");
+    tr.className = "nieuw";
+    tr.innerHTML = `<td>${omschr}</td><td class="r">${n}</td><td class="r">${pond(prijs)}</td><td class="r">${pond(n * prijs)}</td>`;
+    tb.appendChild(tr);
+    na(120 * (i + 1), () => tr.classList.add("aan"));
+    sub += n * prijs;
   });
-  herbereken();
-}));
+  const nieuw = { sub, btw: sub * 0.2, tot: sub * 1.2, dep: sub * 1.2 * 0.2 };
+  ["sub", "btw", "tot", "dep"].forEach((k) => telOp(document.getElementById(k), bedrag[k], nieuw[k], 1100, pond));
+  bedrag = nieuw;
+});
 
-function herbereken() {
-  const items = gekozen ? KLUSSEN[gekozen].reduce((s, [, n, p]) => s + n * p, 0) : 0;
-  const sub = items + (parseFloat(waarde.uren) || 0) * 65, btw = sub * 0.21, tot = sub + btw;
-  const oud = { ...totaal };
-  totaal = { sub, btw, tot };
-  telOp(document.getElementById("sub"), oud.sub, sub, 700, euro);
-  telOp(document.getElementById("btw"), oud.btw, btw, 700, euro);
-  telOp(document.getElementById("tot"), oud.tot, tot, 900, euro);
+function tijdlijn(tekst, tijd, kleur) {
+  const d = document.createElement("div");
+  d.className = "nieuw";
+  d.innerHTML = `<i style="background:${kleur}"></i>${tekst}<small>${tijd}</small>`;
+  document.getElementById("tijdlijn").appendChild(d);
+  na(30, () => d.classList.add("aan"));
 }
-
-document.getElementById("maak").addEventListener("click", () => {
-  blurAlles();
-  document.getElementById("d-naam").textContent = waarde.naam;
-  document.getElementById("d-email").textContent = waarde.email;
-  const uren = parseFloat(waarde.uren) || 0;
-  document.getElementById("d-items").innerHTML = KLUSSEN[gekozen].map(([n, q, p]) => `<div class="r"><span>${n}${q > 1 ? " × " + q : ""}</span><span>${euro(q * p)}</span></div>`).join("")
-    + `<div class="r"><span>Labour, ${uren} hours</span><span>${euro(uren * 65)}</span></div>`;
-  document.getElementById("d-btw").textContent = euro(totaal.btw);
-  document.getElementById("d-tot").textContent = euro(totaal.tot);
-  document.getElementById("schermen").classList.add("weg");
-});
-
-document.getElementById("stuur").addEventListener("click", () => {
-  const k = document.getElementById("stuur");
-  k.innerHTML = '<div class="spin"></div>Sending…';
-  animeer(1100, () => {}, () => {
-    k.classList.add("klaar");
-    k.innerHTML = "✓ Sent";
-    document.getElementById("t-email").textContent = waarde.email;
-    document.getElementById("t1").classList.add("aan");
-    animeer(2200, () => {}, () => {
-      document.getElementById("t-naam").textContent = waarde.naam.split(" ")[0];
-      document.getElementById("t2").classList.add("aan");
-    });
+function toast(titel, sub, ico, kleur) {
+  const t = document.getElementById("toast");
+  t.classList.remove("aan");
+  na(250, () => {
+    document.getElementById("toast-titel").textContent = titel;
+    document.getElementById("toast-sub").textContent = sub;
+    document.getElementById("toast-ico").textContent = ico;
+    document.getElementById("toast-ico").style.background = kleur;
+    t.classList.add("aan");
   });
+}
+function status(tekst, bg, kleur) { const s = document.getElementById("status"); s.textContent = tekst; s.style.background = bg; s.style.color = kleur; }
+
+document.getElementById("verstuur").addEventListener("click", () => { blurAlles(); document.getElementById("modal").classList.add("open"); });
+document.getElementById("stuur").addEventListener("click", () => {
+  document.getElementById("modal").classList.remove("open");
+  status("Sent", "#eef4ff", "#1F5EFF");
+  tijdlijn("Sent to James by email", "09:14", "#1F5EFF");
+  toast("Quote sent to James Carter", "PDF attached · accept link included", "✓", "#12b76a");
 });
+window.bekeken = () => { tijdlijn("Opened by James", "09:16", "#f79009"); toast("James opened your quote", "Viewed 2 times · on mobile", "👁", "#f79009"); };
+window.geaccepteerd = () => {
+  status("Accepted", "#ecfdf3", "#067647");
+  tijdlijn("Accepted & signed online", "09:21", "#12b76a");
+  toast("Quote accepted · £4,092.00", "Deposit of £818.40 requested · job ready to book", "✓", "#12b76a");
+};
 </script>
 </body></html>

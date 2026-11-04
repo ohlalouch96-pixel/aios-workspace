@@ -1,137 +1,176 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Demo — webshop dashboard (fictief)</title>
+<title>Demo — webshop marketing dashboard (fictief)</title>
 <link rel="stylesheet" href="_demo.css">
 <style>
-.inhoud { position: absolute; left: 0; right: 0; top: 110px; bottom: 0; padding: 26px 34px; background: #f9fafb; }
-.balk2 { display: flex; align-items: center; margin-bottom: 20px; }
-.tabs { display: flex; background: #eaecf0; border-radius: 16px; padding: 6px; gap: 4px; }
-.tab { padding: 14px 26px; border-radius: 12px; font: 600 25px Inter; color: #475467; transition: background .25s, color .25s, box-shadow .25s; }
-.tab.actief { background: #fff; color: #101828; box-shadow: 0 2px 6px rgba(16,24,40,.12); }
-.live { margin-left: auto; display: flex; align-items: center; gap: 10px; font: 600 23px Inter; color: #067647; }
-.live i { width: 14px; height: 14px; border-radius: 50%; background: #17b26a; box-shadow: 0 0 0 6px rgba(23,178,106,.2); }
-.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
-.kpi { background: #fff; border: 1px solid #eaecf0; border-radius: 20px; padding: 16px 24px; }
-.kpi small { display: block; font: 600 21px Inter; color: #667085; }
-.kpi b { display: block; font: 800 40px Inter; letter-spacing: -.02em; margin: 6px 0 4px; color: #101828; }
-.kpi span { font: 600 20px Inter; color: #067647; background: #ecfdf3; padding: 4px 10px; border-radius: 20px; }
-.kaart { background: #fff; border: 1px solid #eaecf0; border-radius: 20px; padding: 18px 24px; margin-bottom: 16px; }
-.kaart h3 { font: 700 25px Inter; color: #101828; margin-bottom: 10px; display: flex; justify-content: space-between; }
-.kaart h3 small { font: 500 21px Inter; color: #667085; }
-.prod { display: grid; grid-template-columns: 1fr 210px 80px; align-items: center; gap: 16px; padding: 10px 10px; border-radius: 12px; font: 500 23px Inter; transition: background .2s; }
-.prod.hover { background: #eef4ff; }
-.prod .bar { height: 14px; border-radius: 7px; background: #eaecf0; overflow: hidden; } .prod .bar i { display: block; height: 100%; background: #1F5EFF; border-radius: 7px; }
-.prod .n { text-align: right; font-weight: 700; }
-.prod .waarschuw { color: #b42318; font: 700 18px Inter; margin-left: 8px; }
-#paneel { position: absolute; left: 0; right: 0; bottom: 0; height: 560px; background: #fff; border-radius: 30px 30px 0 0; box-shadow: 0 -20px 50px rgba(16,24,40,.2);
-  padding: 34px 38px; transform: translateY(105%); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
-#paneel.open { transform: none; }
-#paneel .greep { width: 80px; height: 8px; border-radius: 4px; background: #d0d5dd; margin: -14px auto 22px; }
-#paneel h4 { font: 800 34px Inter; margin-bottom: 18px; }
-.mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
-.mini div { background: #f9fafb; border-radius: 16px; padding: 16px 18px; font: 600 20px Inter; color: #667085; }
-.mini b { display: block; font: 800 34px Inter; color: #101828; margin-top: 4px; }
-.alert { display: flex; gap: 16px; align-items: center; background: #fef3f2; border: 1px solid #fecdca; border-radius: 16px; padding: 18px 20px; font: 600 23px/1.35 Inter; color: #912018; margin-bottom: 20px; }
-.knop { height: 82px; border-radius: 18px; background: #1F5EFF; color: #fff; font: 700 30px Inter; display: flex; align-items: center; justify-content: center; transition: background .3s; }
-.knop.klaar { background: #12b76a; }
+.werk { position: absolute; left: 0; right: 0; top: 62px; bottom: 0; padding: 16px 20px; }
+.rel { position: relative; }
+.periode { height: 36px; padding: 0 12px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.lijst { position: absolute; right: 0; top: 42px; width: 190px; background: #fff; border: 1px solid #d0d5dd; border-radius: 10px; box-shadow: 0 14px 30px rgba(16,24,40,.14);
+  z-index: 10; opacity: 0; transform: translateY(-6px); transition: opacity .2s, transform .2s; }
+.lijst.open { opacity: 1; transform: none; }
+.lijst div { padding: 9px 12px; font-size: 14px; } .lijst div.hover { background: #eef4ff; color: #1F5EFF; }
+.live { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: #067647; }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: #17b26a; box-shadow: 0 0 0 4px rgba(23,178,106,.2); }
+.kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 12px; }
+.kpi { background: #fff; border: 1px solid #eaecf0; border-radius: 10px; padding: 11px 12px; }
+.kpi small { display: block; font-size: 12px; font-weight: 600; color: #667085; }
+.kpi b { display: block; font-size: 21px; font-weight: 800; letter-spacing: -.01em; margin: 4px 0 3px; }
+.kpi span { font-size: 11.5px; font-weight: 600; color: #067647; } .kpi span.min { color: #b42318; }
+.rij { display: grid; grid-template-columns: 1.45fr 1fr; gap: 12px; }
+.kaart { background: #fff; border: 1px solid #eaecf0; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; position: relative; }
+.kaart h3 { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.kaart h3 small { font-size: 12px; font-weight: 500; color: #667085; }
+.legenda { margin-left: auto; display: flex; gap: 12px; font-size: 11.5px; color: #667085; font-weight: 500; }
+.legenda i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-size: 11px; color: #667085; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid #eaecf0; }
+td { padding: 8px; border-bottom: 1px solid #f2f4f7; } .r { text-align: right; } th.r { text-align: right; }
+tr.klikbaar { transition: background .2s; } tr.klikbaar.hover { background: #eef4ff; }
+.roas { font-weight: 700; } .goed { color: #067647; } .slecht { color: #b42318; }
+.tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+.tag.rood { background: #fef3f2; color: #b42318; }
+.kanaal { display: inline-flex; align-items: center; gap: 8px; } .kanaal i { width: 18px; height: 18px; border-radius: 5px; display: inline-block; }
+.prod { display: grid; grid-template-columns: 1fr 70px 64px; gap: 10px; align-items: center; font-size: 13px; padding: 7px 0; border-bottom: 1px solid #f2f4f7; }
+.prod .bar { height: 8px; border-radius: 4px; background: #eaecf0; overflow: hidden; } .prod .bar i { display: block; height: 100%; background: #1F5EFF; }
+#tip { position: absolute; padding: 8px 10px; background: #101828; color: #fff; border-radius: 8px; font-size: 12px; line-height: 1.45; pointer-events: none; opacity: 0; transition: opacity .2s; white-space: nowrap; }
+#tip.aan { opacity: 1; }
+#lade { position: absolute; top: 0; right: 0; bottom: 0; width: 520px; background: #fff; border-left: 1px solid #eaecf0; box-shadow: -20px 0 40px rgba(16,24,40,.15);
+  z-index: 30; padding: 18px 20px; transform: translateX(105%); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+#lade.open { transform: none; }
+#lade h2 { font-size: 18px; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+#lade .sub { font-size: 13px; color: #667085; margin-bottom: 14px; }
+.camp td:first-child { font-weight: 600; }
+.advies { display: flex; gap: 12px; background: #fef3f2; border: 1px solid #fecdca; border-radius: 10px; padding: 12px 14px; margin: 14px 0 12px; font-size: 13.5px; line-height: 1.45; color: #912018; }
 </style></head>
-<body style="--hookbg:#17345F">
+<body style="--hookbg:#111111">
 <div id="hook"></div>
-<div class="app">
-  <div class="appbar"><div class="applogo" style="background:#7c4a2d">N</div><div class="appnaam">Northfield Coffee Co.<small>Store dashboard</small></div><div class="rechts">SR</div></div>
-  <div class="inhoud">
-    <div class="balk2"><div class="tabs"><div class="tab actief" id="p7">7 days</div><div class="tab" id="p30">30 days</div><div class="tab" id="p90">90 days</div></div><div class="live"><i></i>Live</div></div>
-    <div class="kpis">
-      <div class="kpi"><small>Revenue</small><b id="k-omzet">€0</b><span id="d-omzet">+0%</span></div>
-      <div class="kpi"><small>Orders</small><b id="k-orders">0</b><span id="d-orders">+0%</span></div>
-      <div class="kpi"><small>Avg. order value</small><b id="k-aov">€0</b><span id="d-aov">+0%</span></div>
-      <div class="kpi"><small>Returning customers</small><b id="k-terug">0%</b><span id="d-terug">+0 pts</span></div>
+<div class="monitor"><div class="scherm"><div id="camera"><div id="desk">
+  <div class="venster">
+    <div class="zijbalk">
+      <div class="merk"><i style="background:#7c4a2d">N</i>Northfield Coffee</div>
+      <a class="actief"><b></b>Overview</a><a><b></b>Orders</a><a><b></b>Products</a><a><b></b>Marketing</a><a><b></b>Customers</a><a><b></b>Reports</a><a><b></b>Settings</a>
+      <div class="gebruiker"><i>SR</i>Sophie Reyes<br>Founder</div>
     </div>
-    <div class="kaart"><h3>Revenue <small id="grafiek-label">last 7 days</small></h3>
-      <svg width="850" height="150" viewBox="0 0 850 190" preserveAspectRatio="none"><defs><linearGradient id="vul" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F5EFF" stop-opacity=".25"/><stop offset="1" stop-color="#1F5EFF" stop-opacity="0"/></linearGradient></defs>
-        <g stroke="#f2f4f7" stroke-width="2"><line x1="0" y1="45" x2="850" y2="45"/><line x1="0" y1="95" x2="850" y2="95"/><line x1="0" y1="145" x2="850" y2="145"/></g>
-        <path id="vlak" fill="url(#vul)"/><path id="lijn" fill="none" stroke="#1F5EFF" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
-    <div class="kaart"><h3>Top products <small>units sold</small></h3><div id="producten"></div></div>
+    <div class="hoofd">
+      <div class="kopbalk"><h1>Overview</h1><span class="live"><i></i>Live · synced 1 min ago</span>
+        <div class="rechts"><div class="rel"><span class="periode" id="periode"><span id="periode-tekst">Last 7 days</span> ▾</span>
+          <div class="lijst" id="periode-lijst"><div>Today</div><div>Last 7 days</div><div id="opt-30">Last 30 days</div><div>This quarter</div></div></div><span class="btn">Export</span></div></div>
+      <div class="werk">
+        <div class="kpis">
+          <div class="kpi"><small>Revenue</small><b id="k0">€0</b><span id="v0"></span></div>
+          <div class="kpi"><small>Orders</small><b id="k1">0</b><span id="v1"></span></div>
+          <div class="kpi"><small>Avg. order value</small><b id="k2">€0</b><span id="v2"></span></div>
+          <div class="kpi"><small>Conversion rate</small><b id="k3">0%</b><span id="v3"></span></div>
+          <div class="kpi"><small>Ad spend</small><b id="k4">€0</b><span id="v4"></span></div>
+          <div class="kpi"><small>ROAS (paid)</small><b id="k5">0.00</b><span id="v5"></span></div>
+        </div>
+        <div class="rij">
+          <div>
+            <div class="kaart"><h3>Revenue vs. ad spend <small id="grafiek-sub">daily</small><span class="legenda"><span><i style="background:#1F5EFF"></i>Revenue</span><span><i style="background:#f79009"></i>Ad spend</span></span></h3>
+              <svg id="grafiek" width="580" height="170" viewBox="0 0 580 170"></svg><div id="tip"></div></div>
+            <div class="kaart"><h3>Channels <small>click a channel for campaigns</small></h3>
+              <table><thead><tr><th>Channel</th><th class="r">Spend</th><th class="r">Revenue</th><th class="r">ROAS</th></tr></thead><tbody id="kanalen"></tbody></table></div>
+          </div>
+          <div>
+            <div class="kaart"><h3>Top products</h3><div id="producten"></div></div>
+            <div class="kaart"><h3>Today</h3><div style="font-size:13px;line-height:1.9;color:#344054">Orders so far: <b id="vandaag">23</b><br>Abandoned carts recovered: <b>4</b> (€186)<br>Refund requests: <b>1</b></div></div>
+          </div>
+        </div>
+      </div>
+      <div id="lade"><h2><span class="kanaal"><i style="background:#1877f2"></i></span>Meta Ads · campaigns</h2><div class="sub">Last 30 days · break-even ROAS set at 2.0</div>
+        <table class="camp"><thead><tr><th>Campaign</th><th class="r">Spend</th><th class="r">Revenue</th><th class="r">ROAS</th></tr></thead><tbody>
+          <tr><td>Prospecting · Broad</td><td class="r">€2,100</td><td class="r">€8,190</td><td class="r roas goed">3.90</td></tr>
+          <tr><td>Retargeting · 7 days</td><td class="r">€900</td><td class="r">€5,580</td><td class="r roas goed">6.20</td></tr>
+          <tr id="camp-video"><td>Spring Sale · Video<span class="tag rood">below break-even</span></td><td class="r">€900</td><td class="r">€1,050</td><td class="r roas slecht">1.17</td></tr>
+        </tbody></table>
+        <div class="advies"><span style="font-size:18px">⚠️</span><span><b>Spring Sale · Video</b> earns €1.17 for every €1 spent. Pausing it and moving the budget to Retargeting would have added an estimated <b>€3,500</b> in revenue this month.</span></div>
+        <span class="btn rood" id="pauzeer">Pause campaign</span> <span class="btn">Move budget</span>
+      </div>
+      <div class="toast" id="toast"><div class="ico" id="toast-ico">🛒</div><div><span id="toast-titel"></span><small id="toast-sub"></small></div></div>
+    </div>
   </div>
-  <div id="paneel"><div class="greep"></div><h4 id="pn-naam">-</h4>
-    <div class="mini"><div>Sold<b id="pn-sold">-</b></div><div>In stock<b id="pn-stock">-</b></div><div>Per day<b id="pn-dag">-</b></div></div>
-    <div class="alert"><span style="font-size:34px">⚠️</span><span>Low stock: at this pace you run out in about <b>5 days</b>. Suggested reorder: 120 units.</span></div>
-    <div class="knop" id="bestel">Create reorder</div></div>
-  <div class="toast" id="t-order" style="top:130px;bottom:auto"><div class="ico" style="background:#1F5EFF">🛒</div><div>New order #1048 · €42.50<small>Yirgacheffe 250g × 2 · just now</small></div></div>
-  <div class="toast" id="t-bestel" style="top:130px;bottom:auto"><div class="ico">✓</div><div>Reorder sent to supplier<small>120 units · Ethiopia Yirgacheffe 250g</small></div></div>
-</div>
+</div></div></div></div>
+<div class="voetstuk"></div>
+<div id="ondertitel"></div>
 <div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
 <script src="_demo.js"></script>
 <script>
-// fictieve cijfers; gemiddelde orderwaarde = omzet / orders
+// fictieve cijfers die onderling kloppen: AOV = omzet/orders, conversie = orders/sessies, ROAS = betaalde omzet/advertentiekosten, kanalen tellen op tot de omzet
 const DATA = {
-  7:  { omzet: 4820,  orders: 112,  terug: 38, d: ["+9%", "+6%", "+3%", "+2 pts"], label: "last 7 days",
-        punten: [520, 610, 580, 700, 640, 760, 1010],
-        prod: [["Ethiopia Yirgacheffe 250g", 74], ["House Espresso 1kg", 61], ["Colombia Huila 250g", 45], ["Decaf Swiss Water 250g", 27]] },
-  30: { omzet: 19640, orders: 451,  terug: 41, d: ["+14%", "+11%", "+3%", "+4 pts"], label: "last 30 days",
-        punten: [430, 520, 610, 560, 690, 650, 720, 810, 760, 880, 940, 1020],
-        prod: [["Ethiopia Yirgacheffe 250g", 312], ["House Espresso 1kg", 254], ["Colombia Huila 250g", 198], ["Decaf Swiss Water 250g", 121]] },
-  90: { omzet: 55310, orders: 1268, terug: 44, d: ["+22%", "+19%", "+3%", "+6 pts"], label: "last 90 days",
-        punten: [380, 450, 430, 520, 600, 580, 650, 720, 700, 810, 900, 980],
-        prod: [["Ethiopia Yirgacheffe 250g", 868], ["House Espresso 1kg", 742], ["Colombia Huila 250g", 571], ["Decaf Swiss Water 250g", 349]] },
+  7: { omzet: 8120, orders: 171, sessies: 5700, spend: 1480, betaald: 5390, v: ["+8%", "+6%", "+2%", "+0.1 pt", "+4%", "−0.05"],
+       kanalen: [["Meta Ads", "#1877f2", 920, 3500], ["Google Ads", "#34a853", 440, 1720], ["TikTok Ads", "#111", 120, 170], ["Email flows", "#7a5af8", 0, 1150], ["Organic", "#98a2b3", 0, 1580]],
+       prod: [["Ethiopia Yirgacheffe 250g", 74], ["House Espresso 1kg", 61], ["Colombia Huila 250g", 45], ["Decaf Swiss Water 250g", 27]],
+       dagen: [[980, 190], [1040, 205], [1110, 214], [1090, 210], [1220, 218], [1310, 220], [1370, 223]] },
+  30: { omzet: 34460, orders: 742, sessies: 25586, spend: 6240, betaald: 22880, v: ["+14%", "+11%", "+3%", "+0.2 pt", "+9%", "+0.12"],
+       kanalen: [["Meta Ads", "#1877f2", 3900, 14820], ["Google Ads", "#34a853", 1840, 7360], ["TikTok Ads", "#111", 500, 700], ["Email flows", "#7a5af8", 0, 4900], ["Organic", "#98a2b3", 0, 6680]],
+       prod: [["Ethiopia Yirgacheffe 250g", 312], ["House Espresso 1kg", 254], ["Colombia Huila 250g", 198], ["Decaf Swiss Water 250g", 121]],
+       dagen: Array.from({ length: 30 }, (_, i) => [880 + i * 14 + ((i * 37) % 9) * 22 + (i % 7 === 5 ? 160 : 0), 180 + ((i * 13) % 7) * 6 + i * 1.2]) },
 };
-let huidig = { omzet: 0, orders: 0, terug: 0, punten: Array(12).fill(0), prod: [0, 0, 0, 0] }, periode = 7;
+let p = 7, oud = { omzet: 0, orders: 0, sessies: 1, spend: 0, betaald: 0 };
 const getal = (n) => Math.round(n).toLocaleString("en-GB");
 
-function pad(ptn) {
-  const n = ptn.length, max = 1100;
-  const xy = ptn.map((v, i) => [i * 850 / (n - 1), 180 - (v / max) * 160]);
-  const d = "M" + xy.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L");
-  return [d, d + " L850,190 L0,190 Z"];
-}
-function herbemonster(ptn, n) { // naar n punten, zodat 7 en 12 punten in elkaar overlopen
-  return Array.from({ length: n }, (_, i) => { const t = i * (ptn.length - 1) / (n - 1), a = Math.floor(t), b = Math.min(a + 1, ptn.length - 1); return ptn[a] + (ptn[b] - ptn[a]) * (t - a); });
-}
-
-function toonPeriode(p, duur) {
-  const d = DATA[p], oud = huidig, doel = herbemonster(d.punten, 12);
-  periode = p;
-  ["p7", "p30", "p90"].forEach((id) => document.getElementById(id).classList.toggle("actief", id === "p" + p));
-  document.getElementById("grafiek-label").textContent = d.label;
-  ["omzet", "orders", "aov", "terug"].forEach((k, i) => (document.getElementById("d-" + k).textContent = d.d[i]));
-  const max = d.prod[0][1];
-  document.getElementById("producten").innerHTML = d.prod.map(([naam], i) =>
-    `<div class="prod" id="prod-${i}"><span>${naam}${i === 0 ? '<span class="waarschuw">● low stock</span>' : ""}</span><div class="bar"><i id="bar-${i}" style="width:${(oud.prod[i] / Math.max(1, oud.max || max)) * 100}%"></i></div><span class="n" id="n-${i}">${getal(oud.prod[i])}</span></div>`).join("");
-  document.getElementById("prod-0").addEventListener("click", openPaneel);
-  animeer(duur, (t) => {
-    const om = oud.omzet + (d.omzet - oud.omzet) * t, or = oud.orders + (d.orders - oud.orders) * t;
-    document.getElementById("k-omzet").textContent = euro(om);
-    document.getElementById("k-orders").textContent = getal(or);
-    document.getElementById("k-aov").textContent = or ? "€" + (om / or).toFixed(2) : "€0";
-    document.getElementById("k-terug").textContent = Math.round(oud.terug + (d.terug - oud.terug) * t) + "%";
-    const [l, v] = pad(oud.punten.map((x, i) => x + (doel[i] - x) * t));
-    document.getElementById("lijn").setAttribute("d", l);
-    document.getElementById("vlak").setAttribute("d", v);
-    d.prod.forEach(([, n], i) => {
-      const w = oud.prod[i] + (n - oud.prod[i]) * t;
-      document.getElementById("bar-" + i).style.width = (w / max) * 100 + "%";
-      document.getElementById("n-" + i).textContent = getal(w);
-    });
+function grafiek(d, t, vorig) {
+  const W = 580, H = 170, n = d.dagen.length, max = Math.max(...d.dagen.map((x) => x[0])) * 1.15, bw = (W / n) * 0.62;
+  let s = '<g stroke="#f2f4f7"><line x1="0" y1="42" x2="580" y2="42"/><line x1="0" y1="92" x2="580" y2="92"/><line x1="0" y1="142" x2="580" y2="142"/></g>';
+  const lijn = [];
+  d.dagen.forEach(([om, sp], i) => {
+    const x = (i + 0.5) * (W / n), h = (om / max) * (H - 18) * t, ys = H - 8 - (sp * 4 / max) * (H - 18) * t;
+    s += `<rect id="bar-${i}" x="${(x - bw / 2).toFixed(1)}" y="${(H - 8 - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="#1F5EFF" opacity=".85"/>`;
+    lijn.push(`${x.toFixed(1)},${ys.toFixed(1)}`);
   });
-  huidig = { omzet: d.omzet, orders: d.orders, terug: d.terug, punten: doel, prod: d.prod.map((x) => x[1]), max };
+  s += `<polyline points="${lijn.join(" ")}" fill="none" stroke="#f79009" stroke-width="2.5" stroke-linejoin="round"/>`;
+  document.getElementById("grafiek").innerHTML = s;
 }
 
-function openPaneel() {
-  const d = DATA[periode], n = d.prod[0][1];
-  document.getElementById("pn-naam").textContent = d.prod[0][0];
-  document.getElementById("pn-sold").textContent = getal(n);
-  document.getElementById("pn-stock").textContent = "48";
-  document.getElementById("pn-dag").textContent = (n / periode).toFixed(1);
-  document.getElementById("paneel").classList.add("open");
+function toon(nieuw, duur) {
+  const d = DATA[nieuw], o = oud;
+  p = nieuw;
+  document.getElementById("periode-tekst").textContent = nieuw === 7 ? "Last 7 days" : "Last 30 days";
+  document.getElementById("grafiek-sub").textContent = nieuw === 7 ? "daily · last 7 days" : "daily · last 30 days";
+  d.v.forEach((v, i) => { const el = document.getElementById("v" + i); el.textContent = v + " vs. previous"; el.className = v.startsWith("−") ? "min" : ""; });
+  document.getElementById("kanalen").innerHTML = d.kanalen.map(([naam, kl, sp, om], i) => {
+    const roas = sp ? (om / sp).toFixed(2) : "–", cls = sp ? (om / sp < 2 ? "slecht" : "goed") : "";
+    return `<tr class="klikbaar" id="kanaal-${i}"><td><span class="kanaal"><i style="background:${kl}"></i>${naam}</span>${sp && om / sp < 2 ? '<span class="tag rood">below break-even</span>' : ""}</td><td class="r">${sp ? geld(sp) : "–"}</td><td class="r">${geld(om)}</td><td class="r roas ${cls}">${roas}</td></tr>`;
+  }).join("");
+  document.getElementById("kanaal-0").addEventListener("click", () => document.getElementById("lade").classList.add("open"));
+  const max = d.prod[0][1];
+  document.getElementById("producten").innerHTML = d.prod.map(([naam, n], i) => `<div class="prod"><span>${naam}</span><div class="bar"><i id="pb-${i}" style="width:0"></i></div><span class="r" id="pn-${i}">0</span></div>`).join("");
+  animeer(duur, (t) => {
+    const om = o.omzet + (d.omzet - o.omzet) * t, or = o.orders + (d.orders - o.orders) * t, se = o.sessies + (d.sessies - o.sessies) * t;
+    const sp = o.spend + (d.spend - o.spend) * t, be = o.betaald + (d.betaald - o.betaald) * t;
+    document.getElementById("k0").textContent = geld(om);
+    document.getElementById("k1").textContent = getal(or);
+    document.getElementById("k2").textContent = or ? geld(om / or, "€", 2) : "€0";
+    document.getElementById("k3").textContent = ((or / se) * 100).toFixed(1) + "%";
+    document.getElementById("k4").textContent = geld(sp);
+    document.getElementById("k5").textContent = sp ? (be / sp).toFixed(2) : "0.00";
+    d.prod.forEach(([, n], i) => { document.getElementById("pb-" + i).style.width = (n / max) * 100 * t + "%"; document.getElementById("pn-" + i).textContent = getal(n * t); });
+    grafiek(d, t);
+  });
+  oud = { omzet: d.omzet, orders: d.orders, sessies: d.sessies, spend: d.spend, betaald: d.betaald };
 }
-document.getElementById("bestel").addEventListener("click", () => {
-  const k = document.getElementById("bestel");
-  k.classList.add("klaar"); k.textContent = "✓ Reorder created";
-  document.getElementById("t-bestel").classList.add("aan");
+
+document.getElementById("periode").addEventListener("click", () => document.getElementById("periode-lijst").classList.add("open"));
+document.getElementById("opt-30").addEventListener("click", (ev) => { ev.stopPropagation(); document.getElementById("periode-lijst").classList.remove("open"); toon(30, 1100); });
+document.getElementById("pauzeer").addEventListener("click", () => {
+  const k = document.getElementById("pauzeer"); k.className = "btn groen"; k.textContent = "✓ Paused";
+  const r = document.getElementById("camp-video"); r.style.opacity = ".45";
+  toast("Campaign paused · Spring Sale · Video", "Budget of €30/day moved to Retargeting", "✓", "#12b76a");
 });
-["7", "30", "90"].forEach((p) => document.getElementById("p" + p).addEventListener("click", () => toonPeriode(+p, 1000)));
-window.nieuweOrder = () => document.getElementById("t-order").classList.add("aan");
-window.verbergOrder = () => document.getElementById("t-order").classList.remove("aan");
-toonPeriode(7, 1200);
+function toast(titel, sub, ico, kleur) {
+  const t = document.getElementById("toast"); t.classList.remove("aan");
+  na(250, () => { document.getElementById("toast-titel").textContent = titel; document.getElementById("toast-sub").textContent = sub;
+    const i = document.getElementById("toast-ico"); i.textContent = ico; i.style.background = kleur; t.classList.add("aan"); });
+}
+window.nieuweOrder = () => { toast("New order #2291 · €58.40", "House Espresso 1kg × 2 · via Meta Ads", "🛒", "#1F5EFF"); document.getElementById("vandaag").textContent = "24"; };
+window.verbergToast = () => document.getElementById("toast").classList.remove("aan");
+window.tooltip = (i) => {
+  const d = DATA[p].dagen[i], tip = document.getElementById("tip"), bar = document.getElementById("bar-" + i).getBBox();
+  tip.innerHTML = `<b>Day ${i + 1}</b><br>Revenue ${geld(d[0])}<br>Ad spend ${geld(Math.round(d[1]))}`;
+  tip.style.left = bar.x + 14 + "px"; tip.style.top = "40px"; tip.classList.add("aan");
+};
+window.verbergTip = () => document.getElementById("tip").classList.remove("aan");
+toon(7, 1300);
 </script>
 </body></html>

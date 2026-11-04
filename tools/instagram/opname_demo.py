@@ -5,7 +5,9 @@ Opent een demo-pagina uit tools/instagram/demos/ (fictieve bedrijven, alleen
 functionaliteit die echt gebouwd kan worden, nooit klantnamen) en speelt een
 script af: muisaanwijzer bewegen, klikken, letter voor letter typen. De tijd
 wordt door deze tool bestuurd (CSS-animaties en tweens per frame verzet),
-dus elk frame is scherp en het tempo is altijd gelijk. Levert reel.mp4
+dus elk frame is scherp en het tempo is altijd gelijk. De app staat op een
+beeldscherm; "zoom" laat de camera inzoomen op een element, "ondertitel" zet
+een korte uitleg onder het scherm. Levert reel.mp4
 (1080x1920, 30 fps, zonder geluid) en cover.jpg.
 
 Spec:
@@ -17,6 +19,8 @@ Spec:
         {"doe": "typ", "id": "naam", "tekst": "James Carter"},
         {"doe": "klik", "sel": "#klus"},
         {"doe": "klik", "sel": "#klus-lijst [data-v=boiler]"},
+        {"doe": "zoom", "factor": 1.8, "sel": "#naam"},
+        {"doe": "ondertitel", "tekst": "Pick the job. *The lines fill themselves.*"},
         {"doe": "klik", "sel": "#maak"}
       ]
     }
@@ -58,7 +62,7 @@ STAP_JS = """(ms) => {
 class Opname:
     def __init__(self, pg, frames):
         self.pg, self.frames, self.n = pg, frames, 0
-        self.cx, self.cy = 540.0, 1500.0
+        self.cx, self.cy = 700.0, 700.0  # desktop-pixels (#desk, 1280x800)
         self.vorige, self.bewogen = None, True
 
     def frame(self):
@@ -80,13 +84,18 @@ class Opname:
             t = i / stappen
             e = 1 - (1 - t) ** 3
             self.cx, self.cy = x0 + (x - x0) * e, y0 + (y - y0) * e
-            self.pg.evaluate(f"window.__cursor({self.cx - 9:.1f}, {self.cy - 5:.1f})")
+            self.pg.evaluate(f"window.__cursor({self.cx:.1f}, {self.cy:.1f})")
             self.bewogen = True
             self.frame()
 
     def midden(self, sel):
-        box = self.pg.locator(sel).first.bounding_box()
-        return box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
+        return self.pg.evaluate("(s) => window.__doel(s)", sel)
+
+    def zoom(self, factor, sel=None, x=640, y=400):
+        if sel:
+            x, y = self.midden(sel)
+        self.pg.evaluate("([z, x, y]) => window.__camera(z, x, y)", [factor, x, y])
+        self.bewogen = True
 
     def klik(self, sel):
         x, y = self.midden(sel)
@@ -141,6 +150,11 @@ def render(spec, uit):
                 rec.typ(st["id"], st["tekst"])
             elif doe == "beweeg":
                 rec.beweeg(*rec.midden(st["sel"]))
+            elif doe == "zoom":
+                rec.zoom(st.get("factor", 1), st.get("sel"), st.get("x", 640), st.get("y", 400))
+            elif doe == "ondertitel":
+                pg.evaluate("(h) => window.__ondertitel(h)", opmaak(st["tekst"]))
+                rec.bewogen = True
             elif doe == "js":
                 pg.evaluate(st["code"])
                 rec.bewogen = True
