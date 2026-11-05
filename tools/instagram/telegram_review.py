@@ -24,6 +24,7 @@ Gebruik (CLI):
 import argparse
 import html
 import json
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -218,6 +219,8 @@ def luister(bot, conn):
                 bot.tekst(f"👍 Genoteerd voor concept #{wacht_op_feedback}: <i>{html.escape(tekst)}</i>\nJe krijgt de aangepaste versie zo terug.")
                 print(f"feedback op post {wacht_op_feedback}: {tekst}")
                 wacht_op_feedback = None
+                # de agent maakt meteen een nieuwe versie (los proces, zodat de bot blijft luisteren)
+                subprocess.Popen([sys.executable, str(WORKSPACE_ROOT / "apps" / "content" / "agent.py"), "verwerk"], cwd=str(WORKSPACE_ROOT))
 
 
 def main():
