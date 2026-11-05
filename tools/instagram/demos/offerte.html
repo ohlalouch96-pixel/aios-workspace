@@ -62,9 +62,9 @@
             <div class="velden">
               <div class="veld"><label>Name</label><div class="inp" id="naam" data-ph="Full name"><span class="ph">Full name</span></div></div>
               <div class="veld"><label>Email</label><div class="inp" id="email" data-ph="name@email.com"><span class="ph">name@email.com</span></div></div>
-              <div class="veld"><label>Phone</label><div class="inp" id="tel" data-ph="07…"><span class="ph">07…</span></div></div>
+              <div class="veld"><label>Phone</label><div class="inp" id="tel" data-ph="(555) …"><span class="ph">(555) …</span></div></div>
               <div class="veld rel"><label>Address</label><div class="inp" id="adres" data-ph="Start typing an address"><span class="ph">Start typing an address</span></div>
-                <div class="lijst" id="adres-lijst"><div id="adres-optie">14 Elm Grove, Bristol BS6 7XY<small>Semi-detached house · 3 bedrooms</small></div><div>14 Elm Close, Bristol BS16 2LN<small>Terraced house</small></div></div></div>
+                <div class="lijst" id="adres-lijst"><div id="adres-optie">1482 Maple Ave, Columbus, OH 43215<small>Single-family home · 3 bedrooms</small></div><div>1482 Maple Ct, Dublin, OH 43017<small>Townhouse</small></div></div></div>
             </div>
           </div>
           <div class="kaart"><h3>Job</h3>
@@ -77,9 +77,9 @@
         </div>
         <div>
           <div class="kaart sam"><h3>Summary</h3>
-            <div><span>Subtotal</span><span id="sub">£0.00</span></div><div><span>VAT 20%</span><span id="btw">£0.00</span></div>
-            <div class="tot"><span>Total</span><span id="tot">£0.00</span></div>
-            <div class="dep">20% deposit on acceptance: <b id="dep">£0.00</b></div>
+            <div><span>Subtotal</span><span id="sub">$0.00</span></div><div><span>Sales tax 8%</span><span id="btw">$0.00</span></div>
+            <div class="tot"><span>Total</span><span id="tot">$0.00</span></div>
+            <div class="dep">20% deposit on acceptance: <b id="dep">$0.00</b></div>
             <div style="font-size:12px;color:#98a2b3;margin-top:10px">Valid for 30 days · 10-year boiler warranty</div></div>
           <div class="kaart tijd"><h3>Activity</h3><div id="tijdlijn"><div><i></i>Draft created<small>09:12</small></div></div></div>
         </div>
@@ -105,10 +105,10 @@ const KETEL = [
   ["Magnetic system filter", 1, 145],
   ["Powerflush <small>· up to 10 radiators</small>", 1, 420],
   ["Smart thermostat, supplied & fitted", 1, 210],
-  ["Gas Safe certificate & Building Regs notification", 1, 85],
-  ["Labour <small>· 2 engineers, 1 day</small>", 16, 45],
+  ["Permit & inspection", 1, 150],
+  ["Labor <small>· 2 technicians, 1 day</small>", 16, 65],
 ];
-const pond = (n) => geld(n, "£", 2);
+const dollar = (n) => geld(n, "$", 2);
 const waarde = {};
 let bedrag = { sub: 0, btw: 0, tot: 0, dep: 0 };
 
@@ -118,7 +118,7 @@ window.typLetter = (id, ch) => { waarde[id] = (waarde[id] || "") + ch; toon(id);
 window.blurAlles = () => document.querySelectorAll(".inp.focus").forEach((e) => { e.classList.remove("focus"); toon(e.id); });
 
 document.getElementById("adres-optie").addEventListener("click", () => {
-  waarde.adres = "14 Elm Grove, Bristol BS6 7XY"; blurAlles(); toon("adres"); document.getElementById("adres-lijst").classList.remove("open");
+  waarde.adres = "1482 Maple Ave, Columbus, OH 43215"; blurAlles(); toon("adres"); document.getElementById("adres-lijst").classList.remove("open");
 });
 document.getElementById("sjabloon").addEventListener("click", () => { blurAlles(); document.getElementById("sjabloon-lijst").classList.add("open"); });
 document.getElementById("opt-ketel").addEventListener("click", (ev) => {
@@ -131,13 +131,13 @@ document.getElementById("opt-ketel").addEventListener("click", (ev) => {
   KETEL.forEach(([omschr, n, prijs], i) => {
     const tr = document.createElement("tr");
     tr.className = "nieuw";
-    tr.innerHTML = `<td>${omschr}</td><td class="r">${n}</td><td class="r">${pond(prijs)}</td><td class="r">${pond(n * prijs)}</td>`;
+    tr.innerHTML = `<td>${omschr}</td><td class="r">${n}</td><td class="r">${dollar(prijs)}</td><td class="r">${dollar(n * prijs)}</td>`;
     tb.appendChild(tr);
     na(120 * (i + 1), () => tr.classList.add("aan"));
     sub += n * prijs;
   });
-  const nieuw = { sub, btw: sub * 0.2, tot: sub * 1.2, dep: sub * 1.2 * 0.2 };
-  ["sub", "btw", "tot", "dep"].forEach((k) => telOp(document.getElementById(k), bedrag[k], nieuw[k], 1100, pond));
+  const nieuw = { sub, btw: sub * 0.08, tot: sub * 1.08, dep: sub * 1.08 * 0.2 };
+  ["sub", "btw", "tot", "dep"].forEach((k) => telOp(document.getElementById(k), bedrag[k], nieuw[k], 1100, dollar));
   bedrag = nieuw;
 });
 
@@ -172,7 +172,7 @@ window.bekeken = () => { tijdlijn("Opened by James", "09:16", "#f79009"); toast(
 window.geaccepteerd = () => {
   status("Accepted", "#ecfdf3", "#067647");
   tijdlijn("Accepted & signed online", "09:21", "#12b76a");
-  toast("Quote accepted · £4,092.00", "Deposit of £818.40 requested · job ready to book", "✓", "#12b76a");
+  toast("Quote accepted · $4,098.60", "Deposit of $819.72 requested · job ready to book", "✓", "#12b76a");
 };
 </script>
 </body></html>

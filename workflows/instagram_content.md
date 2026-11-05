@@ -78,7 +78,11 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 
 **Zo echt mogelijk (04-11):** desktop-software op een echt beeldscherm, met inzoomen op waar geklikt wordt, herkenbare situaties uit de praktijk (bijv. cv-ketel vervangen, ROAS per advertentiekanaal), realistische cijfers die onderling kloppen. Doel: de kijker denkt "dit gaat over mij". Fictieve bedrijven en gegevens, maar alleen functionaliteit die echt gebouwd kan worden. Onderwerpen: offerte-maker, dashboard, binnenkomende factuur, WhatsApp-bericht, klantenservice-chat, rekentool, calculaties. Zonder n8n.
 
-- Demo-pagina's: `tools/instagram/demos/<naam>.html` + standaardscript `<naam>.json` (klik/typ/wacht/js-stappen). Klaar: `offerte` (Brightline Heating, cv-ketel vervangen, UK/£), `dashboard` (Northfield Coffee, omzet/ROAS per kanaal). Desktop-app (1280x800) op een beeldscherm; stappen `zoom` (camera) en `ondertitel` (uitleg onder het scherm) per moment.
+- Demo-pagina's: `tools/instagram/demos/<naam>.html` + standaardscript `<naam>.json`. Valuta altijd **US dollar** (besluit 05-11). Klaar (7):
+  `offerte` (beeldscherm, cv-ketel vervangen), `dashboard` (beeldscherm, omzet/ROAS per kanaal), `calculatie` (laptop, dakdekker),
+  `factuur` (beeldscherm, donkere app, factuur automatisch uitgelezen), `whatsapp` (telefoon, kapper boekt via WhatsApp),
+  `klantenservice` (tablet, webshop-chat met overdracht naar mens), `rekentool` (telefoon, Insightance-rekentool, formule = website).
+- **Afwisseling:** wissel toestel (beeldscherm, laptop, telefoon, tablet) én app-opmaak (zijbalk/bovenbalk, licht/donker, accentkleur). Chat/WhatsApp altijd op een telefoon. Op een telefoon niet inzoomen (snijdt af), telefoon is groot genoeg.
 - Opnemen: `python tools/instagram/opname_demo.py tools/instagram/demos/offerte.json` → reel.mp4 + cover.jpg. Frame voor frame (scherp), ±45 sec renderen.
 - Nieuwe demo: zelfde opbouw (`_demo.css`/`_demo.js`), velden via `focusVeld`/`typLetter`, animaties via CSS of `animeer()`. Geen native `<select>` (popup komt niet in beeld), gebruik een eigen lijst.
 - Fictieve namen: generiek, geen bestaande merken, e-mail/domein op `.example` of een algemeen voorbeeldadres.

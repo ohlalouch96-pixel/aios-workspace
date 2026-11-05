@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — WhatsApp-boekingsassistent kapper (fictief)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+#desk { background: #efeae2; font-family: Inter, sans-serif; }
+.status { position: absolute; left: 0; right: 0; top: 0; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 6px 30px 0 34px; font: 600 15px Inter; background: #f6f6f6; z-index: 5; }
+.status .ico { display: flex; gap: 6px; align-items: center; }
+.status .bat { width: 25px; height: 12px; border: 1.5px solid #111; border-radius: 4px; position: relative; } .status .bat:after { content: ''; position: absolute; left: 1.5px; top: 1.5px; bottom: 1.5px; width: 70%; background: #111; border-radius: 1.5px; }
+.kop { position: absolute; left: 0; right: 0; top: 46px; height: 58px; display: flex; align-items: center; gap: 10px; padding: 0 12px; background: #f6f6f6; border-bottom: 1px solid #e3e3e3; z-index: 5; }
+.kop .terug { font-size: 26px; color: #1f8ef1; width: 18px; }
+.kop .ava { width: 38px; height: 38px; border-radius: 50%; background: #1d1d1f; color: #fff; display: grid; place-items: center; font: 800 14px Inter; }
+.kop .naam { font: 600 16px Inter; } .kop .naam small { display: block; font: 400 12.5px Inter; color: #667781; }
+.kop .acties { margin-left: auto; display: flex; gap: 18px; color: #1f8ef1; font-size: 20px; }
+.chat { position: absolute; left: 0; right: 0; top: 104px; bottom: 56px; padding: 10px 10px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px;
+  background-image: radial-gradient(rgba(0,0,0,.035) 1.5px, transparent 1.6px); background-size: 22px 22px; transition: bottom .3s ease; }
+.toetsen-open .chat { bottom: 316px; }
+.datum { align-self: center; background: #fff; color: #54656f; font: 500 12px Inter; padding: 5px 10px; border-radius: 8px; margin: 6px 0; box-shadow: 0 1px .5px rgba(0,0,0,.13); }
+.b { max-width: 78%; padding: 7px 9px 6px; border-radius: 9px; font: 400 15px/1.36 Inter; box-shadow: 0 1px .5px rgba(0,0,0,.13); position: relative; opacity: 0; transform: translateY(8px) scale(.98); transition: opacity .25s, transform .25s; }
+.b.aan { opacity: 1; transform: none; }
+.b.in { align-self: flex-start; background: #fff; border-top-left-radius: 2px; }
+.b.uit { align-self: flex-end; background: #d9fdd3; border-top-right-radius: 2px; }
+.b .t { float: right; font-size: 11px; color: #667781; margin: 8px 0 -4px 10px; }
+.b .vink { color: #8696a0; letter-spacing: -3px; margin-left: 3px; transition: color .3s; } .b .vink.blauw { color: #53bdeb; }
+.knoppen { align-self: flex-start; width: 78%; display: grid; gap: 3px; margin-top: -2px; opacity: 0; transition: opacity .25s; }
+.knoppen.aan { opacity: 1; }
+.knoppen div { background: #fff; border-radius: 8px; text-align: center; padding: 10px; font: 500 15px Inter; color: #027eb5; box-shadow: 0 1px .5px rgba(0,0,0,.13); transition: background .2s; }
+.knoppen div.hover { background: #e9edef; }
+.knoppen.weg div { color: #8696a0; }
+.balk { position: absolute; left: 0; right: 0; bottom: 0; height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 10px; background: #f6f6f6; transition: bottom .3s ease; z-index: 6; }
+.toetsen-open .balk { bottom: 260px; }
+.balk .plus { font-size: 26px; color: #1f8ef1; }
+.veld { flex: 1; height: 36px; border-radius: 18px; background: #fff; border: 1px solid #e3e3e3; display: flex; align-items: center; padding: 0 14px; font: 400 15px Inter; color: #111; white-space: nowrap; overflow: hidden; }
+.veld .ph { color: #8696a0; } .veld .caret { display: inline-block; width: 1.5px; height: 18px; background: #1f8ef1; margin-left: 1px; }
+.stuur { width: 36px; height: 36px; border-radius: 50%; background: #1f8ef1; color: #fff; display: grid; place-items: center; font-size: 16px; }
+.toetsenbord { position: absolute; left: 0; right: 0; bottom: 0; height: 260px; background: #d1d4d9; padding: 8px 3px 0; transform: translateY(100%); transition: transform .3s ease; z-index: 6; }
+.toetsen-open .toetsenbord { transform: none; }
+.toetsenbord .rij { display: flex; justify-content: center; gap: 6px; margin-bottom: 11px; }
+.toetsenbord .rij span { width: 32px; height: 42px; border-radius: 6px; background: #fff; display: grid; place-items: center; font: 400 21px Inter; box-shadow: 0 1px 0 #8e9096; }
+.toetsenbord .rij span.breed { width: 44px; background: #abb0ba; font-size: 15px; }
+.toetsenbord .rij span.spatie { width: 180px; font-size: 15px; }
+.toetsenbord .rij span.druk { background: #abb0ba; }
+.home { position: absolute; left: 50%; bottom: 7px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #111; z-index: 7; }
+</style></head>
+<body class="mobiel" style="--hookbg:#17345F">
+<div id="hook"></div>
+<div class="telefoon"><div class="eiland"></div><div class="scherm"><div id="camera"><div id="desk">
+  <div class="status"><span>23:12</span><span class="ico"><span style="font-size:12px;letter-spacing:-1px">▂▄▆█</span><span style="font-size:13px">5G</span><span class="bat"></span></span></div>
+  <div class="kop"><span class="terug">‹</span><div class="ava">F&amp;C</div><div class="naam">Fade &amp; Co. Barbers<small id="sub">business account</small></div><div class="acties"><span>▶</span><span>✆</span></div></div>
+  <div class="chat" id="chat"><div class="datum">Today</div></div>
+  <div class="balk"><span class="plus">+</span><div class="veld" id="veld"><span class="ph">Message</span></div><div class="stuur" id="stuur">➤</div></div>
+  <div class="toetsenbord" id="tb">
+    <div class="rij"><span>q</span><span>w</span><span>e</span><span>r</span><span>t</span><span>y</span><span>u</span><span>i</span><span>o</span><span>p</span></div>
+    <div class="rij"><span>a</span><span>s</span><span>d</span><span>f</span><span>g</span><span>h</span><span>j</span><span>k</span><span>l</span></div>
+    <div class="rij"><span class="breed">⇧</span><span>z</span><span>x</span><span>c</span><span>v</span><span>b</span><span>n</span><span>m</span><span class="breed">⌫</span></div>
+    <div class="rij"><span class="breed">123</span><span class="breed">☺</span><span class="spatie">space</span><span class="breed">return</span></div>
+  </div>
+  <div class="home"></div>
+</div></div></div></div>
+<div id="ondertitel"></div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+let tekst = "", tijd = "23:12";
+const chat = document.getElementById("chat"), desk = () => document.getElementById("desk");
+function toonVeld(focus) { document.getElementById("veld").innerHTML = (tekst || '<span class="ph">Message</span>') + (focus ? '<span class="caret"></span>' : ""); }
+window.focusVeld = () => { desk().classList.add("toetsen-open"); toonVeld(true); };
+window.typLetter = (_, ch) => {
+  tekst += ch; toonVeld(true);
+  const toets = [...document.querySelectorAll(".toetsenbord .rij span")].find((s) => s.textContent === ch.toLowerCase() || (ch === " " && s.textContent === "space"));
+  if (toets) { toets.classList.add("druk"); na(90, () => toets.classList.remove("druk")); }
+};
+function bubbel(html, kant, extra) {
+  const b = document.createElement("div");
+  b.className = "b " + kant;
+  b.innerHTML = html + `<span class="t">${tijd}${kant === "uit" ? '<span class="vink">✓✓</span>' : ""}</span>`;
+  chat.appendChild(b);
+  na(20, () => b.classList.add("aan"));
+  if (kant === "uit") na(700, () => b.querySelector(".vink").classList.add("blauw"));
+  return b;
+}
+function knoppen(lijst, id) {
+  const k = document.createElement("div");
+  k.className = "knoppen"; k.id = id;
+  k.innerHTML = lijst.map((x, i) => `<div id="${id}-${i}">${x}</div>`).join("");
+  chat.appendChild(k);
+  na(250, () => k.classList.add("aan"));
+  lijst.forEach((x, i) => document.getElementById(`${id}-${i}`).addEventListener("click", () => kies(id, x)));
+}
+function typt(ms, dan) { const s = document.getElementById("sub"); s.textContent = "typing…"; s.style.color = "#25a35a"; na(ms, () => { s.textContent = "business account"; s.style.color = ""; dan(); }); }
+
+document.getElementById("veld").addEventListener("click", focusVeld);
+document.getElementById("stuur").addEventListener("click", () => {
+  bubbel(tekst, "uit"); tekst = ""; toonVeld(false); desk().classList.remove("toetsen-open");
+  typt(1300, () => {
+    bubbel("Hey Mike 👋 Saturday we still have these open. Which one works for you?", "in");
+    knoppen(["10:30", "13:00", "15:30"], "tijden");
+  });
+});
+function kies(id, x) {
+  document.getElementById(id).classList.add("weg");
+  bubbel(x, "uit");
+  if (id === "tijden") typt(1100, () => { bubbel("Great choice. Who would you like?", "in"); knoppen(["Jay", "Sam", "No preference"], "kapper"); });
+  if (id === "kapper") typt(1300, () => bubbel("You're booked ✅<br><b>Saturday, 13:00 with Sam</b><br>Skin fade · $35<br>📍 214 Main St<br><br>We'll remind you on Friday. Reply <b>CHANGE</b> to move it.", "in"));
+}
+window.herinnering = () => {
+  [...chat.querySelectorAll(".b, .knoppen")].slice(0, 3).forEach((e) => e.remove());
+  tijd = "10:00";
+  const d = document.createElement("div"); d.className = "datum"; d.textContent = "Friday"; chat.appendChild(d);
+  bubbel("Reminder ✂️ Tomorrow at <b>13:00</b> with Sam. See you then, Mike!", "in");
+};
+</script>
+</body></html>

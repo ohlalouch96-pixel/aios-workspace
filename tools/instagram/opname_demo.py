@@ -135,6 +135,7 @@ def render(spec, uit):
                     [k["cbg"], k["cfg"], k["acc"]])
         pg.evaluate("document.getAnimations().forEach(a => a.finish())")
         rec = Opname(pg, frames)
+        rec.cx, rec.cy = pg.evaluate("(() => { const d = document.getElementById('desk'); return [d.offsetWidth * .55, d.offsetHeight * .85]; })()")
         rec.wacht(0.3)
         pg.evaluate("(h) => window.__hook(h)", opmaak(spec["hook"]))
         rec.bewogen = True
@@ -148,6 +149,13 @@ def render(spec, uit):
                 rec.klik(st["sel"])
             elif doe == "typ":
                 rec.typ(st["id"], st["tekst"])
+            elif doe == "typ_rest":  # alleen typen, veld is al aangeklikt (bv. op een telefoon)
+                for ch in st["tekst"]:
+                    pg.evaluate("([id, ch]) => window.typLetter(id, ch)", [st["id"], ch])
+                    rec.bewogen = True
+                    rec.frame()
+                    rec.frame()
+                rec.wacht(0.25)
             elif doe == "beweeg":
                 rec.beweeg(*rec.midden(st["sel"]))
             elif doe == "zoom":

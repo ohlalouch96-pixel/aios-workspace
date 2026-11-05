@@ -1,0 +1,18 @@
+{"demo":"rekentool","kleurenset":"blauw","hook":"How much is your store *leaving on the table?*",
+"stappen":[
+ {"doe":"wacht","s":0.8},
+ {"doe":"ondertitel","tekst":"Your orders per month"},
+ {"doe":"klik","sel":"#orders"},
+ {"doe":"js","code":"focusVeld('orders')"},
+ {"doe":"typ_rest","id":"orders","tekst":"320"},
+ {"doe":"ondertitel","tekst":"Your average order value"},
+ {"doe":"klik","sel":"#aov"},
+ {"doe":"js","code":"focusVeld('aov')"},
+ {"doe":"typ_rest","id":"aov","tekst":"62"},
+ {"doe":"js","code":"focusVeld('')"},
+ {"doe":"ondertitel","tekst":"That's what abandoned carts *cost you*"},
+ {"doe":"wacht","s":2.2},
+ {"doe":"ondertitel","tekst":"And what 3 emails *win back*"},
+ {"doe":"wacht","s":2.4},
+ {"doe":"klik","sel":"#knop"},
+ {"doe":"wacht","s":1.8}]}

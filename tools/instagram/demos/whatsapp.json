@@ -1,0 +1,20 @@
+{"demo":"whatsapp","kleurenset":"navy","hook":"A customer texts at *11pm.* Who answers?",
+"stappen":[
+ {"doe":"wacht","s":0.8},
+ {"doe":"ondertitel","tekst":"A customer asks for a slot"},
+ {"doe":"klik","sel":"#veld"},
+ 
+ {"doe":"wacht","s":0.4},
+ {"doe":"typ_rest","id":"veld","tekst":"Hi! Any chance of a haircut this Saturday?"},
+ {"doe":"klik","sel":"#stuur"},
+ {"doe":"wacht","s":0.6},
+ {"doe":"ondertitel","tekst":"Answered in seconds. *Even at night.*"},
+ {"doe":"wacht","s":2.4},
+ {"doe":"klik","sel":"#tijden-1"},
+ {"doe":"wacht","s":2.2},
+ {"doe":"ondertitel","tekst":"Booked, *without you lifting a finger*"},
+ {"doe":"klik","sel":"#kapper-1"},
+ {"doe":"wacht","s":3.6},
+ {"doe":"ondertitel","tekst":"And the reminder? *Automatic.*"},
+ {"doe":"js","code":"herinnering()"},
+ {"doe":"wacht","s":2.8}]}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — rekentool verlaten mandjes (Insightance)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+#desk { background: #f5f8fc; color: #17345F; font-family: Inter, sans-serif; }
+.status { height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 6px 30px 0 34px; font: 600 15px Inter; background: #fff; }
+.status .bat { width: 25px; height: 12px; border: 1.5px solid #111; border-radius: 4px; position: relative; display: inline-block; } .status .bat:after { content: ''; position: absolute; left: 1.5px; top: 1.5px; bottom: 1.5px; width: 80%; background: #111; border-radius: 1.5px; }
+.pagina { position: absolute; left: 0; right: 0; top: 46px; bottom: 82px; overflow: hidden; }
+.site { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; background: #fff; border-bottom: 1px solid #e6edf6; }
+.site b { font-size: 15px; letter-spacing: .14em; } .site span { font-size: 22px; }
+.intro { padding: 22px 20px 10px; } .intro small { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; color: #3D6AA8; }
+.intro h1 { font: 700 26px/1.15 Georgia, serif; margin: 8px 0 8px; } .intro p { font-size: 14px; line-height: 1.5; color: #3B5478; }
+.calc { margin: 10px 16px; border-radius: 18px; overflow: hidden; border: 1px solid #dce6f4; background: #fff; box-shadow: 0 20px 40px -24px rgba(23,52,95,.4); }
+.in { padding: 16px; display: grid; gap: 12px; }
+.in label { display: block; font-size: 12.5px; font-weight: 600; color: #3B5478; margin-bottom: 5px; }
+.inp { height: 44px; border: 1.5px solid #cfdcee; border-radius: 11px; display: flex; align-items: center; padding: 0 13px; font: 600 17px Inter; }
+.inp.focus { border-color: #1F5EFF; box-shadow: 0 0 0 3px rgba(31,94,255,.15); } .inp .ph { color: #9aaecb; font-weight: 400; } .inp .caret { display: inline-block; width: 1.5px; height: 20px; background: #1F5EFF; margin-left: 1px; }
+.uit { background: #17345F; color: #fff; padding: 16px; display: grid; gap: 10px; position: relative; }
+.uit:before { content: ''; position: absolute; inset: 0; background: radial-gradient(70% 80% at 100% 0%, rgba(31,94,255,.45), transparent 70%); }
+.uit div { position: relative; } .uit small { display: block; font-size: 12px; color: #9DBBE3; } .uit b { font-size: 22px; letter-spacing: -.01em; }
+.uit .groot b { font-size: 28px; color: #fff; } .uit .jaar { font-size: 12.5px; color: #c9d8ef; }
+.uit .knop { margin-top: 4px; justify-self: start; padding: 11px 18px; border-radius: 22px; background: #1F5EFF; font-size: 14px; font-weight: 700; transition: background .25s; }
+.note { font-size: 11.5px; color: #7d90ad; padding: 0 20px; line-height: 1.45; }
+.safari { position: absolute; left: 0; right: 0; bottom: 0; height: 82px; background: rgba(248,248,248,.96); border-top: 1px solid #ddd; padding: 8px 14px 0; }
+.safari .adres { height: 38px; border-radius: 12px; background: #e9e9eb; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14.5px; color: #111; }
+.home { position: absolute; left: 50%; bottom: 7px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #111; }
+</style></head>
+<body class="mobiel" style="--hookbg:#1F5EFF;--hookacc:#FFD84D">
+<div id="hook"></div>
+<div class="telefoon"><div class="eiland"></div><div class="scherm"><div id="camera"><div id="desk">
+  <div class="status"><span>9:41</span><span><span style="font-size:12px;letter-spacing:-1px">▂▄▆█</span> <span class="bat"></span></span></div>
+  <div class="pagina">
+    <div class="site"><b>INSIGHTANCE</b><span>≡</span></div>
+    <div class="intro"><small>CALCULATOR</small><h1>What is your store leaving on the table?</h1><p>Enter two numbers. See how much revenue sits in abandoned carts, and how much a good email series wins back.</p></div>
+    <div class="calc">
+      <div class="in">
+        <div><label>Orders per month</label><div class="inp" id="orders" data-ph="e.g. 300"><span class="ph">e.g. 300</span></div></div>
+        <div><label>Average order value</label><div class="inp" id="aov" data-ph="$ e.g. 55"><span class="ph">$ e.g. 55</span></div></div>
+      </div>
+      <div class="uit">
+        <div><small>Abandoned carts per month</small><b id="o-carts">0</b></div>
+        <div><small>Revenue in those carts</small><b id="o-lost">$0</b></div>
+        <div class="groot"><small>Recoverable per month</small><b id="o-month">$0 – $0</b><div class="jaar" id="o-year">$0 – $0 per year</div></div>
+        <div class="knop" id="knop">Talk through your numbers</div>
+      </div>
+    </div>
+    <p class="note">Estimate based on averages: 70% of carts are abandoned, and a good three-email series wins back 5 to 10% of them.</p>
+  </div>
+  <div class="safari"><div class="adres">🔒 insightance.ai</div></div>
+  <div class="home"></div>
+</div></div></div></div>
+<div id="ondertitel"></div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+// zelfde formule als de rekentool op insightance.ai/webshops: mandjes = orders / 0,3 × 0,7; terug te halen = 5–10% van de omzet in die mandjes
+const waarde = { orders: "", aov: "" };
+let oud = { carts: 0, lost: 0 };
+const usd = (n) => "$" + Math.round(n).toLocaleString("en-US");
+function toon(id, focus) { const el = document.getElementById(id), v = waarde[id]; el.classList.toggle("focus", focus);
+  el.innerHTML = (v ? (id === "aov" ? "$" : "") + Number(v).toLocaleString("en-US") : `<span class="ph">${el.dataset.ph}</span>`) + (focus ? '<span class="caret"></span>' : ""); }
+window.focusVeld = (id) => { ["orders", "aov"].forEach((x) => toon(x, x === id)); };
+window.typLetter = (id, ch) => { waarde[id] += ch; toon(id, true); reken(); };
+function reken() {
+  const orders = parseFloat(waarde.orders) || 0, aov = parseFloat(waarde.aov) || 0;
+  const carts = orders / 0.3 * 0.7, lost = carts * aov, o = oud;
+  animeer(600, (t) => {
+    const c = o.carts + (carts - o.carts) * t, l = o.lost + (lost - o.lost) * t;
+    document.getElementById("o-carts").textContent = Math.round(c).toLocaleString("en-US");
+    document.getElementById("o-lost").textContent = usd(l);
+    document.getElementById("o-month").textContent = usd(l * 0.05) + " – " + usd(l * 0.1);
+    document.getElementById("o-year").textContent = usd(l * 0.05 * 12) + " – " + usd(l * 0.1 * 12) + " per year";
+  });
+  oud = { carts, lost };
+}
+document.getElementById("knop").addEventListener("click", () => { const k = document.getElementById("knop"); k.style.background = "#12b76a"; k.textContent = "✓ Opening calendar…"; });
+</script>
+</body></html>

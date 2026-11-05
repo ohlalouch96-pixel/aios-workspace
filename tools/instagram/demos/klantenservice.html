@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — klantenservice-assistent webshop (fictief)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+#desk { background: #faf7f2; font-family: Inter, sans-serif; color: #2b211b; }
+.browser { height: 54px; background: #ece9e4; display: flex; align-items: center; gap: 14px; padding: 0 18px; border-bottom: 1px solid #ddd8d0; }
+.browser .url { flex: 1; height: 32px; border-radius: 9px; background: #fff; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; color: #555; }
+.browser .knop { width: 30px; height: 30px; border-radius: 8px; background: #dcd8d1; }
+.shopnav { height: 66px; display: flex; align-items: center; gap: 30px; padding: 0 40px; border-bottom: 1px solid #ece6dc; background: #fff; }
+.shopnav b { font-size: 20px; letter-spacing: .04em; } .shopnav a { font-size: 14px; color: #6b5d52; } .shopnav .mand { margin-left: auto; font-size: 14px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; }
+.hero .foto { height: 440px; border-radius: 18px; background: radial-gradient(circle at 50% 60%, #6b4630 0 30%, #8a5b3d 31% 45%, #e9dccb 46%); }
+.hero h1 { font-size: 40px; line-height: 1.1; margin: 18px 0 10px; font-family: Georgia, serif; } .hero p { font-size: 16px; line-height: 1.6; color: #6b5d52; }
+.hero .prijs { font-size: 24px; font-weight: 700; margin: 18px 0; } .hero .koop { display: inline-block; padding: 14px 26px; border-radius: 30px; background: #2b211b; color: #fff; font-weight: 600; }
+.bel { position: absolute; right: 28px; bottom: 28px; width: 64px; height: 64px; border-radius: 50%; background: #2b211b; color: #fff; display: grid; place-items: center; font-size: 26px; box-shadow: 0 10px 24px rgba(0,0,0,.25); z-index: 20; transition: transform .2s; }
+.widget { position: absolute; right: 28px; bottom: 106px; width: 420px; height: 620px; background: #fff; border-radius: 20px; box-shadow: 0 24px 60px rgba(43,33,27,.28); overflow: hidden; z-index: 20;
+  transform-origin: 100% 100%; transform: scale(.6); opacity: 0; transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .25s; display: flex; flex-direction: column; }
+.widget.open { transform: none; opacity: 1; }
+.wkop { background: #2b211b; color: #fff; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
+.wkop i { width: 38px; height: 38px; border-radius: 50%; background: #c08457; font-style: normal; display: grid; place-items: center; font-weight: 800; }
+.wkop b { display: block; font-size: 15px; } .wkop small { font-size: 12px; color: #d6c7b8; }
+.berichten { flex: 1; padding: 14px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; background: #faf7f2; overflow: hidden; }
+.m { max-width: 82%; padding: 10px 12px; border-radius: 14px; font-size: 14px; line-height: 1.45; opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s; }
+.m.aan { opacity: 1; transform: none; }
+.m.bot { align-self: flex-start; background: #fff; border: 1px solid #ece6dc; border-bottom-left-radius: 4px; }
+.m.klant { align-self: flex-end; background: #2b211b; color: #fff; border-bottom-right-radius: 4px; }
+.order { margin-top: 8px; border: 1px solid #ece6dc; border-radius: 12px; padding: 10px; background: #faf7f2; }
+.order .st { display: flex; justify-content: space-between; font-size: 12px; color: #6b5d52; margin-bottom: 6px; }
+.order .bar { height: 6px; border-radius: 3px; background: #ece6dc; overflow: hidden; } .order .bar i { display: block; height: 100%; width: 70%; background: #3f9d63; }
+.order a { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #8a5b3d; }
+.keuzes { display: flex; flex-wrap: wrap; gap: 6px; align-self: flex-start; opacity: 0; transition: opacity .25s; } .keuzes.aan { opacity: 1; }
+.keuzes span { font-size: 13px; padding: 8px 12px; border: 1px solid #c08457; color: #8a5b3d; border-radius: 18px; background: #fff; transition: background .2s; } .keuzes span.hover { background: #f5ebe0; }
+.typen { align-self: flex-start; background: #fff; border: 1px solid #ece6dc; border-radius: 14px; padding: 12px 14px; display: none; gap: 4px; }
+.typen.aan { display: flex; } .typen i { width: 7px; height: 7px; border-radius: 50%; background: #b8a99b; animation: stip 1s infinite; } .typen i:nth-child(2) { animation-delay: .15s; } .typen i:nth-child(3) { animation-delay: .3s; }
+@keyframes stip { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+.invoer { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #ece6dc; }
+.invoer .veld { flex: 1; height: 40px; border: 1px solid #ddd3c7; border-radius: 20px; display: flex; align-items: center; padding: 0 14px; font-size: 14px; white-space: nowrap; overflow: hidden; }
+.invoer .veld.focus { border-color: #8a5b3d; } .invoer .ph { color: #b8a99b; } .invoer .caret { display: inline-block; width: 1.5px; height: 17px; background: #8a5b3d; margin-left: 1px; }
+.invoer .stuur { width: 40px; height: 40px; border-radius: 50%; background: #2b211b; color: #fff; display: grid; place-items: center; font-size: 15px; }
+.mens { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #3f9d63; font-weight: 600; }
+</style></head>
+<body class="tablet-modus" style="--hookbg:#C8372D;--hookacc:#FFE1D6">
+<div id="hook"></div>
+<div class="tablet"><div class="scherm"><div id="camera"><div id="desk">
+  <div class="browser"><span class="knop"></span><div class="url">🔒 northfieldcoffee.example/products/ethiopia</div><span class="knop"></span></div>
+  <div class="shopnav"><b>NORTHFIELD</b><a>Coffee</a><a>Subscriptions</a><a>Equipment</a><a>Our roastery</a><span class="mand">Cart (0)</span></div>
+  <div class="hero"><div class="foto"></div><div><small style="color:#8a5b3d;font-weight:600;letter-spacing:.1em">SINGLE ORIGIN</small><h1>Ethiopia Yirgacheffe</h1><p>Washed, light roast. Notes of jasmine, bergamot and stone fruit. Roasted to order every Tuesday and Friday.</p><div class="prijs">$18.50 · 250g</div><span class="koop">Add to cart</span></div></div>
+  <div class="widget" id="widget">
+    <div class="wkop"><i>N</i><div><b>Northfield help</b><small>Usually answers instantly · a person is on hand 9–5</small></div></div>
+    <div class="berichten" id="berichten"><div class="m bot aan">Hi! 👋 Ask me anything about your order, shipping or our coffee.</div><div class="typen" id="typen"><i></i><i></i><i></i></div></div>
+    <div class="invoer"><div class="veld" id="veld"><span class="ph">Type your question…</span></div><div class="stuur" id="stuur">➤</div></div>
+  </div>
+  <div class="bel" id="bel">💬</div>
+</div></div></div></div>
+<div id="ondertitel"></div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+let tekst = "", vraag = 0;
+const bus = document.getElementById("berichten"), typen = document.getElementById("typen");
+function veld(f) { const v = document.getElementById("veld"); v.classList.toggle("focus", f); v.innerHTML = (tekst || '<span class="ph">Type your question…</span>') + (f ? '<span class="caret"></span>' : ""); }
+window.focusVeld = () => veld(true);
+window.typLetter = (_, ch) => { tekst += ch; veld(true); };
+function bericht(html, wie) { const m = document.createElement("div"); m.className = "m " + wie; m.innerHTML = html; bus.insertBefore(m, typen); na(20, () => m.classList.add("aan")); return m; }
+function antwoord(ms, html, dan) { typen.classList.add("aan"); bus.appendChild(typen); na(ms, () => { typen.classList.remove("aan"); bericht(html, "bot"); if (dan) dan(); }); }
+document.getElementById("bel").addEventListener("click", () => document.getElementById("widget").classList.add("open"));
+document.getElementById("stuur").addEventListener("click", () => {
+  bericht(tekst, "klant"); tekst = ""; veld(false); vraag++;
+  if (vraag === 1) antwoord(1200, `Found it! Order <b>#2291</b> shipped yesterday.<div class="order"><div class="st"><span>In transit · UPS</span><span>Arrives <b>Thu, Nov 7</b></span></div><div class="bar"><i></i></div><a>Track package →</a></div>`);
+  if (vraag === 2) antwoord(1300, "It's already on its way, so I can't change the grind on this one. I can send you a free return label, or set espresso grind on your next order. Or I can get someone from the team.", () => {
+    const k = document.createElement("div"); k.className = "keuzes"; k.innerHTML = '<span>Free return label</span><span>Next order: espresso</span><span id="persoon">Talk to a person</span>';
+    bus.insertBefore(k, typen); na(250, () => k.classList.add("aan"));
+    document.getElementById("persoon").addEventListener("click", () => {
+      k.remove(); bericht("Talk to a person", "klant");
+      antwoord(1000, '<div class="mens">● Sophie from Northfield joined</div>Hi! I saw the whole chat, no need to repeat anything. I\'ll swap it for espresso grind and send a label right away ☕');
+    });
+  });
+});
+</script>
+</body></html>

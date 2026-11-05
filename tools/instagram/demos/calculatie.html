@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — calculatie dakdekker (fictief)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+#desk { background: #f4f6f3; }
+.top { height: 58px; background: #fff; border-bottom: 1px solid #e4e7e2; display: flex; align-items: center; gap: 28px; padding: 0 26px; }
+.top .merk { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; color: #14301f; }
+.top .merk i { width: 30px; height: 30px; border-radius: 8px; background: #15803d; color: #fff; display: grid; place-items: center; font-style: normal; font-size: 15px; }
+.top nav { display: flex; gap: 4px; } .top nav a { padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #5b6b60; }
+.top nav a.actief { background: #ecf7ef; color: #15803d; }
+.top .rechts { margin-left: auto; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #5b6b60; }
+.top .rechts i { width: 30px; height: 30px; border-radius: 50%; background: #d8e2da; font-style: normal; display: grid; place-items: center; font-weight: 700; color: #14301f; font-size: 12px; }
+.titel { display: flex; align-items: baseline; gap: 12px; padding: 18px 26px 10px; }
+.titel h1 { font-size: 22px; font-weight: 800; color: #14301f; } .titel span { font-size: 14px; color: #5b6b60; }
+.grid { display: grid; grid-template-columns: 1fr 470px; gap: 18px; padding: 0 26px; }
+.blok { background: #fff; border: 1px solid #e4e7e2; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; }
+.blok h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: #5b6b60; margin-bottom: 12px; }
+.rij2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.veld label { display: block; font-size: 12px; font-weight: 600; color: #5b6b60; margin-bottom: 5px; }
+.inp { height: 40px; border: 1px solid #cfd8d1; border-radius: 9px; padding: 0 12px; display: flex; align-items: center; font-size: 15px; font-weight: 600; background: #fff; }
+.inp.focus { border-color: #15803d; box-shadow: 0 0 0 3px rgba(21,128,61,.15); }
+.inp .ph { color: #9aa79e; font-weight: 400; } .inp .caret { display: inline-block; width: 1.5px; height: 18px; background: #15803d; margin-left: 1px; } .inp .eenh { margin-left: auto; color: #9aa79e; font-weight: 500; font-size: 13px; }
+.chips { display: flex; gap: 8px; } .chip { padding: 9px 14px; border-radius: 9px; border: 1px solid #cfd8d1; font-size: 13.5px; font-weight: 600; color: #3d4a41; transition: all .2s; }
+.chip.aan { background: #15803d; border-color: #15803d; color: #fff; }
+.mats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mat { border: 1.5px solid #e4e7e2; border-radius: 12px; padding: 12px; transition: border-color .2s, background .2s; }
+.mat .foto { height: 54px; border-radius: 8px; margin-bottom: 9px; }
+.mat b { display: block; font-size: 14px; color: #14301f; } .mat small { font-size: 12.5px; color: #5b6b60; }
+.mat.aan { border-color: #15803d; background: #f3faf5; }
+.post { display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-bottom: 1px solid #f0f2ef; color: #3d4a41; }
+.post small { color: #8a978e; margin-left: 6px; }
+.kost { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; padding: 10px 0 4px; }
+.marges { display: flex; gap: 8px; margin: 12px 0; } .marges .chip { flex: 1; text-align: center; }
+.prijs { background: #14301f; color: #fff; border-radius: 12px; padding: 14px 16px; }
+.prijs .groot { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; } .prijs .groot b { font-size: 30px; letter-spacing: -.02em; }
+.prijs .sub { display: flex; justify-content: space-between; font-size: 13px; color: #b7d3bf; margin-top: 6px; }
+.verhouding { height: 10px; border-radius: 5px; background: #2b4a37; overflow: hidden; display: flex; margin-top: 10px; } .verhouding i { display: block; height: 100%; }
+.knop { margin-top: 12px; height: 44px; border-radius: 10px; background: #15803d; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; transition: background .25s; }
+.knop.klaar { background: #0e5c2b; }
+.toast { right: 26px; top: 70px; }
+</style></head>
+<body style="--hookbg:#153B2E;--hookacc:#B6F36B">
+<div id="hook"></div>
+<div class="laptop"><div class="scherm"><div id="camera"><div id="desk">
+  <div class="top"><div class="merk"><i>R</i>Ridgeway Roofing</div><nav><a>Jobs</a><a class="actief">Estimates</a><a>Crew</a><a>Materials</a><a>Invoices</a></nav><div class="rechts">Estimate E-3307 · draft<i>DW</i></div></div>
+  <div class="titel"><h1>Roof replacement</h1><span>The Parkers · 88 Cedar Ridge Rd</span></div>
+  <div class="grid">
+    <div>
+      <div class="blok"><h3>Measurements</h3>
+        <div class="rij2">
+          <div class="veld"><label>Roof area</label><div class="inp" id="opp" data-ph="0" data-eenh="sq ft"><span class="ph">0</span><span class="eenh">sq ft</span></div></div>
+          <div class="veld"><label>Waste factor</label><div class="inp">10<span class="eenh">%</span></div></div>
+          <div class="veld"><label>Layers to tear off</label><div class="inp">1<span class="eenh">layer</span></div></div>
+        </div>
+        <div class="veld" style="margin-top:12px"><label>Pitch</label><div class="chips"><span class="chip">Low (≤ 4/12)</span><span class="chip" id="pitch-mid">Medium (5–8/12)</span><span class="chip">Steep (9/12+)</span></div></div>
+      </div>
+      <div class="blok"><h3>Material</h3>
+        <div class="mats">
+          <div class="mat" id="mat-0"><div class="foto" style="background:repeating-linear-gradient(0deg,#6b6f73 0 9px,#585c60 9px 11px)"></div><b>3-tab shingles</b><small>$135 / square</small></div>
+          <div class="mat" id="mat-1"><div class="foto" style="background:repeating-linear-gradient(0deg,#4b4440 0 7px,#5d5550 7px 13px,#3e3835 13px 15px)"></div><b>Architectural shingles</b><small>$160 / square</small></div>
+          <div class="mat" id="mat-2"><div class="foto" style="background:repeating-linear-gradient(90deg,#3f5f73 0 14px,#557a90 14px 16px)"></div><b>Standing seam metal</b><small>$480 / square</small></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="blok"><h3>Breakdown</h3>
+        <div class="post"><span>Squares<small>incl. 10% waste</small></span><span id="p-sq">0.00</span></div>
+        <div class="post"><span>Materials</span><span id="p-mat">$0</span></div>
+        <div class="post"><span>Flashing &amp; drip edge</span><span id="p-fl">$0</span></div>
+        <div class="post"><span>Tear-off &amp; disposal</span><span id="p-tear">$0</span></div>
+        <div class="post"><span>Dumpster</span><span id="p-dump">$0</span></div>
+        <div class="post"><span>Labor<small id="p-uren">0 h × $55</small></span><span id="p-lab">$0</span></div>
+        <div class="post"><span>Permit</span><span id="p-perm">$0</span></div>
+        <div class="kost"><span>Your cost</span><span id="p-kost">$0</span></div>
+        <div class="marges"><span class="chip" id="m20">20% margin</span><span class="chip" id="m25">25%</span><span class="chip" id="m30">30%</span></div>
+        <div class="prijs"><div class="groot"><span>Price to customer</span><b id="p-prijs">$0</b></div>
+          <div class="sub"><span>Your profit: <b id="p-winst">$0</b></span><span id="p-persq">$0 / square</span></div>
+          <div class="verhouding"><i id="v-kost" style="background:#9aa79e;width:100%"></i><i id="v-winst" style="background:#B6F36B;width:0"></i></div></div>
+        <div class="knop" id="maak">Turn into quote</div>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"><div class="ico">✓</div><div><span id="toast-titel"></span><small>Sent to The Parkers for e-signature</small></div></div>
+</div></div></div></div>
+<div id="ondertitel"></div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+// rekenregels: squares = sq ft / 100 × 1,10; arbeid 2,0 / 2,5 / 3,2 uur per square (laag/midden/steil); prijs = kosten / (1 − marge)
+const MAT = [135, 160, 480], UUR = { mid: 2.5 }, UURLOON = 55, TEAR = 90, FLASH = 420, DUMP = 450, PERMIT = 250;
+let opp = "", mat = null, pitch = null, marge = 0.2, oud = {};
+const usd = (n, d) => geld(n, "$", d || 0);
+window.focusVeld = (id) => { const el = document.getElementById(id); el.classList.add("focus"); toon(); };
+function toon() { const el = document.getElementById("opp"); el.innerHTML = (opp ? Number(opp).toLocaleString("en-US") : '<span class="ph">0</span>') + (el.classList.contains("focus") ? '<span class="caret"></span>' : "") + '<span class="eenh">sq ft</span>'; }
+window.typLetter = (id, ch) => { opp += ch; toon(); reken(); };
+function blur() { document.getElementById("opp").classList.remove("focus"); toon(); }
+
+function reken() {
+  const sqft = parseFloat(opp) || 0, sq = (sqft / 100) * 1.1;
+  const m = mat === null ? 0 : sq * MAT[mat], uren = pitch ? sq * UUR[pitch] : 0, lab = uren * UURLOON;
+  const ok = sqft > 0;
+  const n = { sq, m, fl: ok ? FLASH : 0, tear: sq * TEAR, dump: ok ? DUMP : 0, lab, perm: ok ? PERMIT : 0 };
+  n.kost = n.m + n.fl + n.tear + n.dump + n.lab + n.perm;
+  n.prijs = n.kost / (1 - marge); n.winst = n.prijs - n.kost; n.persq = sq ? n.prijs / sq : 0; n.uren = uren;
+  const o = { ...{ sq: 0, m: 0, fl: 0, tear: 0, dump: 0, lab: 0, perm: 0, kost: 0, prijs: 0, winst: 0, persq: 0, uren: 0 }, ...oud };
+  animeer(650, (t) => {
+    const v = (k) => o[k] + (n[k] - o[k]) * t;
+    document.getElementById("p-sq").textContent = v("sq").toFixed(2);
+    document.getElementById("p-mat").textContent = usd(v("m"));
+    document.getElementById("p-fl").textContent = usd(v("fl"));
+    document.getElementById("p-tear").textContent = usd(v("tear"));
+    document.getElementById("p-dump").textContent = usd(v("dump"));
+    document.getElementById("p-lab").textContent = usd(v("lab"));
+    document.getElementById("p-uren").textContent = v("uren").toFixed(1) + " h × $55";
+    document.getElementById("p-perm").textContent = usd(v("perm"));
+    document.getElementById("p-kost").textContent = usd(v("kost"));
+    document.getElementById("p-prijs").textContent = usd(v("prijs"));
+    document.getElementById("p-winst").textContent = usd(v("winst"));
+    document.getElementById("p-persq").textContent = usd(v("persq"), 2) + " / square";
+    const pr = v("prijs") || 1;
+    document.getElementById("v-kost").style.width = (v("kost") / pr) * 100 + "%";
+    document.getElementById("v-winst").style.width = (v("winst") / pr) * 100 + "%";
+  });
+  oud = n;
+}
+document.getElementById("pitch-mid").addEventListener("click", (e) => { blur(); pitch = "mid"; e.currentTarget.classList.add("aan"); reken(); });
+[0, 1, 2].forEach((i) => document.getElementById("mat-" + i).addEventListener("click", () => {
+  blur(); mat = i; document.querySelectorAll(".mat").forEach((m, j) => m.classList.toggle("aan", j === i)); reken();
+}));
+["m20", "m25", "m30"].forEach((id) => document.getElementById(id).addEventListener("click", () => {
+  marge = { m20: 0.2, m25: 0.25, m30: 0.3 }[id];
+  ["m20", "m25", "m30"].forEach((x) => document.getElementById(x).classList.toggle("aan", x === id)); reken();
+}));
+document.getElementById("m20").classList.add("aan");
+document.getElementById("maak").addEventListener("click", () => {
+  const k = document.getElementById("maak"); k.classList.add("klaar"); k.textContent = "✓ Quote created";
+  document.getElementById("toast-titel").textContent = "Quote Q-3307 created · " + usd(oud.prijs);
+  document.getElementById("toast").classList.add("aan");
+});
+</script>
+</body></html>

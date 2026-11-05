@@ -5,7 +5,11 @@
 
 (function () {
   const tweens = [];
-  const BREED = 1280, HOOG = 800, SCHERM_B = 960, SCHERM_H = 600, BASIS = SCHERM_B / BREED;
+  // maten volgen het toestel (beeldscherm, laptop, telefoon, tablet): desk = app-pixels, scherm = zichtbare pixels
+  const maten = () => {
+    const d = document.getElementById("desk"), sc = document.querySelector(".scherm");
+    return { B: d.offsetWidth, H: d.offsetHeight, SB: sc.clientWidth, SH: sc.clientHeight };
+  };
   window.__klok = 0;
 
   window.animeer = function (duur, stap, klaar) {
@@ -34,13 +38,15 @@
     cursor = document.createElement("div");
     cursor.id = "__cursor";
     cursor.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24"><path d="M4 2 L4 19 L8.5 14.8 L11.6 21.5 L14.3 20.3 L11.2 13.7 L17.5 13.7 Z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>';
-    cursor.style.transform = "translate(700px,700px)";
+    const m = maten();
+    cursor.style.transform = `translate(${m.B * 0.55}px,${m.H * 0.85}px)`;
     desk().appendChild(cursor);
+    __camera(1, m.B / 2, m.H / 2);
   });
 
   // midden van een element in desktop-pixels (los van zoom)
   window.__doel = function (sel) {
-    const el = document.querySelector(sel), d = desk().getBoundingClientRect(), r = el.getBoundingClientRect(), s = d.width / BREED;
+    const el = document.querySelector(sel), d = desk().getBoundingClientRect(), r = el.getBoundingClientRect(), s = d.width / maten().B;
     return [(r.left - d.left + r.width / 2) / s, (r.top - d.top + r.height / 2) / s];
   };
   window.__cursor = (x, y) => (cursor.style.transform = `translate(${x - 4}px,${y - 2}px)`);
@@ -54,10 +60,10 @@
 
   // camera: inzoomen op een punt (desktop-pixels), z=1 is het hele scherm
   window.__camera = function (z, fx, fy) {
-    const s = BASIS * z;
-    let tx = SCHERM_B / 2 - fx * s, ty = SCHERM_H / 2 - fy * s;
-    tx = Math.min(0, Math.max(SCHERM_B - BREED * s, tx));
-    ty = Math.min(0, Math.max(SCHERM_H - HOOG * s, ty));
+    const m = maten(), s = (m.SB / m.B) * z;
+    let tx = m.SB / 2 - fx * s, ty = m.SH / 2 - fy * s;
+    tx = Math.min(0, Math.max(m.SB - m.B * s, tx));
+    ty = Math.min(0, Math.max(m.SH - m.H * s, ty));
     document.getElementById("camera").style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
   };
 

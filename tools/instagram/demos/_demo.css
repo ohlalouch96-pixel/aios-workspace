@@ -22,6 +22,29 @@ body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans
 .voetstuk:after { content: ''; position: absolute; left: -110px; right: -110px; bottom: -18px; height: 24px; border-radius: 50%/40%;
   background: linear-gradient(#c7ccd3, #868b93); box-shadow: 0 18px 30px rgba(0,0,0,.35); }
 
+/* laptop */
+.laptop { position: absolute; left: 40px; top: 500px; width: 1000px; height: 640px; border-radius: 22px 22px 6px 6px; background: #1a1b1f; box-shadow: 0 0 0 2px #34363c; }
+.laptop .scherm { left: 20px; top: 20px; width: 960px; height: 600px; border-radius: 4px; }
+.laptop:after { content: ''; position: absolute; left: -60px; right: -60px; top: 640px; height: 30px; border-radius: 0 0 26px 26px;
+  background: linear-gradient(#d4d7dc, #9a9fa7); box-shadow: 0 26px 40px rgba(0,0,0,.4); }
+.laptop:before { content: ''; position: absolute; left: 420px; width: 160px; top: 640px; height: 10px; border-radius: 0 0 10px 10px; background: #8a8f97; z-index: 2; }
+/* telefoon (app-pixels 390 breed) */
+.telefoon { position: absolute; left: 270px; top: 420px; width: 540px; height: 1100px; border-radius: 80px; background: #0b0c0e;
+  box-shadow: 0 0 0 3px #3a3d43, 0 0 0 6px #17181b, 0 50px 90px rgba(0,0,0,.5); }
+.telefoon .scherm { left: 18px; top: 18px; width: 504px; height: 1064px; border-radius: 64px; }
+.telefoon #camera, .telefoon #desk { width: 390px; height: 823px; }
+.telefoon #desk { font-size: 15px; }
+.telefoon .eiland { position: absolute; left: 50%; top: 10px; width: 108px; height: 30px; margin-left: -54px; border-radius: 20px; background: #000; z-index: 60; }
+body.mobiel #__cursor { display: none; }
+body.mobiel .__ripple { background: rgba(60,60,60,.28); width: 44px; height: 44px; }
+body.mobiel #ondertitel { top: 1530px; height: 110px; font-size: 40px; }
+body.mobiel .voet { top: 1660px; }
+/* tablet, liggend (app-pixels 1280 breed) */
+.tablet { position: absolute; left: 40px; top: 480px; width: 1000px; height: 700px; border-radius: 44px; background: #0b0c0e; box-shadow: 0 0 0 3px #3a3d43, 0 50px 90px rgba(0,0,0,.45); }
+.tablet .scherm { left: 26px; top: 26px; width: 948px; height: 648px; border-radius: 20px; }
+.tablet #camera, .tablet #desk { width: 1280px; height: 875px; }
+body.tablet-modus #ondertitel { top: 1250px; }
+
 #ondertitel { position: absolute; left: 90px; right: 90px; top: 1290px; height: 200px; display: flex; align-items: center; justify-content: center; text-align: center;
   font: 700 46px/1.2 Inter; color: var(--hookfg, #fff); }
 #ondertitel span { opacity: 0; transform: translateY(16px); transition: opacity .35s ease, transform .35s ease; }
