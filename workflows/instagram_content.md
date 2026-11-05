@@ -40,16 +40,15 @@ Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aa
 
 ```
 I build AI systems for business owners, so you and your team can focus on the work that actually matters.
-Send me a DM and I'll show you which tasks AI could take over first in your business ⚡
+Send me a DM and I'll show you what's possible for your business ⚡
 ```
 
-## Actualiteiten: dubbele controle
+## Actualiteiten: één controle (sinds 06-11, was dubbel; dubbel kostte te veel tijd)
 
-1. Zoek nieuws dat relevant is voor ondernemers (niet puur voor techneuten).
-2. **Controle 1:** lees de oorspronkelijke bron zelf (persbericht, onderzoek, officiële blog), niet alleen een samenvatting. Leg de kern vast.
-3. **Controle 2:** zoek een tweede, onafhankelijke bron die hetzelfde bevestigt. Loop datum, cijfers en namen na.
-4. Faalt een van de twee: onderwerp vervalt, geen concept naar Oussama.
-5. In Telegram altijd **beide bronlinks** meesturen, zodat Oussama zelf kan controleren voordat hij goedkeurt.
+1. Zoek nieuws dat relevant is voor ondernemers (niet puur voor techneuten), alleen uit officiële bronnen of gevestigde nieuwssites, geen blogs of samenvattingen.
+2. **Controle:** lees de bron zelf en check namen, cijfers en datums. Alleen gecheckte feiten gaan de post in, geen "voorbeelden" die je niet kon nagaan.
+3. Klopt het niet: onderwerp vervalt, geen concept naar Oussama.
+4. In Telegram altijd de **bronlink(s)** meesturen, zodat Oussama zelf kan controleren voordat hij goedkeurt.
 
 ## Beeld
 

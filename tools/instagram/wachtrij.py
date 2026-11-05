@@ -71,7 +71,7 @@ def verbind():
 
 
 AFSLUITER = ("I build AI systems for business owners, so you and your team can focus on the work that actually matters.\n"
-             "Send me a DM and I'll show you which tasks AI could take over first in your business ⚡")
+             "Send me a DM and I'll show you what's possible for your business ⚡")
 
 
 def volledige_caption(caption, hashtags, soort):

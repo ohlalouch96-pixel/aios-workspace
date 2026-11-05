@@ -176,7 +176,7 @@ def hashtag_eisen(conn):
 def taalregels(aantal, verboden_tags):
     return (f"Hashtags: exactly {aantal}, relevant to this specific post, varied (not a fixed set). Do NOT use any of these from the previous post: "
             f"{', '.join(verboden_tags) or 'none'}. Caption: first sentence must stop the scroll (allowed to challenge, never untrue); then at most two short paragraphs (together max ~55 words) "
-            "and one closing question or nudge. Keep it compact, no wall of text. Do NOT write the fixed sign-off line or the hashtags inside the caption; they are added automatically. "
+            "and one closing question or nudge. Keep it compact, no wall of text. Every sentence must follow logically from the one before: never refer to 'they', 'them' or a group that was not clearly introduced first. This also applies to slides and reel beats, read in order. Do NOT write the fixed sign-off line or the hashtags inside the caption; they are added automatically. "
             "Music: one short line with the type and mood of background music that fits this content and colour, e.g. 'calm lo-fi beat, search: lofi chill'; empty string for images.")
 
 
@@ -250,20 +250,16 @@ def prompt_story(rij):
 
 
 def onderzoek_actualiteit(conn):
-    """Controle 1: zoeken en de originele bron lezen. Controle 2: onafhankelijk bevestigen. Faalt er één, dan geen concept."""
+    """Eén ronde: nieuws zoeken, de originele bron lezen en de feiten daartegen controleren. Klopt het niet, dan geen concept."""
     gebruikt = [r[0] for r in conn.execute("SELECT onderwerp FROM instagram_posts WHERE soort = 'actualiteit' ORDER BY id DESC LIMIT 15")]
-    notities = vraag(conn, None, "actualiteit:zoeken", (
+    return vraag(conn, None, "actualiteit:zoeken+check", (
         f"Today is {date.today().isoformat()}. Find ONE piece of AI or automation news from the last 10 days that matters to small and mid-sized business owners "
-        f"(not purely technical). Only use announcements from the company itself (official newsroom or blog), government bodies, research institutes, or established news outlets (e.g. Reuters, AP, The Verge, TechCrunch, Bloomberg). Skip blogs, SEO articles and summaries. Avoid these topics already covered: {gebruikt or 'none'}. Open and read the ORIGINAL source (press release, official blog, study), "
-        "not just a summary. Report: what happened, the exact facts (names, numbers, dates), why it matters for a business owner, and the original source URL."), zoeken=True)
-    print("  zoeknotities:", notities[:1200].replace("\n", " "))
-    controle = vraag(conn, None, "actualiteit:controle", (
-        "Independent check. Below are research notes about a news item. Search for a SECOND, independent source that confirms the same facts. "
-        "Verify names, numbers and dates against both sources. bevestigd=true ONLY if a second independent source confirms the key facts and nothing contradicts them. "
-        "Give both URLs (bron_1 = original, bron_2 = independent), in 'kern' ONLY the facts that BOTH sources state (drop anything only one source has), the date, and a one-line Dutch explanation in 'toelichting'.\n\n"
-        f"NOTES:\n{notities}"), schema=CONTROLE, zoeken=True)
-    controle["notities"] = notities
-    return controle
+        "(not purely technical). Only use announcements from the company itself (official newsroom or blog), government bodies, research institutes, or established "
+        "news outlets (e.g. Reuters, AP, The Verge, TechCrunch, Bloomberg). Skip blogs, SEO articles and summaries. "
+        f"Avoid these topics already covered: {gebruikt or 'none'}. Open and read the source and check every fact (names, numbers, dates) against it. "
+        "bevestigd=true only if you read the source yourself and the facts hold. 'kern': ONLY the checked facts, no examples or claims you could not check. "
+        "bron_1 = the source URL you read, bron_2 = a second URL if you used one (else empty). 'datum' = publication date, 'toelichting' = one line in Dutch."),
+        schema=CONTROLE, zoeken=True)
 
 
 # ---------- maken ----------
@@ -327,7 +323,7 @@ def maak(conn, soort=None):
     if soort == "actualiteit":
         c = onderzoek_actualiteit(conn)
         if not c["bevestigd"]:
-            print("Actualiteit niet dubbel bevestigd, vervalt:", c["toelichting"])
+            print("Actualiteit niet bevestigd, vervalt:", c["toelichting"])
             return None
         prompt = (f"Turn this verified news into an Instagram carousel (4 to 6 slides) in the series 'AI NEWS'. Lens: 'what this actually means for your business'.\n"
                   f"Verified facts (use ONLY these, add nothing else, not even 'examples' the company gives unless they are listed here): {c['kern']} (date: {c['datum']}).\nSlides as for a normal carousel: cover, tekst slides, optional cijfer slide only with a "
@@ -337,7 +333,7 @@ def maak(conn, soort=None):
         kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
         (map_ / "onderzoek.json").write_text(json.dumps(c, ensure_ascii=False, indent=2), encoding="utf-8")  # herleidbaar: waar komt elke bewering vandaan
         render("actualiteit", spec, kleur, map_)
-        pid = opslaan(conn, "actualiteit", spec, kleur, map_, bronnen=[c["bron_1"], c["bron_2"]])
+        pid = opslaan(conn, "actualiteit", spec, kleur, map_, bronnen=[b for b in (c["bron_1"], c["bron_2"]) if b])
     elif soort == "demo_reel":
         demo = laatst_gebruikt(conn, "demo_reel", DEMOS)
         spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags), aantal, tags)
