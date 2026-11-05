@@ -42,6 +42,13 @@ def verbind():
             tekst TEXT NOT NULL,
             ingelezen_op TEXT DEFAULT (datetime('now'))
         );
+        CREATE TABLE IF NOT EXISTS instagram_feedback (
+            id INTEGER PRIMARY KEY,
+            post_id INTEGER NOT NULL REFERENCES instagram_posts(id),
+            tekst TEXT NOT NULL,
+            verwerkt INTEGER NOT NULL DEFAULT 0,
+            gemaakt_op TEXT DEFAULT (datetime('now'))
+        );
         CREATE TABLE IF NOT EXISTS instagram_posts (
             id INTEGER PRIMARY KEY,
             bron_id INTEGER REFERENCES instagram_bron(id),
@@ -57,7 +64,21 @@ def verbind():
             bijgewerkt_op TEXT DEFAULT (datetime('now'))
         );
     """)
+    kolommen = {r[1] for r in conn.execute("PRAGMA table_info(instagram_posts)")}
+    if "muziek" not in kolommen:
+        conn.execute("ALTER TABLE instagram_posts ADD COLUMN muziek TEXT")
     return conn
+
+
+AFSLUITER = ("I build AI systems for business owners, so you and your team can focus on the work that actually matters.\n"
+             "Send me a DM and I'll show you which tasks AI could take over first in your business ⚡")
+
+
+def volledige_caption(caption, hashtags, soort):
+    """Caption zoals hij op Instagram komt: tekst, vaste afsluiter, hashtags. The Fork: alleen de tekst."""
+    if soort == "fork":
+        return caption.strip()
+    return f"{caption.strip()}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
 
 
 def recente_kleuren(conn, n=5):
@@ -100,9 +121,9 @@ def volgende(conn, pijler=None):
 def opslaan(conn, spec_pad):
     spec = json.loads(Path(spec_pad).read_text(encoding="utf-8"))
     cur = conn.execute(
-        "INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, muziek) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (spec.get("bron_id"), spec["soort"], spec["onderwerp"], spec.get("kleurenset"), json.dumps(spec.get("hashtags", [])),
-         spec.get("caption"), json.dumps(spec.get("bronnen", [])), spec.get("map")))
+         spec.get("caption"), json.dumps(spec.get("bronnen", [])), spec.get("map"), spec.get("muziek")))
     conn.commit()
     return cur.lastrowid
 
