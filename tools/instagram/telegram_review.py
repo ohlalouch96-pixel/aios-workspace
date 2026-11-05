@@ -18,7 +18,7 @@ Gebruik (CLI):
     python tools/instagram/telegram_review.py stuur 12         # post 12 uit de wachtrij versturen
     python tools/instagram/telegram_review.py luister          # knoppen en feedback verwerken (blijft draaien)
 
-.env: INSTAGRAM_BOT_TOKEN (content-bot), TELEGRAM_CHAT_ID (Oussama), OPENAI_API_KEY (alleen voor ingesproken feedback).
+.env: INSTAGRAM_BOT_TOKEN (content-bot), INSTAGRAM_CHAT_ID (privéchat Oussama met die bot), OPENAI_API_KEY (alleen voor ingesproken feedback).
 """
 
 import argparse
@@ -44,9 +44,9 @@ SOORT_LABEL = {"carrousel": "Carrousel", "kaart": "Losse afbeelding", "fork": "T
 class Bot:
     def __init__(self):
         self.token = get_env("INSTAGRAM_BOT_TOKEN")
-        self.chat = get_env("TELEGRAM_CHAT_ID")
+        self.chat = get_env("INSTAGRAM_CHAT_ID")
         if not self.token or not self.chat:
-            sys.exit("INSTAGRAM_BOT_TOKEN of TELEGRAM_CHAT_ID ontbreekt in .env")
+            sys.exit("INSTAGRAM_BOT_TOKEN of INSTAGRAM_CHAT_ID ontbreekt in .env")
         self.api = f"https://api.telegram.org/bot{self.token}"
 
     def call(self, methode, files=None, **data):

@@ -94,7 +94,7 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 3. `python tools/instagram/wachtrij.py kleur` en `... hashtags` voor kleurenset en recent gebruikte hashtags.
 4. Spec (JSON) maken en renderen: `python tools/instagram/render_carrousel.py spec.json`.
 5. Vastleggen: `python tools/instagram/wachtrij.py opslaan spec.json`.
-6. Naar Telegram ter goedkeuring (volgt in stap 6 van het plan).
+6. Naar Telegram ter goedkeuring: `python tools/instagram/telegram_review.py stuur <id>`. Knoppen en feedback verwerkt `... luister` (draait straks altijd op de server). Feedback staat in tabel `instagram_feedback` (verwerkt=0) en wordt door de agent opgepakt. Content-bot: @Insightance_content_bot, `.env`: INSTAGRAM_BOT_TOKEN + INSTAGRAM_CHAT_ID (privéchat, NIET de groep-ID van TELEGRAM_CHAT_ID).
 
 ## Geleerd
 
