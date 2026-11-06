@@ -95,6 +95,12 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 5. Vastleggen: `python tools/instagram/wachtrij.py opslaan spec.json`.
 6. Naar Telegram ter goedkeuring: `python tools/instagram/telegram_review.py stuur <id>`. Knoppen en feedback verwerkt `... luister` (draait straks altijd op de server). Feedback staat in tabel `instagram_feedback` (verwerkt=0) en wordt door de agent opgepakt. Content-bot: @Insightance_content_bot, `.env`: INSTAGRAM_BOT_TOKEN + INSTAGRAM_CHAT_ID (privéchat, NIET de groep-ID van TELEGRAM_CHAT_ID).
 
+## Video met voice-over (Typer-stijl, sinds 06-11)
+
+- Stem: Eric via ElevenLabs (`tools/instagram/stem.py`, cache in `.tmp/instagram/stem_cache/`). Oussama's eigen stem getest en afgewezen.
+- Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
+- Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
+
 ## Geleerd
 
-(Hier aanvullen als er iets misgaat of beter blijkt te werken.)
+- **Voice-over (06-11):** hele script in één keer inspreken, niet per zin: per zin klonk elke beat als een herstart met een dode pauze ertussen. Tekst in beeld volgt exact de woordvolgorde van wat gezegd wordt (anders hoor je iets anders dan je leest). Animaties rustig (±0,7 s in) en op het gesproken woord, niet "tak tak tak". Scènes lopen in elkaar over (inhoud glijdt weg net voor de volgende zin).

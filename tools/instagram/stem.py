@@ -6,6 +6,7 @@ Spreekt een zin in met de vaste merkstem en geeft de timing per letter terug
 bewaard in .tmp/instagram/stem_cache/, dus opnieuw renderen kost geen tegoed.
 
 Stem (besluit 06-11): Eric, iets sneller (speed 1.1), eleven_multilingual_v2.
+Intonatie iets levendiger gemaakt na feedback (stability 0.4, style 0.18).
 Oussama's eigen stem is getest en afgewezen.
 
 Gebruik (CLI):
@@ -28,7 +29,7 @@ API = "https://api.elevenlabs.io/v1"
 
 STEMMEN = {
     "eric": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_multilingual_v2",
-             "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "style": 0.0, "speed": 1.1}},
+             "voice_settings": {"stability": 0.4, "similarity_boost": 0.75, "style": 0.18, "speed": 1.1}},
 }
 
 

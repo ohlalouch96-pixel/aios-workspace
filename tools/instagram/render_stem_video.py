@@ -1,10 +1,12 @@
 """
 Instagram — video met voice-over in "Typer"-stijl (@insightance.ai)
 
-Elke beat = één zin die Eric inspreekt (tools/instagram/stem.py) + één scène
-uit tools/instagram/video/typer.html (getal, mandje, mails, meldingen, eind).
-De scène duurt zo lang als de zin plus een korte adempauze, dus beeld en stem
-lopen altijd gelijk. Ondertitels lopen woord voor woord mee. Donkere en lichte
+Elke beat = één zin + één scène uit tools/instagram/video/typer.html (getal,
+mandje, mails, meldingen, eind). Eric (tools/instagram/stem.py) spreekt het
+hele script in één keer in, zodat het als één verhaal klinkt; de scènes worden
+op zijn woordtijden geknipt en beeld verschijnt op het gesproken woord.
+Optioneel per beat "pauze": 0.4 voor een korte adempauze na die zin.
+Regel: tekst in beeld volgt dezelfde woordvolgorde als wat Eric zegt. Ondertitels lopen woord voor woord mee. Donkere en lichte
 scènes wisselen met een harde cut. Geen gezicht, geen muziek (Oussama voegt
 muziek zelf toe in Instagram).
 
@@ -46,36 +48,56 @@ from stem import inspreken  # noqa: E402
 PAGINA = Path(__file__).resolve().parent / "video" / "typer.html"
 FPS = 30
 BEGIN = 0.3      # stilte voor de eerste zin
-ADEM = 0.45      # pauze tussen zinnen
-STAART = 1.2     # eindkaart blijft nog even staan
+VOORLOOP = 0.25  # nieuwe scène verschijnt net voordat het eerste woord klinkt
+STAART = 1.4     # eindkaart blijft nog even staan
 MAX_WOORDEN = 4  # woorden per ondertitelblok
 
 
+def is_woord(w):
+    return not any(c in w for c in "<>=")  # pauze-tags (<break time="0.4s" />) tellen niet mee
+
+
+def ondertitels(woorden, start):
+    """Woorden in blokken van max. 4, gelijk verdeeld, nieuw blok na het eind van een zin."""
+    blokken = -(-len(woorden) // MAX_WOORDEN)
+    per = -(-len(woorden) // blokken)
+    uit, blok = [], []
+    for w in woorden:
+        blok.append({"w": w["w"], "s": start + w["s"], "e": start + w["e"]})
+        if len(blok) == per or w["w"][-1] in ".?!":
+            uit.append({"s": blok[0]["s"], "e": blok[-1]["e"], "w": blok})
+            blok = []
+    if blok:
+        uit.append({"s": blok[0]["s"], "e": blok[-1]["e"], "w": blok})
+    return uit
+
+
 def tijdlijn(spec):
-    """Spreekt elke zin in en zet scènes, stem en ondertitels op één tijdlijn."""
-    scenes, audio, captions, t = [], [], [], 0.0
-    for n, beat in enumerate(spec["beats"]):
-        mp3, woorden = inspreken(beat["zegt"], spec.get("stem", "eric"))
-        start_stem = t + (BEGIN if n == 0 else 0)
-        lengte = woorden[-1]["e"]
-        dur = (start_stem - t) + lengte + ADEM + (STAART if n == len(spec["beats"]) - 1 else 0)
-        dur = max(dur, beat.get("min", 0))
-        # woordtijden binnen de scène, zodat beeld op het gesproken woord kan verschijnen
-        w_scene = [{"w": w["w"], "s": start_stem - t + w["s"]} for w in woorden]
-        scenes.append({**beat["scene"], "start": t, "dur": dur, "woorden": w_scene})
-        audio.append((mp3, start_stem))
-        blokken = -(-len(woorden) // MAX_WOORDEN)
-        per = -(-len(woorden) // blokken)  # gelijk verdelen, geen los woord aan het eind
-        blok = []
-        for w in woorden:  # nieuw blok na `per` woorden of na het eind van een zin
-            blok.append({"w": w["w"], "s": start_stem + w["s"], "e": start_stem + w["e"]})
-            if len(blok) == per or w["w"][-1] in ".?!":
-                captions.append({"s": blok[0]["s"], "e": blok[-1]["e"], "w": blok})
-                blok = []
-        if blok:
-            captions.append({"s": blok[0]["s"], "e": blok[-1]["e"], "w": blok})
-        t += dur
-    return {"scenes": scenes, "captions": captions}, audio, t
+    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin)
+    en knipt de scènes op de woordtijden: elke scène begint net voor haar eerste woord."""
+    beats = spec["beats"]
+    delen = []
+    for beat in beats:
+        delen.append(beat["zegt"])
+        if beat.get("pauze"):
+            delen.append(f'<break time="{beat["pauze"]}s" />')
+    mp3, alle = inspreken(" ".join(delen), spec.get("stem", "eric"))
+    alle = [w for w in alle if is_woord(w["w"])]
+    per_beat, i = [], 0
+    for beat in beats:
+        n = len(beat["zegt"].split())
+        per_beat.append(alle[i:i + n])
+        i += n
+    starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
+    totaal = BEGIN + alle[-1]["e"] + STAART
+    scenes, captions = [], []
+    for n, (beat, woorden) in enumerate(zip(beats, per_beat)):
+        start = starts[n]
+        eind = starts[n + 1] if n + 1 < len(beats) else totaal
+        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start} for w in woorden]
+        scenes.append({**beat["scene"], "start": start, "dur": eind - start, "woorden": w_scene})
+        captions += ondertitels(woorden, BEGIN)
+    return {"scenes": scenes, "captions": captions}, [(mp3, BEGIN)], totaal
 
 
 def render(spec, uit):
@@ -84,7 +106,7 @@ def render(spec, uit):
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
     lijn, audio, totaal = tijdlijn(spec)
-    cover_t = lijn["scenes"][0]["dur"] - ADEM
+    cover_t = lijn["scenes"][0]["dur"] - 0.3
     with sync_playwright() as p:
         try:
             browser = p.chromium.launch(channel="chrome")

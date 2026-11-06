@@ -56,10 +56,11 @@ const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'
 const mk = (s, t) => esc(s).replace(/\*(.+?)\*/g, `<span class="hl" data-hl="${t}">$1</span>`);
 const geld = v => '$' + v.toFixed(2);
 // Tijd (s, binnen de scène) waarop het woord wordt uitgesproken; anders de reservetijd.
-const wt = (s, woord, reserve) => {
-  const w = (s.woorden || []).find(x => x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === woord);
+const wt = (s, woord, reserve, nr = 0) => {
+  const w = (s.woorden || []).filter(x => x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === woord)[nr];
   return w ? w.s : reserve;
 };
+const IN = .7, UIT = .3;  // duur van in- en uitfaden (s); rustig genoeg om met je ogen te volgen
 
 // Elke scène: HTML met tijdsattributen (seconden vanaf het begin van de scène, d = duur van de scène).
 const SCENES = {
@@ -71,23 +72,23 @@ const SCENES = {
     const tot = s.items.reduce((a, i) => a + i[1], 0);
     return {kleur: 'licht', html: `
     <div class="kop klein" data-in="0">${mk(s.kop, wt(s, "let", d * .45))}</div>
-    <div class="kaart mandje" data-in="0.15">
+    <div class="kaart mandje" data-in="0.3">
       <h3>Your cart <span class="status" data-in="${d * .35}">${esc(s.status)}</span></h3>
-      ${s.items.map((i, n) => `<div class="regel" data-dim="${wt(s, "go", d * .4) + n * .12}"><span class="nm"><span class="ic"></span>${esc(i[0])}</span><b>${geld(i[1])}</b></div>`).join('')}
-      <div class="totaal" data-dim="${wt(s, "go", d * .4) + s.items.length * .12}"><span>Subtotal</span><span>${geld(tot)}</span></div>
+      ${s.items.map((i, n) => `<div class="regel" data-dim="${wt(s, "go", d * .4) + n * .2}"><span class="nm"><span class="ic"></span>${esc(i[0])}</span><b>${geld(i[1])}</b></div>`).join('')}
+      <div class="totaal" data-dim="${wt(s, "go", d * .4) + s.items.length * .2}"><span>Subtotal</span><span>${geld(tot)}</span></div>
     </div>`};
   },
   mails: (s, d) => ({kleur: 'licht', html: `
-    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, "moment", d * .7))}</div>
-    ${s.mails.map((m, n) => `<div class="kaart mail" data-in="${.35 + n * d * .22}">
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, s.hl || "email", d * .7))}</div>
+    ${s.mails.map((m, n) => `<div class="kaart mail" data-in="${wt(s, (s.op || [])[n], .4 + n * d * .25)}">
       <span class="tijd">${esc(m[0])}</span>
       <div><div class="ond">${esc(m[1])}</div><div class="vz">${esc(m[2])}</div></div>
-      <span class="ok" data-in="${.75 + n * d * .22}">Sent ✓</span></div>`).join('')}`}),
+      <span class="ok" data-in="${wt(s, (s.op || [])[n], .4 + n * d * .25) + .5}">Sent ✓</span></div>`).join('')}`}),
   meldingen: (s, d) => ({kleur: 'donker', html: `
     <div class="klok" data-in="0">${esc(s.klok)}</div>
-    ${s.meldingen.map((m, n) => `<div class="toast" data-in="${.3 + n * d * .14}"><span class="dot">$</span>
+    ${s.meldingen.map((m, n) => `<div class="toast" data-in="${wt(s, (s.op || [])[n], .3 + n * d * .18)}"><span class="dot">$</span>
       <div><div class="t1">${esc(m[0])}</div><div class="t2">${esc(m[1])}</div></div><span class="bedrag">${geld(m[2])}</span></div>`).join('')}
-    <div class="teller" data-in="${.3}" data-count="${s.meldingen.reduce((a, m) => a + m[2], 0)}" data-t0="0.3" data-dur="${d * .5}" data-pre="$" data-dec="2">$0.00</div>
+    <div class="teller" data-in="${.3}" data-count="${s.meldingen.reduce((a, m) => a + m[2], 0)}" data-t0="0.3" data-dur="${d * .6}" data-pre="$" data-dec="2">$0.00</div>
     <div class="teller-lab" data-in="0.3">${esc(s.label)}</div>
     <div class="kop" style="margin-top:90px" data-in="${wt(s, "while", d * .62) - .15}">${mk(s.kop, wt(s, "sleep", d * .72))}</div>`}),
   eind: (s, d) => ({kleur: 'donker', html: `
@@ -104,21 +105,26 @@ function bouw(i) {
   const el = document.getElementById('scene');
   el.className = uit.kleur;
   document.body.className = uit.kleur;
-  el.innerHTML = uit.html;
+  el.innerHTML = `<div class="inhoud">${uit.html}</div>`;
   huidig = i;
 }
 
-function werk(t) {
+function werk(t, d, laatste) {
   const r = document.getElementById('scene');
+  // inhoud glijdt aan het eind van de scène omhoog weg, zodat de volgende er vloeiend op aansluit
+  const weg = laatste ? 0 : E((t - (d - UIT)) / UIT), w = r.firstElementChild;
+  w.style.opacity = 1 - weg;
+  w.style.transform = `translateY(${-50 * weg}px)`;
+  w.style.filter = weg > 0 ? `blur(${weg * 10}px)` : '';
   r.querySelectorAll('[data-in]').forEach(el => {
-    const p = E((t - +el.dataset.in) / .45);
+    const p = E((t - +el.dataset.in) / IN);
     el.style.opacity = p;
-    el.style.transform = `translateY(${(1 - p) * 40}px)`;
-    el.style.filter = p < 1 ? `blur(${(1 - p) * 12}px)` : '';
+    el.style.transform = `translateY(${(1 - p) * 30}px)`;
+    el.style.filter = p < 1 ? `blur(${(1 - p) * 10}px)` : '';
   });
-  r.querySelectorAll('[data-hl]').forEach(el => el.style.setProperty('--hl', E((t - +el.dataset.hl) / .35)));
+  r.querySelectorAll('[data-hl]').forEach(el => el.style.setProperty('--hl', E((t - +el.dataset.hl) / .5)));
   r.querySelectorAll('[data-dim]').forEach(el => {
-    const p = E((t - +el.dataset.dim) / .4);
+    const p = E((t - +el.dataset.dim) / .6);
     el.style.opacity = 1 - .62 * p;
     el.style.textDecoration = p > .5 ? 'line-through' : '';
   });
@@ -128,7 +134,7 @@ function werk(t) {
     el.textContent = (el.dataset.pre || '') + v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}) + (el.dataset.suf || '');
   });
   r.querySelectorAll('[data-typ]').forEach(el => {
-    const tekst = el.dataset.typ, n = Math.floor(cl((t - +el.dataset.t0) * 30 / tekst.length) * tekst.length);
+    const tekst = el.dataset.typ, n = Math.floor(cl((t - +el.dataset.t0) * 20 / tekst.length) * tekst.length);
     const klaar = n >= tekst.length, aan = !klaar || Math.floor(t * 2.2) % 2 === 0;
     el.innerHTML = esc(tekst.slice(0, n)) + (t >= +el.dataset.t0 ? `<span class="caret" style="opacity:${aan ? 1 : 0}"></span>` : '');
   });
@@ -144,7 +150,7 @@ window.__zet = t => {
   let i = 0;
   while (i + 1 < spec.scenes.length && t >= spec.scenes[i + 1].start) i++;
   if (i !== huidig) bouw(i);
-  werk(t - spec.scenes[i].start);
+  werk(t - spec.scenes[i].start, spec.scenes[i].dur, i === spec.scenes.length - 1);
   ondertitel(t);
 };
 </script>
