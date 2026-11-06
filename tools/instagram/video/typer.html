@@ -1,0 +1,151 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:100 900;src:url('../fonts/inter-latin.woff2')}
+:root{--donker:#0A0A0A;--licht:#F4F3EE;--lime:#D4F53C;--groen:#5BB82E;--grijs:#8A8A85}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;font-family:Inter;-webkit-font-smoothing:antialiased}
+body{background:var(--donker)}
+#scene{position:absolute;inset:0;padding:300px 90px 0}
+#scene.donker{background:radial-gradient(ellipse 70% 45% at 50% 38%,rgba(212,245,60,.16),transparent 70%),var(--donker);color:#fff;text-align:center}
+#scene.licht{background:var(--licht);color:var(--donker);text-align:left}
+.kop{font-weight:800;font-size:92px;line-height:1.04;letter-spacing:-.035em}
+.kop.klein{font-size:76px}
+.hl{background:linear-gradient(var(--lime),var(--lime)) no-repeat 0 62%/calc(var(--hl,0)*100%) 78%;padding:0 6px;margin:0 -6px}
+.donker .hl{color:var(--lime);background:none;text-shadow:0 0 calc(var(--hl,0)*40px) rgba(212,245,60,.55)}
+.typ{font-weight:600;font-size:58px;line-height:1.2;letter-spacing:-.02em;min-height:140px}
+.caret{display:inline-block;width:5px;height:.95em;background:var(--lime);vertical-align:-.12em;margin-left:6px}
+.getal{font-weight:800;font-size:330px;line-height:1;letter-spacing:-.06em;color:var(--lime);text-shadow:0 0 70px rgba(212,245,60,.45);margin:120px 0 40px}
+.bron{font-size:30px;color:var(--grijs);margin-top:60px}
+.kaart{background:#fff;border-radius:34px;box-shadow:0 30px 70px rgba(10,10,10,.12),0 2px 0 rgba(10,10,10,.04);padding:44px 48px;margin-top:40px}
+.mandje h3{font-size:34px;font-weight:700;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.status{font-size:26px;font-weight:700;color:#C2410C;background:#FFEDD5;border-radius:30px;padding:10px 20px}
+.regel{display:flex;justify-content:space-between;align-items:center;font-size:36px;padding:24px 0;border-top:2px solid #EEEDE7}
+.regel .ic{width:76px;height:76px;border-radius:20px;background:#ECEBE4;margin-right:26px;flex:none}
+.regel .nm{flex:1;display:flex;align-items:center}
+.regel b{font-weight:700}
+.totaal{display:flex;justify-content:space-between;font-size:40px;font-weight:800;padding-top:26px;border-top:2px solid #EEEDE7}
+.mail{display:flex;gap:30px;align-items:flex-start;padding:36px 40px;margin-top:30px}
+.mail .tijd{flex:none;font-size:26px;font-weight:700;color:var(--donker);background:var(--lime);border-radius:30px;padding:10px 20px;margin-top:4px}
+.mail .ond{font-size:36px;font-weight:700;line-height:1.2}
+.mail .vz{font-size:28px;color:var(--grijs);margin-top:8px}
+.mail .ok{margin-left:auto;flex:none;font-size:26px;font-weight:700;color:var(--groen);margin-top:8px}
+.klok{font-size:40px;font-weight:600;color:var(--grijs);letter-spacing:.04em}
+.toast{display:flex;align-items:center;gap:26px;text-align:left;background:#1A1A1A;border:2px solid #2A2A2A;border-radius:30px;padding:28px 34px;margin-top:24px}
+.toast .dot{width:64px;height:64px;border-radius:18px;background:var(--groen);flex:none;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;font-weight:800}
+.toast .t1{font-size:30px;font-weight:700}
+.toast .t2{font-size:26px;color:var(--grijs);margin-top:4px}
+.toast .bedrag{margin-left:auto;font-size:38px;font-weight:800;color:var(--lime)}
+.teller{font-weight:800;font-size:150px;letter-spacing:-.05em;color:#fff;margin-top:70px;line-height:1}
+.teller-lab{font-size:34px;color:var(--grijs);margin-top:14px}
+.knop{display:inline-block;background:var(--lime);color:var(--donker);font-weight:800;font-size:54px;border-radius:80px;padding:34px 64px;margin-top:110px;box-shadow:0 0 80px rgba(212,245,60,.35)}
+.handle{font-size:40px;font-weight:600;color:#fff;margin-top:56px;opacity:.85}
+#cap{position:absolute;left:90px;right:90px;top:1400px;text-align:center;font-weight:700;font-size:50px;line-height:1.25;letter-spacing:-.01em}
+#cap span{opacity:.45}
+#cap span.aan{opacity:1}
+body.donker #cap{color:#fff}
+body.licht #cap{color:var(--donker)}
+</style></head>
+<body>
+<div id="scene"></div>
+<div id="cap"></div>
+<script>
+const cl = x => Math.min(Math.max(x, 0), 1);
+const E = x => 1 - Math.pow(1 - cl(x), 3);
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const mk = (s, t) => esc(s).replace(/\*(.+?)\*/g, `<span class="hl" data-hl="${t}">$1</span>`);
+const geld = v => '$' + v.toFixed(2);
+// Tijd (s, binnen de scène) waarop het woord wordt uitgesproken; anders de reservetijd.
+const wt = (s, woord, reserve) => {
+  const w = (s.woorden || []).find(x => x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === woord);
+  return w ? w.s : reserve;
+};
+
+// Elke scène: HTML met tijdsattributen (seconden vanaf het begin van de scène, d = duur van de scène).
+const SCENES = {
+  getal: (s, d) => ({kleur: 'donker', html: `
+    <div class="getal" data-in="0" data-count="${s.tot}" data-van="${s.van || 0}" data-t0="0.1" data-dur="${Math.min(1.4, d * .5)}" data-suf="${s.suf || ''}">0</div>
+    <div class="typ" data-typ="${esc(s.tekst)}" data-t0="${Math.min(1.2, d * .35)}"></div>
+    ${s.bron ? `<div class="bron" data-in="${d * .6}">${esc(s.bron)}</div>` : ''}`}),
+  mandje: (s, d) => {
+    const tot = s.items.reduce((a, i) => a + i[1], 0);
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, "let", d * .45))}</div>
+    <div class="kaart mandje" data-in="0.15">
+      <h3>Your cart <span class="status" data-in="${d * .35}">${esc(s.status)}</span></h3>
+      ${s.items.map((i, n) => `<div class="regel" data-dim="${wt(s, "go", d * .4) + n * .12}"><span class="nm"><span class="ic"></span>${esc(i[0])}</span><b>${geld(i[1])}</b></div>`).join('')}
+      <div class="totaal" data-dim="${wt(s, "go", d * .4) + s.items.length * .12}"><span>Subtotal</span><span>${geld(tot)}</span></div>
+    </div>`};
+  },
+  mails: (s, d) => ({kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, "moment", d * .7))}</div>
+    ${s.mails.map((m, n) => `<div class="kaart mail" data-in="${.35 + n * d * .22}">
+      <span class="tijd">${esc(m[0])}</span>
+      <div><div class="ond">${esc(m[1])}</div><div class="vz">${esc(m[2])}</div></div>
+      <span class="ok" data-in="${.75 + n * d * .22}">Sent ✓</span></div>`).join('')}`}),
+  meldingen: (s, d) => ({kleur: 'donker', html: `
+    <div class="klok" data-in="0">${esc(s.klok)}</div>
+    ${s.meldingen.map((m, n) => `<div class="toast" data-in="${.3 + n * d * .14}"><span class="dot">$</span>
+      <div><div class="t1">${esc(m[0])}</div><div class="t2">${esc(m[1])}</div></div><span class="bedrag">${geld(m[2])}</span></div>`).join('')}
+    <div class="teller" data-in="${.3}" data-count="${s.meldingen.reduce((a, m) => a + m[2], 0)}" data-t0="0.3" data-dur="${d * .5}" data-pre="$" data-dec="2">$0.00</div>
+    <div class="teller-lab" data-in="0.3">${esc(s.label)}</div>
+    <div class="kop" style="margin-top:90px" data-in="${wt(s, "while", d * .62) - .15}">${mk(s.kop, wt(s, "sleep", d * .72))}</div>`}),
+  eind: (s, d) => ({kleur: 'donker', html: `
+    <div class="kop" style="margin-top:120px" data-in="0">${mk(s.kop, d * .35)}</div>
+    <div class="knop" data-in="${wt(s, "send", d * .55) - .1}">${esc(s.knop)}</div>
+    <div class="handle" data-in="${wt(s, "dm", d * .65)}">${esc(s.handle)}</div>`}),
+};
+
+let spec = null, huidig = -1;
+window.__laad = s => { spec = s; };
+
+function bouw(i) {
+  const sc = spec.scenes[i], uit = SCENES[sc.type](sc, sc.dur);
+  const el = document.getElementById('scene');
+  el.className = uit.kleur;
+  document.body.className = uit.kleur;
+  el.innerHTML = uit.html;
+  huidig = i;
+}
+
+function werk(t) {
+  const r = document.getElementById('scene');
+  r.querySelectorAll('[data-in]').forEach(el => {
+    const p = E((t - +el.dataset.in) / .45);
+    el.style.opacity = p;
+    el.style.transform = `translateY(${(1 - p) * 40}px)`;
+    el.style.filter = p < 1 ? `blur(${(1 - p) * 12}px)` : '';
+  });
+  r.querySelectorAll('[data-hl]').forEach(el => el.style.setProperty('--hl', E((t - +el.dataset.hl) / .35)));
+  r.querySelectorAll('[data-dim]').forEach(el => {
+    const p = E((t - +el.dataset.dim) / .4);
+    el.style.opacity = 1 - .62 * p;
+    el.style.textDecoration = p > .5 ? 'line-through' : '';
+  });
+  r.querySelectorAll('[data-count]').forEach(el => {
+    const p = E((t - +el.dataset.t0) / +el.dataset.dur), van = +(el.dataset.van || 0), tot = +el.dataset.count;
+    const v = van + (tot - van) * p, dec = +(el.dataset.dec || 0);
+    el.textContent = (el.dataset.pre || '') + v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}) + (el.dataset.suf || '');
+  });
+  r.querySelectorAll('[data-typ]').forEach(el => {
+    const tekst = el.dataset.typ, n = Math.floor(cl((t - +el.dataset.t0) * 30 / tekst.length) * tekst.length);
+    const klaar = n >= tekst.length, aan = !klaar || Math.floor(t * 2.2) % 2 === 0;
+    el.innerHTML = esc(tekst.slice(0, n)) + (t >= +el.dataset.t0 ? `<span class="caret" style="opacity:${aan ? 1 : 0}"></span>` : '');
+  });
+}
+
+function ondertitel(t) {
+  const c = document.getElementById('cap');
+  const blok = spec.captions.find(b => t >= b.s && t <= b.e + .2);
+  c.innerHTML = blok ? blok.w.map(w => `<span class="${t >= w.s ? 'aan' : ''}">${esc(w.w)}</span>`).join(' ') : '';
+}
+
+window.__zet = t => {
+  let i = 0;
+  while (i + 1 < spec.scenes.length && t >= spec.scenes[i + 1].start) i++;
+  if (i !== huidig) bouw(i);
+  werk(t - spec.scenes[i].start);
+  ondertitel(t);
+};
+</script>
+</body></html>

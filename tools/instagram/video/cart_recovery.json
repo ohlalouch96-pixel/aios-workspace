@@ -1,0 +1,25 @@
+{
+  "onderwerp": "Cart recovery flow",
+  "stem": "eric",
+  "beats": [
+    {"zegt": "Seven out of ten shoppers leave their cart behind.",
+     "scene": {"type": "getal", "tot": 70, "suf": "%", "tekst": "of online carts get abandoned.",
+               "bron": "Baymard Institute, average of 50 studies"}},
+    {"zegt": "Most stores just let them go.",
+     "scene": {"type": "mandje", "kop": "Most stores just *let them go.*", "status": "Abandoned · 11:47 PM",
+               "items": [["Running shorts", 48], ["Training tee", 35], ["Water bottle", 29]]}, "min": 3.2},
+    {"zegt": "This flow follows up at the right moment, with the right email.",
+     "scene": {"type": "mails", "kop": "The right email, at the *right moment.*",
+               "mails": [["1 hour", "You left something behind", "Your cart is saved for you"],
+                         ["24 hours", "Still thinking it over?", "Here's what other runners say"],
+                         ["48 hours", "Last call on your cart", "Your items are still waiting"]]}, "min": 4.6},
+    {"zegt": "And it brings a part of those sales back, while you sleep.",
+     "scene": {"type": "meldingen", "klok": "2:14 AM", "label": "recovered tonight", "kop": "While you *sleep.*",
+               "meldingen": [["Order recovered", "Cart from 11:47 PM", 112.0],
+                             ["Order recovered", "Cart from yesterday", 84.5],
+                             ["Order recovered", "Cart from 2 days ago", 63.0]]}, "min": 4.4},
+    {"zegt": "Want to see what it could bring back for your store? Send me a DM.",
+     "scene": {"type": "eind", "kop": "What could it bring back for *your store?*", "knop": "Send me a DM ⚡",
+               "handle": "@insightance.ai"}}
+  ]
+}
