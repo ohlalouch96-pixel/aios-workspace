@@ -100,8 +100,29 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Stem: Eric via ElevenLabs (`tools/instagram/stem.py`, cache in `.tmp/instagram/stem_cache/`). Oussama's eigen stem getest en afgewezen.
 - Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
 - Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
-- Na elke zin een natuurlijke pauze van Eric zelf (pauze-tag 0,7-0,8 s), het beeld blijft dan staan. Nooit de opname knippen of zelf stilte toevoegen: dode stilte zonder ademhaling klinkt als losse fragmenten (06-11). Stem met pit: stability 0.25, style 0.45. Geen lopende ondertitels: de teksten in beeld vertellen het verhaal, ook zonder geluid. Kleurenset volgt de kleurregel (navy basis, `VIDEO_KLEUREN` in de tool); zwart-lime is de oorspronkelijke Typer-look.
+- Stem: profiel `eric_v3` (nieuwste model, regie-tags per zin zoals [confident], [understated], [softly]; gekozen 06-11 uit 4 proeven). Spec: per beat `zegt` (woorden) + `uitspraak` (met tags).
+- Pauzes: de tool maakt elke pauze precies 1,75 s (alleen het stille midden, ElevenLabs-stilte is -88 dB) en zet Erics echte ademhaling (`video/adem_eric.wav`) vlak voor elke nieuwe zin. Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
+
+### Controleregels (vóór Oussama een video ziet, besluit 06-11)
+
+Automatisch (de tool stopt bij een fout):
+1. Eén doorlopende opname, nooit per zin inspreken.
+2. Beeld blijft na het laatste woord van elke zin minstens 1,5 s staan.
+3. Elke scène minstens 3,0 s in beeld.
+4. Stem = gekozen profiel; aantal gehoorde woorden = aantal woorden in het script.
+5. Bedragen kloppen op elk moment (subtotaal = som, teller = som van de meldingen die al in beeld zijn).
+
+Zelf bekijken op `controle.png` (per scène begin, midden, rust):
+6. Tekst in beeld volgt de woordvolgorde van wat Eric zegt.
+7. Niets valt buiten beeld of overlapt, alles binnen de veilige zone.
+8. Rustig tempo, elementen op het gesproken woord, niet te veel tegelijk.
+9. Kleurenset klopt, tekst goed leesbaar.
+10. Cijfers met bron gecheckt, geen klantnamen, geen gedachtestreepjes.
+
+Bij elke nieuwe versie:
+11. Vergelijken met de laatst goedgekeurde versie en melden wat er veranderd is, ook bijeffecten.
+12. Alleen veranderen wat gevraagd is.
 
 ## Geleerd
 
-- **Voice-over (06-11):** hele script in één keer inspreken, niet per zin: per zin klonk elke beat als een herstart met een dode pauze ertussen. Tekst in beeld volgt exact de woordvolgorde van wat gezegd wordt (anders hoor je iets anders dan je leest). Animaties rustig (±0,7 s in) en op het gesproken woord, niet "tak tak tak". Scènes lopen in elkaar over (inhoud glijdt weg net voor de volgende zin).
+- **Voice-over (06-11):** zelf toegevoegde stilte was niet het probleem (ElevenLabs-pauzes zijn ook digitale stilte); wel het knippen door een ademhaling en een vlakkere opname. Hele script in één keer inspreken, niet per zin: per zin klonk elke beat als een herstart met een dode pauze ertussen. Tekst in beeld volgt exact de woordvolgorde van wat gezegd wordt (anders hoor je iets anders dan je leest). Animaties rustig (±0,7 s in) en op het gesproken woord, niet "tak tak tak". Scènes lopen in elkaar over (inhoud glijdt weg net voor de volgende zin).

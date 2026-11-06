@@ -30,6 +30,10 @@ API = "https://api.elevenlabs.io/v1"
 STEMMEN = {
     "eric": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_multilingual_v2",
              "voice_settings": {"stability": 0.25, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
+    # Gekozen 06-11 (proef C): nieuwste model, regie per zin met tags als [confident], [understated].
+    # Kent geen <break>-tags; pauzes via " [long pause] ", daarna gelijkgetrokken in render_stem_video.py.
+    "eric_v3": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_v3",
+                "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
 }
 
 
@@ -40,19 +44,24 @@ def sleutel():
     raise SystemExit("ELEVENLABS_API_KEY ontbreekt in .env")
 
 
-def inspreken(tekst, stem="eric", settings=None):
+def inspreken(tekst, stem="eric", settings=None, model=None, seed=None):
     """Geeft (pad naar mp3, woorden) terug. Woorden: [{"w", "s", "e"}] in seconden.
     settings: optioneel andere voice_settings (bv. om intonatie te testen)."""
     instelling = STEMMEN[stem]
     if settings:
         instelling = {**instelling, "voice_settings": {**instelling["voice_settings"], **settings}}
+    if model:
+        instelling = {**instelling, "model_id": model}
+    if seed is not None:
+        instelling = {**instelling, "seed": seed}
     code = hashlib.sha1(json.dumps([tekst, instelling], sort_keys=True).encode()).hexdigest()[:16]
     mp3, meta = CACHE / f"{code}.mp3", CACHE / f"{code}.json"
     if not (mp3.exists() and meta.exists()):
         CACHE.mkdir(parents=True, exist_ok=True)
         r = requests.post(f"{API}/text-to-speech/{instelling['voice_id']}/with-timestamps",
                           headers={"xi-api-key": sleutel()},
-                          json={"text": tekst, "model_id": instelling["model_id"], "voice_settings": instelling["voice_settings"]},
+                          json={"text": tekst, "model_id": instelling["model_id"], "voice_settings": instelling["voice_settings"],
+                                **({"seed": instelling["seed"]} if "seed" in instelling else {})},
                           timeout=120)
         r.raise_for_status()
         d = r.json()

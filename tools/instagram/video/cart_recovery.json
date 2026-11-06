@@ -1,6 +1,6 @@
 {
   "onderwerp": "Cart recovery flow",
-  "stem": "eric",
+  "stem": "eric_v3",
   "kleurenset": "navy",
   "beats": [
     {
@@ -12,7 +12,7 @@
         "tekst": "of online carts get abandoned.",
         "bron": "Baymard Institute, average of 50 studies"
       },
-      "pauze": 0.7
+      "uitspraak": "[confident] Seven out of ten shoppers leave their cart behind."
     },
     {
       "zegt": "Most stores just let them go.",
@@ -35,7 +35,7 @@
           ]
         ]
       },
-      "pauze": 0.8
+      "uitspraak": "[understated] Most stores just let them go."
     },
     {
       "zegt": "This flow follows up at the right moment, with the right email.",
@@ -65,7 +65,7 @@
           "email"
         ]
       },
-      "pauze": 0.8
+      "uitspraak": "[warm] This flow follows up at the right moment, with the right email."
     },
     {
       "zegt": "And it brings a part of those sales back, while you sleep.",
@@ -97,7 +97,7 @@
           "back"
         ]
       },
-      "pauze": 0.7
+      "uitspraak": "And it brings a part of those sales back... [softly] while you sleep."
     },
     {
       "zegt": "Want to see what it could bring back for your store? Send me a DM.",
@@ -106,7 +106,8 @@
         "kop": "What could it bring back for *your store?*",
         "knop": "Send me a DM ⚡",
         "handle": "@insightance.ai"
-      }
+      },
+      "uitspraak": "[curious] Want to see what it could bring back for your store? [confident] Send me a DM."
     }
   ]
 }

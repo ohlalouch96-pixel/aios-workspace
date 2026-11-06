@@ -88,7 +88,7 @@ const SCENES = {
     <div class="klok" data-in="0">${esc(s.klok)}</div>
     ${s.meldingen.map((m, n) => `<div class="toast" data-in="${wt(s, (s.op || [])[n], .3 + n * d * .18)}"><span class="dot">$</span>
       <div><div class="t1">${esc(m[0])}</div><div class="t2">${esc(m[1])}</div></div><span class="bedrag">${geld(m[2])}</span></div>`).join('')}
-    <div class="teller" data-in="${.3}" data-count="${s.meldingen.reduce((a, m) => a + m[2], 0)}" data-t0="0.3" data-dur="${d * .6}" data-pre="$" data-dec="2">$0.00</div>
+    <div class="teller" data-in="${.3}" data-som='${JSON.stringify(s.meldingen.map((m, n) => [wt(s, (s.op || [])[n], .3 + n * d * .18), m[2]]))}'>$0.00</div>
     <div class="teller-lab" data-in="0.3">${esc(s.label)}</div>
     <div class="kop" style="margin-top:90px" data-in="${wt(s, "while", d * .62) - .15}">${mk(s.kop, wt(s, "sleep", d * .72))}</div>`}),
   eind: (s, d) => ({kleur: 'donker', html: `
@@ -135,6 +135,11 @@ function werk(t, d, laatste) {
     const p = E((t - +el.dataset.t0) / +el.dataset.dur), van = +(el.dataset.van || 0), tot = +el.dataset.count;
     const v = van + (tot - van) * p, dec = +(el.dataset.dec || 0);
     el.textContent = (el.dataset.pre || '') + v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec}) + (el.dataset.suf || '');
+  });
+  // teller = som van de meldingen die al in beeld zijn (bedragen kloppen op elk moment)
+  r.querySelectorAll('[data-som]').forEach(el => {
+    const v = JSON.parse(el.dataset.som).reduce((a, [t0, bedrag]) => a + bedrag * E((t - t0) / .6), 0);
+    el.textContent = '$' + v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   });
   r.querySelectorAll('[data-typ]').forEach(el => {
     const tekst = el.dataset.typ, n = Math.floor(cl((t - +el.dataset.t0) * 20 / tekst.length) * tekst.length);

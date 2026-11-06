@@ -5,12 +5,18 @@ Elke beat = één zin + één scène uit tools/instagram/video/typer.html (getal
 mandje, mails, meldingen, eind). Eric (tools/instagram/stem.py) spreekt het
 hele script in één keer in, zodat het als één verhaal klinkt; de scènes worden
 op zijn woordtijden geknipt en beeld verschijnt op het gesproken woord.
-Na elke zin een natuurlijke pauze van Eric zelf (pauze-tag, per beat aan te passen met "pauze");
-het beeld blijft tijdens die pauze staan.
-Geen lopende ondertitels (aan te zetten met "ondertitels": true). "kleurenset" volgt de kleurregel.
-Regel: tekst in beeld volgt dezelfde woordvolgorde als wat Eric zegt. Ondertitels lopen woord voor woord mee. Donkere en lichte
-scènes wisselen met een harde cut. Geen gezicht, geen muziek (Oussama voegt
-muziek zelf toe in Instagram).
+
+Pauzes: elke pauze tussen twee zinnen wordt precies PAUZE_DOEL lang gemaakt door
+alleen het stille middenstuk korter of langer te maken (de stilte van ElevenLabs
+is echte stilte, -88 dB). Het uitklinken van het laatste woord en het begin van
+het volgende blijven onaangeroerd; vlak voor elke nieuwe zin komt Erics eigen
+ademhaling (video/adem_eric.wav). Zo blijft het beeld na elke zin 1,5 s staan
+en klinkt het als één doorlopend gesprek.
+
+Geen lopende ondertitels (aan te zetten met "ondertitels": true). "kleurenset"
+volgt de kleurregel. Geen gezicht, geen muziek (Oussama voegt die zelf toe).
+Voor het renderen controleert de tool de regels uit workflows/instagram_content.md
+(woorden per zin, rust na elke zin, minimale scèneduur) en stopt bij een fout.
 
 Frames worden een voor een gerenderd op het exacte tijdstip (scherp, vast
 tempo) en met ffmpeg samengevoegd met de stem. Levert reel.mp4 (1080x1920,
@@ -18,19 +24,20 @@ tempo) en met ffmpeg samengevoegd met de stem. Levert reel.mp4 (1080x1920,
 
 Spec:
     {
-      "onderwerp": "Cart recovery flow",
-      "stem": "eric",
+      "onderwerp": "Cart recovery flow", "stem": "eric_v3", "kleurenset": "navy",
       "beats": [
         {"zegt": "Seven out of ten shoppers leave their cart behind.",
+         "uitspraak": "[confident] Seven out of ten shoppers leave their cart behind.",
          "scene": {"type": "getal", "tot": 70, "suf": "%", "tekst": "of online carts get abandoned.",
                    "bron": "Baymard Institute, average of 50 studies"}},
         ...
       ]
     }
+"zegt" = de woorden (voor timing en controle), "uitspraak" = optioneel dezelfde zin met regie-tags.
 
 Gebruik (CLI):
     python tools/instagram/render_stem_video.py spec.json [--uit map/]
-Kost ElevenLabs-tegoed alleen voor zinnen die nog niet in de cache staan.
+Kost ElevenLabs-tegoed alleen voor een script dat nog niet in de cache staat.
 """
 
 import argparse
@@ -41,19 +48,27 @@ import sys
 from pathlib import Path
 
 import imageio_ffmpeg
+import numpy as np
 from playwright.sync_api import sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_carrousel import TMP  # noqa: E402
-from stem import inspreken  # noqa: E402
+from stem import STEMMEN, inspreken  # noqa: E402
 
 PAGINA = Path(__file__).resolve().parent / "video" / "typer.html"
+ADEM = Path(__file__).resolve().parent / "video" / "adem_eric.wav"
+FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 FPS = 30
-BEGIN = 0.3      # stilte voor de eerste zin
-VOORLOOP = 0.25  # nieuwe scène verschijnt net voordat het eerste woord klinkt
-STAART = 1.4     # eindkaart blijft nog even staan
-MAX_WOORDEN = 4  # woorden per ondertitelblok
-PAUZE = 0.8      # pauze-tag na elke zin: Eric pauzeert zelf (met ademhaling), beeld blijft dan staan
+SR = 44100
+BEGIN = 0.3        # stilte voor de eerste zin
+VOORLOOP = 0.25    # nieuwe scène verschijnt net voordat het eerste woord klinkt
+STAART = 1.4       # eindkaart blijft nog even staan
+MAX_WOORDEN = 4    # woorden per ondertitelblok
+PAUZE_DOEL = 1.75  # stilte tussen twee zinnen => beeld blijft 1,5 s staan (zoals de versie die Oussama goed vond)
+UITKLINK = 0.35    # na het laatste woord niet knippen (uitklinken)
+AANLOOP = 0.15     # voor het volgende woord niet knippen
+MIN_RUST = 1.5     # regel: beeld blijft na het laatste woord minstens zo lang staan
+MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
 # donker/dfg = donkere scène, licht/lfg = lichte scène, acc = accent op donker, mark = markeerstift op licht.
@@ -69,7 +84,8 @@ VIDEO_KLEUREN = {
 
 
 def is_woord(w):
-    return not any(c in w for c in "<>=")  # pauze-tags (<break time="0.4s" />) tellen niet mee
+    # pauze- en regie-tags (<break .../>, [confident]) en losse puntjes tellen niet mee
+    return not any(c in w for c in "<>=[]") and w.strip(".") != ""
 
 
 def ondertitels(woorden, start):
@@ -87,37 +103,114 @@ def ondertitels(woorden, start):
     return uit
 
 
-def tijdlijn(spec):
-    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin)
-    en knipt de scènes op de woordtijden: elke scène begint net voor haar eerste woord."""
+def script(spec):
+    beats, stem = spec["beats"], spec.get("stem", "eric")
+    zinnen = [b.get("uitspraak", b["zegt"]) for b in beats]
+    if STEMMEN[stem]["model_id"] == "eleven_v3":  # v3 kent geen <break>; lengte wordt later gelijkgetrokken
+        return " [long pause] ".join(zinnen)
+    return " ".join(z + (' <break time="1.0s" />' if n < len(zinnen) - 1 else "") for n, z in enumerate(zinnen))
+
+
+def pcm(pad):
+    raw = subprocess.run([FFMPEG, "-v", "error", "-i", str(pad), "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(raw, dtype=np.float32).copy()
+
+
+def pauzes_gelijk(mp3, per_beat, uit_wav):
+    """Maakt elke pauze PAUZE_DOEL lang (alleen het stille midden), zet Erics ademhaling vlak voor
+    elke nieuwe zin en geeft de woordtijden in de nieuwe opname terug."""
+    x, adem = pcm(mp3), pcm(ADEM)
+
+    def s(t):
+        return int(round(t * SR))
+
+    def pauze(van, tot):
+        """Echte pauze tussen twee zinnen, gemeten op het geluid (de woordtijden van v3 lopen uit):
+        begin = eerste stilte van 0,3 s na het laatste woord, eind = waar de stem weer begint."""
+        blok, stil_db = s(0.02), 10 ** (-50 / 20)
+        stuk = x[s(van):s(tot)]
+        luid = [np.sqrt(np.mean(stuk[k:k + blok] ** 2)) > stil_db for k in range(0, len(stuk) - blok, blok)]
+        nodig = int(0.3 / 0.02)
+        for k in range(len(luid) - nodig):
+            if not any(luid[k:k + nodig]):
+                rest = luid[k:]
+                terug = next((j for j, l in enumerate(rest) if l), len(rest))
+                return van + k * 0.02, van + (k + terug) * 0.02
+        return van, tot
+
+    for n in range(len(per_beat) - 1):
+        woorden, volgende = per_beat[n], per_beat[n + 1]
+        a, b = pauze(woorden[-1]["s"], volgende[0]["s"] + 0.6)
+        woorden[-1]["e"] = a
+        delta = b - volgende[0]["s"]  # hele volgende zin gelijkzetten met het echte geluid
+        per_beat[n + 1] = volgende = [{**w, "s": w["s"] + delta, "e": w["e"] + delta} for w in volgende]
+    delen, verschuif, nieuw, cursor = [], 0.0, [], 0
+    for n, woorden in enumerate(per_beat):
+        nieuw.append([{**w, "s": w["s"] + verschuif, "e": w["e"] + verschuif} for w in woorden])
+        if n == len(per_beat) - 1:
+            break
+        a, b = woorden[-1]["e"], per_beat[n + 1][0]["s"]
+        kop_eind, staart_begin = s(min(a + UITKLINK, b - AANLOOP)), s(b - AANLOOP)
+        delen.append(x[cursor:kop_eind])
+        stil = np.zeros(max(s(PAUZE_DOEL) - (kop_eind - s(a)) - (s(b) - staart_begin), 0), dtype=np.float32)
+        k = min(len(adem), len(stil))  # ademhaling eindigt vlak voor de volgende zin
+        stil[len(stil) - k:] += adem[len(adem) - k:]
+        delen.append(stil)
+        cursor = staart_begin
+        verschuif += PAUZE_DOEL - (b - a)
+    delen.append(x[cursor:])
+    y = np.concatenate(delen)
+    subprocess.run([FFMPEG, "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(uit_wav)],
+                   input=y.tobytes(), check=True)
+    return nieuw
+
+
+def tijdlijn(spec, uit):
+    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin),
+    trekt de pauzes gelijk en knipt de scènes op de woordtijden."""
     beats = spec["beats"]
-    delen = []
-    for beat in beats:
-        delen.append(beat["zegt"])
-        if beat is not beats[-1]:
-            delen.append(f'<break time="{beat.get("pauze", PAUZE)}s" />')
-    mp3, alle = inspreken(" ".join(delen), spec.get("stem", "eric"))
+    mp3, alle = inspreken(script(spec), spec.get("stem", "eric"))
     alle = [w for w in alle if is_woord(w["w"])]
+    verwacht = sum(len(b["zegt"].split()) for b in beats)
+    if len(alle) != verwacht:
+        raise SystemExit(f"Controle: {len(alle)} woorden gehoord, {verwacht} verwacht. Klopt de uitspraak met 'zegt'?")
     per_beat, i = [], 0
     for beat in beats:
         n = len(beat["zegt"].split())
         per_beat.append(alle[i:i + n])
         i += n
-    # Niet knippen of zelf stilte toevoegen: dode stilte maakt er weer losse fragmenten van (06-11).
-    stukken = [(mp3, 0.0, alle[-1]["e"] + 0.5, BEGIN)]
+    wav = uit / "stem.wav"
+    per_beat = pauzes_gelijk(mp3, per_beat, wav)
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
     scenes, captions = [], []
     for n, (beat, woorden) in enumerate(zip(beats, per_beat)):
         start = starts[n]
         eind = starts[n + 1] if n + 1 < len(beats) else totaal
-        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start} for w in woorden]
+        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start, "e": BEGIN + w["e"] - start} for w in woorden]
         scenes.append({**beat["scene"], "start": start, "dur": eind - start, "woorden": w_scene})
         captions += ondertitels(woorden, BEGIN)
     lijn = {"scenes": scenes, "kleuren": VIDEO_KLEUREN[spec.get("kleurenset", "navy")]}
     if spec.get("ondertitels"):  # standaard uit: de teksten in beeld vertellen het verhaal al (besluit 06-11)
         lijn["captions"] = captions
-    return lijn, stukken, totaal
+    return lijn, [(wav, 0.0, totaal, BEGIN)], totaal
+
+
+def controleer(lijn):
+    """Regels uit de workflow: rust na elke zin en minimale scèneduur. Stopt bij een fout."""
+    fouten = []
+    print(f"{'scène':<10} {'in beeld':>9} {'rust na laatste woord':>22}")
+    for n, sc in enumerate(lijn["scenes"]):
+        rust = sc["dur"] - sc["woorden"][-1]["e"]
+        print(f"{sc['type']:<10} {sc['dur']:>8.2f}s {rust:>21.2f}s")
+        if sc["dur"] < MIN_SCENE:
+            fouten.append(f"{sc['type']}: {sc['dur']:.2f}s in beeld, minimaal {MIN_SCENE}s")
+        if n < len(lijn["scenes"]) - 1 and rust < MIN_RUST - 0.02:
+            fouten.append(f"{sc['type']}: rust {rust:.2f}s, minimaal {MIN_RUST}s")
+    if fouten:
+        raise SystemExit("Controle mislukt:\n  " + "\n  ".join(fouten))
+    print("Controle: alle regels in orde.")
 
 
 def render(spec, uit):
@@ -125,7 +218,8 @@ def render(spec, uit):
     frames = uit / "_frames"
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
-    lijn, audio, totaal = tijdlijn(spec)
+    lijn, audio, totaal = tijdlijn(spec, uit)
+    controleer(lijn)
     cover_t = lijn["scenes"][0]["dur"] - 0.3
     with sync_playwright() as p:
         try:
@@ -156,7 +250,33 @@ def render(spec, uit):
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-t", f"{totaal:.2f}", "-movflags", "+faststart", str(video)]
     subprocess.run(cmd, check=True)
     shutil.rmtree(frames)
+    (uit / "stem.wav").unlink(missing_ok=True)
+    controleblad(video, lijn, uit / "controle.png")
     return video
+
+
+def controleblad(video, lijn, pad):
+    """Eén overzicht om zelf te bekijken voor Oussama de video ziet: per scène (kolom) drie momenten
+    (rij): net na het eerste woord, midden in de zin, en tijdens de rust na de zin."""
+    tmp = pad.parent / "_controle"
+    tmp.mkdir(exist_ok=True)
+    rijen = []
+    for r, moment in enumerate(["begin", "midden", "rust"]):
+        cellen = []
+        for k, sc in enumerate(lijn["scenes"]):
+            w = sc["woorden"]
+            t = sc["start"] + {"begin": w[0]["s"] + 0.6, "midden": w[len(w) // 2]["s"] + 0.4, "rust": w[-1]["e"] + 1.0}[moment]
+            cel = tmp / f"{r}_{k}.png"
+            subprocess.run([FFMPEG, "-y", "-v", "error", "-ss", f"{t:.2f}", "-i", str(video), "-frames:v", "1",
+                            "-vf", "scale=270:-1", str(cel)], check=True)
+            cellen.append(cel)
+        rij = tmp / f"rij{r}.png"
+        subprocess.run([FFMPEG, "-y", "-v", "error", *sum((["-i", str(c)] for c in cellen), []),
+                        "-filter_complex", f"hstack={len(cellen)}", str(rij)], check=True)
+        rijen.append(rij)
+    subprocess.run([FFMPEG, "-y", "-v", "error", *sum((["-i", str(x)] for x in rijen), []),
+                    "-filter_complex", f"vstack={len(rijen)}", str(pad)], check=True)
+    shutil.rmtree(tmp)
 
 
 def main():
