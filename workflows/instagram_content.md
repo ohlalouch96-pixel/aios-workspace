@@ -100,6 +100,7 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Stem: Eric via ElevenLabs (`tools/instagram/stem.py`, cache in `.tmp/instagram/stem_cache/`). Oussama's eigen stem getest en afgewezen.
 - Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
 - Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
+- Na elke zin ±1,3 s stilte waarin het beeld blijft staan (om te kunnen lezen). Geen lopende ondertitels: de teksten in beeld vertellen het verhaal, ook zonder geluid. Kleurenset volgt de kleurregel (navy basis, `VIDEO_KLEUREN` in de tool); zwart-lime is de oorspronkelijke Typer-look.
 
 ## Geleerd
 

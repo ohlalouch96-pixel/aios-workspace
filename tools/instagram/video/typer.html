@@ -2,20 +2,20 @@
 <html><head><meta charset="utf-8">
 <style>
 @font-face{font-family:Inter;font-weight:100 900;src:url('../fonts/inter-latin.woff2')}
-:root{--donker:#0A0A0A;--licht:#F4F3EE;--lime:#D4F53C;--groen:#5BB82E;--grijs:#8A8A85}
+:root{--donker:#0A0A0A;--dfg:#FFFFFF;--acc:#D4F53C;--accfg:#0A0A0A;--licht:#F4F3EE;--lfg:#0A0A0A;--mark:#D4F53C;--pos:#5BB82E;--kaart:#1A1A1A;--rand:#2A2A2A;--grijs:#8A8A85}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;overflow:hidden;font-family:Inter;-webkit-font-smoothing:antialiased}
 body{background:var(--donker)}
-#scene{position:absolute;inset:0;padding:300px 90px 0}
-#scene.donker{background:radial-gradient(ellipse 70% 45% at 50% 38%,rgba(212,245,60,.16),transparent 70%),var(--donker);color:#fff;text-align:center}
-#scene.licht{background:var(--licht);color:var(--donker);text-align:left}
+#scene{position:absolute;inset:0;padding:250px 90px 480px;display:flex;flex-direction:column;justify-content:center}  /* midden van de veilige zone van Reels */
+#scene.donker{background:radial-gradient(ellipse 70% 45% at 50% 38%,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%),var(--donker);color:var(--dfg);text-align:center}
+#scene.licht{background:var(--licht);color:var(--lfg);text-align:left}
 .kop{font-weight:800;font-size:92px;line-height:1.04;letter-spacing:-.035em}
 .kop.klein{font-size:76px}
-.hl{background:linear-gradient(var(--lime),var(--lime)) no-repeat 0 62%/calc(var(--hl,0)*100%) 78%;padding:0 6px;margin:0 -6px}
-.donker .hl{color:var(--lime);background:none;text-shadow:0 0 calc(var(--hl,0)*40px) rgba(212,245,60,.55)}
+.hl{background:linear-gradient(var(--mark),var(--mark)) no-repeat 0 62%/calc(var(--hl,0)*100%) 78%;padding:0 6px;margin:0 -6px}
+.donker .hl{color:var(--acc);background:none;text-shadow:0 0 calc(var(--hl,0)*40px) color-mix(in srgb,var(--acc) 55%,transparent)}
 .typ{font-weight:600;font-size:58px;line-height:1.2;letter-spacing:-.02em;min-height:140px}
-.caret{display:inline-block;width:5px;height:.95em;background:var(--lime);vertical-align:-.12em;margin-left:6px}
-.getal{font-weight:800;font-size:330px;line-height:1;letter-spacing:-.06em;color:var(--lime);text-shadow:0 0 70px rgba(212,245,60,.45);margin:120px 0 40px}
+.caret{display:inline-block;width:5px;height:.95em;background:var(--acc);vertical-align:-.12em;margin-left:6px}
+.getal{font-weight:800;font-size:330px;line-height:1;letter-spacing:-.06em;color:var(--acc);text-shadow:0 0 70px color-mix(in srgb,var(--acc) 45%,transparent);margin:120px 0 40px}
 .bron{font-size:30px;color:var(--grijs);margin-top:60px}
 .kaart{background:#fff;border-radius:34px;box-shadow:0 30px 70px rgba(10,10,10,.12),0 2px 0 rgba(10,10,10,.04);padding:44px 48px;margin-top:40px}
 .mandje h3{font-size:34px;font-weight:700;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
@@ -26,25 +26,25 @@ body{background:var(--donker)}
 .regel b{font-weight:700}
 .totaal{display:flex;justify-content:space-between;font-size:40px;font-weight:800;padding-top:26px;border-top:2px solid #EEEDE7}
 .mail{display:flex;gap:30px;align-items:flex-start;padding:36px 40px;margin-top:30px}
-.mail .tijd{flex:none;font-size:26px;font-weight:700;color:var(--donker);background:var(--lime);border-radius:30px;padding:10px 20px;margin-top:4px}
+.mail .tijd{flex:none;font-size:26px;font-weight:700;color:var(--lfg);background:var(--mark);border-radius:30px;padding:10px 20px;margin-top:4px}
 .mail .ond{font-size:36px;font-weight:700;line-height:1.2}
 .mail .vz{font-size:28px;color:var(--grijs);margin-top:8px}
-.mail .ok{margin-left:auto;flex:none;font-size:26px;font-weight:700;color:var(--groen);margin-top:8px}
+.mail .ok{margin-left:auto;flex:none;font-size:26px;font-weight:700;color:var(--pos);margin-top:8px}
 .klok{font-size:40px;font-weight:600;color:var(--grijs);letter-spacing:.04em}
-.toast{display:flex;align-items:center;gap:26px;text-align:left;background:#1A1A1A;border:2px solid #2A2A2A;border-radius:30px;padding:28px 34px;margin-top:24px}
-.toast .dot{width:64px;height:64px;border-radius:18px;background:var(--groen);flex:none;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;font-weight:800}
+.toast{display:flex;align-items:center;gap:26px;text-align:left;background:var(--kaart);border:2px solid var(--rand);border-radius:30px;padding:28px 34px;margin-top:24px}
+.toast .dot{width:64px;height:64px;border-radius:18px;background:var(--pos);flex:none;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;font-weight:800}
 .toast .t1{font-size:30px;font-weight:700}
 .toast .t2{font-size:26px;color:var(--grijs);margin-top:4px}
-.toast .bedrag{margin-left:auto;font-size:38px;font-weight:800;color:var(--lime)}
-.teller{font-weight:800;font-size:150px;letter-spacing:-.05em;color:#fff;margin-top:70px;line-height:1}
+.toast .bedrag{margin-left:auto;font-size:38px;font-weight:800;color:var(--acc)}
+.teller{font-weight:800;font-size:150px;letter-spacing:-.05em;color:var(--dfg);margin-top:70px;line-height:1}
 .teller-lab{font-size:34px;color:var(--grijs);margin-top:14px}
-.knop{display:inline-block;background:var(--lime);color:var(--donker);font-weight:800;font-size:54px;border-radius:80px;padding:34px 64px;margin-top:110px;box-shadow:0 0 80px rgba(212,245,60,.35)}
-.handle{font-size:40px;font-weight:600;color:#fff;margin-top:56px;opacity:.85}
+.knop{display:inline-block;background:var(--acc);color:var(--accfg);font-weight:800;font-size:54px;border-radius:80px;padding:34px 64px;margin-top:110px;box-shadow:0 0 80px color-mix(in srgb,var(--acc) 35%,transparent)}
+.handle{font-size:40px;font-weight:600;color:var(--dfg);margin-top:56px;opacity:.85}
 #cap{position:absolute;left:90px;right:90px;top:1400px;text-align:center;font-weight:700;font-size:50px;line-height:1.25;letter-spacing:-.01em}
 #cap span{opacity:.45}
 #cap span.aan{opacity:1}
-body.donker #cap{color:#fff}
-body.licht #cap{color:var(--donker)}
+body.donker #cap{color:var(--dfg)}
+body.licht #cap{color:var(--lfg)}
 </style></head>
 <body>
 <div id="scene"></div>
@@ -98,7 +98,10 @@ const SCENES = {
 };
 
 let spec = null, huidig = -1;
-window.__laad = s => { spec = s; };
+window.__laad = s => {
+  spec = s;
+  Object.entries(s.kleuren || {}).forEach(([k, v]) => document.documentElement.style.setProperty('--' + k, v));
+};
 
 function bouw(i) {
   const sc = spec.scenes[i], uit = SCENES[sc.type](sc, sc.dur);
@@ -142,6 +145,7 @@ function werk(t, d, laatste) {
 
 function ondertitel(t) {
   const c = document.getElementById('cap');
+  if (!spec.captions) return;
   const blok = spec.captions.find(b => t >= b.s && t <= b.e + .2);
   c.innerHTML = blok ? blok.w.map(w => `<span class="${t >= w.s ? 'aan' : ''}">${esc(w.w)}</span>`).join(' ') : '';
 }

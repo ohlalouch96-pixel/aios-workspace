@@ -1,6 +1,7 @@
 {
   "onderwerp": "Cart recovery flow",
   "stem": "eric",
+  "kleurenset": "navy",
   "beats": [
     {
       "zegt": "Seven out of ten shoppers leave their cart behind.",
@@ -32,8 +33,7 @@
             29
           ]
         ]
-      },
-      "pauze": 0.5
+      }
     },
     {
       "zegt": "This flow follows up at the right moment, with the right email.",
@@ -62,8 +62,7 @@
           "moment",
           "email"
         ]
-      },
-      "pauze": 0.6
+      }
     },
     {
       "zegt": "And it brings a part of those sales back, while you sleep.",
@@ -94,8 +93,7 @@
           "those",
           "back"
         ]
-      },
-      "pauze": 0.4
+      }
     },
     {
       "zegt": "Want to see what it could bring back for your store? Send me a DM.",
