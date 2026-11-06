@@ -5,7 +5,8 @@ Elke beat = één zin + één scène uit tools/instagram/video/typer.html (getal
 mandje, mails, meldingen, eind). Eric (tools/instagram/stem.py) spreekt het
 hele script in één keer in, zodat het als één verhaal klinkt; de scènes worden
 op zijn woordtijden geknipt en beeld verschijnt op het gesproken woord.
-Na elke zin ±1 s stilte waarin het beeld blijft staan (per beat aan te passen met "pauze").
+Na elke zin een natuurlijke pauze van Eric zelf (pauze-tag, per beat aan te passen met "pauze");
+het beeld blijft tijdens die pauze staan.
 Geen lopende ondertitels (aan te zetten met "ondertitels": true). "kleurenset" volgt de kleurregel.
 Regel: tekst in beeld volgt dezelfde woordvolgorde als wat Eric zegt. Ondertitels lopen woord voor woord mee. Donkere en lichte
 scènes wisselen met een harde cut. Geen gezicht, geen muziek (Oussama voegt
@@ -52,8 +53,7 @@ BEGIN = 0.3      # stilte voor de eerste zin
 VOORLOOP = 0.25  # nieuwe scène verschijnt net voordat het eerste woord klinkt
 STAART = 1.4     # eindkaart blijft nog even staan
 MAX_WOORDEN = 4  # woorden per ondertitelblok
-PAUZE = 1.0      # pauze-tag na elke zin (ElevenLabs maakt er in de praktijk ±0,6 s van)
-RUST = 0.7       # extra stilte die we zelf tussen de zinnen leggen: beeld blijft staan zodat je het kunt lezen
+PAUZE = 0.8      # pauze-tag na elke zin: Eric pauzeert zelf (met ademhaling), beeld blijft dan staan
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
 # donker/dfg = donkere scène, licht/lfg = lichte scène, acc = accent op donker, mark = markeerstift op licht.
@@ -103,10 +103,8 @@ def tijdlijn(spec):
         n = len(beat["zegt"].split())
         per_beat.append(alle[i:i + n])
         i += n
-    # Eén opname, op de stiltes tussen de zinnen in stukken gezet, met extra rust ertussen.
-    knip = [0.0] + [(a[-1]["e"] + b[0]["s"]) / 2 for a, b in zip(per_beat, per_beat[1:])] + [alle[-1]["e"] + 0.3]
-    stukken = [(mp3, knip[n], knip[n + 1], BEGIN + knip[n] + n * RUST) for n in range(len(beats))]
-    per_beat = [[{**w, "s": w["s"] + n * RUST, "e": w["e"] + n * RUST} for w in ws] for n, ws in enumerate(per_beat)]
+    # Niet knippen of zelf stilte toevoegen: dode stilte maakt er weer losse fragmenten van (06-11).
+    stukken = [(mp3, 0.0, alle[-1]["e"] + 0.5, BEGIN)]
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
     scenes, captions = [], []

@@ -6,7 +6,7 @@ Spreekt een zin in met de vaste merkstem en geeft de timing per letter terug
 bewaard in .tmp/instagram/stem_cache/, dus opnieuw renderen kost geen tegoed.
 
 Stem (besluit 06-11): Eric, iets sneller (speed 1.1), eleven_multilingual_v2.
-Intonatie iets levendiger gemaakt na feedback (stability 0.4, style 0.18).
+Meer pit na feedback: stability 0.25, style 0.45 (gekozen uit 4 proeven, 06-11).
 Oussama's eigen stem is getest en afgewezen.
 
 Gebruik (CLI):
@@ -29,7 +29,7 @@ API = "https://api.elevenlabs.io/v1"
 
 STEMMEN = {
     "eric": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_multilingual_v2",
-             "voice_settings": {"stability": 0.4, "similarity_boost": 0.75, "style": 0.18, "speed": 1.1}},
+             "voice_settings": {"stability": 0.25, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
 }
 
 
@@ -40,9 +40,12 @@ def sleutel():
     raise SystemExit("ELEVENLABS_API_KEY ontbreekt in .env")
 
 
-def inspreken(tekst, stem="eric"):
-    """Geeft (pad naar mp3, woorden) terug. Woorden: [{"w", "s", "e"}] in seconden."""
+def inspreken(tekst, stem="eric", settings=None):
+    """Geeft (pad naar mp3, woorden) terug. Woorden: [{"w", "s", "e"}] in seconden.
+    settings: optioneel andere voice_settings (bv. om intonatie te testen)."""
     instelling = STEMMEN[stem]
+    if settings:
+        instelling = {**instelling, "voice_settings": {**instelling["voice_settings"], **settings}}
     code = hashlib.sha1(json.dumps([tekst, instelling], sort_keys=True).encode()).hexdigest()[:16]
     mp3, meta = CACHE / f"{code}.mp3", CACHE / f"{code}.json"
     if not (mp3.exists() and meta.exists()):
