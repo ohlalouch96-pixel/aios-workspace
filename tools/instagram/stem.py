@@ -30,10 +30,11 @@ API = "https://api.elevenlabs.io/v1"
 STEMMEN = {
     "eric": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_multilingual_v2",
              "voice_settings": {"stability": 0.25, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
-    # Gekozen 06-11 (proef C): nieuwste model, regie per zin met tags als [confident], [understated].
-    # Kent geen <break>-tags; pauzes via " [long pause] ", daarna gelijkgetrokken in render_stem_video.py.
+    # Nieuwste model, regie per zin met tags als [confident], [understated]. Stability 0.0 (proef D, 06-11):
+    # levendigste intonatie en Eric ademt zelf af en toe. Kent geen <break>-tags; pauzes via " [long pause] ",
+    # daarna gelijkgetrokken in render_stem_video.py.
     "eric_v3": {"voice_id": "cjVigY5qzO86Huf0OWal", "model_id": "eleven_v3",
-                "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
+                "voice_settings": {"stability": 0.0, "similarity_boost": 0.75, "style": 0.45, "speed": 1.1}},
 }
 
 

@@ -100,8 +100,8 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Stem: Eric via ElevenLabs (`tools/instagram/stem.py`, cache in `.tmp/instagram/stem_cache/`). Oussama's eigen stem getest en afgewezen.
 - Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
 - Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
-- Stem: profiel `eric_v3` (nieuwste model, regie-tags per zin zoals [confident], [understated], [softly]; gekozen 06-11 uit 4 proeven). Spec: per beat `zegt` (woorden) + `uitspraak` (met tags).
-- Pauzes: de tool maakt elke pauze precies 1,75 s (alleen het stille midden, ElevenLabs-stilte is -88 dB) en zet Erics echte ademhaling (`video/adem_eric.wav`) vlak voor elke nieuwe zin. Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
+- Stem: profiel `eric_v3` (nieuwste model, stability 0.0 = proef D, regie-tags per zin zoals [confident], [understated], [softly]). Eric ademt zelf af en toe; dat blijft staan. Spec: per beat `zegt` (woorden) + `uitspraak` (met tags).
+- Pauzes: de tool maakt elke pauze precies 1,75 s door alleen echte stilte (onder -60 dB) in te korten of te verlengen. **Nooit zelf een ademhaling toevoegen**: een vaste ademhaling voor elke zin klonk nep (06-11). Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
 
 ### Controleregels (vóór Oussama een video ziet, besluit 06-11)
 

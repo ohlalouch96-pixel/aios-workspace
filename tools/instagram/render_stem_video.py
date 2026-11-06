@@ -7,11 +7,11 @@ hele script in één keer in, zodat het als één verhaal klinkt; de scènes wor
 op zijn woordtijden geknipt en beeld verschijnt op het gesproken woord.
 
 Pauzes: elke pauze tussen twee zinnen wordt precies PAUZE_DOEL lang gemaakt door
-alleen het stille middenstuk korter of langer te maken (de stilte van ElevenLabs
-is echte stilte, -88 dB). Het uitklinken van het laatste woord en het begin van
-het volgende blijven onaangeroerd; vlak voor elke nieuwe zin komt Erics eigen
-ademhaling (video/adem_eric.wav). Zo blijft het beeld na elke zin 1,5 s staan
-en klinkt het als één doorlopend gesprek.
+alleen echte stilte (onder -60 dB) korter of langer te maken. Alles wat Eric
+zelf laat horen, zoals het uitklinken van een woord of een ademhaling die hij uit
+zichzelf neemt, blijft staan. Nooit zelf een ademhaling toevoegen: een vaste
+ademhaling voor elke zin klinkt nep (06-11). Zo blijft het beeld na elke zin
+1,5 s staan en klinkt het als één doorlopend gesprek.
 
 Geen lopende ondertitels (aan te zetten met "ondertitels": true). "kleurenset"
 volgt de kleurregel. Geen gezicht, geen muziek (Oussama voegt die zelf toe).
@@ -56,7 +56,6 @@ from render_carrousel import TMP  # noqa: E402
 from stem import STEMMEN, inspreken  # noqa: E402
 
 PAGINA = Path(__file__).resolve().parent / "video" / "typer.html"
-ADEM = Path(__file__).resolve().parent / "video" / "adem_eric.wav"
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 FPS = 30
 SR = 44100
@@ -65,8 +64,8 @@ VOORLOOP = 0.25    # nieuwe scène verschijnt net voordat het eerste woord klink
 STAART = 1.4       # eindkaart blijft nog even staan
 MAX_WOORDEN = 4    # woorden per ondertitelblok
 PAUZE_DOEL = 1.75  # stilte tussen twee zinnen => beeld blijft 1,5 s staan (zoals de versie die Oussama goed vond)
-UITKLINK = 0.35    # na het laatste woord niet knippen (uitklinken)
-AANLOOP = 0.15     # voor het volgende woord niet knippen
+RAND = 0.12        # aan begin en eind van een stilte niets weghalen (zachte overgang)
+STIL_DB = -60      # alleen geluid onder dit niveau telt als stilte die korter/langer mag
 MIN_RUST = 1.5     # regel: beeld blijft na het laatste woord minstens zo lang staan
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
 
@@ -118,25 +117,29 @@ def pcm(pad):
 
 
 def pauzes_gelijk(mp3, per_beat, uit_wav):
-    """Maakt elke pauze PAUZE_DOEL lang (alleen het stille midden), zet Erics ademhaling vlak voor
-    elke nieuwe zin en geeft de woordtijden in de nieuwe opname terug."""
-    x, adem = pcm(mp3), pcm(ADEM)
+    """Maakt elke pauze tussen twee zinnen PAUZE_DOEL lang. Alleen echte stilte wordt ingekort of
+    verlengd; geluid in de pauze (uitklinken, een eigen ademhaling) blijft staan.
+    Geeft de woordtijden in de nieuwe opname terug."""
+    x = pcm(mp3)
 
     def s(t):
         return int(round(t * SR))
 
-    def pauze(van, tot):
-        """Echte pauze tussen twee zinnen, gemeten op het geluid (de woordtijden van v3 lopen uit):
-        begin = eerste stilte van 0,3 s na het laatste woord, eind = waar de stem weer begint."""
-        blok, stil_db = s(0.02), 10 ** (-50 / 20)
+    blok = s(0.02)
+
+    def luid(van, tot, drempel):
         stuk = x[s(van):s(tot)]
-        luid = [np.sqrt(np.mean(stuk[k:k + blok] ** 2)) > stil_db for k in range(0, len(stuk) - blok, blok)]
-        nodig = int(0.3 / 0.02)
-        for k in range(len(luid) - nodig):
-            if not any(luid[k:k + nodig]):
-                rest = luid[k:]
-                terug = next((j for j, l in enumerate(rest) if l), len(rest))
-                return van + k * 0.02, van + (k + terug) * 0.02
+        return [np.sqrt(np.mean(stuk[k:k + blok] ** 2)) > 10 ** (drempel / 20) for k in range(0, len(stuk) - blok, blok)]
+
+    def pauze(van, tot):
+        """Echte pauze, gemeten op het geluid (de woordtijden van v3 lopen uit): begin = eerste
+        stilte van 0,3 s na het laatste woord, eind = waar de stem weer echt begint (boven -30 dB)."""
+        l50, nodig = luid(van, tot, -50), int(0.3 / 0.02)
+        for k in range(len(l50) - nodig):
+            if not any(l50[k:k + nodig]):
+                spraak = luid(van + k * 0.02, tot, -30)
+                terug = next((j for j, l in enumerate(spraak) if l), len(spraak))
+                return van + k * 0.02, van + k * 0.02 + max(terug * 0.02 - 0.04, 0)
         return van, tot
 
     for n in range(len(per_beat) - 1):
@@ -144,21 +147,41 @@ def pauzes_gelijk(mp3, per_beat, uit_wav):
         a, b = pauze(woorden[-1]["s"], volgende[0]["s"] + 0.6)
         woorden[-1]["e"] = a
         delta = b - volgende[0]["s"]  # hele volgende zin gelijkzetten met het echte geluid
-        per_beat[n + 1] = volgende = [{**w, "s": w["s"] + delta, "e": w["e"] + delta} for w in volgende]
+        per_beat[n + 1] = [{**w, "s": w["s"] + delta, "e": w["e"] + delta} for w in volgende]
+
     delen, verschuif, nieuw, cursor = [], 0.0, [], 0
     for n, woorden in enumerate(per_beat):
         nieuw.append([{**w, "s": w["s"] + verschuif, "e": w["e"] + verschuif} for w in woorden])
         if n == len(per_beat) - 1:
             break
         a, b = woorden[-1]["e"], per_beat[n + 1][0]["s"]
-        kop_eind, staart_begin = s(min(a + UITKLINK, b - AANLOOP)), s(b - AANLOOP)
-        delen.append(x[cursor:kop_eind])
-        stil = np.zeros(max(s(PAUZE_DOEL) - (kop_eind - s(a)) - (s(b) - staart_begin), 0), dtype=np.float32)
-        k = min(len(adem), len(stil))  # ademhaling eindigt vlak voor de volgende zin
-        stil[len(stil) - k:] += adem[len(adem) - k:]
-        delen.append(stil)
-        cursor = staart_begin
-        verschuif += PAUZE_DOEL - (b - a)
+        delen.append(x[cursor:s(a)])
+        stuk = x[s(a):s(b)].copy()
+        # stille stukken (runs onder STIL_DB) binnen de pauze, randen beschermd
+        stil = luid(a, b, STIL_DB)
+        runs, k = [], 0
+        while k < len(stil):
+            if not stil[k]:
+                j = k
+                while j < len(stil) and not stil[j]:
+                    j += 1
+                runs.append((k * blok, j * blok))
+                k = j
+            else:
+                k += 1
+        verschil = s(PAUZE_DOEL) - len(stuk)
+        rand = s(RAND)
+        if runs and verschil != 0:
+            van, tot = max(runs, key=lambda r: r[1] - r[0])  # langste stilte aanpassen
+            midden = (van + tot) // 2
+            if verschil > 0:
+                stuk = np.concatenate([stuk[:midden], np.zeros(verschil, dtype=np.float32), stuk[midden:]])
+            else:
+                weg = min(-verschil, max(tot - van - 2 * rand, 0))
+                stuk = np.concatenate([stuk[:midden - weg // 2], stuk[midden - weg // 2 + weg:]])
+        delen.append(stuk)
+        cursor = s(b)
+        verschuif += len(stuk) / SR - (b - a)
     delen.append(x[cursor:])
     y = np.concatenate(delen)
     subprocess.run([FFMPEG, "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(uit_wav)],
