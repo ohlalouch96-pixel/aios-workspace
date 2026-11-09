@@ -149,7 +149,9 @@ PAGINA = """
   .persoon-sub { font-size: 12.5px; color: var(--faint); margin-top: 1px; }
 
   .bericht-blok { background: var(--tint); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .bericht-blok.preview { background: var(--soft); border: 1px dashed var(--line); }
   .bericht-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--mid); margin-bottom: 5px; }
+  .preview-tag { text-transform: none; font-weight: 500; color: var(--faint); letter-spacing: 0; }
   .bericht-tekst { font-size: 13.5px; line-height: 1.5; color: var(--ink); white-space: pre-wrap; }
   .bericht-acties { margin-top: 8px; }
 
@@ -275,6 +277,13 @@ function initialen(naam) {
         <div class="bericht-label">Bericht 1 — na acceptatie</div>
         <div class="bericht-tekst" id="bericht1-{{ loop.index }}">{{ k.bericht1 }}</div>
         <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('bericht1-{{ loop.index }}', this)">📋 Kopieer</button></div>
+      </div>
+      {% endif %}
+      {% if k.bericht2 %}
+      <div class="bericht-blok preview">
+        <div class="bericht-label">Bericht 2 — follow-up <span class="preview-tag">pas relevant als bericht 1 geen reactie krijgt</span></div>
+        <div class="bericht-tekst" id="preview-bericht2-{{ loop.index }}">{{ k.bericht2 }}</div>
+        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('preview-bericht2-{{ loop.index }}', this)">📋 Kopieer</button></div>
       </div>
       {% endif %}
 
