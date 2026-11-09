@@ -1,7 +1,7 @@
 # Plan: LinkedIn Outreach Agent
 
 **Created:** 2026-11-09
-**Status:** Draft
+**Status:** Stap 1-11 gebouwd en getest (2026-11-09). Stap 12 (eind-tot-eind-test met echte LinkedIn-login) wacht op Oussama.
 **Request:** Een LinkedIn-outreach-systeem bouwen (browser-automatisering voor zoeken/kwalificeren, een lokale webcockpit voor het klaarzetten en bevestigen van connectieverzoeken/berichten, en een dashboard met cijfers), geïnspireerd op Tim's "Clearvana"-systeem maar toegepast op Insightance/Oussama.
 
 ---
@@ -321,20 +321,20 @@ Geen impact op de bestaande webshop-/ondernemers-outreach-flows of op de Instagr
 
 ## Validation Checklist
 
-- [ ] `tools/linkedin/browser.py login` slaat een herbruikbare sessie op in `.tmp/linkedin-session/`
-- [ ] Een testzoekopdracht levert profiel-URLs op binnen het week 1-daglimiet
-- [ ] Een testprofiel wordt correct uitgelezen (naam/functie/bedrijf/locatie/about)
-- [ ] Een conceptkandidaat komt via `wachtrij.py` in het `linkedin-tracker`-tabblad terecht met status `Te versturen`
-- [ ] De lokale cockpit-pagina toont de kaart met de juiste knoppen en verwerkt `✅ Verstuurd` / `✏️ Aanpassen` / `❌ Overslaan` correct
-- [ ] De cockpit is alleen bereikbaar via `127.0.0.1` (lokaal), niet van buiten de laptop
-- [ ] `python scripts/collect_linkedin.py` synchroniseert het tabblad naar `data.db` zonder fouten
-- [ ] `python scripts/generate_metrics.py` toont een "Outreach: LinkedIn"-sectie en telt mee in "Outreach: Totaal"
-- [ ] De noodstop-logica pauzeert daadwerkelijk bij een gesimuleerde lage acceptatieratio (handmatig getest met testdata)
-- [ ] `browser.py check` detecteert correct een testgeval van acceptatie (handmatig: één testverzoek accepteren en checken of de status/tabel bijgewerkt wordt)
-- [ ] Het daglimiet in `limits.py` blijft correct binnen één sessie (meerdere acties kort na elkaar, zonder tussentijdse `collect_linkedin.py`-sync), dankzij het directe `linkedin_daily_log`
-- [ ] `.env.example`, `.gitignore`, `requirements.txt` en `CLAUDE.md` zijn bijgewerkt
-- [ ] `pip install -r requirements.txt` en `playwright install chromium` zijn eenmalig gedraaid vóór de eerste test
-- [ ] Geen enkel wachtwoord of 2FA-code wordt ergens opgeslagen — alleen de Playwright-sessiemap (lokaal, gitignored)
+- [ ] `tools/linkedin/browser.py login` slaat een herbruikbare sessie op in `.tmp/linkedin-session/` — **nog te doen door Oussama (stap 12)**
+- [ ] Een testzoekopdracht levert profiel-URLs op binnen het week 1-daglimiet — **nog te doen (stap 12), inclusief eventuele selector-calibratie**
+- [ ] Een testprofiel wordt correct uitgelezen (naam/functie/bedrijf/locatie/about) — **nog te doen (stap 12)**
+- [x] Een conceptkandidaat komt via `wachtrij.py` in het `linkedin-tracker`-tabblad terecht met status `Te versturen` — getest 2026-11-09 (testrij toegevoegd, gecontroleerd, weer opgeruimd)
+- [x] De lokale cockpit-pagina toont de kaart met de juiste knoppen en verwerkt `✅ Verstuurd` / `✏️ Aanpassen` / `❌ Overslaan` correct — getest 2026-11-09 (HTTP 200, kaart zichtbaar, Verstuurd-knop gaf 302 + status+datum klopten in de sheet)
+- [x] De cockpit is alleen bereikbaar via `127.0.0.1` (lokaal), niet van buiten de laptop — `app.run(host="127.0.0.1", ...)`
+- [x] `python scripts/collect_linkedin.py` synchroniseert het tabblad naar `data.db` zonder fouten — getest met data (2 rijen) en met een lege sheet (0 rijen)
+- [x] `python scripts/generate_metrics.py` toont een "Outreach: LinkedIn"-sectie en telt mee in "Outreach: Totaal" — getest 2026-11-09, ook via de volledige `scripts/collect.py`-orchestrator
+- [ ] De noodstop-logica pauzeert daadwerkelijk bij een gesimuleerde lage acceptatieratio — logica gebouwd en de "lege data"-paden getest, maar nog niet getest met een echte lage-ratio-dataset; eerste kans daarvoor is bij een echte batch na stap 12
+- [ ] `browser.py check` detecteert correct een testgeval van acceptatie — **nog te doen (stap 12)**, kan niet zonder echte LinkedIn-sessie
+- [x] Het daglimiet in `limits.py` blijft correct binnen één sessie (meerdere acties kort na elkaar, zonder tussentijdse `collect_linkedin.py`-sync), dankzij het directe `linkedin_daily_log` — getest: cockpit-knop verhoogde de teller meteen (0/8 → 1/8) zonder sync
+- [x] `.env.example`, `.gitignore` (bleek al voldoende), `requirements.txt` en `CLAUDE.md` zijn bijgewerkt
+- [x] `pip install -r requirements.txt` en `playwright install chromium` zijn eenmalig gedraaid vóór de eerste test — Flask geïnstalleerd, Playwright+Chromium stonden al klaar
+- [x] Geen enkel wachtwoord of 2FA-code wordt ergens opgeslagen — alleen de Playwright-sessiemap (lokaal, gitignored); nog te bevestigen bij de echte login in stap 12
 
 ---
 
