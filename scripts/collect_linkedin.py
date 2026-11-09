@@ -57,7 +57,7 @@ def collect():
 
         result = service.spreadsheets().values().get(
             spreadsheetId=sheet_id,
-            range=f"{sheet_tab}!A:P"
+            range=f"{sheet_tab}!A:R"
         ).execute()
 
         values = result.get("values", [])
@@ -111,7 +111,7 @@ def write(conn, result, date):
         )
     """)
     kolommen = {r[1] for r in conn.execute("PRAGMA table_info(linkedin)")}
-    for nieuwe_kolom in ("bericht2", "datum_bericht2"):
+    for nieuwe_kolom in ("bericht2", "datum_bericht2", "bericht3", "datum_bericht3"):
         if nieuwe_kolom not in kolommen:
             conn.execute(f"ALTER TABLE linkedin ADD COLUMN {nieuwe_kolom} TEXT")
 
@@ -134,8 +134,8 @@ def write(conn, result, date):
             INSERT OR REPLACE INTO linkedin
             (naam, functie, bedrijf, locatie, url, status, connectienotitie, bericht1,
              datum_verzoek, datum_geaccepteerd, datum_bericht1, volgende_follow_up, gereageerd, notities, collected_at,
-             bericht2, datum_bericht2)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             bericht2, datum_bericht2, bericht3, datum_bericht3)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             naam,
             row.get("functie", ""),
@@ -154,6 +154,8 @@ def write(conn, result, date):
             collected_at,
             row.get("bericht 2", "") or row.get("bericht2", ""),
             row.get("datum bericht 2 verstuurd", "") or row.get("datum_bericht2", ""),
+            row.get("bericht 3", "") or row.get("bericht3", ""),
+            row.get("datum bericht 3 verstuurd", "") or row.get("datum_bericht3", ""),
         ))
         records += 1
 

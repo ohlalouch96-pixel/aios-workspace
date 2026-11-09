@@ -34,7 +34,7 @@ KOLOMMEN = [
     "naam", "functie", "bedrijf", "locatie", "url", "status",
     "connectienotitie", "bericht1", "datum_verzoek", "datum_geaccepteerd",
     "datum_bericht1", "volgende_follow_up", "gereageerd", "notities",
-    "bericht2", "datum_bericht2",
+    "bericht2", "datum_bericht2", "bericht3", "datum_bericht3",
 ]
 FOLLOW_UP_DAGEN = 5  # eerste follow-up-due, zie workflows/linkedin_outreach.md (nog voorlopig)
 
@@ -56,7 +56,7 @@ def _service():
 
 
 def nieuw(kandidaat):
-    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie, bericht1, bericht2."""
+    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie, bericht1, bericht2, bericht3."""
     service, sheet_id = _service()
     tab = _sheet_tab()
 
@@ -69,17 +69,18 @@ def nieuw(kandidaat):
         kandidaat.get("connectienotitie", ""), kandidaat.get("bericht1", ""),
         "", "", "", "", "", kandidaat.get("notities", ""),
         kandidaat.get("bericht2", ""), "",
+        kandidaat.get("bericht3", ""), "",
     ]
     end_row = start_row
     service.spreadsheets().values().update(
-        spreadsheetId=sheet_id, range=f"{tab}!A{start_row}:P{end_row}",
+        spreadsheetId=sheet_id, range=f"{tab}!A{start_row}:R{end_row}",
         valueInputOption="RAW", body={"values": [row]},
     ).execute()
     return start_row
 
 
 def _rij_vinden(service, sheet_id, tab, url):
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
     values = result.get("values", [])
     for i, row in enumerate(values[1:], start=2):  # rij 1 = headers
         if len(row) > 4 and row[4] == url:
@@ -100,12 +101,12 @@ def status(url, nieuwe_status, datum=None):
 
     datumkolom = {
         "Verzoek verstuurd": "I", "Geaccepteerd": "J", "Bericht verstuurd": "K",
-        "Bericht 2 verstuurd": "P",
+        "Bericht 2 verstuurd": "P", "Afgerond": "R",
     }.get(nieuwe_status)
     if datumkolom:
         updates.append({"range": f"{tab}!{datumkolom}{rij_nr}", "values": [[datum]]})
 
-    if nieuwe_status == "Bericht verstuurd":
+    if nieuwe_status in ("Bericht verstuurd", "Bericht 2 verstuurd"):
         follow_up_due = (datetime.now() + timedelta(days=FOLLOW_UP_DAGEN)).strftime("%Y-%m-%d")
         updates.append({"range": f"{tab}!L{rij_nr}", "values": [[follow_up_due]]})
 
@@ -127,7 +128,7 @@ def volgende_batch(n):
 
     service, sheet_id = _service()
     tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
     values = result.get("values", [])
     kandidaten = []
     for row in values[1:]:
@@ -141,11 +142,19 @@ def volgende_batch(n):
     return kandidaten
 
 
+# Status waaruit een follow-up kan volgen -> welk bericht er dan klaarstaat.
+FOLLOW_UP_STADIA = {
+    "Bericht verstuurd": "bericht2",
+    "Bericht 2 verstuurd": "bericht3",
+}
+
+
 def due_follow_ups():
-    """Rijen waarvan volgende_follow_up vandaag of eerder is en nog status 'Bericht verstuurd' hebben."""
+    """Rijen waarvan volgende_follow_up vandaag of eerder is, met 'volgende_actie'
+    erbij (bericht2 of bericht3) zodat de cockpit weet welk bericht te tonen."""
     service, sheet_id = _service()
     tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
     values = result.get("values", [])
     vandaag = datetime.now().strftime("%Y-%m-%d")
     due = []
@@ -153,7 +162,9 @@ def due_follow_ups():
         while len(row) < len(KOLOMMEN):
             row.append("")
         record = dict(zip(KOLOMMEN, row))
-        if record["status"] == "Bericht verstuurd" and record["volgende_follow_up"] and record["volgende_follow_up"] <= vandaag:
+        volgende_actie = FOLLOW_UP_STADIA.get(record["status"])
+        if volgende_actie and record["volgende_follow_up"] and record["volgende_follow_up"] <= vandaag:
+            record["volgende_actie"] = volgende_actie
             due.append(record)
     return due
 
