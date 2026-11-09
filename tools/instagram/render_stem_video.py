@@ -147,12 +147,13 @@ def opname(spec, naam=None):
     seed = spec["opnames"][naam].get("seed") if naam else spec.get("seed")
     mp3, alle = inspreken(script(spec, naam), spec.get("stem", "eric"), seed=seed)
     alle = [w for w in alle if is_woord(w["w"])]
-    verwacht = sum(len(b["zegt"].split()) for b in beats)
-    if len(alle) != verwacht:
-        raise SystemExit(f"Controle: {len(alle)} woorden gehoord, {verwacht} verwacht. Klopt de uitspraak met 'zegt'?")
+    # een extra opname kan voor een andere zin een andere tekst hebben gehad ("zegt" per beatnummer)
+    zegt = spec["opnames"][naam].get("zegt", {}) if naam else {}
+    tellen = [len((zegt.get(str(n)) or b["zegt"]).split()) for n, b in enumerate(beats)]
+    if len(alle) != sum(tellen):
+        raise SystemExit(f"Controle: {len(alle)} woorden gehoord, {sum(tellen)} verwacht. Klopt de uitspraak met 'zegt'?")
     per_beat, i = [], 0
-    for beat in beats:
-        n = len(beat["zegt"].split())
+    for n in tellen:
         per_beat.append(alle[i:i + n])
         i += n
     return afkap_check(pcm(mp3)), per_beat

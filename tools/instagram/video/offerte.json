@@ -3,10 +3,21 @@
   "stem": "eric_v3",
   "kleurenset": "navy",
   "tempo": 1.1,
+  "opnames": {
+    "vorige": {
+      "uitspraak": {
+        "0": "[confident] It's nine at night, and you're still writing quotes.",
+        "5": "[curious] Want this for your business? [confident] Send me a DM."
+      },
+      "zegt": {
+        "0": "It's nine at night, and you're still writing quotes."
+      }
+    }
+  },
   "beats": [
     {
-      "zegt": "It's nine at night, and you're still writing quotes.",
-      "uitspraak": "[confident] It's nine at night, and you're still writing quotes.",
+      "zegt": "It's 9 PM, and you're still writing quotes.",
+      "uitspraak": "[confident] It's 9 PM, and you're still writing quotes.",
       "scene": {
         "type": "klok",
         "tijd": "9:12",
@@ -127,13 +138,14 @@
         "totaal": 4098.6,
         "aanbetaling": 819.72
       },
+      "opname": "vorige",
       "stem": {
         "volume_db": 1.8
       }
     },
     {
       "zegt": "Want this for your business? Send me a DM.",
-      "uitspraak": "[curious] Want this for your business? [confident] Send me a DM.",
+      "uitspraak": "[curious] Want this for your business? [confident] Send me a DM. [long pause]",
       "scene": {
         "type": "eind",
         "kop": "Want this for *your business?*",
