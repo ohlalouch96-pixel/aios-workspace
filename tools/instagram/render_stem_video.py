@@ -34,6 +34,13 @@ Spec:
       ]
     }
 "zegt" = de woorden (voor timing en controle), "uitspraak" = optioneel dezelfde zin met regie-tags.
+Gratis bijstellen van een bestaande opname (kost geen ElevenLabs-tegoed), per beat:
+    "stem": {"tempo": 1.1, "volume_db": 3}            hele zin iets sneller / harder
+    "stem": {"volume_db": 3.5, "volume_vanaf": "while"} alleen vanaf dat woord harder
+    "inademing": true                                  één korte, zachte inademing vlak voor deze zin
+                                                       (Erics eigen inademing uit de goedgekeurde versie
+                                                       van 06-11; spaarzaam gebruiken, nooit voor elke zin)
+Alleen de stem beluisteren, zonder video: --alleen-stem (levert stem.mp3).
 
 Gebruik (CLI):
     python tools/instagram/render_stem_video.py spec.json [--uit map/]
@@ -56,6 +63,7 @@ from render_carrousel import TMP  # noqa: E402
 from stem import STEMMEN, inspreken  # noqa: E402
 
 PAGINA = Path(__file__).resolve().parent / "video" / "typer.html"
+INADEMING = Path(__file__).resolve().parent / "video" / "inademing_eric.wav"
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 FPS = 30
 SR = 44100
@@ -116,7 +124,7 @@ def pcm(pad):
     return np.frombuffer(raw, dtype=np.float32).copy()
 
 
-def pauzes_gelijk(mp3, per_beat, uit_wav):
+def pauzes_gelijk(mp3, per_beat, uit_wav, beats=None):
     """Maakt elke pauze tussen twee zinnen PAUZE_DOEL lang. Alleen echte stilte wordt ingekort of
     verlengd; geluid in de pauze (uitklinken, een eigen ademhaling) blijft staan.
     Geeft de woordtijden in de nieuwe opname terug."""
@@ -149,6 +157,41 @@ def pauzes_gelijk(mp3, per_beat, uit_wav):
         delta = b - volgende[0]["s"]  # hele volgende zin gelijkzetten met het echte geluid
         per_beat[n + 1] = [{**w, "s": w["s"] + delta, "e": w["e"] + delta} for w in volgende]
 
+    # Bijstellen per zin (tempo/volume), op de echte zinsgrenzen; latere woorden schuiven mee.
+    for n, beat in enumerate(beats or []):
+        bew = beat.get("stem")
+        if not bew:
+            continue
+        ws = per_beat[n]
+        van = ws[0]["s"]
+        tot = ws[-1]["e"] if n < len(per_beat) - 1 else ws[-1]["s"] + 1.0
+        vanaf = van
+        if bew.get("volume_vanaf"):
+            doel = next((w for w in ws if w["w"].lower().strip(".,?!") == bew["volume_vanaf"]), None)
+            if doel is None:
+                raise SystemExit(f"Controle: woord '{bew['volume_vanaf']}' niet gevonden in zin {n + 1}")
+            # beginnen waar de stem na de laatste korte stilte voor dat woord weer inzet
+            l = luid(van, doel["s"] + 0.3, -50)
+            stil = [k for k in range(len(l) - 5) if not any(l[k:k + 5])]
+            vanaf = van + ((stil[-1] + 5) * 0.02 if stil else 0.0)
+        tempo, vol = bew.get("tempo", 1.0), bew.get("volume_db", 0.0)
+        filt = ",".join(f for f in [f"atempo={tempo}" if tempo != 1.0 else "", f"volume={vol}dB" if vol else ""] if f)
+        if not filt:
+            continue
+        ruw = x[s(vanaf):s(tot)]
+        uit = np.frombuffer(subprocess.run([FFMPEG, "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
+                                            "-af", filt, "-f", "f32le", "-"], input=ruw.tobytes(), capture_output=True,
+                                           check=True).stdout, dtype=np.float32)
+        x = np.concatenate([x[:s(vanaf)], uit, x[s(tot):]])
+        rek = len(uit) / max(len(ruw), 1)
+        extra = (len(uit) - len(ruw)) / SR
+        for m in range(n, len(per_beat)):
+            per_beat[m] = [{**w,
+                            "s": (vanaf + (w["s"] - vanaf) * rek if w["s"] >= vanaf else w["s"]) if m == n else w["s"] + extra,
+                            "e": (vanaf + (w["e"] - vanaf) * rek if w["e"] >= vanaf else w["e"]) if m == n else w["e"] + extra}
+                           for w in per_beat[m]]
+
+    inademing = pcm(INADEMING) if any(b.get("inademing") for b in (beats or [])) else None
     delen, verschuif, nieuw, cursor = [], 0.0, [], 0
     for n, woorden in enumerate(per_beat):
         nieuw.append([{**w, "s": w["s"] + verschuif, "e": w["e"] + verschuif} for w in woorden])
@@ -179,6 +222,10 @@ def pauzes_gelijk(mp3, per_beat, uit_wav):
             else:
                 weg = min(-verschil, max(tot - van - 2 * rand, 0))
                 stuk = np.concatenate([stuk[:midden - weg // 2], stuk[midden - weg // 2 + weg:]])
+        if inademing is not None and beats[n + 1].get("inademing"):
+            k = min(len(inademing), len(stuk) - s(0.04))  # eindigt vlak voor het eerste woord
+            plek = len(stuk) - s(0.04) - k
+            stuk[plek:plek + k] += inademing[len(inademing) - k:]
         delen.append(stuk)
         cursor = s(b)
         verschuif += len(stuk) / SR - (b - a)
@@ -204,7 +251,7 @@ def tijdlijn(spec, uit):
         per_beat.append(alle[i:i + n])
         i += n
     wav = uit / "stem.wav"
-    per_beat = pauzes_gelijk(mp3, per_beat, wav)
+    per_beat = pauzes_gelijk(mp3, per_beat, wav, beats)
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
     scenes, captions = [], []
@@ -306,10 +353,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("spec")
     ap.add_argument("--uit")
+    ap.add_argument("--alleen-stem", action="store_true", help="alleen stem.mp3 maken om te beluisteren (geen video)")
     args = ap.parse_args()
     spec_pad = Path(args.spec)
     uit = (Path(args.uit) if args.uit else TMP / spec_pad.stem).resolve()
-    print(render(json.loads(spec_pad.read_text(encoding="utf-8")), uit))
+    spec = json.loads(spec_pad.read_text(encoding="utf-8"))
+    if args.alleen_stem:
+        uit.mkdir(parents=True, exist_ok=True)
+        lijn, _, _ = tijdlijn(spec, uit)
+        controleer(lijn)
+        mp3 = uit / "stem.mp3"
+        subprocess.run([FFMPEG, "-y", "-v", "error", "-i", str(uit / "stem.wav"), "-af", f"adelay={int(BEGIN * 1000)}",
+                        "-b:a", "192k", str(mp3)], check=True)
+        (uit / "stem.wav").unlink()
+        print(mp3)
+    else:
+        print(render(spec, uit))
 
 
 if __name__ == "__main__":

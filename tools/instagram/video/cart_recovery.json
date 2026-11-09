@@ -35,7 +35,12 @@
           ]
         ]
       },
-      "uitspraak": "[understated] Most stores just let them go."
+      "uitspraak": "[understated] Most stores just let them go.",
+      "stem": {
+        "tempo": 1.1,
+        "volume_db": 3
+      },
+      "inademing": true
     },
     {
       "zegt": "This flow follows up at the right moment, with the right email.",
@@ -97,7 +102,11 @@
           "back"
         ]
       },
-      "uitspraak": "And it brings a part of those sales back... [softly] while you sleep."
+      "uitspraak": "And it brings a part of those sales back... [softly] while you sleep.",
+      "stem": {
+        "volume_db": 3.5,
+        "volume_vanaf": "while"
+      }
     },
     {
       "zegt": "Want to see what it could bring back for your store? Send me a DM.",
