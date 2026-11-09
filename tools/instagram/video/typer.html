@@ -89,6 +89,63 @@ body{background:var(--donker)}
 .notif.groot{padding:36px 34px}
 .notif.groot .t1{font-size:38px}
 .notif .tijdje{margin-left:auto;align-self:flex-start;font-size:22px;color:var(--grijs)}
+/* ---- algemene scènes (alle diensten): items = [{a,b,c,d,nieuw}], 'op' = woorden waarop elk item verschijnt ---- */
+.groot{font-weight:800;font-size:200px;line-height:1;letter-spacing:-.05em;color:var(--acc);text-shadow:0 0 70px color-mix(in srgb,var(--acc) 40%,transparent);margin-bottom:40px}
+.chip{display:inline-flex;align-items:center;gap:16px;margin-top:56px;background:var(--kaart);border:2px solid var(--rand);border-radius:26px;padding:20px 30px;font-size:30px;font-weight:600;color:var(--dfg)}
+.licht .chip{background:#fff;border-color:#EAECF0;color:#101828;box-shadow:0 14px 34px rgba(16,24,40,.08)}
+.chip .vink{width:44px;height:44px;border-radius:50%;background:#12B76A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px}
+.tel{background:#101828;border-radius:44px;padding:40px 36px;margin-top:40px;color:#fff;text-align:left;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.tel-kop{display:flex;align-items:center;gap:22px;padding-bottom:28px;border-bottom:2px solid #1F2A3D}
+.tel-kop .av{width:76px;height:76px;border-radius:50%;background:#344054;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700}
+.tel-kop b{font-size:34px;display:block}.tel-kop small{font-size:24px;color:#98A2B3}
+.live{margin-left:auto;font-size:22px;font-weight:700;color:#12B76A;background:rgba(18,183,106,.14);border-radius:30px;padding:10px 18px;display:flex;gap:10px;align-items:center}
+.live i{width:12px;height:12px;border-radius:50%;background:#12B76A}
+.tel-regel{margin-top:22px;font-size:29px;line-height:1.35;max-width:88%;padding:20px 24px;border-radius:24px}
+.tel-regel.klant{background:#1F2A3D}
+.tel-regel.ai{background:color-mix(in srgb,var(--acc) 22%,#101828);margin-left:auto;border:2px solid color-mix(in srgb,var(--acc) 50%,transparent)}
+.tel-regel small{display:block;font-size:20px;color:#98A2B3;font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+.chatapp{background:#fff;border-radius:40px;overflow:hidden;margin-top:40px;box-shadow:0 30px 70px rgba(16,24,40,.16),0 0 0 2px #EAECF0}
+.chatapp-kop{display:flex;align-items:center;gap:20px;padding:26px 30px;color:#fff;background:#1F5EFF}
+.chatapp-kop.whatsapp{background:#075E54}
+.chatapp-kop .av{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:30px}
+.chatapp-kop b{display:block;font-size:31px}.chatapp-kop small{font-size:23px;opacity:.85}
+.chatapp-veld{padding:24px 26px 30px;background:#F2F4F7;min-height:200px}
+.chatapp-veld.whatsapp{background:#ECE5DD}
+.bel{font-size:29px;line-height:1.35;padding:18px 24px;border-radius:24px;margin-top:16px;max-width:82%;width:fit-content;color:#101828;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.bel.klant{background:#fff;border-top-left-radius:6px}
+.bel.ai{background:#D9E6FF;margin-left:auto;border-top-right-radius:6px}
+.whatsapp .bel.ai{background:#DCF8C6}
+.bel small{display:block;font-size:19px;color:#667085;text-align:right;margin-top:4px}
+.puntjes{display:flex;gap:9px;padding:22px 26px;background:#D9E6FF;border-radius:24px;width:fit-content;margin:16px 0 0 auto}
+.whatsapp .puntjes{background:#DCF8C6}
+.puntjes i{width:14px;height:14px;border-radius:50%;background:#667085}
+.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:20px 18px 24px}
+.agenda .dag{font-size:26px;font-weight:700;color:#667085;text-align:center;padding-bottom:10px}
+.agenda .kolom{position:relative;height:620px;background:repeating-linear-gradient(#fff 0 76px,#F2F4F7 76px 78px);border-radius:14px}
+.blok{position:absolute;left:4px;right:4px;border-radius:12px;padding:8px 9px;font-size:23px;font-weight:700;line-height:1.15;background:#F2F4F7;color:#475467;overflow:hidden}
+.blok small{display:block;font-size:19px;font-weight:500;opacity:.8;margin-top:2px}
+.blok.nieuw{background:var(--mark);color:#101828;box-shadow:0 8px 20px rgba(16,24,40,.14);border:2px solid color-mix(in srgb,var(--mark) 60%,#101828)}
+.mailrij{display:flex;align-items:center;gap:20px;padding:24px 30px;border-bottom:2px solid #F2F4F7;font-size:28px}
+.mailrij .av{width:58px;height:58px;border-radius:50%;background:#EEF4FF;color:#1F5EFF;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:26px}
+.mailrij .tekst{flex:1;min-width:0}.mailrij b{display:block;font-size:28px}.mailrij span.ond{display:block;color:#475467;font-size:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.label{flex:none;font-size:21px;font-weight:700;border-radius:20px;padding:8px 16px;background:var(--mark);color:#101828}
+.doc{background:#fff;border-radius:22px;box-shadow:0 30px 70px rgba(16,24,40,.14);padding:36px 40px;margin-top:40px;position:relative;overflow:hidden;color:#101828}
+.doc-kop{display:flex;justify-content:space-between;align-items:center;font-size:30px;font-weight:700;padding-bottom:18px;border-bottom:2px solid #EAECF0}
+.doc-kop small{font-size:22px;color:#98A2B3;font-weight:600;letter-spacing:.08em}
+.scanlijn{position:absolute;left:0;right:0;height:6px;background:linear-gradient(90deg,transparent,var(--acc),transparent);box-shadow:0 0 30px var(--acc)}
+.veld{display:flex;justify-content:space-between;align-items:center;font-size:28px;padding:16px 0;border-bottom:2px solid #F2F4F7}
+.veld span:first-child{color:#667085}.veld b{background:var(--mark);border-radius:10px;padding:4px 12px}
+.tegels{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+.tegel{background:#fff;border-radius:24px;padding:26px 28px;box-shadow:0 14px 34px rgba(16,24,40,.08),0 0 0 2px #EAECF0;color:#101828;text-align:left}
+.tegel small{display:block;font-size:22px;color:#667085;font-weight:600;letter-spacing:.04em}
+.tegel b{display:block;font-size:56px;font-weight:800;letter-spacing:-.03em;margin-top:6px}
+.grafiek{background:#fff;border-radius:24px;margin-top:18px;padding:24px;box-shadow:0 14px 34px rgba(16,24,40,.08),0 0 0 2px #EAECF0}
+.grafiek svg{width:100%;height:260px;display:block}
+.alert{display:flex;gap:18px;align-items:center;margin-top:18px;background:#FFFAEB;color:#B54708;border:2px solid #FEDF89;border-radius:20px;padding:20px 24px;font-size:27px;font-weight:600;text-align:left}
+.taak{display:flex;align-items:center;gap:22px;font-size:32px;padding:22px 30px;border-bottom:2px solid #F2F4F7;color:#101828;text-align:left}
+.taak .box{width:46px;height:46px;border-radius:12px;border:3px solid #D0D5DD;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:800}
+.taak.af .box{background:#12B76A;border-color:#12B76A}
+.taak.af span{color:#101828}
 #cap{position:absolute;left:90px;right:90px;top:1400px;text-align:center;font-weight:700;font-size:50px;line-height:1.25;letter-spacing:-.01em}
 #cap span{opacity:.45}
 #cap span.aan{opacity:1}
@@ -113,6 +170,11 @@ const wt = (s, woord, reserve, nr = 0) => {
 const cursor = (k, pos) => `<span style="position:absolute;${pos}">
   <span class="ring" data-ring="${k}" style="left:-30px;top:-30px;opacity:0"></span>
   <svg class="cursor" data-in="${k - .6}" data-klik="${k}" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.5-7.5L4 18z" fill="#101828" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>`;
+// Tijdstip waarop item n verschijnt: op het woord uit s.op[n] als Eric dat zegt, anders gelijk verdeeld over de scène.
+const tijd = (s, n, d) => {
+  const aantal = (s.items || []).length + 1;
+  return wt(s, ((s.op || [])[n] || '').toLowerCase().replace(/[^a-z0-9']/g, ''), .5 + n * Math.max(.35, (d * .75 - .5) / aantal));
+};
 const IN = .7, UIT = .3;  // duur van in- en uitfaden (s); rustig genoeg om met je ogen te volgen
 
 // Elke scène: HTML met tijdsattributen (seconden vanaf het begin van de scène, d = duur van de scène).
@@ -193,6 +255,77 @@ const SCENES = {
       <div class="notif groot" data-in="${wt(s, 'yes', d * .6)}"><span class="ic" style="background:#12B76A">✓</span><div><div class="t1">Quote accepted · ${geld(s.totaal)}</div><div class="t2">Signed online by ${esc(s.klant)}</div></div><span class="tijdje">9:21</span></div>
       <div class="notif" data-in="${wt(s, 'yes', d * .6) + .5}"><span class="ic" style="background:var(--acc);color:var(--accfg)">$</span><div><div class="t1">Deposit requested · ${geld(s.aanbetaling)}</div><div class="t2">Job ready to book</div></div><span class="tijdje">9:21</span></div>
     </div>`}),
+  // ---- algemene scènes voor alle diensten ----
+  hook: (s, d) => ({kleur: 'donker', html: `
+    ${s.groot ? `<div class="groot" data-in="0">${esc(s.groot)}</div>` : ''}
+    <div class="kop" data-in="${s.groot ? .3 : 0}">${mk(s.kop, d * .55)}</div>
+    ${s.tekst ? `<div><span class="chip" data-in="${d * .45}">${esc(s.tekst)}</span></div>` : ''}`}),
+  telefoon: (s, d) => ({kleur: 'donker', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="tel" data-in="0.15">
+      <div class="tel-kop"><span class="av">${esc((s.bedrijf || '?')[0])}</span><div><b>${esc(s.bedrijf)}</b><small>Incoming call · AI receptionist</small></div><span class="live"><i></i>Live</span></div>
+      ${s.items.map((it, n) => `<div class="tel-regel ${it.a === 'ai' ? 'ai' : 'klant'}" data-in="${tijd(s, n, d)}"><small>${it.a === 'ai' ? 'AI RECEPTIONIST' : 'CALLER'}</small>${esc(it.b)}</div>`).join('')}
+    </div>
+    ${s.resultaat ? `<div><span class="chip" data-in="${tijd(s, s.items.length, d)}"><span class="vink">✓</span>${esc(s.resultaat)}</span></div>` : ''}`}),
+  chat: (s, d) => {
+    const wa = s.kanaal === 'whatsapp' ? 'whatsapp' : '';
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="chatapp" data-in="0.15">
+      <div class="chatapp-kop ${wa}"><span class="av">${esc((s.bedrijf || '?')[0])}</span><div><b>${esc(s.bedrijf)}</b><small>${wa ? 'online' : 'AI assistant · replies instantly'}</small></div></div>
+      <div class="chatapp-veld ${wa}">
+        ${s.items.map((it, n) => it.a === 'ai'
+          ? `<div class="puntjes" data-in="${tijd(s, n, d) - .7}" data-uit="${tijd(s, n, d) - .05}"><i></i><i></i><i></i></div><div class="bel ai" data-in="${tijd(s, n, d)}">${esc(it.b)}<small>${esc(it.c || '')}</small></div>`
+          : `<div class="bel klant" data-in="${tijd(s, n, d)}">${esc(it.b)}<small>${esc(it.c || '')}</small></div>`).join('')}
+      </div>
+    </div>`};
+  },
+  agenda: (s, d) => {
+    const dagen = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], uur = x => { const [h, m] = x.split(':').map(Number); return h + m / 60; };
+    let k = 0;
+    const blokken = s.items.map(it => {
+      const top = (uur(it.b) - 8) * 78, h = Math.max(56, (uur(it.c) - uur(it.b)) * 78 - 6);
+      const tin = it.nieuw ? tijd(s, k++, d) : .15;
+      return {dag: dagen.indexOf(it.a), html: `<div class="blok ${it.nieuw ? 'nieuw' : ''}" style="top:${top}px;height:${h}px" data-in="${tin}">${esc(it.d)}<small>${esc(it.b)}</small></div>`};
+    });
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="app" data-in="0.1"><div class="app-kop"><span class="logo" style="background:#1F5EFF">${esc((s.bedrijf || '?')[0])}</span><b>${esc(s.bedrijf)}</b><span class="nr">This week</span></div>
+      <div class="agenda">${dagen.map((dg, i) => `<div><div class="dag">${dg}</div><div class="kolom">${blokken.filter(b => b.dag === i).map(b => b.html).join('')}</div></div>`).join('')}</div>
+    </div>`};
+  },
+  inbox: (s, d) => ({kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="app" data-in="0.1"><div class="app-kop"><span class="logo" style="background:#1F5EFF">✉</span><b>Inbox</b><span class="nr">${esc(s.bedrijf || '')}</span></div>
+      ${s.items.map((it, n) => `<div class="mailrij"><span class="av">${esc(it.a[0])}</span><div class="tekst"><b>${esc(it.a)}</b><span class="ond">${esc(it.b)}</span></div><span class="label" data-in="${tijd(s, n, d)}">${esc(it.c)}</span></div>`).join('')}
+    </div>
+    ${s.resultaat ? `<div><span class="chip" data-in="${tijd(s, s.items.length, d)}"><span class="vink">✓</span>${esc(s.resultaat)}</span></div>` : ''}`}),
+  document: (s, d) => ({kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="doc" data-in="0.1"><div class="scanlijn" data-scan="${tijd(s, 0, d) - .9}"></div>
+      <div class="doc-kop">${esc(s.bedrijf || 'Document')}<small>${esc(s.tekst || 'SCANNED')}</small></div>
+      ${s.items.map((it, n) => `<div class="veld" data-in="${tijd(s, n, d)}"><span>${esc(it.a)}</span><b>${esc(it.b)}</b></div>`).join('')}
+    </div>
+    ${s.resultaat ? `<div><span class="chip" data-in="${tijd(s, s.items.length, d)}"><span class="vink">✓</span>${esc(s.resultaat)}</span></div>` : ''}`}),
+  dashboard: (s, d) => {
+    const pts = (s.getallen || []).length ? s.getallen : [3, 4, 3.6, 5, 4.8, 6, 7];
+    const mx = Math.max(...pts), mn = Math.min(...pts), w = 900, h = 240;
+    const lijn = pts.map((v, i) => `${(i / (pts.length - 1) * w).toFixed(1)},${(h - 20 - (v - mn) / ((mx - mn) || 1) * (h - 40)).toFixed(1)}`).join(' ');
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="tegels">${s.items.map((it, n) => `<div class="tegel" data-in="${tijd(s, n, d)}"><small>${esc(it.a)}</small><b data-count="${parseFloat(it.b)}" data-t0="${tijd(s, n, d)}" data-dur="1.0" data-pre="${esc(it.c || '')}" data-suf="${esc(it.d || '')}" data-dec="${(String(it.b).split('.')[1] || '').length}">0</b></div>`).join('')}</div>
+    <div class="grafiek" data-in="${tijd(s, 0, d)}"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${lijn}" fill="none" stroke="#1F5EFF" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" stroke-dasharray="1" data-teken="${tijd(s, 0, d)}"/></svg></div>
+    ${s.resultaat ? `<div class="alert" data-in="${tijd(s, s.items.length, d)}">⚠ ${esc(s.resultaat)}</div>` : ''}`};
+  },
+  checklist: (s, d) => ({kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
+    <div class="app" data-in="0.1"><div class="app-kop"><span class="logo" style="background:#1F5EFF">${esc((s.bedrijf || '?')[0])}</span><b>${esc(s.bedrijf)}</b><span class="nr">${esc(s.tekst || 'Automated')}</span></div>
+      ${s.items.map((it, n) => `<div class="taak" data-af="${tijd(s, n, d)}"><span class="box">✓</span><span>${esc(it.a)}</span></div>`).join('')}
+    </div>
+    ${s.resultaat ? `<div><span class="chip" data-in="${tijd(s, s.items.length, d)}"><span class="vink">✓</span>${esc(s.resultaat)}</span></div>` : ''}`}),
+  notificaties: (s, d) => ({kleur: 'donker', html: `
+    <div class="kop" data-in="0">${mk(s.kop, d * .6)}</div>
+    <div style="margin-top:60px">${s.items.map((it, n) => `<div class="notif" data-in="${tijd(s, n, d)}"><span class="ic" style="background:${['#12B76A', '#1F5EFF', '#F79009', '#7A5AF8'][n % 4]}">${esc(it.a)}</span><div><div class="t1">${esc(it.b)}</div><div class="t2">${esc(it.c)}</div></div><span class="tijdje">${esc(it.d)}</span></div>`).join('')}</div>`}),
   eind: (s, d) => ({kleur: 'donker', html: `
     <div class="kop" style="margin-top:120px" data-in="0">${mk(s.kop, d * .35)}</div>
     <div class="knop" data-in="${wt(s, "send", d * .55) - .1}">${esc(s.knop)}</div>
@@ -237,6 +370,13 @@ function werk(t, d, laatste) {
     el.style.opacity = x > 0 && x < 1 ? .7 * (1 - x) : 0;
     el.style.transform = `scale(${.4 + .8 * cl(x)})`;
   });
+  r.querySelectorAll('[data-af]').forEach(el => el.classList.toggle('af', t >= +el.dataset.af));
+  r.querySelectorAll('[data-scan]').forEach(el => {
+    const x = (t - +el.dataset.scan) / 1.0;
+    el.style.opacity = x > 0 && x < 1 ? 1 : 0;
+    el.style.top = `${cl(x) * 100}%`;
+  });
+  r.querySelectorAll('[data-teken]').forEach(el => { el.style.strokeDashoffset = 1 - E((t - +el.dataset.teken) / 1.4); });
   r.querySelectorAll('[data-hl]').forEach(el => el.style.setProperty('--hl', E((t - +el.dataset.hl) / .5)));
   r.querySelectorAll('[data-dim]').forEach(el => {
     const p = E((t - +el.dataset.dim) / .6);

@@ -9,9 +9,12 @@ Plaatst nooit zelf iets op Instagram (fase 1).
 
 Kosten: elke Claude-aanroep wordt berekend (tokens × prijs + webzoekopdrachten)
 en opgeslagen in instagram_kosten. Melding in Telegram bij $15, stop bij $20 per maand.
+Video met stem (stem_video): onderwerp = volgende dienst van de website (tools/instagram/diensten.py),
+alleen als er genoeg ElevenLabs-tegoed is; anders wordt een ander soort post gekozen.
 
 Gebruik (CLI):
-    python apps/content/agent.py maak [--soort carrousel|kaart|tekst_reel|demo_reel|actualiteit|story]
+    python apps/content/agent.py maak [--soort carrousel|kaart|tekst_reel|demo_reel|stem_video|actualiteit|story]
+    python apps/content/agent.py maak --soort stem_video --zonder-stem   # gratis proef: script + beeld, geen Eric, niet naar Telegram
     python apps/content/agent.py verwerk          # openstaande ✏️-feedback verwerken
     python apps/content/agent.py dagelijks        # buffer aanvullen (max 2 nieuwe concepten per keer)
     python apps/content/agent.py kosten           # uitgaven deze maand
@@ -35,6 +38,8 @@ sys.path.insert(0, str(TOOLS))
 from config import get_env  # noqa: E402,F401  (laadt .env)
 import wachtrij  # noqa: E402
 import telegram_review  # noqa: E402
+import diensten  # noqa: E402
+import stem  # noqa: E402
 
 MODEL = "claude-opus-5-5"
 EFFORT = "medium"
@@ -49,7 +54,12 @@ DEMOS = ["offerte", "dashboard", "calculatie", "factuur", "whatsapp", "klantense
 SCENES = ["bureau", "kantoor", "ipad", "scherm", "krant", "whiteboard", "servet"]
 DIAGRAMMEN = ["venn", "fork", "lijst", "voor_na", "stappen", "grafiek", "loop"]
 # mix per week (±5 posts): ongeveer half informatie, half bewijs
-MIX = {"carrousel": 0.32, "demo_reel": 0.25, "tekst_reel": 0.13, "kaart": 0.12, "actualiteit": 0.10, "story": 0.08}
+MIX = {"carrousel": 0.30, "demo_reel": 0.18, "stem_video": 0.14, "tekst_reel": 0.10, "kaart": 0.12, "actualiteit": 0.09, "story": 0.07}
+STEM_MIN_TEGOED = 700  # ElevenLabs-tekens nodig voor een video met stem (één opname ±450 + marge)
+STEM_SCENES = ["hook", "telefoon", "chat", "agenda", "inbox", "document", "dashboard", "checklist", "notificaties", "eind"]
+STEM_TAGS = {"[confident]", "[curious]", "[warm]", "[excited]", "[long pause]"}  # [understated]/[softly] laten Eric wegzakken
+STEM_MUZIEK = ("Uptempo en vrolijk (±110-120 BPM), zonder zang, zacht onder de stem: muziek ±15%, origineel geluid 100%. "
+               "Zoekterm: 'upbeat corporate', 'positive tech' of 'happy commercial'.")
 
 client = anthropic.Anthropic()
 
@@ -149,6 +159,10 @@ SCHEMA = {
                   "keuze_a": S, "uitkomst_a": A(S), "keuze_b": S, "uitkomst_b": S, "items": A(obj({"tekst": S, "ok": {"type": "boolean"}})),
                   "links_kop": S, "links_lijst": A(S), "rechts_kop": S, "rechts_lijst": A(S), "stappen": A(S), "lijn": S, "notitie": S, "x": S, "y": S}),
     "demo_reel": obj(BASIS),
+    "stem_video": obj({**BASIS, "beats": A(obj({"zegt": S, "uitspraak": S, "scene": obj({
+        "type": {"type": "string", "enum": STEM_SCENES}, "kop": S, "groot": S, "tekst": S, "bedrijf": S, "kanaal": S,
+        "items": A(obj({"a": S, "b": S, "c": S, "d": S, "nieuw": {"type": "boolean"}})), "op": A(S), "resultaat": S,
+        "getallen": A({"type": "number"}), "knop": S, "handle": S})}))}),
     "story": obj({"onderwerp": S, "tekst": S, "foto_idee": S}),
 }
 CONTROLE = obj({"bevestigd": {"type": "boolean"}, "kern": S, "bron_1": S, "bron_2": S, "datum": S, "toelichting": S})
@@ -160,9 +174,20 @@ def vorige(conn, n=6):
             conn.execute("SELECT soort, kleurenset, hashtags FROM instagram_posts WHERE status != 'overgeslagen' ORDER BY id DESC LIMIT ?", (n,))]
 
 
+def stem_tegoed():
+    """Resterende ElevenLabs-tekens deze maand (0 als de stand niet op te vragen is)."""
+    try:
+        _, gebruikt, limiet = stem.tegoed()
+        return limiet - gebruikt
+    except Exception:
+        return 0
+
+
 def kies_soort(conn):
     laatste = [v["soort"] for v in vorige(conn, 2)]
     opties = {s: w for s, w in MIX.items() if not laatste or s != laatste[0]}
+    if "stem_video" in opties and stem_tegoed() < STEM_MIN_TEGOED:
+        del opties["stem_video"]  # te weinig tegoed: dan een ander soort post
     return random.choices(list(opties), weights=list(opties.values()))[0]
 
 
@@ -196,13 +221,57 @@ def controleer(spec, aantal, verboden_tags):
     return fouten
 
 
+def woorden(tekst):
+    return [w for w in re.sub(r"[^a-z0-9' ]", " ", tekst.lower().replace("’", "'")).split() if w]
+
+
+def controleer_stem(spec):
+    """De regels voor een video met stem die vóór de opname te controleren zijn (opname kost tegoed)."""
+    fouten, beats = [], spec.get("beats", [])
+    if not 5 <= len(beats) <= 7:
+        fouten.append(f"needs 5 to 7 beats, has {len(beats)}")
+    if beats and beats[-1]["scene"]["type"] != "eind":
+        fouten.append("the last beat must be scene type 'eind'")
+    if beats and beats[0]["scene"]["type"] == "eind":
+        fouten.append("the first beat must be the hook, not 'eind'")
+    totaal = sum(len(woorden(b["zegt"])) for b in beats)
+    if not 35 <= totaal <= 70:
+        fouten.append(f"the spoken script must be 35 to 70 words in total, is {totaal}")
+    for n, b in enumerate(beats, 1):
+        zegt, sc = woorden(b["zegt"]), b["scene"]
+        if len(zegt) > 15:
+            fouten.append(f"beat {n}: max 15 spoken words, has {len(zegt)}")
+        tags = set(re.findall(r"\[[^\]]+\]", b["uitspraak"]))
+        if tags - STEM_TAGS:
+            fouten.append(f"beat {n}: only these tags are allowed: {', '.join(sorted(STEM_TAGS))}; remove {', '.join(sorted(tags - STEM_TAGS))}")
+        if woorden(re.sub(r"\[[^\]]+\]", " ", b["uitspraak"])) != zegt:
+            fouten.append(f"beat {n}: 'uitspraak' must be exactly 'zegt' plus tags, same words")
+        if re.search(r"\b(at night|in the (morning|evening|afternoon)|o'clock)\b", b["zegt"].lower()) and re.search(r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b", b["zegt"].lower()):
+            fouten.append(f"beat {n}: say times the way people say them, e.g. 'It's 9 PM', never 'nine at night'")
+        kop = woorden(sc["kop"].replace("*", ""))
+        it = iter(zegt)
+        if kop and not all(w in it for w in kop):
+            fouten.append(f"beat {n}: every word of 'kop' must also be spoken in 'zegt', in the same order (on screen = what Eric says)")
+        for w in sc["op"]:
+            if w and woorden(w)[:1] and woorden(w)[0] not in zegt:
+                fouten.append(f"beat {n}: 'op' word '{w}' is not spoken in this beat")
+        if sc["type"] in ("telefoon", "chat") and any(i["a"] not in ("klant", "ai") for i in sc["items"]):
+            fouten.append(f"beat {n}: for {sc['type']} every item 'a' must be 'klant' or 'ai'")
+        if sc["type"] == "agenda" and any(i["a"] not in ("Mon", "Tue", "Wed", "Thu", "Fri") or not re.fullmatch(r"\d\d:\d\d", i["b"]) or not re.fullmatch(r"\d\d:\d\d", i["c"]) for i in sc["items"]):
+            fouten.append(f"beat {n}: agenda items need a=Mon..Fri, b and c as HH:MM between 08:00 and 16:00")
+        grens = {"telefoon": 3, "chat": 4, "inbox": 4, "document": 4, "dashboard": 2, "checklist": 4, "notificaties": 3, "agenda": 6}.get(sc["type"])
+        if grens and len(sc["items"]) > grens:
+            fouten.append(f"beat {n}: scene {sc['type']} takes at most {grens} items")
+    return fouten
+
+
 def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None):
     spec = vraag(conn, post_id, f"schrijven:{soort}", prompt, SCHEMA[soort])
-    fouten = controleer(spec, aantal, verboden_tags)
+    fouten = controleer(spec, aantal, verboden_tags) + (controleer_stem(spec) if soort == "stem_video" else [])
     if fouten:  # één herkansing met de concrete fouten erbij
         spec = vraag(conn, post_id, f"herschrijven:{soort}", prompt + "\n\nYour previous attempt had these problems, fix them:\n- " + "\n- ".join(fouten)
                      + "\n\nPrevious attempt:\n" + json.dumps(spec, ensure_ascii=False), SCHEMA[soort])
-        fouten = controleer(spec, aantal, verboden_tags)
+        fouten = controleer(spec, aantal, verboden_tags) + (controleer_stem(spec) if soort == "stem_video" else [])
         if fouten:
             raise RuntimeError("Concept haalt de controle niet: " + "; ".join(fouten))
     return spec
@@ -242,6 +311,33 @@ def prompt_demo(demo, aantal, tags):
     return (f"Write the caption for a screen-recording reel that demos this (fictional business, real capability):\n{json.dumps(beschrijving, ensure_ascii=False)}\n\n"
             "This is proof content: show what is possible, concrete and recognisable for a business owner. Do not claim it is a real client. "
             f"'onderwerp' is a short Dutch description.\n{taalregels(aantal, tags)}")
+
+
+def prompt_stem_video(dienst, aantal, tags):
+    return (f"Write a 20 to 25 second vertical video with a voice-over (the voice is 'Eric', calm, confident, American) about this service Oussama builds:\n"
+            f"SERVICE: {dienst['naam']}: {dienst['wat']}\n\n"
+            "Goal: a business owner recognises their own problem and sees what is possible. Structure: beat 1 = a recognisable problem (hook), "
+            "middle beats = what the AI does, step by step, shown in a realistic app screen, one beat = the result for the owner, last beat = scene 'eind'. "
+            "5 to 7 beats, 35 to 70 spoken words in total, max ~12 words per beat. Use a fictional but realistic small business (US, dollars, generic names, "
+            "e-mail domains on .example), never real brands or clients. No statistics or claims you cannot back up; describe what the system does.\n\n"
+            "Per beat: 'zegt' = the exact spoken sentence(s). 'uitspraak' = the same words with delivery tags in front of sentences: use ONLY [confident], [curious], "
+            "[warm], [excited] (never [understated] or [softly]: they make the voice drop). Say times like people do ('It's 9 PM', never 'nine at night'). "
+            "'scene.kop' = the on-screen headline: ONLY words that Eric also says in this beat, in the same order, short (max ~8 words), mark 1 to 3 key words "
+            "with *asterisks*. 'scene.op' = for each item, the spoken word (from this beat) at which it appears, in order.\n\n"
+            "Scene types (fill only the fields listed, leave the rest empty, numbers as plain numbers):\n"
+            "- hook (dark): kop, groot (optional big text like '3 missed calls' or '9:12 PM'), tekst (optional small chip, e.g. 'Voicemail full').\n"
+            "- telefoon (dark, a live call handled by an AI receptionist): kop, bedrijf, items max 3 lines {a:'klant'|'ai', b:line}, resultaat (e.g. 'Booked: Thu 10:30 AM').\n"
+            "- chat (light, a chat on a phone): kop, bedrijf, kanaal ('whatsapp' or 'web'), items max 4 {a:'klant'|'ai', b:message, c:time like '21:14'}.\n"
+            "- agenda (light, week calendar): kop, bedrijf, items max 6 {a:'Mon'..'Fri', b:start 'HH:MM', c:end 'HH:MM' (08:00-16:00), d:short title, nieuw:true for the 2-3 that get booked automatically}.\n"
+            "- inbox (light, emails get labelled): kop, bedrijf (an address on .example), items max 4 {a:sender, b:subject, c:label}, resultaat (e.g. '3 replies drafted').\n"
+            "- document (light, a document is scanned and fields are extracted): kop, bedrijf (document title), tekst (small tag like 'SCANNED'), items max 4 {a:field, b:value}, resultaat.\n"
+            "- dashboard (light): kop, items exactly 2 KPI tiles {a:LABEL, b:number as text, c:prefix like '$', d:suffix like '%'}, getallen (6-8 numbers for the line chart), resultaat (optional warning line).\n"
+            "- checklist (light, tasks tick themselves off): kop, bedrijf, tekst (small tag), items max 4 {a:task}, resultaat.\n"
+            "- notificaties (dark, phone notifications): kop, items max 3 {a:one symbol like ✓ $ ★, b:title, c:subtitle, d:time like '9:16'}.\n"
+            "- eind (dark, last beat): kop (e.g. 'Want this for *your business?*'), knop 'Send me a DM ⚡', handle '@insightance.ai'. "
+            "Spoken text for eind: a short question about their business plus 'Send me a DM.'\n"
+            "Every number on screen must add up and match what is said. 'onderwerp' is a short Dutch description including the service name.\n"
+            f"{taalregels(aantal, tags)}")
 
 
 def prompt_story(rij):
@@ -288,14 +384,31 @@ def render(soort, spec, kleur, map_, extra=None):
     elif soort == "demo_reel":
         import opname_demo
         opname_demo.render(json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8")), map_)
+    elif soort == "stem_video":
+        import render_stem_video
+        return render_stem_video.render(video_spec(spec, kleur), map_, zonder_stem=bool(extra))
+
+
+def video_spec(spec, kleur):
+    """Van Claudes concept naar de spec van render_stem_video (vaste stem, tempo en regels)."""
+    beats = [{"zegt": b["zegt"], "uitspraak": b["uitspraak"], "scene": b["scene"]} for b in spec["beats"]]
+    if not beats[-1]["uitspraak"].rstrip().endswith("[long pause]"):  # anders kapt ElevenLabs het laatste woord af
+        beats[-1]["uitspraak"] = beats[-1]["uitspraak"].rstrip() + " [long pause]"
+    if len(beats) > 3 and not any(b.get("inademing") for b in beats):
+        beats[random.randint(1, len(beats) - 2)]["inademing"] = True  # één natuurlijke inademing, op een willekeurige plek
+    uit = {"onderwerp": spec.get("onderwerp", ""), "stem": "eric_v3", "kleurenset": kleur, "tempo": 1.1, "beats": beats}
+    if spec.get("seed") is not None:
+        uit["seed"] = spec["seed"]
+    return uit
 
 
 def opslaan(conn, soort, spec, kleur, map_, bron_id=None, bronnen=None):
     (map_ / "spec.json").write_text(json.dumps({**spec, "soort": soort, "kleurenset": kleur}, ensure_ascii=False, indent=2), encoding="utf-8")
     tags = [] if soort == "kaart" and spec.get("diagram") == "fork" else spec.get("hashtags", [])
-    cur = conn.execute("INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, muziek) VALUES (?,?,?,?,?,?,?,?,?)",
+    cur = conn.execute("INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, muziek, dienst) VALUES (?,?,?,?,?,?,?,?,?,?)",
                        (bron_id, "fork" if soort == "kaart" and spec.get("diagram") == "fork" else soort, spec.get("onderwerp") or "", kleur,
-                        json.dumps(tags), spec.get("caption") or spec.get("tekst"), json.dumps(bronnen or []), str(map_), spec.get("muziek") or None))
+                        json.dumps(tags), spec.get("caption") or spec.get("tekst"), json.dumps(bronnen or []), str(map_), spec.get("muziek") or None,
+                        spec.get("dienst")))
     conn.commit()
     return cur.lastrowid
 
@@ -306,10 +419,33 @@ def laatst_gebruikt(conn, soort, opties):
     return random.choice(nooit) if nooit else max(opties, key=gebruikt.index)  # gebruikt: nieuwste eerst, dus hoogste index = langst geleden
 
 
-def maak(conn, soort=None):
+def maak_stem_video(conn, aantal, tags, zonder_stem=False):
+    """Video met Erics stem over de volgende dienst van de website. Zonder stem: gratis proef, alleen lokaal."""
+    if not zonder_stem and stem_tegoed() < STEM_MIN_TEGOED:
+        raise RuntimeError("Te weinig ElevenLabs-tegoed voor een video met stem")
+    dienst = diensten.volgende(conn)
+    print(f"Dienst: {dienst['naam']}")
+    spec = schrijf(conn, "stem_video", prompt_stem_video(dienst, aantal, tags), aantal, tags)
+    spec["dienst"], spec["muziek"] = dienst["naam"], STEM_MUZIEK
+    kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(("proef-" if zonder_stem else "") + dienst["naam"])
+    render("stem_video", spec, kleur, map_, zonder_stem)
+    meldingen = json.loads((map_ / "controle.json").read_text(encoding="utf-8")).get("stem", {}) or {}
+    if not zonder_stem and meldingen.get("meldingen") and stem_tegoed() >= STEM_MIN_TEGOED:
+        print("Stem zakt weg, één nieuwe opname:", meldingen["meldingen"])
+        spec["seed"] = random.randint(1, 10_000)
+        render("stem_video", spec, kleur, map_)
+    (map_ / "spec.json").write_text(json.dumps({**spec, "soort": "stem_video", "kleurenset": kleur}, ensure_ascii=False, indent=2), encoding="utf-8")
+    return spec, kleur, map_
+
+
+def maak(conn, soort=None, zonder_stem=False):
     soort = soort or kies_soort(conn)
     aantal, tags = hashtag_eisen(conn)
     print(f"Nieuw concept: {soort}")
+    if soort == "stem_video" and zonder_stem:
+        _, _, map_ = maak_stem_video(conn, aantal, tags, zonder_stem=True)
+        print(f"Proefvideo zonder stem (niet naar Telegram): {map_ / 'reel.mp4'}")
+        return None
     bot = telegram_review.Bot()
     if soort == "story":
         rij = wachtrij.volgende(conn, "the_other_shift")
@@ -334,6 +470,9 @@ def maak(conn, soort=None):
         (map_ / "onderzoek.json").write_text(json.dumps(c, ensure_ascii=False, indent=2), encoding="utf-8")  # herleidbaar: waar komt elke bewering vandaan
         render("actualiteit", spec, kleur, map_)
         pid = opslaan(conn, "actualiteit", spec, kleur, map_, bronnen=[b for b in (c["bron_1"], c["bron_2"]) if b])
+    elif soort == "stem_video":
+        spec, kleur, map_ = maak_stem_video(conn, aantal, tags)
+        pid = opslaan(conn, "stem_video", spec, kleur, map_)
     elif soort == "demo_reel":
         demo = laatst_gebruikt(conn, "demo_reel", DEMOS)
         spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags), aantal, tags)
@@ -386,7 +525,15 @@ def verwerk(conn):
             conn.execute("UPDATE instagram_feedback SET verwerkt = 1 WHERE id = ?", (fid,))
             conn.commit()
             continue
-        if soort not in ("story", "demo_reel"):  # bij een demo verandert alleen de tekst, de video blijft
+        if soort == "stem_video":
+            spec["dienst"], spec["muziek"] = oud.get("dienst"), STEM_MUZIEK
+            if [b["uitspraak"] for b in spec["beats"]] != [b["uitspraak"] for b in oud["beats"]] and stem_tegoed() < STEM_MIN_TEGOED:
+                telegram_review.Bot().tekst(f"⚠️ Aanpassing van #{pid} vraagt een nieuwe opname van Eric, maar het ElevenLabs-tegoed is te laag. Ik heb niets veranderd.")
+                conn.execute("UPDATE instagram_feedback SET verwerkt = 1 WHERE id = ?", (fid,))
+                conn.commit()
+                continue
+            render("stem_video", spec, kleur, map_)
+        elif soort not in ("story", "demo_reel"):  # bij een demo verandert alleen de tekst, de video blijft
             for f in list(map_.glob("slide-*.png")) + list(map_.glob("*.mp4")) + list(map_.glob("kaart.png")):
                 f.unlink()
             render({"fork": "kaart"}.get(soort, soort), spec, kleur, map_, kleur if soort in ("kaart", "fork") else None)
@@ -410,6 +557,7 @@ def main():
     sub = ap.add_subparsers(dest="cmd", required=True)
     m = sub.add_parser("maak")
     m.add_argument("--soort", choices=list(MIX))
+    m.add_argument("--zonder-stem", action="store_true", help="stem_video als gratis proef zonder Eric, niet naar Telegram")
     sub.add_parser("verwerk")
     sub.add_parser("dagelijks")
     sub.add_parser("kosten")
@@ -417,7 +565,7 @@ def main():
     conn = wachtrij.verbind()
     kosten_tabel(conn)
     if args.cmd == "maak":
-        maak(conn, args.soort)
+        maak(conn, args.soort, args.zonder_stem)
     elif args.cmd == "verwerk":
         verwerk(conn)
     elif args.cmd == "dagelijks":

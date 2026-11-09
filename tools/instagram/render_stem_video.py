@@ -48,6 +48,8 @@ In de spec "tempo": 1.1 = de hele stem 10% sneller (gratis, toonhoogte blijft ge
 In de spec "rust": 1.0 = beeld blijft na elke zin 1,0 s staan (standaard MIN_RUST); korte scènes houden
 toch minimaal MIN_SCENE seconden.
 Alleen de stem beluisteren, zonder video: --alleen-stem (levert stem.mp3).
+Gratis proefvideo zonder Eric (script en beeld beoordelen, geen tegoed): --zonder-stem.
+Stemcontrole per zin gaat automatisch: volume wordt gelijkgetrokken, een wegzakkende toon wordt gemeld.
 
 Gebruik (CLI):
     python tools/instagram/render_stem_video.py spec.json [--uit map/]
@@ -220,6 +222,45 @@ def afkap_check(x):
     return x
 
 
+def f0(audio):
+    """Mediaan van de toonhoogte (Hz) van een stuk spraak (autocorrelatie, mannenstem 70-260 Hz)."""
+    n, hop, uit = sec(0.04), sec(0.01), []
+    for k in range(0, len(audio) - n, hop):
+        f = audio[k:k + n] * np.hanning(n)
+        if np.sqrt(np.mean(f ** 2)) < 10 ** (-32 / 20):
+            continue
+        ac = np.correlate(f, f, "full")[n - 1:]
+        lo, hi = int(SR / 260), int(SR / 70)
+        lag = lo + int(np.argmax(ac[lo:hi]))
+        if ac[lag] / (ac[0] + 1e-9) > 0.45:
+            uit.append(SR / lag)
+    return float(np.median(uit)) if len(uit) >= 6 else None
+
+
+def luidheid(audio):
+    s = audio[np.abs(audio) > 0.01]
+    return 20 * np.log10(np.sqrt(np.mean(s ** 2)) + 1e-9) if len(s) else -99.0
+
+
+def stemcontrole(stukken):
+    """Regel: geen zin mag wegzakken. Volume wordt automatisch gelijkgetrokken (gratis); een zin die duidelijk
+    lager klinkt dan de rest wordt gemeld (dat is niet gratis te verhelpen: andere opname of andere regie)."""
+    niveaus = [luidheid(a) for a, _ in stukken]
+    doel = float(np.median(niveaus))
+    uit = []
+    for (a, w), lv in zip(stukken, niveaus):
+        if abs(doel - lv) > 0.8:
+            a = a * np.float32(10 ** ((doel - lv) / 20))
+        uit.append((a, w))
+    tonen = [f0(a) for a, _ in uit]
+    meldingen = []
+    for n, f in enumerate(tonen):
+        rest = [x for i, x in enumerate(tonen) if i != n and x]
+        if f and rest and f < 0.85 * float(np.median(rest)):
+            meldingen.append(f"zin {n + 1} klinkt lager dan de rest ({f:.0f} Hz tegen {np.median(rest):.0f} Hz)")
+    return uit, meldingen, tonen
+
+
 def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     """Zinnen achter elkaar met tussen elke zin rust + VOORLOOP stilte (gemeten van waar de stem stopt
     tot de eerste klank van de volgende zin). Is een scène dan korter dan MIN_SCENE, dan krijgt alleen
@@ -256,6 +297,7 @@ def tijdlijn(spec, uit):
     tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven gelijk
     stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
                for n, ((a, w), b) in enumerate(zip(stukken, beats))]
+    stukken, meldingen, tonen = stemcontrole(stukken)
     wav = uit / "stem.wav"
     per_beat = monteer(stukken, beats, wav, spec.get("rust", MIN_RUST))
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
@@ -270,7 +312,33 @@ def tijdlijn(spec, uit):
     lijn = {"scenes": scenes, "kleuren": VIDEO_KLEUREN[spec.get("kleurenset", "navy")]}
     if spec.get("ondertitels"):  # standaard uit: de teksten in beeld vertellen het verhaal al (besluit 06-11)
         lijn["captions"] = captions
+    lijn["stem"] = {"meldingen": meldingen, "toon_hz": [round(x) if x else None for x in tonen]}
     return lijn, [(wav, 0.0, totaal, BEGIN)], totaal
+
+
+def tijdlijn_zonder_stem(spec):
+    """Gratis proefversie zonder Eric: woordtijden geschat (±3 woorden per seconde na tempo), zelfde pauze-
+    en scèneregels. Om script en beeld te beoordelen voordat er tegoed naar een opname gaat."""
+    beats, per_beat, t = spec["beats"], [], 0.0
+    for n, beat in enumerate(beats):
+        if n:
+            vorige = per_beat[-1][-1]["e"] - per_beat[-1][0]["s"] + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
+            t += max(spec.get("rust", MIN_RUST) + VOORLOOP, MIN_SCENE - vorige + 0.01)
+        woorden = []
+        for w in beat["zegt"].split():
+            duur = 0.12 + 0.055 * len(w.strip(".,?!"))
+            woorden.append({"w": w, "s": t, "e": t + duur})
+            t += duur + 0.04
+        per_beat.append(woorden)
+    starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
+    totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
+    scenes = []
+    for n, (beat, woorden) in enumerate(zip(beats, per_beat)):
+        start = starts[n]
+        eind = starts[n + 1] if n + 1 < len(beats) else totaal
+        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start, "e": BEGIN + w["e"] - start} for w in woorden]
+        scenes.append({**beat["scene"], "start": start, "dur": eind - start, "woorden": w_scene})
+    return {"scenes": scenes, "kleuren": VIDEO_KLEUREN[spec.get("kleurenset", "navy")]}, [], totaal
 
 
 def controleer(lijn, min_rust=None):
@@ -289,13 +357,17 @@ def controleer(lijn, min_rust=None):
     print("Controle: alle regels in orde.")
 
 
-def render(spec, uit):
+def render(spec, uit, zonder_stem=False):
     uit.mkdir(parents=True, exist_ok=True)
     frames = uit / "_frames"
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
-    lijn, audio, totaal = tijdlijn(spec, uit)
+    lijn, audio, totaal = tijdlijn_zonder_stem(spec) if zonder_stem else tijdlijn(spec, uit)
     controleer(lijn, spec.get("rust"))
+    for m in lijn.get("stem", {}).get("meldingen", []):
+        print("Let op, stem:", m)
+    (uit / "controle.json").write_text(json.dumps({"stem": lijn.get("stem"), "scenes": [
+        {"type": s["type"], "dur": round(s["dur"], 2)} for s in lijn["scenes"]]}, ensure_ascii=False, indent=2), encoding="utf-8")
     cover_t = lijn["scenes"][0]["dur"] - 0.3
     with sync_playwright() as p:
         try:
@@ -322,8 +394,9 @@ def render(spec, uit):
                   for i, (_, van, tot, op) in enumerate(audio))
     mix += "".join(f"[a{i}]" for i in range(len(audio))) + f"amix=inputs={len(audio)}:normalize=0:duration=longest,apad[a]"  # geluid even lang als beeld (anders hapert het einde op telefoons)
     video = uit / "reel.mp4"
-    cmd += ["-filter_complex", mix, "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "slow", "-crf", "16",
-            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-t", f"{totaal:.2f}", "-movflags", "+faststart", str(video)]
+    if audio:
+        cmd += ["-filter_complex", mix, "-map", "0:v", "-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
+    cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p", "-t", f"{totaal:.2f}", "-movflags", "+faststart", str(video)]
     subprocess.run(cmd, check=True)
     shutil.rmtree(frames)
     (uit / "stem.wav").unlink(missing_ok=True)
@@ -360,6 +433,7 @@ def main():
     ap.add_argument("spec")
     ap.add_argument("--uit")
     ap.add_argument("--alleen-stem", action="store_true", help="alleen stem.mp3 maken om te beluisteren (geen video)")
+    ap.add_argument("--zonder-stem", action="store_true", help="gratis proefvideo zonder Eric (geschatte timing, geen tegoed)")
     args = ap.parse_args()
     spec_pad = Path(args.spec)
     uit = (Path(args.uit) if args.uit else TMP / spec_pad.stem).resolve()
@@ -374,7 +448,7 @@ def main():
         (uit / "stem.wav").unlink()
         print(mp3)
     else:
-        print(render(spec, uit))
+        print(render(spec, uit, zonder_stem=args.zonder_stem))
 
 
 if __name__ == "__main__":
