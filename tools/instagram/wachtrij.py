@@ -88,8 +88,9 @@ def recente_kleuren(conn, n=5):
     return [r[0] for r in rows]
 
 
-def kies_kleur(conn):
-    """Navy als basis (~2 op 3), af en toe een andere set, nooit twee niet-navy achter elkaar, geen vast patroon."""
+def kies_kleur(conn, video=False):
+    """Navy als basis (~2 op 3), af en toe een andere set, nooit twee niet-navy achter elkaar, geen vast patroon.
+    video=True: ook 'wit' (logokleuren op wit) kan gekozen worden; die set bestaat alleen voor video's met stem."""
     recent = recente_kleuren(conn)
     if recent and recent[0] != NAVY:
         return NAVY
@@ -97,7 +98,8 @@ def kies_kleur(conn):
     if random.random() >= kans:
         return NAVY
     laatst_gebruikt = [k for k in recent if k != NAVY][:3]
-    keuze = [k for k in ANDERE_KLEUREN if k not in laatst_gebruikt] or ANDERE_KLEUREN
+    andere = ANDERE_KLEUREN + (["wit"] if video else [])
+    keuze = [k for k in andere if k not in laatst_gebruikt] or andere
     return random.choice(keuze)
 
 

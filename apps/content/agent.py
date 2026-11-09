@@ -427,7 +427,7 @@ def maak_stem_video(conn, aantal, tags, zonder_stem=False):
     print(f"Dienst: {dienst['naam']}")
     spec = schrijf(conn, "stem_video", prompt_stem_video(dienst, aantal, tags), aantal, tags)
     spec["dienst"], spec["muziek"] = dienst["naam"], STEM_MUZIEK
-    kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(("proef-" if zonder_stem else "") + dienst["naam"])
+    kleur, map_ = wachtrij.kies_kleur(conn, video=True), nieuwe_map(("proef-" if zonder_stem else "") + dienst["naam"])
     render("stem_video", spec, kleur, map_, zonder_stem)
     meldingen = json.loads((map_ / "controle.json").read_text(encoding="utf-8")).get("stem", {}) or {}
     if not zonder_stem and meldingen.get("meldingen") and stem_tegoed() >= STEM_MIN_TEGOED:

@@ -93,6 +93,8 @@ VIDEO_KLEUREN = {
     "groen": dict(donker="#153B2E", dfg="#FFFFFF", acc="#B6F36B", accfg="#153B2E", licht="#F2F6EE", lfg="#153B2E", mark="#DDF7BD", pos="#3E9B4F", kaart="#1D4A3A", rand="#2A5C49", grijs="#9DB5A8"),
     "creme": dict(donker="#2B2420", dfg="#F3EDE2", acc="#F0784A", accfg="#2B2420", licht="#F3EDE2", lfg="#2B2420", mark="#FFD9C9", pos="#3E8E5B", kaart="#3A312B", rand="#4A3F37", grijs="#A89A8C"),
     "rood":  dict(donker="#7E1F18", dfg="#FFFFFF", acc="#FFC9B8", accfg="#7E1F18", licht="#FFF7F3", lfg="#2A1512", mark="#FFD2C4", pos="#3E8E5B", kaart="#93281F", rand="#A8362C", grijs="#E4AFA6"),
+    # wit in de logokleuren (navy tekst, blauwe accenten), alleen voor video (besluit 09-11)
+    "wit":   dict(donker="#FFFFFF", dfg="#17345F", acc="#2E62C9", accfg="#FFFFFF", licht="#EEF3FA", lfg="#17345F", mark="#D3E2F7", pos="#2F9E6B", kaart="#F5F8FC", rand="#DCE6F2", grijs="#6B7C99"),
     "paars": dict(donker="#2D1B5A", dfg="#FFFFFF", acc="#F59BD0", accfg="#2D1B5A", licht="#F7F4FD", lfg="#2D1B5A", mark="#F6CDE6", pos="#3E9B6B", kaart="#3A2670", rand="#4B3586", grijs="#B3A6D6"),
 }
 

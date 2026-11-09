@@ -124,7 +124,7 @@ Zelf bekijken op `controle.png` (per scène begin, midden, rust):
 6. Tekst in beeld volgt de woordvolgorde van wat Eric zegt.
 7. Niets valt buiten beeld of overlapt, alles binnen de veilige zone.
 8. Rustig tempo, elementen op het gesproken woord, niet te veel tegelijk.
-9. Kleurenset klopt, tekst goed leesbaar.
+9. Kleur volgens de kleurregel: navy basis (±2 op 3), verder afwisselend zwart-lime, blauw, groen, crème, rood, paars en (alleen video) wit in de logokleuren; nooit twee keer achter elkaar dezelfde niet-navy set (`wachtrij.kies_kleur`). Tekst goed leesbaar in die set.
 10. Cijfers met bron gecheckt, geen klantnamen, geen gedachtestreepjes.
 
 Bij elke nieuwe versie:
