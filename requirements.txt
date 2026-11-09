@@ -4,6 +4,11 @@ claude-agent-sdk>=0.1
 python-dotenv>=1.0
 markdown>=3.5
 
+# LinkedIn Outreach Agent — browserautomatisering + lokale cockpit
+playwright>=1.47
+flask>=3.1
+# Eenmalig na installatie: playwright install chromium
+
 # Optional — install separately based on scoping:
 # pip install openai        # Voice notes (Whisper transcription)
 # pip install weasyprint    # PDF report generation

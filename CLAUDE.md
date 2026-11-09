@@ -106,6 +106,7 @@ These are how you know your AIOS is working:
 │   ├── collect.py           # DataOS orchestrator — dagelijkse data collectie
 │   ├── collect_outreach.py  # Outreach tracker webshops (Google Sheets)
 │   ├── collect_ondernemers.py # Outreach tracker ondernemers/vakbedrijven (tabblad ondernemers-tracker)
+│   ├── collect_linkedin.py  # Outreach tracker LinkedIn (tabblad linkedin-tracker)
 │   ├── collect_fx_rates.py  # Wisselkoersen
 │   ├── generate_metrics.py  # Genereert key-metrics.md
 │   ├── db.py                # Database framework
@@ -130,10 +131,18 @@ These are how you know your AIOS is working:
 │   └── README.md            # De backlog zelf
 ├── tools/                   # WAT-tools — deterministieke Python-scripts (herbruikbaar, buiten scripts/collect-flow om)
 │   ├── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
-│   └── ga4_weekly_report.py # Wekelijkse websitecijfers uit Google Analytics 4 (bronnen, UTM, pagina's, acties)
+│   ├── ga4_weekly_report.py # Wekelijkse websitecijfers uit Google Analytics 4 (bronnen, UTM, pagina's, acties)
+│   └── linkedin/            # LinkedIn Outreach Agent — zoeken/lezen/limieten/wachtrij
+│       ├── browser.py       # Playwright: zoeken, profielen lezen, acceptatie-check (login/zoek/lees/check)
+│       ├── limits.py        # Opbouwschema, daglimieten, noodstop (zie workflows/linkedin_outreach.md)
+│       └── wachtrij.py      # Schrijft/leest het tabblad linkedin-tracker
+├── apps/                    # Standing lokale apps (draaien als los proces, geen collect_*-script)
+│   └── linkedin/
+│       └── cockpit.py       # Lokale webcockpit (127.0.0.1) voor LinkedIn-outreach — kaarten, knoppen, dashboard
 ├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
 │   ├── source_prospects.md  # SOP bij tools/source_prospects.py
-│   └── ga4_weekly_report.md # SOP wekelijkse GA4-samenvatting (elke maandag)
+│   ├── ga4_weekly_report.md # SOP wekelijkse GA4-samenvatting (elke maandag)
+│   └── linkedin_outreach.md # SOP voor de LinkedIn Outreach Agent
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
 └── shares/                  # Packaged systems for sharing (created by /share)
@@ -153,6 +162,7 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 |------|-----------|-----------------|
 | Google Sheets | `collect_outreach.py` | Webshop-outreach (tabel `outreach`) |
 | Google Sheets | `collect_ondernemers.py` | Ondernemers/vakbedrijven-outreach (tabel `ondernemers`) |
+| Google Sheets | `collect_linkedin.py` | LinkedIn-outreach (tabel `linkedin`) |
 | Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
 | Fathom | `intel/collect_fathom.py` | Meeting-opnames en transcripts |
 | Google Analytics 4 | `tools/ga4_weekly_report.py` | Websitebezoek insightance.ai: bronnen, UTM-links, pagina's, acties (wekelijks, niet in data.db) |

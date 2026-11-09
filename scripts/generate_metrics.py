@@ -148,6 +148,9 @@ def section_outreach(conn):
     if table_exists(conn, "ondernemers"):
         rows = query_all(conn, "SELECT naam, status, datum_bericht1 AS d1, datum_bericht2 AS d2, gereageerd FROM ondernemers")
         tracks.append(("Ondernemers (vakbedrijven)", "bericht 1 of gebeld", "bericht 2", track_stats(rows, today)))
+    if table_exists(conn, "linkedin"):
+        rows = query_all(conn, "SELECT naam, status, datum_verzoek AS d1, datum_bericht1 AS d2, gereageerd FROM linkedin")
+        tracks.append(("LinkedIn", "verzoek verstuurd", "bericht 1", track_stats(rows, today)))
     if not tracks:
         return []
 

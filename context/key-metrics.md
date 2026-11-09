@@ -1,20 +1,20 @@
 # Key Metrics
 
-> Auto-gegenereerd vanuit database. Laatste update: 2026-10-30
+> Auto-gegenereerd vanuit database. Laatste update: 2026-11-09
 > Bron: `data/data.db` | Vernieuwen: `python scripts/generate_metrics.py`
 
 ## Outreach: Webshops
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 1065 |
-| Nog te benaderen | 240 |
-| Benaderd (DM1/mail 1, cumulatief) | 825 |
-| Vandaag voor het eerst benaderd | 32 |
-| DM2/mail 2 ontvangen (cumulatief) | 740 |
-| Volledige reeks doorlopen (Afgerond) | 673 |
-| Reacties (alle uitkomsten) | 66 |
-| Reactieratio (van benaderd) | 8.0% |
-| Afgewezen | 15 |
+| Totaal prospects | 1061 |
+| Nog te benaderen | 178 |
+| Benaderd (DM1/mail 1, cumulatief) | 883 |
+| Vandaag voor het eerst benaderd | 15 |
+| DM2/mail 2 ontvangen (cumulatief) | 835 |
+| Volledige reeks doorlopen (Afgerond) | 783 |
+| Reacties (alle uitkomsten) | 67 |
+| Reactieratio (van benaderd) | 7.6% |
+| Afgewezen | 16 |
 | Warme leads | 6 |
 | Reactie zonder vastgelegde uitkomst | 45 |
 
@@ -23,42 +23,66 @@
 ## Outreach: Ondernemers (vakbedrijven)
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 472 |
-| Nog te benaderen | 128 |
-| Benaderd (bericht 1 of gebeld, cumulatief) | 344 |
-| Vandaag voor het eerst benaderd | 20 |
-| Bericht 2 ontvangen (cumulatief) | 258 |
-| Volledige reeks doorlopen (Afgerond) | 110 |
+| Totaal prospects | 486 |
+| Nog te benaderen | 80 |
+| Benaderd (bericht 1 of gebeld, cumulatief) | 406 |
+| Vandaag voor het eerst benaderd | 15 |
+| Bericht 2 ontvangen (cumulatief) | 334 |
+| Volledige reeks doorlopen (Afgerond) | 171 |
 | Onbereikbaar (bounce) | 4 |
-| Reacties (alle uitkomsten) | 14 |
-| Reactieratio (van benaderd) | 4.1% |
-| Afgewezen | 14 |
+| Reacties (alle uitkomsten) | 19 |
+| Reactieratio (van benaderd) | 4.7% |
+| Afgewezen | 19 |
+| Warme leads | 0 |
+| Reactie zonder vastgelegde uitkomst | 0 |
+
+## Outreach: LinkedIn
+| Metric | Waarde |
+|--------|--------|
+| Totaal prospects | 0 |
+| Nog te benaderen | 0 |
+| Benaderd (verzoek verstuurd, cumulatief) | 0 |
+| Vandaag voor het eerst benaderd | 0 |
+| Bericht 1 ontvangen (cumulatief) | 0 |
+| Volledige reeks doorlopen (Afgerond) | 0 |
+| Reacties (alle uitkomsten) | 0 |
+| Reactieratio (van benaderd) | — |
+| Afgewezen | 0 |
 | Warme leads | 0 |
 | Reactie zonder vastgelegde uitkomst | 0 |
 
 ## Outreach: Totaal
 | Metric | Waarde |
 |--------|--------|
-| Totaal prospects | 1537 |
-| Benaderd | 1169 |
-| Nog te benaderen | 368 |
-| Reacties | 80 |
-| Afgewezen | 29 |
+| Totaal prospects | 1547 |
+| Benaderd | 1289 |
+| Nog te benaderen | 258 |
+| Reacties | 86 |
+| Afgewezen | 35 |
 | Warme leads | 6 |
 
 ## Wisselkoersen (EUR basis)
 | Valuta | Koers | Datum |
 |--------|-------|-------|
-| AUD | 1.5842 | 2026-10-29 |
-| CAD | 1.5577 | 2026-10-29 |
-| GBP | 0.8358 | 2026-10-29 |
-| USD | 1.1130 | 2026-10-29 |
+| AUD | 1.6250 | 2026-11-06 |
+| CAD | 1.5705 | 2026-11-06 |
+| GBP | 0.8341 | 2026-11-06 |
+| USD | 1.1165 | 2026-11-06 |
 
 ## Data Versheid
 | Bron | Laatste Record | Status |
 |------|----------------|--------|
-| fx_rates | 2026-10-29 | Verbonden |
+| fx_rates | 2026-11-06 | Verbonden |
+| instagram_bron | — | Leeg |
+| instagram_feedback | — | Leeg |
+| instagram_kosten | — | Leeg |
+| instagram_meldingen | — | Leeg |
+| instagram_posts | — | Leeg |
+| linkedin | — | Leeg |
+| linkedin_daily_log | — | Leeg |
+| linkedin_feedback | — | Leeg |
+| linkedin_system_status | — | Leeg |
 | meetings | — | Leeg |
-| ondernemers | 2026-10-30 | Verbonden |
-| outreach | 2026-10-30 | Verbonden |
+| ondernemers | 2026-11-09 | Verbonden |
+| outreach | 2026-11-09 | Verbonden |
 | staff_registry | — | Leeg |
