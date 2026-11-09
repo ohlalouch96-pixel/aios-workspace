@@ -27,6 +27,7 @@ from generate_metrics import track_stats, rate  # noqa: E402
 import collect_linkedin  # noqa: E402
 import limits  # noqa: E402
 import wachtrij  # noqa: E402
+import browser  # noqa: E402
 
 
 def _sync_vers(conn):
@@ -121,6 +122,7 @@ PAGINA = """
   .banner { display: flex; gap: 10px; align-items: flex-start; border-radius: 10px; padding: 13px 16px; margin-bottom: 18px; font-size: 13.5px; line-height: 1.5; }
   .banner.stop { background: var(--red-bg); color: var(--red); border: 1px solid #f3c6c0; }
   .banner.warn { background: var(--amber-bg); color: var(--amber); border: 1px solid #f0ddab; }
+  .banner.ok { background: var(--green-bg); color: var(--green); border: 1px solid #bfe3d1; }
   .banner b { font-weight: 700; }
 
   /* Section headers */
@@ -223,6 +225,12 @@ function initialen(naam) {
   {% if noodstop.waarschuwing %}
   <div class="banner warn">⚠️ <div>{{ noodstop.waarschuwing }}</div></div>
   {% endif %}
+  {% if check_fout %}
+  <div class="banner stop">⛔ <div><b>Check mislukt.</b> {{ check_fout }}</div></div>
+  {% endif %}
+  {% if check_geaccepteerd is not none %}
+  <div class="banner ok">✅ <div>Check op LinkedIn voltooid: <b>{{ check_geaccepteerd }}</b> geaccepteerd, <b>{{ check_verlopen }}</b> verlopen/ingetrokken.</div></div>
+  {% endif %}
 
   <div class="sectie" style="margin-top: 22px;">
     <div class="sectie-head">
@@ -275,7 +283,10 @@ function initialen(naam) {
   <div class="sectie">
     <div class="sectie-head">
       <h2>Wachten op acceptatie</h2>
-      <span class="count-badge">{{ wachtend|length }}</span>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span class="count-badge">{{ wachtend|length }}</span>
+        <form method="post" action="{{ url_for('check_linkedin') }}"><button class="btn btn-outline btn-sm">🔄 Check op LinkedIn (±15 sec)</button></form>
+      </div>
     </div>
     {% if not wachtend %}
     <div class="leeg">Niemand aan het wachten.</div>
@@ -289,7 +300,7 @@ function initialen(naam) {
           <div class="persoon-sub">{{ w.bedrijf }} · {{ w.locatie }} · verzoek verstuurd {{ w.datum_verzoek }}</div>
         </div>
       </div>
-      <p class="persoon-sub" style="margin-bottom: 10px;">Wordt automatisch bijgewerkt zodra <code>browser.py check</code> draait. Zelf gezien dat dit al geaccepteerd is? Gebruik de knop hieronder.</p>
+      <p class="persoon-sub" style="margin-bottom: 10px;">Klik boven op "Check op LinkedIn" om echt te checken of dit al geaccepteerd is. Zelf al gezien op LinkedIn dat het geaccepteerd is? Gebruik de knop hieronder.</p>
       <div class="knoppenrij">
         <a class="btn btn-outline" href="{{ w.url }}" target="_blank">💬 Open op LinkedIn</a>
         <form method="post" action="{{ url_for('geaccepteerd_handmatig') }}"><input type="hidden" name="url" value="{{ w.url }}"><button class="btn btn-primary">✅ Geaccepteerd</button></form>
@@ -426,7 +437,28 @@ def index():
     return render_template_string(
         PAGINA, kandidaten=kandidaten, wachtend=wachtend, geaccepteerd=geaccepteerd, follow_ups=follow_ups,
         noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
+        check_fout=request.args.get("check_fout"),
+        check_geaccepteerd=request.args.get("check_geaccepteerd"),
+        check_verlopen=request.args.get("check_verlopen"),
     )
+
+
+@app.route("/check_linkedin", methods=["POST"])
+def check_linkedin():
+    """Opent echt een browser naar LinkedIn (verzonden uitnodigingen + connecties),
+    en schrijft wijzigingen direct door naar de Sheet — zie tools/linkedin/browser.py check()."""
+    conn = get_connection()
+    resultaat = browser.check(conn)
+    conn.close()
+    if "fout" in resultaat:
+        return redirect(url_for("index", check_fout=resultaat["fout"]))
+    for url in resultaat["geaccepteerd"]:
+        wachtrij.status(url, "Geaccepteerd")
+    for url in resultaat["verlopen"]:
+        wachtrij.status(url, "Verlopen")
+    return redirect(url_for(
+        "index", check_geaccepteerd=len(resultaat["geaccepteerd"]), check_verlopen=len(resultaat["verlopen"]),
+    ))
 
 
 @app.route("/verstuurd", methods=["POST"])

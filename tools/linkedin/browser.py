@@ -280,66 +280,82 @@ def cmd_lees(args):
 # ============================================================================
 # check — eigen "verzonden uitnodigingen" + connecties bekijken (acceptatie-detectie)
 # ============================================================================
-def cmd_check():
-    conn = get_connection()
-    if limits.get_status(conn, "restricted"):
-        print("Systeem staat gepauzeerd door een eerdere restrictiemelding. Los dat eerst op (zie limits.check_noodstop).")
-        conn.close()
-        return
-
-    p, ctx = _context(headless=True)
-    page = ctx.new_page()
+def check(conn=None):
+    """Checkt LinkedIn's eigen 'verzonden uitnodigingen' + connecties-pagina en
+    werkt de lokale database bij. Geeft de urls terug die van status veranderd
+    zijn, zodat een aanroeper (bv. apps/linkedin/cockpit.py) dat ook meteen naar
+    de Google Sheet kan doorschrijven i.p.v. alleen de lokale db."""
+    eigen_conn = conn is None
+    if eigen_conn:
+        conn = get_connection()
     try:
-        page.goto("https://www.linkedin.com/mynetwork/invitation-manager/sent/")
-        _delay()
-        patroon = _detect_restriction(page)
-        if patroon:
-            _stop_op_restrictie(conn, patroon)
-            return
-        try:
-            verzonden_namen = page.eval_on_selector_all(
-                "a[href*='/in/']", "els => els.map(e => e.href.split('?')[0])"
-            )
-        except Exception:
-            verzonden_namen = []
-        verzonden_set = set(verzonden_namen)
+        if limits.get_status(conn, "restricted"):
+            return {"fout": "Systeem staat gepauzeerd door een eerdere restrictiemelding (zie limits.check_noodstop)."}
 
-        page.goto("https://www.linkedin.com/mynetwork/invite-connect/connections/")
-        _delay()
+        p, ctx = _context(headless=True)
+        page = ctx.new_page()
         try:
-            connectie_urls = page.eval_on_selector_all(
-                "a[href*='/in/']", "els => els.map(e => e.href.split('?')[0])"
-            )
-        except Exception:
-            connectie_urls = []
-        connectie_set = set(connectie_urls)
+            page.goto("https://www.linkedin.com/mynetwork/invitation-manager/sent/")
+            _delay()
+            patroon = _detect_restriction(page)
+            if patroon:
+                _stop_op_restrictie(conn, patroon)
+                return {"fout": f"restrictie gedetecteerd: {patroon}"}
+            try:
+                verzonden_namen = page.eval_on_selector_all(
+                    "a[href*='/in/']", "els => els.map(e => e.href.split('?')[0])"
+                )
+            except Exception:
+                verzonden_namen = []
+            verzonden_set = set(verzonden_namen)
+
+            page.goto("https://www.linkedin.com/mynetwork/invite-connect/connections/")
+            _delay()
+            try:
+                connectie_urls = page.eval_on_selector_all(
+                    "a[href*='/in/']", "els => els.map(e => e.href.split('?')[0])"
+                )
+            except Exception:
+                connectie_urls = []
+            connectie_set = set(connectie_urls)
+        finally:
+            ctx.close()
+            p.stop()
+
+        if not _row_table_exists(conn):
+            return {"fout": "Tabel 'linkedin' bestaat nog niet (draai eerst scripts/collect_linkedin.py)."}
+
+        rijen = conn.execute("SELECT naam, url FROM linkedin WHERE status = 'Verzoek verstuurd'").fetchall()
+        geaccepteerd_urls, verlopen_urls = [], []
+        for rij in rijen:
+            if rij["url"] in verzonden_set:
+                continue
+            if rij["url"] in connectie_set:
+                conn.execute("UPDATE linkedin SET status = 'Geaccepteerd' WHERE url = ?", (rij["url"],))
+                geaccepteerd_urls.append(rij["url"])
+            else:
+                conn.execute("UPDATE linkedin SET status = 'Verlopen' WHERE url = ?", (rij["url"],))
+                verlopen_urls.append(rij["url"])
+        conn.commit()
+        return {
+            "geaccepteerd": geaccepteerd_urls,
+            "verlopen": verlopen_urls,
+            "nog_in_afwachting": len(rijen) - len(geaccepteerd_urls) - len(verlopen_urls),
+        }
     finally:
-        ctx.close()
-        p.stop()
+        if eigen_conn:
+            conn.close()
 
-    if not _row_table_exists(conn):
-        print("Tabel 'linkedin' bestaat nog niet (draai eerst scripts/collect_linkedin.py). Niets om te vergelijken.")
-        conn.close()
+
+def cmd_check():
+    resultaat = check()
+    if "fout" in resultaat:
+        print(resultaat["fout"])
         return
-
-    rijen = conn.execute("SELECT naam, url FROM linkedin WHERE status = 'Verzoek verstuurd'").fetchall()
-    bijgewerkt = {"geaccepteerd": 0, "verlopen": 0, "nog_in_afwachting": 0}
-    for rij in rijen:
-        if rij["url"] in verzonden_set:
-            bijgewerkt["nog_in_afwachting"] += 1
-            continue
-        if rij["url"] in connectie_set:
-            conn.execute("UPDATE linkedin SET status = 'Geaccepteerd' WHERE url = ?", (rij["url"],))
-            bijgewerkt["geaccepteerd"] += 1
-        else:
-            conn.execute("UPDATE linkedin SET status = 'Verlopen' WHERE url = ?", (rij["url"],))
-            bijgewerkt["verlopen"] += 1
-    conn.commit()
-    print(f"Check voltooid: {bijgewerkt['geaccepteerd']} geaccepteerd, {bijgewerkt['verlopen']} verlopen/ingetrokken, "
-          f"{bijgewerkt['nog_in_afwachting']} nog in afwachting.")
+    print(f"Check voltooid: {len(resultaat['geaccepteerd'])} geaccepteerd, {len(resultaat['verlopen'])} verlopen/ingetrokken, "
+          f"{resultaat['nog_in_afwachting']} nog in afwachting.")
     print("Let op: dit werkt alleen de lokale database bij. Zet dezelfde statussen ook in de Google Sheet via "
           "tools/linkedin/wachtrij.py zodat ze niet weer overschreven worden door de volgende collect_linkedin.py-sync.")
-    conn.close()
 
 
 def _row_table_exists(conn):
