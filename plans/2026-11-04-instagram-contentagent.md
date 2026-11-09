@@ -252,3 +252,10 @@ Automatisch plaatsen na ✅ via de officiële "Instagram API with Instagram Logi
 1. Oussama krijgt elke week ±5 concepten in Telegram die hij met één tik kan goedkeuren.
 2. Minimaal 4 van de 5 eerste concepten zijn zonder of met één aanpassing goed genoeg om te plaatsen.
 3. Nul feitelijke fouten in geplaatste posts.
+
+
+---
+
+## Status 09-11-2026
+
+Stap 1 t/m 9 afgerond. Extra gebouwd: video's met stem (ElevenLabs, Eric), onderwerpen uit de 28 diensten van de website, 12 controleregels. Alles draait op de Hetzner-server (instagram-bot.service; instagram-agent.timer staat nog uit tot de tijd gekozen is).

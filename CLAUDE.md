@@ -132,21 +132,42 @@ These are how you know your AIOS is working:
 ├── tools/                   # WAT-tools — deterministieke Python-scripts (herbruikbaar, buiten scripts/collect-flow om)
 │   ├── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
 │   ├── ga4_weekly_report.py # Wekelijkse websitecijfers uit Google Analytics 4 (bronnen, UTM, pagina's, acties)
-│   └── linkedin/            # LinkedIn Outreach Agent — zoeken/lezen/limieten/wachtrij
-│       ├── browser.py       # Playwright: zoeken, profielen lezen, acceptatie-check (login/zoek/lees/check)
-│       ├── limits.py        # Opbouwschema, daglimieten, noodstop (zie workflows/linkedin_outreach.md)
-│       └── wachtrij.py      # Schrijft/leest het tabblad linkedin-tracker
+│   ├── linkedin/            # LinkedIn Outreach Agent — zoeken/lezen/limieten/wachtrij
+│   │   ├── browser.py       # Playwright: zoeken, profielen lezen, acceptatie-check (login/zoek/lees/check)
+│   │   ├── limits.py        # Opbouwschema, daglimieten, noodstop (zie workflows/linkedin_outreach.md)
+│   │   └── wachtrij.py      # Schrijft/leest het tabblad linkedin-tracker
+│   └── instagram/           # Instagram-contentagent @insightance.ai (zie workflows/instagram_content.md)
+│       ├── wachtrij.py      # Wachtrij in data.db (instagram_*), kleurregel, hashtags
+│       ├── render_carrousel.py / render_kaart.py / render_tekst_reel.py / opname_demo.py  # beeld en reels
+│       ├── render_stem_video.py  # Video met voice-over (Eric) in Typer-stijl + 12 controleregels
+│       ├── video/typer.html # Scènes voor de stemvideo's (telefoon, chat, agenda, inbox, document, ...)
+│       ├── stem.py          # ElevenLabs-stem Eric (cache in .tmp/instagram/stem_cache)
+│       ├── diensten.py      # Onderwerpen stemvideo's = de 28 diensten op insightance.ai/automations
+│       ├── demos/           # Fictieve demo-apps voor schermopname-reels
+│       └── telegram_review.py  # Content-bot: concepten naar Telegram, knoppen en feedback
 ├── apps/                    # Standing lokale apps (draaien als los proces, geen collect_*-script)
-│   └── linkedin/
-│       └── cockpit.py       # Lokale webcockpit (127.0.0.1) voor LinkedIn-outreach — kaarten, knoppen, dashboard
+│   ├── linkedin/
+│   │   └── cockpit.py       # Lokale webcockpit (127.0.0.1) voor LinkedIn-outreach — kaarten, knoppen, dashboard
+│   └── content/
+│       └── agent.py         # Instagram-contentagent: kiest, schrijft (Claude), controleert, rendert, stuurt naar Telegram
 ├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
 │   ├── source_prospects.md  # SOP bij tools/source_prospects.py
 │   ├── ga4_weekly_report.md # SOP wekelijkse GA4-samenvatting (elke maandag)
-│   └── linkedin_outreach.md # SOP voor de LinkedIn Outreach Agent
+│   ├── linkedin_outreach.md # SOP voor de LinkedIn Outreach Agent
+│   └── instagram_content.md # SOP + alle regels voor de Instagram-contentagent (stem, kleuren, 12 controleregels)
 ├── outputs/                 # Work products and deliverables
 ├── reference/               # Templates, examples, reusable patterns
 └── shares/                  # Packaged systems for sharing (created by /share)
 ```
+
+## Instagram-contentagent (@insightance.ai)
+
+Draait op de Hetzner-server (zelfde als CommandOS), niet op de laptop:
+- `instagram-bot.service`: luistert naar de knoppen en feedback in Telegram (@Insightance_content_bot), altijd aan.
+- `instagram-agent.timer`: maakt dagelijks nieuwe concepten (`apps/content/agent.py dagelijks`, buffer van 3). Staat nog **uit** tot Oussama een tijd kiest.
+- De wachtrij (tabellen `instagram_*` in `data/data.db`) en de bestanden (`.tmp/instagram/`) staan sinds 09-11-2026 op de server; die zijn leidend. Draai de agent of de content-bot niet ook lokaal (twee luisteraars botsen in Telegram).
+- Fase 1: niets gaat automatisch online; Oussama keurt goed in Telegram en plaatst zelf.
+- Kosten: Claude max $20/mnd (melding bij $15); ElevenLabs gratis plan 10.000 tekens/mnd (reset op de 7e), ±450 per video met stem.
 
 ## Data Warehouse
 

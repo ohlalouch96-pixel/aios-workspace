@@ -98,6 +98,23 @@
 
 ---
 
+## ~~Contentagent voor Instagram~~ — gebouwd 2026-11-04 t/m 11-09
+
+Fase 1 af: agent maakt carrousels, kaarten, tekst-reels, demo-reels, actualiteiten, stories en video's met stem (Eric), Oussama keurt goed in Telegram en plaatst zelf. Draait op de server. Zie `workflows/instagram_content.md` en `plans/2026-11-04-instagram-contentagent.md`.
+**Nog open:** tijd kiezen voor de dagelijkse concepten (dan `instagram-agent.timer` aanzetten); oordeel over concept #3 (The Fork) en #4 (calculatie-demo); #5 (actualiteit 26-10) is verouderd.
+**Fase 2 (later):** automatisch posten na ✅.
+
+---
+
+## ElevenLabs voice agent
+
+**Status:** Geparkeerd sinds 2026-11-02, geen trigger-datum
+**Waarom geparkeerd:** Idee van de zwager, nog geen concreet, herhalend proces dat het zou moeten vervangen. Nu bouwen zou een oplossing zijn zonder scherp probleem.
+**Wat het is:** ElevenLabs is een voice-agent/conversational AI waarmee je kunt praten en die dingen voor je bijhoudt of vastlegt (vergelijkbaar met hoe IntelOS/Fathom meetings al vastlegt, maar dan losstaand via spraak).
+**Trigger om op te pakken:** Geen vaste datum. Wel: zodra Oussama vraagt of er nog dingen te doen zijn/opgepakt kunnen worden, dit item proactief opperen.
+
+---
+
 ## ~~LinkedIn Pijler 2 ("Herkenbare pijn") fine-tunen~~ — afgerond 2026-08-21
 
 Hernoemd naar "The Other Shift", volledig uitgewerkt: wekelijks woensdag 11:00, geen CTA, geen afbeelding, hashtag-regel, 4 posts klaar. Zie `outputs/linkedin-content-serie.md`.
