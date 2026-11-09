@@ -71,7 +71,7 @@ Send me a DM and I'll show you what's possible for your business ⚡
 
 ## Muziekadvies (bij elk concept met video)
 
-Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bij inhoud én kleur. Voorbeelden: navy/uitleg → rustige lo-fi of zachte piano; zwart/rood Myth Check → strakke, licht spannende beat; groen stappenplan → luchtig, positief akoestisch; actualiteit → neutraal, licht nieuwsachtig ritme. Geen specifiek nummer verzinnen; type/sfeer en eventueel een zoekterm voor de Instagram-muziekbibliotheek. Oussama voegt de muziek zelf toe bij het plaatsen.
+Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bij inhoud én kleur. Voorbeelden: navy/uitleg → rustige lo-fi of zachte piano; zwart/rood Myth Check → strakke, licht spannende beat; groen stappenplan → luchtig, positief akoestisch; actualiteit → neutraal, licht nieuwsachtig ritme. Video met stem (09-11): altijd rustig en zonder zang, heel zacht eronder (muziek 10-20%, origineel geluid 100%), zoektermen 'corporate minimal', 'soft piano', 'lofi chill'; nooit drukke/upbeat muziek onder Eric. Geen specifiek nummer verzinnen; type/sfeer en eventueel een zoekterm voor de Instagram-muziekbibliotheek. Oussama voegt de muziek zelf toe bij het plaatsen.
 
 ## Demo-reels
 
