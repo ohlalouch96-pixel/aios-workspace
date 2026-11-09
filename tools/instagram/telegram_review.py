@@ -39,7 +39,8 @@ from config import get_env  # noqa: E402
 from wachtrij import verbind, volledige_caption  # noqa: E402
 
 SOORT_LABEL = {"carrousel": "Carrousel", "kaart": "Losse afbeelding", "fork": "The Fork", "tekst_reel": "Reel · bewegende tekst",
-               "demo_reel": "Reel · demo", "actualiteit": "Actualiteit", "story": "Story-tekst"}
+               "demo_reel": "Reel · demo", "stem_video": "Reel · video met stem", "actualiteit": "Actualiteit",
+               "story": "Story-tekst"}
 
 
 class Bot:

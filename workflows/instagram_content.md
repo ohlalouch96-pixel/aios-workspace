@@ -99,6 +99,7 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 
 - Stem: Eric via ElevenLabs (`tools/instagram/stem.py`, cache in `.tmp/instagram/stem_cache/`). Oussama's eigen stem getest en afgewezen.
 - Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
+- Scènes in `video/typer.html`: getal, mandje, mails, meldingen (cart-recovery) en klok, offerte, totaal, pdf, akkoord (offerte-tool, 09-11), eind. Nieuwe scènes eerst zonder stem bekijken (geen tegoed), pas daarna Eric laten inspreken. Specs: `video/cart_recovery.json`, `video/offerte.json`. Soort in de wachtrij: `stem_video`.
 - Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
 - Stem: profiel `eric_v3` (nieuwste model, stability 0.0 = proef D, regie-tags per zin zoals [confident], [understated], [softly]). Eric ademt zelf af en toe; dat blijft staan. Spec: per beat `zegt` (woorden) + `uitspraak` (met tags).
 - Tempo: hele stem 10% sneller (`"tempo": 1.1`, gratis, toon blijft gelijk; gekozen 09-11).

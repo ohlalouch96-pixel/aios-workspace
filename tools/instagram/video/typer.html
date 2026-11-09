@@ -40,6 +40,55 @@ body{background:var(--donker)}
 .teller-lab{font-size:34px;color:var(--grijs);margin-top:14px}
 .knop{display:inline-block;background:var(--acc);color:var(--accfg);font-weight:800;font-size:54px;border-radius:80px;padding:34px 64px;margin-top:110px;box-shadow:0 0 80px color-mix(in srgb,var(--acc) 35%,transparent)}
 .handle{font-size:40px;font-weight:600;color:var(--dfg);margin-top:56px;opacity:.85}
+/* ---- offerte-scènes: echte app-look (zelfde ontwerp als demos/offerte.html) ---- */
+.klokgroot{font-weight:800;font-size:230px;line-height:1;letter-spacing:-.05em;color:var(--dfg);text-shadow:0 0 80px color-mix(in srgb,var(--acc) 35%,transparent)}
+.klokgroot small{font-size:90px;color:var(--acc);margin-left:14px;letter-spacing:-.02em}
+.bestand{display:inline-flex;align-items:center;gap:22px;margin-top:70px;background:var(--kaart);border:2px solid var(--rand);border-radius:26px;padding:24px 32px;font-size:32px;font-weight:600;color:var(--dfg)}
+.bestand .doc{width:56px;height:56px;border-radius:12px;background:#2B579A;color:#fff;font-weight:800;font-size:30px;display:flex;align-items:center;justify-content:center}
+.bestand .bewerk{font-size:24px;color:var(--grijs);font-weight:500}
+.app{background:#fff;border-radius:30px;box-shadow:0 30px 70px rgba(16,24,40,.14),0 0 0 2px #EAECF0;margin-top:44px;overflow:hidden;color:#101828}
+.app-kop{display:flex;align-items:center;gap:18px;padding:28px 34px;border-bottom:2px solid #EAECF0;font-size:30px}
+.logo{width:54px;height:54px;border-radius:14px;background:#ea580c;color:#fff;font-weight:800;font-size:30px;display:flex;align-items:center;justify-content:center;flex:none}
+.app-kop .nr{color:#98A2B3;font-size:26px;margin-left:auto}
+.pil{font-size:22px;font-weight:700;border-radius:30px;padding:8px 18px;background:#F2F4F7;color:#475467}
+.kies{position:relative;margin:26px 34px 6px;height:76px;border:2px solid #D0D5DD;border-radius:16px;display:flex;align-items:center;padding:0 24px;font-size:30px}
+.kies .ph{color:#98A2B3;position:absolute;left:24px}
+.kies .val{font-weight:600;position:absolute;left:24px}
+.kies .pijl{margin-left:auto;color:#667085}
+.cursor{position:absolute;width:46px;height:46px;pointer-events:none;z-index:5;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.ring{position:absolute;width:90px;height:90px;border-radius:50%;border:4px solid #1F5EFF;pointer-events:none}
+.tabel{padding:6px 34px 24px}
+.tabel .rij{display:flex;justify-content:space-between;align-items:baseline;gap:20px;font-size:31px;padding:16px 0;border-bottom:2px solid #F2F4F7}
+.tabel .rij small{display:block;color:#667085;font-size:24px;margin-top:2px}
+.tabel .rij b{font-weight:600;white-space:nowrap}
+.som{padding:34px 40px}
+.som .rij{display:flex;justify-content:space-between;font-size:38px;color:#475467;padding:18px 0}
+.som .totaal-groot{display:flex;justify-content:space-between;align-items:baseline;border-top:3px solid #EAECF0;margin-top:14px;padding-top:26px;font-size:40px;font-weight:700;color:#101828}
+.som .totaal-groot span:last-child{font-size:84px;font-weight:800;letter-spacing:-.03em}
+.aanbet{margin-top:22px;font-size:28px;color:#067647;background:#ECFDF3;border-radius:16px;padding:18px 24px}
+.papier{background:#fff;border-radius:22px;box-shadow:0 30px 70px rgba(16,24,40,.16);margin-top:40px;padding:44px 48px;color:#101828;position:relative}
+.papier .bovenrij{display:flex;justify-content:space-between;align-items:flex-start}
+.papier .merk{display:flex;align-items:center;gap:16px;font-weight:700;font-size:30px}
+.papier .q{text-align:right;font-size:22px;color:#667085;letter-spacing:.12em}
+.papier .q b{display:block;font-size:40px;color:#101828;letter-spacing:.02em}
+.papier .voor{margin-top:36px;font-size:24px;color:#667085}
+.papier .voor b{display:block;font-size:30px;color:#101828;margin-top:6px}
+.mini{margin-top:30px;border-top:2px solid #EAECF0}
+.mini div{display:flex;justify-content:space-between;font-size:26px;color:#344054;padding:12px 0;border-bottom:2px solid #F2F4F7}
+.mini .meer{color:#98A2B3;border-bottom:none}
+.papier .eind{display:flex;justify-content:space-between;margin-top:34px;padding-top:24px;border-top:2px solid #EAECF0;font-size:32px;font-weight:700}
+.verstuur{display:flex;justify-content:flex-end;margin-top:30px;position:relative}
+.knop-app{position:relative;background:#1F5EFF;color:#fff;font-weight:700;font-size:32px;border-radius:18px;padding:24px 40px}
+.melding-app{display:flex;gap:22px;align-items:center;background:#101828;color:#fff;border-radius:22px;padding:24px 30px;margin-top:30px;font-size:28px;font-weight:600}
+.melding-app i{width:50px;height:50px;border-radius:50%;background:#12B76A;display:flex;align-items:center;justify-content:center;font-style:normal;flex:none}
+.melding-app small{display:block;font-size:22px;color:#98A2B3;font-weight:500;margin-top:2px}
+.notif{display:flex;gap:24px;align-items:center;text-align:left;background:var(--kaart);border:2px solid var(--rand);border-radius:30px;padding:28px 32px;margin-top:24px}
+.notif .ic{width:68px;height:68px;border-radius:18px;flex:none;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#fff}
+.notif .t1{font-size:31px;font-weight:700;color:var(--dfg)}
+.notif .t2{font-size:25px;color:var(--grijs);margin-top:4px}
+.notif.groot{padding:36px 34px}
+.notif.groot .t1{font-size:38px}
+.notif .tijdje{margin-left:auto;align-self:flex-start;font-size:22px;color:var(--grijs)}
 #cap{position:absolute;left:90px;right:90px;top:1400px;text-align:center;font-weight:700;font-size:50px;line-height:1.25;letter-spacing:-.01em}
 #cap span{opacity:.45}
 #cap span.aan{opacity:1}
@@ -54,12 +103,16 @@ const cl = x => Math.min(Math.max(x, 0), 1);
 const E = x => 1 - Math.pow(1 - cl(x), 3);
 const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const mk = (s, t) => esc(s).replace(/\*(.+?)\*/g, `<span class="hl" data-hl="${t}">$1</span>`);
-const geld = v => '$' + v.toFixed(2);
+const geld = v => '$' + v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 // Tijd (s, binnen de scène) waarop het woord wordt uitgesproken; anders de reservetijd.
 const wt = (s, woord, reserve, nr = 0) => {
   const w = (s.woorden || []).filter(x => x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === woord)[nr];
   return w ? w.s : reserve;
 };
+// Muisaanwijzer die op tijdstip k klikt (verschijnt 0,6 s eerder, met een klikring).
+const cursor = (k, pos) => `<span style="position:absolute;${pos}">
+  <span class="ring" data-ring="${k}" style="left:-30px;top:-30px;opacity:0"></span>
+  <svg class="cursor" data-in="${k - .6}" data-klik="${k}" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.5-7.5L4 18z" fill="#101828" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>`;
 const IN = .7, UIT = .3;  // duur van in- en uitfaden (s); rustig genoeg om met je ogen te volgen
 
 // Elke scène: HTML met tijdsattributen (seconden vanaf het begin van de scène, d = duur van de scène).
@@ -91,6 +144,55 @@ const SCENES = {
     <div class="teller" data-in="${.3}" data-som='${JSON.stringify(s.meldingen.map((m, n) => [wt(s, (s.op || [])[n], .3 + n * d * .18), m[2]]))}'>$0.00</div>
     <div class="teller-lab" data-in="0.3">${esc(s.label)}</div>
     <div class="kop" style="margin-top:90px" data-in="${wt(s, "while", d * .62) - .15}">${mk(s.kop, wt(s, "sleep", d * .72))}</div>`}),
+  // ---- offerte-video ----
+  klok: (s, d) => ({kleur: 'donker', html: `
+    <div class="klokgroot" data-in="0">${esc(s.tijd)}<small>${esc(s.ampm)}</small></div>
+    <div class="typ" style="margin-top:50px" data-typ="${esc(s.tekst)}" data-t0="${wt(s, 'still', d * .35)}"></div>
+    <div><span class="bestand" data-in="${wt(s, 'quotes', d * .55)}"><span class="doc">W</span>${esc(s.bestand)}<span class="bewerk">Editing…</span></span></div>`}),
+  offerte: (s, d) => {
+    const k = wt(s, 'job', d * .3) + .05, stap = Math.min(.22, Math.max(.12, (wt(s, 'itself', d * .7) - k) / s.regels.length));
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, 'fills', d * .6))}</div>
+    <div class="app" data-in="0.15">
+      <div class="app-kop"><span class="logo">${esc(s.bedrijf[0])}</span><b>${esc(s.bedrijf)}</b><span class="nr">${esc(s.nummer)}</span><span class="pil">Draft</span></div>
+      <div class="kies"><span class="ph" data-uit="${k}">Choose a job template…</span><span class="val" data-in="${k}">${esc(s.klus)}</span><span class="pijl">▾</span>
+        ${cursor(k, 'right:60px;top:22px')}</div>
+      <div class="tabel">${s.regels.map((r, i) => `<div class="rij" data-in="${k + .3 + i * stap}"><span>${esc(r[0])}${r[1] ? `<small>${esc(r[1])}</small>` : ''}</span><b>${geld(r[2])}</b></div>`).join('')}</div>
+    </div>`};
+  },
+  totaal: (s, d) => {
+    const sub = s.posten.reduce((a, p) => a + p[1], 0), btw = Math.round(sub * s.btw * 100) / 100, tot = sub + btw;
+    const op = s.op || [];
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, 'seconds', d * .7))}</div>
+    <div class="app som" data-in="0.1">
+      ${s.posten.map((p, i) => `<div class="rij" data-in="${wt(s, op[i], .3 + i * .4)}"><span>${esc(p[0])}</span><span>${geld(p[1])}</span></div>`).join('')}
+      <div class="rij" data-in="${wt(s, op[s.posten.length], 1.2)}"><span>Sales tax ${Math.round(s.btw * 100)}%</span><span>${geld(btw)}</span></div>
+      <div class="totaal-groot" data-in="${wt(s, 'worked', 1.6) - .1}"><span>Total</span><span data-count="${tot.toFixed(2)}" data-t0="${wt(s, 'worked', 1.6)}" data-dur="1.0" data-pre="$" data-dec="2">$0.00</span></div>
+      <div class="aanbet" data-in="${wt(s, 'seconds', 2.4) + .2}">${Math.round(s.aanbetaling * 100)}% deposit on acceptance: <b>${geld(Math.round(tot * s.aanbetaling * 100) / 100)}</b></div>
+    </div>`};
+  },
+  pdf: (s, d) => {
+    const k = wt(s, 'sent', d * .5);
+    return {kleur: 'licht', html: `
+    <div class="kop klein" data-in="0">${mk(s.kop, wt(s, 'driveway', d * .75))}</div>
+    <div class="papier" data-in="0.15">
+      <div class="bovenrij"><div class="merk"><span class="logo">${esc(s.bedrijf[0])}</span>${esc(s.bedrijf)}</div><div class="q">QUOTE<b>${esc(s.nummer)}</b></div></div>
+      <div class="voor">Prepared for<b>${esc(s.klant)}</b>${esc(s.adres)}</div>
+      <div class="mini">${(s.regels || []).slice(0, 3).map(r => `<div><span>${esc(r[0])}</span><span>${geld(r[1])}</span></div>`).join('')}
+        ${(s.meer ? `<div class="meer">+ ${s.meer} more items</div>` : '')}</div>
+      <div class="eind"><span>Total</span><span>${geld(s.totaal)}</span></div>
+    </div>
+    <div class="verstuur"><span class="knop-app">Send quote${cursor(k, 'right:-10px;top:40px')}</span></div>
+    <div class="melding-app" data-in="${k + .35}"><i>✓</i><div>Quote sent to ${esc(s.klant)}<small>PDF attached · accept link included</small></div></div>`};
+  },
+  akkoord: (s, d) => ({kleur: 'donker', html: `
+    <div class="kop" data-in="0">${mk(s.kop, wt(s, 'yes', d * .6))}</div>
+    <div style="margin-top:60px">
+      <div class="notif" data-in="${wt(s, 'see', .4)}"><span class="ic" style="background:#F79009">👁</span><div><div class="t1">${esc(s.klant.split(' ')[0])} opened your quote</div><div class="t2">Viewed 2 times · on mobile</div></div><span class="tijdje">9:16</span></div>
+      <div class="notif groot" data-in="${wt(s, 'yes', d * .6)}"><span class="ic" style="background:#12B76A">✓</span><div><div class="t1">Quote accepted · ${geld(s.totaal)}</div><div class="t2">Signed online by ${esc(s.klant)}</div></div><span class="tijdje">9:21</span></div>
+      <div class="notif" data-in="${wt(s, 'yes', d * .6) + .5}"><span class="ic" style="background:var(--acc);color:var(--accfg)">$</span><div><div class="t1">Deposit requested · ${geld(s.aanbetaling)}</div><div class="t2">Job ready to book</div></div><span class="tijdje">9:21</span></div>
+    </div>`}),
   eind: (s, d) => ({kleur: 'donker', html: `
     <div class="kop" style="margin-top:120px" data-in="0">${mk(s.kop, d * .35)}</div>
     <div class="knop" data-in="${wt(s, "send", d * .55) - .1}">${esc(s.knop)}</div>
@@ -124,6 +226,16 @@ function werk(t, d, laatste) {
     el.style.opacity = p;
     el.style.transform = `translateY(${(1 - p) * 30}px)`;
     el.style.filter = p < 1 ? `blur(${(1 - p) * 10}px)` : '';
+  });
+  r.querySelectorAll('[data-uit]').forEach(el => { el.style.opacity = 1 - E((t - +el.dataset.uit) / .25); });
+  r.querySelectorAll('[data-klik]').forEach(el => {
+    const x = (t - +el.dataset.klik) / .16, p = x > -1 && x < 1 ? 1 - Math.abs(x) : 0;
+    el.style.transform = `scale(${1 - .18 * p})`;
+  });
+  r.querySelectorAll('[data-ring]').forEach(el => {
+    const x = (t - +el.dataset.ring) / .5;
+    el.style.opacity = x > 0 && x < 1 ? .7 * (1 - x) : 0;
+    el.style.transform = `scale(${.4 + .8 * cl(x)})`;
   });
   r.querySelectorAll('[data-hl]').forEach(el => el.style.setProperty('--hl', E((t - +el.dataset.hl) / .5)));
   r.querySelectorAll('[data-dim]').forEach(el => {

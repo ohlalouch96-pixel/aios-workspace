@@ -1,0 +1,145 @@
+{
+  "onderwerp": "Quote tool: a quote built and sent in minutes",
+  "stem": "eric_v3",
+  "kleurenset": "navy",
+  "tempo": 1.1,
+  "beats": [
+    {
+      "zegt": "It's nine at night, and you're still writing quotes.",
+      "uitspraak": "[confident] It's nine at night, and you're still writing quotes.",
+      "scene": {
+        "type": "klok",
+        "tijd": "9:12",
+        "ampm": "PM",
+        "tekst": "Still writing quotes.",
+        "bestand": "Quote_Carter_FINAL_v3.docx"
+      }
+    },
+    {
+      "zegt": "Pick the job, and every line fills itself in.",
+      "uitspraak": "[confident] Pick the job, and every line fills itself in.",
+      "inademing": true,
+      "scene": {
+        "type": "offerte",
+        "kop": "Pick the job. Every line *fills itself in.*",
+        "bedrijf": "Brightline Heating",
+        "nummer": "Q-2026-0142",
+        "klus": "Boiler replacement",
+        "regels": [
+          [
+            "Remove & dispose of old boiler",
+            "",
+            180
+          ],
+          [
+            "30 kW combi boiler, supplied & fitted",
+            "10-year warranty",
+            1650
+          ],
+          [
+            "Magnetic system filter",
+            "",
+            145
+          ],
+          [
+            "Powerflush",
+            "Up to 10 radiators",
+            420
+          ],
+          [
+            "Smart thermostat, supplied & fitted",
+            "",
+            210
+          ],
+          [
+            "Permit & inspection",
+            "",
+            150
+          ],
+          [
+            "Labor",
+            "2 technicians · 1 day",
+            1040
+          ]
+        ]
+      }
+    },
+    {
+      "zegt": "Labor, parts and tax, worked out in seconds.",
+      "uitspraak": "[confident] Labor, parts and tax, worked out in seconds.",
+      "scene": {
+        "type": "totaal",
+        "kop": "Labor, parts and tax. *Worked out in seconds.*",
+        "posten": [
+          [
+            "Labor",
+            1040
+          ],
+          [
+            "Parts, materials & permit",
+            2755
+          ]
+        ],
+        "op": [
+          "labor",
+          "parts",
+          "tax"
+        ],
+        "btw": 0.08,
+        "aanbetaling": 0.2
+      }
+    },
+    {
+      "zegt": "Your logo, your prices, sent before you leave the driveway.",
+      "uitspraak": "[confident] Your logo, your prices, sent before you leave the driveway.",
+      "scene": {
+        "type": "pdf",
+        "kop": "Your logo, your prices. Sent before you *leave the driveway.*",
+        "bedrijf": "Brightline Heating",
+        "nummer": "Q-2026-0142",
+        "klant": "James Carter",
+        "adres": "1482 Maple Ave, Columbus, OH",
+        "totaal": 4098.6,
+        "regels": [
+          [
+            "30 kW combi boiler, supplied & fitted",
+            1650
+          ],
+          [
+            "Powerflush",
+            420
+          ],
+          [
+            "Labor · 2 technicians, 1 day",
+            1040
+          ]
+        ],
+        "meer": 4
+      }
+    },
+    {
+      "zegt": "And you see the moment they say yes.",
+      "uitspraak": "[confident] And you see the moment they say yes.",
+      "scene": {
+        "type": "akkoord",
+        "kop": "And you see the moment *they say yes.*",
+        "klant": "James Carter",
+        "totaal": 4098.6,
+        "aanbetaling": 819.72
+      },
+      "stem": {
+        "volume_db": 1.8
+      }
+    },
+    {
+      "zegt": "Want this for your business? Send me a DM.",
+      "uitspraak": "[curious] Want this for your business? [confident] Send me a DM.",
+      "scene": {
+        "type": "eind",
+        "kop": "Want this for *your business?*",
+        "knop": "Send me a DM ⚡",
+        "handle": "@insightance.ai"
+      }
+    }
+  ]
+}
