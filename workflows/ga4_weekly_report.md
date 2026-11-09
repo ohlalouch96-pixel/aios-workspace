@@ -30,7 +30,8 @@ acties ze doen, met toe- of afname ten opzichte van de week ervoor.
 - Bots: consent.js laadt GA niet voor herkenbare bots; het script filtert daarnaast datacentersteden
   (`BOT_CITIES`) en toont hoeveel. 03-11: na het wijzigen van de IG-bio kwamen 9 "bezoekers" uit
   Prineville/Luleå (Meta), Ashburn (Amazon) en Springfield, allemaal first_visit zonder engagement.
-  Zie je nieuwe verdachte steden, voeg ze toe aan `BOT_CITIES`.
+  Zie je nieuwe verdachte steden, voeg ze toe aan `BOT_CITIES`. 09-11: Springfield toegevoegd (alle
+  bezoeken daar op 3-4 nov waren Meta-checks na bio-wijzigingen; normale user-agent, dus consent.js herkende ze niet).
 - Standaardrapporten lopen 24-48 uur achter; de huidige dag is nooit compleet.
 - "Betrokken bezoek" = langer dan 10 seconden, of 2+ pagina's, of een sleutelgebeurtenis. Beste maat voor echte interesse.
 - UTM-afspraken: `reference/utm-links.md`. Kale links (zonder label) tellen als direct of als referral.

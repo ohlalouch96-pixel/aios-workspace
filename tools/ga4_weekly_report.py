@@ -42,6 +42,7 @@ BOT_CITIES = [
     "Ashburn", "Boardman", "Prineville", "Luleå", "Lulea", "Council Bluffs",
     "The Dalles", "Clonee", "Odense", "Forest City", "Altoona", "Papillion",
     "Los Lunas", "New Albany", "Fort Worth", "Henrico", "Eemshaven", "Middenmeer",
+    "Springfield",  # 09-11: Meta-linkcheckers na bio-wijzigingen geolokaliseren hier (0s, geen engagement)
 ]
 
 # acties uit docs/consent.js, met leesbare naam
