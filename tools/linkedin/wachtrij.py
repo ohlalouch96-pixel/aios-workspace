@@ -34,6 +34,7 @@ KOLOMMEN = [
     "naam", "functie", "bedrijf", "locatie", "url", "status",
     "connectienotitie", "bericht1", "datum_verzoek", "datum_geaccepteerd",
     "datum_bericht1", "volgende_follow_up", "gereageerd", "notities",
+    "bericht2", "datum_bericht2",
 ]
 FOLLOW_UP_DAGEN = 5  # eerste follow-up-due, zie workflows/linkedin_outreach.md (nog voorlopig)
 
@@ -55,7 +56,7 @@ def _service():
 
 
 def nieuw(kandidaat):
-    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie, bericht1."""
+    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie, bericht1, bericht2."""
     service, sheet_id = _service()
     tab = _sheet_tab()
 
@@ -67,17 +68,18 @@ def nieuw(kandidaat):
         kandidaat.get("locatie", ""), kandidaat.get("url", ""), "Te versturen",
         kandidaat.get("connectienotitie", ""), kandidaat.get("bericht1", ""),
         "", "", "", "", "", kandidaat.get("notities", ""),
+        kandidaat.get("bericht2", ""), "",
     ]
     end_row = start_row
     service.spreadsheets().values().update(
-        spreadsheetId=sheet_id, range=f"{tab}!A{start_row}:N{end_row}",
+        spreadsheetId=sheet_id, range=f"{tab}!A{start_row}:P{end_row}",
         valueInputOption="RAW", body={"values": [row]},
     ).execute()
     return start_row
 
 
 def _rij_vinden(service, sheet_id, tab, url):
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:N").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
     values = result.get("values", [])
     for i, row in enumerate(values[1:], start=2):  # rij 1 = headers
         if len(row) > 4 and row[4] == url:
@@ -98,6 +100,7 @@ def status(url, nieuwe_status, datum=None):
 
     datumkolom = {
         "Verzoek verstuurd": "I", "Geaccepteerd": "J", "Bericht verstuurd": "K",
+        "Bericht 2 verstuurd": "P",
     }.get(nieuwe_status)
     if datumkolom:
         updates.append({"range": f"{tab}!{datumkolom}{rij_nr}", "values": [[datum]]})
@@ -124,7 +127,7 @@ def volgende_batch(n):
 
     service, sheet_id = _service()
     tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:N").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
     values = result.get("values", [])
     kandidaten = []
     for row in values[1:]:
@@ -142,7 +145,7 @@ def due_follow_ups():
     """Rijen waarvan volgende_follow_up vandaag of eerder is en nog status 'Bericht verstuurd' hebben."""
     service, sheet_id = _service()
     tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:N").execute()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:P").execute()
     values = result.get("values", [])
     vandaag = datetime.now().strftime("%Y-%m-%d")
     due = []

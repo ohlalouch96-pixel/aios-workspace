@@ -299,10 +299,19 @@ function initialen(naam) {
           <div class="persoon-sub"><span class="due-badge">Due {{ f.volgende_follow_up }}</span></div>
         </div>
       </div>
+      {% if f.bericht2 %}
+      <div class="bericht-blok">
+        <div class="bericht-label">Bericht 2 — follow-up</div>
+        <div class="bericht-tekst" id="fu-bericht2-{{ loop.index }}">{{ f.bericht2 }}</div>
+        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('fu-bericht2-{{ loop.index }}', this)">📋 Kopieer</button></div>
+      </div>
+      {% else %}
+      <p class="persoon-sub" style="margin-bottom: 10px;">Bericht 2 is nog niet ingevuld voor deze kandidaat.</p>
+      {% endif %}
       <div class="knoppenrij">
         <a class="btn btn-outline" href="{{ f.url }}" target="_blank">💬 Open op LinkedIn</a>
+        <form method="post" action="{{ url_for('bericht2_verstuurd') }}"><input type="hidden" name="url" value="{{ f.url }}"><button class="btn btn-primary">✅ Verstuurd</button></form>
       </div>
-      <p class="persoon-sub" style="margin-top:10px;">Berichtinhoud voor follow-ups is nog niet ingevuld (zie workflows/linkedin_outreach.md).</p>
     </div>
     {% endfor %}
   </div>
@@ -341,6 +350,13 @@ def verstuurd():
     wachtrij.status(url, "Verzoek verstuurd")
     limits.log_action(conn, "connection", ref=url)
     conn.close()
+    return redirect(url_for("index"))
+
+
+@app.route("/bericht2_verstuurd", methods=["POST"])
+def bericht2_verstuurd():
+    url = request.form["url"]
+    wachtrij.status(url, "Bericht 2 verstuurd")
     return redirect(url_for("index"))
 
 

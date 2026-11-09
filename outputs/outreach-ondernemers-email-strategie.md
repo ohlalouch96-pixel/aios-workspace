@@ -175,9 +175,22 @@ gedachtestreepjes. Enters zonder lege regel ertussen. De middelste zin is
 vast voor alle kandidaten. De slotvraag mag specifiek-maar-open variëren
 (nooit een vage "Hoe gaat het?").
 
-**Bericht 2/3 (follow-up) en de bijbehorende sheet-/cockpit-uitbreiding staan
-nog open** — volgt in een volgende stap zodra Oussama akkoord geeft op de
-inhoud.
+**Bericht 2 — follow-up als bericht 1 geen reactie krijgt (vastgelegd 09-11):**
+
+```
+Dag [voornaam],
+Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden.
+Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Mocht je ervoor openstaan, zou ik graag een keer vrijblijvend met jou willen kijken naar de mogelijkheden voor [bedrijfsnaam]. Hier alvast een voorbeeld van een offertetool: insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2
+Ik hoor graag van je.
+```
+
+**Gespreksregel na een reactie:** geen vast vervolgscript (Oussama neemt het
+gesprek dan zelf over, ad-hoc met Claude), maar wel de regel om niet te lang
+open vragen te blijven stellen — relatief snel naar een voorstel voor een
+vrijblijvende call sturen.
+
+**Bericht 3 staat nog open** — volgt in een volgende stap zodra Oussama
+akkoord geeft op de inhoud.
 
 ---
 

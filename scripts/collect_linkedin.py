@@ -57,7 +57,7 @@ def collect():
 
         result = service.spreadsheets().values().get(
             spreadsheetId=sheet_id,
-            range=f"{sheet_tab}!A:N"
+            range=f"{sheet_tab}!A:P"
         ).execute()
 
         values = result.get("values", [])
@@ -110,6 +110,10 @@ def write(conn, result, date):
             UNIQUE(naam)
         )
     """)
+    kolommen = {r[1] for r in conn.execute("PRAGMA table_info(linkedin)")}
+    for nieuwe_kolom in ("bericht2", "datum_bericht2"):
+        if nieuwe_kolom not in kolommen:
+            conn.execute(f"ALTER TABLE linkedin ADD COLUMN {nieuwe_kolom} TEXT")
 
     if result.get("status") != "success":
         conn.commit()
@@ -129,8 +133,9 @@ def write(conn, result, date):
         conn.execute("""
             INSERT OR REPLACE INTO linkedin
             (naam, functie, bedrijf, locatie, url, status, connectienotitie, bericht1,
-             datum_verzoek, datum_geaccepteerd, datum_bericht1, volgende_follow_up, gereageerd, notities, collected_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             datum_verzoek, datum_geaccepteerd, datum_bericht1, volgende_follow_up, gereageerd, notities, collected_at,
+             bericht2, datum_bericht2)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             naam,
             row.get("functie", ""),
@@ -146,7 +151,9 @@ def write(conn, result, date):
             row.get("volgende follow-up (due)", "") or row.get("volgende_follow_up", ""),
             row.get("gereageerd?", "") or row.get("gereageerd", ""),
             row.get("notities", ""),
-            collected_at
+            collected_at,
+            row.get("bericht 2", "") or row.get("bericht2", ""),
+            row.get("datum bericht 2 verstuurd", "") or row.get("datum_bericht2", ""),
         ))
         records += 1
 

@@ -13,7 +13,7 @@ insightance.ai/<pagina>?utm_source=<kanaal>&utm_medium=outreach&utm_campaign=<be
 | -------------- | ---------------------------------------------------------- |
 | `utm_source`   | `email`, `instagram`, `linkedin`                           |
 | `utm_medium`   | altijd `outreach`                                          |
-| `utm_campaign` | het bericht: `mail1` t/m `mail4`, `dm2`, `li1`, `voorbeeld` |
+| `utm_campaign` | het bericht: `mail1` t/m `mail4`, `dm2`, `li1`, `li2`, `voorbeeld` |
 
 Welke landingspagina (webshops of vakbedrijven) staat al in de URL, dus die hoeft niet in de campagnenaam.
 
@@ -27,7 +27,8 @@ Welke landingspagina (webshops of vakbedrijven) staat al in de URL, dus die hoef
 | Webshop-mail 4 (ondertekening)             | `insightance.ai/webshops?utm_source=email&utm_medium=outreach&utm_campaign=mail4` |
 | Instagram DM2                              | `insightance.ai/webshops?utm_source=instagram&utm_medium=outreach&utm_campaign=dm2` |
 | Ondernemers e-mail bericht 2               | `insightance.ai/vakbedrijven?utm_source=email&utm_medium=outreach&utm_campaign=mail2` |
-| Ondernemers LinkedIn bericht 1             | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li1` |
+| Ondernemers LinkedIn bericht 1 (handmatig, InMail, zie outreach-ondernemers-email-strategie.md) | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li1` |
+| LinkedIn Outreach Agent — bericht 2 (follow-up zonder reactie) | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2` |
 | Voorbeeldmail via Instagram                | `insightance.ai/voorbeeld/<shop>.html?utm_source=instagram&utm_medium=outreach&utm_campaign=voorbeeld` |
 | Voorbeeldmail via e-mail                   | `insightance.ai/voorbeeld/<shop>.html?utm_source=email&utm_medium=outreach&utm_campaign=voorbeeld` |
 

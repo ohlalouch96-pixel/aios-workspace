@@ -89,7 +89,30 @@ niet aanpassen. De slotvraag mag per branche lichtjes variëren zolang hij
 specifiek-maar-open blijft (geen "Hoe gaat het?" — te vaag, geen duidelijk
 onderwerp).
 
-Bericht 2/3 en de follow-upreeks staan nog open, zie "Nog niet ingevuld".
+**Vaste sjabloon bericht 2** (follow-up als bericht 1 geen reactie krijgt,
+vastgelegd 2026-11-09):
+
+```
+Dag [voornaam],
+Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden.
+Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Mocht je ervoor openstaan, zou ik graag een keer vrijblijvend met jou willen kijken naar de mogelijkheden voor [bedrijfsnaam]. Hier alvast een voorbeeld van een offertetool: insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2
+Ik hoor graag van je.
+```
+
+Voorbeelden beperkt tot offertes/calculaties/facturatie (geen klantenservice
+e.d.) — alleen voor offerte-gerelateerde pijnpunten bestaat een bewezen demo
+(MHL), zelfde regel als in `outputs/outreach-ondernemers-email-strategie.md`.
+
+**Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
+Als iemand op bericht 1 of 2 reageert, is er bewust GEEN vast vervolgscript —
+Oussama meldt dat aan Claude en het gesprek gaat ad-hoc verder. Wel een
+standing regel: **niet te lang blijven hangen.** Niet meerdere rondes open
+vragen stellen — na een reactie relatief snel richting een vrijblijvende call
+sturen, bijvoorbeeld: *"Vind je het goed als ik je vrijblijvend kan laten
+zien wat mogelijk is voor jouw bedrijf?"* Doel is een call, niet een lang
+LinkedIn-gesprek.
+
+**Bericht 3 (verdere follow-up) staat nog open**, zie "Nog niet ingevuld".
 
 ### 4. In de wachtrij zetten (tool: `wachtrij.py`, aangeroepen door de agent)
 
@@ -174,9 +197,9 @@ schaalt NIET door als de voorwaarde niet gehaald is.
   klantcontact), niet bij cart-recovery-taal.
 - **"Geaccepteerd" → "Bericht 1 klaarzetten"-sectie** in de cockpit (stap 7
   hierboven) — wachtte op de berichtinhoud om zinvol te kunnen bouwen.
-- **Volledige follow-upreeks (meerdere stappen)**: de sheet heeft nu één
-  "Volgende follow-up (due)"-kolom; wordt uitgebreid zodra het aantal/timing
-  van follow-upstappen vastligt.
+- **Bericht 3** (als bericht 2 ook geen reactie krijgt): inhoud nog niet
+  vastgesteld. Sheet heeft kolommen t/m bericht 2 (`O`/`P`); bericht 3 vraagt
+  weer twee nieuwe kolommen op dezelfde manier als bericht 2 is toegevoegd.
 
 ## Bekende valkuilen / eerlijke beperkingen
 
