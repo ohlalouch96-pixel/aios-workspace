@@ -24,8 +24,20 @@ sys.path.insert(0, str(WORKSPACE_ROOT / "tools" / "linkedin"))
 from config import get_env  # noqa: E402
 from db import get_connection  # noqa: E402
 from generate_metrics import track_stats, rate  # noqa: E402
+import collect_linkedin  # noqa: E402
 import limits  # noqa: E402
 import wachtrij  # noqa: E402
+
+
+def _sync_vers(conn):
+    """Haalt de linkedin-tracker-sheet vers op bij elke paginaweergave, zodat
+    het dashboard niet kan achterlopen op een losse collect_linkedin.py-run."""
+    try:
+        result = collect_linkedin.collect()
+        if result.get("status") == "success":
+            collect_linkedin.write(conn, result, datetime.now().strftime("%Y-%m-%d"))
+    except Exception as e:
+        print(f"Waarschuwing: live sync mislukt, toon laatst bekende data ({e})")
 
 app = Flask(__name__)
 
@@ -59,7 +71,10 @@ def _dashboard_stats(conn):
     st["laatst_bijgewerkt"] = None
     if laatste and laatste["t"]:
         try:
-            st["laatst_bijgewerkt"] = datetime.fromisoformat(laatste["t"]).strftime("%d %b %H:%M")
+            # collected_at is UTC-aware (zie collect_linkedin.py) — omzetten naar
+            # lokale tijd, anders staat er standaard 1 uur "achter" (CET).
+            utc_tijd = datetime.fromisoformat(laatste["t"])
+            st["laatst_bijgewerkt"] = utc_tijd.astimezone().strftime("%d %b %H:%M")
         except ValueError:
             st["laatst_bijgewerkt"] = laatste["t"]
     return st
@@ -326,6 +341,7 @@ function initialen(naam) {
 def index():
     conn = get_connection()
     _ensure_feedback_table(conn)
+    _sync_vers(conn)
     kandidaten = wachtrij.volgende_batch(10)
     follow_ups = wachtrij.due_follow_ups()
     noodstop = limits.check_noodstop(conn)
