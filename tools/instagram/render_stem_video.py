@@ -39,7 +39,7 @@ De tool maakt dan een tweede opname van het hele script (zelfde samenhang) en ne
 er wordt alleen in de stilte tussen zinnen geknipt. Nooit losse zinnen apart laten inspreken.
 Gratis bijstellen van een bestaande opname (kost geen ElevenLabs-tegoed), per beat:
     "stem": {"tempo": 1.1, "volume_db": 3}            hele zin iets sneller / harder
-    "stem": {"toon": 1.12, "vanaf": "while"}          alleen vanaf dat woord 12% hoger (of volume_db)
+    "stem": {"volume_db": 1.2, "vanaf": "while"}      alleen vanaf dat woord harder (toon: zie bewerk())
     "inademing": true                                  één korte, zachte inademing vlak voor deze zin
                                                        (Erics eigen inademing uit de goedgekeurde versie
                                                        van 06-11; spaarzaam gebruiken, nooit voor elke zin)
@@ -176,7 +176,8 @@ def zinnen(x, per_beat):
 
 def bewerk(audio, woorden, bew, n):
     """Gratis bijstellen van één zin: tempo, volume en toonhoogte (eventueel pas vanaf een woord).
-    toon 1.1 = 10% hoger, zonder dat het tempo verandert; boven ±15% gaat het onnatuurlijk klinken."""
+    toon 1.1 = 10% hoger, zonder dat het tempo verandert. LET OP: dit verschuift ook de klankkleur; al bij
+    14% klonk het als een andere stem (09-11). Liever een andere opname kiezen; toon hooguit 1.03."""
     tempo, vol, toon = bew.get("tempo", 1.0), bew.get("volume_db", 0.0), bew.get("toon", 1.0)
     filt = ",".join(f for f in [f"asetrate={int(SR * toon)},aresample={SR},atempo={1 / toon:.5f}" if toon != 1.0 else "",
                                 f"atempo={tempo}" if tempo != 1.0 else "", f"volume={vol}dB" if vol else ""] if f)
