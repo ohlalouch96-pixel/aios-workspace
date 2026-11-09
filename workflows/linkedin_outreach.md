@@ -65,12 +65,31 @@ Claude beoordeelt elk profiel uit stap 2 tegen de doelgroepcriteria:
 
 Afgekeurde profielen gaan NIET naar de sheet (zelfde filosofie als
 `tools/source_prospects.py`). Voor goedgekeurde profielen schrijft Claude:
-- Een connectienotitie (kort, gaat mee met het connectieverzoek zelf).
-- Een openingsbericht ("Bericht 1", wordt pas na acceptatie verstuurd).
+- **Connectienotitie: geen.** Op verzoek van Oussama (09-11) wordt het
+  connectieverzoek altijd leeg verstuurd, geen bijgevoegde tekst. De cockpit
+  toont geen notitie-blok als `connectienotitie` leeg is.
+- Een openingsbericht ("Bericht 1", wordt pas na acceptatie verstuurd) — vast
+  sjabloon, zie hieronder.
 
-**Berichtinhoud/aanbod-strategie is nog niet definitief ingevuld** (zie
-"Nog niet ingevuld" onderaan) — tot die tijd een neutrale, informatieve
-placeholder-toon gebruiken, geen hard verkoopaanbod.
+**Vaste sjabloon bericht 1** (vastgelegd 2026-11-09, zie ook
+`outputs/outreach-ondernemers-email-strategie.md` → sectie "LinkedIn-variant"
+voor de volledige geschiedenis/herzieningen):
+
+```
+Dag [voornaam],
+Bedankt voor het accepteren! Ik volg wat installatiebedrijven in de regio bezighoudt.
+Hoe loopt het bij [bedrijfsnaam] op dit moment, veel aanvragen binnen of relatief rustig?
+```
+
+Regels: "Dag [voornaam]," als aanhef (geen "Hoi", geen Goedemorgen/middag/avond
+— een LinkedIn-bericht wordt vaak uren/dagen later gelezen). Geen gedachtestreepjes.
+Enters zonder lege regel ertussen. De middelste zin ("Ik volg wat
+installatiebedrijven in de regio bezighoudt") is vast voor ALLE kandidaten,
+niet aanpassen. De slotvraag mag per branche lichtjes variëren zolang hij
+specifiek-maar-open blijft (geen "Hoe gaat het?" — te vaag, geen duidelijk
+onderwerp).
+
+Bericht 2/3 en de follow-upreeks staan nog open, zie "Nog niet ingevuld".
 
 ### 4. In de wachtrij zetten (tool: `wachtrij.py`, aangeroepen door de agent)
 

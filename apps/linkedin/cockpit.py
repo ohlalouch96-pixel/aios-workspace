@@ -246,11 +246,15 @@ function initialen(naam) {
         </div>
       </div>
 
+      {% if k.connectienotitie %}
       <div class="bericht-blok">
         <div class="bericht-label">Connectienotitie</div>
         <div class="bericht-tekst" id="notitie-{{ loop.index }}">{{ k.connectienotitie }}</div>
         <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('notitie-{{ loop.index }}', this)">📋 Kopieer</button></div>
       </div>
+      {% else %}
+      <p class="persoon-sub" style="margin-bottom: 10px;">Geen notitie — gewoon een leeg connectieverzoek versturen.</p>
+      {% endif %}
       {% if k.bericht1 %}
       <div class="bericht-blok">
         <div class="bericht-label">Bericht 1 — na acceptatie</div>

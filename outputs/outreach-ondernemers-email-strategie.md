@@ -144,7 +144,44 @@ Succes met [bedrijfsnaam]!
 
 ---
 
-## LinkedIn-variant (vastgelegd 2026-09-28, herzien 2026-11-02)
+## LinkedIn-variant — geautomatiseerde agent (vastgelegd 2026-11-09)
+
+> **Let op:** dit vervangt de handmatige Sales Navigator-InMail-werkwijze
+> hieronder ("herzien 2026-11-02") voor zover het de LinkedIn Outreach Agent
+> betreft (`apps/linkedin/cockpit.py`, zie `workflows/linkedin_outreach.md`).
+> De oude sectie blijft staan als geschiedenis/referentie — als Oussama tijdens
+> de Sales Navigator-proefperiode zelf nog los InMail-credits inzet, geldt die
+> oude werkwijze daar nog steeds.
+>
+> Belangrijkste verschillen met de oude, handmatige versie: geen onderwerpregel/
+> InMail-credit-limiet (de agent stuurt gewone connectieverzoeken, geen InMail);
+> naam/bedrijfsnaam worden automatisch ingevuld (niet meer kaal laten staan —
+> dat was alleen nodig omdat Oussama het zelf moest invullen bij het kopiëren).
+
+**Connectieverzoek: geen notitie.** Altijd een leeg connectieverzoek, geen
+bijgevoegde tekst (besluit 09-11, voorkomt dat het als een pitch aanvoelt nog
+voordat er zelfs verbonden is).
+
+**Bericht 1 — opener (na acceptatie), vast sjabloon:**
+
+```
+Dag [voornaam],
+Bedankt voor het accepteren! Ik volg wat installatiebedrijven in de regio bezighoudt.
+Hoe loopt het bij [bedrijfsnaam] op dit moment, veel aanvragen binnen of relatief rustig?
+```
+
+Regels: "Dag [voornaam]," (geen "Hoi", geen tijdsafhankelijke aanhef). Geen
+gedachtestreepjes. Enters zonder lege regel ertussen. De middelste zin is
+vast voor alle kandidaten. De slotvraag mag specifiek-maar-open variëren
+(nooit een vage "Hoe gaat het?").
+
+**Bericht 2/3 (follow-up) en de bijbehorende sheet-/cockpit-uitbreiding staan
+nog open** — volgt in een volgende stap zodra Oussama akkoord geeft op de
+inhoud.
+
+---
+
+## LinkedIn-variant — handmatig, Sales Navigator InMail (vastgelegd 2026-09-28, herzien 2026-11-02)
 
 **Sinds 02-11**: volledig herschreven op verzoek van Oussama, bewust nog korter en
 directer dan de versie van 28-09 — combinatie van het belscript (directe, "brutale"
