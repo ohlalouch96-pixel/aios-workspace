@@ -6,7 +6,7 @@ mandje, mails, meldingen, eind). Eric (tools/instagram/stem.py) spreekt het
 hele script in één keer in, zodat het als één verhaal klinkt; de scènes worden
 op zijn woordtijden geknipt en beeld verschijnt op het gesproken woord.
 
-Pauzes: elke pauze tussen twee zinnen wordt precies PAUZE_DOEL lang gemaakt door
+Pauzes: elke pauze tussen twee zinnen wordt even lang gemaakt (MIN_RUST + VOORLOOP) door
 alleen echte stilte (onder -60 dB) korter of langer te maken. Alles wat Eric
 zelf laat horen, zoals het uitklinken van een woord of een ademhaling die hij uit
 zichzelf neemt, blijft staan. Nooit zelf een ademhaling toevoegen: een vaste
@@ -78,9 +78,8 @@ BEGIN = 0.3        # stilte voor de eerste zin
 VOORLOOP = 0.25    # nieuwe scène verschijnt net voordat het eerste woord klinkt
 STAART = 1.4       # eindkaart blijft nog even staan
 MAX_WOORDEN = 4    # woorden per ondertitelblok
-PAUZE_DOEL = 1.75  # stilte tussen twee zinnen => beeld blijft 1,5 s staan (zoals de versie die Oussama goed vond)
 VOORKLANK = 0.06   # zin begint net voor de eerste klank (zachte inzet blijft heel)
-MIN_RUST = 1.5     # regel: beeld blijft na het laatste woord minstens zo lang staan
+MIN_RUST = 1.0     # regel: beeld blijft na het laatste woord zo lang staan (gekozen 09-11 uit 1,5 / 1,0 / 0,75)
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
@@ -241,7 +240,7 @@ def tijdlijn(spec, uit):
     for naam in {b["opname"] for b in beats if b.get("opname")}:
         extra = zinnen(*opname(spec, naam))
         stukken = [extra[n] if b.get("opname") == naam else stukken[n] for n, b in enumerate(beats)]
-    tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven PAUZE_DOEL
+    tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven gelijk
     stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
                for n, ((a, w), b) in enumerate(zip(stukken, beats))]
     wav = uit / "stem.wav"

@@ -101,13 +101,14 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Renderen: `python tools/instagram/render_stem_video.py tools/instagram/video/<naam>.json` (scènes in `tools/instagram/video/typer.html`).
 - Onderwerpen: eigen bouwwerk als bewijs (cart-recovery, offerte-tool, dashboard, altijd anoniem) en herkenbare "dit kan ik voor jou bouwen"-video's per branche.
 - Stem: profiel `eric_v3` (nieuwste model, stability 0.0 = proef D, regie-tags per zin zoals [confident], [understated], [softly]). Eric ademt zelf af en toe; dat blijft staan. Spec: per beat `zegt` (woorden) + `uitspraak` (met tags).
-- Pauzes: de tool maakt elke pauze precies 1,75 s door alleen echte stilte (onder -60 dB) in te korten of te verlengen. **Nooit zelf een ademhaling toevoegen**: een vaste ademhaling voor elke zin klonk nep (06-11). Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
+- Tempo: hele stem 10% sneller (`"tempo": 1.1`, gratis, toon blijft gelijk; gekozen 09-11).
+- Pauzes: de tool maakt elke pauze gelijk (1,0 s rust in beeld + 0,25 s voorloop) door alleen echte stilte (onder -60 dB) in te korten of te verlengen. **Nooit zelf een ademhaling toevoegen**: een vaste ademhaling voor elke zin klonk nep (06-11). Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
 
 ### Controleregels (vóór Oussama een video ziet, besluit 06-11)
 
 Automatisch (de tool stopt bij een fout):
 1. Eén doorlopende opname, nooit per zin inspreken.
-2. Beeld blijft na het laatste woord van elke zin minstens 1,5 s staan.
+2. Beeld blijft na het laatste woord van elke zin 1,0 s staan (gekozen 09-11; 1,5 s voelde te lang, 0,75 s te krap).
 3. Elke scène minstens 3,0 s in beeld.
 4. Stem = gekozen profiel; aantal gehoorde woorden = aantal woorden in het script.
 5. Bedragen kloppen op elk moment (subtotaal = som, teller = som van de meldingen die al in beeld zijn).
