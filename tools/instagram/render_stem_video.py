@@ -45,6 +45,8 @@ Gratis bijstellen van een bestaande opname (kost geen ElevenLabs-tegoed), per be
                                                        (Erics eigen inademing uit de goedgekeurde versie
                                                        van 06-11; spaarzaam gebruiken, nooit voor elke zin)
 In de spec "tempo": 1.1 = de hele stem 10% sneller (gratis, toonhoogte blijft gelijk).
+In de spec "rust": 1.0 = beeld blijft na elke zin 1,0 s staan (standaard MIN_RUST); korte scènes houden
+toch minimaal MIN_SCENE seconden.
 Alleen de stem beluisteren, zonder video: --alleen-stem (levert stem.mp3).
 
 Gebruik (CLI):
@@ -206,14 +208,17 @@ def bewerk(audio, woorden, bew, n):
             [{**w, "s": schaal(w["s"]), "e": schaal(w["e"])} for w in woorden])
 
 
-def monteer(stukken, beats, uit_wav):
-    """Zinnen achter elkaar met tussen elke zin precies PAUZE_DOEL stilte (gemeten van waar de stem
-    stopt tot de eerste klank van de volgende zin). Eventueel één inademing vlak voor een zin."""
+def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
+    """Zinnen achter elkaar met tussen elke zin rust + VOORLOOP stilte (gemeten van waar de stem stopt
+    tot de eerste klank van de volgende zin). Is een scène dan korter dan MIN_SCENE, dan krijgt alleen
+    die pauze wat extra zodat de tekst te lezen blijft. Eventueel één inademing vlak voor een zin."""
     inademing = pcm(INADEMING) if any(b.get("inademing") for b in beats) else None
     delen, per_beat, t = [], [], 0.0
     for n, (audio, woorden) in enumerate(stukken):
         if n:
-            gat = np.zeros(sec(PAUZE_DOEL - VOORKLANK), dtype=np.float32)
+            vorige = len(stukken[n - 1][0]) / SR + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
+            pauze = max(rust + VOORLOOP, MIN_SCENE - vorige + VOORKLANK + 0.01)
+            gat = np.zeros(sec(pauze - VOORKLANK), dtype=np.float32)
             if inademing is not None and beats[n].get("inademing"):
                 k = min(len(inademing), len(gat))
                 gat[len(gat) - k:] += inademing[len(inademing) - k:]
@@ -240,7 +245,7 @@ def tijdlijn(spec, uit):
     stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
                for n, ((a, w), b) in enumerate(zip(stukken, beats))]
     wav = uit / "stem.wav"
-    per_beat = monteer(stukken, beats, wav)
+    per_beat = monteer(stukken, beats, wav, spec.get("rust", MIN_RUST))
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
     scenes, captions = [], []
@@ -256,7 +261,7 @@ def tijdlijn(spec, uit):
     return lijn, [(wav, 0.0, totaal, BEGIN)], totaal
 
 
-def controleer(lijn):
+def controleer(lijn, min_rust=None):
     """Regels uit de workflow: rust na elke zin en minimale scèneduur. Stopt bij een fout."""
     fouten = []
     print(f"{'scène':<10} {'in beeld':>9} {'rust na laatste woord':>22}")
@@ -265,8 +270,8 @@ def controleer(lijn):
         print(f"{sc['type']:<10} {sc['dur']:>8.2f}s {rust:>21.2f}s")
         if sc["dur"] < MIN_SCENE:
             fouten.append(f"{sc['type']}: {sc['dur']:.2f}s in beeld, minimaal {MIN_SCENE}s")
-        if n < len(lijn["scenes"]) - 1 and rust < MIN_RUST - 0.02:
-            fouten.append(f"{sc['type']}: rust {rust:.2f}s, minimaal {MIN_RUST}s")
+        if n < len(lijn["scenes"]) - 1 and rust < (min_rust or MIN_RUST) - 0.02:
+            fouten.append(f"{sc['type']}: rust {rust:.2f}s, minimaal {min_rust or MIN_RUST}s")
     if fouten:
         raise SystemExit("Controle mislukt:\n  " + "\n  ".join(fouten))
     print("Controle: alle regels in orde.")
@@ -278,7 +283,7 @@ def render(spec, uit):
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
     lijn, audio, totaal = tijdlijn(spec, uit)
-    controleer(lijn)
+    controleer(lijn, spec.get("rust"))
     cover_t = lijn["scenes"][0]["dur"] - 0.3
     with sync_playwright() as p:
         try:
@@ -324,7 +329,7 @@ def controleblad(video, lijn, pad):
         cellen = []
         for k, sc in enumerate(lijn["scenes"]):
             w = sc["woorden"]
-            t = sc["start"] + {"begin": w[0]["s"] + 0.6, "midden": w[len(w) // 2]["s"] + 0.4, "rust": w[-1]["e"] + 1.0}[moment]
+            t = sc["start"] + {"begin": w[0]["s"] + 0.6, "midden": w[len(w) // 2]["s"] + 0.4, "rust": w[-1]["e"] + min(1.0, (sc["dur"] - w[-1]["e"]) * 0.6)}[moment]
             cel = tmp / f"{r}_{k}.png"
             subprocess.run([FFMPEG, "-y", "-v", "error", "-ss", f"{t:.2f}", "-i", str(video), "-frames:v", "1",
                             "-vf", "scale=270:-1", str(cel)], check=True)
@@ -350,7 +355,7 @@ def main():
     if args.alleen_stem:
         uit.mkdir(parents=True, exist_ok=True)
         lijn, _, _ = tijdlijn(spec, uit)
-        controleer(lijn)
+        controleer(lijn, spec.get("rust"))
         mp3 = uit / "stem.mp3"
         subprocess.run([FFMPEG, "-y", "-v", "error", "-i", str(uit / "stem.wav"), "-af", f"adelay={int(BEGIN * 1000)}",
                         "-b:a", "192k", str(mp3)], check=True)
