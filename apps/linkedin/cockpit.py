@@ -409,10 +409,11 @@ def index():
     conn = get_connection()
     _ensure_feedback_table(conn)
     _sync_vers(conn)
-    kandidaten = wachtrij.volgende_batch(10)
-    wachtend = wachtrij.wachtend_op_acceptatie()
-    geaccepteerd = wachtrij.geaccepteerd_wachtend()
-    follow_ups = wachtrij.due_follow_ups()
+    records = wachtrij.alle_records()  # 1 live Sheets-aanroep, hergebruikt door alle secties hieronder
+    kandidaten = wachtrij.volgende_batch(10, records=records)
+    wachtend = wachtrij.wachtend_op_acceptatie(records=records)
+    geaccepteerd = wachtrij.geaccepteerd_wachtend(records=records)
+    follow_ups = wachtrij.due_follow_ups(records=records)
     noodstop = limits.check_noodstop(conn)
     limieten = limits.current_week_limits(conn)
     vandaag = {

@@ -116,8 +116,28 @@ def status(url, nieuwe_status, datum=None):
     return rij_nr
 
 
-def volgende_batch(n):
-    """Rijen met status 'Te versturen', beperkt tot n EN tot het resterende daglimiet."""
+def alle_records():
+    """Haalt de hele sheet in ÉÉN keer op en geeft alle rijen als dicts terug
+    (KOLOMMEN-gemapt). De cockpit roept dit precies 1x per paginaweergave aan
+    en geeft het resultaat door aan de functies hieronder, in plaats van dat
+    elke sectie zijn eigen losse Sheets-aanroep doet (dat was de reden dat
+    een knopdruk traag aanvoelde — 4 losse live ophaalacties per klik)."""
+    service, sheet_id = _service()
+    tab = _sheet_tab()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
+    values = result.get("values", [])
+    records = []
+    for row in values[1:]:
+        while len(row) < len(KOLOMMEN):
+            row.append("")
+        records.append(dict(zip(KOLOMMEN, row)))
+    return records
+
+
+def volgende_batch(n, records=None):
+    """Rijen met status 'Te versturen', beperkt tot n EN tot het resterende daglimiet.
+    records: optioneel vooraf opgehaalde lijst (zie alle_records()) om een extra
+    live Sheets-aanroep te vermijden; zonder opgave wordt zelf vers opgehaald."""
     import limits  # lokale import om circulaire afhankelijkheid bij CLI-gebruik te vermijden
     conn = get_connection()
     budget = limits.remaining_today(conn, "connections")
@@ -126,15 +146,10 @@ def volgende_batch(n):
     if limiet <= 0:
         return []
 
-    service, sheet_id = _service()
-    tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
-    values = result.get("values", [])
+    if records is None:
+        records = alle_records()
     kandidaten = []
-    for row in values[1:]:
-        while len(row) < len(KOLOMMEN):
-            row.append("")
-        record = dict(zip(KOLOMMEN, row))
+    for record in records:
         if record["status"] == "Te versturen":
             kandidaten.append(record)
         if len(kandidaten) >= limiet:
@@ -142,39 +157,21 @@ def volgende_batch(n):
     return kandidaten
 
 
-def wachtend_op_acceptatie():
+def wachtend_op_acceptatie(records=None):
     """Rijen met status 'Verzoek verstuurd': connectieverzoek is weg, nog geen
     uitkomst. Bedoeld als zuiver informatieve sectie (browser.py check werkt
     dit automatisch bij; de cockpit biedt ook een handmatige override)."""
-    service, sheet_id = _service()
-    tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
-    values = result.get("values", [])
-    wachtend = []
-    for row in values[1:]:
-        while len(row) < len(KOLOMMEN):
-            row.append("")
-        record = dict(zip(KOLOMMEN, row))
-        if record["status"] == "Verzoek verstuurd":
-            wachtend.append(record)
-    return wachtend
+    if records is None:
+        records = alle_records()
+    return [r for r in records if r["status"] == "Verzoek verstuurd"]
 
 
-def geaccepteerd_wachtend():
+def geaccepteerd_wachtend(records=None):
     """Rijen met status 'Geaccepteerd': connectieverzoek is geaccepteerd (via
     browser.py check), bericht 1 kan nu verstuurd worden."""
-    service, sheet_id = _service()
-    tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
-    values = result.get("values", [])
-    wachtend = []
-    for row in values[1:]:
-        while len(row) < len(KOLOMMEN):
-            row.append("")
-        record = dict(zip(KOLOMMEN, row))
-        if record["status"] == "Geaccepteerd":
-            wachtend.append(record)
-    return wachtend
+    if records is None:
+        records = alle_records()
+    return [r for r in records if r["status"] == "Geaccepteerd"]
 
 
 # Status waaruit een follow-up kan volgen -> welk bericht er dan klaarstaat.
@@ -184,23 +181,17 @@ FOLLOW_UP_STADIA = {
 }
 
 
-def due_follow_ups():
+def due_follow_ups(records=None):
     """Rijen waarvan volgende_follow_up vandaag of eerder is, met 'volgende_actie'
     erbij (bericht2 of bericht3) zodat de cockpit weet welk bericht te tonen."""
-    service, sheet_id = _service()
-    tab = _sheet_tab()
-    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
-    values = result.get("values", [])
+    if records is None:
+        records = alle_records()
     vandaag = datetime.now().strftime("%Y-%m-%d")
     due = []
-    for row in values[1:]:
-        while len(row) < len(KOLOMMEN):
-            row.append("")
-        record = dict(zip(KOLOMMEN, row))
+    for record in records:
         volgende_actie = FOLLOW_UP_STADIA.get(record["status"])
         if volgende_actie and record["volgende_follow_up"] and record["volgende_follow_up"] <= vandaag:
-            record["volgende_actie"] = volgende_actie
-            due.append(record)
+            due.append({**record, "volgende_actie": volgende_actie})
     return due
 
 
