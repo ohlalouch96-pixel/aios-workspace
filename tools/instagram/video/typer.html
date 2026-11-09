@@ -90,7 +90,7 @@ body{background:var(--donker)}
 .notif.groot .t1{font-size:38px}
 .notif .tijdje{margin-left:auto;align-self:flex-start;font-size:22px;color:var(--grijs)}
 /* ---- algemene scènes (alle diensten): items = [{a,b,c,d,nieuw}], 'op' = woorden waarop elk item verschijnt ---- */
-.groot{font-weight:800;font-size:200px;line-height:1;letter-spacing:-.05em;color:var(--acc);text-shadow:0 0 70px color-mix(in srgb,var(--acc) 40%,transparent);margin-bottom:40px}
+.hookgroot{font-weight:800;font-size:200px;line-height:1;letter-spacing:-.05em;color:var(--acc);text-shadow:0 0 70px color-mix(in srgb,var(--acc) 40%,transparent);margin-bottom:40px}
 .chip{display:inline-flex;align-items:center;gap:16px;margin-top:56px;background:var(--kaart);border:2px solid var(--rand);border-radius:26px;padding:20px 30px;font-size:30px;font-weight:600;color:var(--dfg)}
 .licht .chip{background:#fff;border-color:#EAECF0;color:#101828;box-shadow:0 14px 34px rgba(16,24,40,.08)}
 .chip .vink{width:44px;height:44px;border-radius:50%;background:#12B76A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px}
@@ -257,7 +257,7 @@ const SCENES = {
     </div>`}),
   // ---- algemene scènes voor alle diensten ----
   hook: (s, d) => ({kleur: 'donker', html: `
-    ${s.groot ? `<div class="groot" data-in="0">${esc(s.groot)}</div>` : ''}
+    ${s.groot ? `<div class="hookgroot" data-in="0">${esc(s.groot)}</div>` : ''}
     <div class="kop" data-in="${s.groot ? .3 : 0}">${mk(s.kop, d * .55)}</div>
     ${s.tekst ? `<div><span class="chip" data-in="${d * .45}">${esc(s.tekst)}</span></div>` : ''}`}),
   telefoon: (s, d) => ({kleur: 'donker', html: `
