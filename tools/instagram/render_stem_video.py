@@ -34,9 +34,12 @@ Spec:
       ]
     }
 "zegt" = de woorden (voor timing en controle), "uitspraak" = optioneel dezelfde zin met regie-tags.
+Andere opname voor één zin: "opname": "alt" + optioneel "alt_uitspraak" per beat en "alt_seed" in de spec.
+De tool maakt dan een tweede opname van het hele script (zelfde samenhang) en neemt alleen die zinnen eruit;
+er wordt alleen in de stilte tussen zinnen geknipt. Nooit losse zinnen apart laten inspreken.
 Gratis bijstellen van een bestaande opname (kost geen ElevenLabs-tegoed), per beat:
     "stem": {"tempo": 1.1, "volume_db": 3}            hele zin iets sneller / harder
-    "stem": {"volume_db": 3.5, "volume_vanaf": "while"} alleen vanaf dat woord harder
+    "stem": {"toon": 1.12, "vanaf": "while"}          alleen vanaf dat woord 12% hoger (of volume_db)
     "inademing": true                                  één korte, zachte inademing vlak voor deze zin
                                                        (Erics eigen inademing uit de goedgekeurde versie
                                                        van 06-11; spaarzaam gebruiken, nooit voor elke zin)
@@ -72,8 +75,7 @@ VOORLOOP = 0.25    # nieuwe scène verschijnt net voordat het eerste woord klink
 STAART = 1.4       # eindkaart blijft nog even staan
 MAX_WOORDEN = 4    # woorden per ondertitelblok
 PAUZE_DOEL = 1.75  # stilte tussen twee zinnen => beeld blijft 1,5 s staan (zoals de versie die Oussama goed vond)
-RAND = 0.12        # aan begin en eind van een stilte niets weghalen (zachte overgang)
-STIL_DB = -60      # alleen geluid onder dit niveau telt als stilte die korter/langer mag
+VOORKLANK = 0.06   # zin begint net voor de eerste klank (zachte inzet blijft heel)
 MIN_RUST = 1.5     # regel: beeld blijft na het laatste woord minstens zo lang staan
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
 
@@ -110,9 +112,9 @@ def ondertitels(woorden, start):
     return uit
 
 
-def script(spec):
+def script(spec, alt=False):
     beats, stem = spec["beats"], spec.get("stem", "eric")
-    zinnen = [b.get("uitspraak", b["zegt"]) for b in beats]
+    zinnen = [(b.get("alt_uitspraak") if alt else None) or b.get("uitspraak", b["zegt"]) for b in beats]
     if STEMMEN[stem]["model_id"] == "eleven_v3":  # v3 kent geen <break>; lengte wordt later gelijkgetrokken
         return " [long pause] ".join(zinnen)
     return " ".join(z + (' <break time="1.0s" />' if n < len(zinnen) - 1 else "") for n, z in enumerate(zinnen))
@@ -124,123 +126,21 @@ def pcm(pad):
     return np.frombuffer(raw, dtype=np.float32).copy()
 
 
-def pauzes_gelijk(mp3, per_beat, uit_wav, beats=None):
-    """Maakt elke pauze tussen twee zinnen PAUZE_DOEL lang. Alleen echte stilte wordt ingekort of
-    verlengd; geluid in de pauze (uitklinken, een eigen ademhaling) blijft staan.
-    Geeft de woordtijden in de nieuwe opname terug."""
-    x = pcm(mp3)
-
-    def s(t):
-        return int(round(t * SR))
-
-    blok = s(0.02)
-
-    def luid(van, tot, drempel):
-        stuk = x[s(van):s(tot)]
-        return [np.sqrt(np.mean(stuk[k:k + blok] ** 2)) > 10 ** (drempel / 20) for k in range(0, len(stuk) - blok, blok)]
-
-    def pauze(van, tot):
-        """Echte pauze, gemeten op het geluid (de woordtijden van v3 lopen uit): begin = eerste
-        stilte van 0,3 s na het laatste woord, eind = waar de stem weer echt begint (boven -30 dB)."""
-        l50, nodig = luid(van, tot, -50), int(0.3 / 0.02)
-        for k in range(len(l50) - nodig):
-            if not any(l50[k:k + nodig]):
-                spraak = luid(van + k * 0.02, tot, -30)
-                terug = next((j for j, l in enumerate(spraak) if l), len(spraak))
-                return van + k * 0.02, van + k * 0.02 + max(terug * 0.02 - 0.04, 0)
-        return van, tot
-
-    for n in range(len(per_beat) - 1):
-        woorden, volgende = per_beat[n], per_beat[n + 1]
-        a, b = pauze(woorden[-1]["s"], volgende[0]["s"] + 0.6)
-        woorden[-1]["e"] = a
-        delta = b - volgende[0]["s"]  # hele volgende zin gelijkzetten met het echte geluid
-        per_beat[n + 1] = [{**w, "s": w["s"] + delta, "e": w["e"] + delta} for w in volgende]
-
-    # Bijstellen per zin (tempo/volume), op de echte zinsgrenzen; latere woorden schuiven mee.
-    for n, beat in enumerate(beats or []):
-        bew = beat.get("stem")
-        if not bew:
-            continue
-        ws = per_beat[n]
-        van = ws[0]["s"]
-        tot = ws[-1]["e"] if n < len(per_beat) - 1 else ws[-1]["s"] + 1.0
-        vanaf = van
-        if bew.get("volume_vanaf"):
-            doel = next((w for w in ws if w["w"].lower().strip(".,?!") == bew["volume_vanaf"]), None)
-            if doel is None:
-                raise SystemExit(f"Controle: woord '{bew['volume_vanaf']}' niet gevonden in zin {n + 1}")
-            # beginnen waar de stem na de laatste korte stilte voor dat woord weer inzet
-            l = luid(van, doel["s"] + 0.3, -50)
-            stil = [k for k in range(len(l) - 5) if not any(l[k:k + 5])]
-            vanaf = van + ((stil[-1] + 5) * 0.02 if stil else 0.0)
-        tempo, vol = bew.get("tempo", 1.0), bew.get("volume_db", 0.0)
-        filt = ",".join(f for f in [f"atempo={tempo}" if tempo != 1.0 else "", f"volume={vol}dB" if vol else ""] if f)
-        if not filt:
-            continue
-        ruw = x[s(vanaf):s(tot)]
-        uit = np.frombuffer(subprocess.run([FFMPEG, "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
-                                            "-af", filt, "-f", "f32le", "-"], input=ruw.tobytes(), capture_output=True,
-                                           check=True).stdout, dtype=np.float32)
-        x = np.concatenate([x[:s(vanaf)], uit, x[s(tot):]])
-        rek = len(uit) / max(len(ruw), 1)
-        extra = (len(uit) - len(ruw)) / SR
-        for m in range(n, len(per_beat)):
-            per_beat[m] = [{**w,
-                            "s": (vanaf + (w["s"] - vanaf) * rek if w["s"] >= vanaf else w["s"]) if m == n else w["s"] + extra,
-                            "e": (vanaf + (w["e"] - vanaf) * rek if w["e"] >= vanaf else w["e"]) if m == n else w["e"] + extra}
-                           for w in per_beat[m]]
-
-    inademing = pcm(INADEMING) if any(b.get("inademing") for b in (beats or [])) else None
-    delen, verschuif, nieuw, cursor = [], 0.0, [], 0
-    for n, woorden in enumerate(per_beat):
-        nieuw.append([{**w, "s": w["s"] + verschuif, "e": w["e"] + verschuif} for w in woorden])
-        if n == len(per_beat) - 1:
-            break
-        a, b = woorden[-1]["e"], per_beat[n + 1][0]["s"]
-        delen.append(x[cursor:s(a)])
-        stuk = x[s(a):s(b)].copy()
-        # stille stukken (runs onder STIL_DB) binnen de pauze, randen beschermd
-        stil = luid(a, b, STIL_DB)
-        runs, k = [], 0
-        while k < len(stil):
-            if not stil[k]:
-                j = k
-                while j < len(stil) and not stil[j]:
-                    j += 1
-                runs.append((k * blok, j * blok))
-                k = j
-            else:
-                k += 1
-        verschil = s(PAUZE_DOEL) - len(stuk)
-        rand = s(RAND)
-        if runs and verschil != 0:
-            van, tot = max(runs, key=lambda r: r[1] - r[0])  # langste stilte aanpassen
-            midden = (van + tot) // 2
-            if verschil > 0:
-                stuk = np.concatenate([stuk[:midden], np.zeros(verschil, dtype=np.float32), stuk[midden:]])
-            else:
-                weg = min(-verschil, max(tot - van - 2 * rand, 0))
-                stuk = np.concatenate([stuk[:midden - weg // 2], stuk[midden - weg // 2 + weg:]])
-        if inademing is not None and beats[n + 1].get("inademing"):
-            k = min(len(inademing), len(stuk) - s(0.04))  # eindigt vlak voor het eerste woord
-            plek = len(stuk) - s(0.04) - k
-            stuk[plek:plek + k] += inademing[len(inademing) - k:]
-        delen.append(stuk)
-        cursor = s(b)
-        verschuif += len(stuk) / SR - (b - a)
-    delen.append(x[cursor:])
-    y = np.concatenate(delen)
-    subprocess.run([FFMPEG, "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(uit_wav)],
-                   input=y.tobytes(), check=True)
-    return nieuw
+def sec(t):
+    return int(round(t * SR))
 
 
-def tijdlijn(spec, uit):
-    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin),
-    trekt de pauzes gelijk en knipt de scènes op de woordtijden."""
+def niveau(x, van, tot):
+    """Per blok van 20 ms het geluidsniveau in dB."""
+    blok, stuk = sec(0.02), x[sec(van):sec(tot)]
+    return [20 * np.log10(np.sqrt(np.mean(stuk[k:k + blok] ** 2)) + 1e-9) for k in range(0, len(stuk) - blok, blok)]
+
+
+def opname(spec, alt=False):
+    """Het hele script in één keer ingesproken (alt: de tweede opname, met alt_uitspraak en alt_seed).
+    Geeft (audio, woorden per beat) en controleert of het aantal woorden klopt."""
     beats = spec["beats"]
-    mp3, alle = inspreken(script(spec), spec.get("stem", "eric"))
+    mp3, alle = inspreken(script(spec, alt), spec.get("stem", "eric"), seed=spec.get("alt_seed") if alt else spec.get("seed"))
     alle = [w for w in alle if is_woord(w["w"])]
     verwacht = sum(len(b["zegt"].split()) for b in beats)
     if len(alle) != verwacht:
@@ -250,8 +150,90 @@ def tijdlijn(spec, uit):
         n = len(beat["zegt"].split())
         per_beat.append(alle[i:i + n])
         i += n
+    return pcm(mp3), per_beat
+
+
+def zinnen(x, per_beat):
+    """Knipt een opname in zinnen op het echte geluid (de woordtijden van v3 lopen uit).
+    Per zin: (audio van net voor de eerste klank tot waar de stem stopt, woorden relatief aan dat begin)."""
+    uit, vorig_eind = [], 0.0
+    for n, ws in enumerate(per_beat):
+        zoek = niveau(x, vorig_eind, ws[0]["s"] + 0.6)
+        klank = vorig_eind + next((k for k, d in enumerate(zoek) if d > -30), 0) * 0.02
+        begin = max(klank - VOORKLANK, vorig_eind)
+        delta = klank - ws[0]["s"]
+        tot = (per_beat[n + 1][0]["s"] + 0.6) if n + 1 < len(per_beat) else len(x) / SR
+        van = max(ws[-1]["s"] + delta - 0.2, klank)
+        l, nodig = [d > -50 for d in niveau(x, van, tot)], int(0.3 / 0.02)
+        k = next((k for k in range(len(l) - nodig) if not any(l[k:k + nodig])), None)
+        eind = van + k * 0.02 if k is not None else tot
+        woorden = [{**w, "s": w["s"] + delta - begin, "e": w["e"] + delta - begin} for w in ws]
+        woorden[-1]["e"] = eind - begin
+        uit.append((x[sec(begin):sec(eind)].copy(), woorden))
+        vorig_eind = eind
+    return uit
+
+
+def bewerk(audio, woorden, bew, n):
+    """Gratis bijstellen van één zin: tempo, volume en toonhoogte (eventueel pas vanaf een woord).
+    toon 1.1 = 10% hoger, zonder dat het tempo verandert; boven ±15% gaat het onnatuurlijk klinken."""
+    tempo, vol, toon = bew.get("tempo", 1.0), bew.get("volume_db", 0.0), bew.get("toon", 1.0)
+    filt = ",".join(f for f in [f"asetrate={int(SR * toon)},aresample={SR},atempo={1 / toon:.5f}" if toon != 1.0 else "",
+                                f"atempo={tempo}" if tempo != 1.0 else "", f"volume={vol}dB" if vol else ""] if f)
+    if not filt:
+        return audio, woorden
+    vanaf = 0.0
+    woord = bew.get("vanaf") or bew.get("volume_vanaf")
+    if woord:
+        doel = next((w for w in woorden if w["w"].lower().strip(".,?!") == woord), None)
+        if doel is None:
+            raise SystemExit(f"Controle: woord '{woord}' niet gevonden in zin {n + 1}")
+        l = [d > -50 for d in niveau(audio, 0, doel["s"] + 0.3)]
+        stil = [k for k in range(len(l) - 5) if not any(l[k:k + 5])]  # laatste korte stilte voor dat woord
+        vanaf = (stil[-1] + 5) * 0.02 if stil else 0.0
+    ruw = audio[sec(vanaf):]
+    nieuw = np.frombuffer(subprocess.run([FFMPEG, "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
+                                          "-af", filt, "-f", "f32le", "-"], input=ruw.tobytes(), capture_output=True,
+                                         check=True).stdout, dtype=np.float32)
+    rek = len(nieuw) / max(len(ruw), 1)
+    schaal = lambda t: t if t < vanaf else vanaf + (t - vanaf) * rek  # noqa: E731
+    return (np.concatenate([audio[:sec(vanaf)], nieuw]),
+            [{**w, "s": schaal(w["s"]), "e": schaal(w["e"])} for w in woorden])
+
+
+def monteer(stukken, beats, uit_wav):
+    """Zinnen achter elkaar met tussen elke zin precies PAUZE_DOEL stilte (gemeten van waar de stem
+    stopt tot de eerste klank van de volgende zin). Eventueel één inademing vlak voor een zin."""
+    inademing = pcm(INADEMING) if any(b.get("inademing") for b in beats) else None
+    delen, per_beat, t = [], [], 0.0
+    for n, (audio, woorden) in enumerate(stukken):
+        if n:
+            gat = np.zeros(sec(PAUZE_DOEL - VOORKLANK), dtype=np.float32)
+            if inademing is not None and beats[n].get("inademing"):
+                k = min(len(inademing), len(gat))
+                gat[len(gat) - k:] += inademing[len(inademing) - k:]
+            delen.append(gat)
+            t += len(gat) / SR
+        delen.append(audio)
+        per_beat.append([{**w, "s": w["s"] + t, "e": w["e"] + t} for w in woorden])
+        t += len(audio) / SR
+    subprocess.run([FFMPEG, "-y", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(uit_wav)],
+                   input=np.concatenate(delen).tobytes(), check=True)
+    return per_beat
+
+
+def tijdlijn(spec, uit):
+    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin), knipt het
+    op het echte geluid in zinnen, zet ze met gelijke pauzes achter elkaar en knipt de scènes op de
+    woordtijden. Beats met "opname": "alt" komen uit een tweede opname van hetzelfde hele script."""
+    beats = spec["beats"]
+    stukken = zinnen(*opname(spec))
+    if any(b.get("opname") == "alt" for b in beats):
+        alt = zinnen(*opname(spec, alt=True))
+        stukken = [alt[n] if b.get("opname") == "alt" else stukken[n] for n, b in enumerate(beats)]
+    stukken = [bewerk(a, w, b.get("stem", {}), n) for n, ((a, w), b) in enumerate(zip(stukken, beats))]
     wav = uit / "stem.wav"
-    per_beat = pauzes_gelijk(mp3, per_beat, wav, beats)
+    per_beat = monteer(stukken, beats, wav)
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
     scenes, captions = [], []
