@@ -2,7 +2,15 @@
   "onderwerp": "Cart recovery flow",
   "stem": "eric_v3",
   "kleurenset": "navy",
-  "alt_seed": 21,
+  "opnames": {
+    "a": {
+      "seed": 21,
+      "uitspraak": {
+        "1": "[confident] Most stores just let them go.",
+        "3": "And it brings a part of those sales back... [confident] while you sleep."
+      }
+    }
+  },
   "beats": [
     {
       "zegt": "Seven out of ten shoppers leave their cart behind.",
@@ -38,8 +46,7 @@
       },
       "uitspraak": "[understated] Most stores just let them go.",
       "inademing": true,
-      "opname": "alt",
-      "alt_uitspraak": "[confident] Most stores just let them go."
+      "opname": "a"
     },
     {
       "zegt": "This flow follows up at the right moment, with the right email.",
@@ -102,8 +109,7 @@
         ]
       },
       "uitspraak": "And it brings a part of those sales back... [softly] while you sleep.",
-      "opname": "alt",
-      "alt_uitspraak": "And it brings a part of those sales back... [confident] while you sleep.",
+      "opname": "a",
       "stem": {
         "volume_db": 1.2,
         "vanaf": "while"

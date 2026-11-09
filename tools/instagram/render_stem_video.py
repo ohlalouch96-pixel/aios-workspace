@@ -34,15 +34,17 @@ Spec:
       ]
     }
 "zegt" = de woorden (voor timing en controle), "uitspraak" = optioneel dezelfde zin met regie-tags.
-Andere opname voor één zin: "opname": "alt" + optioneel "alt_uitspraak" per beat en "alt_seed" in de spec.
-De tool maakt dan een tweede opname van het hele script (zelfde samenhang) en neemt alleen die zinnen eruit;
-er wordt alleen in de stilte tussen zinnen geknipt. Nooit losse zinnen apart laten inspreken.
+Andere opname voor een zin: in de spec "opnames": {"a": {"seed": 21, "uitspraak": {"1": "[confident] ..."}}}
+en bij die beat "opname": "a". De tool maakt dan een extra opname van het hele script (zelfde samenhang,
+met de aangepaste uitspraak per beatnummer) en neemt alleen die zinnen eruit; er wordt alleen in de stilte
+tussen zinnen geknipt. Nooit losse zinnen apart laten inspreken.
 Gratis bijstellen van een bestaande opname (kost geen ElevenLabs-tegoed), per beat:
     "stem": {"tempo": 1.1, "volume_db": 3}            hele zin iets sneller / harder
     "stem": {"volume_db": 1.2, "vanaf": "while"}      alleen vanaf dat woord harder (toon: zie bewerk())
     "inademing": true                                  één korte, zachte inademing vlak voor deze zin
                                                        (Erics eigen inademing uit de goedgekeurde versie
                                                        van 06-11; spaarzaam gebruiken, nooit voor elke zin)
+In de spec "tempo": 1.1 = de hele stem 10% sneller (gratis, toonhoogte blijft gelijk).
 Alleen de stem beluisteren, zonder video: --alleen-stem (levert stem.mp3).
 
 Gebruik (CLI):
@@ -112,9 +114,10 @@ def ondertitels(woorden, start):
     return uit
 
 
-def script(spec, alt=False):
+def script(spec, naam=None):
     beats, stem = spec["beats"], spec.get("stem", "eric")
-    zinnen = [(b.get("alt_uitspraak") if alt else None) or b.get("uitspraak", b["zegt"]) for b in beats]
+    anders = spec.get("opnames", {}).get(naam, {}).get("uitspraak", {}) if naam else {}
+    zinnen = [anders.get(str(n)) or b.get("uitspraak", b["zegt"]) for n, b in enumerate(beats)]
     if STEMMEN[stem]["model_id"] == "eleven_v3":  # v3 kent geen <break>; lengte wordt later gelijkgetrokken
         return " [long pause] ".join(zinnen)
     return " ".join(z + (' <break time="1.0s" />' if n < len(zinnen) - 1 else "") for n, z in enumerate(zinnen))
@@ -136,11 +139,12 @@ def niveau(x, van, tot):
     return [20 * np.log10(np.sqrt(np.mean(stuk[k:k + blok] ** 2)) + 1e-9) for k in range(0, len(stuk) - blok, blok)]
 
 
-def opname(spec, alt=False):
-    """Het hele script in één keer ingesproken (alt: de tweede opname, met alt_uitspraak en alt_seed).
+def opname(spec, naam=None):
+    """Het hele script in één keer ingesproken (naam: een extra opname uit spec["opnames"]).
     Geeft (audio, woorden per beat) en controleert of het aantal woorden klopt."""
     beats = spec["beats"]
-    mp3, alle = inspreken(script(spec, alt), spec.get("stem", "eric"), seed=spec.get("alt_seed") if alt else spec.get("seed"))
+    seed = spec["opnames"][naam].get("seed") if naam else spec.get("seed")
+    mp3, alle = inspreken(script(spec, naam), spec.get("stem", "eric"), seed=seed)
     alle = [w for w in alle if is_woord(w["w"])]
     verwacht = sum(len(b["zegt"].split()) for b in beats)
     if len(alle) != verwacht:
@@ -226,13 +230,15 @@ def monteer(stukken, beats, uit_wav):
 def tijdlijn(spec, uit):
     """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin), knipt het
     op het echte geluid in zinnen, zet ze met gelijke pauzes achter elkaar en knipt de scènes op de
-    woordtijden. Beats met "opname": "alt" komen uit een tweede opname van hetzelfde hele script."""
+    woordtijden. Beats met "opname": "<naam>" komen uit een extra opname van hetzelfde hele script."""
     beats = spec["beats"]
     stukken = zinnen(*opname(spec))
-    if any(b.get("opname") == "alt" for b in beats):
-        alt = zinnen(*opname(spec, alt=True))
-        stukken = [alt[n] if b.get("opname") == "alt" else stukken[n] for n, b in enumerate(beats)]
-    stukken = [bewerk(a, w, b.get("stem", {}), n) for n, ((a, w), b) in enumerate(zip(stukken, beats))]
+    for naam in {b["opname"] for b in beats if b.get("opname")}:
+        extra = zinnen(*opname(spec, naam))
+        stukken = [extra[n] if b.get("opname") == naam else stukken[n] for n, b in enumerate(beats)]
+    tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven PAUZE_DOEL
+    stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
+               for n, ((a, w), b) in enumerate(zip(stukken, beats))]
     wav = uit / "stem.wav"
     per_beat = monteer(stukken, beats, wav)
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
