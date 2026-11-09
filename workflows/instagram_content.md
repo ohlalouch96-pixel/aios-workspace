@@ -125,4 +125,5 @@ Bij elke nieuwe versie:
 
 ## Geleerd
 
+- **Stem bijstellen (09-11):** regie-tags [understated] en [softly] laten Eric omlaag gaan in toon; gebruik [confident] voor zinnen die even krachtig moeten blijven. Toon/tempo/volume per zin gratis bijstellen via `"stem"` in de spec, eerst `--alleen-stem` laten beluisteren, pas daarna de video (alleen nieuwe opnames kosten tegoed). Een zin mag uit een tweede opname van hetzelfde hele script komen (`"opname": "alt"`); toonhoogte per zin nameten.
 - **Voice-over (06-11):** zelf toegevoegde stilte was niet het probleem (ElevenLabs-pauzes zijn ook digitale stilte); wel het knippen door een ademhaling en een vlakkere opname. Hele script in één keer inspreken, niet per zin: per zin klonk elke beat als een herstart met een dode pauze ertussen. Tekst in beeld volgt exact de woordvolgorde van wat gezegd wordt (anders hoor je iets anders dan je leest). Animaties rustig (±0,7 s in) en op het gesproken woord, niet "tak tak tak". Scènes lopen in elkaar over (inhoud glijdt weg net voor de volgende zin).
