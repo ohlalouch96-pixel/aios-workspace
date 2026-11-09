@@ -194,8 +194,17 @@ gesprek dan zelf over, ad-hoc met Claude), maar wel de regel om niet te lang
 open vragen te blijven stellen — relatief snel naar een voorstel voor een
 vrijblijvende call sturen.
 
-**Bericht 3 staat nog open** — volgt in een volgende stap zodra Oussama
-akkoord geeft op de inhoud.
+**Bericht 3 — laatste follow-up als bericht 2 ook geen reactie krijgt
+(vastgelegd 09-11, sluit de reeks af):**
+
+```
+Dag [voornaam],
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden.
+Succes met [bedrijfsnaam]!
+```
+
+Volledige automatiseerde reeks (connectieverzoek → bericht 1 → bericht 2 →
+bericht 3) is hiermee compleet.
 
 ---
 

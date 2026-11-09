@@ -315,6 +315,40 @@ function initialen(naam) {
 
   <div class="sectie">
     <div class="sectie-head">
+      <h2>Geaccepteerd — bericht 1 klaarzetten</h2>
+      <span class="count-badge">{{ geaccepteerd|length }}</span>
+    </div>
+    {% if not geaccepteerd %}
+    <div class="leeg">Niemand heeft nog geaccepteerd (of <code>browser.py check</code> is nog niet gedraaid).</div>
+    {% endif %}
+    {% for g in geaccepteerd %}
+    <div class="card">
+      <div class="persoon">
+        <div class="avatar">{{ g.naam[:1] }}</div>
+        <div>
+          <div class="persoon-naam">{{ g.naam }} — {{ g.functie }}</div>
+          <div class="persoon-sub">{{ g.bedrijf }} · {{ g.locatie }}</div>
+        </div>
+      </div>
+      {% if g.bericht1 %}
+      <div class="bericht-blok">
+        <div class="bericht-label">Bericht 1</div>
+        <div class="bericht-tekst" id="acc-bericht1-{{ loop.index }}">{{ g.bericht1 }}</div>
+        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('acc-bericht1-{{ loop.index }}', this)">📋 Kopieer</button></div>
+      </div>
+      {% else %}
+      <p class="persoon-sub" style="margin-bottom: 10px;">Bericht 1 is nog niet ingevuld voor deze kandidaat.</p>
+      {% endif %}
+      <div class="knoppenrij">
+        <a class="btn btn-outline" href="{{ g.url }}" target="_blank">💬 Open op LinkedIn</a>
+        <form method="post" action="{{ url_for('bericht1_verstuurd') }}"><input type="hidden" name="url" value="{{ g.url }}"><button class="btn btn-primary">✅ Verstuurd</button></form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="sectie">
+    <div class="sectie-head">
       <h2>Follow-ups due</h2>
       <span class="count-badge">{{ follow_ups|length }}</span>
     </div>
@@ -362,6 +396,7 @@ def index():
     _ensure_feedback_table(conn)
     _sync_vers(conn)
     kandidaten = wachtrij.volgende_batch(10)
+    geaccepteerd = wachtrij.geaccepteerd_wachtend()
     follow_ups = wachtrij.due_follow_ups()
     noodstop = limits.check_noodstop(conn)
     limieten = limits.current_week_limits(conn)
@@ -373,8 +408,8 @@ def index():
     stats = _dashboard_stats(conn)
     conn.close()
     return render_template_string(
-        PAGINA, kandidaten=kandidaten, follow_ups=follow_ups, noodstop=noodstop,
-        limieten=limieten, vandaag=vandaag, stats=stats,
+        PAGINA, kandidaten=kandidaten, geaccepteerd=geaccepteerd, follow_ups=follow_ups,
+        noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
     )
 
 
@@ -385,6 +420,13 @@ def verstuurd():
     wachtrij.status(url, "Verzoek verstuurd")
     limits.log_action(conn, "connection", ref=url)
     conn.close()
+    return redirect(url_for("index"))
+
+
+@app.route("/bericht1_verstuurd", methods=["POST"])
+def bericht1_verstuurd():
+    url = request.form["url"]
+    wachtrij.status(url, "Bericht verstuurd")  # plant ook meteen de bericht2-due-datum
     return redirect(url_for("index"))
 
 

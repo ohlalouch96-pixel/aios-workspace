@@ -112,16 +112,26 @@ weergavetekst — dus een korte, eigen redirect-link (zelfde patroon als
 `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2`.
 Bestand: `docs/offerte/index.html`.
 
+**Vaste sjabloon bericht 3** (laatste follow-up als bericht 2 ook geen reactie
+krijgt, vastgelegd 2026-11-09 — sluit de reeks af):
+
+```
+Dag [voornaam],
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden.
+Succes met [bedrijfsnaam]!
+```
+
+Status wordt na het versturen direct `Afgerond` (geen nieuwe follow-up-datum
+— dit is de laatste stap).
+
 **Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
-Als iemand op bericht 1 of 2 reageert, is er bewust GEEN vast vervolgscript —
+Als iemand op bericht 1, 2 of 3 reageert, is er bewust GEEN vast vervolgscript —
 Oussama meldt dat aan Claude en het gesprek gaat ad-hoc verder. Wel een
 standing regel: **niet te lang blijven hangen.** Niet meerdere rondes open
 vragen stellen — na een reactie relatief snel richting een vrijblijvende call
 sturen, bijvoorbeeld: *"Vind je het goed als ik je vrijblijvend kan laten
 zien wat mogelijk is voor jouw bedrijf?"* Doel is een call, niet een lang
 LinkedIn-gesprek.
-
-**Bericht 3 (verdere follow-up) staat nog open**, zie "Nog niet ingevuld".
 
 ### 4. In de wachtrij zetten (tool: `wachtrij.py`, aangeroepen door de agent)
 
@@ -160,15 +170,19 @@ via `wachtrij.status()` in de Sheet, anders overschrijft de volgende
 
 ### 7. Na acceptatie: openingsbericht versturen
 
-Zodra een rij op `Geaccepteerd` staat, verschijnt die niet automatisch opnieuw
-in de cockpit als "te versturen" — dit is nog een open punt (zie "Nog niet
-ingevuld"): een aparte sectie "Geaccepteerd — bericht 1 klaarzetten" moet nog
-aan de cockpit toegevoegd worden zodra de berichtinhoud is vastgesteld.
+Cockpit-sectie **"Geaccepteerd — bericht 1 klaarzetten"** toont alle rijen met
+status `Geaccepteerd` (via `wachtrij.geaccepteerd_wachtend()`), met bericht 1 +
+kopieerknop. Na **✅ Verstuurd** (route `/bericht1_verstuurd`) wordt de status
+`Bericht verstuurd` en plant `wachtrij.status()` automatisch de follow-up-
+due-datum voor bericht 2 (vandaag + `FOLLOW_UP_DAGEN`).
 
 ### 8. Follow-ups
 
 `wachtrij.due_follow_ups()` + de cockpit-sectie "Follow-ups due" tonen wie aan
-de beurt is. Inhoud van de follow-upberichten: zie "Nog niet ingevuld".
+de beurt is, met een `volgende_actie`-veld (`bericht2` of `bericht3`) dat
+bepaalt welk bericht en welke knop-route (`/bericht2_verstuurd` of
+`/bericht3_verstuurd`) getoond wordt. Na bericht 3 wordt de status `Afgerond`
+— geen nieuwe follow-up gepland, de reeks is dan compleet.
 
 ### 9. Dashboard
 
@@ -198,17 +212,13 @@ schaalt NIET door als de voorwaarde niet gehaald is.
   bevestiging: `limits.clear_restriction(conn)`.
 - Twee opeenvolgende dagen zonder acceptaties → waarschuwing, geen harde pauze.
 
-## Nog niet ingevuld (bewust uitgesteld, zie het implementatieplan)
+## Status berichtenreeks
 
-- **Berichtinhoud/aanbod-strategie**: de definitieve tekst/toon voor de
-  connectienotitie, het openingsbericht en de follow-upreeks. Moet aansluiten
-  bij de bestaande `/vakbedrijven`-positionering (offertetijd, administratie,
-  klantcontact), niet bij cart-recovery-taal.
-- **"Geaccepteerd" → "Bericht 1 klaarzetten"-sectie** in de cockpit (stap 7
-  hierboven) — wachtte op de berichtinhoud om zinvol te kunnen bouwen.
-- **Bericht 3** (als bericht 2 ook geen reactie krijgt): inhoud nog niet
-  vastgesteld. Sheet heeft kolommen t/m bericht 2 (`O`/`P`); bericht 3 vraagt
-  weer twee nieuwe kolommen op dezelfde manier als bericht 2 is toegevoegd.
+Volledige reeks (connectieverzoek → bericht 1 → bericht 2 → bericht 3) is
+vastgelegd en volledig gebouwd (2026-11-09). Niets meer open op dit vlak.
+Toekomstige aanpassingen aan de teksten: pas de sjablonen hierboven aan, werk
+bestaande sheetrijen bij via `wachtrij.py`, en houd
+`outputs/outreach-ondernemers-email-strategie.md` in sync.
 
 ## Bekende valkuilen / eerlijke beperkingen
 

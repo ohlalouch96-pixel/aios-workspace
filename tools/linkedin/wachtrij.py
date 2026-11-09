@@ -142,6 +142,23 @@ def volgende_batch(n):
     return kandidaten
 
 
+def geaccepteerd_wachtend():
+    """Rijen met status 'Geaccepteerd': connectieverzoek is geaccepteerd (via
+    browser.py check), bericht 1 kan nu verstuurd worden."""
+    service, sheet_id = _service()
+    tab = _sheet_tab()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
+    values = result.get("values", [])
+    wachtend = []
+    for row in values[1:]:
+        while len(row) < len(KOLOMMEN):
+            row.append("")
+        record = dict(zip(KOLOMMEN, row))
+        if record["status"] == "Geaccepteerd":
+            wachtend.append(record)
+    return wachtend
+
+
 # Status waaruit een follow-up kan volgen -> welk bericht er dan klaarstaat.
 FOLLOW_UP_STADIA = {
     "Bericht verstuurd": "bericht2",
@@ -175,12 +192,15 @@ def main():
     v = sub.add_parser("volgende")
     v.add_argument("n", type=int, default=5, nargs="?")
     sub.add_parser("due-follow-ups")
+    sub.add_parser("geaccepteerd")
     args = ap.parse_args()
 
     if args.cmd == "volgende":
         print(json.dumps(volgende_batch(args.n), ensure_ascii=False, indent=2))
     elif args.cmd == "due-follow-ups":
         print(json.dumps(due_follow_ups(), ensure_ascii=False, indent=2))
+    elif args.cmd == "geaccepteerd":
+        print(json.dumps(geaccepteerd_wachtend(), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
