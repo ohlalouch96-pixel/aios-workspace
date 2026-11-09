@@ -100,23 +100,47 @@ def _context(headless=True):
 # ============================================================================
 # login — eenmalige handmatige login, sessie wordt lokaal opgeslagen
 # ============================================================================
-def cmd_login():
+def cmd_login(timeout_sec=600):
+    """Wacht automatisch tot de login gelukt is (geen input() — werkt ook als dit script
+    zonder aangesloten terminal-stdin draait, bv. als achtergrondproces)."""
     print("Er opent een browservenster. Log zelf in op LinkedIn (incl. je eigen 2FA).")
-    print("Druk daarna hier op Enter — de sessie wordt lokaal opgeslagen in .tmp/linkedin-session/.")
+    print(f"Dit script wacht automatisch tot je bent ingelogd (max {timeout_sec // 60} minuten).")
     p, ctx = _context(headless=False)
     page = ctx.new_page()
     page.goto("https://www.linkedin.com/login")
-    input("\n[Enter indrukken zodra je bent ingelogd] ")
+
+    gestart = time.time()
+    while time.time() - gestart < timeout_sec:
+        try:
+            if "linkedin.com/feed" in page.url or "linkedin.com/mynetwork" in page.url:
+                print("Login gedetecteerd (doorgestuurd naar feed/mynetwork).")
+                break
+            cookies = ctx.cookies("https://www.linkedin.com")
+            if any(c["name"] == "li_at" for c in cookies):
+                print("Login gedetecteerd (sessie-cookie aanwezig).")
+                break
+        except Exception:
+            pass
+        time.sleep(2)
+    else:
+        print(f"Nog niet ingelogd na {timeout_sec // 60} minuten — sessie wordt alsnog opgeslagen zoals die nu is.")
+
     ctx.close()
     p.stop()
-    print("Sessie opgeslagen. Volgende keer kan dit script headless draaien.")
+    print("Sessie opgeslagen in .tmp/linkedin-session/. Volgende keer kan dit script headless draaien.")
 
 
 # ============================================================================
 # zoek — standaard LinkedIn people-search (geen Sales Navigator, zie plan)
 # ============================================================================
 def _zoek_url(titel, branche, regio, page_nr=1):
-    keywords = " ".join(x for x in [titel, branche, regio] if x)
+    # Gecalibreerd op 2026-11-09 tegen de live site: simpele combinaties (bv. "eigenaar
+    # loodgieter") geven relevante resultaten, maar een letterlijk "OR" of de regio
+    # meeplakken in de keywords verdunt de relevantie fors (LinkedIn's keyword-zoek is
+    # fuzzy, geen echte boolean search). Regio wordt daarom NIET in de zoekopdracht
+    # gestopt — dat wordt gecontroleerd tijdens het kwalificeren (stap 5), met de
+    # daadwerkelijke locatie uit het gelezen profiel.
+    keywords = " ".join(x for x in [titel, branche] if x)
     from urllib.parse import quote
     return f"https://www.linkedin.com/search/results/people/?keywords={quote(keywords)}&origin=GLOBAL_SEARCH_HEADER&page={page_nr}"
 
@@ -154,10 +178,21 @@ def cmd_zoek(args):
                 _stop_op_restrictie(conn, patroon)
                 break
 
+            # LinkedIn's zoekresultatenpagina bevat ook /in/-links buiten de eigenlijke
+            # resultatenlijst (bv. "andere suggesties"-zijbalk). Die links hebben alleen
+            # de naam als tekst (kort), de echte resultaatkaarten bevatten ook functie +
+            # bedrijf (tekstlengte >180 in de praktijk) — gecalibreerd op 2026-11-09 tegen
+            # de live site. Drempel van 50 laat ruim marge over naar de korte suggesties.
             links = page.eval_on_selector_all(
-                "a[href*='/in/']", "els => els.map(e => e.href)"
+                "a[href*='/in/']",
+                "els => els.map(e => ({href: e.href, lengte: (e.textContent || '').trim().length}))",
             )
-            nieuw = [l.split("?")[0] for l in links if "/in/" in l]
+            beste = {}
+            for l in links:
+                href = l["href"].split("?")[0]
+                if l["lengte"] > beste.get(href, -1):
+                    beste[href] = l["lengte"]
+            nieuw = [href for href, lengte in beste.items() if lengte > 50]
             for l in nieuw:
                 if l not in gevonden:
                     gevonden.append(l)
@@ -199,23 +234,17 @@ def _lees_profiel(page, conn, url):
         return {"url": url, "fout": f"restrictie gedetecteerd: {patroon}"}
 
     try:
+        # Bevat naam, functie, bedrijf, locatie EN de about-tekst (geen apart #about-element
+        # gevonden bij calibratie op 2026-11-09 — de about-paragraaf staat gewoon in de
+        # normale paginatekst van <main>, dus geen losse selector nodig).
         top_card = page.inner_text("main")
     except Exception:
         top_card = ""
-
-    about_text = ""
-    try:
-        about_section = page.query_selector("section:has(#about)")
-        if about_section:
-            about_text = about_section.inner_text()
-    except Exception:
-        pass
 
     limits.log_action(conn, "profile_view", ref=url)
     return {
         "url": url,
         "pagina_tekst": top_card[:4000],
-        "about_tekst": about_text[:2000],
         "gelezen_op": datetime.now(timezone.utc).isoformat(),
     }
 

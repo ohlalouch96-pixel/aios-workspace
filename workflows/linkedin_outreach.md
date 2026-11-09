@@ -50,9 +50,10 @@ wel een voorraad opbouwen voor als de proefperiode afloopt.
 python tools/linkedin/browser.py lees --batch-bestand .tmp/linkedin_zoekresultaten.json
 ```
 
-Levert per profiel ruwe tekst (paginatekst + about-tekst) in
-`.tmp/linkedin_profielen.json` — dit script interpreteert niets, dat is de
-volgende stap.
+Levert per profiel de volledige paginatekst (naam, functie, bedrijf, locatie
+én de about-paragraaf — die staat gewoon in de normale paginatekst, geen losse
+sectie) in `.tmp/linkedin_profielen.json` — dit script interpreteert niets,
+dat is de volgende stap.
 
 ### 3. Kwalificeren + conceptteksten schrijven (agent-werk, GEEN script)
 
