@@ -54,6 +54,14 @@ def _dashboard_stats(conn):
     ).fetchall()]
     st = track_stats(rows, datetime.now().date())
     st["reactieratio"] = rate(st["reacties"], st["benaderd"])
+
+    laatste = conn.execute("SELECT MAX(collected_at) AS t FROM linkedin").fetchone()
+    st["laatst_bijgewerkt"] = None
+    if laatste and laatste["t"]:
+        try:
+            st["laatst_bijgewerkt"] = datetime.fromisoformat(laatste["t"]).strftime("%d %b %H:%M")
+        except ValueError:
+            st["laatst_bijgewerkt"] = laatste["t"]
     return st
 
 
@@ -105,6 +113,7 @@ PAGINA = """
   .sectie-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .sectie-head h2 { font-size: 14px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; margin: 0; }
   .count-badge { background: var(--tint); color: var(--mid); font-weight: 700; font-size: 12px; border-radius: 999px; padding: 2px 10px; }
+  .freshness { font-size: 11.5px; color: var(--faint); font-weight: 500; }
 
   /* Empty state */
   .leeg { color: var(--faint); font-size: 13.5px; background: var(--white); border: 1px dashed var(--line); border-radius: 10px; padding: 18px; text-align: center; }
@@ -198,6 +207,27 @@ function initialen(naam) {
   <div class="banner warn">⚠️ <div>{{ noodstop.waarschuwing }}</div></div>
   {% endif %}
 
+  <div class="sectie" style="margin-top: 22px;">
+    <div class="sectie-head">
+      <h2>Dashboard</h2>
+      {% if stats and stats.laatst_bijgewerkt %}<span class="freshness">Laatst bijgewerkt: {{ stats.laatst_bijgewerkt }}</span>{% endif %}
+    </div>
+    {% if stats is none %}
+    <div class="leeg">Nog geen data. Draai <code>scripts/collect_linkedin.py</code> zodra de eerste kandidaten in de sheet staan.</div>
+    {% else %}
+    <div class="tiles">
+      <div class="tile"><div class="num">{{ stats.totaal }}</div><div class="lbl">Totaal prospects</div></div>
+      <div class="tile"><div class="num">{{ stats.te_versturen }}</div><div class="lbl">Nog te versturen</div></div>
+      <div class="tile accent"><div class="num">{{ stats.benaderd }}</div><div class="lbl">Benaderd</div></div>
+      <div class="tile"><div class="num">{{ stats.vandaag }}</div><div class="lbl">Vandaag benaderd</div></div>
+      <div class="tile accent"><div class="num">{{ stats.reacties }}</div><div class="lbl">Reacties</div></div>
+      <div class="tile"><div class="num">{{ stats.reactieratio }}</div><div class="lbl">Reactieratio</div></div>
+      <div class="tile"><div class="num">{{ stats.afgewezen }}</div><div class="lbl">Afgewezen</div></div>
+      <div class="tile warm"><div class="num">{{ stats.warm|length }}</div><div class="lbl">Warme leads</div></div>
+    </div>
+    {% endif %}
+  </div>
+
   <div class="sectie">
     <div class="sectie-head">
       <h2>Te versturen</h2>
@@ -271,24 +301,6 @@ function initialen(naam) {
       <p class="persoon-sub" style="margin-top:10px;">Berichtinhoud voor follow-ups is nog niet ingevuld (zie workflows/linkedin_outreach.md).</p>
     </div>
     {% endfor %}
-  </div>
-
-  <div class="sectie">
-    <div class="sectie-head"><h2>Dashboard</h2></div>
-    {% if stats is none %}
-    <div class="leeg">Nog geen data. Draai <code>scripts/collect_linkedin.py</code> zodra de eerste kandidaten in de sheet staan.</div>
-    {% else %}
-    <div class="tiles">
-      <div class="tile"><div class="num">{{ stats.totaal }}</div><div class="lbl">Totaal prospects</div></div>
-      <div class="tile"><div class="num">{{ stats.te_versturen }}</div><div class="lbl">Nog te versturen</div></div>
-      <div class="tile accent"><div class="num">{{ stats.benaderd }}</div><div class="lbl">Benaderd</div></div>
-      <div class="tile"><div class="num">{{ stats.vandaag }}</div><div class="lbl">Vandaag benaderd</div></div>
-      <div class="tile accent"><div class="num">{{ stats.reacties }}</div><div class="lbl">Reacties</div></div>
-      <div class="tile"><div class="num">{{ stats.reactieratio }}</div><div class="lbl">Reactieratio</div></div>
-      <div class="tile"><div class="num">{{ stats.afgewezen }}</div><div class="lbl">Afgewezen</div></div>
-      <div class="tile warm"><div class="num">{{ stats.warm|length }}</div><div class="lbl">Warme leads</div></div>
-    </div>
-    {% endif %}
   </div>
 
 </div>
