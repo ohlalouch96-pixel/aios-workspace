@@ -8,9 +8,9 @@ klaarzetten zodat Oussama zelf het connectieverzoek + openingsbericht verstuurt
 — zonder dat een bot ooit zelf iets verstuurt. Derde outreach-spoor naast
 webshops (`outreach`-tabel) en vakbedrijven (`ondernemers`-tabel).
 
-**Scope van de eerste ronde:** alleen nieuwe prospects (geen overlap met de
-`ondernemers`-tracker), regio **Noord-Holland** (daarna olievlek-uitbreiding
-naar aangrenzende provincies — handmatig besluit, geen automatische regel).
+**Scope:** alleen nieuwe prospects (geen overlap met de `ondernemers`-tracker).
+Regio **heel Nederland** (besluit Oussama, 09-11 — de olievlek-fase vanuit
+Noord-Holland is overgeslagen na de eerste testronde).
 
 ## Architectuur in één oogopslag
 
@@ -30,8 +30,13 @@ contentbot blijft ongewijzigd op Telegram draaien.
 ### 1. Zoeken (tool: `browser.py zoek`)
 
 ```
-python tools/linkedin/browser.py zoek --titel "eigenaar OR directeur OR zaakvoerder OR oprichter" --branche "loodgieter" --regio "Noord-Holland" --aantal 20
+python tools/linkedin/browser.py zoek --titel "eigenaar" --branche "loodgieter" --regio "Nederland" --aantal 20
 ```
+
+**Let op (gecalibreerd 09-11):** combineer bewust maar twee simpele zoekwoorden
+(titel + branche), geen "OR"-lijsten — die verdunnen de relevantie fors.
+Regio wordt sowieso niet in de zoekwoorden gestopt (zie onder), dus
+`--regio` is nu puur informatief/voor logging.
 
 Herhaal met andere branchewoorden (schilder, stukadoor, aannemer,
 installatietechniek, bouwbedrijf) — dit is bewust een standaard LinkedIn
@@ -60,8 +65,9 @@ dat is de volgende stap.
 Claude beoordeelt elk profiel uit stap 2 tegen de doelgroepcriteria:
 - Functie: eigenaar, directeur, zaakvoerder of oprichter.
 - Branche: installatiebedrijf-achtig (loodgieter, schilder, stukadoor,
-  aannemer, installatietechniek, bouwbedrijf).
-- Regio: binnen de actuele olievlek-grens (nu: Noord-Holland).
+  aannemer, installatietechniek, bouwbedrijf, en aanverwant zoals vloeren/
+  sanitair — bij twijfel aan Oussama voorleggen, niet zelf afwijzen).
+- Regio: heel Nederland (geen regiofilter meer sinds 09-11).
 
 Afgekeurde profielen gaan NIET naar de sheet (zelfde filosofie als
 `tools/source_prospects.py`). Voor goedgekeurde profielen schrijft Claude:
@@ -150,10 +156,15 @@ Status wordt automatisch `Te versturen`.
 python apps/linkedin/cockpit.py
 ```
 
-Open `http://127.0.0.1:5050`. Oussama bekijkt elke kaart, stuurt het
-connectieverzoek + notitie ZELF op LinkedIn, en bevestigt met **✅ Verstuurd**.
-Dat werkt de Sheet bij én logt de actie meteen lokaal (daglimiet blijft
-actueel binnen de sessie, zie Design Decision 10 in het plan).
+Open `http://127.0.0.1:5050`. De cockpit-kaart in **"Te versturen"** toont
+bewust ALLEEN naam/functie/bedrijf/locatie (geen berichttekst, want er gaat
+geen notitie mee — zie hierboven) — gehouden zo simpel mogelijk, besluit
+Oussama 09-11. Oussama stuurt het (lege) connectieverzoek ZELF op LinkedIn,
+en bevestigt met **✅ Connectie verstuurd**. Dat werkt de Sheet bij én logt de
+actie meteen lokaal (daglimiet blijft actueel binnen de sessie, zie Design
+Decision 10 in het plan). De kandidaat verschijnt daarna in **"Wachten op
+acceptatie"** — puur informatief, geen berichttekst nodig, met een handmatige
+"✅ Geaccepteerd"-knop als noodgreep (zie stap 6 voor de automatische route).
 
 ### 6. Acceptatie-check (tool: `browser.py check`)
 
@@ -171,10 +182,13 @@ via `wachtrij.status()` in de Sheet, anders overschrijft de volgende
 ### 7. Na acceptatie: openingsbericht versturen
 
 Cockpit-sectie **"Geaccepteerd — bericht 1 klaarzetten"** toont alle rijen met
-status `Geaccepteerd` (via `wachtrij.geaccepteerd_wachtend()`), met bericht 1 +
-kopieerknop. Na **✅ Verstuurd** (route `/bericht1_verstuurd`) wordt de status
-`Bericht verstuurd` en plant `wachtrij.status()` automatisch de follow-up-
-due-datum voor bericht 2 (vandaag + `FOLLOW_UP_DAGEN`).
+status `Geaccepteerd` (via `wachtrij.geaccepteerd_wachtend()`), met bericht 1
+direct zichtbaar + kopieerknop. Bericht 2 en 3 staan bewust ingeklapt achter
+een "▸ Bericht 2 en 3 bekijken"-toggle (besluit Oussama 09-11: alleen het nu
+relevante bericht meteen tonen, de rest desgewenst opklappen). Na
+**✅ Verstuurd** (route `/bericht1_verstuurd`) wordt de status `Bericht
+verstuurd` en plant `wachtrij.status()` automatisch de follow-up-due-datum
+voor bericht 2 (vandaag + `FOLLOW_UP_DAGEN`).
 
 ### 8. Follow-ups
 

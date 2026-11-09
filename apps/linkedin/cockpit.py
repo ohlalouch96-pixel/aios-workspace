@@ -263,51 +263,36 @@ function initialen(naam) {
         </div>
       </div>
 
-      {% if k.connectienotitie %}
-      <div class="bericht-blok">
-        <div class="bericht-label">Connectienotitie</div>
-        <div class="bericht-tekst" id="notitie-{{ loop.index }}">{{ k.connectienotitie }}</div>
-        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('notitie-{{ loop.index }}', this)">📋 Kopieer</button></div>
-      </div>
-      {% else %}
-      <p class="persoon-sub" style="margin-bottom: 10px;">Geen notitie — gewoon een leeg connectieverzoek versturen.</p>
-      {% endif %}
-      {% if k.bericht1 %}
-      <div class="bericht-blok">
-        <div class="bericht-label">Bericht 1 — na acceptatie</div>
-        <div class="bericht-tekst" id="bericht1-{{ loop.index }}">{{ k.bericht1 }}</div>
-        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('bericht1-{{ loop.index }}', this)">📋 Kopieer</button></div>
-      </div>
-      {% endif %}
-      {% if k.bericht2 %}
-      <div class="bericht-blok preview">
-        <div class="bericht-label">Bericht 2 — follow-up <span class="preview-tag">pas relevant als bericht 1 geen reactie krijgt</span></div>
-        <div class="bericht-tekst" id="preview-bericht2-{{ loop.index }}">{{ k.bericht2 }}</div>
-        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('preview-bericht2-{{ loop.index }}', this)">📋 Kopieer</button></div>
-      </div>
-      {% endif %}
-      {% if k.bericht3 %}
-      <div class="bericht-blok preview">
-        <div class="bericht-label">Bericht 3 — laatste follow-up <span class="preview-tag">pas relevant als bericht 2 ook geen reactie krijgt</span></div>
-        <div class="bericht-tekst" id="preview-bericht3-{{ loop.index }}">{{ k.bericht3 }}</div>
-        <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('preview-bericht3-{{ loop.index }}', this)">📋 Kopieer</button></div>
-      </div>
-      {% endif %}
-
       <div class="knoppenrij">
         <a class="btn btn-outline" href="{{ k.url }}" target="_blank">💬 Open op LinkedIn</a>
-        <form method="post" action="{{ url_for('verstuurd') }}"><input type="hidden" name="url" value="{{ k.url }}"><button class="btn btn-primary">✅ Verstuurd</button></form>
+        <form method="post" action="{{ url_for('verstuurd') }}"><input type="hidden" name="url" value="{{ k.url }}"><button class="btn btn-primary">✅ Connectie verstuurd</button></form>
         <form method="post" action="{{ url_for('overslaan') }}"><input type="hidden" name="url" value="{{ k.url }}"><button class="btn btn-danger-ghost">❌ Overslaan</button></form>
-        <details class="aanpassen">
-          <summary><span class="btn btn-ghost">✏️ Aanpassen</span></summary>
-          <div class="aanpassen-paneel">
-            <form method="post" action="{{ url_for('aanpassen') }}">
-              <input type="hidden" name="url" value="{{ k.url }}">
-              <textarea name="feedback" placeholder="Wat moet er anders aan deze notitie/bericht?"></textarea>
-              <div style="margin-top:8px;"><button class="btn btn-primary btn-sm" type="submit">Opslaan</button></div>
-            </form>
-          </div>
-        </details>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="sectie">
+    <div class="sectie-head">
+      <h2>Wachten op acceptatie</h2>
+      <span class="count-badge">{{ wachtend|length }}</span>
+    </div>
+    {% if not wachtend %}
+    <div class="leeg">Niemand aan het wachten.</div>
+    {% endif %}
+    {% for w in wachtend %}
+    <div class="card muted">
+      <div class="persoon">
+        <div class="avatar">{{ w.naam[:1] }}</div>
+        <div>
+          <div class="persoon-naam">{{ w.naam }} — {{ w.functie }}</div>
+          <div class="persoon-sub">{{ w.bedrijf }} · {{ w.locatie }} · verzoek verstuurd {{ w.datum_verzoek }}</div>
+        </div>
+      </div>
+      <p class="persoon-sub" style="margin-bottom: 10px;">Wordt automatisch bijgewerkt zodra <code>browser.py check</code> draait. Zelf gezien dat dit al geaccepteerd is? Gebruik de knop hieronder.</p>
+      <div class="knoppenrij">
+        <a class="btn btn-outline" href="{{ w.url }}" target="_blank">💬 Open op LinkedIn</a>
+        <form method="post" action="{{ url_for('geaccepteerd_handmatig') }}"><input type="hidden" name="url" value="{{ w.url }}"><button class="btn btn-primary">✅ Geaccepteerd</button></form>
       </div>
     </div>
     {% endfor %}
@@ -339,9 +324,38 @@ function initialen(naam) {
       {% else %}
       <p class="persoon-sub" style="margin-bottom: 10px;">Bericht 1 is nog niet ingevuld voor deze kandidaat.</p>
       {% endif %}
+      <details class="aanpassen">
+        <summary><span class="btn btn-ghost btn-sm">▸ Bericht 2 en 3 bekijken <span class="preview-tag">nog niet relevant</span></span></summary>
+        <div class="aanpassen-paneel">
+          {% if g.bericht2 %}
+          <div class="bericht-blok preview">
+            <div class="bericht-label">Bericht 2 — follow-up</div>
+            <div class="bericht-tekst" id="acc-bericht2-{{ loop.index }}">{{ g.bericht2 }}</div>
+            <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('acc-bericht2-{{ loop.index }}', this)">📋 Kopieer</button></div>
+          </div>
+          {% endif %}
+          {% if g.bericht3 %}
+          <div class="bericht-blok preview">
+            <div class="bericht-label">Bericht 3 — laatste follow-up</div>
+            <div class="bericht-tekst" id="acc-bericht3-{{ loop.index }}">{{ g.bericht3 }}</div>
+            <div class="bericht-acties"><button type="button" class="btn btn-outline btn-sm" onclick="kopieerUitElement('acc-bericht3-{{ loop.index }}', this)">📋 Kopieer</button></div>
+          </div>
+          {% endif %}
+        </div>
+      </details>
       <div class="knoppenrij">
         <a class="btn btn-outline" href="{{ g.url }}" target="_blank">💬 Open op LinkedIn</a>
         <form method="post" action="{{ url_for('bericht1_verstuurd') }}"><input type="hidden" name="url" value="{{ g.url }}"><button class="btn btn-primary">✅ Verstuurd</button></form>
+        <details class="aanpassen">
+          <summary><span class="btn btn-ghost">✏️ Aanpassen</span></summary>
+          <div class="aanpassen-paneel">
+            <form method="post" action="{{ url_for('aanpassen') }}">
+              <input type="hidden" name="url" value="{{ g.url }}">
+              <textarea name="feedback" placeholder="Wat moet er anders aan bericht 1?"></textarea>
+              <div style="margin-top:8px;"><button class="btn btn-primary btn-sm" type="submit">Opslaan</button></div>
+            </form>
+          </div>
+        </details>
       </div>
     </div>
     {% endfor %}
@@ -396,6 +410,7 @@ def index():
     _ensure_feedback_table(conn)
     _sync_vers(conn)
     kandidaten = wachtrij.volgende_batch(10)
+    wachtend = wachtrij.wachtend_op_acceptatie()
     geaccepteerd = wachtrij.geaccepteerd_wachtend()
     follow_ups = wachtrij.due_follow_ups()
     noodstop = limits.check_noodstop(conn)
@@ -408,7 +423,7 @@ def index():
     stats = _dashboard_stats(conn)
     conn.close()
     return render_template_string(
-        PAGINA, kandidaten=kandidaten, geaccepteerd=geaccepteerd, follow_ups=follow_ups,
+        PAGINA, kandidaten=kandidaten, wachtend=wachtend, geaccepteerd=geaccepteerd, follow_ups=follow_ups,
         noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
     )
 
@@ -420,6 +435,13 @@ def verstuurd():
     wachtrij.status(url, "Verzoek verstuurd")
     limits.log_action(conn, "connection", ref=url)
     conn.close()
+    return redirect(url_for("index"))
+
+
+@app.route("/geaccepteerd_handmatig", methods=["POST"])
+def geaccepteerd_handmatig():
+    url = request.form["url"]
+    wachtrij.status(url, "Geaccepteerd")
     return redirect(url_for("index"))
 
 

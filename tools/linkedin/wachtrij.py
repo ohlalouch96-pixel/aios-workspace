@@ -142,6 +142,24 @@ def volgende_batch(n):
     return kandidaten
 
 
+def wachtend_op_acceptatie():
+    """Rijen met status 'Verzoek verstuurd': connectieverzoek is weg, nog geen
+    uitkomst. Bedoeld als zuiver informatieve sectie (browser.py check werkt
+    dit automatisch bij; de cockpit biedt ook een handmatige override)."""
+    service, sheet_id = _service()
+    tab = _sheet_tab()
+    result = service.spreadsheets().values().get(spreadsheetId=sheet_id, range=f"{tab}!A:R").execute()
+    values = result.get("values", [])
+    wachtend = []
+    for row in values[1:]:
+        while len(row) < len(KOLOMMEN):
+            row.append("")
+        record = dict(zip(KOLOMMEN, row))
+        if record["status"] == "Verzoek verstuurd":
+            wachtend.append(record)
+    return wachtend
+
+
 def geaccepteerd_wachtend():
     """Rijen met status 'Geaccepteerd': connectieverzoek is geaccepteerd (via
     browser.py check), bericht 1 kan nu verstuurd worden."""
@@ -193,6 +211,7 @@ def main():
     v.add_argument("n", type=int, default=5, nargs="?")
     sub.add_parser("due-follow-ups")
     sub.add_parser("geaccepteerd")
+    sub.add_parser("wachtend")
     args = ap.parse_args()
 
     if args.cmd == "volgende":
@@ -201,6 +220,8 @@ def main():
         print(json.dumps(due_follow_ups(), ensure_ascii=False, indent=2))
     elif args.cmd == "geaccepteerd":
         print(json.dumps(geaccepteerd_wachtend(), ensure_ascii=False, indent=2))
+    elif args.cmd == "wachtend":
+        print(json.dumps(wachtend_op_acceptatie(), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
