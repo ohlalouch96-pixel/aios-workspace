@@ -67,6 +67,8 @@ def verbind():
     kolommen = {r[1] for r in conn.execute("PRAGMA table_info(instagram_posts)")}
     if "muziek" not in kolommen:
         conn.execute("ALTER TABLE instagram_posts ADD COLUMN muziek TEXT")
+    if "dienst" not in kolommen:  # welke dienst van de website een video met stem had (tools/instagram/diensten.py)
+        conn.execute("ALTER TABLE instagram_posts ADD COLUMN dienst TEXT")
     return conn
 
 
@@ -121,9 +123,9 @@ def volgende(conn, pijler=None):
 def opslaan(conn, spec_pad):
     spec = json.loads(Path(spec_pad).read_text(encoding="utf-8"))
     cur = conn.execute(
-        "INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, muziek) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO instagram_posts (bron_id, soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, muziek, dienst) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (spec.get("bron_id"), spec["soort"], spec["onderwerp"], spec.get("kleurenset"), json.dumps(spec.get("hashtags", [])),
-         spec.get("caption"), json.dumps(spec.get("bronnen", [])), spec.get("map"), spec.get("muziek")))
+         spec.get("caption"), json.dumps(spec.get("bronnen", [])), spec.get("map"), spec.get("muziek"), spec.get("dienst")))
     conn.commit()
     return cur.lastrowid
 
