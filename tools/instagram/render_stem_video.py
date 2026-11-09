@@ -155,7 +155,7 @@ def opname(spec, naam=None):
         n = len(beat["zegt"].split())
         per_beat.append(alle[i:i + n])
         i += n
-    return pcm(mp3), per_beat
+    return afkap_check(pcm(mp3)), per_beat
 
 
 def zinnen(x, per_beat):
@@ -205,6 +205,18 @@ def bewerk(audio, woorden, bew, n):
     schaal = lambda t: t if t < vanaf else vanaf + (t - vanaf) * rek  # noqa: E731
     return (np.concatenate([audio[:sec(vanaf)], nieuw]),
             [{**w, "s": schaal(w["s"]), "e": schaal(w["e"])} for w in woorden])
+
+
+def afkap_check(x):
+    """ElevenLabs v3 kapt het laatste woord soms af (opname eindigt midden in de klank). Dan een korte
+    uitfade zodat het niet hapert, en een melding: voortaan " [long pause]" achter de laatste zin zetten."""
+    eind = niveau(x, max(len(x) / SR - 0.1, 0), len(x) / SR)
+    if eind and max(eind) > -40:
+        print("Let op: opname eindigt abrupt (laatste woord afgekapt door ElevenLabs); uitfade toegepast. "
+              "Bij een nieuwe opname ' [long pause]' achter de laatste zin zetten.")
+        f = sec(0.08)
+        x[-f:] *= np.linspace(1, 0, f)
+    return x
 
 
 def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
@@ -307,7 +319,7 @@ def render(spec, uit):
         cmd += ["-i", str(mp3)]
     mix = "".join(f"[{i + 1}:a]atrim={van:.3f}:{tot:.3f},asetpts=PTS-STARTPTS,adelay={int(op * 1000)}:all=1[a{i}];"
                   for i, (_, van, tot, op) in enumerate(audio))
-    mix += "".join(f"[a{i}]" for i in range(len(audio))) + f"amix=inputs={len(audio)}:normalize=0:duration=longest[a]"
+    mix += "".join(f"[a{i}]" for i in range(len(audio))) + f"amix=inputs={len(audio)}:normalize=0:duration=longest,apad[a]"  # geluid even lang als beeld (anders hapert het einde op telefoons)
     video = uit / "reel.mp4"
     cmd += ["-filter_complex", mix, "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "slow", "-crf", "16",
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-t", f"{totaal:.2f}", "-movflags", "+faststart", str(video)]

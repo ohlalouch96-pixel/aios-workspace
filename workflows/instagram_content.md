@@ -105,6 +105,10 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Tempo: hele stem 10% sneller (`"tempo": 1.1`, gratis, toon blijft gelijk; gekozen 09-11).
 - Pauzes: de tool maakt elke pauze gelijk (1,0 s rust in beeld + 0,25 s voorloop) door alleen echte stilte (onder -60 dB) in te korten of te verlengen. **Nooit zelf een ademhaling toevoegen**: een vaste ademhaling voor elke zin klonk nep (06-11). Zinsgrenzen worden op het geluid gemeten: de woordtijden van v3 lopen uit.
 
+- **Tijden zoals mensen ze zeggen (09-11):** Eric zegt "It's 9 PM", nooit "nine at night". Schrijf in `zegt`/`uitspraak` dus "9 PM" (zelfde als in beeld).
+- **Geluid even lang als beeld (09-11):** stopte het geluidsspoor eerder dan het beeld, dan haperde het einde op de telefoon. De tool vult het geluid nu aan met stilte (apad).
+- **Laatste woord niet laten afkappen (09-11):** ElevenLabs v3 kapt het laatste woord soms af (video hapert aan het eind). Zet altijd " [long pause]" achter de laatste zin in `uitspraak`; de tool geeft een melding en fadet uit als het toch gebeurt.
+
 ### Controleregels (vóór Oussama een video ziet, besluit 06-11)
 
 Automatisch (de tool stopt bij een fout):
