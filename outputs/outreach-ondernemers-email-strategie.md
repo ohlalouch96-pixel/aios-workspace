@@ -180,9 +180,14 @@ vast voor alle kandidaten. De slotvraag mag specifiek-maar-open variëren
 ```
 Dag [voornaam],
 Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden.
-Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Mocht je ervoor openstaan, zou ik graag een keer vrijblijvend met jou willen kijken naar de mogelijkheden voor [bedrijfsnaam]. Hier alvast een voorbeeld van een offertetool: insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2
+Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Zou je een keer samen met mij vrijblijvend willen kijken naar welke mogelijkheden er zijn voor [bedrijfsnaam]?
+Hier een voorbeeld van zo'n offertetool: insightance.ai/offerte
 Ik hoor graag van je.
 ```
+
+Link herzien 09-11: `insightance.ai/offerte` is een korte redirect (zelfde
+patroon als `/li`, `/wa`, `/ig`, `/go`) naar de volledige getrackte URL —
+LinkedIn-chats laten anders de lange UTM-link met alle parameters zien.
 
 **Gespreksregel na een reactie:** geen vast vervolgscript (Oussama neemt het
 gesprek dan zelf over, ad-hoc met Claude), maar wel de regel om niet te lang

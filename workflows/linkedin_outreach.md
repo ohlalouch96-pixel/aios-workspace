@@ -95,13 +95,22 @@ vastgelegd 2026-11-09):
 ```
 Dag [voornaam],
 Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden.
-Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Mocht je ervoor openstaan, zou ik graag een keer vrijblijvend met jou willen kijken naar de mogelijkheden voor [bedrijfsnaam]. Hier alvast een voorbeeld van een offertetool: insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2
+Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Zou je een keer samen met mij vrijblijvend willen kijken naar welke mogelijkheden er zijn voor [bedrijfsnaam]?
+Hier een voorbeeld van zo'n offertetool: insightance.ai/offerte
 Ik hoor graag van je.
 ```
 
 Voorbeelden beperkt tot offertes/calculaties/facturatie (geen klantenservice
 e.d.) — alleen voor offerte-gerelateerde pijnpunten bestaat een bewezen demo
 (MHL), zelfde regel als in `outputs/outreach-ondernemers-email-strategie.md`.
+
+**Link: `insightance.ai/offerte`** (herzien 09-11, was eerst de volledige
+URL met UTM-parameters zichtbaar in het bericht). LinkedIn-chats tonen altijd
+de letterlijke getypte tekst, geen verborgen hyperlinks met afwijkende
+weergavetekst — dus een korte, eigen redirect-link (zelfde patroon als
+`insightance.ai/li`, `/wa`, `/ig`, `/go`) stuurt door naar
+`insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2`.
+Bestand: `docs/offerte/index.html`.
 
 **Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
 Als iemand op bericht 1 of 2 reageert, is er bewust GEEN vast vervolgscript —

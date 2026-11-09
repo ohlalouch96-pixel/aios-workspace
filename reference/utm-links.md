@@ -28,7 +28,8 @@ Welke landingspagina (webshops of vakbedrijven) staat al in de URL, dus die hoef
 | Instagram DM2                              | `insightance.ai/webshops?utm_source=instagram&utm_medium=outreach&utm_campaign=dm2` |
 | Ondernemers e-mail bericht 2               | `insightance.ai/vakbedrijven?utm_source=email&utm_medium=outreach&utm_campaign=mail2` |
 | Ondernemers LinkedIn bericht 1 (handmatig, InMail, zie outreach-ondernemers-email-strategie.md) | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li1` |
-| LinkedIn Outreach Agent — bericht 2 (follow-up zonder reactie) | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2` |
+| LinkedIn Outreach Agent — bericht 2 (follow-up zonder reactie), volledige URL | `insightance.ai/vakbedrijven?utm_source=linkedin&utm_medium=outreach&utm_campaign=li2` |
+| LinkedIn Outreach Agent — bericht 2, korte link (dit is wat daadwerkelijk in het bericht staat) | `insightance.ai/offerte` (korte link, `docs/offerte/index.html`, stuurt door naar de regel hierboven) |
 | Voorbeeldmail via Instagram                | `insightance.ai/voorbeeld/<shop>.html?utm_source=instagram&utm_medium=outreach&utm_campaign=voorbeeld` |
 | Voorbeeldmail via e-mail                   | `insightance.ai/voorbeeld/<shop>.html?utm_source=email&utm_medium=outreach&utm_campaign=voorbeeld` |
 
