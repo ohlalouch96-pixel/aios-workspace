@@ -179,9 +179,9 @@ vast voor alle kandidaten. De slotvraag mag specifiek-maar-open variëren
 
 ```
 Dag [voornaam],
-Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden.
-Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat. Zou je een keer samen met mij vrijblijvend willen kijken naar welke mogelijkheden er zijn voor [bedrijfsnaam]?
-Hier een voorbeeld van zo'n offertetool: insightance.ai/offerte
+Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals het opstellen van offertes, calculaties maken of de facturatie bijhouden. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
+Hier alvast een voorbeeld van zo'n offertetool: insightance.ai/offerte
 Ik hoor graag van je.
 ```
 
