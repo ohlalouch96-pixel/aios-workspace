@@ -80,7 +80,8 @@ def volledige_caption(caption, hashtags, soort):
     """Caption zoals hij op Instagram komt: tekst, vaste afsluiter, hashtags. The Fork: alleen de tekst."""
     if soort == "fork":
         return caption.strip()
-    return f"{caption.strip()}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
+    caption = caption.replace(AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
+    return f"{caption}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
 
 
 def recente_kleuren(conn, n=5):
