@@ -18,16 +18,6 @@
 
 ---
 
-## E-mail-follow-ups als concept in Gmail klaarzetten
-
-**Status:** Geparkeerd sinds 2026-10-06 ("een andere keer"), wel hoge prioriteit zodra er tijd is
-**Waarom:** Door de outreach-volumes lopen follow-ups snel op (elke nieuwe DM = 3 berichten, elke nieuwe mail = 4). E-mail is het enige kanaal dat veilig te automatiseren is.
-**Stap 1 (nu):** Claude zet de e-mail-follow-ups (webshops mail 2/3/4 + ondernemers bericht 2/3) als concept klaar in Gmail via de Gmail-koppeling. Oussama klikt alleen op versturen.
-**Stap 2 (later, na vertrouwen):** Volledig automatisch versturen via n8n, binnen het dagmaximum.
-**Randvoorwaarde:** Dagmaximum aanhouden: ~40 Instagram + ~40 e-mail per dag (nieuw + follow-ups samen).
-
----
-
 ## E-maillijst / nieuwsbrief via de website
 
 **Status:** Geparkeerd sinds 2026-10-11
@@ -58,7 +48,7 @@
 
 ## KvK-registratie
 
-**Status:** Geparkeerd, bewuste keuze op 2026-10-12: wachten tot de eerste klant ja zegt
+**Status:** Opgepakt op 2026-11-10: Oussama plant de KvK-afspraak nu al in (eerder: wachten tot de eerste klant ja zegt)
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
 **Trigger om op te pakken:** Zodra een klant ja zegt (bijv. Millenaar | Peijnenburg na het eerste gesprek). Dan direct een afspraak inplannen, niet pas na de betaling.
 **Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel. Online formulier via DigiD (ca. 15 min), daarna afspraak op een KvK-kantoor met ID. Kosten 2026: €85,15 eenmalig.
@@ -86,16 +76,6 @@
 3. Eigen afspraken met leveranciers checken: Anthropic (zit in zakelijke voorwaarden), Hetzner (AV-contract afsluiten in het account).
 4. Privacybeleid op de website nalopen bij het live zetten van het nieuwe ontwerp.
 **Let op:** Wettelijk verplicht zodra Insightance persoonsgegevens van klanten verwerkt. Eén keer laten checken door een jurist is verstandig.
-
----
-
-## Visitekaartjes laten drukken
-
-**Status:** Ontwerp klaar op 2026-10-09 (ontwerp A: navy voorkant, witte achterkant zonder telefoonnummer, QR naar insightance.ai). Drukbestanden in `outputs/visitekaartje-2026/DRUK-*` (88x58 mm incl. afloop). BESTELD op 2026-10-09 via Vistaprint: 500 stuks voor ca. EUR 30 (definitieve bestanden: `outputs/visitekaartje-2026/VISITEKAARTJE-*`). Verwachte levering: rond 2026-10-23 (ca. twee weken na bestellen).
-**Waarom eerder geparkeerd:** Website en logo (kleur) worden nog aangepast, wachten tot dat vastligt voor consistente kleuren op het kaartje.
-**Wat er moet gebeuren:** Visitekaartje ontwerpen en bestellen in de nieuwe huisstijlkleuren, zodra het nieuwe logo en de website live staan.
-**Waar:** Vistaprint of Drukwerkdeal (prijs/kwaliteit vergeleken op 2026-10-04, zie gesprekshistorie).
-**Trigger om op te pakken:** Zodra de vernieuwde website (met nieuw logo) live staat op insightance.ai — Claude moet Oussama hier dan actief aan herinneren.
 
 ---
 
