@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Demo — rondleiding insightance.ai (opname, verandert niets aan de site)</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+/* De echte site (docs/) in het beeldscherm, via een lokale server (opname_demo.py, "server": true).
+   a = homepage, b = automations-pagina; wisselen gaat met een korte overgang in plaats van echt laden. */
+#desk iframe { position: absolute; inset: 0; width: 1280px; height: 800px; border: 0; background: #fff; }
+#b { opacity: 0; }
+</style>
+</head>
+<body style="--hookbg:#17345F">
+<div id="hook"></div>
+<div class="monitor"><div class="scherm"><div id="camera"><div id="desk">
+  <iframe id="a" src="/docs/index.html"></iframe>
+  <iframe id="b" src="/docs/automations.html"></iframe>
+</div></div></div></div>
+<div class="voetstuk"></div>
+<div id="ondertitel"></div>
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+<script src="_demo.js"></script>
+<script>
+// Selectors in de site: "a|<css>" (homepage) of "b|<css>" (automations).
+const frame = (id) => document.getElementById(id);
+const site = (sel) => { const [id, css] = sel.split("|"); return [frame(id), frame(id).contentDocument.querySelector(css)]; };
+
+const doel = window.__doel;
+window.__doel = function (sel) {
+  if (!sel.includes("|")) return doel(sel);
+  const r = site(sel)[1].getBoundingClientRect();  // iframe staat op 0,0 van het bureaublad, 1 site-pixel = 1 desktop-pixel
+  return [r.left + r.width / 2, r.top + r.height / 2];
+};
+// klik: knoppen echt indrukken, links niet volgen (de wissel tussen pagina's doet het script zelf)
+window.__klik = function (sel) {
+  if (!sel.includes("|")) { const el = document.querySelector(sel); el.classList.add("hover"); el.click(); return; }
+  const el = site(sel)[1];
+  if (!el.closest("a[href]")) el.click();
+};
+
+// rustig scrollen naar een element (of "top"), duur in ms
+window.scrollNaar = function (id, css, duur, marge) {
+  const w = frame(id).contentWindow, van = w.scrollY;
+  const naar = css === "top" ? 0 : Math.round(w.document.querySelector(css).getBoundingClientRect().top + van - (marge ?? 70));
+  animeer(duur || 1500, (t) => w.scrollTo({ top: van + (naar - van) * t, behavior: "instant" }));
+};
+window.springNaar = function (id, css, marge) {
+  const w = frame(id).contentWindow;
+  w.scrollTo({ top: css === "top" ? 0 : Math.round(w.document.querySelector(css).getBoundingClientRect().top + w.scrollY - (marge ?? 70)), behavior: "instant" });
+};
+// andere pagina tonen (korte overgang)
+window.toon = function (id) {
+  const ander = frame(id === "a" ? "b" : "a"), deze = frame(id);
+  deze.style.zIndex = 2; ander.style.zIndex = 1;
+  animeer(450, (t) => (deze.style.opacity = t), () => (ander.style.opacity = 0));
+};
+// schuifbalk rustig naar een waarde
+window.schuif = function (sel, waarde, duur) {
+  const el = site(sel)[1], van = +el.value;
+  animeer(duur || 900, (t) => {
+    const v = Math.round((van + (waarde - van) * t) / (+el.step || 1)) * (+el.step || 1);
+    if (+el.value !== v) { el.value = v; el.dispatchEvent(new Event("input", { bubbles: true })); }
+  });
+};
+</script>
+</body></html>

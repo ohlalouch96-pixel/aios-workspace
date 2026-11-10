@@ -32,15 +32,23 @@ Spec:
       ]
     }
 
+Echte site opnemen (website.html, "server": true): de tool start een lokale server op de
+workspace, zodat docs/ in het beeldscherm geladen en bestuurd kan worden. Niets gaat naar de
+live site; cookiemelding uit, geen Google Analytics, taal Engels, alles met klantnamen
+(resultaten, case-labels, naam in de hero-kaart) verborgen, alleen in de opname. Ook de animaties van de site lopen op de klok van de tool.
+
 Gebruik (CLI):
     python tools/instagram/opname_demo.py spec.json [--uit map/] [--stem | --zonder-stem]
 --zonder-stem = gratis proef met geschatte stemtiming (geen geluid, geen tegoed).
 """
 
 import argparse
+import functools
+import http.server
 import json
 import shutil
 import sys
+import threading
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -52,11 +60,40 @@ import render_stem_video as rsv  # noqa: E402
 DEMOS = Path(__file__).resolve().parent / "demos"
 FPS = 30
 MS = 1000 / FPS
+WORKSPACE = Path(__file__).resolve().parents[2]
+
+# Alleen in de site-frames (docs/): klok van de tool, geen cookiemelding/GA, Engels, resultaten verborgen.
+SITE_JS = """(() => {
+  if (!location.pathname.includes('/docs/')) return;
+  try { localStorage.setItem('cookie_consent', 'functional'); localStorage.setItem('lang', 'en'); } catch (e) {}
+  let vt = performance.now(), wachtrij = [];
+  performance.now = () => vt;
+  window.requestAnimationFrame = (cb) => { wachtrij.push(cb); return wachtrij.length; };
+  window.cancelAnimationFrame = () => {};
+  window.__vtick = (ms) => { vt += ms; const nu = wachtrij; wachtrij = []; nu.forEach(cb => { try { cb(vt); } catch (e) {} }); return nu.length ? 1 : 0; };
+  document.addEventListener('DOMContentLoaded', () => {
+    const s = document.createElement('style');
+    s.textContent = '#resultaten,#ck,.case-tag,.proof .who,.flow-top b{display:none!important} html{scroll-behavior:auto!important}';  // klantnamen (MHL, FTUK) nooit op Instagram
+    document.head.appendChild(s);
+  });
+})();"""
+
+
+def server():
+    """Lokale server op de workspace (alleen 127.0.0.1), zodat de demo-pagina docs/ in een iframe kan besturen."""
+    stil = type("Stil", (http.server.SimpleHTTPRequestHandler,), {"log_message": lambda *a: None})
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(stil, directory=str(WORKSPACE)))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv
 
 STAP_JS = """(ms) => {
   window.__tick(ms);
   let actief = window.__bezig();
-  document.getAnimations().forEach(a => {
+  const docs = [document];
+  document.querySelectorAll('iframe').forEach(f => {
+    try { if (f.contentWindow.__vtick) actief += f.contentWindow.__vtick(ms); docs.push(f.contentDocument); } catch (e) {}
+  });
+  docs.flatMap(d => d.getAnimations()).forEach(a => {
     if (a.playState === 'finished' || a.playState === 'idle') return;
     a.pause();
     a.currentTime = (a.currentTime || 0) + ms;
@@ -115,7 +152,7 @@ class Opname:
         x, y = self.midden(sel)
         self.beweeg(x, y)
         self.pg.evaluate("([x, y]) => window.__klikEffect(x, y)", [x, y])
-        self.pg.evaluate("(s) => { const el = document.querySelector(s); el.classList.add('hover'); el.click(); }", sel)
+        self.pg.evaluate("(s) => { if (window.__klik) return window.__klik(s); const el = document.querySelector(s); el.classList.add('hover'); el.click(); }", sel)
         self.bewogen = True
         self.wacht(0.35)
 
@@ -184,7 +221,16 @@ def render(spec, uit, stem=False, zonder_stem=False):
         except Exception:
             browser = p.chromium.launch()
         pg = browser.new_page(viewport={"width": 1080, "height": 1920})
-        pg.goto((DEMOS / f"{spec['demo']}.html").as_uri())
+        srv = None
+        if spec.get("server"):
+            srv = server()
+            pg.add_init_script(SITE_JS)
+            pg.goto(f"http://127.0.0.1:{srv.server_address[1]}/tools/instagram/demos/{spec['demo']}.html")
+            pg.wait_for_function("[...document.querySelectorAll('iframe')].every(f => f.contentDocument && f.contentDocument.readyState === 'complete')")
+            for f in pg.frames[1:]:
+                f.evaluate("document.fonts.ready")
+        else:
+            pg.goto((DEMOS / f"{spec['demo']}.html").as_uri())
         pg.evaluate("document.fonts.ready")
         pg.evaluate("([bg, fg, acc]) => { const s = document.body.style; s.setProperty('--hookbg', bg); s.setProperty('--hookfg', fg); s.setProperty('--hookacc', acc); }",
                     [k["cbg"], k["cfg"], k["acc"]])
@@ -229,6 +275,8 @@ def render(spec, uit, stem=False, zonder_stem=False):
         if scenes:
             rec.wacht_tot(totaal)
         browser.close()
+        if srv:
+            srv.shutdown()
     video = rsv.samenvoegen(frames, audio, rec.n / FPS, uit / "reel.mp4")
     if lijn:
         rsv.controleblad(video, lijn, uit / "controle.png")
