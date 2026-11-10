@@ -279,9 +279,11 @@ def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     delen, per_beat, t = [], [], 0.0
     for n, (audio, woorden) in enumerate(stukken):
         if n:
-            vorige = len(stukken[n - 1][0]) / SR + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
-            pauze = max(rust + VOORLOOP, min_scene(beats[n - 1]) - vorige + VOORKLANK + 0.01)
-            gat = np.zeros(sec(pauze - VOORKLANK), dtype=np.float32)
+            # gemeten waar de eerste klank in elk stuk zit (meestal VOORKLANK, soms 0 als Eric direct inzet)
+            k_vorig, k = stukken[n - 1][1][0]["s"], woorden[0]["s"]
+            vorige = len(stukken[n - 1][0]) / SR + (BEGIN - VOORLOOP if n == 1 else -k_vorig)
+            pauze = max(rust + VOORLOOP, min_scene(beats[n - 1]) - vorige + 0.01)
+            gat = np.zeros(sec(pauze - k), dtype=np.float32)
             if inademing is not None and beats[n].get("inademing"):
                 k = min(len(inademing), len(gat))
                 gat[len(gat) - k:] += inademing[len(inademing) - k:]
