@@ -376,13 +376,26 @@ def met_stem():
     return False
 
 
+def stem_zakt(map_):
+    """Zakt een zin weg (stemcontrole) en is er tegoed, dan één nieuwe opname (zelfde regel als stem_video)."""
+    meldingen = (json.loads((map_ / "controle.json").read_text(encoding="utf-8")).get("stem") or {}).get("meldingen")
+    if meldingen and stem_tegoed() >= STEM_MIN_TEGOED:
+        print("Stem zakt weg, één nieuwe opname:", meldingen)
+        return True
+    return False
+
+
 def render(soort, spec, kleur, map_, extra=None):
     if soort in ("carrousel", "actualiteit"):
         import render_carrousel
         render_carrousel.render({"serie": spec["serie"], "kleurenset": kleur, "slides": spec["slides"]}, map_)
     elif soort == "tekst_reel":
         import render_tekst_reel
-        render_tekst_reel.render({"serie": spec["serie"], "kleurenset": kleur, "beats": spec["beats"]}, map_, stem=met_stem())
+        r = {"serie": spec["serie"], "kleurenset": kleur, "beats": spec["beats"]}
+        if met_stem() and render_tekst_reel.render(r, map_, stem=True) and stem_zakt(map_):
+            render_tekst_reel.render({**r, "seed": random.randint(1, 10_000)}, map_, stem=True)
+        elif not (map_ / "reel.mp4").exists():
+            render_tekst_reel.render(r, map_)
     elif soort == "kaart":
         import render_kaart
         d = spec["diagram"]
@@ -394,7 +407,11 @@ def render(soort, spec, kleur, map_, extra=None):
         render_kaart.render(k, map_ / "kaart.png", extra)
     elif soort == "demo_reel":
         import opname_demo
-        opname_demo.render(json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8")), map_, stem=met_stem())
+        d = json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8"))
+        if met_stem() and opname_demo.render(d, map_, stem=True) and stem_zakt(map_):
+            opname_demo.render({**d, "seed": random.randint(1, 10_000)}, map_, stem=True)
+        elif not (map_ / "reel.mp4").exists():
+            opname_demo.render(d, map_)
     elif soort == "stem_video":
         import render_stem_video
         return render_stem_video.render(video_spec(spec, kleur), map_, zonder_stem=bool(extra))
