@@ -93,7 +93,7 @@
 ## ~~Contentagent voor Instagram~~ — gebouwd 2026-11-04 t/m 11-09
 
 Fase 1 af: agent maakt carrousels, kaarten, tekst-reels, demo-reels, actualiteiten, stories en video's met stem (Eric), Oussama keurt goed in Telegram en plaatst zelf. Draait op de server. Zie `workflows/instagram_content.md` en `plans/2026-11-04-instagram-contentagent.md`.
-**Nog open:** dagelijkse concepten om 09:00 staan aan (10-11); posten vanaf 16-11; na 2-3 weken video met/zonder stem vergelijken.
+**Nog open:** dagelijkse concepten om 08:15 staan aan (10-11); posten vanaf 16-11; na 2-3 weken video met/zonder stem vergelijken.
 **Fase 2 (later):** automatisch posten na ✅.
 
 ---
