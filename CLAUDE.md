@@ -167,7 +167,7 @@ Draait op de Hetzner-server (zelfde als CommandOS), niet op de laptop:
 - `instagram-agent.timer`: maakt dagelijks nieuwe concepten (`apps/content/agent.py dagelijks`, buffer van 3). Staat nog **uit** tot Oussama een tijd kiest.
 - De wachtrij (tabellen `instagram_*` in `data/data.db`) en de bestanden (`.tmp/instagram/`) staan sinds 09-11-2026 op de server; die zijn leidend. Draai de agent of de content-bot niet ook lokaal (twee luisteraars botsen in Telegram).
 - Fase 1: niets gaat automatisch online; Oussama keurt goed in Telegram en plaatst zelf.
-- Kosten: Claude max $20/mnd (melding bij $15); ElevenLabs gratis plan 10.000 tekens/mnd (reset op de 7e), ±450 per video met stem.
+- Kosten: Claude max $20/mnd (melding bij $15); ElevenLabs Starter $6/mnd (sinds 10-11-2026, commerciële licentie) 30.000 tekens/mnd, ±150-450 per opname. Let op: `stem.tegoed()` geeft (plan, VERBRUIKT, limiet), niet wat er over is.
 
 ## Data Warehouse
 
