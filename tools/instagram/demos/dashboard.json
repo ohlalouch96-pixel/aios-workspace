@@ -1,7 +1,7 @@
 {"demo":"dashboard","kleurenset":"zwart","hook":"Still opening *5 tabs* to see if your ads work?",
 "stappen":[
  {"doe":"wacht","s":0.8},
- {"doe":"ondertitel","tekst":"Revenue, ad spend, ROAS. *One screen.*"},
+ {"doe":"ondertitel","tekst":"Revenue, ad spend, ROAS. *One screen.*","uitspraak":"[confident] Revenue, ad spend, R.O.A.S. One screen."},
  {"doe":"wacht","s":0.8},
  {"doe":"zoom","factor":1.3,"x":745,"y":150},
  {"doe":"wacht","s":1.8},

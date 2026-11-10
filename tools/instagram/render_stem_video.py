@@ -58,6 +58,7 @@ Kost ElevenLabs-tegoed alleen voor een script dat nog niet in de cache staat.
 
 import argparse
 import json
+import random
 import shutil
 import subprocess
 import sys
@@ -83,6 +84,7 @@ MAX_WOORDEN = 4    # woorden per ondertitelblok
 VOORKLANK = 0.06   # zin begint net voor de eerste klank (zachte inzet blijft heel)
 MIN_RUST = 1.0     # regel: beeld blijft na het laatste woord zo lang staan (gekozen 09-11 uit 1,5 / 1,0 / 0,75)
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
+ERIC = {"stem": "eric_v3", "tempo": 1.1}  # vaste stem voor alle video's (take D, 10% sneller; besluit 09-11)
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
 # donker/dfg = donkere scène, licht/lfg = lichte scène, acc = accent op donker, mark = markeerstift op licht.
@@ -263,6 +265,11 @@ def stemcontrole(stukken):
     return uit, meldingen, tonen
 
 
+def min_scene(beat):
+    """Een scène staat minstens MIN_SCENE in beeld, of langer als de beat dat vraagt ("min_duur", bv. een demo)."""
+    return max(MIN_SCENE, beat.get("min_duur", 0))
+
+
 def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     """Zinnen achter elkaar met tussen elke zin rust + VOORLOOP stilte (gemeten van waar de stem stopt
     tot de eerste klank van de volgende zin). Is een scène dan korter dan MIN_SCENE, dan krijgt alleen
@@ -272,7 +279,7 @@ def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     for n, (audio, woorden) in enumerate(stukken):
         if n:
             vorige = len(stukken[n - 1][0]) / SR + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
-            pauze = max(rust + VOORLOOP, MIN_SCENE - vorige + VOORKLANK + 0.01)
+            pauze = max(rust + VOORLOOP, min_scene(beats[n - 1]) - vorige + VOORKLANK + 0.01)
             gat = np.zeros(sec(pauze - VOORKLANK), dtype=np.float32)
             if inademing is not None and beats[n].get("inademing"):
                 k = min(len(inademing), len(gat))
@@ -287,60 +294,78 @@ def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     return per_beat
 
 
-def tijdlijn(spec, uit):
-    """Spreekt het hele script in één keer in (doorlopende intonatie, geen herstart per zin), knipt het
-    op het echte geluid in zinnen, zet ze met gelijke pauzes achter elkaar en knipt de scènes op de
-    woordtijden. Beats met "opname": "<naam>" komen uit een extra opname van hetzelfde hele script."""
-    beats = spec["beats"]
-    stukken = zinnen(*opname(spec))
-    for naam in {b["opname"] for b in beats if b.get("opname")}:
-        extra = zinnen(*opname(spec, naam))
-        stukken = [extra[n] if b.get("opname") == naam else stukken[n] for n, b in enumerate(beats)]
-    tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven gelijk
-    stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
-               for n, ((a, w), b) in enumerate(zip(stukken, beats))]
-    stukken, meldingen, tonen = stemcontrole(stukken)
-    wav = uit / "stem.wav"
-    per_beat = monteer(stukken, beats, wav, spec.get("rust", MIN_RUST))
+def stemspoor(spec, uit, zonder_stem=False):
+    """Erics stem onder een reeks beats ("zegt", optioneel "uitspraak", "stem", "opname", "inademing", "min_duur").
+    Gedeeld door de video met stem, de tekst-reel en de demo-reel. Spreekt het hele script in één keer in
+    (doorlopende intonatie, geen herstart per zin), knipt het op het echte geluid in zinnen en zet ze met
+    gelijke pauzes achter elkaar. Beats met "opname": "<naam>" komen uit een extra opname van hetzelfde script.
+    zonder_stem: gratis proef, woordtijden geschat (±3 woorden per seconde), zelfde pauze- en scèneregels.
+    Geeft (scènes [{start, dur, woorden relatief aan de scène}], audio voor samenvoegen(), totaal, stemcontrole)."""
+    beats, info, audio = spec["beats"], None, []
+    if zonder_stem:
+        per_beat, t = [], 0.0
+        for n, beat in enumerate(beats):
+            if n:
+                vorige = per_beat[-1][-1]["e"] - per_beat[-1][0]["s"] + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
+                t += max(spec.get("rust", MIN_RUST) + VOORLOOP, min_scene(beats[n - 1]) - vorige + 0.01)
+            woorden = []
+            for w in beat["zegt"].split():
+                duur = 0.12 + 0.055 * len(w.strip(".,?!"))
+                woorden.append({"w": w, "s": t, "e": t + duur})
+                t += duur + 0.04
+            per_beat.append(woorden)
+    else:
+        stukken = zinnen(*opname(spec))
+        for naam in {b["opname"] for b in beats if b.get("opname")}:
+            extra = zinnen(*opname(spec, naam))
+            stukken = [extra[n] if b.get("opname") == naam else stukken[n] for n, b in enumerate(beats)]
+        tempo = spec.get("tempo", 1.0)  # hele stem sneller/langzamer (toonhoogte blijft gelijk), pauzes blijven gelijk
+        stukken = [bewerk(a, w, {**b.get("stem", {}), "tempo": b.get("stem", {}).get("tempo", 1.0) * tempo}, n)
+                   for n, ((a, w), b) in enumerate(zip(stukken, beats))]
+        stukken, meldingen, tonen = stemcontrole(stukken)
+        wav = uit / "stem.wav"
+        per_beat = monteer(stukken, beats, wav, spec.get("rust", MIN_RUST))
+        info = {"meldingen": meldingen, "toon_hz": [round(x) if x else None for x in tonen]}
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
-    totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
-    scenes, captions = [], []
-    for n, (beat, woorden) in enumerate(zip(beats, per_beat)):
+    totaal = max(BEGIN + per_beat[-1][-1]["e"] + STAART, starts[-1] + beats[-1].get("min_duur", 0))
+    if not zonder_stem:
+        audio = [(wav, 0.0, totaal, BEGIN)]
+    scenes = []
+    for n, woorden in enumerate(per_beat):
         start = starts[n]
         eind = starts[n + 1] if n + 1 < len(beats) else totaal
-        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start, "e": BEGIN + w["e"] - start} for w in woorden]
-        scenes.append({**beat["scene"], "start": start, "dur": eind - start, "woorden": w_scene})
-        captions += ondertitels(woorden, BEGIN)
+        scenes.append({"start": start, "dur": eind - start,
+                       "woorden": [{"w": w["w"], "s": BEGIN + w["s"] - start, "e": BEGIN + w["e"] - start} for w in woorden]})
+    return scenes, audio, totaal, info
+
+
+def regie(beats, tags=True):
+    """Vaste stemregels die vóór elke opname gelden: " [long pause]" achter de laatste zin (anders kapt
+    ElevenLabs het laatste woord af) en bij meer dan 3 zinnen één natuurlijke inademing op een willekeurige plek.
+    tags=True: zinnen zonder regie-tag krijgen er een (begin zelfverzekerd, vraag nieuwsgierig, verder afwisselend)."""
+    for n, b in enumerate(beats):
+        u = b.get("uitspraak") or b["zegt"]
+        if tags and not u.lstrip().startswith("["):
+            tag = "[confident]" if n == 0 else "[curious]" if u.rstrip().endswith("?") else ["[warm]", "[confident]"][n % 2]
+            u = f"{tag} {u}"
+        b["uitspraak"] = u
+    if not beats[-1]["uitspraak"].rstrip().endswith("[long pause]"):
+        beats[-1]["uitspraak"] = beats[-1]["uitspraak"].rstrip() + " [long pause]"
+    if len(beats) > 3 and not any(b.get("inademing") for b in beats):
+        beats[random.randint(1, len(beats) - 2)]["inademing"] = True
+    return beats
+
+
+def tijdlijn(spec, uit, zonder_stem=False):
+    """Stemspoor plus de Typer-scènes uit de spec."""
+    scenes, audio, totaal, info = stemspoor(spec, uit, zonder_stem)
+    scenes = [{**b["scene"], **sc} for b, sc in zip(spec["beats"], scenes)]
     lijn = {"scenes": scenes, "kleuren": VIDEO_KLEUREN[spec.get("kleurenset", "navy")]}
     if spec.get("ondertitels"):  # standaard uit: de teksten in beeld vertellen het verhaal al (besluit 06-11)
-        lijn["captions"] = captions
-    lijn["stem"] = {"meldingen": meldingen, "toon_hz": [round(x) if x else None for x in tonen]}
-    return lijn, [(wav, 0.0, totaal, BEGIN)], totaal
-
-
-def tijdlijn_zonder_stem(spec):
-    """Gratis proefversie zonder Eric: woordtijden geschat (±3 woorden per seconde na tempo), zelfde pauze-
-    en scèneregels. Om script en beeld te beoordelen voordat er tegoed naar een opname gaat."""
-    beats, per_beat, t = spec["beats"], [], 0.0
-    for n, beat in enumerate(beats):
-        if n:
-            vorige = per_beat[-1][-1]["e"] - per_beat[-1][0]["s"] + (BEGIN - VOORLOOP + VOORKLANK if n == 1 else 0)
-            t += max(spec.get("rust", MIN_RUST) + VOORLOOP, MIN_SCENE - vorige + 0.01)
-        woorden = []
-        for w in beat["zegt"].split():
-            duur = 0.12 + 0.055 * len(w.strip(".,?!"))
-            woorden.append({"w": w, "s": t, "e": t + duur})
-            t += duur + 0.04
-        per_beat.append(woorden)
-    starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
-    totaal = BEGIN + per_beat[-1][-1]["e"] + STAART
-    scenes = []
-    for n, (beat, woorden) in enumerate(zip(beats, per_beat)):
-        start = starts[n]
-        eind = starts[n + 1] if n + 1 < len(beats) else totaal
-        w_scene = [{"w": w["w"], "s": BEGIN + w["s"] - start, "e": BEGIN + w["e"] - start} for w in woorden]
-        scenes.append({**beat["scene"], "start": start, "dur": eind - start, "woorden": w_scene})
-    return {"scenes": scenes, "kleuren": VIDEO_KLEUREN[spec.get("kleurenset", "navy")]}, [], totaal
+        lijn["captions"] = sum((ondertitels(sc["woorden"], sc["start"]) for sc in scenes), [])
+    if info:
+        lijn["stem"] = info
+    return lijn, audio, totaal
 
 
 def controleer(lijn, min_rust=None):
@@ -364,12 +389,8 @@ def render(spec, uit, zonder_stem=False):
     frames = uit / "_frames"
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
-    lijn, audio, totaal = tijdlijn_zonder_stem(spec) if zonder_stem else tijdlijn(spec, uit)
-    controleer(lijn, spec.get("rust"))
-    for m in lijn.get("stem", {}).get("meldingen", []):
-        print("Let op, stem:", m)
-    (uit / "controle.json").write_text(json.dumps({"stem": lijn.get("stem"), "scenes": [
-        {"type": s["type"], "dur": round(s["dur"], 2)} for s in lijn["scenes"]]}, ensure_ascii=False, indent=2), encoding="utf-8")
+    lijn, audio, totaal = tijdlijn(spec, uit, zonder_stem)
+    controle(lijn, uit, spec.get("rust"))
     cover_t = lijn["scenes"][0]["dur"] - 0.3
     with sync_playwright() as p:
         try:
@@ -388,21 +409,35 @@ def render(spec, uit, zonder_stem=False):
         pg.screenshot(path=str(uit / "cover.jpg"), type="jpeg", quality=95)
         browser.close()
 
-    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
-    cmd = [ffmpeg, "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(frames / "f%05d.png")]
-    for mp3, *_ in audio:
-        cmd += ["-i", str(mp3)]
-    mix = "".join(f"[{i + 1}:a]atrim={van:.3f}:{tot:.3f},asetpts=PTS-STARTPTS,adelay={int(op * 1000)}:all=1[a{i}];"
-                  for i, (_, van, tot, op) in enumerate(audio))
-    mix += "".join(f"[a{i}]" for i in range(len(audio))) + f"amix=inputs={len(audio)}:normalize=0:duration=longest,apad[a]"  # geluid even lang als beeld (anders hapert het einde op telefoons)
-    video = uit / "reel.mp4"
+    video = samenvoegen(frames, audio, totaal, uit / "reel.mp4")
+    controleblad(video, lijn, uit / "controle.png")
+    return video
+
+
+def controle(lijn, uit, min_rust=None):
+    """Regels controleren (stopt bij een fout), stemmeldingen tonen en alles bewaren in controle.json."""
+    controleer(lijn, min_rust)
+    for m in (lijn.get("stem") or {}).get("meldingen", []):
+        print("Let op, stem:", m)
+    (uit / "controle.json").write_text(json.dumps({"stem": lijn.get("stem"), "scenes": [
+        {"type": s["type"], "dur": round(s["dur"], 2)} for s in lijn["scenes"]]}, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def samenvoegen(frames, audio, totaal, video):
+    """Frames (f00000.png, ...) plus eventueel de stem tot één mp4; ruimt frames en stem.wav op."""
+    cmd = [FFMPEG, "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(frames / "f%05d.png")]
+    for wav, *_ in audio:
+        cmd += ["-i", str(wav)]
     if audio:
+        mix = "".join(f"[{i + 1}:a]atrim={van:.3f}:{tot:.3f},asetpts=PTS-STARTPTS,adelay={int(op * 1000)}:all=1[a{i}];"
+                      for i, (_, van, tot, op) in enumerate(audio))
+        mix += "".join(f"[a{i}]" for i in range(len(audio))) + f"amix=inputs={len(audio)}:normalize=0:duration=longest,apad[a]"  # geluid even lang als beeld (anders hapert het einde op telefoons)
         cmd += ["-filter_complex", mix, "-map", "0:v", "-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p", "-t", f"{totaal:.2f}", "-movflags", "+faststart", str(video)]
     subprocess.run(cmd, check=True)
     shutil.rmtree(frames)
-    (uit / "stem.wav").unlink(missing_ok=True)
-    controleblad(video, lijn, uit / "controle.png")
+    for wav, *_ in audio:
+        Path(wav).unlink(missing_ok=True)
     return video
 
 

@@ -8,7 +8,13 @@ wordt door deze tool bestuurd (CSS-animaties en tweens per frame verzet),
 dus elk frame is scherp en het tempo is altijd gelijk. De app staat op een
 beeldscherm; "zoom" laat de camera inzoomen op een element, "ondertitel" zet
 een korte uitleg onder het scherm. Levert reel.mp4
-(1080x1920, 30 fps, zonder geluid) en cover.jpg.
+(1080x1920, 30 fps) en cover.jpg.
+
+Met --stem zegt Eric de hook en elke ondertitel (zelfde stem en regels als
+render_stem_video: één doorlopende opname, 1 s rust na elke zin). Elke ondertitel
+begint een nieuw stuk; dat stuk duurt minstens zo lang als de handelingen erin, en
+anders zo lang als Eric nodig heeft (de opname wacht dan op hem). Afwijkende
+uitspraak (bv. "R.O.A.S."): "hook_uitspraak" in de spec of "uitspraak" bij een ondertitel.
 
 Spec:
     {
@@ -26,21 +32,21 @@ Spec:
     }
 
 Gebruik (CLI):
-    python tools/instagram/opname_demo.py spec.json [--uit map/]
+    python tools/instagram/opname_demo.py spec.json [--uit map/] [--stem | --zonder-stem]
+--zonder-stem = gratis proef met geschatte stemtiming (geen geluid, geen tegoed).
 """
 
 import argparse
 import json
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
-import imageio_ffmpeg
 from playwright.sync_api import sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_carrousel import KLEUREN, TMP, opmaak  # noqa: E402
+import render_stem_video as rsv  # noqa: E402
 
 DEMOS = Path(__file__).resolve().parent / "demos"
 FPS = 30
@@ -76,6 +82,13 @@ class Opname:
 
     def wacht(self, s):
         for _ in range(int(s * FPS)):
+            self.frame()
+
+    def wacht_tot(self, t):
+        doel = int(round(t * FPS))
+        if self.n > doel + 1:
+            print(f"Let op: opname loopt {(self.n - doel) / FPS:.2f}s voor op de stem")
+        while self.n < doel:
             self.frame()
 
     def beweeg(self, x, y, duur=0.45):
@@ -117,12 +130,51 @@ class Opname:
         self.wacht(0.25)
 
 
-def render(spec, uit):
+def frames_stap(st):
+    """Hoeveel frames een stap duurt (zelfde rekensom als de Opname-methodes hierboven)."""
+    doe, beweeg = st["doe"], max(1, int(0.45 * FPS))
+    if doe == "wacht":
+        return int(st["s"] * FPS)
+    if doe == "klik":
+        return beweeg + int(0.35 * FPS)
+    if doe == "typ":
+        return beweeg + int(0.35 * FPS) + 2 * len(st["tekst"]) + int(0.25 * FPS)
+    if doe == "typ_rest":
+        return 2 * len(st["tekst"]) + int(0.25 * FPS)
+    if doe == "beweeg":
+        return beweeg
+    return 0
+
+
+def stem_beats(spec):
+    """Wat Eric zegt: de hook en elke ondertitel (zonder *sterretjes*), met als minimale duur de handelingen
+    in dat stuk, zodat niets op het scherm wordt afgekapt."""
+    beats = [{"zegt": spec["hook"].replace("*", ""), "uitspraak": spec.get("hook_uitspraak"),
+              "frames": int(0.3 * FPS) + int(0.7 * FPS)}]
+    for st in spec["stappen"]:
+        if st["doe"] == "ondertitel":
+            beats.append({"zegt": st["tekst"].replace("*", ""), "uitspraak": st.get("uitspraak"), "frames": 0})
+        beats[-1]["frames"] += frames_stap(st)
+    for b in beats:
+        b["min_duur"] = b.pop("frames") / FPS
+        if not b["uitspraak"]:
+            del b["uitspraak"]
+    return rsv.regie(beats)
+
+
+def render(spec, uit, stem=False, zonder_stem=False):
     uit.mkdir(parents=True, exist_ok=True)
     frames = uit / "_frames"
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
     k = KLEUREN[spec.get("kleurenset", "navy")]
+    scenes, audio, lijn = None, [], None
+    if stem or zonder_stem:
+        stemspec = {**rsv.ERIC, **{x: spec[x] for x in ("seed", "rust") if x in spec}, "beats": stem_beats(spec)}
+        scenes, audio, totaal, info = rsv.stemspoor(stemspec, uit, zonder_stem)
+        lijn = {"scenes": [{**sc, "type": "hook" if n == 0 else f"stuk{n + 1}"} for n, sc in enumerate(scenes)], "stem": info}
+        rsv.controle(lijn, uit, spec.get("rust"))
+    stuk = 0
     with sync_playwright() as p:
         try:
             browser = p.chromium.launch(channel="chrome")
@@ -143,6 +195,9 @@ def render(spec, uit):
         pg.screenshot(path=str(uit / "cover.jpg"), type="jpeg", quality=95)
         for st in spec["stappen"]:
             doe = st["doe"]
+            if scenes and doe == "ondertitel":  # nieuw stuk: wachten tot Eric aan deze zin begint
+                stuk += 1
+                rec.wacht_tot(scenes[stuk]["start"])
             if doe == "wacht":
                 rec.wacht(st["s"])
             elif doe == "klik":
@@ -168,11 +223,12 @@ def render(spec, uit):
                 rec.bewogen = True
             else:
                 raise ValueError(f"Onbekende stap: {doe}")
+        if scenes:
+            rec.wacht_tot(totaal)
         browser.close()
-    video = uit / "reel.mp4"
-    subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(frames / "f%05d.png"),
-                    "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(video)], check=True)
-    shutil.rmtree(frames)
+    video = rsv.samenvoegen(frames, audio, rec.n / FPS, uit / "reel.mp4")
+    if lijn:
+        rsv.controleblad(video, lijn, uit / "controle.png")
     return video
 
 
@@ -180,10 +236,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("spec")
     ap.add_argument("--uit")
+    ap.add_argument("--stem", action="store_true", help="Eric zegt de hook en ondertitels (kost ElevenLabs-tegoed als het niet in de cache staat)")
+    ap.add_argument("--zonder-stem", action="store_true", help="gratis proef met geschatte stemtiming, zonder geluid")
     args = ap.parse_args()
     spec_pad = Path(args.spec)
     uit = (Path(args.uit) if args.uit else TMP / spec_pad.stem).resolve()
-    print(render(json.loads(spec_pad.read_text(encoding="utf-8")), uit))
+    print(render(json.loads(spec_pad.read_text(encoding="utf-8")), uit, stem=args.stem, zonder_stem=args.zonder_stem))
 
 
 if __name__ == "__main__":

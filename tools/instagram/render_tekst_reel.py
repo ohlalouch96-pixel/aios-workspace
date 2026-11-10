@@ -1,8 +1,11 @@
 """
 Instagram — reel met bewegende tekst (@insightance.ai)
 
-Maakt een verticale video (1080x1920, 30 fps, mp4, zonder geluid) uit een
-reeks korte teksten ("beats"). Woorden verschijnen een voor een, het kernwoord
+Maakt een verticale video (1080x1920, 30 fps, mp4) uit een reeks korte
+teksten ("beats"). Met --stem leest Eric elke beat voor (zelfde stem en regels als
+render_stem_video: één doorlopende opname, 1 s rust na elke zin, minimaal 3 s per
+beat) en verschijnt elk woord op het moment dat hij het zegt; "duur" wordt dan
+genegeerd. Een label dat een gewoon woord is ("Myth", "Truth") zegt hij ook. Woorden verschijnen een voor een, het kernwoord
 in de accentkleur, elke beat schuift weg voor de volgende. Zelfde kleurensets
 en letters als de carrousels. Tekst blijft binnen de veilige zone van Reels
 (niet onder de knoppen of de caption).
@@ -22,37 +25,43 @@ Spec:
     }
 
 Gebruik (CLI):
-    python tools/instagram/render_tekst_reel.py spec.json [--uit map/]
+    python tools/instagram/render_tekst_reel.py spec.json [--uit map/] [--stem | --zonder-stem]
+--zonder-stem = gratis proef met geschatte stemtiming (geen geluid, geen tegoed).
 Vereist: playwright (Chrome) en imageio-ffmpeg (pip install imageio-ffmpeg).
 """
 
 import argparse
 import html
 import json
+import re
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
-import imageio_ffmpeg
 from playwright.sync_api import sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_carrousel import KLEUREN, FONTS, TMP, logo, maat, opmaak  # noqa: E402
+import render_stem_video as rsv  # noqa: E402
 
 FPS = 30
 IN, UIT_ANIM, STAGGER = 0.45, 0.35, 0.09
 
 
-def pagina(spec):
+def pagina(spec, scenes=None, totaal=None):
+    """scenes (met stem): per beat start, duur en woordtijden; elk woord verschijnt net voordat Eric het zegt."""
     k = KLEUREN[spec.get("kleurenset", "navy")]
     beats, t = [], 0.0
-    totaal = sum(b["duur"] for b in spec["beats"])
+    totaal = totaal or sum(b["duur"] for b in spec["beats"])
     for nr, b in enumerate(spec["beats"]):
         laatste = nr == len(spec["beats"]) - 1
+        sc = scenes[nr] if scenes else None
+        if sc:
+            t, b = sc["start"], {**b, "duur": sc["dur"]}
+            tijden = [t + w["s"] for w in sc["woorden"]][len(gesproken_label(b)):]
         # woorden in losse spans, <em>-delen (kernwoord) krijgen de accentkleur
         woorden = opmaak(b["tekst"]).replace("<em>", " <em>").replace("</em>", "</em> ").split()
-        spans, open_em, i = [], False, 0
+        spans, open_em, i, wi = [], False, 0, 0
         for w in woorden:
             if w.startswith("<em>"):
                 open_em, w = True, w[4:]
@@ -61,7 +70,17 @@ def pagina(spec):
                 w = w[:-5]
             if w:
                 cls = ' class="acc"' if open_em else ""
-                spans.append(f'<span{cls} style="animation-delay:{t + 0.15 + i * STAGGER:.2f}s">{w}</span>')
+                if sc:  # met stem: op het gesproken woord (losse leestekens met het woord ervoor mee)
+                    echt = re.search(r"\w", w) is not None
+                    start = tijden[min(wi if echt else max(wi - 1, 0), len(tijden) - 1)] - 0.08
+                    wi += echt
+                else:
+                    start = t + 0.15 + i * STAGGER
+                span = f'<span{cls} style="animation-delay:{start:.2f}s">{w}</span>'
+                if spans and re.search(r"\w", w) is None:  # los leesteken na een kernwoord: vast aan dat woord, geen spatie ervoor
+                    spans[-1] += span
+                else:
+                    spans.append(span)
                 i += 1
             if sluit:
                 open_em = False
@@ -96,16 +115,40 @@ h1 span{{display:inline-block;animation:in {IN}s cubic-bezier(.2,.8,.2,1) both}}
     return f'<html><head><meta charset="utf-8"><style>{css}</style></head><body>{body}</body></html>', totaal
 
 
-def render(spec, uit):
+def gesproken_label(b):
+    """Een label als "Myth" of "Truth" zegt Eric ook; "Step 1" of "Cost #1" niet."""
+    lab = (b.get("label") or "").strip()
+    return [lab] if lab and lab.isalpha() else []
+
+
+def stem_beats(spec):
+    """De beats zoals Eric ze uitspreekt: label (als het een woord is) + de tekst zonder *sterretjes*."""
+    beats = []
+    for b in spec["beats"]:
+        zegt = " ".join(w + "." for w in gesproken_label(b)) + " " + b["tekst"].replace("*", "")
+        beats.append({"zegt": " ".join(zegt.split())})
+    return rsv.regie(beats)
+
+
+def render(spec, uit, stem=False, zonder_stem=False):
     uit.mkdir(parents=True, exist_ok=True)
     frames = uit / "_frames"
     shutil.rmtree(frames, ignore_errors=True)
     frames.mkdir()
-    doc, totaal = pagina(spec)
+    scenes, audio, lijn = None, [], None
+    if stem or zonder_stem:
+        stemspec = {**rsv.ERIC, **{k: spec[k] for k in ("seed", "rust") if k in spec}, "beats": stem_beats(spec)}
+        scenes, audio, totaal, info = rsv.stemspoor(stemspec, uit, zonder_stem)
+        lijn = {"scenes": [{**sc, "type": f"beat{n + 1}"} for n, sc in enumerate(scenes)], "stem": info}
+        rsv.controle(lijn, uit, spec.get("rust"))
+        doc, totaal = pagina(spec, scenes, totaal)
+    else:
+        doc, totaal = pagina(spec)
     tmp = uit / "_reel.html"
     tmp.write_text(doc, encoding="utf-8")
     n = int(totaal * FPS)
-    hook_klaar = min(spec["beats"][0]["duur"] - UIT_ANIM - 0.05, 2.2)
+    eerste = scenes[0]["dur"] if scenes else spec["beats"][0]["duur"]
+    hook_klaar = min(eerste - UIT_ANIM - 0.05, scenes[0]["woorden"][-1]["e"] + 0.4 if scenes else 2.2)
     with sync_playwright() as p:
         try:
             browser = p.chromium.launch(channel="chrome")
@@ -121,11 +164,10 @@ def render(spec, uit):
         pg.evaluate(f"document.getAnimations().forEach(a => a.currentTime = {hook_klaar * 1000:.0f})")
         pg.screenshot(path=str(uit / "cover.jpg"), type="jpeg", quality=95)
         browser.close()
-    video = uit / "reel.mp4"
-    subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(frames / "f%05d.png"),
-                    "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(video)], check=True)
-    shutil.rmtree(frames)
+    video = rsv.samenvoegen(frames, audio, n / FPS, uit / "reel.mp4")
     tmp.unlink()
+    if lijn:
+        rsv.controleblad(video, lijn, uit / "controle.png")
     return video
 
 
@@ -133,10 +175,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("spec")
     ap.add_argument("--uit")
+    ap.add_argument("--stem", action="store_true", help="Eric leest de tekst voor (kost ElevenLabs-tegoed als het niet in de cache staat)")
+    ap.add_argument("--zonder-stem", action="store_true", help="gratis proef met geschatte stemtiming, zonder geluid")
     args = ap.parse_args()
     spec_pad = Path(args.spec)
     uit = (Path(args.uit) if args.uit else TMP / spec_pad.stem).resolve()
-    print(render(json.loads(spec_pad.read_text(encoding="utf-8")), uit))
+    print(render(json.loads(spec_pad.read_text(encoding="utf-8")), uit, stem=args.stem, zonder_stem=args.zonder_stem))
 
 
 if __name__ == "__main__":
