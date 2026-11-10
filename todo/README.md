@@ -6,6 +6,18 @@
 
 ---
 
+## Warm netwerk raadplegen (familie en kennissen)
+
+**Status:** Geparkeerd sinds 2026-11-10 ("nu geen tijd, later oppakken")
+**Idee van Oussama:** Eén persoonlijk WhatsApp-bericht schrijven en sturen naar neven, ooms, tantes en andere bekenden. Misschien kennen zij een ondernemer of webshop die geholpen kan worden, en zo komt er een potentiële klant uit.
+**Waarom:** Het doel is de eerste betalende klant, in welke branche ook. Een introductie via iemand die je kent is veel warmer dan een koud bericht.
+**Wat er moet gebeuren:**
+1. Lijstje maken van wie het bericht krijgt.
+2. Bericht schrijven: kort, persoonlijk, in gewone taal uitleggen wat Insightance doet en één concrete vraag ("ken jij iemand met een eigen bedrijf of webshop die...?").
+3. Versturen en bijhouden wie iemand doorgeeft.
+
+---
+
 ## E-mail-follow-ups als concept in Gmail klaarzetten
 
 **Status:** Geparkeerd sinds 2026-10-06 ("een andere keer"), wel hoge prioriteit zodra er tijd is
