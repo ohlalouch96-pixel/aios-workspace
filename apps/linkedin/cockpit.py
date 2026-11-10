@@ -374,6 +374,35 @@ function initialen(naam) {
 
   <div class="sectie">
     <div class="sectie-head">
+      <h2>Verstuurd — wachten op reactie</h2>
+      <span class="count-badge">{{ onderweg|length }}</span>
+    </div>
+    {% if not onderweg %}
+    <div class="leeg">Niemand onderweg.</div>
+    {% endif %}
+    {% for o in onderweg %}
+    <div class="card muted">
+      <div class="persoon">
+        <div class="avatar">{{ o.naam[:1] }}</div>
+        <div>
+          <div class="persoon-naam">{{ o.naam }} — {{ o.functie }}</div>
+          <div class="persoon-sub">{{ o.bedrijf }} · {{ o.locatie }}</div>
+        </div>
+      </div>
+      {% if o.status == 'Bericht verstuurd' %}
+      <p class="persoon-sub" style="margin-bottom: 10px;">Bericht 1 verstuurd op {{ o.datum_bericht1 }}. Volgende follow-up (bericht 2) staat gepland op {{ o.volgende_follow_up }}.</p>
+      {% else %}
+      <p class="persoon-sub" style="margin-bottom: 10px;">Bericht 2 verstuurd op {{ o.datum_bericht2 }}. Volgende follow-up (bericht 3) staat gepland op {{ o.volgende_follow_up }}.</p>
+      {% endif %}
+      <div class="knoppenrij">
+        <a class="btn btn-outline" href="{{ o.url }}" target="_blank">💬 Open op LinkedIn</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="sectie">
+    <div class="sectie-head">
       <h2>Follow-ups due</h2>
       <span class="count-badge">{{ follow_ups|length }}</span>
     </div>
@@ -424,6 +453,7 @@ def index():
     kandidaten = wachtrij.volgende_batch(10, records=records)
     wachtend = wachtrij.wachtend_op_acceptatie(records=records)
     geaccepteerd = wachtrij.geaccepteerd_wachtend(records=records)
+    onderweg = wachtrij.onderweg(records=records)
     follow_ups = wachtrij.due_follow_ups(records=records)
     noodstop = limits.check_noodstop(conn)
     limieten = limits.current_week_limits(conn)
@@ -435,8 +465,8 @@ def index():
     stats = _dashboard_stats(conn)
     conn.close()
     return render_template_string(
-        PAGINA, kandidaten=kandidaten, wachtend=wachtend, geaccepteerd=geaccepteerd, follow_ups=follow_ups,
-        noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
+        PAGINA, kandidaten=kandidaten, wachtend=wachtend, geaccepteerd=geaccepteerd, onderweg=onderweg,
+        follow_ups=follow_ups, noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
         check_fout=request.args.get("check_fout"),
         check_geaccepteerd=request.args.get("check_geaccepteerd"),
         check_verlopen=request.args.get("check_verlopen"),

@@ -181,6 +181,25 @@ FOLLOW_UP_STADIA = {
 }
 
 
+def onderweg(records=None):
+    """Rijen met status 'Bericht verstuurd' of 'Bericht 2 verstuurd' waarvan de
+    follow-up nog NIET due is: puur zichtbaarheid in de cockpit, zodat iemand
+    niet 'verdwijnt' uit het dashboard tussen het versturen van een bericht en
+    de volgende follow-up-datum (besluit Oussama 10-11, zie due_follow_ups()
+    voor de rijen die al wel due zijn)."""
+    if records is None:
+        records = alle_records()
+    vandaag = datetime.now().strftime("%Y-%m-%d")
+    resultaat = []
+    for record in records:
+        if record["status"] not in FOLLOW_UP_STADIA:
+            continue
+        due = record["volgende_follow_up"] and record["volgende_follow_up"] <= vandaag
+        if not due:
+            resultaat.append(record)
+    return resultaat
+
+
 def due_follow_ups(records=None):
     """Rijen waarvan volgende_follow_up vandaag of eerder is, met 'volgende_actie'
     erbij (bericht2 of bericht3) zodat de cockpit weet welk bericht te tonen."""
@@ -203,6 +222,7 @@ def main():
     sub.add_parser("due-follow-ups")
     sub.add_parser("geaccepteerd")
     sub.add_parser("wachtend")
+    sub.add_parser("onderweg")
     args = ap.parse_args()
 
     if args.cmd == "volgende":
@@ -213,6 +233,8 @@ def main():
         print(json.dumps(geaccepteerd_wachtend(), ensure_ascii=False, indent=2))
     elif args.cmd == "wachtend":
         print(json.dumps(wachtend_op_acceptatie(), ensure_ascii=False, indent=2))
+    elif args.cmd == "onderweg":
+        print(json.dumps(onderweg(), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
