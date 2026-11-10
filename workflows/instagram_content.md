@@ -86,6 +86,7 @@ Bij elke reel in het Telegram-bericht één korte regel muziekadvies, passend bi
 - Opnemen: `python tools/instagram/opname_demo.py tools/instagram/demos/offerte.json` → reel.mp4 + cover.jpg. Frame voor frame (scherp), ±45 sec renderen.
 - Nieuwe demo: zelfde opbouw (`_demo.css`/`_demo.js`), velden via `focusVeld`/`typLetter`, animaties via CSS of `animeer()`. Geen native `<select>` (popup komt niet in beeld), gebruik een eigen lijst.
 - Fictieve namen: generiek, geen bestaande merken, e-mail/domein op `.example` of een algemeen voorbeeldadres.
+- **Rondleiding eigen website (10-11):** `demos/website.json` (`"server": true`) neemt de echte site uit `docs/` op in het beeldscherm via een lokale server (niets naar de live site, geen cookiemelding, geen GA, Engels). Klantnamen (resultatenblok, case-labels, naam in de hero-kaart) worden alleen in de opname verborgen. Route: home, scrollen, automations (opent op Klantcontact, niet de cart-agent), rekentool met offertes + facturen, contact. Concept #7, eenmalig (niet in de agent-rotatie).
 
 ## Stappen per concept
 
