@@ -5,8 +5,8 @@ Maakt een verticale video (1080x1920, 30 fps, mp4) uit een reeks korte
 teksten ("beats"). Met --stem leest Eric elke beat voor (zelfde stem en regels als
 render_stem_video: één doorlopende opname, 1 s rust na elke zin, minimaal 3 s per
 beat) en verschijnt elk woord op het moment dat hij het zegt; "duur" wordt dan
-genegeerd. Hij zegt alleen de grote tekst (geen labels) en eindigt met "Send me a DM."
-(niet in beeld). Woorden verschijnen een voor een, het kernwoord
+genegeerd. Hij zegt alleen de grote tekst (geen labels) en eindigt met de vaste
+afsluiter "You wanna know more? Send me a DM." als eigen zin (niet in beeld). Woorden verschijnen een voor een, het kernwoord
 in de accentkleur, elke beat schuift weg voor de volgende. Zelfde kleurensets
 en letters als de carrousels. Tekst blijft binnen de veilige zone van Reels
 (niet onder de knoppen of de caption).
@@ -118,9 +118,9 @@ h1 span{{display:inline-block;animation:in {IN}s cubic-bezier(.2,.8,.2,1) both}}
 
 def stem_beats(spec):
     """De beats zoals Eric ze uitspreekt: alleen de grote tekst (zonder *sterretjes*, geen labels),
-    en achter de laatste zin de vaste afsluiter "Send me a DM." (niet in beeld)."""
+    en daarna de vaste afsluiter als eigen zin (niet in beeld, de laatste beat blijft staan)."""
     beats = [{"zegt": " ".join(b["tekst"].replace("*", "").split())} for b in spec["beats"]]
-    beats[-1]["zegt"] += " " + rsv.AFSLUITER
+    beats.append({"zegt": rsv.AFSLUITER, "uitspraak": "[warm] " + rsv.AFSLUITER})
     return rsv.regie(beats)
 
 
@@ -133,6 +133,7 @@ def render(spec, uit, stem=False, zonder_stem=False):
     if stem or zonder_stem:
         stemspec = {**rsv.ERIC, **{k: spec[k] for k in ("seed", "rust") if k in spec}, "beats": stem_beats(spec)}
         scenes, audio, totaal, info = rsv.stemspoor(stemspec, uit, zonder_stem)
+        scenes = rsv.afsluiter_erbij(scenes)
         lijn = {"scenes": [{**sc, "type": f"beat{n + 1}"} for n, sc in enumerate(scenes)], "stem": info}
         rsv.controle(lijn, uit, spec.get("rust"))
         doc, totaal = pagina(spec, scenes, totaal)

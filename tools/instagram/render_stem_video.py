@@ -70,7 +70,7 @@ from playwright.sync_api import sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_carrousel import TMP  # noqa: E402
-from stem import STEMMEN, inspreken  # noqa: E402
+from stem import STEMMEN, env, inspreken  # noqa: E402
 
 PAGINA = Path(__file__).resolve().parent / "video" / "typer.html"
 INADEMING = Path(__file__).resolve().parent / "video" / "inademing_eric.wav"
@@ -85,7 +85,7 @@ VOORKLANK = 0.06   # zin begint net voor de eerste klank (zachte inzet blijft he
 MIN_RUST = 1.0     # regel: beeld blijft na het laatste woord zo lang staan (gekozen 09-11 uit 1,5 / 1,0 / 0,75)
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
 ERIC = {"stem": "eric_v3", "tempo": 1.2}  # vaste stem voor alle video's (take D, 20% sneller; 10% voelde te traag, 10-11)
-AFSLUITER = "Send me a DM."  # Eric eindigt elke video hiermee (besluit 10-11), hoeft niet in beeld
+AFSLUITER = "You wanna know more? Send me a DM."  # Eric eindigt elke video hiermee als eigen zin (besluit 10-11), hoeft niet in beeld
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
 # donker/dfg = donkere scène, licht/lfg = lichte scène, acc = accent op donker, mark = markeerstift op licht.
@@ -271,6 +271,42 @@ def min_scene(beat):
     return max(MIN_SCENE, beat.get("min_duur", 0))
 
 
+def gehoord(wav, beats):
+    """Regel 4b (10-11): Eric sloeg in een opname woorden over ("background") terwijl de woordtijden van
+    ElevenLabs gewoon alle woorden gaven. Daarom de opname laten uitschrijven (OpenAI Whisper, ±$0,002 per
+    video) en vergelijken met het script. Geeft de woorden die niet gehoord zijn; None als het niet kan."""
+    import difflib
+    import requests
+    sleutel = env("OPENAI_API_KEY")
+    if not sleutel:
+        return None
+    try:
+        r = requests.post("https://api.openai.com/v1/audio/transcriptions", headers={"Authorization": f"Bearer {sleutel}"},
+                          files={"file": ("stem.wav", Path(wav).read_bytes())}, data={"model": "whisper-1", "language": "en"}, timeout=120)
+        r.raise_for_status()
+    except Exception as e:  # controle kan niet: melden, niet blokkeren
+        print("Let op: uitschrijven van de stem lukte niet:", e)
+        return None
+    schoon = lambda s: ["".join(c for c in w.lower() if c.isalnum()) for w in s.replace("-", " ").split()]  # noqa: E731
+    hoord = [w for w in schoon(r.json().get("text", "")) if w]
+    script = [w for b in beats for w in schoon(b["zegt"]) if w]
+    mis = []
+    for blok in difflib.SequenceMatcher(None, script, hoord, autojunk=False).get_opcodes():
+        if blok[0] in ("delete", "replace"):
+            for w in script[blok[1]:blok[2]]:
+                if len(w) >= 3 and not any(c.isdigit() for c in w) and not difflib.get_close_matches(w, hoord[max(blok[3] - 2, 0):blok[4] + 2], cutoff=0.75):
+                    mis.append(w)
+    return mis
+
+
+def afsluiter_erbij(scenes):
+    """De afsluiter is een eigen zin (met de vaste rust ervoor), maar in beeld blijft de laatste scène gewoon staan."""
+    a, b = scenes[-2], scenes[-1]
+    verschil = b["start"] - a["start"]
+    return scenes[:-2] + [{**a, "dur": a["dur"] + b["dur"],
+                           "woorden": a["woorden"] + [{**w, "s": w["s"] + verschil, "e": w["e"] + verschil} for w in b["woorden"]]}]
+
+
 def monteer(stukken, beats, uit_wav, rust=MIN_RUST):
     """Zinnen achter elkaar met tussen elke zin rust + VOORLOOP stilte (gemeten van waar de stem stopt
     tot de eerste klank van de volgende zin). Is een scène dan korter dan MIN_SCENE, dan krijgt alleen
@@ -328,7 +364,10 @@ def stemspoor(spec, uit, zonder_stem=False):
         stukken, meldingen, tonen = stemcontrole(stukken)
         wav = uit / "stem.wav"
         per_beat = monteer(stukken, beats, wav, spec.get("rust", MIN_RUST))
-        info = {"meldingen": meldingen, "toon_hz": [round(x) if x else None for x in tonen]}
+        mis = gehoord(wav, beats)
+        if mis:
+            meldingen.append("niet gehoord: " + ", ".join(mis))
+        info = {"meldingen": meldingen, "toon_hz": [round(x) if x else None for x in tonen], "niet_gehoord": mis}
     starts = [0.0] + [BEGIN + w[0]["s"] - VOORLOOP for w in per_beat[1:]]
     totaal = max(BEGIN + per_beat[-1][-1]["e"] + STAART, starts[-1] + beats[-1].get("min_duur", 0))
     if not zonder_stem:

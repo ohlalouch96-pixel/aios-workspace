@@ -336,8 +336,8 @@ def prompt_stem_video(dienst, aantal, tags):
             "- dashboard (light): kop, items exactly 2 KPI tiles {a:LABEL, b:number as text, c:prefix like '$', d:suffix like '%'}, getallen (6-8 numbers for the line chart), resultaat (optional warning line).\n"
             "- checklist (light, tasks tick themselves off): kop, bedrijf, tekst (small tag), items max 4 {a:task}, resultaat.\n"
             "- notificaties (dark, phone notifications): kop, items max 3 {a:one symbol like ✓ $ ★, b:title, c:subtitle, d:time like '9:16'}.\n"
-            "- eind (dark, last beat): kop (e.g. 'Want this for *your business?*'), knop 'Send me a DM ⚡', handle '@insightance.ai'. "
-            "Spoken text for eind: a short question about their business plus 'Send me a DM.'\n"
+            "- eind (dark, last beat): kop exactly 'Wanna *know more?*', knop 'Send me a DM ⚡', handle '@insightance.ai'. "
+            "Spoken text for eind: exactly 'You wanna know more? Send me a DM.' (zegt) and '[warm] You wanna know more? Send me a DM.' (uitspraak)\n"
             "Every number on screen must add up and match what is said. 'onderwerp' is a short Dutch description including the service name.\n"
             f"{taalregels(aantal, tags)}")
 

@@ -38,6 +38,13 @@ STEMMEN = {
 }
 
 
+def env(naam):
+    for regel in (WORKSPACE_ROOT / ".env").read_text(encoding="utf-8").splitlines():
+        if regel.startswith(naam + "="):
+            return regel.split("=", 1)[1].strip()
+    return None
+
+
 def sleutel():
     for regel in (WORKSPACE_ROOT / ".env").read_text(encoding="utf-8").splitlines():
         if regel.startswith("ELEVENLABS_API_KEY="):
