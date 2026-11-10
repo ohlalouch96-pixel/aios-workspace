@@ -295,8 +295,7 @@ def prompt_tekst_reel(rij, aantal, tags):
     serie = "MYTH CHECK" if rij[1] == "myth_check" else "AUTOMATION SIMPLIFIED"
     return (f"Turn this into a 12 to 16 second vertical text reel: 4 to 6 beats of 2.2 to 3.6 seconds each.\n{bron_tekst(rij)}\n\n"
             "Beat 1 is the hook (about 3 s). Each beat is max ~10 words; mark the key word with *asterisks*; 'label' is an optional small tag (e.g. 'Step 1'), empty if not needed. "
-            "A voice-over (Eric) reads every beat aloud word for word, and says a one-word label like 'Myth' or 'Truth' too: write it the way people say it, "
-            "no symbols or abbreviations that read badly aloud (no '#', '/', '&', emoji), times like '9 PM'. "
+            "There is no voice-over: the text and the music carry the reel. "
             f"Last beat lands the point. 'serie' must be '{serie}'.\n{taalregels(aantal, tags)}")
 
 
@@ -367,35 +366,14 @@ def nieuwe_map(naam):
     return pad
 
 
-def met_stem():
-    """Tekst- en demo-reels krijgen Erics stem (besluit 10-11: zonder stem oogt het leeg); is het
-    ElevenLabs-tegoed op, dan worden ze zoals vroeger zonder geluid gemaakt."""
-    if stem_tegoed() >= STEM_MIN_TEGOED:
-        return True
-    print("Te weinig ElevenLabs-tegoed: deze video wordt zonder stem gemaakt.")
-    return False
-
-
-def stem_zakt(map_):
-    """Zakt een zin weg (stemcontrole) en is er tegoed, dan één nieuwe opname (zelfde regel als stem_video)."""
-    meldingen = (json.loads((map_ / "controle.json").read_text(encoding="utf-8")).get("stem") or {}).get("meldingen")
-    if meldingen and stem_tegoed() >= STEM_MIN_TEGOED:
-        print("Stem zakt weg, één nieuwe opname:", meldingen)
-        return True
-    return False
-
-
 def render(soort, spec, kleur, map_, extra=None):
     if soort in ("carrousel", "actualiteit"):
         import render_carrousel
         render_carrousel.render({"serie": spec["serie"], "kleurenset": kleur, "slides": spec["slides"]}, map_)
     elif soort == "tekst_reel":
         import render_tekst_reel
-        r = {"serie": spec["serie"], "kleurenset": kleur, "beats": spec["beats"]}
-        if met_stem() and render_tekst_reel.render(r, map_, stem=True) and stem_zakt(map_):
-            render_tekst_reel.render({**r, "seed": random.randint(1, 10_000)}, map_, stem=True)
-        elif not (map_ / "reel.mp4").exists():
-            render_tekst_reel.render(r, map_)
+        # alleen tekst + muziek, geen stem (besluit 10-11; de stem blijft voor stem_video)
+        render_tekst_reel.render({"serie": spec["serie"], "kleurenset": kleur, "beats": spec["beats"]}, map_)
     elif soort == "kaart":
         import render_kaart
         d = spec["diagram"]
@@ -407,11 +385,7 @@ def render(soort, spec, kleur, map_, extra=None):
         render_kaart.render(k, map_ / "kaart.png", extra)
     elif soort == "demo_reel":
         import opname_demo
-        d = json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8"))
-        if met_stem() and opname_demo.render(d, map_, stem=True) and stem_zakt(map_):
-            opname_demo.render({**d, "seed": random.randint(1, 10_000)}, map_, stem=True)
-        elif not (map_ / "reel.mp4").exists():
-            opname_demo.render(d, map_)
+        opname_demo.render(json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8")), map_)  # zonder stem (10-11)
     elif soort == "stem_video":
         import render_stem_video
         return render_stem_video.render(video_spec(spec, kleur), map_, zonder_stem=bool(extra))
@@ -501,7 +475,6 @@ def maak(conn, soort=None, zonder_stem=False):
     elif soort == "demo_reel":
         demo = laatst_gebruikt(conn, "demo_reel", DEMOS)
         spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags), aantal, tags)
-        spec["muziek"] = STEM_MUZIEK
         map_ = nieuwe_map(demo)
         render("demo_reel", spec, None, map_, demo)
         pid = opslaan(conn, "demo_reel", spec, demo, map_)
@@ -524,8 +497,6 @@ def maak(conn, soort=None, zonder_stem=False):
         else:
             maker = prompt_carrousel if soort == "carrousel" else prompt_tekst_reel
             spec = schrijf(conn, soort, maker(rij, aantal, tags), aantal, tags)
-            if soort == "tekst_reel":
-                spec["muziek"] = STEM_MUZIEK
             kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
             render(soort, spec, kleur, map_)
             pid = opslaan(conn, soort, spec, kleur, map_, bron_id=rij[0])
@@ -553,8 +524,6 @@ def verwerk(conn):
             conn.execute("UPDATE instagram_feedback SET verwerkt = 1 WHERE id = ?", (fid,))
             conn.commit()
             continue
-        if soort == "demo_reel":
-            spec["muziek"] = STEM_MUZIEK
         if soort == "stem_video":
             spec["dienst"], spec["muziek"] = oud.get("dienst"), STEM_MUZIEK
             if [b["uitspraak"] for b in spec["beats"]] != [b["uitspraak"] for b in oud["beats"]] and stem_tegoed() < STEM_MIN_TEGOED:
@@ -564,8 +533,6 @@ def verwerk(conn):
                 continue
             render("stem_video", spec, kleur, map_)
         elif soort not in ("story", "demo_reel"):  # bij een demo verandert alleen de tekst, de video blijft
-            if soort == "tekst_reel":
-                spec["muziek"] = STEM_MUZIEK
             for f in list(map_.glob("slide-*.png")) + list(map_.glob("*.mp4")) + list(map_.glob("kaart.png")):
                 f.unlink()
             render({"fork": "kaart"}.get(soort, soort), spec, kleur, map_, kleur if soort in ("kaart", "fork") else None)
