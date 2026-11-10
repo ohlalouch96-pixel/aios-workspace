@@ -287,7 +287,9 @@ def gehoord(wav, beats):
     except Exception as e:  # controle kan niet: melden, niet blokkeren
         print("Let op: uitschrijven van de stem lukte niet:", e)
         return None
-    schoon = lambda s: ["".join(c for c in w.lower() if c.isalnum()) for w in s.replace("-", " ").split()]  # noqa: E731
+    spreektaal = {"wanna": "want to", "gonna": "going to", "gotta": "got to"}  # Whisper schrijft ze voluit
+    schoon = lambda s: [x for w in s.replace("-", " ").split() for x in spreektaal.get(  # noqa: E731
+        "".join(c for c in w.lower() if c.isalnum()), "".join(c for c in w.lower() if c.isalnum())).split()]
     hoord = [w for w in schoon(r.json().get("text", "")) if w]
     script = [w for b in beats for w in schoon(b["zegt"]) if w]
     mis = []
