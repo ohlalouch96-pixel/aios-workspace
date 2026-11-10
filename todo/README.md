@@ -48,7 +48,7 @@
 
 ## KvK-registratie
 
-**Status:** Opgepakt op 2026-11-10: Oussama plant de KvK-afspraak nu al in (eerder: wachten tot de eerste klant ja zegt)
+**Status:** Online ingeschreven op 2026-11-10 met oussama@insightance.ai, wacht op bevestiging per mail. Daarna: KvK-nummer en btw-nummer doorgeven aan Claude (eerder: wachten tot de eerste klant ja zegt)
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
 **Trigger om op te pakken:** Zodra een klant ja zegt (bijv. Millenaar | Peijnenburg na het eerste gesprek). Dan direct een afspraak inplannen, niet pas na de betaling.
 **Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel. Online formulier via DigiD (ca. 15 min), daarna afspraak op een KvK-kantoor met ID. Kosten 2026: €85,15 eenmalig.
