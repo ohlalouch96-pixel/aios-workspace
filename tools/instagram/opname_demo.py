@@ -10,7 +10,8 @@ beeldscherm; "zoom" laat de camera inzoomen op een element, "ondertitel" zet
 een korte uitleg onder het scherm. Levert reel.mp4
 (1080x1920, 30 fps) en cover.jpg.
 
-Met --stem zegt Eric de hook en elke ondertitel (zelfde stem en regels als
+Met --stem zegt Eric de hook en elke ondertitel, en eindigt met "Send me a DM."
+(niet in beeld; zelfde stem en regels als
 render_stem_video: één doorlopende opname, 1 s rust na elke zin). Elke ondertitel
 begint een nieuw stuk; dat stuk duurt minstens zo lang als de handelingen erin, en
 anders zo lang als Eric nodig heeft (de opname wacht dan op hem). Afwijkende
@@ -155,6 +156,9 @@ def stem_beats(spec):
         if st["doe"] == "ondertitel":
             beats.append({"zegt": st["tekst"].replace("*", ""), "uitspraak": st.get("uitspraak"), "frames": 0})
         beats[-1]["frames"] += frames_stap(st)
+    beats[-1]["zegt"] += " " + rsv.AFSLUITER
+    if beats[-1].get("uitspraak"):
+        beats[-1]["uitspraak"] += " " + rsv.AFSLUITER
     for b in beats:
         b["min_duur"] = b.pop("frames") / FPS
         if not b["uitspraak"]:

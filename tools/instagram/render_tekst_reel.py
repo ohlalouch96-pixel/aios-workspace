@@ -5,7 +5,8 @@ Maakt een verticale video (1080x1920, 30 fps, mp4) uit een reeks korte
 teksten ("beats"). Met --stem leest Eric elke beat voor (zelfde stem en regels als
 render_stem_video: één doorlopende opname, 1 s rust na elke zin, minimaal 3 s per
 beat) en verschijnt elk woord op het moment dat hij het zegt; "duur" wordt dan
-genegeerd. Een label dat een gewoon woord is ("Myth", "Truth") zegt hij ook. Woorden verschijnen een voor een, het kernwoord
+genegeerd. Hij zegt alleen de grote tekst (geen labels) en eindigt met "Send me a DM."
+(niet in beeld). Woorden verschijnen een voor een, het kernwoord
 in de accentkleur, elke beat schuift weg voor de volgende. Zelfde kleurensets
 en letters als de carrousels. Tekst blijft binnen de veilige zone van Reels
 (niet onder de knoppen of de caption).
@@ -58,7 +59,7 @@ def pagina(spec, scenes=None, totaal=None):
         sc = scenes[nr] if scenes else None
         if sc:
             t, b = sc["start"], {**b, "duur": sc["dur"]}
-            tijden = [t + w["s"] for w in sc["woorden"]][len(gesproken_label(b)):]
+            tijden = [t + w["s"] for w in sc["woorden"]]
         # woorden in losse spans, <em>-delen (kernwoord) krijgen de accentkleur
         woorden = opmaak(b["tekst"]).replace("<em>", " <em>").replace("</em>", "</em> ").split()
         spans, open_em, i, wi = [], False, 0, 0
@@ -115,18 +116,11 @@ h1 span{{display:inline-block;animation:in {IN}s cubic-bezier(.2,.8,.2,1) both}}
     return f'<html><head><meta charset="utf-8"><style>{css}</style></head><body>{body}</body></html>', totaal
 
 
-def gesproken_label(b):
-    """Een label als "Myth" of "Truth" zegt Eric ook; "Step 1" of "Cost #1" niet."""
-    lab = (b.get("label") or "").strip()
-    return [lab] if lab and lab.isalpha() else []
-
-
 def stem_beats(spec):
-    """De beats zoals Eric ze uitspreekt: label (als het een woord is) + de tekst zonder *sterretjes*."""
-    beats = []
-    for b in spec["beats"]:
-        zegt = " ".join(w + "." for w in gesproken_label(b)) + " " + b["tekst"].replace("*", "")
-        beats.append({"zegt": " ".join(zegt.split())})
+    """De beats zoals Eric ze uitspreekt: alleen de grote tekst (zonder *sterretjes*, geen labels),
+    en achter de laatste zin de vaste afsluiter "Send me a DM." (niet in beeld)."""
+    beats = [{"zegt": " ".join(b["tekst"].replace("*", "").split())} for b in spec["beats"]]
+    beats[-1]["zegt"] += " " + rsv.AFSLUITER
     return rsv.regie(beats)
 
 

@@ -84,7 +84,8 @@ MAX_WOORDEN = 4    # woorden per ondertitelblok
 VOORKLANK = 0.06   # zin begint net voor de eerste klank (zachte inzet blijft heel)
 MIN_RUST = 1.0     # regel: beeld blijft na het laatste woord zo lang staan (gekozen 09-11 uit 1,5 / 1,0 / 0,75)
 MIN_SCENE = 3.0    # regel: elke scène minstens zo lang in beeld
-ERIC = {"stem": "eric_v3", "tempo": 1.1}  # vaste stem voor alle video's (take D, 10% sneller; besluit 09-11)
+ERIC = {"stem": "eric_v3", "tempo": 1.2}  # vaste stem voor alle video's (take D, 20% sneller; 10% voelde te traag, 10-11)
+AFSLUITER = "Send me a DM."  # Eric eindigt elke video hiermee (besluit 10-11), hoeft niet in beeld
 
 # Kleurensets voor video, zelfde namen als de kleurregel (wachtrij.kies_kleur): navy is de basis.
 # donker/dfg = donkere scène, licht/lfg = lichte scène, acc = accent op donker, mark = markeerstift op licht.
