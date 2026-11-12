@@ -226,8 +226,15 @@ Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor 
 Ik hoor graag van je.
 ```
 
-Bericht 3 is identiek aan de installatiebedrijven-versie hierboven (al
-generiek genoeg). Geen link in bericht 2, want er bestaat nog geen
+```
+Dag [voornaam],
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht je er ooit voor openstaan om tijd terug te winnen, dan weet je me te vinden.
+Succes met [bedrijfsnaam]!
+```
+
+Bericht 3 is sinds 12-11 een eigen, iets uitgebreidere afsluiter voor
+makelaars (concreter dan "mocht het ooit relevant worden" bij
+installatiebedrijven). Geen link in bericht 2, want er bestaat nog geen
 makelaars-specifieke demo/landingspagina zoals de offertetool. Het 10-15
 uur/week-cijfer en het woord "automatiseren" zijn op verzoek van Oussama
 (12-11) weer verwijderd/vervangen door "uit handen nemen" — hij merkt bij

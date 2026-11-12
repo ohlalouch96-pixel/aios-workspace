@@ -163,7 +163,7 @@ Ik hoor graag van je.
 
 ```
 Dag [voornaam],
-Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden.
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht je er ooit voor openstaan om tijd terug te winnen, dan weet je me te vinden.
 Succes met [bedrijfsnaam]!
 ```
 
@@ -173,8 +173,9 @@ is op verzoek van Oussama (12-11) weer weggehaald uit bericht 2, en het woord
 "automatiseren" vervangen door "uit handen nemen" — hij merkt bij
 installatiebedrijven veel weerstand tegen de woorden "automatiseren"/"AI".
 Dit is voorlopig alleen voor makelaars doorgevoerd, niet (nog) voor
-installatiebedrijven. Bericht 3 is identiek aan de installatiebedrijven-
-versie (al generiek genoeg voor beide niches).
+installatiebedrijven. Bericht 3 is sinds 12-11 een eigen, iets uitgebreidere
+afsluiter voor makelaars (concreter dan "mocht het ooit relevant worden")
+— niet meer identiek aan de installatiebedrijven-versie.
 
 **Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
 Als iemand op bericht 1, 2 of 3 reageert, is er bewust GEEN vast vervolgscript —

@@ -32,7 +32,7 @@ Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, z
 Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor {bedrijf}?
 Ik hoor graag van je."""
     b3 = f"""Dag {voornaam},
-Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden.
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht je er ooit voor openstaan om tijd terug te winnen, dan weet je me te vinden.
 Succes met {bedrijf}!"""
     return b1, b2, b3
 
