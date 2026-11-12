@@ -221,15 +221,18 @@ Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even ligg
 
 ```
 Dag [voornaam],
-Ik help makelaars en adviseurs met het automatiseren van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
 Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
-Ondernemers die dit automatiseren winnen doorgaans 10 tot 15 uur per week terug.
 Ik hoor graag van je.
 ```
 
 Bericht 3 is identiek aan de installatiebedrijven-versie hierboven (al
 generiek genoeg). Geen link in bericht 2, want er bestaat nog geen
-makelaars-specifieke demo/landingspagina zoals de offertetool.
+makelaars-specifieke demo/landingspagina zoals de offertetool. Het 10-15
+uur/week-cijfer en het woord "automatiseren" zijn op verzoek van Oussama
+(12-11) weer verwijderd/vervangen door "uit handen nemen" — hij merkt bij
+installatiebedrijven veel weerstand tegen de woorden "automatiseren"/"AI".
+Voorlopig alleen voor makelaars, niet (nog) voor installatiebedrijven.
 
 Bron van de waarheid voor deze teksten is `tools/linkedin/berichten.py` (de
 agent gebruikt dat bestand, niet dit document) — dit document is de

@@ -156,9 +156,8 @@ Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even ligg
 
 ```
 Dag [voornaam],
-Ik help makelaars en adviseurs met het automatiseren van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
 Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
-Ondernemers die dit automatiseren winnen doorgaans 10 tot 15 uur per week terug.
 Ik hoor graag van je.
 ```
 
@@ -169,10 +168,13 @@ Succes met [bedrijfsnaam]!
 ```
 
 Geen link in bericht 2 (nog geen makelaars-specifieke demo/landingspagina
-zoals de offertetool voor installatiebedrijven) — in plaats daarvan het
-algemene 10-15 uur/week-cijfer, zelfde bron als
-`outputs/outreach-ondernemers-email-strategie.md`. Bericht 3 is identiek aan
-de installatiebedrijven-versie (al generiek genoeg voor beide niches).
+zoals de offertetool voor installatiebedrijven). Het 10-15 uur/week-cijfer
+is op verzoek van Oussama (12-11) weer weggehaald uit bericht 2, en het woord
+"automatiseren" vervangen door "uit handen nemen" — hij merkt bij
+installatiebedrijven veel weerstand tegen de woorden "automatiseren"/"AI".
+Dit is voorlopig alleen voor makelaars doorgevoerd, niet (nog) voor
+installatiebedrijven. Bericht 3 is identiek aan de installatiebedrijven-
+versie (al generiek genoeg voor beide niches).
 
 **Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
 Als iemand op bericht 1, 2 of 3 reageert, is er bewust GEEN vast vervolgscript —
