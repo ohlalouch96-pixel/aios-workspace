@@ -28,7 +28,7 @@ def makelaars(voornaam, bedrijf):
 Bedankt voor het accepteren! Ik volg wat er speelt bij makelaars en adviseurs in de regio rond opvolging van lopende aanvragen.
 Hoe gaat dat bij {bedrijf}, blijft een aanvraag of advies weleens even liggen voordat er opvolging is?"""
     b2 = f"""Dag {voornaam},
-Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij {bedrijf} gaat.
+Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij {bedrijf} gaat, en of dit wel eens wordt vergeten.
 Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor {bedrijf}?
 Ik hoor graag van je."""
     b3 = f"""Dag {voornaam},

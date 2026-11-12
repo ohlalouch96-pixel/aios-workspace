@@ -156,7 +156,7 @@ Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even ligg
 
 ```
 Dag [voornaam],
-Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Ik help makelaars en adviseurs met het uit handen nemen van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat, en of dit wel eens wordt vergeten.
 Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
 Ik hoor graag van je.
 ```
