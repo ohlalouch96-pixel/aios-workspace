@@ -48,7 +48,7 @@
 
 ## KvK-registratie
 
-**Status:** Online ingeschreven op 2026-11-10 met oussama@insightance.ai, wacht op bevestiging per mail. Daarna: KvK-nummer en btw-nummer doorgeven aan Claude (eerder: wachten tot de eerste klant ja zegt)
+**Status:** INGESCHREVEN op 2026-11-12. KvK-nummer: 42220238. Btw-nummer en omzetbelastingnummer (OB) komen binnen 2 weken per post (verwacht uiterlijk ~26-11). Nog open: KvK in websitefooter, Google Bedrijfsprofiel, reviews MHL/FTUK, btw-nummer doorgeven zodra binnen.
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
 **Trigger om op te pakken:** Zodra een klant ja zegt (bijv. Millenaar | Peijnenburg na het eerste gesprek). Dan direct een afspraak inplannen, niet pas na de betaling.
 **Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel. Online formulier via DigiD (ca. 15 min), daarna afspraak op een KvK-kantoor met ID. Kosten 2026: €85,15 eenmalig.
@@ -58,7 +58,7 @@
 - **Kleineondernemersregeling (KOR):** geen btw rekenen, maar ook geen btw terugvragen. Bij zakelijke klanten maakt btw voor hen niet uit (zij vragen het terug).
 - **Zakelijke rekening:** niet verplicht voor een eenmanszaak. Besluit 10-11: openen zodra een klant ja zegt (nu nog geen inkomsten, dus geen maandkosten zonder reden).
 **Volgorde bij de eerste klant:**
-1. ~~KvK-inschrijving~~ (gedaan 10-11, wacht op bevestiging).
+1. ~~KvK-inschrijving~~ (gedaan 12-11, KvK 42220238; btw-nummer volgt).
 2. Klant zegt ja → direct zakelijke rekening openen (goedkope online bank, geen lange contractduur). Loopt tegelijk met het wachten op het btw-nummer, dus geen tijdverlies.
 3. Tweede gesprek: voorstel laten zien en akkoord krijgen, nog zonder factuur.
 4. Btw-nummer binnen en zakelijke rekening klaar → pas dan de factuur voor de eerste betaling sturen (met het zakelijke rekeningnummer).

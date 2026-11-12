@@ -11,6 +11,7 @@
 **Model:** Eenpersoonsbedrijf / freelance agency gericht op AI-automatisering voor MKB.
 **Markt:** Nederland (primair), potentieel uitbreidbaar via digitale dienstverlening.
 **Website:** insightance.ai (live)
+**KvK:** 42220238 (eenmanszaak, ingeschreven 2026-11-12). Btw-nummer volgt per post.
 
 ---
 
