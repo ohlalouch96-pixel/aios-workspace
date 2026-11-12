@@ -183,6 +183,14 @@ PAGINA = """
   /* Follow-up card (lichter, nog niet actionable) */
   .card.muted { background: var(--soft); box-shadow: none; }
   .due-badge { background: var(--amber-bg); color: var(--amber); font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 10px; }
+
+  /* Compacte chips (bv. "Wachten op acceptatie") — alleen naam + 2 kleine acties */
+  .chip-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: flex; align-items: center; gap: 4px; background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 6px 8px 6px 14px; }
+  .chip-naam { font-size: 13px; font-weight: 600; color: var(--ink); margin-right: 2px; }
+  .chip-icon { background: transparent; border: none; color: var(--mid); cursor: pointer; font-size: 13px; line-height: 1; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; font-family: inherit; }
+  .chip-icon:hover { background: var(--tint); color: var(--navy); }
+  .chip form { display: inline; }
 </style>
 <script>
 function kopieerUitElement(id, btn) {
@@ -327,23 +335,17 @@ function initialen(naam) {
     </div>
     {% if not wachtend %}
     <div class="leeg">Niemand aan het wachten.</div>
-    {% endif %}
-    {% for w in wachtend %}
-    <div class="card muted">
-      <div class="persoon">
-        <div class="avatar">{{ w.naam[:1] }}</div>
-        <div>
-          <div class="persoon-naam">{{ w.naam }} — {{ w.functie }}</div>
-          <div class="persoon-sub">{{ w.bedrijf }} · {{ w.locatie }} · verzoek verstuurd {{ w.datum_verzoek }}</div>
-        </div>
+    {% else %}
+    <div class="chip-wrap">
+      {% for w in wachtend %}
+      <div class="chip" title="{{ w.bedrijf }} · {{ w.locatie }} · verzoek verstuurd {{ w.datum_verzoek }}">
+        <span class="chip-naam">{{ w.naam }}</span>
+        <a class="chip-icon" href="{{ w.url }}" target="_blank" title="Open op LinkedIn">↗</a>
+        <form method="post" action="{{ url_for('geaccepteerd_handmatig') }}"><input type="hidden" name="url" value="{{ w.url }}"><button type="submit" class="chip-icon" title="Zelf gezien dat dit geaccepteerd is">✓</button></form>
       </div>
-      <p class="persoon-sub" style="margin-bottom: 10px;">Klik boven op "Check op LinkedIn" om echt te checken of dit al geaccepteerd is. Zelf al gezien op LinkedIn dat het geaccepteerd is? Gebruik de knop hieronder.</p>
-      <div class="knoppenrij">
-        <a class="btn btn-outline" href="{{ w.url }}" target="_blank">💬 Open op LinkedIn</a>
-        <form method="post" action="{{ url_for('geaccepteerd_handmatig') }}"><input type="hidden" name="url" value="{{ w.url }}"><button class="btn btn-primary">✅ Geaccepteerd</button></form>
-      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+    {% endif %}
   </div>
 
   <div class="sectie">
