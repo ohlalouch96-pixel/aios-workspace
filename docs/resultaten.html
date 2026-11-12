@@ -193,6 +193,9 @@
   .foot-links a { color: rgba(255,255,255,.85); text-decoration: none; transition: color .2s; }
   .foot-links a:hover { color: #fff; }
   .foot-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; font-size: 13px; color: rgba(255,255,255,.6); }
+  /* bedrijfsgegevens in de footer; btw-nummer later toevoegen als extra <span class="foot-reg"> */
+  .foot-legal { display: inline-flex; flex-wrap: wrap; justify-content: center; row-gap: 2px; }
+  .foot-legal .foot-reg::before { content: "\00a0·\00a0"; }
 
   .chatfab { position: fixed; z-index: 41; right: 20px; bottom: max(20px, env(safe-area-inset-bottom, 0px)); width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer; background: var(--bright); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(31,94,255,.65); opacity: 0; transform: translateY(16px) scale(.9); pointer-events: none; transition: opacity .35s, transform .35s var(--ease), background .2s; }
   .chatfab svg { width: 22px; height: 22px; }
@@ -724,7 +727,7 @@
       <span class="logo" data-bar="#FFFFFF" data-curve="#9DBBE3"><span>Insightance</span></span>
       <div class="foot-links"><a href="mailto:info@insightance.ai">info@insightance.ai</a><a href="https://wa.me/31653340362" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.linkedin.com/in/oussama-hlalouch-49915514a" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
-    <div class="foot-bot"><span>© 2026 Insightance · Amsterdam</span><nav class="foot-pages" aria-label="Footer"><a href="index.html">Home</a><a href="automations.html">Automations</a><a href="resultaten.html" data-i18n>Resultaten</a><a href="demo.html">Demo</a><a href="webshops.html" data-i18n>Voor webshops</a><a href="vakbedrijven.html" data-i18n>Voor vakbedrijven</a><a href="privacybeleid.html" data-i18n>Privacybeleid</a></nav></div>
+    <div class="foot-bot"><span class="foot-legal"><span>© 2026 Insightance · Amsterdam</span><span class="foot-reg">KvK 42220238</span></span><nav class="foot-pages" aria-label="Footer"><a href="index.html">Home</a><a href="automations.html">Automations</a><a href="resultaten.html" data-i18n>Resultaten</a><a href="demo.html">Demo</a><a href="webshops.html" data-i18n>Voor webshops</a><a href="vakbedrijven.html" data-i18n>Voor vakbedrijven</a><a href="privacybeleid.html" data-i18n>Privacybeleid</a></nav></div>
   </div>
 </footer>
 
