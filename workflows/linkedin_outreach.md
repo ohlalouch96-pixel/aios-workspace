@@ -151,7 +151,7 @@ verkoopadviezen/aanvragen die blijven liggen zonder systematische opvolging):
 ```
 Dag [voornaam],
 Bedankt voor het accepteren! Ik volg wat er speelt bij makelaars en adviseurs in de regio rond opvolging van lopende aanvragen.
-Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even liggen voordat er opvolging is, of hebben jullie dat goed op orde?
+Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even liggen voordat er opvolging is?
 ```
 
 ```

@@ -118,6 +118,23 @@ def status(url, nieuwe_status, datum=None):
     return rij_nr
 
 
+def herschrijf_bericht(url, veld, tekst):
+    """Overschrijft bericht1/bericht2/bericht3 van een bestaande rij (bv. na een
+    sjabloonwijziging, zie tools/linkedin/berichten.py). Alleen zinvol zolang dat
+    bericht nog niet verstuurd is."""
+    kolom = {"bericht1": "H", "bericht2": "O", "bericht3": "Q"}[veld]
+    service, sheet_id = _service()
+    tab = _sheet_tab()
+    rij_nr, _ = _rij_vinden(service, sheet_id, tab, url)
+    if rij_nr is None:
+        raise ValueError(f"Geen rij gevonden met url={url}")
+    service.spreadsheets().values().update(
+        spreadsheetId=sheet_id, range=f"{tab}!{kolom}{rij_nr}",
+        valueInputOption="RAW", body={"values": [[tekst]]},
+    ).execute()
+    return rij_nr
+
+
 def alle_records():
     """Haalt de hele sheet in ÉÉN keer op en geeft alle rijen als dicts terug
     (KOLOMMEN-gemapt). De cockpit roept dit precies 1x per paginaweergave aan
