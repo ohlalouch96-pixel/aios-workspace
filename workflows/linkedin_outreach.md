@@ -2,11 +2,20 @@
 
 ## Doel
 
-Nieuwe MKB-installatiebedrijven (loodgieters, schilders, stukadoors, aannemers,
-installatietechniek, bouwbedrijven) vinden op LinkedIn, kwalificeren, en
-klaarzetten zodat Oussama zelf het connectieverzoek + openingsbericht verstuurt
-— zonder dat een bot ooit zelf iets verstuurt. Derde outreach-spoor naast
-webshops (`outreach`-tabel) en vakbedrijven (`ondernemers`-tabel).
+Nieuwe MKB-prospects vinden op LinkedIn, kwalificeren, en klaarzetten zodat
+Oussama zelf het connectieverzoek + openingsbericht verstuurt — zonder dat een
+bot ooit zelf iets verstuurt. Derde outreach-spoor naast webshops
+(`outreach`-tabel) en vakbedrijven (`ondernemers`-tabel).
+
+**Twee niches naast elkaar (sinds 10-11-2026):**
+- **Installatiebedrijven** (loodgieters, schilders, stukadoors, aannemers,
+  installatietechniek, bouwbedrijven) — de oorspronkelijke niche.
+- **Makelaars + hypotheek-/verzekeringsadviseurs** — toegevoegd na de
+  niche-pivot op de `ondernemers`-tracker (zie geheugen `project_niche_pivot_
+  makelaars`). Die pivot gold specifiek voor bellen/mailen (nul conversie
+  daar); LinkedIn presteert anders (snelle acceptaties, eerste reacties), dus
+  op verzoek van Oussama (12-11) blijft installatiebedrijven hier WEL actief,
+  naast makelaars.
 
 **Scope:** alleen nieuwe prospects (geen overlap met de `ondernemers`-tracker).
 Regio **heel Nederland** (besluit Oussama, 09-11 — de olievlek-fase vanuit
@@ -15,11 +24,14 @@ Noord-Holland is overgeslagen na de eerste testronde).
 ## Architectuur in één oogopslag
 
 ```
-tools/linkedin/browser.py   zoeken + profielen lezen + acceptatie-check (Playwright, persistente sessie)
-tools/linkedin/limits.py    opbouwschema, daglimieten, noodstop
-tools/linkedin/wachtrij.py  schrijft/leest de Google Sheet "linkedin-tracker"
-apps/linkedin/cockpit.py    lokale webcockpit (127.0.0.1) — kaarten + knoppen + dashboard
-scripts/collect_linkedin.py sync Sheet -> data.db (tabel `linkedin`), alleen-lezend
+tools/linkedin/browser.py       zoek()/lees_batch()/check() — Playwright, persistente sessie
+tools/linkedin/limits.py        opbouwschema, daglimieten, noodstop
+tools/linkedin/wachtrij.py      schrijft/leest de Google Sheet "linkedin-tracker"
+tools/linkedin/berichten.py     berichtsjablonen per niche (pure templating)
+tools/linkedin/kwalificeer.py   Claude API: beoordeelt 1 profiel (ja/twijfel/nee), kostenlog
+tools/linkedin/vind_prospects.py  "Nieuwe dag": zoek+lees+kwalificeer+klaarzetten in 1 aanroep
+apps/linkedin/cockpit.py        lokale webcockpit (127.0.0.1) — kaarten + knoppen + dashboard
+scripts/collect_linkedin.py     sync Sheet -> data.db (tabel `linkedin`), alleen-lezend
 ```
 
 Geen Telegram voor dit kanaal (kostenoverweging, zie plan). De Instagram-
@@ -27,59 +39,61 @@ contentbot blijft ongewijzigd op Telegram draaien.
 
 ## Stappenketen
 
-### 1. Zoeken (tool: `browser.py zoek`)
+### 1-3. Zoeken + lezen + kwalificeren (geautomatiseerd sinds 12-11: de "Nieuwe dag"-knop)
+
+In de cockpit, bij "Te versturen": knop **"🔍 Nieuwe dag — zoek nieuwe
+prospects"**. Draait `tools/linkedin/vind_prospects.py nieuwe_dag()`, duurt
+1-3 minuten (echte LinkedIn-bezoeken + een Claude-aanroep per profiel):
+
+1. **Zoeken** (`browser.zoek()`): roteert door een vaste poolt van (titel,
+   branche)-combinaties per niche (zie `ZOEKCOMBOS` in `vind_prospects.py`),
+   bijgehouden in `.tmp/linkedin/zoek_rotatie.json` zodat niet elke dag
+   dezelfde opdracht herhaalt. Zoekbudget wordt verdeeld over de actieve
+   niches. **Let op (gecalibreerd 09-11):** bewust maar twee simpele
+   zoekwoorden per opdracht (titel + branche), geen "OR"-lijsten en geen
+   regio in de zoekwoorden — die verdunnen de relevantie fors op LinkedIn's
+   fuzzy zoekmachine. Regio wordt tijdens kwalificatie beoordeeld, niet
+   vooraf gefilterd.
+2. **Lezen** (`browser.lees_batch()`): leest elk nieuw gevonden profiel
+   (gededupliceerd tegen de bestaande sheet) tot het daglimiet voor
+   profielbezoeken.
+3. **Kwalificeren** (`kwalificeer.kwalificeer()`, 1 Claude API-aanroep per
+   profiel, model `claude-sonnet-5-5`, effort `low`): geeft een verdict
+   (ja/twijfel/nee) + geëxtraheerde naam/functie/bedrijf/locatie terug. "ja"
+   gaat direct naar "Te versturen" met berichten klaar. "Twijfel" gaat naar
+   de cockpit-sectie **"Twijfelgevallen — jouw oordeel"** (berichten staan
+   al klaar, 1 klik op "Toevoegen" of "Afwijzen"). "Nee" wordt genegeerd,
+   niet opgeslagen. Kosten: ca. $0,007 per profiel, geboekt in
+   `linkedin_kosten`, plafond $10/maand (zie `kwalificeer.LIMIET`).
+
+**Handmatig/alternatief** (bv. voor Sales Navigator-profielen die je zelf
+kopieert, of om een losse batch te draaien buiten de knop om):
 
 ```
-python tools/linkedin/browser.py zoek --titel "eigenaar" --branche "loodgieter" --regio "Nederland" --aantal 20
-```
-
-**Let op (gecalibreerd 09-11):** combineer bewust maar twee simpele zoekwoorden
-(titel + branche), geen "OR"-lijsten — die verdunnen de relevantie fors.
-Regio wordt sowieso niet in de zoekwoorden gestopt (zie onder), dus
-`--regio` is nu puur informatief/voor logging.
-
-Herhaal met andere branchewoorden (schilder, stukadoor, aannemer,
-installatietechniek, bouwbedrijf) — dit is bewust een standaard LinkedIn
-people-search op losse zoekwoorden, geen gestructureerde filter-automatisering
-(geoUrn/industrie-codes), omdat dat betrouwbaarder is tegen een UI die
-regelmatig wijzigt. Respecteert het dagbudget uit `limits.py` automatisch.
-
-**Sales Navigator-proefperiode (tot ca. 2026-11-30):** gebruik in plaats
-hiervan `--urls-bestand <lijst.txt>` met profiel-URL's die je zelf uit je
-Sales Navigator-zoekresultaten hebt gekopieerd. Geen zoekbudget verbruikt,
-wel een voorraad opbouwen voor als de proefperiode afloopt.
-
-### 2. Lezen (tool: `browser.py lees`)
-
-```
+python tools/linkedin/browser.py zoek --titel "eigenaar" --branche "loodgieter" --aantal 20
+python tools/linkedin/browser.py zoek --urls-bestand <lijst.txt>   # Sales Navigator-proefperiode, geen zoekbudget
 python tools/linkedin/browser.py lees --batch-bestand .tmp/linkedin_zoekresultaten.json
 ```
 
-Levert per profiel de volledige paginatekst (naam, functie, bedrijf, locatie
-én de about-paragraaf — die staat gewoon in de normale paginatekst, geen losse
-sectie) in `.tmp/linkedin_profielen.json` — dit script interpreteert niets,
-dat is de volgende stap.
+Kwalificatiecriteria (zelfde regels als `kwalificeer.NICHE_REGELS`):
+- **Installatiebedrijven:** eigenaar/directeur/mede-eigenaar van een klein
+  tot middelgroot installatiebedrijf-achtig vakbedrijf (loodgieter,
+  elektricien, installatietechniek, HVAC, aannemer, bouwbedrijf, zonnepanelen).
+  Geen gewone medewerker bij een groot bedrijf (Liander, Heijmans, Vaillant).
+- **Makelaars:** makelaar/eigenaar van een makelaardij, hypotheek- of
+  verzekeringsadviseur, idealiter bij een klein/zelfstandig kantoor (geen
+  medewerker bij een groot filiaalkantoor zonder beslissingsmacht).
 
-### 3. Kwalificeren + conceptteksten schrijven (agent-werk, GEEN script)
-
-Claude beoordeelt elk profiel uit stap 2 tegen de doelgroepcriteria:
-- Functie: eigenaar, directeur, zaakvoerder of oprichter.
-- Branche: installatiebedrijf-achtig (loodgieter, schilder, stukadoor,
-  aannemer, installatietechniek, bouwbedrijf, en aanverwant zoals vloeren/
-  sanitair — bij twijfel aan Oussama voorleggen, niet zelf afwijzen).
-- Regio: heel Nederland (geen regiofilter meer sinds 09-11).
-
-Afgekeurde profielen gaan NIET naar de sheet (zelfde filosofie als
-`tools/source_prospects.py`). Voor goedgekeurde profielen schrijft Claude:
+Voor goedgekeurde profielen geldt:
 - **Connectienotitie: geen.** Op verzoek van Oussama (09-11) wordt het
   connectieverzoek altijd leeg verstuurd, geen bijgevoegde tekst. De cockpit
   toont geen notitie-blok als `connectienotitie` leeg is.
 - Een openingsbericht ("Bericht 1", wordt pas na acceptatie verstuurd) — vast
-  sjabloon, zie hieronder.
+  sjabloon per niche, zie `tools/linkedin/berichten.py` en hieronder.
 
-**Vaste sjabloon bericht 1** (vastgelegd 2026-11-09, zie ook
-`outputs/outreach-ondernemers-email-strategie.md` → sectie "LinkedIn-variant"
-voor de volledige geschiedenis/herzieningen):
+**Vaste sjabloon bericht 1 — installatiebedrijven** (vastgelegd 2026-11-09,
+zie ook `outputs/outreach-ondernemers-email-strategie.md` → sectie
+"LinkedIn-variant" voor de volledige geschiedenis/herzieningen):
 
 ```
 Dag [voornaam],
@@ -130,6 +144,36 @@ Succes met [bedrijfsnaam]!
 Status wordt na het versturen direct `Afgerond` (geen nieuwe follow-up-datum
 — dit is de laatste stap).
 
+**Vaste sjabloon berichten 1-3 — makelaars/adviseurs** (vastgelegd
+2026-11-12, gebaseerd op het pijnpunt uit `outputs/belscript-makelaars.md`:
+verkoopadviezen/aanvragen die blijven liggen zonder systematische opvolging):
+
+```
+Dag [voornaam],
+Bedankt voor het accepteren! Ik volg wat er speelt bij makelaars en adviseurs in de regio rond opvolging van lopende aanvragen.
+Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even liggen voordat er opvolging is, of hebben jullie dat goed op orde?
+```
+
+```
+Dag [voornaam],
+Ik help makelaars en adviseurs met het automatiseren van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
+Ondernemers die dit automatiseren winnen doorgaans 10 tot 15 uur per week terug.
+Ik hoor graag van je.
+```
+
+```
+Dag [voornaam],
+Ik laat het hierbij, geen verdere berichten van mijn kant. Mocht het ooit relevant worden, dan weet je me te vinden.
+Succes met [bedrijfsnaam]!
+```
+
+Geen link in bericht 2 (nog geen makelaars-specifieke demo/landingspagina
+zoals de offertetool voor installatiebedrijven) — in plaats daarvan het
+algemene 10-15 uur/week-cijfer, zelfde bron als
+`outputs/outreach-ondernemers-email-strategie.md`. Bericht 3 is identiek aan
+de installatiebedrijven-versie (al generiek genoeg voor beide niches).
+
 **Gespreksregels na een reactie (geen vast script, maar wel een vaste regel):**
 Als iemand op bericht 1, 2 of 3 reageert, is er bewust GEEN vast vervolgscript —
 Oussama meldt dat aan Claude en het gesprek gaat ad-hoc verder. Wel een
@@ -139,16 +183,21 @@ sturen, bijvoorbeeld: *"Vind je het goed als ik je vrijblijvend kan laten
 zien wat mogelijk is voor jouw bedrijf?"* Doel is een call, niet een lang
 LinkedIn-gesprek.
 
-### 4. In de wachtrij zetten (tool: `wachtrij.py`, aangeroepen door de agent)
+### 4. In de wachtrij zetten (automatisch via de "Nieuwe dag"-knop, of handmatig)
+
+De "Nieuwe dag"-knop doet dit al automatisch (stap 1-3 hierboven). Voor een
+losse handmatige toevoeging:
 
 ```python
 import sys; sys.path.insert(0, "tools/linkedin")
 import wachtrij
 wachtrij.nieuw({"naam": ..., "functie": ..., "bedrijf": ..., "locatie": ...,
-                 "url": ..., "connectienotitie": ..., "bericht1": ...})
+                 "url": ..., "connectienotitie": ..., "bericht1": ...,
+                 "bericht2": ..., "bericht3": ...})
 ```
 
-Status wordt automatisch `Te versturen`.
+Status wordt standaard `Te versturen`; geef `"status": "Twijfel"` mee om in
+de cockpit-sectie "Twijfelgevallen" te komen i.p.v. direct in "Te versturen".
 
 ### 5. Versturen (cockpit, mens-in-de-lus)
 
@@ -229,9 +278,11 @@ schaalt NIET door als de voorwaarde niet gehaald is.
 ## Status berichtenreeks
 
 Volledige reeks (connectieverzoek → bericht 1 → bericht 2 → bericht 3) is
-vastgelegd en volledig gebouwd (2026-11-09). Niets meer open op dit vlak.
-Toekomstige aanpassingen aan de teksten: pas de sjablonen hierboven aan, werk
-bestaande sheetrijen bij via `wachtrij.py`, en houd
+vastgelegd voor beide niches (installatiebedrijven 09-11, makelaars 12-11) en
+volledig gebouwd, inclusief de geautomatiseerde "Nieuwe dag"-knop (12-11).
+Toekomstige aanpassingen aan de teksten: pas `tools/linkedin/berichten.py`
+aan (niet alleen dit document — dat is de bron die de agent écht gebruikt),
+werk bestaande sheetrijen bij via `wachtrij.py`, en houd
 `outputs/outreach-ondernemers-email-strategie.md` in sync.
 
 ## Bekende valkuilen / eerlijke beperkingen

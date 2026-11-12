@@ -135,7 +135,10 @@ These are how you know your AIOS is working:
 │   ├── linkedin/            # LinkedIn Outreach Agent — zoeken/lezen/limieten/wachtrij
 │   │   ├── browser.py       # Playwright: zoeken, profielen lezen, acceptatie-check (login/zoek/lees/check)
 │   │   ├── limits.py        # Opbouwschema, daglimieten, noodstop (zie workflows/linkedin_outreach.md)
-│   │   └── wachtrij.py      # Schrijft/leest het tabblad linkedin-tracker
+│   │   ├── wachtrij.py      # Schrijft/leest het tabblad linkedin-tracker
+│   │   ├── berichten.py     # Berichtsjablonen per niche (installatiebedrijven, makelaars)
+│   │   ├── kwalificeer.py   # Claude API: kwalificeert 1 profiel (ja/twijfel/nee), kostenlog linkedin_kosten
+│   │   └── vind_prospects.py # "Nieuwe dag"-knop: zoek+lees+kwalificeer+klaarzetten in 1 aanroep
 │   └── instagram/           # Instagram-contentagent @insightance.ai (zie workflows/instagram_content.md)
 │       ├── wachtrij.py      # Wachtrij in data.db (instagram_*), kleurregel, hashtags
 │       ├── render_carrousel.py / render_kaart.py / render_tekst_reel.py / opname_demo.py  # beeld en reels

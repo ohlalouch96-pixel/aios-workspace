@@ -206,6 +206,35 @@ Succes met [bedrijfsnaam]!
 Volledige automatiseerde reeks (connectieverzoek → bericht 1 → bericht 2 →
 bericht 3) is hiermee compleet.
 
+**Tweede niche op LinkedIn: makelaars + hypotheek-/verzekeringsadviseurs
+(vastgelegd 12-11-2026).** De niche-pivot op de `ondernemers`-tracker (bellen/
+mailen, zie `outputs/belscript-makelaars.md`) geldt niet 1-op-1 voor LinkedIn
+— die presteert hier anders, dus installatiebedrijven blijft actief naast
+makelaars. Pijnpunt: verkoopadviezen/aanvragen die blijven liggen zonder
+systematische opvolging.
+
+```
+Dag [voornaam],
+Bedankt voor het accepteren! Ik volg wat er speelt bij makelaars en adviseurs in de regio rond opvolging van lopende aanvragen.
+Hoe gaat dat bij [bedrijfsnaam], blijft een aanvraag of advies weleens even liggen voordat er opvolging is, of hebben jullie dat goed op orde?
+```
+
+```
+Dag [voornaam],
+Ik help makelaars en adviseurs met het automatiseren van tijdrovende taken, zoals het bijhouden en herinneren van openstaande aanvragen of de opvolging na een eerste contact. Ik vroeg me af hoe dit bij [bedrijfsnaam] gaat.
+Zou je het interessant vinden om vrijblijvend te kijken wat er mogelijk is voor [bedrijfsnaam]?
+Ondernemers die dit automatiseren winnen doorgaans 10 tot 15 uur per week terug.
+Ik hoor graag van je.
+```
+
+Bericht 3 is identiek aan de installatiebedrijven-versie hierboven (al
+generiek genoeg). Geen link in bericht 2, want er bestaat nog geen
+makelaars-specifieke demo/landingspagina zoals de offertetool.
+
+Bron van de waarheid voor deze teksten is `tools/linkedin/berichten.py` (de
+agent gebruikt dat bestand, niet dit document) — dit document is de
+leesbare geschiedenis/context ernaast.
+
 ---
 
 ## LinkedIn-variant — handmatig, Sales Navigator InMail (vastgelegd 2026-09-28, herzien 2026-11-02)
