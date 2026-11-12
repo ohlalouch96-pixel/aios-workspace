@@ -145,31 +145,20 @@ def _zoek_url(titel, branche, regio, page_nr=1):
     return f"https://www.linkedin.com/search/results/people/?keywords={quote(keywords)}&origin=GLOBAL_SEARCH_HEADER&page={page_nr}"
 
 
-def cmd_zoek(args):
-    conn = get_connection()
-
-    if args.urls_bestand:
-        urls = [u.strip() for u in Path(args.urls_bestand).read_text(encoding="utf-8").splitlines() if u.strip()]
-        urls = list(dict.fromkeys(urls))  # dedup, volgorde behouden
-        output = {"bron": "urls_bestand", "bestand": args.urls_bestand, "urls": urls, "gevonden_op": datetime.now(timezone.utc).isoformat()}
-        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
-        Path(args.output).write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"{len(urls)} profiel-URL's uit {args.urls_bestand} overgenomen (geen zoekbudget gebruikt) -> {args.output}")
-        conn.close()
-        return
-
+def zoek(conn, titel, branche, regio="", aantal=20):
+    """Zoekt op LinkedIn's standaard people-search en geeft gevonden profiel-urls terug
+    (zonder duplicaten). Logt 1 'search'-actie bij limits, ongeacht hoeveel pagina's er
+    intern doorlopen worden. Gooit RuntimeError als het daglimiet al bereikt is."""
     toegestaan, reden = limits.can_act(conn, "searches")
     if not toegestaan:
-        print(f"Geblokkeerd: {reden}")
-        conn.close()
-        sys.exit(1)
+        raise RuntimeError(reden)
 
     p, ctx = _context(headless=True)
     page = ctx.new_page()
     gevonden = []
     try:
-        for page_nr in range(1, 11):  # LinkedIn's eigen paginalimiet; stopt eerder zodra --aantal gehaald is
-            url = _zoek_url(args.titel, args.branche, args.regio, page_nr)
+        for page_nr in range(1, 11):  # LinkedIn's eigen paginalimiet; stopt eerder zodra aantal gehaald is
+            url = _zoek_url(titel, branche, regio, page_nr)
             page.goto(url)
             _delay()
 
@@ -197,15 +186,37 @@ def cmd_zoek(args):
                 if l not in gevonden:
                     gevonden.append(l)
 
-            if len(gevonden) >= args.aantal or not nieuw:
+            if len(gevonden) >= aantal or not nieuw:
                 break
             _delay()
     finally:
         ctx.close()
         p.stop()
 
-    gevonden = gevonden[: args.aantal]
-    limits.log_action(conn, "search", ref=f"{args.titel} | {args.branche} | {args.regio}")
+    gevonden = gevonden[:aantal]
+    limits.log_action(conn, "search", ref=f"{titel} | {branche} | {regio}")
+    return gevonden
+
+
+def cmd_zoek(args):
+    conn = get_connection()
+
+    if args.urls_bestand:
+        urls = [u.strip() for u in Path(args.urls_bestand).read_text(encoding="utf-8").splitlines() if u.strip()]
+        urls = list(dict.fromkeys(urls))  # dedup, volgorde behouden
+        output = {"bron": "urls_bestand", "bestand": args.urls_bestand, "urls": urls, "gevonden_op": datetime.now(timezone.utc).isoformat()}
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"{len(urls)} profiel-URL's uit {args.urls_bestand} overgenomen (geen zoekbudget gebruikt) -> {args.output}")
+        conn.close()
+        return
+
+    try:
+        gevonden = zoek(conn, args.titel, args.branche, args.regio, args.aantal)
+    except RuntimeError as e:
+        print(f"Geblokkeerd: {e}")
+        conn.close()
+        sys.exit(1)
 
     output = {
         "bron": "zoeken", "titel": args.titel, "branche": args.branche, "regio": args.regio,
@@ -249,10 +260,9 @@ def _lees_profiel(page, conn, url):
     }
 
 
-def cmd_lees(args):
-    conn = get_connection()
-    urls = [args.url] if args.url else json.loads(Path(args.batch_bestand).read_text(encoding="utf-8"))["urls"]
-
+def lees_batch(conn, urls, stil=False):
+    """Leest een lijst profiel-urls uit, stopt bij een restrictie of een leeg daglimiet.
+    Geeft de ruwe resultatenlijst terug (zie _lees_profiel: url/pagina_tekst of url/fout)."""
     p, ctx = _context(headless=True)
     page = ctx.new_page()
     resultaten = []
@@ -260,16 +270,24 @@ def cmd_lees(args):
         for url in urls:
             resultaat = _lees_profiel(page, conn, url)
             resultaten.append(resultaat)
-            print(f"[{'OK' if 'fout' not in resultaat else 'FOUT'}] {url}")
-            if "fout" in resultaat and "restrictie" in resultaat.get("fout", ""):
-                break
+            if not stil:
+                print(f"[{'OK' if 'fout' not in resultaat else 'FOUT'}] {url}")
             if "fout" in resultaat:
-                print(f"  gestopt: {resultaat['fout']}")
+                if not stil:
+                    print(f"  gestopt: {resultaat['fout']}")
                 break
             _delay()
     finally:
         ctx.close()
         p.stop()
+    return resultaten
+
+
+def cmd_lees(args):
+    conn = get_connection()
+    urls = [args.url] if args.url else json.loads(Path(args.batch_bestand).read_text(encoding="utf-8"))["urls"]
+
+    resultaten = lees_batch(conn, urls)
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     Path(args.output).write_text(json.dumps(resultaten, ensure_ascii=False, indent=2), encoding="utf-8")

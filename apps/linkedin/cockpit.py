@@ -28,6 +28,7 @@ import collect_linkedin  # noqa: E402
 import limits  # noqa: E402
 import wachtrij  # noqa: E402
 import browser  # noqa: E402
+import vind_prospects  # noqa: E402
 
 
 def _sync_vers(conn):
@@ -231,6 +232,12 @@ function initialen(naam) {
   {% if check_geaccepteerd is not none %}
   <div class="banner ok">✅ <div>Check op LinkedIn voltooid: <b>{{ check_geaccepteerd }}</b> geaccepteerd, <b>{{ check_verlopen }}</b> verlopen/ingetrokken.</div></div>
   {% endif %}
+  {% if nieuwe_dag_fout %}
+  <div class="banner stop">⛔ <div><b>Nieuwe dag mislukt.</b> {{ nieuwe_dag_fout }}</div></div>
+  {% endif %}
+  {% if nieuwe_dag_ja is not none %}
+  <div class="banner ok">✅ <div>Nieuwe zoekronde klaar: {{ nieuwe_dag_gelezen }} profielen gelezen, <b>{{ nieuwe_dag_ja }}</b> klaargezet in "Te versturen", <b>{{ nieuwe_dag_twijfel }}</b> twijfelgeval(len) voor jouw oordeel.</div></div>
+  {% endif %}
 
   <div class="sectie" style="margin-top: 22px;">
     <div class="sectie-head">
@@ -256,10 +263,13 @@ function initialen(naam) {
   <div class="sectie">
     <div class="sectie-head">
       <h2>Te versturen</h2>
-      <span class="count-badge">{{ kandidaten|length }}</span>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span class="count-badge">{{ kandidaten|length }}</span>
+        <form method="post" action="{{ url_for('nieuwe_dag') }}"><button class="btn btn-outline btn-sm">🔍 Nieuwe dag — zoek nieuwe prospects (1-3 min)</button></form>
+      </div>
     </div>
     {% if not kandidaten %}
-    <div class="leeg">Niets klaarstaand. Draai <code>tools/linkedin/browser.py zoek</code> + <code>lees</code>, kwalificeer en zet kandidaten klaar via <code>wachtrij.nieuw()</code>.</div>
+    <div class="leeg">Niets klaarstaand. Klik boven op "Nieuwe dag" om automatisch te zoeken, of zet handmatig iets klaar via <code>wachtrij.nieuw()</code>.</div>
     {% endif %}
     {% for k in kandidaten %}
     <div class="card">
@@ -275,6 +285,33 @@ function initialen(naam) {
         <a class="btn btn-outline" href="{{ k.url }}" target="_blank">💬 Open op LinkedIn</a>
         <form method="post" action="{{ url_for('verstuurd') }}"><input type="hidden" name="url" value="{{ k.url }}"><button class="btn btn-primary">✅ Connectie verstuurd</button></form>
         <form method="post" action="{{ url_for('overslaan') }}"><input type="hidden" name="url" value="{{ k.url }}"><button class="btn btn-danger-ghost">❌ Overslaan</button></form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="sectie">
+    <div class="sectie-head">
+      <h2>Twijfelgevallen — jouw oordeel</h2>
+      <span class="count-badge">{{ twijfel|length }}</span>
+    </div>
+    {% if not twijfel %}
+    <div class="leeg">Geen twijfelgevallen.</div>
+    {% endif %}
+    {% for t in twijfel %}
+    <div class="card muted">
+      <div class="persoon">
+        <div class="avatar">{{ t.naam[:1] }}</div>
+        <div>
+          <div class="persoon-naam">{{ t.naam }} — {{ t.functie }}</div>
+          <div class="persoon-sub">{{ t.bedrijf }} · {{ t.locatie }}</div>
+        </div>
+      </div>
+      <p class="persoon-sub" style="margin-bottom: 10px;">{{ t.notities }}</p>
+      <div class="knoppenrij">
+        <a class="btn btn-outline" href="{{ t.url }}" target="_blank">💬 Bekijk op LinkedIn</a>
+        <form method="post" action="{{ url_for('twijfel_accepteren') }}"><input type="hidden" name="url" value="{{ t.url }}"><button class="btn btn-primary">✅ Toevoegen aan Te versturen</button></form>
+        <form method="post" action="{{ url_for('twijfel_afwijzen') }}"><input type="hidden" name="url" value="{{ t.url }}"><button class="btn btn-danger-ghost">❌ Afwijzen</button></form>
       </div>
     </div>
     {% endfor %}
@@ -454,6 +491,7 @@ def index():
     wachtend = wachtrij.wachtend_op_acceptatie(records=records)
     geaccepteerd = wachtrij.geaccepteerd_wachtend(records=records)
     onderweg = wachtrij.onderweg(records=records)
+    twijfel = wachtrij.twijfelgevallen(records=records)
     follow_ups = wachtrij.due_follow_ups(records=records)
     noodstop = limits.check_noodstop(conn)
     limieten = limits.current_week_limits(conn)
@@ -466,11 +504,41 @@ def index():
     conn.close()
     return render_template_string(
         PAGINA, kandidaten=kandidaten, wachtend=wachtend, geaccepteerd=geaccepteerd, onderweg=onderweg,
-        follow_ups=follow_ups, noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
+        twijfel=twijfel, follow_ups=follow_ups, noodstop=noodstop, limieten=limieten, vandaag=vandaag, stats=stats,
         check_fout=request.args.get("check_fout"),
         check_geaccepteerd=request.args.get("check_geaccepteerd"),
         check_verlopen=request.args.get("check_verlopen"),
+        nieuwe_dag_fout=request.args.get("nieuwe_dag_fout"),
+        nieuwe_dag_ja=request.args.get("nieuwe_dag_ja"),
+        nieuwe_dag_twijfel=request.args.get("nieuwe_dag_twijfel"),
+        nieuwe_dag_gelezen=request.args.get("nieuwe_dag_gelezen"),
     )
+
+
+@app.route("/nieuwe_dag", methods=["POST"])
+def nieuwe_dag():
+    """Zoekt, leest en kwalificeert automatisch nieuwe prospects (installatiebedrijven +
+    makelaars), zie tools/linkedin/vind_prospects.py. Duurt 1-3 minuten (echte LinkedIn-
+    bezoeken + Claude-kwalificatie per profiel)."""
+    resultaat = vind_prospects.nieuwe_dag()
+    return redirect(url_for(
+        "index", nieuwe_dag_fout=resultaat["fout"], nieuwe_dag_ja=resultaat["ja"],
+        nieuwe_dag_twijfel=resultaat["twijfel"], nieuwe_dag_gelezen=resultaat["gelezen"],
+    ))
+
+
+@app.route("/twijfel_accepteren", methods=["POST"])
+def twijfel_accepteren():
+    url = request.form["url"]
+    wachtrij.status(url, "Te versturen")
+    return redirect(url_for("index"))
+
+
+@app.route("/twijfel_afwijzen", methods=["POST"])
+def twijfel_afwijzen():
+    url = request.form["url"]
+    wachtrij.status(url, "Genegeerd")
+    return redirect(url_for("index"))
 
 
 @app.route("/check_linkedin", methods=["POST"])

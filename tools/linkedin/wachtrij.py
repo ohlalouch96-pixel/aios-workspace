@@ -56,7 +56,9 @@ def _service():
 
 
 def nieuw(kandidaat):
-    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie, bericht1, bericht2, bericht3."""
+    """kandidaat: dict met (minstens) naam, functie, bedrijf, locatie, url, connectienotitie,
+    bericht1, bericht2, bericht3. Optioneel status (default 'Te versturen'; vind_prospects.py
+    gebruikt 'Twijfel' voor twijfelgevallen die nog Oussama's akkoord nodig hebben)."""
     service, sheet_id = _service()
     tab = _sheet_tab()
 
@@ -65,7 +67,7 @@ def nieuw(kandidaat):
 
     row = [
         kandidaat.get("naam", ""), kandidaat.get("functie", ""), kandidaat.get("bedrijf", ""),
-        kandidaat.get("locatie", ""), kandidaat.get("url", ""), "Te versturen",
+        kandidaat.get("locatie", ""), kandidaat.get("url", ""), kandidaat.get("status", "Te versturen"),
         kandidaat.get("connectienotitie", ""), kandidaat.get("bericht1", ""),
         "", "", "", "", "", kandidaat.get("notities", ""),
         kandidaat.get("bericht2", ""), "",
@@ -157,6 +159,15 @@ def volgende_batch(n, records=None):
     return kandidaten
 
 
+def twijfelgevallen(records=None):
+    """Rijen met status 'Twijfel': door vind_prospects.py (automatische zoekronde) als
+    grensgeval gemarkeerd, berichten staan al klaar maar wachten op Oussama's akkoord
+    (zie notities-kolom voor de reden) voordat ze naar 'Te versturen' gaan."""
+    if records is None:
+        records = alle_records()
+    return [r for r in records if r["status"] == "Twijfel"]
+
+
 def wachtend_op_acceptatie(records=None):
     """Rijen met status 'Verzoek verstuurd': connectieverzoek is weg, nog geen
     uitkomst. Bedoeld als zuiver informatieve sectie (browser.py check werkt
@@ -223,6 +234,7 @@ def main():
     sub.add_parser("geaccepteerd")
     sub.add_parser("wachtend")
     sub.add_parser("onderweg")
+    sub.add_parser("twijfel")
     args = ap.parse_args()
 
     if args.cmd == "volgende":
@@ -235,6 +247,8 @@ def main():
         print(json.dumps(wachtend_op_acceptatie(), ensure_ascii=False, indent=2))
     elif args.cmd == "onderweg":
         print(json.dumps(onderweg(), ensure_ascii=False, indent=2))
+    elif args.cmd == "twijfel":
+        print(json.dumps(twijfelgevallen(), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

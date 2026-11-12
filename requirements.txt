@@ -7,6 +7,7 @@ markdown>=3.5
 # LinkedIn Outreach Agent — browserautomatisering + lokale cockpit
 playwright>=1.47
 flask>=3.1
+anthropic>=0.80  # kwalificatie bij de "Nieuwe dag"-knop (vind_prospects.py), ook gebruikt door apps/content/agent.py
 # Eenmalig na installatie: playwright install chromium
 
 # Optional — install separately based on scoping:
