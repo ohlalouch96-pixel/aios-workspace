@@ -37,6 +37,8 @@ workspace, zodat docs/ in het beeldscherm geladen en bestuurd kan worden. Niets 
 live site; cookiemelding uit, geen Google Analytics, taal Engels, alles met klantnamen
 (resultaten, case-labels, naam in de hero-kaart) verborgen, alleen in de opname. Ook de animaties van de site lopen op de klok van de tool.
 
+Geluidseffecten: "geluid" in de spec (zie tools/instagram/geluid.py); muziek kiest Oussama in Instagram.
+
 Gebruik (CLI):
     python tools/instagram/opname_demo.py spec.json [--uit map/] [--stem | --zonder-stem]
 --zonder-stem = gratis proef met geschatte stemtiming (geen geluid, geen tegoed).
@@ -278,6 +280,9 @@ def render(spec, uit, stem=False, zonder_stem=False):
         if srv:
             srv.shutdown()
     video = rsv.samenvoegen(frames, audio, rec.n / FPS, uit / "reel.mp4")
+    if spec.get("geluid") and not audio:  # zelfgemaakte geluidseffecten (tools/instagram/geluid.py), alleen zonder stem
+        import geluid
+        geluid.onder_video(spec["geluid"], video)
     if lijn:
         rsv.controleblad(video, lijn, uit / "controle.png")
     return video
