@@ -854,7 +854,12 @@
     let len = 0, on = false;
     function build() {
       on = window.innerWidth > 1100; if (!on) return;
-      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1, sy = window.scrollY / Z, zr = el => { const r = el.getBoundingClientRect(); return { top: r.top / Z, bottom: r.bottom / Z, left: r.left / Z, right: r.right / Z, height: r.height / Z, width: r.width / Z }; };  // zoom op grote schermen: alles in tekenmaat
+      const Z = (main.getBoundingClientRect().height / main.offsetHeight) || 1, sy = window.scrollY / Z, zr = el => {  // vaste plek in tekenmaat: telt geen inschuifbeweging (transform) en geen zoom mee
+        let x = 0, y = 0, e = el; while (e && e !== main) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
+        if (e !== main) { const r = el.getBoundingClientRect(), m = main.getBoundingClientRect(); x = (r.left - m.left) / Z; y = (r.top - m.top) / Z; }
+        const top = y + main.getBoundingClientRect().top / Z, left = x + main.getBoundingClientRect().left / Z;
+        return { top, bottom: top + el.offsetHeight, left, right: left + el.offsetWidth, height: el.offsetHeight, width: el.offsetWidth };
+      };
       const W = main.clientWidth, H = main.offsetHeight, mt = zr(main).top + sy, Y = r => r + sy - mt;
       dl.setAttribute('width', W); dl.setAttribute('height', H); dl.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const gut = Math.max(36, (W - 1280) / 2 - 44), R = W - gut, L = gut;
