@@ -8,6 +8,17 @@
 
 ---
 
+## 2026-11-13
+
+### Insightance Website: KvK in de footer en blauwe lijn direct goed
+
+- KvK 42220238 in de footer van de 7 Insightance-pagina's ("© 2026 Insightance · Amsterdam · KvK 42220238"), ook in de Engelse versie en op mobiel; btw-nummer straks als extra `<span class="foot-reg">` erachter (commit 6844066, 12-11)
+- Niet op klant-/demopagina's (offerte-maker, review-tool, FTUK) en niet in docs/voorbeeld/
+- Blauwe lijn meet voortaan de vaste plek van blokken (offsetTop-keten) in plaats van hun plek tijdens het inschuiven; liep na laden ~14px door de FTUK-tegel op resultaten (ook automations, demo, webshops, vakbedrijven + bouwscripts) (commit ad15976)
+- Getest op 1440/1920/2560px (lijn gelijk na laden en na scrollen, nergens door tekst) en mobiel/tablet (lijn uit, KvK volledig in beeld)
+
+---
+
 ## 2026-10-30
 
 ### DataOS: ondernemers-track in de metrics en eerlijke reactietelling
@@ -17,6 +28,15 @@
 - `/prime` haalt voortaan eerst verse data op en rapporteert beide tracks
 - Stand 30-10: webshops 825/1.065 benaderd, 66 reacties (8,0%), 6 warm; ondernemers 344/472 benaderd, 14 reacties (4,1%), allemaal afgewezen
 - current-data.md en strategy.md bijgewerkt met deze cijfers
+
+---
+
+## 2026-10-16
+
+### Insightance Website: werkcomputers en grote schermen
+
+- Met "animaties uit" (o.a. OLVG-werkcomputers) volgt de blauwe lijn nu het scrollen; tellers staan bewust direct op hun eindwaarde
+- Schermen vanaf 1800px: alles 10% groter, vanaf 2400px 15% (CSS zoom); lijncode rekent mee met de vergroting
 
 ---
 
