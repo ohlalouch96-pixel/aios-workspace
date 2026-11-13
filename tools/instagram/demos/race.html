@@ -119,6 +119,7 @@ const AAN = [["h1", -1], ["h2", 0.5], ["m", 0.3], ["off", 0.8], ["v1", 1.0], ["v
              ["pdf", 3.8], ["knop", 4.2], ["vink", 5.5], ["bezig", 6.0], ["s1", 9.7], ["s2", 10.4]];
 const $ = (id) => document.getElementById(id);
 let t0 = null;
+const TEMPO = 1.3;  // hele tijdlijn rustiger: onder groen rond 7 s (13-11, op verzoek)
 const mmss = (s) => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
 
 function zet(t) {
@@ -146,7 +147,7 @@ function zet(t) {
 }
 window.__hook = function () {
   t0 = window.__klok;
-  animeer(20000, () => zet((window.__klok - t0) / 1000));
+  animeer(22000, () => zet((window.__klok - t0) / 1000 / TEMPO));
 };
 zet(-1);
 </script>
