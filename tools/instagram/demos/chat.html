@@ -110,12 +110,12 @@ svg.lijnen path.aan { stroke-dashoffset: 0; }
 const $ = (id) => document.getElementById(id);
 const V1 = "Good afternoon, what happened this morning?", V2 = "Send the quotes.";
 // [element, verschijnt, (verdwijnt)]
-const ZICHT = [["b1", 2.3], ["d1", 2.6, 3.3], ["b2", 3.3], ["b3", 7.9], ["d2", 8.4, 9.1], ["b4", 9.1]];
-const AAN = [["h1", 0], ["lab", 0.4], ["x1", 3.9], ["x2", 4.7], ["x3", 5.5], ["x4", 6.3], ["s1", 11.0], ["s2", 11.8]];
+const ZICHT = [["b1", 1.0], ["d1", 1.2, 1.8], ["b2", 1.8], ["b3", 6.7], ["d2", 7.0, 7.7], ["b4", 7.7]];
+// tijden in seconden (13-11): hook en team staan er vanaf het eerste beeld (-1), de vraag staat binnen 1 s in de chat
+const AAN = [["h1", -1], ["lab", -1], ["x1", 2.3], ["x2", 3.2], ["x3", 4.1], ["x4", 5.0], ["s1", 9.4], ["s2", 10.1]];
 // tegel, aan vanaf, teller-tekst
-const TEAM = [["g2", "c2", 3.9, "12 answered"], ["g3", "c3", 4.7, "3 booked"], ["g4", "c4", 5.5, "2 chased"], ["g1", "c1", 6.3, "4 drafted"]];
+const TEAM = [["g2", "c2", 2.3, "12 answered"], ["g3", "c3", 3.2, "3 booked"], ["g4", "c4", 4.1, "2 chased"], ["g1", "c1", 5.0, "4 drafted"]];
 let t0 = null;
-const TEMPO = 1.2;  // hele tijdlijn 20% rustiger (13-11, op verzoek)
 
 function typ(t, van, tekst, cps) {
   const n = Math.floor((t - van) * cps);
@@ -126,31 +126,31 @@ function zet(t) {
   AAN.forEach(([id, op]) => $(id).classList.toggle("aan", t >= op));
   // invoerveld: eerst vraag 1, dan vraag 2
   let v = null;
-  if (t >= 0.7 && t < 2.3) v = typ(t, 0.7, V1, 30);
-  if (t >= 7.1 && t < 7.9) v = typ(t, 7.1, V2, 24);
+  if (t >= 0.2 && t < 1.0) v = typ(t, 0.2, V1, 55);
+  if (t >= 6.0 && t < 6.7) v = typ(t, 6.0, V2, 24);
   $("veld").textContent = v || "Message";
   $("veld").classList.toggle("leeg", !v);
   TEAM.forEach(([g, c, op, tekst]) => {
     $(g).classList.toggle("aan", t >= op);
-    $(g).classList.toggle("puls", (t >= op && t < op + 0.35) || (g === "g1" && t >= 8.0 && t < 8.35));
+    $(g).classList.toggle("puls", (t >= op && t < op + 0.35) || (g === "g1" && t >= 6.9 && t < 7.25));
     $(c).textContent = t >= op ? tekst : "";
   });
   // na "Send the quotes.": 4 mailtjes vliegen uit de Sales-tegel
   ["e1", "e2", "e3", "e4"].forEach((id, i) => {
-    const s = 8.0 + i * 0.15, el = $(id);
+    const s = 6.9 + i * 0.15, el = $(id);
     el.classList.toggle("start", t >= s && t < s + 0.04);
     el.classList.toggle("vlieg", t >= s + 0.04);
     el.style.transform = t >= s + 0.04 ? `translate(${60 + i * 30}px, -${260 + i * 40}px) scale(.7)` : "none";
   });
-  if (t >= 8.4) { $("c1").textContent = "4 sent ✓"; }
-  $("g1").classList.toggle("klaar", t >= 8.4);
-  ["l1", "l2", "l3", "l4"].forEach((id) => $(id).classList.toggle("aan", t >= 10.3));
-  $("tel").classList.toggle("gloed", t >= 10.3);
-  $("hook").classList.toggle("weg", t >= 10.6);
+  if (t >= 7.3) { $("c1").textContent = "4 sent ✓"; }
+  $("g1").classList.toggle("klaar", t >= 7.3);
+  ["l1", "l2", "l3", "l4"].forEach((id) => $(id).classList.toggle("aan", t >= 8.8));
+  $("tel").classList.toggle("gloed", t >= 8.8);
+  $("hook").classList.toggle("weg", t >= 9.1);
 }
 window.__hook = function () {
   t0 = window.__klok;
-  animeer(20000, () => zet((window.__klok - t0) / 1000 / TEMPO));
+  animeer(20000, () => zet((window.__klok - t0) / 1000));
 };
 zet(-1);
 </script>
