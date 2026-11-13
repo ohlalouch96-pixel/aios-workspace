@@ -1,7 +1,6 @@
 {"demo":"race","kleurenset":"navy","hook":"Same quote. *Two ways.*",
 "stappen":[{"doe":"wacht","s":17.0}],
 "geluid":[
- {"s":"typen","van":0.56,"tot":12.5,"cps":5.4,"soort":"toetsenbord","vol":0.55},
  {"s":"plop","t":0.69,"vol":0.6},
  {"s":"klik","t":6.8,"vol":0.7},{"s":"chime","t":7.19},
  {"s":"klik","t":15.12,"vol":0.45},{"s":"chime","t":15.45,"vol":0.5}
