@@ -80,7 +80,7 @@ svg.lijnen path.aan { stroke-dashoffset: 0; }
     <div class="bub ik in verberg" id="b1">Good afternoon, what happened this morning?</div>
     <div class="dots verberg" id="d1"><i></i><i></i><i></i></div>
     <div class="bub ai in verberg" id="b2">
-      <span class="regel">Good afternoon! Here's your morning:</span>
+      <span class="regel">Good afternoon, sir. Here's your morning:</span>
       <span class="regel in" id="x1">💬 12 customer questions answered</span>
       <span class="regel in" id="x2">📅 3 appointments booked</span>
       <span class="regel in" id="x3">🧾 2 overdue invoices chased</span>
@@ -114,6 +114,7 @@ const AAN = [["h1", 0], ["lab", 0.4], ["x1", 3.9], ["x2", 4.7], ["x3", 5.5], ["x
 // tegel, aan vanaf, teller-tekst
 const TEAM = [["g2", "c2", 3.9, "12 answered"], ["g3", "c3", 4.7, "3 booked"], ["g4", "c4", 5.5, "2 chased"], ["g1", "c1", 6.3, "4 drafted"]];
 let t0 = null;
+const TEMPO = 1.2;  // hele tijdlijn 20% rustiger (13-11, op verzoek)
 
 function typ(t, van, tekst, cps) {
   const n = Math.floor((t - van) * cps);
@@ -148,7 +149,7 @@ function zet(t) {
 }
 window.__hook = function () {
   t0 = window.__klok;
-  animeer(15000, () => zet((window.__klok - t0) / 1000));
+  animeer(20000, () => zet((window.__klok - t0) / 1000 / TEMPO));
 };
 zet(-1);
 </script>
