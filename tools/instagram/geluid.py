@@ -11,7 +11,7 @@ Gebruik in een demo-spec (opname_demo.py), tijden in seconden van de video:
       {"s": "typen", "van": 0.3, "tot": 2.2, "cps": 25, "soort": "telefoon"},   # of "toetsenbord"
       {"s": "klok", "van": 0.5, "tot": 12.5, "elke": 1.0},
       {"s": "swoosh", "t": 2.2}, {"s": "plop", "t": 3.4}, {"s": "ding", "t": 4.1, "hz": 523},
-      {"s": "klik", "t": 6.8}, {"s": "chime", "t": 7.2}, {"s": "riser", "t": 7.3, "duur": 5},
+      {"s": "klik", "t": 6.8}, {"s": "chime", "t": 7.2}, {"s": "check", "t": 11.8}, {"s": "riser", "t": 7.3, "duur": 5},
       {"s": "klap", "t": 12.9}, {"s": "pad", "van": 0, "tot": 17.5}
     ]
     optioneel per regel "vol" (1 = standaard).
@@ -86,6 +86,15 @@ def chime():
     return uit * 0.8
 
 
+def check():
+    """Afgevinkt: twee korte tonen omhoog (G5, C6), zacht en positief."""
+    a, b = ding(784, 0.45), ding(1047, 0.6)
+    uit = np.zeros(int(0.12 * SR) + len(b), dtype=np.float32)
+    uit[:len(a)] += a
+    uit[int(0.12 * SR):] += b
+    return uit * 0.75
+
+
 def klik():
     t = _t(0.04)
     return (np.sin(2 * np.pi * 1200 * t) * np.exp(-t * 180) * 0.4 + _laag(RNG.standard_normal(len(t)), 3) * np.exp(-t * 250) * 0.25).astype(np.float32)
@@ -140,7 +149,7 @@ def maak(regels, duur, wav):
             leg(pad(r["tot"] - r["van"]), r["van"], vol)
         else:
             maker = {"swoosh": lambda: swoosh(klein=r.get("klein", False)), "plop": plop, "ding": lambda: ding(r.get("hz", 880)),
-                     "chime": chime, "klik": klik, "riser": lambda: riser(r.get("duur", 4.0)), "klap": klap}[s]
+                     "chime": chime, "check": check, "klik": klik, "riser": lambda: riser(r.get("duur", 4.0)), "klap": klap}[s]
             leg(maker(), r["t"], vol)
     spoor = spoor[: int(duur * SR)]
     piek = float(np.max(np.abs(spoor))) or 1.0
