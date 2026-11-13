@@ -63,13 +63,35 @@ svg.lijnen { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px;
 svg.lijnen path { fill: none; stroke: #7FA8FF; stroke-width: 3; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: .8; transition: stroke-dashoffset .8s ease; }
 svg.lijnen path.aan { stroke-dashoffset: 0; }
 .voet { position: absolute; left: 0; right: 40px; top: 1600px; display: flex; justify-content: center; align-items: center; gap: 14px; font: 600 30px Inter; color: #fff; opacity: .85; }
+
+/* slot: profielkaartje met Follow-knop die ingetikt wordt (13-11) */
+#scrim { position: absolute; inset: 0; z-index: 15; background: rgba(9,22,44,.62); opacity: 0; transition: opacity .5s ease; }
+#scrim.aan { opacity: 1; }
+#kaart { position: absolute; left: 130px; right: 130px; top: 720px; z-index: 20; background: #fff; border-radius: 34px; padding: 40px 42px 42px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.5); display: grid; grid-template-columns: 140px 1fr; gap: 20px 28px; align-items: center; }
+#kaart.in { transform: translateY(40px) scale(.96); }
+#kaart.in.aan { transform: none; }
+#kaart .pf { width: 140px; height: 140px; border-radius: 50%; background: #17345F; display: grid; place-items: center; box-shadow: 0 0 0 4px #fff, 0 0 0 7px #C9DAFF; }
+#kaart .naam b { display: block; font: 800 38px/1.1 Inter; color: #101828; }
+#kaart .naam span { display: block; font: 600 24px Inter; color: #667085; margin-top: 6px; }
+#kaart .naam i { display: block; font: 700 27px/1.25 Inter; font-style: normal; color: #17345F; margin-top: 10px; }
+#kaart .naam i em { color: #1F5EFF; }
+#volg { grid-column: 1 / -1; position: relative; height: 92px; border-radius: 20px; background: #0095F6; color: #fff; display: grid; place-items: center;
+  font: 800 36px Inter; overflow: hidden; transition: background .3s ease, color .3s ease, transform .15s ease; }
+#volg.druk { transform: scale(.95); }
+#volg.klaar { background: #EFEFEF; color: #101828; }
+#tik { position: absolute; left: 50%; top: 50%; width: 60px; height: 60px; margin: -30px; border-radius: 50%; background: rgba(255,255,255,.7); opacity: 0; transform: scale(.3);
+  transition: opacity .6s ease, transform .6s ease; }
+#tik.start { opacity: 1; transform: scale(.3); transition: none; }
+#tik.aan { opacity: 0; transform: scale(6); }
+.titel { z-index: 16; }
 </style>
 </head>
 <body>
 <div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
 
 <div class="titel" id="hook"><div class="r1 in" id="h1">I run my business<br><em>from one chat.</em></div></div>
-<div class="titel"><div class="r1 in" id="s1">One chat.<br><em>A whole team behind it.</em></div><div class="r2 in" id="s2">Follow for more · AI automation <em>without the hype.</em></div></div>
+<div class="titel"><div class="r1 in" id="s1">One chat.<br><em>A whole team behind it.</em></div></div>
 
 <svg class="lijnen"><path id="l1" d="M150 1340 C150 1290 380 1290 420 1262"/><path id="l2" d="M380 1340 L460 1262"/><path id="l3" d="M610 1340 L560 1262"/><path id="l4" d="M840 1340 C840 1290 640 1290 600 1262"/></svg>
 
@@ -103,6 +125,13 @@ svg.lijnen path.aan { stroke-dashoffset: 0; }
   <div class="tegel" id="g4"><div class="ic">🧾</div><b>Finance<br>agent</b><small id="c4"></small></div>
 </div>
 
+
+<div id="scrim"></div>
+<div id="kaart" class="in">
+  <div class="pf"><svg width="78" height="78" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg></div>
+  <div class="naam"><b>insightance.ai</b><span>Oussama | AI Automation</span><i>AI automation <em>without the hype.</em></i></div>
+  <div id="volg"><span id="volgt">Follow</span><i id="tik"></i></div>
+</div>
 <div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
 
 <script src="_demo.js"></script>
@@ -112,11 +141,13 @@ const V1 = "Good afternoon, what happened this morning?", V2 = "Send the quotes.
 // [element, verschijnt, (verdwijnt)]
 const ZICHT = [["b1", 2.3], ["d1", 2.6, 3.3], ["b2", 3.3], ["b3", 7.9], ["d2", 8.4, 9.1], ["b4", 9.1]];
 // hook en team staan er vanaf het eerste beeld (-1); rest in het rustige tempo (TEMPO 1.2, gekozen 13-11)
-const AAN = [["h1", -1], ["lab", -1], ["x1", 3.9], ["x2", 4.7], ["x3", 5.5], ["x4", 6.3], ["s1", 11.0], ["s2", 11.8]];
+const AAN = [["h1", -1], ["lab", -1], ["x1", 3.9], ["x2", 4.7], ["x3", 5.5], ["x4", 6.3], ["s1", 11.0]];
+const KAART = 11.6;
 // tegel, aan vanaf, teller-tekst
 const TEAM = [["g2", "c2", 3.9, "12 answered"], ["g3", "c3", 4.7, "3 booked"], ["g4", "c4", 5.5, "2 chased"], ["g1", "c1", 6.3, "4 drafted"]];
 let t0 = null;
 const TEMPO = 1.2;
+const START = 0.7;  // alles 0,7 s eerder: de vraag staat sneller in de chat (13-11)
 
 function typ(t, van, tekst, cps) {
   const n = Math.floor((t - van) * cps);
@@ -148,10 +179,18 @@ function zet(t) {
   ["l1", "l2", "l3", "l4"].forEach((id) => $(id).classList.toggle("aan", t >= 10.3));
   $("tel").classList.toggle("gloed", t >= 10.3);
   $("hook").classList.toggle("weg", t >= 10.6);
+  // profielkaartje: verschijnt, Follow wordt ingetikt
+  $("scrim").classList.toggle("aan", t >= KAART);
+  $("kaart").classList.toggle("aan", t >= KAART);
+  $("volg").classList.toggle("druk", t >= KAART + 1.1 && t < KAART + 1.3);
+  $("tik").classList.toggle("start", t >= KAART + 1.1 && t < KAART + 1.15);
+  $("tik").classList.toggle("aan", t >= KAART + 1.15);
+  $("volg").classList.toggle("klaar", t >= KAART + 1.35);
+  $("volgt").textContent = t >= KAART + 1.35 ? "Following ✓" : "Follow";
 }
 window.__hook = function () {
   t0 = window.__klok;
-  animeer(22000, () => zet((window.__klok - t0) / 1000 / TEMPO));
+  animeer(22000, () => zet((window.__klok - t0) / 1000 / TEMPO + START));
 };
 zet(-1);
 </script>

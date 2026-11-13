@@ -72,6 +72,28 @@ em { font-style: normal; color: #7FA8FF; }
 #slot .r2 { font: 600 34px/1.3 Inter; color: #C9DAFF; margin-top: 18px; }
 #hook.weg { opacity: 0; transform: translateY(-20px); transition: opacity .35s ease, transform .35s ease; }
 .voet { position: absolute; left: 0; right: 0; top: 1600px; display: flex; justify-content: center; align-items: center; gap: 14px; font: 600 30px Inter; color: #fff; opacity: .85; }
+
+/* slot: profielkaartje met Follow-knop die ingetikt wordt (13-11) */
+#scrim { position: absolute; inset: 0; z-index: 15; background: rgba(9,22,44,.62); opacity: 0; transition: opacity .5s ease; }
+#scrim.aan { opacity: 1; }
+#kaart { position: absolute; left: 130px; right: 130px; top: 720px; z-index: 20; background: #fff; border-radius: 34px; padding: 40px 42px 42px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.5); display: grid; grid-template-columns: 140px 1fr; gap: 20px 28px; align-items: center; }
+#kaart.in { transform: translateY(40px) scale(.96); }
+#kaart.in.aan { transform: none; }
+#kaart .pf { width: 140px; height: 140px; border-radius: 50%; background: #17345F; display: grid; place-items: center; box-shadow: 0 0 0 4px #fff, 0 0 0 7px #C9DAFF; }
+#kaart .naam b { display: block; font: 800 38px/1.1 Inter; color: #101828; }
+#kaart .naam span { display: block; font: 600 24px Inter; color: #667085; margin-top: 6px; }
+#kaart .naam i { display: block; font: 700 27px/1.25 Inter; font-style: normal; color: #17345F; margin-top: 10px; }
+#kaart .naam i em { color: #1F5EFF; }
+#volg { grid-column: 1 / -1; position: relative; height: 92px; border-radius: 20px; background: #0095F6; color: #fff; display: grid; place-items: center;
+  font: 800 36px Inter; overflow: hidden; transition: background .3s ease, color .3s ease, transform .15s ease; }
+#volg.druk { transform: scale(.95); }
+#volg.klaar { background: #EFEFEF; color: #101828; }
+#tik { position: absolute; left: 50%; top: 50%; width: 60px; height: 60px; margin: -30px; border-radius: 50%; background: rgba(255,255,255,.7); opacity: 0; transform: scale(.3);
+  transition: opacity .6s ease, transform .6s ease; }
+#tik.start { opacity: 1; transform: scale(.3); transition: none; }
+#tik.aan { opacity: 0; transform: scale(6); }
+#slot { z-index: 16; }
 </style>
 </head>
 <body>
@@ -79,7 +101,7 @@ em { font-style: normal; color: #7FA8FF; }
 <div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
 
 <div id="hook"><div class="r1 in" id="h1">Same quote. <em>Two ways.</em></div><div class="r2 in" id="h2">Choose your way.</div></div>
-<div id="slot"><div class="r1 in" id="s1"><em>20 minutes</em> vs <em>1 click.</em></div><div class="r2 in" id="s2">Follow for more · AI automation <em>without the hype.</em></div></div>
+<div id="slot"><div class="r1 in" id="s1"><em>20 minutes</em> vs <em>1 click.</em></div></div>
 
 <div class="paneel" id="boven">
   <div class="kop"><span>By hand</span><span class="timer"><i></i><span id="t1">0:00</span></span></div>
@@ -108,6 +130,13 @@ em { font-style: normal; color: #7FA8FF; }
   </div>
 </div>
 
+
+<div id="scrim"></div>
+<div id="kaart" class="in">
+  <div class="pf"><svg width="78" height="78" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg></div>
+  <div class="naam"><b>insightance.ai</b><span>Oussama | AI Automation</span><i>AI automation <em>without the hype.</em></i></div>
+  <div id="volg"><span id="volgt">Follow</span><i id="tik"></i></div>
+</div>
 <div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
 
 <script src="_demo.js"></script>
@@ -116,7 +145,8 @@ em { font-style: normal; color: #7FA8FF; }
 // onder is klaar rond 5,4 s, daarna schiet de timer boven door naar 20:00 ("Still typing…"), slot vanaf 9,7 s.
 const TEKST = "QUOTE\n\nCustomer: Emma Cartr\ber\nAddress: 18 Maple Street, Austin\n\nJob: replace water heater\n\n1. Remove old water heater ...... $180\n2. New 50-gal water heater ...... $1,6";
 const AAN = [["h1", -1], ["h2", 0.5], ["m", 0.3], ["off", 0.8], ["v1", 1.0], ["v2", 1.3], ["r1", 1.8], ["r2", 2.2], ["r3", 2.6], ["tot", 3.1],
-             ["pdf", 3.8], ["knop", 4.2], ["vink", 5.5], ["bezig", 6.0], ["s1", 9.7], ["s2", 10.4]];
+             ["pdf", 3.8], ["knop", 4.2], ["vink", 5.5], ["bezig", 6.0], ["s1", 9.7]];
+const KAART = 10.3;
 const $ = (id) => document.getElementById(id);
 let t0 = null;
 const TEMPO = 1.3;  // hele tijdlijn rustiger: onder groen rond 7 s (13-11, op verzoek)
@@ -144,6 +174,14 @@ function zet(t) {
   $("knop").firstChild.textContent = t >= 5.3 ? "Sent ✓" : "Send";
   $("onder").classList.toggle("klaar", t >= 5.4);
   $("hook").classList.toggle("weg", t >= 9.4);
+  // profielkaartje: verschijnt, Follow wordt ingetikt
+  $("scrim").classList.toggle("aan", t >= KAART);
+  $("kaart").classList.toggle("aan", t >= KAART);
+  $("volg").classList.toggle("druk", t >= KAART + 1.1 && t < KAART + 1.3);
+  $("tik").classList.toggle("start", t >= KAART + 1.1 && t < KAART + 1.15);
+  $("tik").classList.toggle("aan", t >= KAART + 1.15);
+  $("volg").classList.toggle("klaar", t >= KAART + 1.35);
+  $("volgt").textContent = t >= KAART + 1.35 ? "Following ✓" : "Follow";
 }
 window.__hook = function () {
   t0 = window.__klok;
