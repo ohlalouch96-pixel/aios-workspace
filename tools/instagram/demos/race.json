@@ -1,14 +1,8 @@
 {"demo":"race","kleurenset":"navy","hook":"Same quote. *Two ways.*",
 "stappen":[{"doe":"wacht","s":17.0}],
 "geluid":[
- {"s":"typen","van":0.56,"tot":12.5,"cps":5.4,"soort":"toetsenbord","vol":0.8},
- {"s":"klok","van":0.5,"tot":12.5,"elke":1.0,"vol":0.7},
+ {"s":"typen","van":0.56,"tot":12.5,"cps":5.4,"soort":"toetsenbord","vol":0.55},
  {"s":"plop","t":0.69,"vol":0.6},
- {"s":"ding","t":1.6,"hz":1047,"vol":0.25},{"s":"ding","t":1.99,"hz":1175,"vol":0.25},
- {"s":"ding","t":2.64,"hz":1319,"vol":0.25},{"s":"ding","t":3.16,"hz":1397,"vol":0.25},{"s":"ding","t":3.68,"hz":1568,"vol":0.25},
- {"s":"ding","t":4.33,"hz":1760,"vol":0.3},
- {"s":"klik","t":6.8},{"s":"chime","t":7.19},
- {"s":"riser","t":7.32,"duur":4.95,"vol":0.8},
- {"s":"klap","t":12.91},
- {"s":"swoosh","t":13.6},{"s":"klik","t":15.12},{"s":"chime","t":15.45}
+ {"s":"klik","t":6.8,"vol":0.7},{"s":"chime","t":7.19},
+ {"s":"klik","t":15.12,"vol":0.45},{"s":"chime","t":15.45,"vol":0.5}
 ]}

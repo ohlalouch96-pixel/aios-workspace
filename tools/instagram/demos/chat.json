@@ -1,17 +1,10 @@
 {"demo":"chat","kleurenset":"navy","hook":"I run my business *from one chat.*",
 "stappen":[{"doe":"wacht","s":16.5}],
 "geluid":[
- {"s":"pad","van":0,"tot":17.5,"vol":1.0},
  {"s":"typen","van":0.3,"tot":2.2,"cps":25,"soort":"telefoon"},
- {"s":"swoosh","t":2.15},
  {"s":"plop","t":3.42},
- {"s":"ding","t":4.14,"hz":523},{"s":"ding","t":5.1,"hz":659},{"s":"ding","t":6.06,"hz":784},{"s":"ding","t":7.02,"hz":1047},
+ {"s":"ding","t":4.14,"hz":523,"vol":0.7},{"s":"ding","t":5.1,"hz":659,"vol":0.7},{"s":"ding","t":6.06,"hz":784,"vol":0.7},{"s":"ding","t":7.02,"hz":1047,"vol":0.7},
  {"s":"typen","van":7.98,"tot":8.9,"cps":20,"soort":"telefoon"},
- {"s":"swoosh","t":8.88},
- {"s":"swoosh","t":9.06,"klein":true},{"s":"swoosh","t":9.24,"klein":true},{"s":"swoosh","t":9.42,"klein":true},{"s":"swoosh","t":9.6,"klein":true},
- {"s":"ding","t":9.6,"hz":1319,"vol":0.7},
  {"s":"plop","t":10.38},
- {"s":"riser","t":10.6,"duur":1.3,"vol":0.6},
- {"s":"klap","t":12.66,"vol":0.7},
- {"s":"swoosh","t":13.3},{"s":"klik","t":14.7},{"s":"chime","t":15.0}
+ {"s":"klik","t":14.7,"vol":0.45},{"s":"chime","t":15.0,"vol":0.5}
 ]}
