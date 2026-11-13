@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Advertentie — de race: offerte met de hand vs automatisch (fictief)</title>
+<style>
+/* Verticale advertentie 1080x1920. Boven: offerte met de hand (Word, 21:04). Onder: dezelfde offerte automatisch.
+   Alles wordt per frame gezet vanuit zet(ms) (opname_demo.py stuurt de klok), CSS-overgangen stapt de tool mee. */
+@font-face { font-family: Inter; font-weight: 100 900; src: url('../fonts/inter-latin.woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; color: #101828;
+  background: radial-gradient(ellipse at 50% 30%, #23497F, #0F2547 70%); }
+em { font-style: normal; color: #7FA8FF; }
+
+#hook { position: absolute; left: 60px; right: 60px; top: 150px; text-align: center; color: #fff; }
+#hook .r1 { font: 800 76px/1.05 Inter; letter-spacing: -.03em; }
+#hook .r2 { font: 700 46px/1.2 Inter; letter-spacing: -.01em; color: #C9DAFF; margin-top: 14px; }
+.in { opacity: 0; transform: translateY(26px); transition: opacity .45s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.in.aan { opacity: 1; transform: none; }
+
+.paneel { position: absolute; left: 50px; right: 50px; height: 560px; border-radius: 28px; overflow: hidden; background: #fff;
+  box-shadow: 0 30px 60px rgba(0,0,0,.35); transition: box-shadow .5s ease; }
+#boven { top: 380px; }
+#onder { top: 990px; }
+.kop { position: absolute; left: 0; right: 0; top: 0; height: 74px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px;
+  font: 700 22px Inter; letter-spacing: .14em; text-transform: uppercase; }
+#boven .kop { background: #F2F4F7; color: #475467; }
+#onder .kop { background: #EEF3FF; color: #1F5EFF; }
+.timer { font: 700 34px Inter; letter-spacing: 0; font-variant-numeric: tabular-nums; text-transform: none; display: flex; align-items: center; gap: 10px; }
+.timer i { width: 14px; height: 14px; border-radius: 50%; background: currentColor; display: inline-block; }
+#boven .timer { color: #D92D20; }
+
+/* boven: Word */
+.word { position: absolute; left: 0; right: 0; top: 74px; bottom: 0; background: #E9EBEF; }
+.wbalk { height: 44px; background: #2B579A; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font: 600 17px Inter; }
+.blad { position: absolute; left: 70px; right: 70px; top: 70px; bottom: -40px; background: #fff; padding: 34px 40px; font: 400 27px/1.5 'Times New Roman', serif; color: #222; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: pre-wrap; }
+.caret { display: inline-block; width: 2px; height: 24px; background: #111; vertical-align: -4px; }
+.reken { position: absolute; right: 30px; top: 150px; width: 250px; border-radius: 16px; background: #1D1D1F; color: #fff; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+.reken .sch { font: 300 40px Inter; text-align: right; padding: 8px 4px 14px; font-variant-numeric: tabular-nums; }
+.reken .k { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.reken .k span { height: 40px; border-radius: 50%; background: #333; }
+.reken .k span:nth-child(4n) { background: #FF9F0A; }
+.klok { position: absolute; right: 20px; bottom: 16px; font: 600 18px Inter; color: #475467; background: #fff; padding: 6px 12px; border-radius: 8px; }
+
+/* onder: automatisch */
+.app { position: absolute; left: 0; right: 0; top: 74px; bottom: 0; background: #F9FAFB; padding: 22px 28px; }
+.melding { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid #EAECF0; border-radius: 16px; padding: 14px 18px; box-shadow: 0 8px 20px rgba(16,24,40,.06); }
+.melding .ic { width: 46px; height: 46px; border-radius: 12px; background: #1F5EFF; display: grid; place-items: center; color: #fff; font: 700 22px Inter; }
+.melding b { display: block; font: 700 23px Inter; }
+.melding small { font: 500 19px Inter; color: #667085; }
+.offerte { margin-top: 16px; background: #fff; border: 1px solid #EAECF0; border-radius: 16px; padding: 16px 20px; }
+.rij { display: flex; justify-content: space-between; font: 500 22px Inter; padding: 6px 0; border-bottom: 1px solid #F2F4F7; }
+.rij span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+.velden { display: flex; gap: 10px; margin-bottom: 8px; }
+.veld { flex: 1; background: #F5F8FF; border-radius: 10px; padding: 7px 12px; font: 600 20px Inter; color: #17345F; }
+.veld small { display: block; font: 500 13px Inter; color: #667085; }
+.totaal { display: flex; justify-content: space-between; font: 800 24px Inter; padding-top: 10px; color: #17345F; }
+.acties { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.pdf { font: 600 17px Inter; color: #475467; background: #F2F4F7; padding: 8px 14px; border-radius: 10px; }
+.knop { font: 700 20px Inter; color: #fff; background: #1F5EFF; padding: 12px 30px; border-radius: 12px; position: relative; transition: background .3s ease, transform .15s ease; }
+.knop.druk { transform: scale(.94); }
+.knop.klaar { background: #12B76A; }
+.ripple { position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px; border-radius: 50%; background: rgba(255,255,255,.6); opacity: 0; transform: scale(.4); transition: opacity .5s ease, transform .5s ease; }
+.ripple.aan { opacity: 0; transform: scale(5); }
+.ripple.start { opacity: 1; transform: scale(.4); transition: none; }
+#onder.klaar { box-shadow: 0 0 0 6px #12B76A, 0 30px 70px rgba(18,183,106,.45); }
+.vink { z-index: 5; position: absolute; right: 26px; top: 92px; font: 800 26px Inter; color: #12B76A; background: #ECFDF3; border-radius: 30px; padding: 8px 18px; }
+
+/* slot */
+#slot { position: absolute; left: 60px; right: 60px; top: 150px; text-align: center; color: #fff; }
+#slot .r1 { font: 800 80px/1.05 Inter; letter-spacing: -.03em; }
+#slot .r2 { font: 600 34px/1.3 Inter; color: #C9DAFF; margin-top: 18px; }
+#hook.weg { opacity: 0; transform: translateY(-20px); transition: opacity .35s ease, transform .35s ease; }
+.voet { position: absolute; left: 0; right: 0; top: 1600px; display: flex; justify-content: center; align-items: center; gap: 14px; font: 600 30px Inter; color: #fff; opacity: .85; }
+</style>
+</head>
+<body>
+<!-- nodig voor _demo.js (cursor/camera), niet zichtbaar -->
+<div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
+
+<div id="hook"><div class="r1 in" id="h1">Same quote. <em>Two ways.</em></div><div class="r2 in" id="h2">Choose your way.</div></div>
+<div id="slot"><div class="r1 in" id="s1"><em>20 minutes</em> vs <em>1 click.</em></div><div class="r2 in" id="s2">Follow for more · AI automation <em>without the hype.</em></div></div>
+
+<div class="paneel" id="boven">
+  <div class="kop"><span>By hand</span><span class="timer"><i></i><span id="t1">0:00</span></span></div>
+  <div class="word">
+    <div class="wbalk"><span>Quote_Carter.docx · Word</span><span>— ▢ ✕</span></div>
+    <div class="blad"><span id="typ"></span><span class="caret" id="caret"></span></div>
+    <div class="reken in" id="reken"><div class="sch" id="rsch">0</div><div class="k"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+    <div class="klok">9:04 PM</div>
+  </div>
+</div>
+
+<div class="paneel" id="onder">
+  <div class="kop"><span>Automated</span><span class="timer"><i></i><span id="t2">0:00</span></span></div>
+  <div class="vink in" id="vink">✓ Sent</div>
+  <div class="app">
+    <div class="melding in" id="m"><div class="ic">✉</div><div><b>New quote request</b><small>Emma Carter · water heater replacement</small></div></div>
+    <div class="offerte in" id="off">
+      <div class="velden"><div class="veld in" id="v1"><small>Customer</small>Emma Carter</div><div class="veld in" id="v2"><small>Address</small>18 Maple St, Austin</div></div>
+      <div class="rij in" id="r1"><span>Remove old water heater</span><span>$180.00</span></div>
+      <div class="rij in" id="r2"><span>50-gal water heater, supplied &amp; fitted</span><span>$1,650.00</span></div>
+      <div class="rij in" id="r3"><span>Permit &amp; inspection</span><span>$150.00</span></div>
+      <div class="totaal in" id="tot"><span>Total incl. 8% tax</span><span>$2,138.40</span></div>
+      <div class="acties"><span class="pdf in" id="pdf">📄 Q-2026-0217.pdf</span><span class="knop in" id="knop">Send<i class="ripple" id="rip"></i></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="voet"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+
+<script src="_demo.js"></script>
+<script>
+// Tijdlijn in seconden vanaf de hook. Boven loopt de klok versneld (20 min in 10 s), onder tot 0:42.
+const TEKST = "QUOTE\n\nCustomer: Emma Cartr\ber\nAddress: 18 Maple Street, Austin\n\nJob: replace water heater\n\n1. Remove old water heater ...... $180\n2. New 50-gal water heater ...... $1,6";
+const AAN = [["h1", 0], ["h2", 0.75], ["m", 0.5], ["off", 1.3], ["v1", 1.5], ["v2", 1.8], ["r1", 2.5], ["r2", 2.9], ["r3", 3.3], ["tot", 3.9],
+             ["pdf", 4.7], ["knop", 5.2], ["reken", 3.6], ["vink", 6.6], ["s1", 10.7], ["s2", 11.5]];
+const $ = (id) => document.getElementById(id);
+let t0 = null;
+const mmss = (s) => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+
+function zet(t) {
+  AAN.forEach(([id, op]) => $(id).classList.toggle("aan", t >= op));
+  // boven: letter voor letter typen (\b = backspace), ±7 tekens per seconde, rekenmachine tussendoor
+  const n = Math.max(0, Math.floor((t - 0.4) * 7));
+  let uit = "";
+  for (const c of TEKST.slice(0, n)) uit = c === "\b" ? uit.slice(0, -1) : uit + c;
+  $("typ").textContent = uit;
+  $("caret").style.opacity = Math.floor(t * 2.2) % 2 ? 0.15 : 1;
+  $("rsch").textContent = t < 4.2 ? "1650" : t < 4.8 ? "1650+180" : "1830";
+  $("reken").classList.toggle("aan", t >= 3.6 && t < 5.6);
+  $("t1").textContent = mmss(Math.min(1200, Math.max(0, t - 0.3) * 120));
+  // onder: 0:42 bereikt op het moment van versturen
+  $("t2").textContent = mmss(Math.min(42, Math.max(0, t - 0.3) * (42 / 6.1)));
+  $("knop").classList.toggle("druk", t >= 6.1 && t < 6.3);
+  $("rip").classList.toggle("start", t >= 6.1 && t < 6.15);
+  $("rip").classList.toggle("aan", t >= 6.15);
+  $("knop").classList.toggle("klaar", t >= 6.4);
+  $("knop").firstChild.textContent = t >= 6.4 ? "Sent ✓" : "Send";
+  $("onder").classList.toggle("klaar", t >= 6.5);
+  $("hook").classList.toggle("weg", t >= 10.3);
+}
+window.__hook = function () {
+  t0 = window.__klok;
+  animeer(14500, () => zet((window.__klok - t0) / 1000));
+};
+zet(-1);
+</script>
+</body></html>
