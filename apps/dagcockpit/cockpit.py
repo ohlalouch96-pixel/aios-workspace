@@ -260,6 +260,20 @@ def todo_lijst():
     return sorted(items, key=lambda x: volgorde[x["label"]])
 
 
+def todo_cirkel(items):
+    """Segmenten voor het cirkeldiagram: (label, aantal, kleur, dasharray, offset) op omtrek 100."""
+    kleuren = {"Loopt": "#0F7A45", "Gepland": "#1D4ED8", "Geparkeerd": "#B7C0D0"}
+    totaal = len(items) or 1
+    segs, start = [], 0.0
+    for label in ("Loopt", "Gepland", "Geparkeerd"):
+        n = sum(1 for i in items if i["label"] == label)
+        lengte = 100 * n / totaal
+        segs.append({"label": label, "aantal": n, "kleur": kleuren[label],
+                     "dash": f"{max(lengte - 1.5, 0):.2f} {100 - max(lengte - 1.5, 0):.2f}", "offset": f"{25 - start:.2f}"})
+        start += lengte
+    return segs
+
+
 # ---------------------------------------------------------------- routes
 
 @app.route("/")
@@ -283,7 +297,7 @@ def index():
         kaarten=kaarten, content_taken=content_taken,
         week=weekstrook(conn, vandaag), linkedin=linkedin_deze_week(vandaag),
         contentdag=kort(volgende_contentdag(vandaag)),
-        binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(),
+        binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
@@ -422,6 +436,8 @@ table.todo td{padding:6px 0;border-top:1px solid var(--lijn);vertical-align:midd
 table.todo tr:first-child td{border-top:0}
 table.todo td.l{text-align:right;width:90px}
 .pil.groen{color:var(--groen);background:var(--groenzacht)}
+details.geparkeerd summary{font-size:13px;font-weight:600;color:var(--blauw);cursor:pointer;min-height:32px;display:flex;align-items:center}
+details.geparkeerd[open] summary{margin-bottom:4px}
 table.binnen{width:100%;border-collapse:collapse;font-size:13px}
 table.binnen td{padding:6px 0;vertical-align:top;border-top:1px solid var(--lijn);line-height:1.35}
 table.binnen tr:first-child td{border-top:0}
@@ -543,9 +559,25 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 
       <section class="kaart">
         <div class="kaartkop"><h2>To-do-lijst</h2><span class="pil grijs">{{ todo|length }} open</span></div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <svg width="64" height="64" viewBox="0 0 42 42" role="img" aria-label="{% for c in todo_cirkel %}{{ c.aantal }} {{ c.label|lower }}{% if not loop.last %}, {% endif %}{% endfor %}">
+            <circle cx="21" cy="21" r="15.915" fill="none" stroke="#EEF1F6" stroke-width="6"/>
+            {% for c in todo_cirkel %}{% if c.aantal %}<circle cx="21" cy="21" r="15.915" fill="none" stroke="{{ c.kleur }}" stroke-width="6" stroke-dasharray="{{ c.dash }}" stroke-dashoffset="{{ c.offset }}"/>{% endif %}{% endfor %}
+            <text x="21" y="24.5" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#10213D">{{ todo|length }}</text>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:4px;font-size:13px">
+            {% for c in todo_cirkel %}<span style="display:flex;align-items:center;gap:8px"><span aria-hidden="true" style="width:10px;height:10px;border-radius:3px;background:{{ c.kleur }}"></span>{{ c.label }}<strong style="margin-left:auto;padding-left:12px">{{ c.aantal }}</strong></span>{% endfor %}
+          </div>
+        </div>
         <table class="todo">
-          {% for t in todo %}<tr><td>{{ t.titel }}</td><td class="l"><span class="pil {{ t.kleur }}">{{ t.label }}</span></td></tr>{% endfor %}
+          {% for t in todo if t.label != 'Geparkeerd' %}<tr><td>{{ t.titel }}</td><td class="l"><span class="pil {{ t.kleur }}">{{ t.label }}</span></td></tr>{% endfor %}
         </table>
+        <details class="geparkeerd">
+          <summary>Geparkeerd bekijken</summary>
+          <table class="todo">
+            {% for t in todo if t.label == 'Geparkeerd' %}<tr><td>{{ t.titel }}</td></tr>{% endfor %}
+          </table>
+        </details>
       </section>
     </div>
 
