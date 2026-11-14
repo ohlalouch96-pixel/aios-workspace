@@ -48,7 +48,7 @@
 
 ## KvK-registratie
 
-**Status:** INGESCHREVEN op 2026-11-12. KvK-nummer: 42220238. Btw-nummer en omzetbelastingnummer (OB) komen binnen 2 weken per post (verwacht uiterlijk ~26-11). Google Bedrijfsprofiel aangemaakt op 12-11 (servicebedrijf, Softwarebedrijf, Nederland, ma-za 9-17, logo/omslag/services), verificatie loopt (max 5 dagen, ~17-11). KvK in websitefooter gedaan (andere chat). Nog open: reviews MHL/FTUK zodra profiel zichtbaar (alleen reviewlink nodig, Oussama vraagt het mondeling), btw-nummer doorgeven zodra binnen.
+**Status:** INGESCHREVEN op 2026-11-12. KvK-nummer: 42220238. Btw-nummer en omzetbelastingnummer (OB) komen binnen 2 weken per post (verwacht uiterlijk ~26-11). Google Bedrijfsprofiel aangemaakt op 12-11 (servicebedrijf, Softwarebedrijf, Nederland, ma-za 9-17, logo/omslag/services), GEVERIFIEERD en live op 14-11. KvK in websitefooter gedaan (andere chat). Nog open: reviews MHL/FTUK zodra profiel zichtbaar (alleen reviewlink nodig, Oussama vraagt het mondeling), btw-nummer doorgeven zodra binnen.
 **Waarom geparkeerd:** Was volgens `context/strategy.md` gepland "zodra eerste klant in zicht" — nog niet zover.
 **Trigger om op te pakken:** Zodra een klant ja zegt (bijv. Millenaar | Peijnenburg na het eerste gesprek). Dan direct een afspraak inplannen, niet pas na de betaling.
 **Wat er moet gebeuren:** Bedrijf inschrijven bij de Kamer van Koophandel. Online formulier via DigiD (ca. 15 min), daarna afspraak op een KvK-kantoor met ID. Kosten 2026: €85,15 eenmalig.
