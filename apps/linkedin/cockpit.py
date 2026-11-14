@@ -31,15 +31,18 @@ import browser  # noqa: E402
 import vind_prospects  # noqa: E402
 
 
-def _sync_vers(conn):
-    """Haalt de linkedin-tracker-sheet vers op bij elke paginaweergave, zodat
-    het dashboard niet kan achterlopen op een losse collect_linkedin.py-run."""
+def _sync_vers(conn, records):
+    """Schrijft de al opgehaalde sheet-records (zie wachtrij.alle_records() in index())
+    door naar de lokale database, zodat het dashboard niet kan achterlopen. Doet GEEN
+    eigen live Sheets-aanroep meer — collect_linkedin.write() accepteert dezelfde
+    veldnamen als wachtrij.KOLOMMEN via zijn bestaande fallback-keys, dus 1 gedeelde
+    fetch volstaat i.p.v. de losse collect_linkedin.collect() van hiervoor (snelheidsfix
+    14-11, sheet was gegroeid naar 59 rijen en 2x volledig live ophalen werd traag)."""
     try:
-        result = collect_linkedin.collect()
-        if result.get("status") == "success":
-            collect_linkedin.write(conn, result, datetime.now().strftime("%Y-%m-%d"))
+        result = {"status": "success", "data": {"rows": records}}
+        collect_linkedin.write(conn, result, datetime.now().strftime("%Y-%m-%d"))
     except Exception as e:
-        print(f"Waarschuwing: live sync mislukt, toon laatst bekende data ({e})")
+        print(f"Waarschuwing: lokale sync mislukt, toon laatst bekende data ({e})")
 
 app = Flask(__name__)
 
@@ -487,8 +490,8 @@ function initialen(naam) {
 def index():
     conn = get_connection()
     _ensure_feedback_table(conn)
-    _sync_vers(conn)
-    records = wachtrij.alle_records()  # 1 live Sheets-aanroep, hergebruikt door alle secties hieronder
+    records = wachtrij.alle_records()  # DE ENIGE live Sheets-aanroep van deze paginaweergave
+    _sync_vers(conn, records)
     kandidaten = wachtrij.volgende_batch(10, records=records)
     wachtend = wachtrij.wachtend_op_acceptatie(records=records)
     geaccepteerd = wachtrij.geaccepteerd_wachtend(records=records)
