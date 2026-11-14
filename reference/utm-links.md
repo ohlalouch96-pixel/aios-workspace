@@ -48,6 +48,7 @@ Zelfde opbouw, maar `utm_medium` zegt waar de link staat.
 | Gmail-handtekening           | zichtbaar `insightance.ai`, link `insightance.ai/?utm_source=email&utm_medium=handtekening` (bron: `outputs/logo-2026/handtekening-kopieren.html`) |
 | LinkedIn-post rekentool (geboost, okt) | `https://insightance.ai/?utm_source=linkedin&utm_medium=post&utm_campaign=rekentool#rekentool` |
 | Google Bedrijfsprofiel (website-veld, sinds 12-11) | `https://insightance.ai/?utm_source=google&utm_medium=bedrijfsprofiel` |
+| Google Bedrijfsprofiel-post (knop) | `https://insightance.ai/<pagina>?utm_source=google&utm_medium=bedrijfsprofiel&utm_campaign=post-<onderwerp>` |
 | QR visitekaartje (bij herdruk) | `insightance.ai/?utm_source=visitekaartje&utm_medium=qr` |
 
 `<onderwerp>` kort en in kleine letters, bv. `rekentool`, `mhl-case`, `myth-check`.
