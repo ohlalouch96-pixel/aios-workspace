@@ -82,6 +82,7 @@ These are how you know your AIOS is working:
 ├── CLAUDE.md                # This file — core context, always loaded
 ├── .env                     # API keys and credentials (gitignored, never commit)
 ├── HISTORY.md               # Chronologisch logboek van alles wat gebouwd is
+├── Dagcockpit starten.bat   # Dubbelklik: start de dagcockpit en opent hem in de browser
 ├── .claude/
 │   └── commands/            # Slash commands Claude can execute
 │       ├── prime.md         # /prime — session initialization
@@ -153,6 +154,9 @@ These are how you know your AIOS is working:
 │   │   └── cockpit.py       # Lokale webcockpit (127.0.0.1) voor LinkedIn-outreach — kaarten, knoppen, dashboard
 │   └── content/
 │       └── agent.py         # Instagram-contentagent: kiest, schrijft (Claude), controleert, rendert, stuurt naar Telegram
+│   └── dagcockpit/
+│       ├── cockpit.py       # Persoonlijke dagcockpit (127.0.0.1:5070): taken van vandaag per chat afvinken, weekstrook, LinkedIn-posts, binnenkort, notitie
+│       └── ritme.py         # Vast weekritme, LinkedIn-posttijden, snelkoppelingen (hier aanpassen)
 ├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
 │   ├── source_prospects.md  # SOP bij tools/source_prospects.py
 │   ├── ga4_weekly_report.md # SOP wekelijkse GA4-samenvatting (elke maandag)

@@ -19,6 +19,21 @@
 
 ---
 
+## 2026-11-14
+
+### Dagcockpit: persoonlijk dagoverzicht
+
+- Lokale app `apps/dagcockpit/cockpit.py` (http://127.0.0.1:5070, start met `Dagcockpit starten.bat`): taken van vandaag per chat (LinkedIn, Webshops, Ondernemers en makelaars, Website, Content, Algemeen) om af te vinken, voortgang "x van y", weekstrook met voortgang per dag, LinkedIn-posts van deze week (gepland groen, geplaatst doorgestreept met vinkje), Binnenkort, snelkoppelingen, notitie voor vandaag, taak toevoegen
+- Weekritme in `apps/dagcockpit/ritme.py`: dagelijks LinkedIn + webshops, ma t/m do belronde, maandag GA4, donderdag LinkedIn-check, laatste zaterdag van de maand content klaarzetten; geen outreach-aantallen (bewust)
+- Eenmalige taken die blijven liggen schuiven door met "Van <datum>"; opslag in tabellen `dagcockpit_*` in data.db
+- Ontwerp gekozen uit drie voorbeelden (A: kaarten met navy zijmenu)
+
+### Google-zichtbaarheid
+
+- KvK-inschrijving (42220238), Google Bedrijfsprofiel live en aangevuld (Calendly, social, openingsdatum, eerste post rekentool), Search Console met sitemap en GA4-koppeling, Bing Places geïmporteerd
+
+---
+
 ## 2026-10-30
 
 ### DataOS: ondernemers-track in de metrics en eerlijke reactietelling
