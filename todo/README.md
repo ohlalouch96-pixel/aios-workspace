@@ -23,7 +23,7 @@
 **Status:** Gepland, na ~2 weken data in Search Console (vanaf ~28-11-2026)
 **Wat al klaar is:** Google Search Console sinds 14-11 (domeinproperty insightance.ai, automatisch geverifieerd via DNS bij Cloudflare, DNS-regel laten staan). Sitemap https://insightance.ai/sitemap.xml ingediend: succesvol, 7 pagina's. Gekoppeld aan GA4 (14-11). Google Bedrijfsprofiel live sinds 14-11.
 **Wat er moet gebeuren:** In Search Console kijken op welke zoekwoorden de site verschijnt en hoe vaak er geklikt wordt. Daarna bepalen op welke zoekwoorden Insightance gevonden wil worden, of de pagina's daarop zijn ingericht, en of de kennisbank/blog dan zin krijgt.
-**Ook:** af en toe een post op het Google-profiel (LinkedIn/Instagram hergebruiken, 1x per 1-2 weken; eerste post rekentool geplaatst 14-11); link "Bekijk onze reviews op Google" op de site zodra er reviews staan.
+**Ook:** af en toe een post op het Google-profiel (LinkedIn/Instagram hergebruiken, 1x per 1-2 weken; eerste post rekentool geplaatst 14-11). Profiel 14-11 aangevuld: Calendly-afsprakenlink, openingsdatum, LinkedIn + Instagram. Bing Places geïmporteerd uit Google op 14-11 (wekelijkse sync), live op Bing verwacht ~24-28-11; checken via bing.com/maps op "Insightance"; link "Bekijk onze reviews op Google" op de site zodra er reviews staan.
 
 ---
 
