@@ -27,6 +27,7 @@ CHATS = {
 TAKEN = [
     {"id": "linkedin_verversen", "titel": "Dashboard verversen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "linkedin_connecties", "titel": "Nieuwe connecties maken", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    {"id": "linkedin_followups", "titel": "Follow-ups versturen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "linkedin_check", "titel": "LinkedIn-content checken: hoe deden de posts het?", "chat": "LinkedIn", "ritme": "Donderdag", "dagen": {3}, "kort": "LinkedIn-check"},
     {"id": "webshop_followups", "titel": "Follow-ups versturen", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "webshop_nieuw", "titel": "Minimaal 10 nieuwe berichten", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},

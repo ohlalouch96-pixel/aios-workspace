@@ -231,6 +231,35 @@ def snelkoppelingen():
     return uit
 
 
+def todo_lijst():
+    """Open punten uit todo/README.md: elke ## kop die niet doorgestreept is, met een kort statuslabel."""
+    pad = WORKSPACE_ROOT / "todo" / "README.md"
+    if not pad.exists():
+        return []
+    items, huidig = [], None
+    for regel in pad.read_text(encoding="utf-8").splitlines():
+        if regel.startswith("## "):
+            titel = regel[3:].strip()
+            huidig = None if titel.startswith("~~") else {"titel": titel, "status": ""}
+            if huidig:
+                items.append(huidig)
+        elif huidig and regel.startswith("**Status:**") and not huidig["status"]:
+            huidig["status"] = regel.replace("**Status:**", "").strip()
+    for it in items:
+        st = it["status"].lower()
+        if "gepland" in st:
+            it["label"], it["kleur"] = "Gepland", "blauw"
+        elif any(w in st for w in ("opgepakt", "ingeschreven", "loopt", "bezig")):
+            it["label"], it["kleur"] = "Loopt", "groen"
+        else:
+            it["label"], it["kleur"] = "Geparkeerd", "grijs"
+        kop = it["titel"].split(" (")[0]
+        voor = kop.split(":")[0]
+        it["titel"] = voor if len(voor) > 6 else kop
+    volgorde = {"Loopt": 0, "Gepland": 1, "Geparkeerd": 2}
+    return sorted(items, key=lambda x: volgorde[x["label"]])
+
+
 # ---------------------------------------------------------------- routes
 
 @app.route("/")
@@ -254,7 +283,7 @@ def index():
         kaarten=kaarten, content_taken=content_taken,
         week=weekstrook(conn, vandaag), linkedin=linkedin_deze_week(vandaag),
         contentdag=kort(volgende_contentdag(vandaag)),
-        binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(),
+        binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
@@ -388,6 +417,11 @@ table.posts .status{text-align:right;width:70px}
 table.posts tr.geplaatst .wanneer,table.posts tr.geplaatst .wat{text-decoration:line-through;color:#6B8A78}
 .gepland{font-size:11px;font-weight:600;color:var(--groen);background:var(--groenzacht);padding:2px 8px;border-radius:99px}
 .zijkant{display:flex;flex-direction:column;gap:14px}
+table.todo{width:100%;border-collapse:collapse;font-size:13px}
+table.todo td{padding:6px 0;border-top:1px solid var(--lijn);vertical-align:middle}
+table.todo tr:first-child td{border-top:0}
+table.todo td.l{text-align:right;width:90px}
+.pil.groen{color:var(--groen);background:var(--groenzacht)}
 table.binnen{width:100%;border-collapse:collapse;font-size:13px}
 table.binnen td{padding:6px 0;vertical-align:top;border-top:1px solid var(--lijn);line-height:1.35}
 table.binnen tr:first-child td{border-top:0}
@@ -504,6 +538,13 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
             <td class="status">{% if p.geplaatst %}<svg width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="geplaatst"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#0F5A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}<span class="gepland">gepland</span>{% endif %}</td>
           </tr>
           {% endfor %}
+        </table>
+      </section>
+
+      <section class="kaart">
+        <div class="kaartkop"><h2>To-do-lijst</h2><span class="pil grijs">{{ todo|length }} open</span></div>
+        <table class="todo">
+          {% for t in todo %}<tr><td>{{ t.titel }}</td><td class="l"><span class="pil {{ t.kleur }}">{{ t.label }}</span></td></tr>{% endfor %}
         </table>
       </section>
     </div>
