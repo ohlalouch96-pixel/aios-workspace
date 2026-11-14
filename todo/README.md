@@ -18,6 +18,15 @@
 
 ---
 
+## SEO-gesprek: Insightance beter vindbaar op Google
+
+**Status:** Gepland, na ~2 weken data in Search Console (vanaf ~28-11-2026)
+**Wat al klaar is:** Google Search Console sinds 14-11 (domeinproperty insightance.ai, automatisch geverifieerd via DNS bij Cloudflare, DNS-regel laten staan). Sitemap https://insightance.ai/sitemap.xml ingediend: succesvol, 7 pagina's. Google Bedrijfsprofiel live sinds 14-11.
+**Wat er moet gebeuren:** In Search Console kijken op welke zoekwoorden de site verschijnt en hoe vaak er geklikt wordt. Daarna bepalen op welke zoekwoorden Insightance gevonden wil worden, of de pagina's daarop zijn ingericht, en of de kennisbank/blog dan zin krijgt.
+**Ook:** af en toe een post op het Google-profiel (LinkedIn/Instagram hergebruiken); link "Bekijk onze reviews op Google" op de site zodra er reviews staan.
+
+---
+
 ## E-maillijst / nieuwsbrief via de website
 
 **Status:** Geparkeerd sinds 2026-10-11
