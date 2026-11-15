@@ -117,7 +117,7 @@ def taken_van_vandaag(conn, vandaag):
     iso = vandaag.isoformat()
     vinkjes = {r["taak_id"] for r in conn.execute("SELECT taak_id FROM dagcockpit_vinkjes WHERE datum=?", (iso,))}
     per_chat = {chat: [] for chat in ritme.CHATS}
-    for t in vaste_taken(vandaag):
+    for t in [t for t in ritme.TAKEN if valt_op(t, vandaag) or t.get("toon_altijd")]:
         per_chat.setdefault(t["chat"], []).append({
             "sleutel": t["id"], "titel": t["titel"], "ritme": t["ritme"],
             "klaar": t["id"] in vinkjes, "soort": "vast", "achterstand": False,

@@ -24,6 +24,7 @@ CHATS = {
 
 # Terugkerende taken. "dagen" = set weekdagen, of "laatste_zaterdag" voor de
 # laatste zaterdag van de maand. "kort" = korte omschrijving voor de weekstrook.
+# "toon_altijd": True = staat elke dag in de kaart (met het ritme-label erachter), ook op dagen buiten "dagen".
 TAKEN = [
     {"id": "linkedin_verversen", "titel": "Dashboard verversen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "linkedin_connecties", "titel": "Nieuwe connecties maken", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
@@ -34,7 +35,7 @@ TAKEN = [
     {"id": "instagram_post", "titel": "Instagram-post plaatsen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_kwartier", "titel": "Kwartiertje reageren", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Ondernemers en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "belronde", "titel": "Belronde", "chat": "Ondernemers en makelaars", "ritme": "Ma t/m do", "dagen": {0, 1, 2, 3}, "kort": "Belronde"},
+    {"id": "belronde", "titel": "Belronde", "chat": "Ondernemers en makelaars", "ritme": "Ma t/m do", "dagen": {0, 1, 2, 3}, "kort": "Belronde", "toon_altijd": True},
     {"id": "ga4", "titel": "Websitecijfers bekijken (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers"},
     {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten"},
 ]
