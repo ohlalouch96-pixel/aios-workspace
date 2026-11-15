@@ -86,3 +86,18 @@ STARTHERINNERINGEN = [
     {"titel": "Google-post plaatsen", "chat": "Algemeen", "datum": "2026-11-28"},
     {"titel": "SEO-gesprek: eerste cijfers Search Console", "chat": "Algemeen", "datum": "2026-11-28"},
 ]
+
+# Quote bovenaan de cockpit: elke dag een andere (op volgorde van de dag in het jaar).
+QUOTES = [
+    "Iedere dag een klein beetje beter. Een beetje slimmer, een beetje sterker.",
+    "Vandaag word je een betere versie van jezelf dan gisteren.",
+    "Hou vol. Succes ligt om de hoek.",
+    "Eén gesprek kan alles veranderen. Voer het vandaag.",
+    "Kleine stappen, elke dag. Zo bouw je iets groots.",
+    "Discipline brengt je verder dan motivatie ooit zal doen.",
+    "Je eerste klant komt niet door wachten, maar door doen.",
+    "Wie elke dag zaait, oogst vroeg of laat.",
+]
+
+# Vaste taken die ook in de tegel Binnenkort komen (naast de eenmalige herinneringen).
+BINNENKORT_VAST = ["ga4", "linkedin_check", "content_maand"]

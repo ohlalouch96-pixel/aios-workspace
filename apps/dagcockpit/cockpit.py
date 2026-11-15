@@ -222,8 +222,11 @@ def volgende_contentdag(vandaag):
     return d
 
 
-def binnenkort(conn, vandaag, dagen=21):
-    tot = vandaag + timedelta(days=dagen)
+def binnenkort(conn, vandaag):
+    """Twee weken vooruit: t/m de zondag van de week waarin (morgen + 7 dagen) valt.
+    Op zondag 15-11 dus t/m zondag 29-11; vanaf zondag 22-11 t/m 6-12."""
+    verder = vandaag + timedelta(days=8)
+    tot = verder + timedelta(days=6 - verder.weekday())
     items = []
     for r in conn.execute("SELECT * FROM dagcockpit_taken WHERE datum > ? AND datum <= ? AND klaar_op IS NULL",
                           (vandaag.isoformat(), tot.isoformat())):
@@ -232,14 +235,14 @@ def binnenkort(conn, vandaag, dagen=21):
     d = vandaag + timedelta(days=1)
     while d <= tot:
         for t in vaste_taken(d):
-            if t["id"] in ("linkedin_check", "content_maand"):
+            if t["id"] in ritme.BINNENKORT_VAST:
                 items.append({"datum": d, "titel": t["titel"], "id": None, "vast": True})
         d += timedelta(days=1)
     items.sort(key=lambda x: x["datum"])
     for it in items:
         it["kop"] = f"{DAGEN_KORT[it['datum'].weekday()]} {it['datum'].day}"
         it["accent"] = "oranje" if is_laatste_zaterdag(it["datum"]) else "blauw"
-    return items[:8]
+    return items
 
 
 def snelkoppelingen():
@@ -325,7 +328,7 @@ def index():
         contentdag=kort(volgende_contentdag(vandaag)),
         insta_taken=per_chat.get("Instagram-content", []),
         instadag=kort(volgende_zaterdag(vandaag)),
-        binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
+        binnenkort=binnenkort(conn, vandaag), quote=ritme.QUOTES[vandaag.timetuple().tm_yday % len(ritme.QUOTES)], links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
@@ -410,7 +413,7 @@ TEMPLATE = r"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dagcockpit · Insightance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#17345F;--navy2:#24497F;--blauw:#1D4ED8;--blauwzacht:#E8EFFD;--tekst:#10213D;--grijs:#4B5568;--lijn:#E1E6EF;--bg:#F4F6FA;--groen:#0F5A35;--groenzacht:#E3F4EA;--oranje:#8A4B08;--oranjezacht:#FDF0E1;--paars:#5B3BB0;--paarszacht:#EFEAFB;--rood:#B4231A;--roodzacht:#FCE8E6}
 *{box-sizing:border-box}
@@ -427,9 +430,12 @@ nav.menu{flex:1 1 210px;max-width:240px;background:var(--navy);color:#fff;paddin
 .menu .link span{color:#9DB8EA}
 .menuknop{font-family:inherit;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;min-height:38px;padding:0 10px;border-radius:9px;color:#E3EAF6;background:transparent;border:0;font-size:13px;cursor:pointer}
 .menuknop:hover{background:var(--navy2);color:#fff}
-.doel{margin-top:auto;background:var(--navy2);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px}
-.doel small{font-size:11px;color:#B9C8E4;letter-spacing:.1em}
-.doel strong{font-size:14px;line-height:1.4}
+.doel{margin-top:auto;background:linear-gradient(150deg,#2B5596,#1B3D70);border:1px solid #F2C14E;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:5px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.doel small{font-size:11px;color:#F2C14E;letter-spacing:.14em;font-weight:700;margin-top:4px}
+.doel strong{font-family:'Playfair Display',Georgia,serif;font-size:18px;line-height:1.25;font-weight:600;color:#fff}
+.quote{flex:1 1 280px;margin:0;text-align:center;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:19px;line-height:1.4;color:var(--navy2);padding:0 12px}
+.dag small{display:flex;justify-content:space-between;align-items:center}
+.voorbij{width:16px;height:16px;border-radius:50%;background:#1F8A55;display:inline-flex;align-items:center;justify-content:center}
 main{flex:999 1 560px;min-width:0;padding:24px 28px;display:flex;flex-direction:column;gap:18px}
 header.kop{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
 .datum{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--blauw)}
@@ -513,7 +519,7 @@ table.todo td.l{text-align:right;width:90px}
 details.geparkeerd summary{font-size:13px;font-weight:600;color:var(--blauw);cursor:pointer;min-height:32px;display:flex;align-items:center}
 details.geparkeerd[open] summary{margin-bottom:4px}
 table.binnen{width:100%;border-collapse:collapse;font-size:13px}
-table.binnen td{padding:6px 0;vertical-align:top;border-top:1px solid var(--lijn);line-height:1.35}
+table.binnen td{padding:4px 0;vertical-align:top;border-top:1px solid var(--lijn);line-height:1.35}
 table.binnen tr:first-child td{border-top:0}
 table.binnen .d{width:52px;font-weight:700;white-space:nowrap}
 table.binnen .d.blauw{color:var(--blauw)}
@@ -588,7 +594,10 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
     <ul>{% for t in todo if t.label != 'Geparkeerd' %}<li><i style="background:{{ '#5FD39A' if t.label == 'Loopt' else '#8FB2F7' }}"></i>{{ t.titel }}</li>{% endfor %}</ul>
     <button class="menuknop" type="button" onclick="document.getElementById('geparkeerd').showModal()">Geparkeerd bekijken<span aria-hidden="true">&rsaquo;</span></button>
   </div>
-  <div class="doel"><small>DOEL</small><strong>Eerste betalende klant</strong></div>
+  <div class="doel">
+    <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="#F2C14E" stroke-width="2.5"/><circle cx="16" cy="16" r="8" fill="none" stroke="#F2C14E" stroke-width="2.5"/><circle cx="16" cy="16" r="3.2" fill="#F2C14E"/></svg>
+    <small>MIJN DOEL</small><strong>Eerste betalende klant</strong>
+  </div>
 </nav>
 
 <main>
@@ -597,6 +606,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
       <div class="datum">{{ datum_kop }}</div>
       <h1>{{ groet }}, Oussama</h1>
     </div>
+    <p class="quote">&ldquo;{{ quote }}&rdquo;</p>
     <div class="rechts">
       <div class="ring">
         <svg width="52" height="52" viewBox="0 0 52 52" role="img" aria-label="{{ klaar }} van {{ totaal }} klaar">
@@ -614,7 +624,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
     <div class="kaartkop"><h2 style="font-size:14px">Deze week</h2><span style="font-size:12px;color:var(--grijs)">{{ week.titel }}</span></div>
     <div class="week">
       {% for d in week.dagen %}
-      <div class="dag{% if d.vandaag %} vandaag{% endif %}"><small>{{ d.kop }}</small><span>{{ d.label }}</span><div class="mini"><div style="width:{{ d.procent }}%"></div></div></div>
+      <div class="dag{% if d.vandaag %} vandaag{% endif %}"><small>{{ d.kop }}{% if d.verleden %}<span class="voorbij" role="img" aria-label="voorbij"><svg width="10" height="10" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{% endif %}</small><span>{{ d.label }}</span><div class="mini"><div style="width:{{ d.procent }}%"></div></div></div>
       {% endfor %}
     </div>
   </section>
@@ -673,7 +683,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
         <table class="binnen">
           {% for b in binnenkort %}<tr><td class="d {{ b.accent }}">{{ b.kop }}</td><td>{{ b.titel }}</td></tr>{% endfor %}
         </table>
-        {% else %}<p class="leeg">Niets gepland de komende drie weken.</p>{% endif %}
+        {% else %}<p class="leeg">Niets gepland de komende twee weken.</p>{% endif %}
       </section>
 
     </div>
