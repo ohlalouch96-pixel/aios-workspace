@@ -2,7 +2,7 @@
 
 > Platform: LinkedIn, in het **Engels** (groter bereik dan alleen NL/BE).
 > Doel: bekendheid opbouwen bij warme leads, richting eerste betalende klant.
-> Ritme: dinsdag + donderdag 10:30 = Pijler 1 (kennisserie). Woensdag 11:00 wekelijks = Pijler 2 ("The Other Shift"). Woensdag 16:00, 2x per maand = Pijler 3 ("The Fork"). Zaterdag 9:30 wekelijks = Pijler 4 ("Myth Check").
+> Ritme: dinsdag + donderdag 10:30 = Pijler 1 (kennisserie). Woensdag 11:00 wekelijks = Pijler 2 ("The Other Shift"). Woensdag 16:00, 2x per maand = Pijler 3 ("The Fork"). Maandag 9:30 wekelijks = Pijler 4 ("Myth Check", verplaatst vanaf zaterdag op 15-11-2026, zie onder).
 > Focus: bredere MKB (niet webshops — dat loopt via Instagram outreach).
 
 ---
@@ -234,9 +234,9 @@ That's most of what building a business actually looks like.
 
 **Ontstaan:** idee kwam van Oussama via mobiel (2026-08-27), los van de andere drie pijlers. Doel: mythes rondom AI-automatisering ontkrachten, elke week één mythe die ondernemers (klein én groot, geen specifieke doelgroep benoemd) daadwerkelijk hardop zeggen — niet abstracte "AI neemt de wereld over"-mythes, maar iets waarbij de lezer denkt "hè, dat zeg ik ook weleens."
 
-**Ritme:** wekelijks op **zaterdag, 9:30 uur**. Vult bewust het gat vrijdag-maandag op, naast dinsdag/donderdag (Pijler 1) en woensdag (Pijler 2 en 3). Onderbouwd met 2026-data (Sprout Social, Buffer, SocialPilot, 4,8M+ posts): zondag is de zwakste dag van de week (50-70% lagere engagement dan doordeweeks), maar zaterdagochtend rond 9-10 uur is een uitzondering specifiek voor content in de hoek van ondernemerschap/persoonlijke ontwikkeling, omdat er dan 50% minder gepost wordt (minder concurrentie om aandacht).
+**Ritme:** wekelijks op **maandag, 9:30 uur** (verplaatst vanaf zaterdag op 2026-11-15). Oorspronkelijk op zaterdag gezet op basis van 2026-data (Sprout Social, Buffer, SocialPilot, 4,8M+ posts) die zaterdagochtend 9-10u als uitzondering aanmerkte voor ondernemerschap-content, minder concurrentie om aandacht. In de praktijk bleek dat niet te kloppen voor Oussama's publiek: de twee zaterdagposts in november (Week 8, Week 9) kregen allebei weinig weergaven. Eigen data gaat voor generiek onderzoek — vandaar verplaatst naar maandagochtend, een dag die toch al vrij was in het ritme (geen botsing met Pijler 1/2/3).
 
-**Vorm:** geen afbeelding. **Eén mythe per post**, niet meerdere. Toon mag informeler/losser dan de andere pijlers, past bij een zaterdagochtend-moment waarop niemand op zware kost zit te wachten.
+**Vorm:** geen afbeelding. **Eén mythe per post**, niet meerdere. Toon mag informeler/losser dan de andere pijlers.
 
 **Vaste opbouw:**
 1. **Openingszin** — de mythe zelf, als quote, op zijn eigen regel (dat is meteen de eigenstandige hook)
@@ -262,7 +262,7 @@ Feel like you're not ready? Let's find out together. No strings attached. DM me.
 Week 2, gepost: "AI automation isn't secure enough."
 Week 3, gepost: "It costs me too much time and energy."
 
-**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan opgesteld: Week 4 (24 okt), Week 5 (31 okt), Week 6 (7 nov), Week 7 (14 nov) — tekst voor alle vier staat klaar hieronder. **Let op, les geleerd dezelfde dag:** "staat in het document" betekent niet automatisch "staat ook echt in LinkedIn's planner" — dat bleek bij Week 6 en 7 niet het geval, Oussama had ze niet gezien/ingepland. Nooit meer "ingepland" noteren zonder expliciete bevestiging dat het ook echt gebeurd is. Week 8 (za 21 nov) en Week 9 (za 28 nov) zijn inmiddels ook uitgewerkt en bevestigd — heel november staat nu vol voor Myth Check.
+**Gat ontdekt (2026-10-23):** na Week 3 is de serie zo'n 7 weken stilgevallen, geen bewuste keuze, gewoon blijven liggen. Bevestigd via Oussama (laatste Myth Check die hij zich herinnert is Week 3). Hervatplan opgesteld: Week 4 (24 okt), Week 5 (31 okt), Week 6 (7 nov), Week 7 (14 nov) — tekst voor alle vier staat klaar hieronder. **Let op, les geleerd dezelfde dag:** "staat in het document" betekent niet automatisch "staat ook echt in LinkedIn's planner" — dat bleek bij Week 6 en 7 niet het geval, Oussama had ze niet gezien/ingepland. Nooit meer "ingepland" noteren zonder expliciete bevestiging dat het ook echt gebeurd is. Week 8 (verplaatst van za 21 nov naar ma 16 nov) en Week 9 (verplaatst van za 28 nov naar ma 23 nov) zijn inmiddels ook uitgewerkt en bevestigd — heel november staat nu vol voor Myth Check. **Update 2026-11-15:** beide datums verschoven van zaterdag naar maandag, zie de Ritme-regel bij Pijler 4 hierboven (zwakke resultaten op zaterdag).
 
 Week 4, klaar om in te plannen (24 okt was het voorstel, niet bevestigd dat dit ook echt gepost is):
 ```
@@ -308,7 +308,7 @@ What went wrong the first time around? DM me, let's figure out if it's fixable.
 #Business #AIAutomation #MythCheck
 ```
 
-Week 8, ingepland voor za 21 nov (bevestigd door Oussama):
+Week 8, ingepland voor ma 16 nov (verplaatst vanaf za 21 nov, bevestigd door Oussama):
 ```
 "I don't have enough customers for this to matter."
 
@@ -319,7 +319,7 @@ Curious what this would actually be worth with your current traffic? DM me, I'll
 #Business #AIAutomation #MythCheck
 ```
 
-Week 9, ingepland voor za 28 nov (bevestigd door Oussama — eerste versie ging te veel over cart-recovery/e-commerce, dat is Instagram-doelgroep niet LinkedIn; herschreven voor de bredere MKB-doelgroep van LinkedIn, zoals vakbedrijven):
+Week 9, ingepland voor ma 23 nov (verplaatst vanaf za 28 nov, bevestigd door Oussama — eerste versie ging te veel over cart-recovery/e-commerce, dat is Instagram-doelgroep niet LinkedIn; herschreven voor de bredere MKB-doelgroep van LinkedIn, zoals vakbedrijven):
 ```
 "I know all my customers personally, I don't need this."
 

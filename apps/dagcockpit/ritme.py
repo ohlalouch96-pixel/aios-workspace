@@ -49,7 +49,7 @@ LINKEDIN_WEKELIJKS = [
     {"dag": 1, "tijd": "10:30", "pijler": "Automation Simplified"},
     {"dag": 2, "tijd": "11:00", "pijler": "The Other Shift"},
     {"dag": 3, "tijd": "10:30", "pijler": "Automation Simplified"},
-    {"dag": 5, "tijd": "09:30", "pijler": "Myth Check"},
+    {"dag": 0, "tijd": "09:30", "pijler": "Myth Check"},
 ]
 
 # The Fork: 2x per maand op woensdag 16:00, vaste datums (JJJJ-MM-DD). Aanvullen bij het klaarzetten van een nieuwe maand.
