@@ -15,6 +15,7 @@ Opslag: tabellen dagcockpit_* in data/data.db.
 """
 
 import importlib
+import random
 import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -328,7 +329,7 @@ def index():
         contentdag=kort(volgende_contentdag(vandaag)),
         insta_taken=per_chat.get("Instagram-content", []),
         instadag=kort(volgende_zaterdag(vandaag)),
-        binnenkort=binnenkort(conn, vandaag), quote=ritme.QUOTES[vandaag.timetuple().tm_yday % len(ritme.QUOTES)], links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
+        binnenkort=binnenkort(conn, vandaag), quote=random.Random(vandaag.toordinal()).choice(ritme.QUOTES), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
@@ -415,7 +416,7 @@ TEMPLATE = r"""<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#17345F;--navy2:#24497F;--blauw:#1D4ED8;--blauwzacht:#E8EFFD;--tekst:#10213D;--grijs:#4B5568;--lijn:#E1E6EF;--bg:#F4F6FA;--groen:#0F5A35;--groenzacht:#E3F4EA;--oranje:#8A4B08;--oranjezacht:#FDF0E1;--paars:#5B3BB0;--paarszacht:#EFEAFB;--rood:#B4231A;--roodzacht:#FCE8E6}
+:root{--navy:#0E1E38;--navy2:#1C3358;--blauw:#A8823F;--blauwzacht:#F4ECDD;--goud:#C9A961;--tekst:#141B2B;--grijs:#4B5568;--lijn:#E6DFD2;--bg:#F6F3ED;--groen:#0F5A35;--groenzacht:#E3F4EA;--oranje:#8A4B08;--oranjezacht:#FDF0E1;--paars:#5B3BB0;--paarszacht:#EFEAFB;--rood:#B4231A;--roodzacht:#FCE8E6}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--tekst)}
 a{color:var(--blauw)}a:hover{color:var(--navy)}
@@ -543,6 +544,16 @@ table.ritme{width:100%;border-collapse:collapse;font-size:13px}
 table.ritme th{text-align:left;font-size:12px;color:var(--grijs);font-weight:600;padding:8px 6px;border-bottom:1px solid var(--lijn)}
 table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 @media (max-width:900px){.raster,.kaarten{grid-template-columns:minmax(0,1fr)}.kaart.content{grid-column:auto}nav.menu{max-width:none}main{padding:20px 16px}}
+/* Kleurstelling A: navy & goud (gekozen 15-11) */
+.knop{background:var(--navy)}.knop:hover{background:var(--navy2)}
+.menukop,.merk span{color:var(--goud)}
+.menu .link,.menuknop,.menutodo ul,.todorij .leg{color:#E8E2D4}
+.menu .link span,.menuknop span{color:var(--goud)}
+.ring svg circle + circle{stroke:var(--goud)}
+.dag.vandaag small{color:var(--goud)}.dag.vandaag .mini div{background:var(--goud)}
+h1{color:var(--tekst)}.quote{color:var(--blauw)}
+.doel{background:#0A1628;border:1px solid var(--goud);border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.doel small{color:var(--goud)}.doel svg circle{stroke:var(--goud)}.doel svg circle:last-child{fill:var(--goud)}
 </style>
 </head>
 <body>
@@ -604,7 +615,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
   <header class="kop">
     <div>
       <div class="datum">{{ datum_kop }}</div>
-      <h1>{{ groet }}, Oussama</h1>
+      <h1>{{ groet }}, Oussama Hlalouch</h1>
     </div>
     <p class="quote">&ldquo;{{ quote }}&rdquo;</p>
     <div class="rechts">

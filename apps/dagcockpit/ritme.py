@@ -87,7 +87,7 @@ STARTHERINNERINGEN = [
     {"titel": "SEO-gesprek: eerste cijfers Search Console", "chat": "Algemeen", "datum": "2026-11-28"},
 ]
 
-# Quote bovenaan de cockpit: elke dag een andere (op volgorde van de dag in het jaar).
+# Quote bovenaan de cockpit: elke dag een willekeurige (blijft de hele dag hetzelfde).
 QUOTES = [
     "Iedere dag een klein beetje beter. Een beetje slimmer, een beetje sterker.",
     "Vandaag word je een betere versie van jezelf dan gisteren.",
