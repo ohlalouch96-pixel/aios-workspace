@@ -70,11 +70,15 @@ def _dashboard_stats(conn):
         "SELECT naam, status, datum_verzoek AS d1, datum_bericht1 AS d2, gereageerd FROM linkedin"
     ).fetchall()]
     st = track_stats(rows, datetime.now().date())
-    # track_stats() telt "afgewezen" via status=="Afgewezen" + een gereageerd-tekstveld —
-    # dat is de conventie van de ondernemers-tracker, niet van LinkedIn. Hier betekent
-    # "Genegeerd" hetzelfde (niet meer opvolgen, voor of na contact), dus die telt mee
-    # i.p.v. de kapotte generieke telling (gevonden 15-11, Bilal El Ahrach stond op 0).
-    st["afgewezen"] = sum(1 for r in rows if r["status"] == "Genegeerd")
+    # track_stats() telt "afgewezen" via classify_reply() op het gereageerd-veld — dat
+    # klopt nu (15-11) voor LinkedIn, want gereageerd wordt gevuld zodra iemand écht
+    # heeft gereageerd (zie workflow). Status "Genegeerd" betekent op LinkedIn vaak iets
+    # anders: Oussama heeft iemand zelf overgeslagen, zonder dat die ooit heeft
+    # gereageerd (bv. te groot bedrijf, twijfelgeval afgewezen). Dat is geen "afwijzing
+    # door de prospect" en hoort niet in dezelfde tegel — vandaar een eigen telling.
+    st["overgeslagen"] = sum(
+        1 for r in rows if r["status"] == "Genegeerd" and not (r["gereageerd"] or "").strip().lower().startswith("ja")
+    )
     st["reactieratio"] = rate(st["reacties"], st["benaderd"])
 
     laatste = conn.execute("SELECT MAX(collected_at) AS t FROM linkedin").fetchone()
@@ -271,6 +275,7 @@ function initialen(naam) {
       <div class="tile accent"><div class="num">{{ stats.reacties }}</div><div class="lbl">Reacties</div></div>
       <div class="tile"><div class="num">{{ stats.reactieratio }}</div><div class="lbl">Reactieratio</div></div>
       <div class="tile"><div class="num">{{ stats.afgewezen }}</div><div class="lbl">Afgewezen</div></div>
+      <div class="tile"><div class="num">{{ stats.overgeslagen }}</div><div class="lbl">Overgeslagen</div></div>
       <div class="tile warm"><div class="num">{{ stats.warm|length }}</div><div class="lbl">Warme leads</div></div>
     </div>
     {% endif %}
