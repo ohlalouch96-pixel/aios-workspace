@@ -54,8 +54,12 @@ LINKEDIN_WEKELIJKS = [
     {"dag": 0, "tijd": "09:30", "pijler": "Myth Check"},
 ]
 
-# Instagram: elke dag een ingeplande post (wekelijks op zaterdag klaargezet, eerste keer za 21-11-2026).
-INSTAGRAM_POSTDAGEN = ALLE_DAGEN
+# Instagram: standaard aantal ingeplande posts per dag (per dag aan te passen in de cockpit).
+# Wekelijks op zaterdag klaargezet, eerste keer za 21-11-2026.
+INSTAGRAM_STANDAARD_AANTAL = 1
+
+# Korte pijlernamen voor de contenttegel.
+PIJLER_KORT = {"Automation Simplified": "Automation", "The Other Shift": "Other Shift", "Myth Check": "Myth Check", "The Fork": "The Fork"}
 
 # The Fork: 2x per maand op woensdag 16:00, vaste datums (JJJJ-MM-DD). Aanvullen bij het klaarzetten van een nieuwe maand.
 LINKEDIN_LOS = [

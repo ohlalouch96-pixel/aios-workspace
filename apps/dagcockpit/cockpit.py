@@ -66,6 +66,15 @@ def _db():
             tekst TEXT NOT NULL
         )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS dagcockpit_content (
+            datum TEXT NOT NULL,
+            kanaal TEXT NOT NULL,
+            aantal INTEGER,
+            klaar INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY (datum, kanaal)
+        )
+    """)
     conn.execute("CREATE TABLE IF NOT EXISTS dagcockpit_meta (sleutel TEXT PRIMARY KEY, waarde TEXT)")
     if not conn.execute("SELECT 1 FROM dagcockpit_meta WHERE sleutel='startherinneringen'").fetchone():
         for h in ritme.STARTHERINNERINGEN:
@@ -173,36 +182,33 @@ def weekstrook(conn, vandaag):
     return {"dagen": dagen, "titel": f"Week {week} · {bereik}"}
 
 
-def linkedin_deze_week(vandaag):
+def content_week(conn, vandaag):
+    """LinkedIn- en Instagram-posts van deze week (ma-zo) per dag, met handmatig vinkje en aantal."""
     maandag = vandaag - timedelta(days=vandaag.weekday())
     zondag = maandag + timedelta(days=6)
-    posts = []
+    opgeslagen = {(r["datum"], r["kanaal"]): r for r in conn.execute(
+        "SELECT * FROM dagcockpit_content WHERE datum BETWEEN ? AND ?", (maandag.isoformat(), zondag.isoformat()))}
+    li_posts = {}
     for p in ritme.LINKEDIN_WEKELIJKS:
         d = maandag + timedelta(days=p["dag"])
-        posts.append((d, p["tijd"], p["pijler"]))
+        li_posts.setdefault(d, []).append((p["tijd"], p["pijler"]))
     for p in ritme.LINKEDIN_LOS:
         d = date.fromisoformat(p["datum"])
         if maandag <= d <= zondag:
-            posts.append((d, p["tijd"], p["pijler"]))
-    nu = datetime.now()
-    uit = []
-    for d, tijd, pijler in sorted(posts, key=lambda x: (x[0], x[1])):
-        moment = datetime.combine(d, datetime.strptime(tijd, "%H:%M").time())
-        uit.append({"wanneer": f"{DAGEN_KORT[d.weekday()]} {tijd.lstrip('0') if tijd.startswith('0') else tijd}",
-                    "pijler": pijler, "geplaatst": moment <= nu})
-    return uit
-
-
-def instagram_deze_week(vandaag):
-    maandag = vandaag - timedelta(days=vandaag.weekday())
-    uit = []
+            li_posts.setdefault(d, []).append((p["tijd"], p["pijler"]))
+    dagen, linkedin, instagram = [], [], []
     for i in range(7):
         d = maandag + timedelta(days=i)
-        if i not in ritme.INSTAGRAM_POSTDAGEN:
-            continue
-        uit.append({"kop": DAGEN_KORT[i], "dag": d.day,
-                    "stand": "geplaatst" if d < vandaag else ("vandaag" if d == vandaag else "gepland")})
-    return uit
+        iso = d.isoformat()
+        dagen.append({"kop": DAGEN_KORT[i], "dag": d.day, "vandaag": d == vandaag})
+        posts = [{"tijd": t[1:] if t.startswith("0") else t, "kort": ritme.PIJLER_KORT.get(pl, pl), "pijler": pl}
+                 for t, pl in sorted(li_posts.get(d, []))]
+        li = opgeslagen.get((iso, "linkedin"))
+        linkedin.append({"iso": iso, "posts": posts, "aantal": len(posts), "klaar": bool(li and li["klaar"])})
+        ig = opgeslagen.get((iso, "instagram"))
+        aantal = ig["aantal"] if ig and ig["aantal"] is not None else ritme.INSTAGRAM_STANDAARD_AANTAL
+        instagram.append({"iso": iso, "aantal": aantal, "klaar": bool(ig and ig["klaar"])})
+    return {"dagen": dagen, "linkedin": linkedin, "instagram": instagram}
 
 
 def volgende_zaterdag(vandaag):
@@ -280,7 +286,7 @@ def todo_lijst():
 
 def todo_cirkel(items):
     """Segmenten voor het cirkeldiagram: (label, aantal, kleur, dasharray, offset) op omtrek 100."""
-    kleuren = {"Loopt": "#0F7A45", "Gepland": "#1D4ED8", "Geparkeerd": "#B7C0D0"}
+    kleuren = {"Loopt": "#5FD39A", "Gepland": "#8FB2F7", "Geparkeerd": "#4F6690"}
     totaal = len(items) or 1
     segs, start = [], 0.0
     for label in ("Loopt", "Gepland", "Geparkeerd"):
@@ -315,9 +321,9 @@ def index():
         groet=groet(), datum_kop=lang(vandaag).upper(),
         klaar=klaar, totaal=len(alle), procent=round(100 * klaar / len(alle)) if alle else 0,
         kaarten=kaarten, algemeen=algemeen, content_taken=content_taken,
-        week=weekstrook(conn, vandaag), linkedin=linkedin_deze_week(vandaag),
+        week=weekstrook(conn, vandaag), cw=content_week(conn, vandaag),
         contentdag=kort(volgende_contentdag(vandaag)),
-        instagram=instagram_deze_week(vandaag), insta_taken=per_chat.get("Instagram-content", []),
+        insta_taken=per_chat.get("Instagram-content", []),
         instadag=kort(volgende_zaterdag(vandaag)),
         binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
@@ -342,6 +348,23 @@ def vink():
         conn.execute("INSERT OR IGNORE INTO dagcockpit_vinkjes (datum, taak_id) VALUES (?, ?)", (vandaag, sleutel))
     else:
         conn.execute("DELETE FROM dagcockpit_vinkjes WHERE datum=? AND taak_id=?", (vandaag, sleutel))
+    conn.commit()
+    conn.close()
+    return redirect("/")
+
+
+@app.route("/content", methods=["POST"])
+def content():
+    kanaal = request.form["kanaal"]
+    datum = date.fromisoformat(request.form["datum"]).isoformat()
+    conn = _db()
+    conn.execute("INSERT OR IGNORE INTO dagcockpit_content (datum, kanaal) VALUES (?, ?)", (datum, kanaal))
+    if "aantal" in request.form:
+        conn.execute("UPDATE dagcockpit_content SET aantal=? WHERE datum=? AND kanaal=?",
+                     (max(0, min(9, int(request.form["aantal"]))), datum, kanaal))
+    else:
+        conn.execute("UPDATE dagcockpit_content SET klaar=? WHERE datum=? AND kanaal=?",
+                     (1 if request.form.get("aan") == "1" else 0, datum, kanaal))
     conn.commit()
     conn.close()
     return redirect("/")
@@ -394,12 +417,12 @@ TEMPLATE = r"""<!doctype html>
 body{margin:0;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--tekst)}
 a{color:var(--blauw)}a:hover{color:var(--navy)}
 .app{display:flex;flex-wrap:wrap;min-height:100vh}
-nav.menu{flex:1 1 210px;max-width:240px;background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}
+nav.menu{flex:1 1 210px;max-width:240px;background:var(--navy);color:#fff;padding:20px 16px;display:flex;flex-direction:column;gap:18px}
 .merk{display:flex;align-items:center;gap:10px;padding:0 4px}
 .merk b{font-weight:700;letter-spacing:.14em;font-size:13px;display:block}
 .merk span{font-size:12px;color:#B9C8E4}
 .menukop{font-size:11px;letter-spacing:.12em;color:#9FB2D6;font-weight:600;padding:0 6px;margin-bottom:6px}
-.menu .link{display:flex;justify-content:space-between;align-items:center;min-height:38px;padding:0 10px;border-radius:9px;color:#E3EAF6;text-decoration:none;font-size:13px}
+.menu .link{display:flex;justify-content:space-between;align-items:center;min-height:32px;padding:0 10px;border-radius:9px;color:#E3EAF6;text-decoration:none;font-size:13px}
 .menu .link:hover{background:var(--navy2);color:#fff}
 .menu .link span{color:#9DB8EA}
 .menuknop{font-family:inherit;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;min-height:38px;padding:0 10px;border-radius:9px;color:#E3EAF6;background:transparent;border:0;font-size:13px;cursor:pointer}
@@ -435,7 +458,36 @@ h1{margin:4px 0 0;font-family:'Playfair Display',Georgia,serif;font-size:32px;fo
 .dag.vandaag .mini{background:var(--navy2)}
 .dag.vandaag .mini div{background:#9DB8EA}
 .raster{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:18px;align-items:start}
-.kaarten{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;align-items:start}
+.kaarten{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.kaart.content{grid-column:span 2}
+.stapel{display:flex;flex-direction:column;gap:14px}
+.pillen{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.cweek{display:grid;grid-template-columns:72px repeat(7,minmax(0,1fr));column-gap:4px;row-gap:8px;align-items:start}
+.ckop{font-size:11px;font-weight:600;color:var(--grijs);text-align:center;padding:3px 0;border-radius:99px}
+.ckop.nu{background:var(--navy);color:#fff}
+.klabel{font-size:12px;font-weight:700;padding-top:8px}
+.cel{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-width:0}
+.cel form{margin:0}
+.bol{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:inherit;font-size:13px;font-weight:700;border:2px solid var(--groen);color:var(--groen);background:var(--groenzacht);cursor:pointer;padding:0;margin-bottom:2px}
+.bol:hover{background:#CDEBDA}
+.cel.klaar .bol{background:var(--groen);border-color:var(--groen)}
+.bol.leeg{border:2px dashed #C9D1DE;background:transparent;color:#9AA3B5;cursor:default}
+.tijd{font-size:11px;font-weight:700;color:var(--tekst)}
+.pijl{font-size:10px;color:var(--grijs);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aantal{font-size:11px;font-weight:600;color:var(--grijs)}
+.cel.klaar .tijd,.cel.klaar .pijl,.cel.klaar .aantal{text-decoration:line-through;color:#6B8A78}
+select.aantal{font-family:inherit;border:0;background:transparent;cursor:pointer;padding:2px 0;color:var(--grijs)}
+select.aantal:hover{color:var(--blauw)}
+.menutodo{display:flex;flex-direction:column;gap:8px}
+.menutodo .menukop{display:flex;justify-content:space-between;margin-bottom:0}
+.todorij{display:flex;align-items:center;gap:12px;padding:0 6px}
+.todorij .leg{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#E3EAF6;flex:1}
+.todorij .leg span{display:flex;align-items:center;gap:7px}
+.todorij .leg i{width:8px;height:8px;border-radius:2px}
+.todorij .leg b{margin-left:auto}
+.menutodo ul{list-style:none;margin:0;padding:0 6px;display:flex;flex-direction:column;gap:5px;font-size:12px;color:#E3EAF6}
+.menutodo li{display:flex;align-items:center;gap:7px}
+.menutodo li i{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .taak{display:flex;align-items:center;gap:10px}
 .taak form.vink{display:flex;align-items:center;flex:1;margin:0}
 .taak label{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;flex:1;line-height:1.35}
@@ -452,14 +504,6 @@ table.posts .wanneer{font-weight:700;color:var(--groen);white-space:nowrap;width
 table.posts .status{text-align:right;width:70px}
 table.posts tr.geplaatst .wanneer,table.posts tr.geplaatst .wat{text-decoration:line-through;color:#6B8A78}
 .gepland{font-size:11px;font-weight:600;color:var(--groen);background:var(--groenzacht);padding:2px 8px;border-radius:99px}
-.ig{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
-.ig div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--grijs)}
-.ig .bol{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.ig .gepland .bol{border:2px solid var(--groen);color:var(--groen);background:var(--groenzacht)}
-.ig .geplaatst .bol{background:var(--groen)}
-.ig .geplaatst span{text-decoration:line-through;color:#6B8A78}
-.ig .vandaag .bol{background:var(--navy);color:#fff}
-.ig .vandaag span{color:var(--tekst)}
 .zijkant{display:flex;flex-direction:column;gap:14px}
 table.todo{width:100%;border-collapse:collapse;font-size:13px}
 table.todo td{padding:6px 0;border-top:1px solid var(--lijn);vertical-align:middle}
@@ -492,7 +536,7 @@ dialog input,dialog select{font-family:inherit;font-size:15px;color:var(--tekst)
 table.ritme{width:100%;border-collapse:collapse;font-size:13px}
 table.ritme th{text-align:left;font-size:12px;color:var(--grijs);font-weight:600;padding:8px 6px;border-bottom:1px solid var(--lijn)}
 table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
-@media (max-width:900px){.raster{grid-template-columns:minmax(0,1fr)}nav.menu{max-width:none}main{padding:20px 16px}}
+@media (max-width:900px){.raster,.kaarten{grid-template-columns:minmax(0,1fr)}.kaart.content{grid-column:auto}nav.menu{max-width:none}main{padding:20px 16px}}
 </style>
 </head>
 <body>
@@ -531,6 +575,19 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
     <div class="menukop">INSTELLINGEN</div>
     <button class="menuknop" type="button" onclick="document.getElementById('ritme').showModal()">Weekritme bekijken<span aria-hidden="true">&rsaquo;</span></button>
   </div>
+  <div class="menutodo">
+    <div class="menukop"><span>TO-DO</span><span>{{ todo|length }} open</span></div>
+    <div class="todorij">
+      <svg width="48" height="48" viewBox="0 0 42 42" role="img" aria-label="{% for c in todo_cirkel %}{{ c.aantal }} {{ c.label|lower }}{% if not loop.last %}, {% endif %}{% endfor %}">
+        <circle cx="21" cy="21" r="15.915" fill="none" stroke="#24497F" stroke-width="6"/>
+        {% for c in todo_cirkel %}{% if c.aantal %}<circle cx="21" cy="21" r="15.915" fill="none" stroke="{{ c.kleur }}" stroke-width="6" stroke-dasharray="{{ c.dash }}" stroke-dashoffset="{{ c.offset }}"/>{% endif %}{% endfor %}
+        <text x="21" y="24.5" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">{{ todo|length }}</text>
+      </svg>
+      <div class="leg">{% for c in todo_cirkel %}<span><i style="background:{{ c.kleur }}"></i>{{ c.label }}<b>{{ c.aantal }}</b></span>{% endfor %}</div>
+    </div>
+    <ul>{% for t in todo if t.label != 'Geparkeerd' %}<li><i style="background:{{ '#5FD39A' if t.label == 'Loopt' else '#8FB2F7' }}"></i>{{ t.titel }}</li>{% endfor %}</ul>
+    <button class="menuknop" type="button" onclick="document.getElementById('geparkeerd').showModal()">Geparkeerd bekijken<span aria-hidden="true">&rsaquo;</span></button>
+  </div>
   <div class="doel"><small>DOEL</small><strong>Eerste betalende klant</strong></div>
 </nav>
 
@@ -564,11 +621,11 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 
   <div class="raster">
     <div class="kaarten">
-      {% for k in kaarten %}{{ takenkaart(k) }}{% endfor %}
+      {% for k in kaarten[:3] %}{{ takenkaart(k) }}{% endfor %}
 
-      <section class="kaart">
-        <div class="kaartkop"><h2>LinkedIn-content</h2><span class="pil oranje">Klaarzetten: {{ contentdag }}</span></div>
-        {% for t in content_taken %}
+      <section class="kaart content">
+        <div class="kaartkop"><h2>Content deze week</h2><div class="pillen"><span class="pil oranje">LinkedIn klaarzetten: {{ contentdag }}</span><span class="pil paars">Instagram inplannen: {{ instadag }}</span></div></div>
+        {% for t in content_taken + insta_taken %}
         <div class="taak{% if t.klaar %} klaar{% endif %}">
           <form class="vink" method="post" action="/vink">
             <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
@@ -577,59 +634,35 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
           </form>
         </div>
         {% endfor %}
-        <table class="posts">
-          {% for p in linkedin %}
-          <tr class="{% if p.geplaatst %}geplaatst{% endif %}">
-            <td class="wanneer">{{ p.wanneer }}</td>
-            <td class="wat">{{ p.pijler }}</td>
-            <td class="status">{% if p.geplaatst %}<svg width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="geplaatst"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#0F5A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}<span class="gepland">gepland</span>{% endif %}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </section>
-
-      <div class="zijkant">
-      <section class="kaart">
-        <div class="kaartkop"><h2>Instagram-content</h2><span class="pil oranje">Inplannen: {{ instadag }}</span></div>
-        {% for t in insta_taken %}
-        <div class="taak{% if t.klaar %} klaar{% endif %}">
-          <form class="vink" method="post" action="/vink">
-            <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
-            <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
-            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
-          </form>
-        </div>
-        {% endfor %}
-        <div class="ig">
-          {% for p in instagram %}
-          <div class="{{ p.stand }}"><div class="bol" role="img" aria-label="{{ p.kop }} {{ p.dag }}: {{ p.stand }}">{% if p.stand == 'geplaatst' %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ p.dag }}{% endif %}</div><span>{{ p.kop }}</span></div>
-          {% endfor %}
-        </div>
-      </section>
-
-      <section class="kaart">
-        <div class="kaartkop"><h2>To-do-lijst</h2><span class="pil grijs">{{ todo|length }} open</span></div>
-        <div style="display:flex;align-items:center;gap:16px">
-          <svg width="64" height="64" viewBox="0 0 42 42" role="img" aria-label="{% for c in todo_cirkel %}{{ c.aantal }} {{ c.label|lower }}{% if not loop.last %}, {% endif %}{% endfor %}">
-            <circle cx="21" cy="21" r="15.915" fill="none" stroke="#EEF1F6" stroke-width="6"/>
-            {% for c in todo_cirkel %}{% if c.aantal %}<circle cx="21" cy="21" r="15.915" fill="none" stroke="{{ c.kleur }}" stroke-width="6" stroke-dasharray="{{ c.dash }}" stroke-dashoffset="{{ c.offset }}"/>{% endif %}{% endfor %}
-            <text x="21" y="24.5" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#10213D">{{ todo|length }}</text>
-          </svg>
-          <div style="display:flex;flex-direction:column;gap:4px;font-size:13px">
-            {% for c in todo_cirkel %}<span style="display:flex;align-items:center;gap:8px"><span aria-hidden="true" style="width:10px;height:10px;border-radius:3px;background:{{ c.kleur }}"></span>{{ c.label }}<strong style="margin-left:auto;padding-left:12px">{{ c.aantal }}</strong></span>{% endfor %}
+        <div class="cweek">
+          <div></div>
+          {% for d in cw.dagen %}<div class="ckop{% if d.vandaag %} nu{% endif %}">{{ d.kop }} {{ d.dag }}</div>{% endfor %}
+          <div class="klabel">LinkedIn</div>
+          {% for c in cw.linkedin %}
+          <div class="cel{% if c.klaar %} klaar{% endif %}">
+            {% if c.aantal %}
+            <form method="post" action="/content"><input type="hidden" name="kanaal" value="linkedin"><input type="hidden" name="datum" value="{{ c.iso }}"><input type="hidden" name="aan" value="{{ '0' if c.klaar else '1' }}">
+              <button class="bol" type="submit" aria-pressed="{{ 'true' if c.klaar else 'false' }}" title="{% for p in c.posts %}{{ p.tijd }} {{ p.pijler }}{% if not loop.last %} · {% endif %}{% endfor %}">{% if c.klaar %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ c.aantal }}{% endif %}</button></form>
+            {% for p in c.posts %}<span class="tijd">{{ p.tijd }}</span><span class="pijl" title="{{ p.pijler }}">{{ p.kort }}</span>{% endfor %}
+            {% else %}<span class="bol leeg" aria-label="geen post">&ndash;</span><span class="aantal">geen post</span>{% endif %}
           </div>
+          {% endfor %}
+          <div class="klabel">Instagram</div>
+          {% for c in cw.instagram %}
+          <div class="cel{% if c.klaar %} klaar{% endif %}">
+            {% if c.aantal %}
+            <form method="post" action="/content"><input type="hidden" name="kanaal" value="instagram"><input type="hidden" name="datum" value="{{ c.iso }}"><input type="hidden" name="aan" value="{{ '0' if c.klaar else '1' }}">
+              <button class="bol" type="submit" aria-pressed="{{ 'true' if c.klaar else 'false' }}">{% if c.klaar %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ c.aantal }}{% endif %}</button></form>
+            {% else %}<span class="bol leeg" aria-label="geen post">&ndash;</span>{% endif %}
+            {% if c.klaar %}<span class="aantal">{{ c.aantal }} post{{ '' if c.aantal == 1 else 's' }}</span>
+            {% else %}<form method="post" action="/content"><input type="hidden" name="kanaal" value="instagram"><input type="hidden" name="datum" value="{{ c.iso }}">
+              <select class="aantal" name="aantal" aria-label="Aantal Instagram-posts op {{ c.iso }}" onchange="this.form.submit()">{% for n in range(0, 6) %}<option value="{{ n }}"{% if n == c.aantal %} selected{% endif %}>{{ n }} post{{ '' if n == 1 else 's' }}</option>{% endfor %}</select></form>{% endif %}
+          </div>
+          {% endfor %}
         </div>
-        <table class="todo">
-          {% for t in todo if t.label != 'Geparkeerd' %}<tr><td>{{ t.titel }}</td><td class="l"><span class="pil {{ t.kleur }}">{{ t.label }}</span></td></tr>{% endfor %}
-        </table>
-        <details class="geparkeerd">
-          <summary>Geparkeerd bekijken</summary>
-          <table class="todo">
-            {% for t in todo if t.label == 'Geparkeerd' %}<tr><td>{{ t.titel }}</td></tr>{% endfor %}
-          </table>
-        </details>
       </section>
-      </div>
+
+      <div class="stapel">{% for k in kaarten[3:] %}{{ takenkaart(k) }}{% endfor %}</div>
     </div>
 
     <div class="zijkant">
@@ -659,6 +692,14 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
       <button class="knop" type="submit">Toevoegen</button>
     </div>
   </form>
+</dialog>
+
+<dialog id="geparkeerd" aria-labelledby="geparkeerdtitel">
+  <div class="binnenin">
+    <h2 id="geparkeerdtitel">Geparkeerd</h2>
+    <table class="ritme"><tbody>{% for t in todo if t.label == 'Geparkeerd' %}<tr><td>{{ t.titel }}</td></tr>{% endfor %}</tbody></table>
+    <div class="knoppen"><button class="knop" type="button" onclick="this.closest('dialog').close()">Sluiten</button></div>
+  </div>
 </dialog>
 
 <dialog id="ritme" aria-labelledby="ritmetitel">
