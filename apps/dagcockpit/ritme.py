@@ -24,6 +24,7 @@ CHATS = {
 
 # Terugkerende taken. "dagen" = set weekdagen, of "laatste_zaterdag" voor de
 # laatste zaterdag van de maand. "kort" = korte omschrijving voor de weekstrook.
+# "vanaf": "JJJJ-MM-DD" = taak telt pas vanaf die datum.
 # "toon_altijd": True = staat elke dag in de kaart (met het ritme-label erachter), ook op dagen buiten "dagen".
 TAKEN = [
     {"id": "linkedin_verversen", "titel": "Dashboard verversen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
@@ -37,11 +38,12 @@ TAKEN = [
     {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Ondernemers en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "belronde", "titel": "Belronde", "chat": "Ondernemers en makelaars", "ritme": "Ma t/m do", "dagen": {0, 1, 2, 3}, "kort": "Belronde", "toon_altijd": True},
     {"id": "ga4", "titel": "Websitecijfers bekijken (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers"},
+    {"id": "instagram_klaarzetten", "titel": "Instagram-content volgende week inplannen", "chat": "Instagram-content", "ritme": "Zaterdag", "dagen": {5}, "kort": "Instagram inplannen", "vanaf": "2026-11-21"},
     {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten"},
 ]
 
 # Volgorde waarin een dag zijn label in de weekstrook krijgt (eerste die die dag valt wint).
-WEEKSTROOK_VOORRANG = ["content_maand", "ga4", "linkedin_check", "belronde"]
+WEEKSTROOK_VOORRANG = ["content_maand", "instagram_klaarzetten", "ga4", "linkedin_check", "belronde"]
 
 # LinkedIn-content die automatisch live gaat (ingepland in LinkedIn's planner).
 # Zie outputs/linkedin-content-serie.md voor de pijlers.
@@ -51,6 +53,9 @@ LINKEDIN_WEKELIJKS = [
     {"dag": 3, "tijd": "10:30", "pijler": "Automation Simplified"},
     {"dag": 0, "tijd": "09:30", "pijler": "Myth Check"},
 ]
+
+# Instagram: elke dag een ingeplande post (wekelijks op zaterdag klaargezet, eerste keer za 21-11-2026).
+INSTAGRAM_POSTDAGEN = ALLE_DAGEN
 
 # The Fork: 2x per maand op woensdag 16:00, vaste datums (JJJJ-MM-DD). Aanvullen bij het klaarzetten van een nieuwe maand.
 LINKEDIN_LOS = [

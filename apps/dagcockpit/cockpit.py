@@ -83,6 +83,8 @@ def is_laatste_zaterdag(d):
 
 
 def valt_op(taak, d):
+    if taak.get("vanaf") and d.isoformat() < taak["vanaf"]:
+        return False
     if taak["dagen"] == "laatste_zaterdag":
         return is_laatste_zaterdag(d)
     return d.weekday() in taak["dagen"]
@@ -191,6 +193,22 @@ def linkedin_deze_week(vandaag):
     return uit
 
 
+def instagram_deze_week(vandaag):
+    maandag = vandaag - timedelta(days=vandaag.weekday())
+    uit = []
+    for i in range(7):
+        d = maandag + timedelta(days=i)
+        if i not in ritme.INSTAGRAM_POSTDAGEN:
+            continue
+        uit.append({"kop": DAGEN_KORT[i], "dag": d.day,
+                    "stand": "geplaatst" if d < vandaag else ("vandaag" if d == vandaag else "gepland")})
+    return uit
+
+
+def volgende_zaterdag(vandaag):
+    return vandaag + timedelta(days=(5 - vandaag.weekday()) % 7)
+
+
 def volgende_contentdag(vandaag):
     d = vandaag
     while not is_laatste_zaterdag(d):
@@ -285,7 +303,7 @@ def index():
     alle = [t for lst in per_chat.values() for t in lst]
     klaar = sum(1 for t in alle if t["klaar"])
     kaarten = [{"chat": c, "kleur": ritme.CHATS.get(c, "grijs"), "taken": per_chat[c]}
-               for c in per_chat if per_chat[c] and c not in ("Content", "Algemeen")]
+               for c in per_chat if per_chat[c] and c not in ("Content", "Algemeen", "Instagram-content")]
     algemeen = [{"chat": "Algemeen", "kleur": ritme.CHATS.get("Algemeen", "grijs"), "taken": per_chat.get("Algemeen", [])}]
     algemeen = [k for k in algemeen if k["taken"]]
     content_taken = per_chat.get("Content", [])
@@ -299,6 +317,8 @@ def index():
         kaarten=kaarten, algemeen=algemeen, content_taken=content_taken,
         week=weekstrook(conn, vandaag), linkedin=linkedin_deze_week(vandaag),
         contentdag=kort(volgende_contentdag(vandaag)),
+        instagram=instagram_deze_week(vandaag), insta_taken=per_chat.get("Instagram-content", []),
+        instadag=kort(volgende_zaterdag(vandaag)),
         binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
@@ -432,6 +452,14 @@ table.posts .wanneer{font-weight:700;color:var(--groen);white-space:nowrap;width
 table.posts .status{text-align:right;width:70px}
 table.posts tr.geplaatst .wanneer,table.posts tr.geplaatst .wat{text-decoration:line-through;color:#6B8A78}
 .gepland{font-size:11px;font-weight:600;color:var(--groen);background:var(--groenzacht);padding:2px 8px;border-radius:99px}
+.ig{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.ig div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--grijs)}
+.ig .bol{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.ig .gepland .bol{border:2px solid var(--groen);color:var(--groen);background:var(--groenzacht)}
+.ig .geplaatst .bol{background:var(--groen)}
+.ig .geplaatst span{text-decoration:line-through;color:#6B8A78}
+.ig .vandaag .bol{background:var(--navy);color:#fff}
+.ig .vandaag span{color:var(--tekst)}
 .zijkant{display:flex;flex-direction:column;gap:14px}
 table.todo{width:100%;border-collapse:collapse;font-size:13px}
 table.todo td{padding:6px 0;border-top:1px solid var(--lijn);vertical-align:middle}
@@ -560,6 +588,25 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
         </table>
       </section>
 
+      <div class="zijkant">
+      <section class="kaart">
+        <div class="kaartkop"><h2>Instagram-content</h2><span class="pil oranje">Inplannen: {{ instadag }}</span></div>
+        {% for t in insta_taken %}
+        <div class="taak{% if t.klaar %} klaar{% endif %}">
+          <form class="vink" method="post" action="/vink">
+            <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
+            <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
+            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
+          </form>
+        </div>
+        {% endfor %}
+        <div class="ig">
+          {% for p in instagram %}
+          <div class="{{ p.stand }}"><div class="bol" role="img" aria-label="{{ p.kop }} {{ p.dag }}: {{ p.stand }}">{% if p.stand == 'geplaatst' %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ p.dag }}{% endif %}</div><span>{{ p.kop }}</span></div>
+          {% endfor %}
+        </div>
+      </section>
+
       <section class="kaart">
         <div class="kaartkop"><h2>To-do-lijst</h2><span class="pil grijs">{{ todo|length }} open</span></div>
         <div style="display:flex;align-items:center;gap:16px">
@@ -582,6 +629,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
           </table>
         </details>
       </section>
+      </div>
     </div>
 
     <div class="zijkant">
