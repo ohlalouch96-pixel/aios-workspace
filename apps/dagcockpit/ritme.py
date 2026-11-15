@@ -25,21 +25,22 @@ CHATS = {
 # Terugkerende taken. "dagen" = set weekdagen, of "laatste_zaterdag" voor de
 # laatste zaterdag van de maand. "kort" = korte omschrijving voor de weekstrook.
 # "vanaf": "JJJJ-MM-DD" = taak telt pas vanaf die datum.
-# "toon_altijd": True = staat elke dag in de kaart (met het ritme-label erachter), ook op dagen buiten "dagen".
+# "toon_altijd": True = staat elke dag in de kaart; op dagen buiten "dagen" grijs, niet aan te vinken en telt niet mee.
+# "agenda": kortere titel voor de Agenda-tegel.
 TAKEN = [
     {"id": "linkedin_verversen", "titel": "Dashboard verversen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "linkedin_connecties", "titel": "Nieuwe connecties maken", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    {"id": "linkedin_connecties", "titel": "Connecties maken", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "linkedin_followups", "titel": "Follow-ups versturen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "linkedin_check", "titel": "LinkedIn-content checken: hoe deden de posts het?", "chat": "LinkedIn", "ritme": "Donderdag", "dagen": {3}, "kort": "LinkedIn-check"},
+    {"id": "linkedin_check", "titel": "Posts evalueren", "chat": "LinkedIn", "ritme": "Donderdag", "dagen": {3}, "kort": "LinkedIn-check", "agenda": "LinkedIn-posts evalueren"},
     {"id": "webshop_followups", "titel": "Follow-ups versturen", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "webshop_nieuw", "titel": "Minimaal 10 nieuwe berichten", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "instagram_post", "titel": "Instagram-post plaatsen /plannen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    {"id": "webshop_nieuw", "titel": "10 nieuwe berichten", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    {"id": "instagram_post", "titel": "Post plaatsen / plannen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_kwartier", "titel": "Kwartiertje reageren", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Ondernemers en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "belronde", "titel": "Belronde", "chat": "Ondernemers en makelaars", "ritme": "Ma t/m do", "dagen": {0, 1, 2, 3}, "kort": "Belronde", "toon_altijd": True},
-    {"id": "ga4", "titel": "Websitecijfers bekijken (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers"},
+    {"id": "ga4", "titel": "Websitecijfers (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers", "agenda": "Websitecijfers (GA4)"},
     {"id": "instagram_klaarzetten", "titel": "Instagram-content volgende week inplannen", "chat": "Instagram-content", "ritme": "Zaterdag", "dagen": {5}, "kort": "Instagram inplannen", "vanaf": "2026-11-21"},
-    {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten"},
+    {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten", "agenda": "Content volgende maand klaarzetten"},
 ]
 
 # Volgorde waarin een dag zijn label in de weekstrook krijgt (eerste die die dag valt wint).

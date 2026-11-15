@@ -130,9 +130,16 @@ def taken_van_vandaag(conn, vandaag):
     vinkjes = {r["taak_id"] for r in conn.execute("SELECT taak_id FROM dagcockpit_vinkjes WHERE datum=?", (iso,))}
     per_chat = {chat: [] for chat in ritme.CHATS}
     for t in [t for t in ritme.TAKEN if valt_op(t, vandaag) or t.get("toon_altijd")]:
+        uit = not valt_op(t, vandaag)
+        label = t["ritme"]
+        if uit:
+            d = vandaag + timedelta(days=1)
+            while not valt_op(t, d):
+                d += timedelta(days=1)
+            label = f"weer op {DAGEN_KORT[d.weekday()]}"
         per_chat.setdefault(t["chat"], []).append({
-            "sleutel": t["id"], "titel": t["titel"], "ritme": t["ritme"],
-            "klaar": t["id"] in vinkjes, "soort": "vast", "achterstand": False,
+            "sleutel": t["id"], "titel": t["titel"], "ritme": label,
+            "klaar": t["id"] in vinkjes and not uit, "soort": "vast", "achterstand": False, "uit": uit,
         })
     rijen = conn.execute("""
         SELECT * FROM dagcockpit_taken
@@ -223,6 +230,19 @@ def volgende_contentdag(vandaag):
     return d
 
 
+def agenda_groepen(items, vandaag):
+    """Binnenkort-items gegroepeerd per week: Deze week / Volgende week / Week erna."""
+    maandag = vandaag - timedelta(days=vandaag.weekday())
+    namen = ["Deze week", "Volgende week", "Week erna"]
+    groepen = []
+    for it in items:
+        idx = min((it["datum"] - maandag).days // 7, 2)
+        if not groepen or groepen[-1]["naam"] != namen[idx]:
+            groepen.append({"naam": namen[idx], "regels": []})
+        groepen[-1]["regels"].append(it)
+    return groepen
+
+
 def binnenkort(conn, vandaag):
     """Twee weken vooruit: t/m de zondag van de week waarin (morgen + 7 dagen) valt.
     Op zondag 15-11 dus t/m zondag 29-11; vanaf zondag 22-11 t/m 6-12."""
@@ -237,11 +257,12 @@ def binnenkort(conn, vandaag):
     while d <= tot:
         for t in vaste_taken(d):
             if t["id"] in ritme.BINNENKORT_VAST:
-                items.append({"datum": d, "titel": t["titel"], "id": None, "vast": True})
+                items.append({"datum": d, "titel": t.get("agenda", t["titel"]), "id": None, "vast": True})
         d += timedelta(days=1)
     items.sort(key=lambda x: x["datum"])
     for it in items:
         it["kop"] = f"{DAGEN_KORT[it['datum'].weekday()]} {it['datum'].day}"
+        it["wd"], it["dag"] = DAGEN_KORT[it["datum"].weekday()], it["datum"].day
         it["accent"] = "oranje" if is_laatste_zaterdag(it["datum"]) else "blauw"
     return items
 
@@ -302,15 +323,30 @@ def todo_cirkel(items):
     return segs
 
 
+ICONEN = {
+    "LinkedIn": '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10v6M8 7.5v.01M12 16v-4a2 2 0 0 1 4 0v4M12 10v6"/>',
+    "Webshops": '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+    "Ondernemers en makelaars": '<path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
+    "Instagram": '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/>',
+    "Website": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    "Content": '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13 7l4 4"/>',
+    "Agenda": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    "_": '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
+}
+
+
 # ---------------------------------------------------------------- routes
 
 @app.route("/")
 def index():
     importlib.reload(ritme)
-    vandaag = date.today()
+    try:
+        vandaag = date.fromisoformat(request.args["datum"]) if request.args.get("datum") else date.today()
+    except ValueError:
+        vandaag = date.today()
     conn = _db()
     per_chat = taken_van_vandaag(conn, vandaag)
-    alle = [t for lst in per_chat.values() for t in lst]
+    alle = [t for lst in per_chat.values() for t in lst if not t.get("uit")]
     klaar = sum(1 for t in alle if t["klaar"])
     kaarten = [{"chat": c, "kleur": ritme.CHATS.get(c, "grijs"), "taken": per_chat[c]}
                for c in per_chat if per_chat[c] and c not in ("Content", "Algemeen", "Instagram-content")]
@@ -329,11 +365,11 @@ def index():
         contentdag=kort(volgende_contentdag(vandaag)),
         insta_taken=per_chat.get("Instagram-content", []),
         instadag=kort(volgende_zaterdag(vandaag)),
-        binnenkort=binnenkort(conn, vandaag), quote=random.Random(vandaag.toordinal()).choice(ritme.QUOTES), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
+        agenda=agenda_groepen(binnenkort(conn, vandaag), vandaag), quote=random.Random(vandaag.toordinal()).choice(ritme.QUOTES), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
-        ritme_taken=ritme.TAKEN, linkedin_ritme=ritme.LINKEDIN_WEKELIJKS, dagen_kort=DAGEN_KORT,
+        iconen=ICONEN, ritme_taken=ritme.TAKEN, linkedin_ritme=ritme.LINKEDIN_WEKELIJKS, dagen_kort=DAGEN_KORT,
     )
     conn.close()
     return html
@@ -464,10 +500,10 @@ h1{margin:4px 0 0;font-family:'Playfair Display',Georgia,serif;font-size:32px;fo
 .dag.vandaag small{color:#B9C8E4}
 .dag.vandaag .mini{background:var(--navy2)}
 .dag.vandaag .mini div{background:#9DB8EA}
-.raster{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:18px;align-items:start}
-.kaarten{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-.kaart.content{grid-column:span 2}
-.stapel{display:flex;flex-direction:column;gap:14px}
+.raster{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(300px,1fr);gap:18px;align-items:start}
+.kaarten{display:flex;flex-direction:column;gap:14px}
+.takenrij{display:grid;gap:14px;align-items:stretch}
+.takenrij.vol .kaartkop .ico{display:none}
 .pillen{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .cweek{display:grid;grid-template-columns:72px repeat(7,minmax(0,1fr));column-gap:4px;row-gap:8px;align-items:start}
 .ckop{font-size:11px;font-weight:600;color:var(--grijs);text-align:center;padding:3px 0;border-radius:99px}
@@ -544,6 +580,39 @@ table.ritme{width:100%;border-collapse:collapse;font-size:13px}
 table.ritme th{text-align:left;font-size:12px;color:var(--grijs);font-weight:600;padding:8px 6px;border-bottom:1px solid var(--lijn)}
 table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 @media (max-width:900px){.raster,.kaarten{grid-template-columns:minmax(0,1fr)}.kaart.content{grid-column:auto}nav.menu{max-width:none}main{padding:20px 16px}}
+/* Tegelstijl B: navy koppen (gekozen 15-11) */
+section.kaart.nk{padding:0;overflow:hidden;gap:0;border-radius:14px}
+section.kaart.nk > .kaartkop{background:var(--navy);padding:8px 12px;min-height:48px}
+section.kaart.nk > .kaartkop h2{color:#fff;display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.25}
+section.kaart.nk > :not(.kaartkop):not(.balk){margin-left:12px;margin-right:12px}
+section.kaart.nk > :last-child{margin-bottom:12px}
+section.kaart.nk > .balk + *,section.kaart.nk > .kaartkop + :not(.balk){margin-top:10px}
+.balk.klaar{height:22px;background:#1F8A55;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.04em}
+.takenlijst .taak label{font-size:13px}
+.post{display:block;font-size:10px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.post .tijd{font-size:11px}
+.ico{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(201,169,97,.14);border:1px solid rgba(201,169,97,.5)}
+.teller{font-size:12px;font-weight:700;color:var(--goud);flex-shrink:0}
+section.kaart.nk > .kaartkop h2{min-width:0}
+.klaar-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#fff;background:#1F8A55;padding:4px 10px;border-radius:99px;flex-shrink:0}
+.balk{height:3px;background:#1C3358}
+.balk div{height:3px;background:var(--goud)}
+.takenrij section.kaart.nk{display:flex;flex-direction:column}
+.takenrij .takenlijst{flex:1}
+.takenlijst{display:flex;flex-direction:column;gap:6px}
+.takenlijst .taak{flex:1;background:#FAF7F1;border:1px solid #EFE8DA;border-radius:9px;padding:5px 9px;min-height:34px}
+.takenlijst .taak.klaar{background:#F6F3EC}
+.taak.uit{background:#EFECE6 !important;border-style:dashed !important;opacity:.75}
+.taak.uit label,.taak.uit input{cursor:not-allowed;color:#8B8577}
+.taak.uit .ritme{color:#8B8577;font-style:italic}
+.kaart.content .kaartkop .pil.oranje,.kaart.content .kaartkop .pil.paars{background:rgba(255,255,255,.1);color:#E8E2D4}
+.agenda{gap:0}
+.groep{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--blauw);margin-top:8px;margin-bottom:5px}
+ul.kal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.kal li{display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.3}
+.cal{width:30px;flex-shrink:0;border-radius:6px;overflow:hidden;text-align:center;border:1px solid var(--lijn);display:flex;flex-direction:column}
+.cal small{display:block;background:var(--navy);color:var(--goud);font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:9px}
+.cal b{display:block;font-size:12px;line-height:15px;color:var(--tekst)}
 /* Kleurstelling A: navy & goud (gekozen 15-11) */
 .knop{background:var(--navy)}.knop:hover{background:var(--navy2)}
 .menukop,.merk span{color:var(--goud)}
@@ -557,22 +626,29 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 </style>
 </head>
 <body>
-{% macro takenkaart(k) %}
-      <section class="kaart">
-        <div class="kaartkop"><h2>{{ k.chat }}</h2><span class="pil {{ k.kleur }}">{{ k.taken|selectattr('klaar')|list|length }} van {{ k.taken|length }}</span></div>
-        {% for t in k.taken %}
-        <div class="taak{% if t.klaar %} klaar{% endif %}">
+{% macro icoon(naam) %}<span class="ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A961" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ (iconen.get(naam) or iconen['_'])|safe }}</svg></span>{% endmacro %}
+{% macro taakregel(t) %}
+        <div class="taak{% if t.klaar %} klaar{% endif %}{% if t.uit %} uit{% endif %}">
           <form class="vink" method="post" action="/vink">
             <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
             <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
-            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
+            <label><input type="checkbox" {% if t.klaar %}checked{% endif %}{% if t.uit %} disabled{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
           </form>
-          <span class="ritme{% if t.achterstand and not t.klaar %} achter{% endif %}">{{ t.ritme }}</span>
+          {% if t.uit or t.soort == 'eenmalig' %}<span class="ritme{% if t.achterstand and not t.klaar %} achter{% endif %}">{{ t.ritme }}</span>{% endif %}
           {% if t.soort == 'eenmalig' %}
           <form method="post" action="/verwijder" style="margin:0"><input type="hidden" name="id" value="{{ t.id }}"><button class="weg" type="submit" aria-label="Taak verwijderen: {{ t.titel }}">&times;</button></form>
           {% endif %}
         </div>
-        {% endfor %}
+{% endmacro %}
+{% macro takenkaart(k) %}
+      {% set actief = k.taken|rejectattr('uit')|list %}{% set af = actief|selectattr('klaar')|list|length %}
+      <section class="kaart nk">
+        <div class="kaartkop"><h2>{{ icoon(k.chat) }}<span>{{ k.chat }}</span></h2>
+          {% if not (actief and af == actief|length) %}<span class="teller">{{ af }}/{{ actief|length }}</span>{% endif %}
+        </div>
+        {% if actief and af == actief|length %}<div class="balk klaar"><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Klaar</div>
+        {% else %}<div class="balk"><div style="width:{{ (100 * af / (actief|length)) if actief else 0 }}%"></div></div>{% endif %}
+        <div class="takenlijst">{% for t in k.taken %}{{ taakregel(t) }}{% endfor %}</div>
       </section>
 {% endmacro %}
 <div class="app">
@@ -642,19 +718,11 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 
   <div class="raster">
     <div class="kaarten">
-      {% for k in kaarten[:3] %}{{ takenkaart(k) }}{% endfor %}
+      <div class="takenrij{% if kaarten|length > 4 %} vol{% endif %}" style="grid-template-columns:repeat({{ kaarten|length }},minmax(0,1fr))">{% for k in kaarten %}{{ takenkaart(k) }}{% endfor %}</div>
 
-      <section class="kaart content">
-        <div class="kaartkop"><h2>Content deze week</h2><div class="pillen"><span class="pil oranje">LinkedIn klaarzetten: {{ contentdag }}</span><span class="pil paars">Instagram inplannen: {{ instadag }}</span></div></div>
-        {% for t in content_taken + insta_taken %}
-        <div class="taak{% if t.klaar %} klaar{% endif %}">
-          <form class="vink" method="post" action="/vink">
-            <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
-            <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
-            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
-          </form>
-        </div>
-        {% endfor %}
+      <section class="kaart content nk">
+        <div class="kaartkop"><h2>{{ icoon('Content') }}<span>Content deze week</span></h2><div class="pillen"><span class="pil oranje">LinkedIn klaarzetten: {{ contentdag }}</span><span class="pil paars">Instagram inplannen: {{ instadag }}</span></div></div>
+        {% if content_taken or insta_taken %}<div class="takenlijst">{% for t in content_taken + insta_taken %}{{ taakregel(t) }}{% endfor %}</div>{% endif %}
         <div class="cweek">
           <div></div>
           {% for d in cw.dagen %}<div class="ckop{% if d.vandaag %} nu{% endif %}">{{ d.kop }} {{ d.dag }}</div>{% endfor %}
@@ -664,7 +732,7 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
             {% if c.aantal %}
             <form method="post" action="/content"><input type="hidden" name="kanaal" value="linkedin"><input type="hidden" name="datum" value="{{ c.iso }}"><input type="hidden" name="aan" value="{{ '0' if c.klaar else '1' }}">
               <button class="bol" type="submit" aria-pressed="{{ 'true' if c.klaar else 'false' }}" title="{% for p in c.posts %}{{ p.tijd }} {{ p.pijler }}{% if not loop.last %} · {% endif %}{% endfor %}">{% if c.klaar %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ c.aantal }}{% endif %}</button></form>
-            {% for p in c.posts %}<span class="tijd">{{ p.tijd }}</span><span class="pijl" title="{{ p.pijler }}">{{ p.kort }}</span>{% endfor %}
+            {% for p in c.posts %}<span class="post"><span class="tijd">{{ p.tijd }}</span> <span class="pijl" title="{{ p.pijler }}">{{ p.kort }}</span></span>{% endfor %}
             {% else %}<span class="bol leeg" aria-label="geen post">&ndash;</span><span class="aantal">geen post</span>{% endif %}
           </div>
           {% endfor %}
@@ -683,18 +751,16 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
         </div>
       </section>
 
-      <div class="stapel">{% for k in kaarten[3:] %}{{ takenkaart(k) }}{% endfor %}</div>
     </div>
 
     <div class="zijkant">
-      {% for k in algemeen %}{{ takenkaart(k) }}{% endfor %}
-      <section class="kaart">
-        <h2>Binnenkort</h2>
-        {% if binnenkort %}
-        <table class="binnen">
-          {% for b in binnenkort %}<tr><td class="d {{ b.accent }}">{{ b.kop }}</td><td>{{ b.titel }}</td></tr>{% endfor %}
-        </table>
-        {% else %}<p class="leeg">Niets gepland de komende twee weken.</p>{% endif %}
+      <section class="kaart nk agenda">
+        <div class="kaartkop"><h2>{{ icoon('Agenda') }}<span>Agenda</span></h2></div>
+        {% for k in algemeen %}<div class="groep">Vandaag</div><div class="takenlijst">{% for t in k.taken %}{{ taakregel(t) }}{% endfor %}</div>{% endfor %}
+        {% for g in agenda %}
+        <div class="groep">{{ g.naam }}</div>
+        <ul class="kal">{% for b in g.regels %}<li><span class="cal"><small>{{ b.wd }}</small><b>{{ b.dag }}</b></span><span>{{ b.titel }}</span></li>{% endfor %}</ul>
+        {% else %}{% if not algemeen %}<p class="leeg">Niets gepland de komende twee weken.</p>{% endif %}{% endfor %}
       </section>
 
     </div>

@@ -155,7 +155,7 @@ These are how you know your AIOS is working:
 │   └── content/
 │       └── agent.py         # Instagram-contentagent: kiest, schrijft (Claude), controleert, rendert, stuurt naar Telegram
 │   └── dagcockpit/
-│       ├── cockpit.py       # Persoonlijke dagcockpit (127.0.0.1:5070): taken van vandaag per chat afvinken, weekstrook, LinkedIn-posts, binnenkort, notitie
+│       ├── cockpit.py       # Persoonlijke dagcockpit (127.0.0.1:5070): taken per chat afvinken, weekstrook, content deze week (LinkedIn + Instagram), agenda 2 weken vooruit, to-do in zijmenu (?datum=JJJJ-MM-DD om een andere dag te bekijken)
 │       └── ritme.py         # Vast weekritme, LinkedIn-posttijden, snelkoppelingen (hier aanpassen)
 ├── workflows/               # WAT-workflows — SOP's die beschrijven hoe/wanneer een tool aan te roepen
 │   ├── source_prospects.md  # SOP bij tools/source_prospects.py
