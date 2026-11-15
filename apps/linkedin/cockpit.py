@@ -70,6 +70,11 @@ def _dashboard_stats(conn):
         "SELECT naam, status, datum_verzoek AS d1, datum_bericht1 AS d2, gereageerd FROM linkedin"
     ).fetchall()]
     st = track_stats(rows, datetime.now().date())
+    # track_stats() telt "afgewezen" via status=="Afgewezen" + een gereageerd-tekstveld —
+    # dat is de conventie van de ondernemers-tracker, niet van LinkedIn. Hier betekent
+    # "Genegeerd" hetzelfde (niet meer opvolgen, voor of na contact), dus die telt mee
+    # i.p.v. de kapotte generieke telling (gevonden 15-11, Bilal El Ahrach stond op 0).
+    st["afgewezen"] = sum(1 for r in rows if r["status"] == "Genegeerd")
     st["reactieratio"] = rate(st["reacties"], st["benaderd"])
 
     laatste = conn.execute("SELECT MAX(collected_at) AS t FROM linkedin").fetchone()
