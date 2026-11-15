@@ -81,9 +81,7 @@ def volledige_caption(caption, hashtags, soort):
     if soort == "fork":
         return caption.strip()
     if soort == "advertentie":  # eindigt op "Follow for more", geen DM-afsluiter (besluit 13-11)
-        return f"{caption.strip()}
-
-{' '.join(hashtags)}".strip()
+        return f"{caption.strip()}\n\n{' '.join(hashtags)}".strip()
     caption = caption.replace(AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
     return f"{caption}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
 
