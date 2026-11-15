@@ -185,8 +185,11 @@ def luister(bot, conn):
                     continue
                 actie, pid = cq["data"].split(":")
                 pid = int(pid)
-                bot.call("answerCallbackQuery", callback_query_id=cq["id"])
-                bot.call("editMessageReplyMarkup", chat_id=bot.chat, message_id=cq["message"]["message_id"], reply_markup={"inline_keyboard": []})
+                try:  # een te oude klik (bot lag even plat) mag het verwerken niet tegenhouden
+                    bot.call("answerCallbackQuery", callback_query_id=cq["id"])
+                    bot.call("editMessageReplyMarkup", chat_id=bot.chat, message_id=cq["message"]["message_id"], reply_markup={"inline_keyboard": []})
+                except Exception as fout:
+                    print("Knop bevestigen lukte niet (wordt toch verwerkt):", fout)
                 if actie == "ok":
                     status(conn, pid, "goedgekeurd")
                     plaatsklaar(bot, conn, pid)
