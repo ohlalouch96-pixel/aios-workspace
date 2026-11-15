@@ -473,7 +473,9 @@ def maak(conn, soort=None, zonder_stem=False):
         spec, kleur, map_ = maak_stem_video(conn, aantal, tags)
         pid = opslaan(conn, "stem_video", spec, kleur, map_)
     elif soort == "demo_reel":
-        demo = laatst_gebruikt(conn, "demo_reel", DEMOS)
+        recent = wachtrij.recente_kleuren(conn, 1)
+        opties = [d for d in DEMOS if not (recent and recent[0] in wachtrij.BLAUWIG and wachtrij.echte_kleur(d) in wachtrij.BLAUWIG)]
+        demo = laatst_gebruikt(conn, "demo_reel", opties or DEMOS)  # demo's hebben een vaste kleur: geen blauw na blauw
         spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags), aantal, tags)
         map_ = nieuwe_map(demo)
         render("demo_reel", spec, None, map_, demo)

@@ -86,24 +86,40 @@ def volledige_caption(caption, hashtags, soort):
     return f"{caption}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
 
 
-def recente_kleuren(conn, n=5):
+BLAUWIG = {NAVY, "blauw", "wit"}  # wit = logokleuren (navy/blauw) op wit: oogt ook blauw
+
+
+def echte_kleur(k):
+    """Demo-reels en advertenties staan in de wachtrij met hun demonaam (bijv. 'calculatie'); vertaal naar hun kleurenset."""
+    if k in ANDERE_KLEUREN + [NAVY, "wit"]:
+        return k
+    spec = Path(__file__).resolve().parent / "demos" / f"{k}.json"
+    try:
+        return json.loads(spec.read_text(encoding="utf-8")).get("kleurenset", NAVY)
+    except (OSError, ValueError):
+        return NAVY  # schets-ondergronden e.d. tellen als neutraal/navy
+
+
+def recente_kleuren(conn, n=8):
     rows = conn.execute("SELECT kleurenset FROM instagram_posts WHERE status != 'overgeslagen' AND kleurenset IS NOT NULL ORDER BY id DESC LIMIT ?", (n,))
-    return [r[0] for r in rows]
+    return [echte_kleur(r[0]) for r in rows]
 
 
 def kies_kleur(conn, video=False):
-    """Navy als basis (~2 op 3), af en toe een andere set, nooit twee niet-navy achter elkaar, geen vast patroon.
-    video=True: ook 'wit' (logokleuren op wit) kan gekozen worden; die set bestaat alleen voor video's met stem."""
+    """Kleurregel (aangepast 15-11, Oussama: te veel blauw): navy ongeveer 1 op de 3, nooit twee blauwige posts
+    (navy, blauw, wit) achter elkaar, en verder de kleur die het langst niet gebruikt is (zwart, groen, creme,
+    rood, paars; blauw en bij video ook wit). video=True: 'wit' bestaat alleen voor video's met stem."""
     recent = recente_kleuren(conn)
-    if recent and recent[0] != NAVY:
-        return NAVY
-    kans = 0.6 if recent[:2] == [NAVY, NAVY] else 0.25
-    if random.random() >= kans:
-        return NAVY
-    laatst_gebruikt = [k for k in recent if k != NAVY][:3]
     andere = ANDERE_KLEUREN + (["wit"] if video else [])
-    keuze = [k for k in andere if k not in laatst_gebruikt] or andere
-    return random.choice(keuze)
+    if recent and recent[0] in BLAUWIG:
+        andere = [k for k in andere if k not in BLAUWIG]
+    elif NAVY not in recent[:2] and random.random() < 0.5:
+        return NAVY
+    # langst niet gebruikt eerst; bij gelijke stand willekeurig
+    nooit = [k for k in andere if k not in recent]
+    if nooit:
+        return random.choice(nooit)
+    return max(andere, key=recent.index)
 
 
 def recente_hashtags(conn, n=3):

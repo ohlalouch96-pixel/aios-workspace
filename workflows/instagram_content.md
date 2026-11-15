@@ -54,7 +54,7 @@ Send me a DM and I'll show you what's possible for your business ⚡
 
 - Carrousel 1080×1350 via `tools/instagram/render_carrousel.py` (stijl goedgekeurd 04-11, zie `outputs/instagram-stijl/_overzicht-v2.png`).
   Cover: groot vet Inter, kernwoord in accentkleur. Binnenslides licht met label-pil en markering. Cijferslide: groot Playfair-cijfer. Myth Check: aanhalingsteken + Playfair-citaat.
-- **Kleurregel:** navy is de basis, ongeveer 2 op de 3 posts. Af en toe een andere set (zwart, blauw, groen, creme, rood, paars) om te verrassen. Geen kleurenfestijn, geen vast patroon, nooit twee keer dezelfde niet-navy set achter elkaar. `wachtrij.py kleur` kiest volgens deze regel.
+- **Kleurregel (aangepast 15-11, Oussama: te veel blauw):** navy ongeveer 1 op de 3 of minder, nooit twee blauwige posts achter elkaar (navy, blauw en wit tellen als blauw), verder steeds de kleur die het langst niet gebruikt is (zwart-lime, groen, creme, rood, paars). Demo-reels hebben een vaste kleur per demo; na een blauwige post kiest de agent een niet-blauwe demo. `wachtrij.kies_kleur` kiest volgens deze regel.
 - **Out of the box mag ook.** Niet alles hoeft een carrousel. Af en toe een losse afbeelding in een heel andere stijl, bijvoorbeeld de handgeschreven notitiekaart op een bureau (`tools/instagram/render_kaart.py`: Venn-diagram of splitsing). The Fork gebruikt deze kaart. Wissel ook de ondergrond af: bureau, kantoor, ipad, scherm, krant (zwart-wit), whiteboard, servet (café). En wissel de schets zelf af: venn, fork, lijst (afvinken), voor_na, stappen, grafiek, loop (kringloop). Nooit twee keer achter elkaar dezelfde ondergrond of schets; nieuwe ondergronden mogen erbij (alle kanten op).
 - Nooit de oude zwart-gouden LinkedIn-afbeeldingen. Elke post krijgt nieuw beeld.
 - Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil). Tekst-reel: `tools/instagram/render_tekst_reel.py` (beats van 2-4 sec, 12-16 sec totaal, levert ook cover.jpg). Rendert ±1 min per reel; vereist imageio-ffmpeg.
@@ -127,7 +127,7 @@ Zelf bekijken op `controle.png` (per scène begin, midden, rust):
 6. Tekst in beeld volgt de woordvolgorde van wat Eric zegt.
 7. Niets valt buiten beeld of overlapt, alles binnen de veilige zone.
 8. Rustig tempo, elementen op het gesproken woord, niet te veel tegelijk.
-9. Kleur volgens de kleurregel: navy basis (±2 op 3), verder afwisselend zwart-lime, blauw, groen, crème, rood, paars en (alleen video) wit in de logokleuren; nooit twee keer achter elkaar dezelfde niet-navy set (`wachtrij.kies_kleur`). Tekst goed leesbaar in die set.
+9. Kleur volgens de kleurregel (15-11): navy hooguit ±1 op 3, nooit twee blauwige posts achter elkaar, verder de langst niet gebruikte kleur (`wachtrij.kies_kleur`). Tekst goed leesbaar in die set.
 10. Cijfers met bron gecheckt, geen klantnamen, geen gedachtestreepjes.
 
 Bij elke nieuwe versie:
