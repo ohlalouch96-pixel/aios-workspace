@@ -14,9 +14,9 @@ ALLE_DAGEN = {0, 1, 2, 3, 4, 5, 6}
 # Kaarten in de cockpit, in deze volgorde. "kleur" bepaalt het labeltje.
 CHATS = {
     "LinkedIn": "blauw",
+    "Instagram": "paars",
     "Webshops": "blauw",
     "Ondernemers en makelaars": "oranje",
-    "Instagram": "paars",
     "Website": "paars",
     "Content": "oranje",
     "Algemeen": "grijs",
@@ -39,8 +39,8 @@ TAKEN = [
     {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Ondernemers en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "belronde", "titel": "Belronde", "chat": "Ondernemers en makelaars", "ritme": "Ma t/m do", "dagen": {0, 1, 2, 3}, "kort": "Belronde", "toon_altijd": True},
     {"id": "ga4", "titel": "Websitecijfers (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers", "agenda": "Websitecijfers (GA4)"},
-    {"id": "instagram_klaarzetten", "titel": "Instagram-content volgende week inplannen", "chat": "Instagram-content", "ritme": "Zaterdag", "dagen": {5}, "kort": "Instagram inplannen", "vanaf": "2026-11-21"},
-    {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten", "agenda": "Content volgende maand klaarzetten"},
+    {"id": "instagram_klaarzetten", "titel": "Instagram-content volgende week inplannen", "chat": "Instagram-content", "ritme": "Zaterdag", "dagen": {5}, "kort": "Instagram inplannen", "vanaf": "2026-11-21", "agenda": "Instagram-content volgende week inplannen"},
+    {"id": "content_maand", "titel": "Content volgende maand klaarzetten (LinkedIn + Telegram)", "chat": "Content", "ritme": "Laatste zaterdag", "dagen": "laatste_zaterdag", "kort": "Content klaarzetten", "agenda": "LinkedIn-content volgende maand klaarzetten"},
 ]
 
 # Volgorde waarin een dag zijn label in de weekstrook krijgt (eerste die die dag valt wint).
@@ -101,4 +101,4 @@ QUOTES = [
 ]
 
 # Vaste taken die ook in de tegel Binnenkort komen (naast de eenmalige herinneringen).
-BINNENKORT_VAST = ["ga4", "linkedin_check", "content_maand"]
+BINNENKORT_VAST = ["ga4", "linkedin_check", "content_maand", "instagram_klaarzetten"]

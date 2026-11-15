@@ -610,9 +610,9 @@ section.kaart.nk > .kaartkop h2{min-width:0}
 .groep{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--blauw);margin-top:8px;margin-bottom:5px}
 ul.kal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
 ul.kal li{display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.3}
-.cal{width:30px;flex-shrink:0;border-radius:6px;overflow:hidden;text-align:center;border:1px solid var(--lijn);display:flex;flex-direction:column}
-.cal small{display:block;background:var(--navy);color:var(--goud);font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:9px}
-.cal b{display:block;font-size:12px;line-height:15px;color:var(--tekst)}
+.cal{width:50px;height:21px;flex-shrink:0;border-radius:5px;overflow:hidden;border:1px solid var(--lijn);display:flex}
+.cal small{width:22px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--goud);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.cal b{flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tekst)}
 /* Kleurstelling A: navy & goud (gekozen 15-11) */
 .knop{background:var(--navy)}.knop:hover{background:var(--navy2)}
 .menukop,.merk span{color:var(--goud)}
@@ -721,7 +721,7 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
       <div class="takenrij{% if kaarten|length > 4 %} vol{% endif %}" style="grid-template-columns:repeat({{ kaarten|length }},minmax(0,1fr))">{% for k in kaarten %}{{ takenkaart(k) }}{% endfor %}</div>
 
       <section class="kaart content nk">
-        <div class="kaartkop"><h2>{{ icoon('Content') }}<span>Content deze week</span></h2><div class="pillen"><span class="pil oranje">LinkedIn klaarzetten: {{ contentdag }}</span><span class="pil paars">Instagram inplannen: {{ instadag }}</span></div></div>
+        <div class="kaartkop"><h2>{{ icoon('Content') }}<span>Content deze week</span></h2></div>
         {% if content_taken or insta_taken %}<div class="takenlijst">{% for t in content_taken + insta_taken %}{{ taakregel(t) }}{% endfor %}</div>{% endif %}
         <div class="cweek">
           <div></div>
