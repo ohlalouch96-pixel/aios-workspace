@@ -285,7 +285,9 @@ def index():
     alle = [t for lst in per_chat.values() for t in lst]
     klaar = sum(1 for t in alle if t["klaar"])
     kaarten = [{"chat": c, "kleur": ritme.CHATS.get(c, "grijs"), "taken": per_chat[c]}
-               for c in per_chat if per_chat[c] and c != "Content"]
+               for c in per_chat if per_chat[c] and c not in ("Content", "Algemeen")]
+    algemeen = [{"chat": "Algemeen", "kleur": ritme.CHATS.get("Algemeen", "grijs"), "taken": per_chat.get("Algemeen", [])}]
+    algemeen = [k for k in algemeen if k["taken"]]
     content_taken = per_chat.get("Content", [])
     notitie = conn.execute("SELECT tekst FROM dagcockpit_notities WHERE datum=?", (vandaag.isoformat(),)).fetchone()
     vorige = conn.execute("SELECT datum, tekst FROM dagcockpit_notities WHERE datum < ? AND tekst != '' ORDER BY datum DESC LIMIT 1",
@@ -294,7 +296,7 @@ def index():
         TEMPLATE,
         groet=groet(), datum_kop=lang(vandaag).upper(),
         klaar=klaar, totaal=len(alle), procent=round(100 * klaar / len(alle)) if alle else 0,
-        kaarten=kaarten, content_taken=content_taken,
+        kaarten=kaarten, algemeen=algemeen, content_taken=content_taken,
         week=weekstrook(conn, vandaag), linkedin=linkedin_deze_week(vandaag),
         contentdag=kort(volgende_contentdag(vandaag)),
         binnenkort=binnenkort(conn, vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
@@ -466,6 +468,24 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 </style>
 </head>
 <body>
+{% macro takenkaart(k) %}
+      <section class="kaart">
+        <div class="kaartkop"><h2>{{ k.chat }}</h2><span class="pil {{ k.kleur }}">{{ k.taken|selectattr('klaar')|list|length }} van {{ k.taken|length }}</span></div>
+        {% for t in k.taken %}
+        <div class="taak{% if t.klaar %} klaar{% endif %}">
+          <form class="vink" method="post" action="/vink">
+            <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
+            <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
+            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
+          </form>
+          <span class="ritme{% if t.achterstand and not t.klaar %} achter{% endif %}">{{ t.ritme }}</span>
+          {% if t.soort == 'eenmalig' %}
+          <form method="post" action="/verwijder" style="margin:0"><input type="hidden" name="id" value="{{ t.id }}"><button class="weg" type="submit" aria-label="Taak verwijderen: {{ t.titel }}">&times;</button></form>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </section>
+{% endmacro %}
 <div class="app">
 
 <nav class="menu" aria-label="Zijmenu">
@@ -516,24 +536,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
 
   <div class="raster">
     <div class="kaarten">
-      {% for k in kaarten %}
-      <section class="kaart">
-        <div class="kaartkop"><h2>{{ k.chat }}</h2><span class="pil {{ k.kleur }}">{{ k.taken|selectattr('klaar')|list|length }} van {{ k.taken|length }}</span></div>
-        {% for t in k.taken %}
-        <div class="taak{% if t.klaar %} klaar{% endif %}">
-          <form class="vink" method="post" action="/vink">
-            <input type="hidden" name="sleutel" value="{{ t.sleutel }}">
-            <input type="hidden" name="aan" value="{{ '0' if t.klaar else '1' }}">
-            <label><input type="checkbox" {% if t.klaar %}checked{% endif %} onchange="this.form.submit()">{{ t.titel }}</label>
-          </form>
-          <span class="ritme{% if t.achterstand and not t.klaar %} achter{% endif %}">{{ t.ritme }}</span>
-          {% if t.soort == 'eenmalig' %}
-          <form method="post" action="/verwijder" style="margin:0"><input type="hidden" name="id" value="{{ t.id }}"><button class="weg" type="submit" aria-label="Taak verwijderen: {{ t.titel }}">&times;</button></form>
-          {% endif %}
-        </div>
-        {% endfor %}
-      </section>
-      {% endfor %}
+      {% for k in kaarten %}{{ takenkaart(k) }}{% endfor %}
 
       <section class="kaart">
         <div class="kaartkop"><h2>LinkedIn-content</h2><span class="pil oranje">Klaarzetten: {{ contentdag }}</span></div>
@@ -582,6 +585,7 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
     </div>
 
     <div class="zijkant">
+      {% for k in algemeen %}{{ takenkaart(k) }}{% endfor %}
       <section class="kaart">
         <h2>Binnenkort</h2>
         {% if binnenkort %}
@@ -591,13 +595,6 @@ table.ritme td{padding:8px 6px;border-bottom:1px solid var(--lijn)}
         {% else %}<p class="leeg">Niets gepland de komende drie weken.</p>{% endif %}
       </section>
 
-      <section class="kaart">
-        <form method="post" action="/notitie" style="display:flex;flex-direction:column;gap:8px;margin:0">
-          <div class="notitierij"><label for="notitie" style="font-size:15px;font-weight:700">Notitie voor vandaag</label><button class="knop licht klein" type="submit">Opslaan</button></div>
-          <textarea id="notitie" name="tekst" rows="2" placeholder="Bijvoorbeeld: Victorian Candle Co nabellen">{{ notitie }}</textarea>
-        </form>
-        {% if vorige_notitie %}<p class="vorige"><strong>Vorige ({{ vorige_notitie[0] }}):</strong> {{ vorige_notitie[1] }}</p>{% endif %}
-      </section>
     </div>
   </div>
 </main>
