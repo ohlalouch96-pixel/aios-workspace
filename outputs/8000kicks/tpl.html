@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sample email for 8000Kicks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#e9e4dc; --card:#ffffff; --sand:#eddcc1; --sandlt:#f6efe3; --ink:#151515; --green:#108474;
+    --forest:#297f50; --brown:#846144; --line:#e5ded2; --muted:#6f6a64;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ground);font-family:"Montserrat",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);padding:48px 40px}
+  .wrap{display:flex;gap:40px;justify-content:center;align-items:flex-start}
+  .mail{width:600px;background:var(--card);box-shadow:0 10px 40px rgba(21,21,21,.12)}
+  .inbox{background:#faf8f4;border-bottom:1px solid var(--line);padding:16px 28px;font-size:13px;line-height:1.7}
+  .inbox b{color:var(--green)}
+  .inbox .pre{color:var(--muted)}
+  .topbar{background:var(--green);color:#fff;text-align:center;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:10px}
+  .logo{text-align:center;padding:26px 0;background:var(--ink)}
+  .logo img{width:110px}
+  .hero img{width:100%;display:block}
+  .body{padding:38px 50px 10px}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+  h1{font-weight:800;font-size:32px;line-height:1.15;margin-bottom:16px;letter-spacing:-.01em}
+  p{font-size:15px;line-height:1.7;margin-bottom:14px}
+  .product{background:var(--sandlt);border-radius:12px;padding:18px;margin:24px 0 8px}
+  .product img{width:100%;display:block;border-radius:8px;background:#efefef}
+  .pinfo{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:14px}
+  .pname{font-weight:700;font-size:18px;line-height:1.25;margin-bottom:4px}
+  .psub{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .price{font-weight:800;font-size:20px;white-space:nowrap}
+  .ship{display:inline-block;background:var(--sand);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:20px;margin-top:12px}
+  .btn{display:block;text-align:center;background:var(--green);color:#fff;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:18px;border-radius:6px;margin:24px 0 30px}
+  .why{display:grid;gap:14px;margin-bottom:28px}
+  .why div{display:flex;gap:14px;align-items:flex-start;font-size:14px;line-height:1.55}
+  .why .ic{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sand);color:var(--forest);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .why b{font-weight:700}
+  .life{position:relative;margin-bottom:28px;border-radius:12px;overflow:hidden}
+  .life img{width:100%;display:block}
+  .life .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 24px;background:linear-gradient(transparent,rgba(21,21,21,.78));color:#fff}
+  .life .lab{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);margin-bottom:6px}
+  .life q{font-size:14.5px;line-height:1.55;display:block;quotes:none;font-weight:500}
+  .addon{display:flex;gap:18px;align-items:center;border:1.5px dashed var(--line);border-radius:12px;padding:14px;margin-bottom:34px}
+  .addon img{width:92px;height:92px;object-fit:cover;border-radius:8px}
+  .addon .lab{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brown);margin-bottom:4px}
+  .addon .t{font-weight:700;font-size:15px;margin-bottom:3px}
+  .addon .s{font-size:13px;color:var(--muted);line-height:1.5}
+  .sign{font-size:14.5px;line-height:1.7;margin-bottom:36px}
+  .foot{background:var(--ink);color:#bdb6ad;text-align:center;padding:26px 30px;font-size:11.5px;line-height:1.9}
+  .foot img{width:64px;margin-bottom:10px}
+
+  .notes{width:340px;position:sticky;top:40px}
+  .notes h2{font-weight:800;font-size:20px;margin-bottom:6px}
+  .notes .lead{font-size:13.5px;line-height:1.6;color:var(--muted);margin-bottom:22px}
+  .note{display:flex;gap:14px;margin-bottom:16px}
+  .pin{flex:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .note div:not(.pin){font-size:13.5px;line-height:1.6}
+  .note b{display:block}
+  .flow{margin-top:28px;background:var(--card);border-radius:12px;padding:20px}
+  .flow h3{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+  .step{display:flex;gap:14px;align-items:baseline;font-size:13.5px;line-height:1.5;padding:9px 0;border-top:1px solid var(--line)}
+  .step:first-of-type{border-top:0}
+  .step .t{flex:none;width:44px;color:var(--muted);font-weight:600}
+  .step.on .t,.step.on span{color:var(--ink);font-weight:700}
+  @media (max-width:720px){
+    body{padding:16px 0}
+    .wrap{display:block}
+    .mail{width:100%}
+    .body{padding:30px 20px 6px}
+    h1{font-size:27px}
+    .notes{width:100%;position:static;padding:0 18px;margin-top:28px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mail">
+    <div class="inbox">
+      <b>From:</b> 8000Kicks<br>
+      <b>Subject:</b> Your Trekkers are still by the door<br>
+      <span class="pre">Weatherproof hemp, a wider toe box, and free shipping and exchanges in the US/EU.</span>
+    </div>
+    <div class="topbar">Free shipping and exchanges in US/EU</div>
+    <div class="logo"><img src="{{LOGO}}" alt="8000Kicks"></div>
+
+    <div class="body">
+      <div class="eyebrow">You left something behind</div>
+      <h1>Your next pair is still in your cart.</h1>
+      <p>You picked out the Trekker Wide Toe Box. Good call: it's our best-selling shoe, now with the most room we've ever given it.</p>
+      <p>It's still saved for you, so you can pick up right where you left off.</p>
+
+      <div class="product">
+        <img src="{{PRODUCT}}" alt="Trekker Wide Toe Box in Dark Green">
+        <div class="pinfo">
+          <div>
+            <div class="pname">Trekker Wide Toe Box</div>
+            <div class="psub">Men · Dark Green</div>
+          </div>
+          <div class="price">$149</div>
+        </div>
+        <span class="ship">Free shipping and exchanges</span>
+      </div>
+
+      <a class="btn" href="#">Back to my cart</a>
+
+      <div class="why">
+        <div><span class="ic">01</span><span><b>Room for your toes.</b> The wide toe box lets your toes spread, so you balance and grip the way your feet were made to.</span></div>
+        <div><span class="ic">02</span><span><b>Weatherproof hemp.</b> Keeps water out, with a recycled rubber sole that grips on any terrain.</span></div>
+        <div><span class="ic">03</span><span><b>Support all day.</b> A dual-layer arch support insole keeps your foot aligned from morning to night.</span></div>
+      </div>
+
+      <div class="life">
+        <img src="{{LIFE}}" alt="8000Kicks hemp shoes on a wooden deck">
+        <div class="cap">
+          <div class="lab">Not sure about your size?</div>
+          <q>Exchanges are free in the US and EU. Order your usual size, and if it's not right, we'll swap it.</q>
+        </div>
+      </div>
+
+      <div class="addon">
+        <img src="{{ADDON}}" alt="Striped Hemp Socks in Black">
+        <div>
+          <div class="lab">Made to go with them</div>
+          <div class="t">Striped Hemp Socks</div>
+          <div class="s">Breathable and anti-bacterial, just like the shoes. $14.</div>
+        </div>
+      </div>
+
+      <div class="sign">Got a question about fit or sizing? Just hit reply, a real person on our team will get back to you.<br><br>The 8000Kicks team</div>
+    </div>
+
+    <div class="foot">
+      <img src="{{LOGO}}" alt=""><br>
+      Hemp shoes and gear, made to last.<br>
+      8000kicks.com · Unsubscribe
+    </div>
+  </div>
+
+  <div class="notes">
+    <h2>Why this email works</h2>
+    <p class="lead">Email 1 of a 3-part abandoned cart flow, in 8000Kicks' own look and voice. Easy to run as an A/B test against the cart email you send now.</p>
+    <div class="note"><div class="pin">1</div><div><b>The exact shoe they left</b>Their model, colour and price pull straight from the cart, so it feels personal, not like a newsletter.</div></div>
+    <div class="note"><div class="pin">2</div><div><b>Leads with what's new</b>The wide toe box is the reason people come to the Trekker, so it's the first thing they read.</div></div>
+    <div class="note"><div class="pin">3</div><div><b>Takes away the size worry</b>Sizing is the main reason people hesitate on shoes online. Free exchanges answer that before they ask.</div></div>
+    <div class="note"><div class="pin">4</div><div><b>One clear button</b>One action, right under the product, so getting back to checkout takes one tap.</div></div>
+    <div class="note"><div class="pin">5</div><div><b>A small add-on</b>Hemp socks at $14 are an easy yes that raises the order value without feeling pushy.</div></div>
+
+    <div class="flow">
+      <h3>The full flow</h3>
+      <div class="step on"><div class="t">1 h</div><span>This email: a friendly reminder with their shoe.</span></div>
+      <div class="step"><div class="t">24 h</div><span>Email 2: reviews from people who wear them every day, plus the hemp story.</span></div>
+      <div class="step"><div class="t">72 h</div><span>Email 3: a last nudge, with help choosing the right size.</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
