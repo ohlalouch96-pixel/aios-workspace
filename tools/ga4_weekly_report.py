@@ -197,6 +197,67 @@ def to_markdown(d):
     return "\n".join(L) + "\n"
 
 
+# ── Cloudflare Web Analytics (cookieloos, telt ook wie geen "Akkoord" klikt) ──
+# 16-11: Ierse desktopbezoeken zonder referrer = mailscanners (Microsoft Defender e.d. testen links
+# in outreachmails vanuit Dublin); referrer facebook.com = Meta-linkcheckers bij IG-DM's. Beide apart.
+CF_GQL = "https://api.cloudflare.com/client/v4/graphql"
+
+
+def cf_rows(token, account, start, end):
+    q = """query($a:String!,$s:Date!,$e:Date!){viewer{accounts(filter:{accountTag:$a}){
+      rumPageloadEventsAdaptiveGroups(limit:1000,filter:{date_geq:$s,date_leq:$e,bot:0}){
+        count sum{visits} dimensions{countryName requestPath refererHost deviceType}}}}}"""
+    import requests
+    r = requests.post(CF_GQL, headers={"Authorization": f"Bearer {token}"},
+                      json={"query": q, "variables": {"a": account, "s": start.isoformat(), "e": end.isoformat()}}).json()
+    if r.get("errors"):
+        sys.exit(f"Cloudflare API-fout: {r['errors'][0].get('message')}")
+    return [{**x["dimensions"], "visits": x["sum"]["visits"], "views": x["count"]}
+            for x in r["data"]["viewer"]["accounts"][0]["rumPageloadEventsAdaptiveGroups"]]
+
+
+def cf_kind(r):
+    if r["refererHost"] and "facebook.com" in r["refererHost"]:
+        return "meta"
+    if r["countryName"] == "IE" and not r["refererHost"] and r["deviceType"] == "desktop":
+        return "scanner"
+    return "mens"
+
+
+def cf_collect(end):
+    token, account = get_env("CLOUDFLARE_API_TOKEN"), get_env("CLOUDFLARE_ACCOUNT_ID")
+    if not token or not account:
+        return None
+    start = end - timedelta(days=6)
+    return {"nu": cf_rows(token, account, start, end),
+            "vorige": cf_rows(token, account, start - timedelta(days=7), start - timedelta(days=1))}
+
+
+def cf_markdown(cf):
+    def split(rows):
+        t = {"mens": 0, "scanner": 0, "meta": 0}
+        for r in rows:
+            t[cf_kind(r)] += r["visits"]
+        return t
+    n, p = split(cf["nu"]), split(cf["vorige"])
+    L = ["", "## Cloudflare (iedereen, zonder cookiemelding)",
+         "| | Deze week | Vorige week |", "|---|---|---|",
+         f"| Bezoeken totaal | {sum(n.values())} | {sum(p.values())} |",
+         f"| Waarschijnlijk echte mensen | {n['mens']} | {p['mens']} |",
+         f"| Mailscanners (Ierland, desktop, geen bron) | {n['scanner']} | {p['scanner']} |",
+         f"| Meta-linkcheckers (via facebook.com) | {n['meta']} | {p['meta']} |",
+         "", "| Pagina (alleen 'mens') | Bezoeken | Weergaven | Landen |", "|---|---|---|---|"]
+    pages = {}
+    for r in cf["nu"]:
+        if cf_kind(r) == "mens":
+            pg = pages.setdefault(r["requestPath"], {"v": 0, "pv": 0, "c": set()})
+            pg["v"] += r["visits"]; pg["pv"] += r["views"]; pg["c"].add(r["countryName"])
+    for path, pg in sorted(pages.items(), key=lambda kv: -kv[1]["pv"]):
+        L.append(f"| {path} | {pg['v']} | {pg['pv']} | {', '.join(sorted(pg['c']))} |")
+    L.append("_Cloudflare ziet geen UTM-labels en telt ook Oussama zelf mee. 'Bezoeken' = binnenkomst van buitenaf; doorklikken binnen de site telt alleen als weergave._")
+    return "\n".join(L) + "\n"
+
+
 def main():
     ap = argparse.ArgumentParser(description="Wekelijkse GA4-samenvatting insightance.ai")
     ap.add_argument("--end", help="laatste dag van de week (YYYY-MM-DD), standaard gisteren")
@@ -210,7 +271,10 @@ def main():
 
     data = collect(session(), prop, end)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    md = to_markdown(data)
+    cf = cf_collect(end)
+    if cf:
+        data["cloudflare"] = cf
+    md = to_markdown(data) + (cf_markdown(cf) if cf else "")
     (OUT_DIR / f"weekrapport_{end.isoformat()}.md").write_text(md, encoding="utf-8")
     (OUT_DIR / f"weekrapport_{end.isoformat()}.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     sys.stdout.reconfigure(encoding="utf-8")

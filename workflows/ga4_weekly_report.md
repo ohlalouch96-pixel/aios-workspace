@@ -33,6 +33,12 @@ acties ze doen, met toe- of afname ten opzichte van de week ervoor.
   Zie je nieuwe verdachte steden, voeg ze toe aan `BOT_CITIES`. 09-11: Springfield toegevoegd (alle
   bezoeken daar op 3-4 nov waren Meta-checks na bio-wijzigingen; normale user-agent, dus consent.js herkende ze niet).
 - Standaardrapporten lopen 24-48 uur achter; de huidige dag is nooit compleet.
+- **Cloudflare-sectie (sinds 16-11):** Cloudflare Web Analytics staat al sinds ~juni aan (automatic setup) en telt iedereen,
+  ook wie geen "Akkoord" klikt. Het script haalt dit op via GraphQL (`CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in .env,
+  token "insightance-analytics", alleen lezen) en splitst in: waarschijnlijk mensen, mailscanners (Ierland + desktop + geen
+  referrer: Microsoft Defender e.d. die links in outreachmails openen) en Meta-linkcheckers (referrer facebook.com).
+  Dit is een schatting; Cloudflare ziet geen UTM-labels, telt Oussama zelf mee, en oudere dagen kunnen gesampled zijn (veelvouden van 10).
+  16-11-leerpunt: GA 0 bezoekers terwijl Cloudflare 85 bezoeken telde, waarvan ~47 mailscanners en 6 Meta-checks.
 - "Betrokken bezoek" = langer dan 10 seconden, of 2+ pagina's, of een sleutelgebeurtenis. Beste maat voor echte interesse.
 - UTM-afspraken: `reference/utm-links.md`. Kale links (zonder label) tellen als direct of als referral.
 

@@ -194,6 +194,7 @@ Alle business metrics worden dagelijks verzameld in `data/data.db` (SQLite).
 | Frankfurter API | `collect_fx_rates.py` | Wisselkoersen (EUR basis) |
 | Fathom | `intel/collect_fathom.py` | Meeting-opnames en transcripts |
 | Google Analytics 4 | `tools/ga4_weekly_report.py` | Websitebezoek insightance.ai: bronnen, UTM-links, pagina's, acties (wekelijks, niet in data.db) |
+| Cloudflare Web Analytics | `tools/ga4_weekly_report.py` | Cookieloze teller insightance.ai (iedereen, ook zonder akkoord), met schatting mens/mailscanner/Meta-check |
 
 **IntelOS — Meeting Intelligence:**
 - Database tabel: `meetings` (in `data/data.db`)
