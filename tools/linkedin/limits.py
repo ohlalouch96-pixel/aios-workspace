@@ -40,8 +40,9 @@ NOODSTOP_MIN_ACCEPTATIERATIO = 0.15  # onder dit niveau over de laatste N verzoe
 NOODSTOP_WINDOW = 20  # "laatste N verzonden connectieverzoeken"
 NOODSTOP_MIN_SAMPLE = 10  # pas beoordelen vanaf dit aantal afgehandelde (geaccepteerd/verlopen) verzoeken
 
-ACCEPTED_STATUSSEN = {"Geaccepteerd", "Bericht verstuurd", "Afgerond"}
-RESOLVED_NEGATIEF_STATUSSEN = {"Verlopen", "Afgewezen"}
+# "Afgewezen" komt hier bewust niet voor: die statuswaarde wordt in de LinkedIn-flow
+# nooit gezet (dat gebruikt "Genegeerd"/"Verlopen"), dus die stond hier altijd dood.
+RESOLVED_NEGATIEF_STATUSSEN = {"Verlopen"}
 
 
 def _ensure_tables(conn):
@@ -141,12 +142,23 @@ def _acceptatieratio_voor_periode(conn, start_date, end_date):
         row = conn.execute("SELECT status FROM linkedin WHERE url = ?", (ref,)).fetchone()
         if not row:
             continue
-        if row["status"] in ACCEPTED_STATUSSEN:
+        if _ooit_geaccepteerd(conn, ref):
             geaccepteerd += 1
         elif row["status"] in RESOLVED_NEGATIEF_STATUSSEN:
             negatief += 1
     resolved = geaccepteerd + negatief
     return (geaccepteerd / resolved) if resolved else None
+
+
+def _ooit_geaccepteerd(conn, url):
+    """True als dit profiel ooit een connectieverzoek heeft geaccepteerd, ongeacht de
+    HUIDIGE status. status alleen is niet genoeg: als iemand later alsnog afhaakt (bv.
+    na een gesprek) wordt de status overschreven naar 'Genegeerd', wat verkeerd als
+    'nooit geaccepteerd' meetelde in de acceptatieratio (gevonden en gefixt 16-11-2026,
+    zie Bilal El Ahrach). datum_geaccepteerd blijft wel staan, dus die is de bron van
+    waarheid hier, niet de status-kolom."""
+    row = conn.execute("SELECT datum_geaccepteerd FROM linkedin WHERE url = ?", (url,)).fetchone()
+    return bool(row and (row["datum_geaccepteerd"] or "").strip())
 
 
 def _table_exists(conn, name):
@@ -221,7 +233,7 @@ def check_noodstop(conn):
         row = conn.execute("SELECT status FROM linkedin WHERE url = ?", (ref,)).fetchone()
         if not row:
             continue
-        if row["status"] in ACCEPTED_STATUSSEN:
+        if _ooit_geaccepteerd(conn, ref):
             geaccepteerd += 1
         elif row["status"] in RESOLVED_NEGATIEF_STATUSSEN:
             negatief += 1
@@ -245,10 +257,7 @@ def check_noodstop(conn):
         "AND action_date IN (?, ?)", (vandaag.isoformat(), gisteren.isoformat())
     ).fetchall()]
     if recent:
-        any_accepted = any(
-            (conn.execute("SELECT status FROM linkedin WHERE url = ?", (r,)).fetchone() or {"status": ""})["status"] in ACCEPTED_STATUSSEN
-            for r in recent
-        )
+        any_accepted = any(_ooit_geaccepteerd(conn, r) for r in recent)
         if not any_accepted:
             return {
                 "pauzeren": False,
