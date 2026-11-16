@@ -38,6 +38,11 @@ import wachtrij  # noqa: E402
 
 ROTATIE_BESTAND = WORKSPACE_ROOT / ".tmp" / "linkedin" / "zoek_rotatie.json"
 
+# Hoeveel van het dagbudget elke niche krijgt (besluit Oussama 16-11: iets meer focus
+# op makelaars dan op installatiebedrijven). Verhouding, geen harde aantallen — werkt
+# dus ook door als het dagbudget later verder opschaalt.
+NICHE_GEWICHT = {"installatiebedrijven": 2, "makelaars": 3}
+
 # (titel, branche) per niche — wordt rondgedraaid, zie _volgende_combos().
 ZOEKCOMBOS = {
     "installatiebedrijven": [
@@ -74,6 +79,26 @@ def _volgende_combos(niche, aantal):
     return combos
 
 
+def _verdeel_zoekbudget(zoekbudget, niches):
+    """Verdeelt het zoekbudget over de niches volgens NICHE_GEWICHT, met minstens 1
+    zoekopdracht per niche (zolang het budget dat toelaat). De laatste niche krijgt
+    wat er daarna nog over is, zodat er door afronding nooit budget blijft liggen."""
+    gewichten = [NICHE_GEWICHT.get(n, 1) for n in niches]
+    totaal_gewicht = sum(gewichten)
+    verdeling = {}
+    rest = zoekbudget
+    for i, niche in enumerate(niches):
+        resterende_niches = len(niches) - i
+        if i == len(niches) - 1:
+            aandeel = rest
+        else:
+            aandeel = max(1, round(zoekbudget * gewichten[i] / totaal_gewicht))
+            aandeel = min(aandeel, rest - (resterende_niches - 1))  # laat minstens 1 over per niche hierna
+        verdeling[niche] = max(0, aandeel)
+        rest -= verdeling[niche]
+    return verdeling
+
+
 def nieuwe_dag(niches=("installatiebedrijven", "makelaars")):
     """Hoofdfunctie achter de "Nieuwe dag"-knop. Geeft een samenvatting terug."""
     conn = get_connection()
@@ -93,11 +118,11 @@ def nieuwe_dag(niches=("installatiebedrijven", "makelaars")):
 
     bestaande_urls = {r["url"] for r in wachtrij.alle_records()}
 
-    # Zoekbudget verdelen over de actieve niches (minstens 1 zoekopdracht per niche indien mogelijk).
-    per_niche = max(1, zoekbudget // len(niches))
+    # Zoekbudget verdelen over de actieve niches, gewogen via NICHE_GEWICHT.
+    budget_per_niche = _verdeel_zoekbudget(zoekbudget, niches)
     gevonden_per_niche = {}
     for niche in niches:
-        combos = _volgende_combos(niche, min(per_niche, zoekbudget))
+        combos = _volgende_combos(niche, min(budget_per_niche[niche], zoekbudget))
         for titel, branche in combos:
             if zoekbudget <= 0:
                 break
