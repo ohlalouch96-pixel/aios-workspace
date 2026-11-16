@@ -33,7 +33,7 @@ TAKEN = [
     {"id": "linkedin_followups", "titel": "Follow-ups versturen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "linkedin_check", "titel": "Posts evalueren", "chat": "LinkedIn", "ritme": "Donderdag", "dagen": {3}, "kort": "LinkedIn-check", "agenda": "LinkedIn-posts evalueren"},
     {"id": "webshop_followups", "titel": "Follow-ups versturen", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "webshop_nieuw", "titel": "10 nieuwe berichten", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    {"id": "webshop_nieuw", "titel": "15 nieuwe berichten", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_post", "titel": "Post plaatsen / plannen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_kwartier", "titel": "Kwartiertje reageren", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Ondernemers en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
@@ -82,7 +82,7 @@ SNELKOPPELINGEN = [
 STARTHERINNERINGEN = [
     {"titel": "Reviewlink naar MHL en FTUK sturen", "chat": "Algemeen", "datum": "2026-11-14"},
     {"titel": "Bing checken: staat Insightance erop?", "chat": "Algemeen", "datum": "2026-11-24"},
-    {"titel": "Vervolgafspraak fysiotherapeut", "chat": "Algemeen", "datum": "2026-11-25"},
+    {"titel": "Vervolgafspraak fysiotherapeut", "chat": "Algemeen", "datum": "2026-11-18"},
     {"titel": "Btw-nummer binnen?", "chat": "Algemeen", "datum": "2026-11-26"},
     {"titel": "Google-post plaatsen", "chat": "Algemeen", "datum": "2026-11-28"},
     {"titel": "SEO-gesprek: eerste cijfers Search Console", "chat": "Algemeen", "datum": "2026-11-28"},
