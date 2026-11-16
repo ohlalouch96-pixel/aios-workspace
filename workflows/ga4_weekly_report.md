@@ -26,7 +26,7 @@ acties ze doen, met toe- of afname ten opzichte van de week ervoor.
 ## Om rekening mee te houden
 
 - Alleen bezoekers die "Akkoord" klikten worden geteld: cijfers zijn een ondergrens. Altijd kort noemen.
-- Oussama's eigen apparaten staan op "Alleen functioneel" en tellen niet mee.
+- Oussama telt niet mee: sinds 16-11 opent hij per browser één keer `insightance.ai/?ikbenhet` (onthouden in localStorage `insightance_ik`); dan laadt consent.js GA én de Cloudflare-beacon niet. Terugdraaien: `?ikbenhetniet`. De Cloudflare-beacon staat sinds 16-11 handmatig in consent.js (token in `CF_TOKEN`), automatische injectie in Cloudflare staat uit. Data van vóór 16-11 bevat Oussama wel.
 - Bots: consent.js laadt GA niet voor herkenbare bots; het script filtert daarnaast datacentersteden
   (`BOT_CITIES`) en toont hoeveel. 03-11: na het wijzigen van de IG-bio kwamen 9 "bezoekers" uit
   Prineville/Luleå (Meta), Ashburn (Amazon) en Springfield, allemaal first_visit zonder engagement.
