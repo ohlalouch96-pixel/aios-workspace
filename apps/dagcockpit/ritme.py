@@ -98,6 +98,7 @@ QUOTES = [
     "Discipline brengt je verder dan motivatie ooit zal doen.",
     "Je eerste klant komt niet door wachten, maar door doen.",
     "Wie elke dag zaait, oogst vroeg of laat.",
+    "Je kunt niet verliezen als je niet opgeeft.",
 ]
 
 # Vaste taken die ook in de tegel Binnenkort komen (naast de eenmalige herinneringen).
