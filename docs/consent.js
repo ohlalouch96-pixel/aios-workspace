@@ -11,9 +11,32 @@
   // herkenbare bots (linkcheckers van Meta/LinkedIn, headless browsers) niet meetellen
   const isBot = navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|externalhit|meta-external|lighthouse|pingdom|monitor/i.test(navigator.userAgent);
 
+  // eigen bezoeken niet meetellen: één keer insightance.ai/?ikbenhet openen per browser (terugdraaien: ?ikbenhetniet)
+  const SELF = 'insightance_ik';
+  try {
+    const q = new URLSearchParams(location.search);
+    if (q.has('ikbenhet')) localStorage.setItem(SELF, '1');
+    if (q.has('ikbenhetniet')) localStorage.removeItem(SELF);
+    if (q.has('ikbenhet') || q.has('ikbenhetniet')) {
+      q.delete('ikbenhet'); q.delete('ikbenhetniet');
+      history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+    }
+  } catch (e) {}
+  const isSelf = (() => { try { return localStorage.getItem(SELF) === '1'; } catch (e) { return false; } })();
+
+  // Cloudflare Web Analytics: cookieloos, geen toestemming nodig, dus altijd (behalve bots en Oussama zelf).
+  // Sinds 16-11 handmatig i.p.v. automatische injectie door Cloudflare, zodat isSelf kan werken.
+  const CF_TOKEN = '154ae11b176d48fbad0890f326b4ce00';
+  if (!isBot && !isSelf) {
+    const cf = document.createElement('script');
+    cf.type = 'module'; cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    cf.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_TOKEN }));
+    document.head.appendChild(cf);
+  }
+
   let gaLoaded = false;
   function loadGA() {
-    if (gaLoaded || isBot || !/^G-[A-Z0-9]+$/.test(GA_ID) || GA_ID === 'G-XXXXXXXXXX') return;
+    if (gaLoaded || isBot || isSelf ||!/^G-[A-Z0-9]+$/.test(GA_ID) || GA_ID === 'G-XXXXXXXXXX') return;
     gaLoaded = true;
     const s = document.createElement('script');
     s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
