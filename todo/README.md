@@ -6,6 +6,22 @@
 
 ---
 
+## Moodboard: 5 jaar vooruit
+
+**Status:** Geparkeerd sinds 2026-11-16 (hoeft niet af vóór 23-11, Oussama's 30e verjaardag)
+**Idee van Oussama:** Een moodboard voor op de desktop (bureaubladachtergrond) dat 5 jaar vooruit visualiseert waar hij wil staan.
+**Thema's (eerste opzet, mag uitgebreid worden):**
+- Fysiek
+- Geloof
+- Financieel
+- Persoonlijk: relatie, liefde, carrière
+**Wat er moet gebeuren:**
+1. Samen de thema's aanscherpen en per thema bepalen hoe het er over 5 jaar uitziet.
+2. Per thema beelden/woorden kiezen.
+3. Indeling bepalen en het moodboard maken als desktopachtergrond.
+
+---
+
 ## Warm netwerk raadplegen (familie en kennissen)
 
 **Status:** Geparkeerd sinds 2026-11-10 ("nu geen tijd, later oppakken")
