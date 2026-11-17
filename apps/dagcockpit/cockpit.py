@@ -280,6 +280,25 @@ def snelkoppelingen():
     return uit
 
 
+def _quote_ronde(nr):
+    """Gehusselde volgorde van alle quotes voor ronde nr; begint nooit met de laatste van de vorige ronde."""
+    q = list(ritme.QUOTES)
+    random.Random(nr).shuffle(q)
+    if nr > 0 and len(q) > 1:
+        vorige = list(ritme.QUOTES)
+        random.Random(nr - 1).shuffle(vorige)
+        if q[0] == vorige[-1]:
+            q[0], q[1] = q[1], q[0]
+    return q
+
+
+def dagquote(dag):
+    """Elke dag een andere quote: alle quotes komen in willekeurige volgorde aan de beurt voordat er een terugkomt."""
+    n = len(ritme.QUOTES)
+    ronde, plek = divmod(dag.toordinal(), n)
+    return _quote_ronde(ronde)[plek]
+
+
 def todo_lijst():
     """Open punten uit todo/README.md: elke ## kop die niet doorgestreept is, met een kort statuslabel."""
     pad = WORKSPACE_ROOT / "todo" / "README.md"
@@ -365,7 +384,7 @@ def index():
         contentdag=kort(volgende_contentdag(vandaag)),
         insta_taken=per_chat.get("Instagram-content", []),
         instadag=kort(volgende_zaterdag(vandaag)),
-        agenda=agenda_groepen(binnenkort(conn, vandaag), vandaag), quote=random.Random(vandaag.toordinal()).choice(ritme.QUOTES), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
+        agenda=agenda_groepen(binnenkort(conn, vandaag), vandaag), quote=dagquote(vandaag), links=snelkoppelingen(), todo=todo_lijst(), todo_cirkel=todo_cirkel(todo_lijst()),
         notitie=notitie["tekst"] if notitie else "",
         vorige_notitie=(kort(date.fromisoformat(vorige["datum"])), vorige["tekst"]) if vorige else None,
         vandaag_iso=vandaag.isoformat(), chats=list(ritme.CHATS),
