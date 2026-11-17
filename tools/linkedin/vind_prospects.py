@@ -50,9 +50,14 @@ ZOEKCOMBOS = {
         ("eigenaar", "elektricien"), ("directeur", "aannemer"), ("eigenaar", "klimaattechniek"),
         ("directeur", "bouwbedrijf"), ("eigenaar", "dakdekker"), ("mede-eigenaar", "installatietechniek"),
     ],
+    # Meer makelaar- dan adviseur-combo's (besluit Oussama 17-11): verzekeringsadviseurs
+    # hebben weinig te maken met opvolging van lopende aanvragen, dus die passen minder
+    # goed bij het aanbod. Adviseurs blijven aanwezig (zie niche-besluit 10-11), maar
+    # krijgen een kleiner deel van de rotatie dan makelaars.
     "makelaars": [
-        ("makelaar", "woningen"), ("eigenaar", "makelaardij"), ("hypotheekadviseur", ""),
-        ("verzekeringsadviseur", ""), ("directeur", "hypotheekadvies"), ("eigenaar", "assurantiekantoor"),
+        ("makelaar", "woningen"), ("eigenaar", "makelaardij"), ("verkoopmakelaar", "woningen"),
+        ("aankoopmakelaar", "woningen"), ("directeur", "makelaardij"), ("hypotheekadviseur", ""),
+        ("verzekeringsadviseur", ""),
     ],
 }
 
