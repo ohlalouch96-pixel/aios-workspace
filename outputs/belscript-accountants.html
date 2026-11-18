@@ -1,0 +1,203 @@
+<title>Belscript Accountants</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: één leeskolom om naast de telefoon te houden; gesproken tekst valt op als blauwe "spreekblokken", uitleg blijft rustig grijs. */
+:root{
+  --bg:#f6f8fb; --surface:#ffffff; --fg:#14213a; --muted:#56627a; --line:#dbe2ec;
+  --accent:#1f5fd6; --accent-soft:#e8f0fd; --ok:#167a4a; --ok-soft:#e5f4ec; --warn:#9a6a00; --warn-soft:#fbf2dc; --no:#b33a3a; --no-soft:#fae9e9;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1522; --surface:#151f31; --fg:#e6ecf6; --muted:#9aa8bf; --line:#26344c;
+  --accent:#7aa7ff; --accent-soft:#1a2a47; --ok:#5fd09a; --ok-soft:#14302a; --warn:#e8b94a; --warn-soft:#33290f; --no:#f08585; --no-soft:#3a1c1f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1522; --surface:#151f31; --fg:#e6ecf6; --muted:#9aa8bf; --line:#26344c;
+  --accent:#7aa7ff; --accent-soft:#1a2a47; --ok:#5fd09a; --ok-soft:#14302a; --warn:#e8b94a; --warn-soft:#33290f; --no:#f08585; --no-soft:#3a1c1f; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:2rem}
+h2{font-size:1.35rem;display:flex;gap:12px;align-items:baseline}
+h2 .n{font-size:.85rem;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;font-weight:600;min-width:3.2em}
+h3{font-size:1.05rem}
+p,ul{margin:0}
+ul{padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+section{display:flex;flex-direction:column;gap:14px}
+.lead{color:var(--muted);max-width:62ch}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.say{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;font-size:1.08rem;font-weight:500}
+.say::before{content:"Zeg";display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:2px}
+.note{color:var(--muted);font-size:.95rem}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+.rule div{display:flex;flex-direction:column;gap:2px}
+.rule b{font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.rule span{color:var(--muted);font-size:.9rem}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.q .tag{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.funnel{display:flex;flex-direction:column;gap:12px}
+.funnel .q:nth-child(1){margin-inline:0}
+.funnel .q:nth-child(2){margin-inline:2%}
+.funnel .q:nth-child(3){margin-inline:4%}
+.funnel .q:nth-child(4){margin-inline:6%}
+.funnel .q:nth-child(5){margin-inline:8%}
+@media (max-width:520px){.funnel .q{margin-inline:0!important}}
+.signal{background:var(--ok-soft);color:var(--ok);border-radius:6px;padding:8px 12px;font-weight:600;font-size:.95rem}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:600}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:600;font-size:.85rem;white-space:nowrap}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-no{background:var(--no-soft);color:var(--no)}
+.p-grey{background:var(--line);color:var(--muted)}
+.react{display:grid;grid-template-columns:1fr;gap:12px}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+</style>
+
+<main class="wrap">
+
+<header style="display:flex;flex-direction:column;gap:10px">
+  <span class="eyebrow">Onderzoeksgesprek · accountants- en administratiekantoren</span>
+  <h1>Belscript accountants</h1>
+  <p class="lead">Puur informatief. Je verkoopt niets en noemt geen oplossing. Je wilt weten of er bij deze kantoren een probleem is waar je iets mee kunt. De vragen werken als een trechter: eerst zo breed mogelijk, daarna steeds concreter richting het pijnpunt dat we toetsen: klanten leveren stukken te laat of onvolledig aan, en het kantoor moet erachteraan.</p>
+</header>
+
+<section>
+  <h2><span class="n">Regel</span>Wanneer gaan we door?</h2>
+  <div class="rule">
+    <div><b>20</b><span>echte gesprekken met de eigenaar, minimaal</span></div>
+    <div><b>≥ 50%</b><span>herkent het probleem (Ja). Bij 20 gesprekken: 10 of meer</span></div>
+    <div><b>&lt; 50%</b><span>dan gaan we niet verder met deze niche</span></div>
+  </div>
+  <p class="note">Bellen alleen maandag tot en met donderdag. "Niet bereikt" en gesprekken met iemand anders dan de eigenaar tellen niet mee.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="n">Stap 0</span>Spreek ik met de eigenaar?</h2>
+  <p class="say">"Goedemorgen, u spreekt met Oussama Hlalouch. Spreek ik met de eigenaar?"</p>
+  <p class="note">Staat de naam van de eigenaar in de sheet, gebruik die: "Spreek ik met [naam]?" Is het de eigenaar, ga direct door naar stap 1.</p>
+  <h3>Is het iemand anders</h3>
+  <p class="say">"Ik doe een kort onderzoek onder administratiekantoren in de regio en wil daar graag de eigenaar even over spreken. Wanneer kan ik hem of haar het beste bereiken?"</p>
+  <ul class="note">
+    <li>Liefst bel jij zelf terug: vraag een dag, een tijd en een direct nummer of mobiel.</li>
+    <li>Biedt de ander aan dat de eigenaar jou terugbelt: prima, geef je nummer. Vraag wel: "En als ik niets hoor, wanneer kan ik het zelf nog eens proberen?"</li>
+    <li>Vertel je verhaal niet aan de receptie of een medewerker.</li>
+    <li>Noteer bij Notities: wie je sprak, het terugbelmoment en het directe nummer.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="n">Stap 1</span>Aankondiging en toestemming</h2>
+  <p class="say">"Ik doe vanuit mijn eigen bedrijf, een AI-bureau, onderzoek naar waar administratie- en accountantskantoren in hun dagelijkse werk tegenaan lopen. Mag ik u daar vijf korte vragen over stellen? Het duurt maximaal vijf minuten, en ik verkoop u vandaag niets."</p>
+  <p class="note">"Onderzoek" komt eerst, zodat ze niet meteen aan verkoop denken. De vijf minuten noem je als belofte, niet als verzoek: bij de makelaars klonk "mag ik twee minuten van uw tijd?" als een verkoopgesprek.</p>
+  <h3>Komt het nu niet uit</h3>
+  <p class="say">"Geen probleem. Wanneer komt het beter uit? Dan bel ik u dan terug."</p>
+</section>
+
+<section>
+  <h2><span class="n">Stap 2</span>De vijf vragen</h2>
+  <p class="note">Na elke vraag: stoppen met praten en de stilte laten vallen. Wat na de stilte komt, is vaak het eerlijkste antwoord. Noem tijdens de vragen geen oplossing.</p>
+  <div class="funnel">
+    <div class="q">
+      <span class="tag">Vraag 1 · breed</span>
+      <p class="say">"Wat kost u nu, naast het echte vakwerk, de meeste tijd of ergernis?"</p>
+      <ul class="note">
+        <li>Laat ze vrij praten, ook als het een andere kant op gaat. Een pijnpunt waar je zelf niet aan dacht, is net zo waardevol.</li>
+        <li>Noemen ze iets anders, vraag één keer door: "Hoe vaak speelt dat?" Ga daarna naar vraag 2.</li>
+      </ul>
+      <p class="signal">Noemen ze uit zichzelf het najagen van stukken? Dat is het sterkste signaal. Noteer het letterlijk.</p>
+    </div>
+    <div class="q">
+      <span class="tag">Vraag 2 · hoe het nu gaat</span>
+      <p class="say">"Hoe vragen jullie nu stukken op bij klanten, bijvoorbeeld voor de btw-aangifte of de jaarrekening? En wie doet het navragen als er iets ontbreekt?"</p>
+      <p class="note">Je hoort welke middelen ze gebruiken (mail, klantportaal, WhatsApp, bellen) en of de eigenaar het najagen zelf doet. Dan voelt die de pijn het meest.</p>
+    </div>
+    <div class="q">
+      <span class="tag">Vraag 3 · concreet en recent</span>
+      <p class="say">"Als u denkt aan de laatste btw-ronde: bij hoeveel klanten moesten jullie nog achter stukken aan?"</p>
+      <p class="note">Vraag naar iets wat al gebeurd is, niet naar "meestal". Blijft het vaag: "Was dat eerder een paar klanten, of een groot deel?"</p>
+    </div>
+    <div class="q">
+      <span class="tag">Vraag 4 · tijd en gevolgen</span>
+      <p class="say">"Hoeveel tijd ging daar ongeveer in zitten? En wat merkte u daarvan?"</p>
+      <p class="note">Open laten en wachten. Alleen als ze vastlopen: "Bijvoorbeeld drukte, overwerk, of werk dat bleef liggen?" Het aantal uren gaat in de kolom "Uren per week kwijt". Krijg je uren per kwartaal of drukke periode, noteer het zo.</p>
+    </div>
+    <div class="q">
+      <span class="tag">Vraag 5 · al geprobeerd?</span>
+      <p class="say">"Hebben jullie al iets geprobeerd om dit op te lossen, zoals software, een klantportaal of vaste herinneringen? Heeft dat geld gekost, en wat werkt wel en wat niet?"</p>
+      <p class="note">Werkt het goed: het probleem is kleiner. Werkt het half of gaat het nog met de hand: juist een kans. Hebben ze er al voor betaald: dan vinden ze het echt belangrijk.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">Stap 3</span>Afsluiten</h2>
+  <h3>Als er duidelijk een probleem is</h3>
+  <p class="say">"Dank u wel, dit helpt me echt. Wat u vertelt hoor ik vaker, en ik ga uitzoeken hoe u daar tijd op kunt besparen. Als ik merk dat dit echt een probleem is waar ik iets mee kan, zou ik u dan over een aantal weken nog eens mogen terugbellen? Dan laat ik zien wat eruit gekomen is, en beslist u zelf of het iets voor u is."</p>
+  <p class="note"><strong>Bij ja: altijd de contactgegevens vragen en noteren.</strong> Zonder gegevens kun je niet opvolgen (leerpunt van de fysio-lead).</p>
+  <p class="say">"Fijn. Op welk nummer kan ik u dan het beste rechtstreeks bereiken? En wat is uw e-mailadres?"</p>
+  <p class="note">Vraag ook: "Is een ochtend of een middag handiger?" en zet alles in de sheet.</p>
+  <h3>Als het geen probleem is</h3>
+  <p class="say">"Helder, fijn om te horen dat het bij jullie goed loopt. Hartelijk dank voor uw tijd."</p>
+  <p class="note">Noemden ze bij vraag 1 iets anders interessants, vraag dan gerust ook of je later nog eens mag bellen.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="n">Extra</span>Als ze iets terugvragen</h2>
+  <div class="react">
+    <div class="q">
+      <h3>"Wat doet u precies?"</h3>
+      <p class="say">"Ik help bedrijven om terugkerend handwerk, zoals mail en papierwerk, minder tijd te laten kosten."</p>
+      <p class="note">Stel daarna gewoon de volgende vraag. Niet uitweiden, geen oplossing noemen.</p>
+    </div>
+    <div class="q">
+      <h3>"Wat wilt u ons verkopen?"</h3>
+      <p class="say">"Echt niets vandaag. Ik wil eerst goed begrijpen waar kantoren tegenaan lopen, voordat ik iets bouw."</p>
+    </div>
+    <div class="q">
+      <h3>"Stuur maar een mailtje."</h3>
+      <p class="say">"Dat kan. Het gaat alleen om vijf korte vragen, die zijn telefonisch sneller. Komt het later deze week beter uit?"</p>
+    </div>
+    <div class="q">
+      <h3>"Wij hebben daar al software voor."</h3>
+      <p class="say">"Hoe bevalt dat? Komt alles daardoor ook echt op tijd binnen, of moet iemand er toch nog achteraan?"</p>
+      <p class="note">Gaat het toch nog met de hand: dat is een signaal. Werkt het echt goed: Nee.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">Na afloop</span>Scoren en invullen</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Resultaat</th><th>Wanneer</th><th>Telt als herkend?</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill p-ok">Ja (sterk)</span></td><td>Ze noemen het najagen van stukken bij vraag 1 uit zichzelf.</td><td>Ja</td></tr>
+        <tr><td><span class="pill p-ok">Ja</span></td><td>Ze herkennen het duidelijk bij vraag 3 en 4: regelmatig navragen en merkbaar tijdverlies (grofweg 2 uur of meer per week, of duidelijke piekdrukte).</td><td>Ja</td></tr>
+        <tr><td><span class="pill p-warn">Twijfel</span></td><td>Het speelt wel, maar ze vinden het weinig werk of het loopt al redelijk.</td><td>Nee</td></tr>
+        <tr><td><span class="pill p-no">Nee</span></td><td>Het speelt niet, of ze hebben het goed opgelost.</td><td>Nee</td></tr>
+        <tr><td><span class="pill p-grey">Niet bereikt</span></td><td>Geen eigenaar gesproken.</td><td>Telt niet mee</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Vul in de sheet (tabblad accountants-tracker) in: Gebeld op, Resultaat, Uren per week kwijt, Toestemming terugbellen en bij Notities twee regels: wat ze zeiden (vooral vraag 1, letterlijk) en de vervolgstap. Of geef het door in de chat, dan vult Claude het in.</p>
+</section>
+
+<section>
+  <h2><span class="n">Tips</span>Tijdens het gesprek</h2>
+  <ul>
+    <li>Laat stiltes vallen en vul ze niet zelf in.</li>
+    <li>Stel "hoe"- en "wat"-vragen, geen "waarom"-vragen.</li>
+    <li>Noem geen oplossing (herinneringen, checklist, inbox). Dan blijft het een eerlijk onderzoek.</li>
+    <li>Houd je eigen stukken kort. Zij praten, jij luistert.</li>
+  </ul>
+</section>
+
+</main>
