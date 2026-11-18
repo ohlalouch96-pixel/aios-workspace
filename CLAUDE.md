@@ -132,6 +132,7 @@ These are how you know your AIOS is working:
 │   └── README.md            # De backlog zelf
 ├── tools/                   # WAT-tools — deterministieke Python-scripts (herbruikbaar, buiten scripts/collect-flow om)
 │   ├── source_prospects.py  # Outreach-prospects sourcen, verifiëren, dedupliceren, toevoegen aan sheet
+│   ├── source_accountants.py # Accountants-/administratiekantoren verifiëren (tel, e-mail, eigenaar, grootte) → tabblad accountants-tracker
 │   ├── ga4_weekly_report.py # Wekelijkse websitecijfers uit Google Analytics 4 (bronnen, UTM, pagina's, acties)
 │   ├── linkedin/            # LinkedIn Outreach Agent — zoeken/lezen/limieten/wachtrij
 │   │   ├── browser.py       # Playwright: zoeken, profielen lezen, acceptatie-check (login/zoek/lees/check)
