@@ -40,7 +40,8 @@ from wachtrij import verbind, volledige_caption  # noqa: E402
 
 SOORT_LABEL = {"carrousel": "Carrousel", "kaart": "Losse afbeelding", "fork": "The Fork", "tekst_reel": "Reel · bewegende tekst",
                "demo_reel": "Reel · demo", "stem_video": "Reel · video met stem", "actualiteit": "Actualiteit",
-               "story": "Story-tekst", "advertentie": "Advertentie · reel"}
+               "story": "Story-tekst", "advertentie": "Advertentie · reel",
+               "openbaar": "Losse post · bouwen in het openbaar"}
 
 
 class Bot:
