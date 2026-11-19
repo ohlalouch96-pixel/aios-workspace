@@ -646,6 +646,17 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 /* Compacter bij 5+ tegels (19-11) */
 .takenrij.vol .takenlijst .taak label{font-size:12px;line-height:1.25}.takenrij.vol .takenlijst .taak{min-height:28px;padding:4px 8px}.takenrij.vol .takenlijst{gap:5px}
 .takenrij.vol section.kaart.nk > .kaartkop h2{font-size:13px;line-height:1.15}.takenrij.vol section.kaart.nk > .kaartkop{min-height:44px;padding:6px 10px}
+/* Agenda: zo hoog als de linkerkolom, lange lijst scrolt binnen de tegel (19-11) */
+.raster{align-items:stretch}.raster > :first-child{align-self:start}
+.zijkant{position:relative;min-height:0}
+/* Zijmenu compacter nu de to-do langer is (19-11) */
+nav.menu{gap:12px;padding:16px 14px}.menu .link{min-height:28px}.menuknop{min-height:32px}.menukop{margin-bottom:4px}
+.zijkant > .agenda{position:absolute;inset:0;display:flex;flex-direction:column}
+.agenda .agendalijst{flex:1;min-height:0;overflow-y:auto;padding:0 12px 10px;margin:0 !important}
+.agenda .agendalijst .takenlijst{gap:4px}
+.agenda .agendalijst .taak{min-height:26px;padding:3px 8px}
+.agenda .agendalijst .taak label{font-size:12.5px;line-height:1.25}
+@media (max-width:900px){.zijkant > .agenda{position:static}}
 </style>
 </head>
 <body>
@@ -779,11 +790,13 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
     <div class="zijkant">
       <section class="kaart nk agenda">
         <div class="kaartkop"><h2>{{ icoon('Agenda') }}<span>Agenda</span></h2></div>
+        <div class="agendalijst">
         {% for k in algemeen %}<div class="groep">Vandaag</div><div class="takenlijst">{% for t in k.taken %}{{ taakregel(t) }}{% endfor %}</div>{% endfor %}
         {% for g in agenda %}
         <div class="groep">{{ g.naam }}</div>
         <ul class="kal">{% for b in g.regels %}<li><span class="cal"><small>{{ b.wd }}</small><b>{{ b.dag }}</b></span><span>{{ b.titel }}</span></li>{% endfor %}</ul>
         {% else %}{% if not algemeen %}<p class="leeg">Niets gepland de komende twee weken.</p>{% endif %}{% endfor %}
+        </div>
       </section>
 
     </div>
