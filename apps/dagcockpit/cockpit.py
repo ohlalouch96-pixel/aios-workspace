@@ -346,6 +346,7 @@ ICONEN = {
     "LinkedIn": '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10v6M8 7.5v.01M12 16v-4a2 2 0 0 1 4 0v4M12 10v6"/>',
     "Webshops": '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
     "Ondernemers en makelaars": '<path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
+    "Accountants en administratiekantoren": '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M16 11v4"/>',
     "Instagram": '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/>',
     "Website": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
     "Content": '<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13 7l4 4"/>',
@@ -627,11 +628,14 @@ section.kaart.nk > .kaartkop h2{min-width:0}
 .kaart.content .kaartkop .pil.oranje,.kaart.content .kaartkop .pil.paars{background:rgba(255,255,255,.1);color:#E8E2D4}
 .agenda{gap:0}
 .groep{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--blauw);margin-top:8px;margin-bottom:5px}
-ul.kal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
-ul.kal li{display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.3}
-.cal{width:50px;height:21px;flex-shrink:0;border-radius:5px;overflow:hidden;border:1px solid var(--lijn);display:flex}
+ul.kal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+ul.kal li{display:flex;align-items:center;gap:10px;font-size:12.5px;line-height:1.25}
+.cal{width:50px;height:18px;flex-shrink:0;border-radius:5px;overflow:hidden;border:1px solid var(--lijn);display:flex}
 .cal small{width:22px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--goud);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .cal b{flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tekst)}
+/* Compacter bij 5+ tegels (19-11) */
+.takenrij.vol .takenlijst .taak label{font-size:12px;line-height:1.25}.takenrij.vol .takenlijst .taak{min-height:28px;padding:4px 8px}.takenrij.vol .takenlijst{gap:5px}
+.takenrij.vol section.kaart.nk > .kaartkop h2{font-size:13px;line-height:1.15}.takenrij.vol section.kaart.nk > .kaartkop{min-height:44px;padding:6px 10px}
 /* Kleurstelling A: navy & goud (gekozen 15-11) */
 .knop{background:var(--navy)}.knop:hover{background:var(--navy2)}
 .menukop,.merk span{color:var(--goud)}
@@ -662,7 +666,7 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 {% macro takenkaart(k) %}
       {% set actief = k.taken|rejectattr('uit')|list %}{% set af = actief|selectattr('klaar')|list|length %}
       <section class="kaart nk">
-        <div class="kaartkop"><h2>{{ icoon(k.chat) }}<span>{{ k.chat }}</span></h2>
+        <div class="kaartkop"><h2>{{ icoon(k.chat) }}<span>{{ k.chat|replace('administratiekantoren', 'administratie&shy;kantoren')|safe }}</span></h2>
           {% if not (actief and af == actief|length) %}<span class="teller">{{ af }}/{{ actief|length }}</span>{% endif %}
         </div>
         {% if actief and af == actief|length %}<div class="balk klaar"><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Klaar</div>
