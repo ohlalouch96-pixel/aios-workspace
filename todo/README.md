@@ -145,6 +145,16 @@ Fase 1 af: agent maakt carrousels, kaarten, tekst-reels, demo-reels, actualiteit
 
 ---
 
+## Gratis AI-scan op de website (lage prioriteit)
+
+**Status:** Geparkeerd sinds 2026-11-19, onderaan de lijst ("nu niet aan de orde")
+**Idee:** Een pagina op insightance.ai waar een ondernemer zijn website invult en een paar vragen beantwoordt. Hij krijgt dan drie concrete automatiseringskansen met een geschatte tijdwinst, en laat zijn e-mailadres achter voor het volledige rapport.
+**Waarom nog niet:** Er komen nog weinig ondernemers op de website. Tim heeft op Clearvana al zo'n scan, en die wordt weinig gebruikt.
+**Trigger om op te pakken:** Zodra de websitecijfers (GA4/Cloudflare) laten zien dat er structureel bezoek is.
+**Bron:** brainstorm 2026-11-19 (`plans/brainstorm-2026-11-19-out-of-the-box.md`).
+
+---
+
 ## ElevenLabs voice agent
 
 **Status:** Geparkeerd sinds 2026-11-02, geen trigger-datum
