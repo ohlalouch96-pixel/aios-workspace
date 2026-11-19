@@ -6,9 +6,22 @@
 
 ---
 
+## Jaarevaluatie 2026 en doelen 2027
+
+**Status:** Gepland op 2026-12-28 (staat in de dagcockpit), elk jaar aan het einde van het jaar herhalen
+**Idee van Oussama:** Elk jaar terugkijken op het hele jaar en vooruitkijken naar het nieuwe jaar.
+**Terugkijken:**
+- Wat is er allemaal gedaan, en hoe?
+- Per vlak: financieel, lichamelijk en andere onderwerpen.
+- Wat waren de doelen aan het begin van het jaar, en wat is er bereikt?
+**Vooruitkijken:** de doelen voor het nieuwe jaar, per onderwerp.
+**Daarna:** het moodboard (5 jaar vooruit) maken, zie hieronder.
+
+---
+
 ## Moodboard: 5 jaar vooruit
 
-**Status:** Geparkeerd sinds 2026-11-16 (hoeft niet af vóór 23-11, Oussama's 30e verjaardag)
+**Status:** Gepland op 2026-12-29, direct na de jaarevaluatie (staat in de dagcockpit). Eerder geparkeerd sinds 2026-11-16
 **Idee van Oussama:** Een moodboard voor op de desktop (bureaubladachtergrond) dat 5 jaar vooruit visualiseert waar hij wil staan.
 **Thema's (eerste opzet, mag uitgebreid worden):**
 - Fysiek
@@ -19,6 +32,14 @@
 1. Samen de thema's aanscherpen en per thema bepalen hoe het er over 5 jaar uitziet.
 2. Per thema beelden/woorden kiezen.
 3. Indeling bepalen en het moodboard maken als desktopachtergrond.
+
+---
+
+## Trainingsapp (trainingsschema's)
+
+**Status:** Geparkeerd sinds 2026-11-19 ("voor later")
+**Idee van Oussama:** Het trainingsschema staat nu in de notities op zijn telefoon. Een eigen app bouwen voor de trainingen, op dezelfde manier als de bucketlist-app die hij samen met zijn vriendin heeft gemaakt.
+**Wat er moet gebeuren:** Eerst bepalen wat de app moet kunnen (schema's per dag, gewichten en herhalingen bijhouden, voortgang zien). Daarna bouwen, met de bucketlist-app als voorbeeld.
 
 ---
 
