@@ -6,6 +6,21 @@
 
 ---
 
+## Workshop "AI veilig in de zorg"
+
+**Status:** Gepland op 2026-11-23 (maandag): brainstorm over de presentatievorm (staat in de dagcockpit). Tweede spoor naast de accountants-toets
+**Idee van Oussama:** Workshops geven over AI in de zorg: wat veilig is, wat wel en niet kan, handige tools en tips. Hij presenteert graag, staat graag voor een groep en wilde vóór AI al workshops geven over zijn eigen vak.
+**Onderscheid:** "Van een collega, praktisch, met echte voorbeelden." Hij werkt zelf nog in de zorg (SEH, OLVG), heeft warme ingangen en kan alles op zijn eigen afdeling testen.
+**Waarom nu:** 90% van de ziekenhuizen gebruikt generatieve AI, maar slechts 29% biedt een veilige eigen omgeving (AI Monitor Ziekenhuizen 2026). De AI-wet verplicht organisaties sinds februari 2025 tot AI-geletterdheid. Aanleiding: een tuchtzaak over een arts die patiëntgegevens in ChatGPT zette.
+**Stappen:**
+1. Maandag 23-11: brainstorm over de vorm. Ongeveer 30 minuten, maximaal 45. Leuk en verrassend ("dit overtrof mijn verwachtingen"), praktisch, met echte voorbeelden, actief meedoen, en een quiz of spelvorm (bijvoorbeeld aan het eind).
+2. December: presentatie en PowerPoint samen maken, in de eigen huisstijl.
+3. Januari 2027: eerste keer geven aan het eigen SEH-team (de teamleider gaat akkoord). Vooraf afstemmen met ICT/informatiebeveiliging over het OLVG-beleid.
+4. Daarna evalueren. Gaat het goed, dan een betaald aanbod maken voor andere zorginstellingen, fysiopraktijken en huisartsen (eerst de regels voor nevenwerkzaamheden checken).
+**Let op:** geen juridisch advies geven, wel verwijzen naar beleid en richtlijnen. De markt bestaat al (bijv. Digivaardig in de zorg), dus het onderscheid moet duidelijk zijn.
+
+---
+
 ## Jaarevaluatie 2026 en doelen 2027
 
 **Status:** Gepland op 2026-12-28 (staat in de dagcockpit), elk jaar aan het einde van het jaar herhalen
