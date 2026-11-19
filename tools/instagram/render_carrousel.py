@@ -54,6 +54,11 @@ KLEUREN = {
 
 
 def logo(bar, curve, size=40):
+    """Logo altijd in de vaste merkkleuren (besluit 19-11: herkenbaar blijven, nooit de accentkleur van de set).
+    'bar' bepaalt alleen of de ondergrond donker is (lichte tekstkleur) of licht; 'curve' wordt genegeerd."""
+    h = bar.lstrip("#")
+    licht = sum(int(h[i:i + 2], 16) for i in (0, 2, 4)) / 3 > 140 if len(h) == 6 else False
+    bar, curve = ("#FFFFFF", "#9DBBE3") if licht else ("#17345F", "#3D6AA8")
     return (f'<svg width="{size}" height="{size}" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="{bar}"/>'
             f'<path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="{curve}" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
             f'<circle cx="8" cy="36" r="2.8" fill="{curve}"/><circle cx="36" cy="8" r="2.8" fill="{curve}"/></svg>')
