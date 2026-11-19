@@ -75,7 +75,7 @@ PERSOON_OMGEKEERD_RE = re.compile(
 )
 IK_BEN_RE = re.compile(r"(?i:mijn naam is|ik ben|my name is)\s+" + NAAM)
 PLACEHOLDER_RE = re.compile(
-    r"john@doe|jouw@|your@|naam@|voorbeeld@|email@email|info@domein|123456|(\d)\1{5}", re.I
+    r"john@doe|jouw@|your@|naam@|voorbeeld@|email@email|info@domein|support@jouwweb|@bedrijf.nl|123456|(\d)\1{5}", re.I
 )
 EIGENAAR_RE = re.compile(r"eigena|directeur|directrice|oprichte|vennoot|managing partner", re.I)
 EMAIL_HASH_RE = re.compile(r"^[0-9a-f]{20,}@")  # versleuteld/anti-spam adres, onbruikbaar
