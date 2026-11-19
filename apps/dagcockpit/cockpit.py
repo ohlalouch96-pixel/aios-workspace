@@ -633,9 +633,6 @@ ul.kal li{display:flex;align-items:center;gap:10px;font-size:12.5px;line-height:
 .cal{width:50px;height:18px;flex-shrink:0;border-radius:5px;overflow:hidden;border:1px solid var(--lijn);display:flex}
 .cal small{width:22px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:var(--goud);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .cal b{flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tekst)}
-/* Compacter bij 5+ tegels (19-11) */
-.takenrij.vol .takenlijst .taak label{font-size:12px;line-height:1.25}.takenrij.vol .takenlijst .taak{min-height:28px;padding:4px 8px}.takenrij.vol .takenlijst{gap:5px}
-.takenrij.vol section.kaart.nk > .kaartkop h2{font-size:13px;line-height:1.15}.takenrij.vol section.kaart.nk > .kaartkop{min-height:44px;padding:6px 10px}
 /* Kleurstelling A: navy & goud (gekozen 15-11) */
 .knop{background:var(--navy)}.knop:hover{background:var(--navy2)}
 .menukop,.merk span{color:var(--goud)}
@@ -646,6 +643,9 @@ ul.kal li{display:flex;align-items:center;gap:10px;font-size:12.5px;line-height:
 h1{color:var(--tekst)}.quote{color:var(--blauw)}
 .doel{background:#0A1628;border:1px solid var(--goud);border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
 .doel small{color:var(--goud)}.doel svg circle{stroke:var(--goud)}.doel svg circle:last-child{fill:var(--goud)}
+/* Compacter bij 5+ tegels (19-11) */
+.takenrij.vol .takenlijst .taak label{font-size:12px;line-height:1.25}.takenrij.vol .takenlijst .taak{min-height:28px;padding:4px 8px}.takenrij.vol .takenlijst{gap:5px}
+.takenrij.vol section.kaart.nk > .kaartkop h2{font-size:13px;line-height:1.15}.takenrij.vol section.kaart.nk > .kaartkop{min-height:44px;padding:6px 10px}
 </style>
 </head>
 <body>
