@@ -1,170 +1,181 @@
-# Belscript — makelaars (verkoopadvies-opvolging)
+# Belscript — makelaars (onderzoeksgesprek)
 
-**Status:** Herzien 16-11-2026 — opener ingekort, "bel ik gelegen?"/"2 minuten van je tijd"
-geschrapt (werkte als verkoopsignaal, leverde vooral tegenvragen en excuses op). Daarvoor in de
-plaats: een korte "onderzoekje vanuit eigen bedrijf"-aankondiging met toestemmingsvraag, om
-voor te zijn dat iemand het gesprek als verkooppraatje herkent voordat hij weet waar het over
-gaat. Gebruikt dezelfde Chris Voss-technieken als het ondernemers-belscript (zie
-`outputs/belscript-ondernemers-outreach.md`): no-oriented questions, calibrated questions,
-labeling, accusation audit.
+**Status:** Herzien 19-11-2026 — volledig omgebouwd naar open onderzoeksgesprek (zelfde opzet als
+`outputs/belscript-accountants.html`), na deze week meerdere afwijzingen/scepsis op de vooraf
+aangenomen pijnpunt-hypothese ("verkoopadvies blijft liggen"). Eerst breed vragen wat tijd of
+ergernis kost, pas daarna gericht toetsen of opvolging van verkoopadvies het concrete pijnpunt is,
+in plaats van dat te veronderstellen. Zelfde scoreregel als accountants: 20 gesprekken, ≥50%
+herkent een probleem → doorgaan.
 
-**Specifiek pijnpunt (niet generiek):** verkoopadviezen die een makelaar aan een potentiële
-verkoper uitbrengt, blijven vaak in een stapel/map liggen en worden pas opgevolgd zodra de
-makelaar daar toevallig tijd voor heeft — geen systematische herinnering, geen vast moment.
-Dat kost gemiste verkopen. Dit script pitcht geen brede automatisering, maar precies dít.
-
-**Doel van het gesprek is niet verkopen.** Geen declaratieve pitch ("ik heb/bouw al iets dat
-X doet") — dat klinkt als een verkooppraatje en claimt een kant-en-klare oplossing die er nog
-niet is. In plaats daarvan blijft het gesprek vragend/nieuwsgierig, tot aan de afsluitvraag:
-of je een keer mag laten zien wat je voor hén zou kunnen maken, niet wat je al gebouwd hebt.
+**Puur informatief.** Je verkoopt niets en noemt geen oplossing tijdens de vragen. Je wilt weten of
+er bij makelaars een probleem is waar je iets mee kunt, niet bevestigen dat het probleem bestaat
+dat je zelf al had uitgedacht.
 
 ---
 
-## 0. Heb je de eigenaar?
+## Regel — wanneer gaan we door?
+
+- Minimaal 20 echte gesprekken met de eigenaar.
+- ≥50% herkent een probleem (bij 20 gesprekken: 10 of meer) → doorgaan met deze aanpak/niche.
+- <50% → niet verder met deze insteek.
+- Bellen alleen maandag t/m donderdag. "Niet bereikt" en gesprekken met iemand anders dan de
+  eigenaar tellen niet mee.
+
+---
+
+## 0. Spreek ik met de eigenaar?
 
 > "Goedemorgen, met Oussama [achternaam]. Spreek ik met [naam eigenaar]?"
 
 Staat de naam niet in de lijst: "Spreek ik met de eigenaar?" Is het de eigenaar, ga direct door
-naar de aankondiging (stap 1 hieronder) — niet apart vragen of het gelegen komt.
+naar stap 1.
 
 **Is het iemand anders:**
 
-> "Is [naam] er? Het gaat over een kort onderzoek onder makelaars in de regio."
+> "Ik doe een kort onderzoek onder makelaars in de regio en wil daar graag de eigenaar even over
+> spreken. Wanneer kan ik hem of haar het beste bereiken?"
 
-Is hij er niet: "Wanneer kan ik hem het best bellen?" en noteer dat. Niet je hele verhaal aan de
-receptie vertellen.
-
----
-
-## 1. Aankondiging + toestemming vragen
-
-> "Ik doe een klein onderzoekje vanuit mijn eigen bedrijf naar opvolging van verkoopadvies bij
-> makelaars. Mag ik u daar een paar vragen over stellen?"
-
-**Waarom dit ervoor:** zodra iemand ruikt dat het een verkooppraatje is voordat hij weet
-waarover het gaat, klapt hij dicht. "Eigen bedrijf" en "onderzoekje" zijn in dezelfde zin
-genoemd, zodat niemand nog hoeft te vragen "in het kader waarvan bel je" of "studeer je?". De
-toestemmingsvraag zelf is een lichte "ja"-commitment voordat de inhoud komt — geen aparte
-"bel ik gelegen?"-vraag nodig, die levert vaker een tegenvraag of excuus op dan dat hij iets
-toevoegt. Geeft iemand vanzelf aan dat het nu niet uitkomt: vraag wanneer het beter uitkomt,
-noteer dat, rond af.
+- Liefst zelf terugbellen: vraag dag, tijd en een direct nummer.
+- Biedt de ander aan dat de eigenaar terugbelt: geef je nummer, en vraag ook wanneer je zelf nog
+  eens kan proberen als je niets hoort.
+- Vertel je verhaal niet aan de receptie.
+- Noteer wie je sprak, het terugbelmoment en het directe nummer.
 
 ---
 
-## 2. De reden
+## 1. Aankondiging + toestemming
 
-> "Een makelaar vertelde me laatst dat verkoopadviezen soms blijven liggen tot hij er toevallig
-> tijd voor heeft. Hoe gaat dat bij jullie, blijft een advies weleens liggen voordat er een vast
-> moment is om terug te bellen?"
+> "Ik heb een eigen bedrijf in automatisering en doe onderzoek naar waar makelaars in hun
+> dagelijkse werk tegenaan lopen. Mag ik u daar een paar vragen over stellen? Het duurt maximaal
+> vijf minuten, en ik verkoop u vandaag niets."
 
-**Zeg niet "al":** dan vergelijken ze zich meteen met iets wat ze al hebben. Na de vraag:
-stoppen met praten, stilte laten vallen.
+"Onderzoek" komt eerst, zodat niemand meteen aan verkoop denkt. De vijf minuten noem je als
+belofte, niet als verzoek ("mag ik twee minuten van uw tijd?" werkte eerder juist als
+verkoopsignaal). Noem hier nog niets over verkoopadvies of opvolging, dat zou de antwoorden op
+vraag 1 sturen.
 
----
+**Komt het nu niet uit:**
 
-## 3. Doorvragen — het probleem concreet maken
-
-Reageer op wat hij noemt met een label, en maak het meetbaar met een calibrated question.
-Nog steeds geen pitch.
-
-> "Het klinkt alsof dat best vaker gebeurt dan je zou willen. Hoeveel van dit soort
-> verkoopadviezen liggen er nu ongeveer te wachten op een reactie?"
-
-Noemt hij een aantal of een periode: dat getal gebruik je zo meteen bij het afsluiten (stap 5).
-Noemt hij niets concreets: ga door met "En hoe lang duurt het dan meestal voor iemand erop
-terugkomt?"
+> "Geen probleem. Wanneer komt het beter uit? Dan bel ik u dan terug."
 
 ---
 
-## 4. Als het antwoord is "valt wel mee" / "doen we eigenlijk altijd op tijd"
+## 2. De vragen (breed → concreet)
 
-Niet meteen afhaken, één zachte calibrated question, dan pas accepteren of teruggaan naar
-stap 3 als er toch iets boven water komt.
+Na elke vraag: stoppen met praten, stilte laten vallen. Noem tijdens de vragen geen oplossing.
 
-> "Mooi dat dat bij jullie goed loopt. Wat gebeurt er dan met een verkoopadvies in een drukke
-> week, blijft het dan ook op schema?"
+### Vraag 1 — breed
 
-Blijft het echt "ja, altijd op tijd": ga naar de lichte afsluitvariant hieronder. Blijkt er
-toch frictie: terug naar de normale afsluiting in stap 5.
+> "Wat kost u, naast het echte vakwerk zoals bezichtigingen en waarderingen, de meeste tijd of
+> ergernis?"
 
-> "Goed om te horen. Zou het een slecht idee zijn als ik toch een keer kort langskom? Soms
-> zit er ergens anders in het proces nog tijdswinst te halen, dan kijken we daar samen naar."
+Laat vrij praten, ook als het een andere kant op gaat. Noemen ze uit zichzelf dat een
+verkoopadvies soms blijft liggen of dat ze er zelf achteraan moeten? Sterk signaal, noteer het
+letterlijk. Noemen ze iets anders: vraag één keer door ("hoe vaak speelt dat?") en ga dan naar
+vraag 2.
 
-*(geen claim over een bestaande oplossing, puur een uitnodiging om samen te kijken — ook hier
-een no-oriented question.)*
+### Vraag 2 — hoe het nu gaat
 
----
+> "Hoe gaat dat nu bij jullie met de opvolging van een verkoopadvies dat u aan een potentiële
+> verkoper heeft gegeven? Wie houdt dat in de gaten?"
 
-## 5. Afsluiten — bruggetje + datum
+Je hoort of er een vast moment is, of dat het bij iemand persoonlijk ligt (dan voelt die de pijn
+het meest).
 
-> "Dat is herkenbaar. Bij de makelaar die ik gesproken heb, speelde dit ook, en daar heb ik
-> een overzicht gemaakt dat verkoopadviezen bijhoudt en op een vast moment naar boven haalt,
-> zodat er niks meer bleef liggen. Zou het een slecht idee zijn als ik een keer kort langskom
-> en laat zien wat er mogelijk is voor jullie?"
+### Vraag 3 — concreet en recent
 
-Twijfelt hij: voeg toe —
+> "Als u denkt aan de afgelopen maand: bij hoeveel verkoopadviezen moest u zelf nog achter een
+> reactie aan?"
 
-> "Het is vrijblijvend, en ik vraag maximaal een kwartiertje van je tijd."
+Vraag naar iets wat al gebeurd is, niet naar "meestal". Blijft het vaag: "Was dat een enkele keer,
+of een groter deel?"
 
-Daarna meteen een dag prikken:
+### Vraag 4 — tijd en gevolgen
 
-> "Past dinsdag of donderdag beter?"
+> "Hoeveel tijd gaat daar ongeveer in zitten? En wat merkt u daarvan?"
 
-Prik een dag en tijd, zeg dat je een bevestiging stuurt.
+Open laten en wachten. Alleen als ze vastlopen: "Bijvoorbeeld drukte, of een verkoper die
+intussen bij een ander kantoor is beland?"
 
-*(Het bruggetje naar de makelaar die je al gesproken hebt is sociale bevestiging, en moet
-echt gebeurd zijn — alleen gebruiken als dat zo is, anders zit je vast aan een verhaal dat
-niet klopt zodra iemand doorvraagt. De concrete actie ("een overzicht gemaakt dat...") is
-specifiek genoeg om geloofwaardig te zijn, zonder het woord "automatiseren" te noemen — dat
-klinkt al snel als een pitch. Daarna dezelfde no-oriented question als voorheen: "nee, geen
-slecht idee" is voor hem lichter dan "ja, kom maar langs". De keuze tussen twee dagen
-(dinsdag/donderdag) i.p.v. "wanneer schikt het" voorkomt een vaag "ik bel je nog".)*
+### Vraag 5 — al geprobeerd?
 
----
+> "Heeft u daar al iets voor, zoals een vaste herinnering in uw CRM, bijvoorbeeld Realworks?
+> Werkt dat goed, of moet u het er toch zelf doorheen halen?"
 
-## Als hij vraagt wat jij doet
-
-> "Ik bouw systemen die de mail en het papierwerk van kleine bedrijven bijhouden, zodat er
-> niks blijft liggen."
-
-Daarna weer een vraag stellen, niet verder uitweiden.
+Werkt het goed: het probleem is kleiner. Gaat het nog met de hand of met taken die zelf aangemaakt
+moeten worden: een kans.
 
 ---
 
-## Veelvoorkomende reacties (aanvulling op stap 3-4)
+## 3. Afsluiten
 
-### "We hebben daar al een systeem voor (CRM/makelaarssoftware)"
+**Als er duidelijk een probleem is:**
 
-Nieuwsgierig blijven, niet meteen afhaken.
+> "Dank u wel, dit helpt me echt. Wat u vertelt hoor ik vaker, en ik ga uitzoeken hoe u daar tijd
+> op kunt besparen. Als ik merk dat dit echt een probleem is waar ik iets mee kan, zou ik u dan
+> over een aantal weken nog eens mogen terugbellen? Dan laat ik zien wat eruit gekomen is, en
+> beslist u zelf of het iets voor u is."
 
-> "Hoe bevalt dat, stuurt dat systeem zelf een herinnering als een verkoper na een week nog
-> niet heeft gereageerd, of moet iemand dat er handmatig doorheen halen?"
+Bij ja: altijd contactgegevens vragen en noteren.
 
-Blijkt het handmatig: terug naar stap 5. Blijkt het echt automatisch: vraag naar een ander
-knelpunt (bv. opvolging na een bezichtiging) voordat je afrondt.
+> "Fijn. Op welk nummer kan ik u dan het beste rechtstreeks bereiken? En wat is uw e-mailadres?"
 
-### "Stuur maar een mailtje"
+Vraag ook of een ochtend of middag handiger is, en zet alles in de sheet.
 
-Vaak een beleefde afwijzing. Probeer alsnog een concreet moment vast te leggen.
+**Als het geen probleem is:**
 
-> "Doe ik. Is het een slecht idee om gelijk een kort moment volgende week te prikken, voor het
-> geval de mail aanspreekt? Dan hoeft u er zelf niet achteraan."
+> "Helder, fijn om te horen dat het bij jullie goed loopt. Hartelijk dank voor uw tijd."
 
-### "Wat kost dat?"
-
-Goed teken, nog geen bedrag noemen.
-
-> "Dat hangt af van hoeveel er precies bij jullie blijft liggen. Laat me dat eerst zien in de
-> praktijk, dan maak ik daar een concreet voorstel op."
+Noemden ze bij vraag 1 iets anders interessants: vraag gerust of je later nog eens mag bellen.
 
 ---
 
-## Algemene gesprekstips
+## Als ze iets terugvragen
 
-- Laat stiltes vallen na elke vraag, vul niet zelf in.
-- Geen "waarom"-vragen, altijd "hoe" of "wat".
-- Houd je eigen stukken kort.
-- Eindig elk gesprek met een concrete volgende stap (afspraak met dag/tijd, bel-moment, of
-  expliciet "niet meer bellen"), nooit vaag.
-- Schrijf na elk gesprek twee regels op: wat er gezegd is (incl. het aantal/de periode uit
-  stap 3) en wat de vervolgstap is.
+**"Wat doet u precies?"**
+
+> "Ik help ondernemers om terugkerend handwerk, zoals mail en papierwerk, minder tijd te laten
+> kosten."
+
+Stel daarna gewoon de volgende vraag.
+
+**"Wat wilt u ons verkopen?"**
+
+> "Echt niets vandaag. Ik wil eerst goed begrijpen waar makelaars tegenaan lopen, voordat ik iets
+> bouw."
+
+**"Stuur maar een mailtje"**
+
+> "Dat kan. Het gaat alleen om een paar korte vragen, die zijn telefonisch sneller. Komt het later
+> deze week beter uit?"
+
+**"Wij hebben daar al Realworks (of ander CRM) voor"**
+
+> "Hoe bevalt dat? Komt een verkoopadvies daardoor ook automatisch weer bij u terug als er een
+> tijdje geen reactie is, of moet u dat toch zelf in de gaten houden?"
+
+Gaat het toch nog met de hand: signaal. Werkt het echt automatisch: nee.
+
+---
+
+## Na afloop — scoren en invullen
+
+| Resultaat | Wanneer | Telt als herkend? |
+|---|---|---|
+| Ja (sterk) | Noemt opvolging van verkoopadvies uit zichzelf bij vraag 1. | Ja |
+| Ja | Herkent het duidelijk bij vraag 3 en 4: regelmatig navragen en merkbaar tijdverlies. | Ja |
+| Twijfel | Speelt wel, maar vinden het weinig werk of het loopt al redelijk. | Nee |
+| Nee | Speelt niet, of al goed opgelost (bv. automatisch via CRM). | Nee |
+| Niet bereikt | Geen eigenaar gesproken. | Telt niet mee |
+
+Vul in de sheet (tabblad makelaars-tracker) de status, datum en notities in: wat ze zeiden
+(vooral vraag 1, letterlijk) en de vervolgstap. Of geef het door in de chat.
+
+---
+
+## Tips tijdens het gesprek
+
+- Laat stiltes vallen en vul ze niet zelf in.
+- Stel "hoe"- en "wat"-vragen, geen "waarom"-vragen.
+- Noem geen oplossing tijdens de vragen.
+- Houd je eigen stukken kort. Zij praten, jij luistert.
