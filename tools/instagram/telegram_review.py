@@ -27,6 +27,7 @@ import json
 import subprocess
 import sys
 import time
+from datetime import date, timedelta
 from pathlib import Path
 
 import requests
@@ -139,6 +140,45 @@ def stuur(bot, conn, post_id):
                                      {"text": "❌ Overslaan", "callback_data": f"skip:{post_id}"}]])
 
 
+POSTTIJD = "14:00"  # vaste tijd voor gewone posts (gekozen 20-11: na de lunch in NL, lunch in VK, ochtend in VS)
+REELS = {"tekst_reel", "demo_reel", "stem_video"}
+DAGEN = ["ma", "di", "wo", "do", "vr", "za", "zo"]
+MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
+
+
+def weekplanning(conn, vandaag=None):
+    """Voorstel voor de komende week (ma t/m vr, 1 post per dag om POSTTIJD): alle klaarstaande posts die nog niet
+    geplaatst zijn. Actualiteiten eerst (nieuws veroudert), nooit twee reels of twee beeldposts op opeenvolgende dagen
+    als het anders kan. Advertenties en story-ideeën hebben geen vaste dag en staan apart."""
+    vandaag = vandaag or date.today()
+    maandag = vandaag + timedelta(days=(7 - vandaag.weekday()) % 7 or 7)
+    rijen = conn.execute("SELECT id, soort, status, onderwerp FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
+                         "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'actualiteit') DESC, id").fetchall()
+    stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
+    over, vorige, regels = list(rijen), None, []
+    for d in range(5):
+        dag = maandag + timedelta(days=d)
+        kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
+        if not over:
+            regels.append(f"{kop} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
+            continue
+        groep = lambda r: r[1] in REELS  # noqa: E731
+        keuze = next((r for r in over if vorige is None or groep(r) != vorige), over[0])
+        over.remove(keuze)
+        vorige = groep(keuze)
+        pid, soort, st, onderwerp = keuze
+        label = SOORT_LABEL.get(soort, soort)
+        wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
+        regels.append(f"<b>{kop} · {POSTTIJD}</b> · #{pid} {html.escape(label)}{wacht}\n   {html.escape((onderwerp or '')[:70])}")
+    eind = maandag + timedelta(days=4)
+    tekst = f"📅 <b>Weekplanning {maandag.day} {MAANDEN[maandag.month - 1]} t/m {eind.day} {MAANDEN[eind.month - 1]}</b>\n\n" + "\n".join(regels)
+    if over:
+        tekst += "\n\n<b>Daarna:</b> " + ", ".join(f"#{r[0]}" for r in over) + " (volgende week)"
+    if stories:
+        tekst += "\n\n📸 <b>Story-ideeën</b> (elke dag mogelijk): " + ", ".join(f"#{s}" for s in stories)
+    return tekst + "\n\nDruk na het inplannen of plaatsen op 📤 Geplaatst, dan maakt de agent nieuwe concepten. Typ <b>planning</b> om dit opnieuw te zien."
+
+
 def status(conn, post_id, nieuw):
     conn.execute("UPDATE instagram_posts SET status = ?, bijgewerkt_op = datetime('now') WHERE id = ?", (nieuw, post_id))
     conn.commit()
@@ -211,6 +251,9 @@ def luister(bot, conn):
                 if msg.get("text", "").startswith("/start"):
                     bot.tekst("Hoi Oussama 👋 Hier komen je Instagram-concepten binnen ter goedkeuring.")
                     continue
+                if msg.get("text", "").strip().lower().lstrip("/") == "planning":
+                    bot.tekst(weekplanning(conn))
+                    continue
                 if wacht_op_feedback is None:
                     bot.tekst("Druk eerst op ✏️ Aanpassen bij het concept waar je feedback op hebt.")
                     continue
@@ -235,6 +278,7 @@ def main():
     s = sub.add_parser("stuur")
     s.add_argument("id", type=int)
     sub.add_parser("luister")
+    sub.add_parser("planning", help="weekplanning naar Telegram (zaterdag 09:00 via instagram-planning.timer)")
     args = ap.parse_args()
     bot, conn = Bot(), verbind()
     if args.cmd == "test":
@@ -245,6 +289,9 @@ def main():
         print(f"Concept {args.id} verstuurd.")
     elif args.cmd == "luister":
         luister(bot, conn)
+    elif args.cmd == "planning":
+        bot.tekst(weekplanning(conn))
+        print("Weekplanning verstuurd.")
 
 
 if __name__ == "__main__":

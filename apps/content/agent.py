@@ -571,7 +571,7 @@ def main():
         verwerk(conn)
     elif args.cmd == "dagelijks":
         open_ = conn.execute("SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort != 'advertentie'").fetchone()[0]
-        for _ in range(max(0, min(2, 3 - open_))):  # buffer van ±3 klaarstaande concepten, max 2 per dag
+        for _ in range(max(0, min(2, 5 - open_))):  # voorraad van 5 (een hele week voor de zaterdagplanning), max 2 per dag
             maak(conn)
     elif args.cmd == "kosten":
         print(f"Uitgegeven in {maand()}: ${uitgegeven(conn):.2f} van ${LIMIET:.0f}")
