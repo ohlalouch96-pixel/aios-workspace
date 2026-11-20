@@ -560,7 +560,8 @@ def main():
     m.add_argument("--soort", choices=list(MIX))
     m.add_argument("--zonder-stem", action="store_true", help="stem_video als gratis proef zonder Eric, niet naar Telegram")
     sub.add_parser("verwerk")
-    sub.add_parser("dagelijks")
+    d = sub.add_parser("dagelijks")
+    d.add_argument("--vol", action="store_true", help="vul aan tot een hele week (5) zonder dagmaximum; zaterdag 07:00 vóór de weekplanning")
     sub.add_parser("kosten")
     args = ap.parse_args()
     conn = wachtrij.verbind()
@@ -570,9 +571,17 @@ def main():
     elif args.cmd == "verwerk":
         verwerk(conn)
     elif args.cmd == "dagelijks":
-        open_ = conn.execute("SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort != 'advertentie'").fetchone()[0]
-        for _ in range(max(0, min(2, 5 - open_))):  # voorraad van 5 (een hele week voor de zaterdagplanning), max 2 per dag
-            maak(conn)
+        # voorraad van 5 posts die een dag in de weekplanning vullen (advertenties en story-ideeën tellen niet mee);
+        # normaal max 2 nieuwe per dag, zaterdag 07:00 (--vol) zoveel als nodig zodat de planning van 09:00 vol is
+        telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')"
+        nodig = max(0, 5 - conn.execute(telling).fetchone()[0])
+        for _ in range(nodig + 3 if args.vol else min(2, nodig)):  # +3 ruimte voor een story-idee of mislukte poging
+            if conn.execute(telling).fetchone()[0] >= 5:
+                break
+            try:
+                maak(conn)
+            except Exception as fout:  # één mislukt concept mag de rest niet tegenhouden
+                print("Concept mislukt:", fout)
     elif args.cmd == "kosten":
         print(f"Uitgegeven in {maand()}: ${uitgegeven(conn):.2f} van ${LIMIET:.0f}")
         for stap, n, usd in conn.execute("SELECT stap, COUNT(*), SUM(usd) FROM instagram_kosten WHERE maand = ? GROUP BY stap", (maand(),)):
