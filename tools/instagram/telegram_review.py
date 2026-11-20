@@ -208,10 +208,7 @@ def afvinken(bot, conn, vandaag=None):
                          "AND status IN ('concept', 'goedgekeurd') ORDER BY gepland_op, id", (vandaag,)).fetchall()
     for (pid,) in rijen:
         status(conn, pid, "geplaatst")
-    if rijen:
-        nrs = ", ".join(f"#{p}" for (p,) in rijen)
-        bot.tekst(f"📤 {nrs} automatisch op geplaatst gezet (geplande dag is voorbij). Klopt het niet? Laat het weten.")
-    return [p for (p,) in rijen]
+    return [p for (p,) in rijen]  # stil: geen bericht in Telegram (Oussama wil geen bevestiging, 20-11)
 
 
 def status(conn, post_id, nieuw):
