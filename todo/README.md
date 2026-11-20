@@ -60,7 +60,7 @@
 
 ## Warm netwerk raadplegen (familie en kennissen)
 
-**Status:** Geparkeerd sinds 2026-11-10 ("nu geen tijd, later oppakken")
+**Status:** Loopt sinds 2026-11-20, doorlopend (geen haast, groeit mee). Overzicht + berichtsjablonen per persoon in tabblad `warm-netwerk` van de outreach-sheet. Vader, broertje (visitekaartjes) en zwager al op de hoogte; vriendin raadplegen; tandarts bij afspraak begin 2027; Jelle, rijschool en Tim nog doen.
 **Idee van Oussama:** Eén persoonlijk WhatsApp-bericht schrijven en sturen naar neven, ooms, tantes en andere bekenden. Misschien kennen zij een ondernemer of webshop die geholpen kan worden, en zo komt er een potentiële klant uit.
 **Waarom:** Het doel is de eerste betalende klant, in welke branche ook. Een introductie via iemand die je kent is veel warmer dan een koud bericht.
 **Wat er moet gebeuren:**
