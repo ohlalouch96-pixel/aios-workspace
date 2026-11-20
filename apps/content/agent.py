@@ -279,6 +279,8 @@ def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None):
 
 # ---------- per soort ----------
 def bron_tekst(rij):
+    if rij[0] is None:  # een dienst van insightance.ai/automations in plaats van een LinkedIn-post
+        return f"Source: one of the automations Oussama builds (insightance.ai/automations). Explain what it does and why it matters for a business owner; no claims or numbers you cannot back up:\n\"\"\"\n{rij[3]}\n\"\"\""
     return f"Source ({rij[1]}), already fact-checked LinkedIn post:\n\"\"\"\n{rij[3]}\n\"\"\""
 
 
@@ -487,6 +489,10 @@ def maak(conn, soort=None, zonder_stem=False):
             laatste = [r[0] for r in conn.execute("SELECT b.pijler FROM instagram_posts p JOIN instagram_bron b ON b.id = p.bron_id ORDER BY p.id DESC LIMIT 1")]
             pijler = "myth_check" if laatste == ["automation_simplified"] else "automation_simplified"
         rij = wachtrij.volgende(conn, pijler) or wachtrij.volgende(conn, "automation_simplified")
+        dienst = None
+        if soort in ("carrousel", "tekst_reel") and random.random() < 0.35:  # af en toe een dienst van de website (besluit 20-11)
+            dienst = diensten.volgende(conn)
+            rij = (None, "automation_simplified", dienst["naam"], f"{dienst['naam']}: {dienst['wat']}")
         if soort == "kaart":
             diagram = "fork" if rij[1] == "the_fork" else random.choice([d for d in DIAGRAMMEN if d != "fork"])
             if diagram == "fork":
@@ -499,6 +505,8 @@ def maak(conn, soort=None, zonder_stem=False):
         else:
             maker = prompt_carrousel if soort == "carrousel" else prompt_tekst_reel
             spec = schrijf(conn, soort, maker(rij, aantal, tags), aantal, tags)
+            if dienst:
+                spec["dienst"] = dienst["naam"]
             kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
             render(soort, spec, kleur, map_)
             pid = opslaan(conn, soort, spec, kleur, map_, bron_id=rij[0])
@@ -574,9 +582,10 @@ def main():
         # voorraad van 5 posts die een dag in de weekplanning vullen (advertenties en story-ideeën tellen niet mee);
         # normaal max 2 nieuwe per dag, zaterdag 07:00 (--vol) zoveel als nodig zodat de planning van 09:00 vol is
         telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')"
-        nodig = max(0, 5 - conn.execute(telling).fetchone()[0])
+        doel = len(telegram_review.vrije_dagen()[1]) if args.vol else 5  # zaterdag: precies de vrije dagen van volgende week
+        nodig = max(0, doel - conn.execute(telling).fetchone()[0])
         for _ in range(nodig + 3 if args.vol else min(2, nodig)):  # +3 ruimte voor een story-idee of mislukte poging
-            if conn.execute(telling).fetchone()[0] >= 5:
+            if conn.execute(telling).fetchone()[0] >= doel:
                 break
             try:
                 maak(conn)

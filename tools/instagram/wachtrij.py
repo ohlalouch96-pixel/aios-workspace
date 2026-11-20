@@ -128,7 +128,8 @@ def recente_hashtags(conn, n=3):
 
 
 def volgende(conn, pijler=None):
-    """Eerstvolgend onderwerp dat nog niet gebruikt is. Zonder pijler: de carrousel-pijler die het langst niet aan de beurt was."""
+    """Een willekeurig onderwerp dat nog niet gebruikt is (geen vaste volgorde, besluit 20-11; de bron bevat zowel
+    geplaatste als nog geplande LinkedIn-posts). Zonder pijler: de carrousel-pijler die het langst niet aan de beurt was."""
     if pijler is None:
         laatst = {p: 0 for p in CARROUSEL_PIJLERS}
         for p, pid in conn.execute("SELECT b.pijler, MAX(p.id) FROM instagram_posts p JOIN instagram_bron b ON b.id = p.bron_id GROUP BY b.pijler"):
@@ -138,7 +139,7 @@ def volgende(conn, pijler=None):
     return conn.execute("""
         SELECT id, pijler, titel, tekst FROM instagram_bron
         WHERE pijler = ? AND id NOT IN (SELECT bron_id FROM instagram_posts WHERE bron_id IS NOT NULL AND status != 'overgeslagen')
-        ORDER BY id LIMIT 1""", (pijler,)).fetchone()
+        ORDER BY RANDOM() LIMIT 1""", (pijler,)).fetchone()
 
 
 def opslaan(conn, spec_pad):

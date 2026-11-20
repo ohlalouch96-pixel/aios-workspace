@@ -146,24 +146,43 @@ DAGEN = ["ma", "di", "wo", "do", "vr", "za", "zo"]
 MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
 
 
+VOL_BESTAND = WORKSPACE_ROOT / "data" / "instagram_planning_vol.json"  # ["2026-11-23", ...] dagen die Oussama zelf al gevuld heeft
+
+
+def vrije_dagen(vandaag=None):
+    """De werkdagen (ma-vr) van de komende week, zonder de dagen die al vol staan."""
+    vandaag = vandaag or date.today()
+    maandag = vandaag + timedelta(days=(7 - vandaag.weekday()) % 7 or 7)
+    try:
+        vol = set(json.loads(VOL_BESTAND.read_text(encoding="utf-8")))
+    except (OSError, ValueError):
+        vol = set()
+    return maandag, [maandag + timedelta(days=d) for d in range(5) if (maandag + timedelta(days=d)).isoformat() not in vol]
+
+
 def weekplanning(conn, vandaag=None):
     """Voorstel voor de komende week (ma t/m vr, 1 post per dag om POSTTIJD): alle klaarstaande posts die nog niet
     geplaatst zijn. Actualiteiten eerst (nieuws veroudert), nooit twee reels of twee beeldposts op opeenvolgende dagen
-    als het anders kan. Advertenties en story-ideeën hebben geen vaste dag en staan apart."""
-    vandaag = vandaag or date.today()
-    maandag = vandaag + timedelta(days=(7 - vandaag.weekday()) % 7 or 7)
+    als het anders kan. Advertenties en story-ideeën hebben geen vaste dag en staan apart. Een actualiteit komt op
+    woensdag (breekt de week mooi doormidden, besluit 20-11). Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
+    maandag, dagen = vrije_dagen(vandaag)
     rijen = conn.execute("SELECT id, soort, status, onderwerp FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
                          "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'actualiteit') DESC, id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
     over, vorige, regels = list(rijen), None, []
-    for d in range(5):
-        dag = maandag + timedelta(days=d)
+    woensdag = next((d for d in dagen if d.weekday() == 2), None)
+    actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
+    for dag in dagen:
         kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
         if not over:
             regels.append(f"{kop} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
             continue
         groep = lambda r: r[1] in REELS  # noqa: E731
-        keuze = next((r for r in over if vorige is None or groep(r) != vorige), over[0])
+        if dag == woensdag and actualiteit in over:
+            keuze = actualiteit
+        else:
+            kies_uit = [r for r in over if r is not actualiteit or woensdag is None] or over
+            keuze = next((r for r in kies_uit if vorige is None or groep(r) != vorige), kies_uit[0])
         over.remove(keuze)
         vorige = groep(keuze)
         pid, soort, st, onderwerp = keuze

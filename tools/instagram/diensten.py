@@ -15,6 +15,7 @@ Gebruik (CLI):
 
 import argparse
 import json
+import random
 import re
 import sys
 from pathlib import Path
@@ -47,7 +48,7 @@ def volgende(conn):
     vorige_cat = next((d["categorie"] for d in alle if laatst and d["naam"] == laatst[0]), None)
     minst = min(telling.get(d["naam"], 0) for d in alle)
     kandidaten = [d for d in alle if telling.get(d["naam"], 0) == minst and d["categorie"] != vorige_cat]
-    return (kandidaten or [d for d in alle if telling.get(d["naam"], 0) == minst])[0]
+    return random.choice(kandidaten or [d for d in alle if telling.get(d["naam"], 0) == minst])  # willekeurig, geen vaste volgorde
 
 
 def main():
