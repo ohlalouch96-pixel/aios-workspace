@@ -160,7 +160,7 @@ def vrije_dagen(vandaag=None):
     return maandag, [maandag + timedelta(days=d) for d in range(5) if (maandag + timedelta(days=d)).isoformat() not in vol]
 
 
-def weekplanning(conn, vandaag=None):
+def weekplanning(conn, vandaag=None, bewaar=True):
     """Voorstel voor de komende week (ma t/m vr, 1 post per dag om POSTTIJD): alle klaarstaande posts die nog niet
     geplaatst zijn. Actualiteiten eerst (nieuws veroudert), nooit twee reels of twee beeldposts op opeenvolgende dagen
     als het anders kan. Advertenties en story-ideeën hebben geen vaste dag en staan apart. Een actualiteit komt op
@@ -189,6 +189,8 @@ def weekplanning(conn, vandaag=None):
         label = SOORT_LABEL.get(soort, soort)
         wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
         regels.append(f"<b>{kop} · {POSTTIJD}</b> · #{pid} {html.escape(label)}{wacht}\n   {html.escape((onderwerp or '')[:70])}")
+        if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
+            conn.execute("UPDATE instagram_posts SET gepland_op = ? WHERE id = ?", (dag.isoformat(), pid))
     eind = maandag + timedelta(days=4)
     tekst = f"📅 <b>Weekplanning {maandag.day} {MAANDEN[maandag.month - 1]} t/m {eind.day} {MAANDEN[eind.month - 1]}</b>\n\n" + "\n".join(regels)
     if over:
@@ -196,6 +198,20 @@ def weekplanning(conn, vandaag=None):
     if stories:
         tekst += "\n\n📸 <b>Story-ideeën</b> (elke dag mogelijk): " + ", ".join(f"#{s}" for s in stories)
     return tekst + "\n\nDruk na het inplannen of plaatsen op 📤 Geplaatst, dan maakt de agent nieuwe concepten. Typ <b>planning</b> om dit opnieuw te zien."
+
+
+def afvinken(bot, conn, vandaag=None):
+    """Afspraak 20-11: is de geplande dag voorbij (draait elke dag om 20:00), dan geldt de post als geplaatst.
+    Klopt dat een keer niet, dan zegt Oussama het en wordt de status teruggezet."""
+    vandaag = (vandaag or date.today()).isoformat()
+    rijen = conn.execute("SELECT id FROM instagram_posts WHERE gepland_op IS NOT NULL AND gepland_op <= ? "
+                         "AND status IN ('concept', 'goedgekeurd') ORDER BY gepland_op, id", (vandaag,)).fetchall()
+    for (pid,) in rijen:
+        status(conn, pid, "geplaatst")
+    if rijen:
+        nrs = ", ".join(f"#{p}" for (p,) in rijen)
+        bot.tekst(f"📤 {nrs} automatisch op geplaatst gezet (geplande dag is voorbij). Klopt het niet? Laat het weten.")
+    return [p for (p,) in rijen]
 
 
 def status(conn, post_id, nieuw):
@@ -272,6 +288,7 @@ def luister(bot, conn):
                     continue
                 if msg.get("text", "").strip().lower().lstrip("/") == "planning":
                     bot.tekst(weekplanning(conn))
+                    conn.commit()
                     continue
                 if wacht_op_feedback is None:
                     bot.tekst("Druk eerst op ✏️ Aanpassen bij het concept waar je feedback op hebt.")
@@ -297,6 +314,7 @@ def main():
     s = sub.add_parser("stuur")
     s.add_argument("id", type=int)
     sub.add_parser("luister")
+    sub.add_parser("afvinken", help="posts waarvan de geplande dag voorbij is op geplaatst zetten (elke dag 20:00)")
     sub.add_parser("planning", help="weekplanning naar Telegram (zondag 09:00 via instagram-planning.timer)")
     args = ap.parse_args()
     bot, conn = Bot(), verbind()
@@ -310,6 +328,9 @@ def main():
         luister(bot, conn)
     elif args.cmd == "planning":
         bot.tekst(weekplanning(conn))
+        conn.commit()
+    elif args.cmd == "afvinken":
+        print("Op geplaatst gezet:", afvinken(bot, conn))
         print("Weekplanning verstuurd.")
 
 

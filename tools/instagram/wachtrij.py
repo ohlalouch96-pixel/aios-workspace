@@ -69,6 +69,8 @@ def verbind():
         conn.execute("ALTER TABLE instagram_posts ADD COLUMN muziek TEXT")
     if "dienst" not in kolommen:  # welke dienst van de website een video met stem had (tools/instagram/diensten.py)
         conn.execute("ALTER TABLE instagram_posts ADD COLUMN dienst TEXT")
+    if "gepland_op" not in kolommen:  # dag uit de weekplanning (JJJJ-MM-DD); na die dag 20:00 automatisch 'geplaatst'
+        conn.execute("ALTER TABLE instagram_posts ADD COLUMN gepland_op TEXT")
     return conn
 
 
