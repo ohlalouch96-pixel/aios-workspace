@@ -174,7 +174,7 @@ Draait op de Hetzner-server (zelfde als CommandOS), niet op de laptop:
 - `instagram-bot.service`: luistert naar de knoppen en feedback in Telegram (@Insightance_content_bot), altijd aan.
 - `instagram-agent.timer`: elke dag om 08:15 (Amsterdamse tijd, aan sinds 10-11-2026) `apps/content/agent.py dagelijks`: vult de voorraad klaarstaande posts aan tot 5 (sinds 20-11), max 2 nieuwe per dag.
 - `instagram-vullen.timer`: elke zaterdag 07:00 `agent.py dagelijks --vol`: vult aan tot een volle week (5 posts, zonder dagmaximum), zodat de planning van 09:00 geen lege dagen heeft.
-- `instagram-planning.timer`: elke zaterdag 09:00 een weekplanning in Telegram (ma-vr, 1 post per dag om 14:00, actualiteiten eerst). Ook op te vragen door "planning" te typen in de bot. Na plaatsen op 📤 Geplaatst drukken, anders blijft de voorraad vol.
+- `instagram-planning.timer`: elke zondag 09:00 een weekplanning in Telegram (zaterdag concepten maken en goedkeuren, zondag plannen; besluit 20-11) (ma-vr, 1 post per dag om 14:00, actualiteiten eerst). Ook op te vragen door "planning" te typen in de bot. Na plaatsen op 📤 Geplaatst drukken, anders blijft de voorraad vol.
 - De wachtrij (tabellen `instagram_*` in `data/data.db`) en de bestanden (`.tmp/instagram/`) staan sinds 09-11-2026 op de server; die zijn leidend. Draai de agent of de content-bot niet ook lokaal (twee luisteraars botsen in Telegram).
 - Fase 1: niets gaat automatisch online; Oussama keurt goed in Telegram en plaatst zelf.
 - Kosten: Claude max $20/mnd (melding bij $15); ElevenLabs Starter $6/mnd (sinds 10-11-2026, commerciële licentie) 30.000 tekens/mnd, ±150-450 per opname. Let op: `stem.tegoed()` geeft (plan, VERBRUIKT, limiet), niet wat er over is.

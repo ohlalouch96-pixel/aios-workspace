@@ -278,7 +278,7 @@ def main():
     s = sub.add_parser("stuur")
     s.add_argument("id", type=int)
     sub.add_parser("luister")
-    sub.add_parser("planning", help="weekplanning naar Telegram (zaterdag 09:00 via instagram-planning.timer)")
+    sub.add_parser("planning", help="weekplanning naar Telegram (zondag 09:00 via instagram-planning.timer)")
     args = ap.parse_args()
     bot, conn = Bot(), verbind()
     if args.cmd == "test":
