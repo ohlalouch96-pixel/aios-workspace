@@ -14,7 +14,7 @@ Inloggen bij de Belastingdienst: **Mijn Belastingdienst Zakelijk** (met DigiD of
 
 ## Kleineondernemersregeling (KOR)
 
-**Voornemen (22-11):** aanmelden voor de KOR, als rustregeling zolang de omzet laag is.
+**Besluit (22-11):** aanmelden voor de KOR (vóór 4 december, ingang 1 januari 2027), als rustregeling zolang de omzet laag is.
 
 - Met KOR reken je **geen btw** en doe je **geen btw-aangifte**. Je vraagt ook geen btw terug op je eigen kosten.
 - Grens: **€20.000 omzet per kalenderjaar**.
