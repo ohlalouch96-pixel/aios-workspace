@@ -287,8 +287,17 @@ def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None, hook=None)
 # Formules uit tools/instagram/hooks.json die bij "without the hype" passen en geen eigen cijfers/klanten vereisen.
 HOOK_FORMULES = {2, 3, 5, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24}
 HOOK_MIN = 60
-HOOKSTAP_AAN = False  # geparkeerd: eerst met Oussama bespreken (voorbeeld 21-11)
+HOOKSTAP_AAN = True  # aan sinds 22-11 (Oussama), voor alle soorten posts
 HOOK = obj({"opties": A(obj({"formule": S, "lijn": S, "scherm": S}))})
+# waar de hook in beeld komt, per soort (22-11: carrousel-cover in HOOFDLETTERS, reels/schetsen gewone zinsopbouw)
+HOOK_PLEK = {
+    "carrousel": "the cover slide title (it is shown in CAPITALS)",
+    "actualiteit": "the cover slide title (it is shown in CAPITALS)",
+    "tekst_reel": "the first text on screen, visible from frame 1",
+    "demo_reel": "the big text above the screen recording, visible from frame 1",
+    "stem_video": "the on-screen headline of the first beat: use ONLY words from 'lijn', in the same order (the voice says 'lijn')",
+    "kaart": "the title of the hand-drawn sketch",
+}
 
 
 def formules_tekst():
@@ -309,58 +318,100 @@ def recente_formules(conn, n=3):
     return uit
 
 
-def score_hook(optie, bron):
+def score_hook(optie, bron, soort):
     """Deterministische score (hookscore.py) plus onze eigen eisen; None = optie valt af."""
     lijn, scherm = optie["lijn"].strip(), optie["scherm"].replace("*", "").strip()
-    if "—" in lijn + scherm or len(scherm.split()) > 6:
+    if "—" in lijn + scherm or not scherm or len(scherm.split()) > 6:
         return None
     if any(g not in bron for g in re.findall(r"\d[\d,.]*", lijn + " " + scherm)):  # geen verzonnen cijfers
         return None
+    if soort == "stem_video":  # in beeld alleen woorden die Eric zegt, in dezelfde volgorde
+        it = iter(woorden(lijn))
+        if not all(w in it for w in woorden(scherm)):
+            return None
     res, totaal, oordeel, vlaggen = hookscore.run(lijn)
     zwakst = min(res, key=lambda c: res[c][0])
     return {**optie, "score": round(totaal), "oordeel": oordeel, "zwakst": f"{zwakst}: {res[zwakst][1]}", "vlaggen": vlaggen}
 
 
-def kies_hook(conn, rij, soort):
+DUIDELIJK = obj({"oordelen": A(obj({"nr": {"type": "integer"}, "begrijpelijk": {"type": "boolean"}, "reden": S}))})
+
+
+def duidelijk(conn, opties, soort):
+    """Duidelijkheidscheck (22-11, na 'Dear customer is the robot'): de score meet vorm, niet of iemand het snapt.
+    Een hook die een drukke ondernemer zonder context niet in één seconde begrijpt, valt af."""
+    if not opties:
+        return []
+    lijst = "\n".join(f"{i}. on screen: \"{o['scherm'].replace('*', '')}\" | first caption line: \"{o['lijn']}\"" for i, o in enumerate(opties))
+    oordeel = vraag(conn, None, f"hook-duidelijk:{soort}", (
+        "You are a busy small-business owner scrolling Instagram. You know nothing about the post or its source. For each hook below, judge: "
+        "do you understand within one second what it is about and why it matters to you, from the on-screen text ALONE (no caption, no context)? "
+        "Cryptic, clever-but-unclear, inside references or wordplay you have to decode = not understandable. Be strict. "
+        "Answer per number with begrijpelijk true/false and a short reason in Dutch.\n\n" + lijst), DUIDELIJK, max_tokens=2000)["oordelen"]
+    nee = {o["nr"]: o["reden"] for o in oordeel if not o["begrijpelijk"]}
+    for i, r in nee.items():
+        if 0 <= i < len(opties):
+            print(f"  Hook valt af (onduidelijk): {opties[i]['scherm']} ({r})")
+    return [o for i, o in enumerate(opties) if i not in nee]
+
+
+def kies_hook(conn, soort, bron):
+    """3 opties uit verschillende formules, scoren, de sterkste wint (min. HOOK_MIN, anders één nieuwe ronde)."""
     regels, lijst = formules_tekst()
     vermijd = recente_formules(conn)
-    plek = "cover slide" if soort in ("carrousel", "actualiteit") else "first beat (on screen from frame 1)"
     prompt = (f"Write 3 hook options for an Instagram {soort.replace('_', ' ')} about the source below. Use 3 DIFFERENT formulas from the list"
               f"{' and not these recently used ones: ' + ', '.join(vermijd) if vermijd else ''}.\n"
-              f"Per option: 'formule' = the formula name; 'lijn' = the first line of the caption, 5 to 12 words, what makes someone stop scrolling; "
-              f"'scherm' = the {plek}, max 6 words, the blunter on-screen version.\n"
+              f"Per option: 'formule' = the formula name; 'lijn' = the first line of the caption"
+              f"{' and the first sentence the voice says' if soort == 'stem_video' else ''}, 5 to 12 words, what makes someone stop scrolling; "
+              f"'scherm' = {HOOK_PLEK.get(soort, 'the first text on screen')}, max 6 words, the blunter on-screen version, in sentence case, "
+              "with *asterisks* around the one key word.\n"
               "Hard rules: true to the source, never hype or clickbait (the brand is 'AI automation without the hype'), no numbers unless they appear in the source, "
               "no greeting, no emoji, no hashtag, no em dash. Front-load the interesting word and speak to the viewer ('you') where it fits.\n"
-              f"Hook rules:\n{regels}\n\nFormulas:\n{lijst}\n\n{bron_tekst(rij)}")
+              f"Hook rules:\n{regels}\n\nFormulas:\n{lijst}\n\n{bron}")
     beste, gezien = None, []
-    for poging in range(2):
+    for _ in range(2):
         opties = vraag(conn, None, f"hook:{soort}", prompt, HOOK, max_tokens=4000)["opties"]
-        gescoord = [s for s in (score_hook(o, rij[3]) for o in opties) if s]
+        gescoord = duidelijk(conn, [s for s in (score_hook(o, bron, soort) for o in opties) if s], soort)
         gezien += gescoord
         beste = max(gezien, key=lambda s: s["score"], default=None)
         if beste and beste["score"] >= HOOK_MIN:
             break
-        prompt += ("\n\nThese options scored too low (weakest property in brackets), write 3 better ones:\n"
+        prompt += ("\n\nThese options scored too low or were unclear without context (weakest property in brackets), write 3 better, clearer ones:\n"
                    + "\n".join(f"- {s['score']} \"{s['lijn']}\" ({s['zwakst']})" for s in gescoord))
     if not beste:
         raise RuntimeError("Geen bruikbare hook gevonden")
+    if soort in ("carrousel", "actualiteit"):
+        beste["scherm"] = beste["scherm"].upper()  # A: carrousel-cover in hoofdletters (22-11)
     beste["alle"] = sorted(({"formule": s["formule"], "lijn": s["lijn"], "scherm": s["scherm"], "score": s["score"]} for s in gezien),
                            key=lambda s: -s["score"])
+    print(f"Hook ({beste['formule']}, {beste['score']}): {beste['lijn']} | {beste['scherm']}")
     return beste
 
 
 def hook_instructie(hook, soort):
-    plek = "the cover slide 'titel'" if soort in ("carrousel", "actualiteit") else "beat 1 'tekst'"
-    return (f"\nHOOK (already chosen and tested, use it exactly): {plek} = \"{hook['scherm']}\" (you may add *asterisks* around one key word); "
+    if not hook:
+        return ""
+    plek = {"carrousel": "the cover slide 'titel'", "actualiteit": "the cover slide 'titel'", "tekst_reel": "beat 1 'tekst'",
+            "kaart": "'titel'", "stem_video": "beat 1 'scene.kop'"}.get(soort)
+    eerst = f"{plek} = \"{hook['scherm']}\" (keep the *asterisks*); " if plek else ""
+    if soort == "stem_video":
+        eerst += f"beat 1 'zegt' starts with exactly this sentence: \"{hook['lijn']}\" (and 'uitspraak' the same words with tags); "
+    return (f"\nHOOK (already chosen and tested, use it exactly): {eerst}"
             f"the caption starts with exactly this sentence: \"{hook['lijn']}\". Deliver what the hook promises before the halfway point.")
 
 
 def controleer_hook(spec, hook, soort):
-    eerste = spec["slides"][0]["titel"] if soort in ("carrousel", "actualiteit") else spec["beats"][0]["tekst"]
+    def vlak(s):
+        return re.sub(r"\s+", " ", (s or "").replace("*", "")).strip().lower()
     fouten = []
-    if eerste.replace("*", "").strip().lower() != hook["scherm"].replace("*", "").strip().lower():
-        fouten.append(f"the first {'slide titel' if 'slides' in spec else 'beat tekst'} must be exactly \"{hook['scherm']}\"")
-    if not (spec.get("caption") or "").strip().startswith(hook["lijn"].strip()):
+    eerste = {"carrousel": lambda: spec["slides"][0]["titel"], "actualiteit": lambda: spec["slides"][0]["titel"],
+              "tekst_reel": lambda: spec["beats"][0]["tekst"], "kaart": lambda: spec["titel"],
+              "stem_video": lambda: spec["beats"][0]["scene"]["kop"]}.get(soort)
+    if eerste and vlak(eerste()) != vlak(hook["scherm"]):
+        fouten.append(f"the first on-screen text must be exactly \"{hook['scherm']}\"")
+    if soort == "stem_video" and not vlak(spec["beats"][0]["zegt"]).startswith(vlak(hook["lijn"])):
+        fouten.append(f"beat 1 'zegt' must start with exactly \"{hook['lijn']}\"")
+    if not vlak(spec.get("caption")).startswith(vlak(hook["lijn"])):
         fouten.append(f"the caption must start with exactly \"{hook['lijn']}\"")
     return fouten
 
@@ -476,7 +527,10 @@ def render(soort, spec, kleur, map_, extra=None):
         render_kaart.render(k, map_ / "kaart.png", extra)
     elif soort == "demo_reel":
         import opname_demo
-        opname_demo.render(json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8")), map_)  # zonder stem (10-11)
+        demo = json.loads((TOOLS / "demos" / f"{extra}.json").read_text(encoding="utf-8"))
+        if (spec or {}).get("hook"):  # gekozen hook vervangt de vaste openingstekst van de demo (22-11)
+            demo["hook"] = spec["hook"]["scherm"]
+        opname_demo.render(demo, map_)  # zonder stem (10-11)
     elif soort == "stem_video":
         import render_stem_video
         return render_stem_video.render(video_spec(spec, kleur), map_, zonder_stem=bool(extra))
@@ -515,7 +569,8 @@ def maak_stem_video(conn, aantal, tags, zonder_stem=False):
         raise RuntimeError("Te weinig ElevenLabs-tegoed voor een video met stem")
     dienst = diensten.volgende(conn)
     print(f"Dienst: {dienst['naam']}")
-    spec = schrijf(conn, "stem_video", prompt_stem_video(dienst, aantal, tags), aantal, tags)
+    hook = kies_hook(conn, "stem_video", f"Source: a service Oussama builds. {dienst['naam']}: {dienst['wat']}") if HOOKSTAP_AAN else None
+    spec = schrijf(conn, "stem_video", prompt_stem_video(dienst, aantal, tags) + hook_instructie(hook, "stem_video"), aantal, tags, hook=hook)
     spec["dienst"], spec["muziek"] = dienst["naam"], STEM_MUZIEK
     kleur, map_ = wachtrij.kies_kleur(conn, video=True), nieuwe_map(("proef-" if zonder_stem else "") + dienst["naam"])
     render("stem_video", spec, kleur, map_, zonder_stem)
@@ -555,7 +610,8 @@ def maak(conn, soort=None, zonder_stem=False):
                   f"Verified facts (use ONLY these, add nothing else, not even 'examples' the company gives unless they are listed here): {c['kern']} (date: {c['datum']}).\nSlides as for a normal carousel: cover, tekst slides, optional cijfer slide only with a "
                   f"verified number (bron = publication name), slot slide with a ⚡ call to action. 'serie' must be 'AI NEWS'. Include one hashtag about this specific news.\n"
                   f"{taalregels(aantal, tags)}")
-        spec = schrijf(conn, "carrousel", prompt, aantal, tags)
+        hook = kies_hook(conn, "actualiteit", f"Source: verified AI news (use only these facts): {c['kern']} (date: {c['datum']})") if HOOKSTAP_AAN else None
+        spec = schrijf(conn, "carrousel", prompt + hook_instructie(hook, "actualiteit"), aantal, tags, hook=hook)
         kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
         (map_ / "onderzoek.json").write_text(json.dumps(c, ensure_ascii=False, indent=2), encoding="utf-8")  # herleidbaar: waar komt elke bewering vandaan
         render("actualiteit", spec, kleur, map_)
@@ -567,7 +623,9 @@ def maak(conn, soort=None, zonder_stem=False):
         recent = wachtrij.recente_kleuren(conn, 1)
         opties = [d for d in DEMOS if not (recent and recent[0] in wachtrij.BLAUWIG and wachtrij.echte_kleur(d) in wachtrij.BLAUWIG)]
         demo = laatst_gebruikt(conn, "demo_reel", opties or DEMOS)  # demo's hebben een vaste kleur: geen blauw na blauw
-        spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags), aantal, tags)
+        hook = kies_hook(conn, "demo_reel", "Source (a screen-recording demo, fictional business, real capability):\n"
+                         + (TOOLS / "demos" / f"{demo}.json").read_text(encoding="utf-8")) if HOOKSTAP_AAN else None
+        spec = schrijf(conn, "demo_reel", prompt_demo(demo, aantal, tags) + hook_instructie(hook, "demo_reel"), aantal, tags, hook=hook)
         map_ = nieuwe_map(demo)
         render("demo_reel", spec, None, map_, demo)
         pid = opslaan(conn, "demo_reel", spec, demo, map_)
@@ -586,17 +644,16 @@ def maak(conn, soort=None, zonder_stem=False):
             diagram = "fork" if rij[1] == "the_fork" else random.choice([d for d in DIAGRAMMEN if d != "fork"])
             if diagram == "fork":
                 aantal, tags = 0, []
-            spec = schrijf(conn, "kaart", prompt_kaart(rij, diagram, aantal, tags), aantal, tags)
+            hook = kies_hook(conn, "kaart", bron_tekst(rij)) if HOOKSTAP_AAN else None
+            spec = schrijf(conn, "kaart", prompt_kaart(rij, diagram, aantal, tags) + hook_instructie(hook, "kaart"), aantal, tags, hook=hook)
             scene = laatst_gebruikt(conn, "kaart", SCENES)
             map_ = nieuwe_map(spec["onderwerp"])
             render("kaart", spec, None, map_, scene)
             pid = opslaan(conn, "kaart", spec, scene, map_, bron_id=rij[0])
         else:
             maker = prompt_carrousel if soort == "carrousel" else prompt_tekst_reel
-            hook = kies_hook(conn, rij, soort) if HOOKSTAP_AAN else None
-            if hook:
-                print(f"Hook ({hook['formule']}, {hook['score']}): {hook['lijn']} | {hook['scherm']}")
-            spec = schrijf(conn, soort, maker(rij, aantal, tags) + (hook_instructie(hook, soort) if hook else ""), aantal, tags, hook=hook)
+            hook = kies_hook(conn, soort, bron_tekst(rij)) if HOOKSTAP_AAN else None
+            spec = schrijf(conn, soort, maker(rij, aantal, tags) + hook_instructie(hook, soort), aantal, tags, hook=hook)
             if dienst:
                 spec["dienst"] = dienst["naam"]
             kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
@@ -626,6 +683,8 @@ def verwerk(conn):
             conn.execute("UPDATE instagram_feedback SET verwerkt = 1 WHERE id = ?", (fid,))
             conn.commit()
             continue
+        if oud.get("hook"):
+            spec["hook"] = oud["hook"]  # formule onthouden voor de vergelijking met de echte views
         if soort == "stem_video":
             spec["dienst"], spec["muziek"] = oud.get("dienst"), STEM_MUZIEK
             if [b["uitspraak"] for b in spec["beats"]] != [b["uitspraak"] for b in oud["beats"]] and stem_tegoed() < STEM_MIN_TEGOED:

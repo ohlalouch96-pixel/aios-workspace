@@ -44,6 +44,26 @@ I build AI solutions for the problems that slow your business down. Curious what
 
 Video's met stem: het eindscherm toont "Want to know more?" (netjes geschreven), Eric zegt "You wanna know more? Send me a DM." (spreektaal mag in de stem, niet in beeld; 22-11).
 
+## Hookstap (sinds 22-11, alle soorten posts)
+
+Bron: de open-source Instagram Agent Skill (MIT, Jake Schincariol). `tools/instagram/hookscore.py` en `hooks.json` zijn daaruit overgenomen. Werking in `apps/content/agent.py` (`kies_hook`):
+1. Claude bedenkt 3 hooks, elk met een andere formule uit `hooks.json`. Alleen de 17 formules die bij "without the hype" passen (`HOOK_FORMULES`), en niet de 3 die het laatst gebruikt zijn. Per hook een `lijn` (eerste zin van de caption; bij een video met Eric ook zijn eerste zin) en een `scherm` (max 6 woorden, in beeld vanaf frame 1).
+2. Er vallen hooks af met een cijfer dat niet in de bron staat, met meer dan 6 woorden in beeld, of met een gedachtestreepje.
+3. **Duidelijkheidscheck** (`duidelijk`): Claude leest de hook als een drukke ondernemer zonder context. Snapt die de tekst in beeld niet in één seconde, dan valt hij af. Aanleiding: "Dear customer is the robot" scoorde 80, maar niemand begreep hem. De score meet vorm, niet begrip.
+4. `hookscore.py` geeft elke hook een score van 0 tot 100. De hoogste wint. Onder de 60 komt er één nieuwe ronde.
+5. Hoofdletters: carrousel-covers in HOOFDLETTERS (A). Reels en schetsen in gewone zinsopbouw (B).
+6. Waar de hook komt:
+   - carrousel: de cover;
+   - tekst-reel: beat 1;
+   - demo-reel: vervangt de vaste openingstekst van de demo;
+   - video met Eric: zijn eerste zin plus de kop in beeld;
+   - schets: de titel;
+   - alle soorten: het begin van de caption.
+7. De hook (formule en score) staat in `spec.json` en in Telegram ("🎣 Hook: 80/100 · formule"). Later vergelijken met de echte views uit Insights: welke formules werken voor dit publiek.
+8. Uitzetten: `HOOKSTAP_AAN = False`. Kosten: ±$0,10 extra per concept.
+
+Oussama checkt de hook daarna zelf in Telegram. Bij een proef altijd vooraf zeggen wat het is, welk onderwerp en of er geluid bij hoort.
+
 ## Actualiteiten: één controle (sinds 06-11, was dubbel; dubbel kostte te veel tijd)
 
 1. Zoek nieuws dat relevant is voor ondernemers (niet puur voor techneuten), alleen uit officiële bronnen of gevestigde nieuwssites, geen blogs of samenvattingen.

@@ -148,6 +148,7 @@ These are how you know your AIOS is working:
 │       ├── video/typer.html # Scènes voor de stemvideo's (telefoon, chat, agenda, inbox, document, ...)
 │       ├── stem.py          # ElevenLabs-stem Eric (cache in .tmp/instagram/stem_cache)
 │       ├── diensten.py      # Onderwerpen stemvideo's = de 28 diensten op insightance.ai/automations
+│       ├── hookscore.py + hooks.json  # Hookstap (22-11): 26 hookformules + score 0-100 (MIT, Instagram Agent Skill)
 │       ├── demos/           # Fictieve demo-apps voor schermopname-reels
 │       └── telegram_review.py  # Content-bot: concepten naar Telegram, knoppen en feedback
 ├── apps/                    # Standing lokale apps (draaien als los proces, geen collect_*-script)
