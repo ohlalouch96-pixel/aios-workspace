@@ -27,21 +27,22 @@ Oprichtersdagboek (The Other Shift) alleen in stories. Actualiteiten altijd vanu
 ## Tekst (caption en slides)
 
 1. **Eerste zin = scroll-stopper.** Dat is bij elke post het hoofddoel. Schurend, verrassend of herkenbaar. Test: zou deze zin alleen iemand laten stoppen? Zo niet, herschrijven.
-2. **Compact, korter dan LinkedIn.** Hook + maximaal 2 korte alinea's + afsluiter. Geen lappen tekst.
+2. **Compact, korter dan LinkedIn.** Hook + maximaal 2 korte alinea's (samen max ±35 woorden, zo kort mogelijk; 22-11) + afsluiter. Geen lappen tekst.
 3. **Geen AI-toon** (writing-style skill): geen gedachtestreepjes, geen "Not X. Not Y."-reeksen, geen woorden als simply/seamless/leverage/robust, geen "That's it."-afsluiters, zinslengte afwisselen, niet elke zin op een eigen regel.
 4. **Slides:** één gedachte per slide, kort. Cover = de hook. Laatste slide = afsluiter of zachte uitnodiging ("Follow for AI without the hype ⚡" of een variant, niet elke keer dezelfde).
-5. **Hashtags: 3 tot 6, steeds anders.** Ook het aantal wisselt: nooit twee posts achter elkaar met hetzelfde aantal (dus niet steeds 3). Passend bij het onderwerp, geen vaste set, nooit dezelfde hashtag als in de vorige post (`wachtrij.py hashtags` geeft de recente). Actualiteit: een hashtag over dat nieuws (tool, bedrijf, onderwerp). The Fork: geen hashtags.
+5. **Hashtags: 3 tot 5, steeds anders** (Instagram staat sinds dec 2025 max 5 toe). Ook het aantal wisselt: nooit twee posts achter elkaar met hetzelfde aantal (dus niet steeds 3). Passend bij het onderwerp, geen vaste set, nooit dezelfde hashtag als in de vorige post (`wachtrij.py hashtags` geeft de recente). Actualiteit: een hashtag over dat nieuws (tool, bedrijf, onderwerp). The Fork: geen hashtags.
 7. **Vaste afsluiter** onder de vraag, boven de hashtags, op bijna elke post (niet bij The Fork). Volgorde: tekst → vraag → afsluiter → hashtags. Tekst: zie "Afsluiter" hieronder.
 6. Bron-teksten van LinkedIn zijn het vertrekpunt, niet de eindtekst: herschrijven voor een informeler, scrollend publiek.
 
 ## Afsluiter
 
-Geïnspireerd op een LinkedIn-voorbeeld dat Oussama aandroeg (wat hij bouwt + aanbod van een gesprek). Tekst (vastgesteld 04-11): geen witregel tussen de twee zinnen, geen "Curious?" en geen belgesprek noemen (Oussama peilt eerst via DM of iemand echt interesse heeft), altijd eindigen op ⚡ als herkenningsteken (zelfde als in de bio).
+Wat hij bouwt + uitnodiging voor een DM, op één regel. Sinds 22-11 korter (de oude van 04-11 was twee lange zinnen en maakte de caption een lap tekst). Geen belgesprek noemen (Oussama peilt eerst via DM of iemand echt interesse heeft), altijd eindigen op ⚡ als herkenningsteken (zelfde als in de bio).
 
 ```
-I build AI systems for business owners, so you and your team can focus on the work that actually matters.
-Send me a DM and I'll show you what's possible for your business ⚡
+I build AI solutions for the problems that slow your business down. Curious what's possible for yours? Send me a DM ⚡
 ```
+
+Video's met stem: het eindscherm toont "Want to know more?" (netjes geschreven), Eric zegt "You wanna know more? Send me a DM." (spreektaal mag in de stem, niet in beeld; 22-11).
 
 ## Actualiteiten: één controle (sinds 06-11, was dubbel; dubbel kostte te veel tijd)
 

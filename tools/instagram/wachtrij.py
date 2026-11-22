@@ -74,8 +74,9 @@ def verbind():
     return conn
 
 
-AFSLUITER = ("I build AI systems for business owners, so you and your team can focus on the work that actually matters.\n"
-             "Send me a DM and I'll show you what's possible for your business ⚡")
+AFSLUITER = "I build AI solutions for the problems that slow your business down. Curious what's possible for yours? Send me a DM ⚡"  # korter, gekozen 22-11
+OUDE_AFSLUITER = ("I build AI systems for business owners, so you and your team can focus on the work that actually matters.\n"
+                  "Send me a DM and I'll show you what's possible for your business ⚡")
 
 
 def volledige_caption(caption, hashtags, soort):
@@ -84,7 +85,7 @@ def volledige_caption(caption, hashtags, soort):
         return caption.strip()
     if soort in ("advertentie", "openbaar"):  # advertentie eindigt op "Follow for more", bouwen-in-het-openbaar op een vraag: geen DM-afsluiter
         return f"{caption.strip()}\n\n{' '.join(hashtags)}".strip()
-    caption = caption.replace(AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
+    caption = caption.replace(AFSLUITER, "").replace(OUDE_AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
     return f"{caption}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
 
 

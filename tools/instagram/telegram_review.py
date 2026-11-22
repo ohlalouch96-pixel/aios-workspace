@@ -131,6 +131,12 @@ def stuur(bot, conn, post_id):
     caption = volledige_caption(p["caption"] or "", p["hashtags"], p["soort"])
     delen = [f"<b>Concept #{p['id']} · {SOORT_LABEL.get(p['soort'], p['soort'])}</b>\n{html.escape(p['onderwerp'])}",
              f"<b>Caption</b>\n<pre>{html.escape(caption)}</pre>"]
+    try:  # hook-score (sinds 21-11): welke formule won en met welk cijfer
+        h = json.loads((Path(p["map"]) / "spec.json").read_text(encoding="utf-8")).get("hook")
+    except (OSError, ValueError, TypeError):
+        h = None
+    if h:
+        delen.append(f"🎣 <b>Hook:</b> {h['score']}/100 · {html.escape(h['formule'])}")
     if p["muziek"]:
         delen.append(f"🎵 <b>Muziek:</b> {html.escape(p['muziek'])}")
     if p["bronnen"]:

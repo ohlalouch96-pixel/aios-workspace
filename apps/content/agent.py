@@ -40,6 +40,7 @@ import wachtrij  # noqa: E402
 import telegram_review  # noqa: E402
 import diensten  # noqa: E402
 import stem  # noqa: E402
+import hookscore  # noqa: E402  (MIT, uit instagram-agent-skill; scoort de eerste regel)
 
 MODEL = "claude-opus-5-5"
 EFFORT = "medium"
@@ -194,13 +195,13 @@ def kies_soort(conn):
 def hashtag_eisen(conn):
     recent = wachtrij.recente_hashtags(conn, 1)
     vorige_tags = recent[0] if recent else []
-    aantal = random.choice([n for n in range(3, 7) if n != len(vorige_tags)])
+    aantal = random.choice([n for n in range(3, 6) if n != len(vorige_tags)])  # Instagram: max 5 hashtags (sinds dec 2025)
     return aantal, vorige_tags
 
 
 def taalregels(aantal, verboden_tags):
     return (f"Hashtags: exactly {aantal}, relevant to this specific post, varied (not a fixed set). Do NOT use any of these from the previous post: "
-            f"{', '.join(verboden_tags) or 'none'}. Caption: first sentence must stop the scroll (allowed to challenge, never untrue); then at most two short paragraphs (together max ~55 words) "
+            f"{', '.join(verboden_tags) or 'none'}. Caption: first sentence must stop the scroll (allowed to challenge, never untrue); then at most two short paragraphs (together max ~35 words; as short as possible, Oussama wants no walls of text) "
             "and one closing question or nudge. Keep it compact, no wall of text. Every sentence must follow logically from the one before: never refer to 'they', 'them' or a group that was not clearly introduced first. This also applies to slides and reel beats, read in order. Do NOT write the fixed sign-off line or the hashtags inside the caption; they are added automatically. "
             "Music: one short line with the type and mood of background music that fits this content and colour, e.g. 'calm lo-fi beat, search: lofi chill'; empty string for images.")
 
@@ -249,7 +250,7 @@ def controleer_stem(spec):
         if re.search(r"\b(at night|in the (morning|evening|afternoon)|o'clock)\b", b["zegt"].lower()) and re.search(r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b", b["zegt"].lower()):
             fouten.append(f"beat {n}: say times the way people say them, e.g. 'It's 9 PM', never 'nine at night'")
         kop = woorden(sc["kop"].replace("*", ""))
-        it = iter(zegt)
+        it = iter(woorden(b["zegt"].lower().replace("wanna", "want to")))  # in beeld netjes 'Want to', Eric zegt 'wanna' (22-11)
         if kop and not all(w in it for w in kop):
             fouten.append(f"beat {n}: every word of 'kop' must also be spoken in 'zegt', in the same order (on screen = what Eric says)")
         for w in sc["op"]:
@@ -265,16 +266,103 @@ def controleer_stem(spec):
     return fouten
 
 
-def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None):
+def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None, hook=None):
+    def check(spec):
+        return (controleer(spec, aantal, verboden_tags) + (controleer_stem(spec) if soort == "stem_video" else [])
+                + (controleer_hook(spec, hook, soort) if hook else []))
     spec = vraag(conn, post_id, f"schrijven:{soort}", prompt, SCHEMA[soort])
-    fouten = controleer(spec, aantal, verboden_tags) + (controleer_stem(spec) if soort == "stem_video" else [])
+    fouten = check(spec)
     if fouten:  # één herkansing met de concrete fouten erbij
         spec = vraag(conn, post_id, f"herschrijven:{soort}", prompt + "\n\nYour previous attempt had these problems, fix them:\n- " + "\n- ".join(fouten)
                      + "\n\nPrevious attempt:\n" + json.dumps(spec, ensure_ascii=False), SCHEMA[soort])
-        fouten = controleer(spec, aantal, verboden_tags) + (controleer_stem(spec) if soort == "stem_video" else [])
+        fouten = check(spec)
+    if hook:
+        spec["hook"] = hook
         if fouten:
             raise RuntimeError("Concept haalt de controle niet: " + "; ".join(fouten))
     return spec
+
+
+# ---------- hook (besluit 21-11: 3 opties uit vaste formules, scoren, de sterkste wint) ----------
+# Formules uit tools/instagram/hooks.json die bij "without the hype" passen en geen eigen cijfers/klanten vereisen.
+HOOK_FORMULES = {2, 3, 5, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24}
+HOOK_MIN = 60
+HOOKSTAP_AAN = False  # geparkeerd: eerst met Oussama bespreken (voorbeeld 21-11)
+HOOK = obj({"opties": A(obj({"formule": S, "lijn": S, "scherm": S}))})
+
+
+def formules_tekst():
+    d = json.loads((TOOLS / "hooks.json").read_text(encoding="utf-8"))
+    regels = "\n".join(f"- {r}" for r in d["rules"])
+    lijst = "\n".join(f"- {h['name']}: {h['template']} | e.g. \"{h['example']}\" (on screen: {h['on_screen']}) | trap: {h['trap']}"
+                      for h in d["hooks"] if h["id"] in HOOK_FORMULES)
+    return regels, lijst
+
+
+def recente_formules(conn, n=3):
+    uit = []
+    for (m,) in conn.execute("SELECT map FROM instagram_posts WHERE map IS NOT NULL ORDER BY id DESC LIMIT ?", (n,)):
+        try:
+            uit.append(json.loads((Path(m) / "spec.json").read_text(encoding="utf-8"))["hook"]["formule"])
+        except (OSError, ValueError, KeyError, TypeError):
+            pass
+    return uit
+
+
+def score_hook(optie, bron):
+    """Deterministische score (hookscore.py) plus onze eigen eisen; None = optie valt af."""
+    lijn, scherm = optie["lijn"].strip(), optie["scherm"].replace("*", "").strip()
+    if "—" in lijn + scherm or len(scherm.split()) > 6:
+        return None
+    if any(g not in bron for g in re.findall(r"\d[\d,.]*", lijn + " " + scherm)):  # geen verzonnen cijfers
+        return None
+    res, totaal, oordeel, vlaggen = hookscore.run(lijn)
+    zwakst = min(res, key=lambda c: res[c][0])
+    return {**optie, "score": round(totaal), "oordeel": oordeel, "zwakst": f"{zwakst}: {res[zwakst][1]}", "vlaggen": vlaggen}
+
+
+def kies_hook(conn, rij, soort):
+    regels, lijst = formules_tekst()
+    vermijd = recente_formules(conn)
+    plek = "cover slide" if soort in ("carrousel", "actualiteit") else "first beat (on screen from frame 1)"
+    prompt = (f"Write 3 hook options for an Instagram {soort.replace('_', ' ')} about the source below. Use 3 DIFFERENT formulas from the list"
+              f"{' and not these recently used ones: ' + ', '.join(vermijd) if vermijd else ''}.\n"
+              f"Per option: 'formule' = the formula name; 'lijn' = the first line of the caption, 5 to 12 words, what makes someone stop scrolling; "
+              f"'scherm' = the {plek}, max 6 words, the blunter on-screen version.\n"
+              "Hard rules: true to the source, never hype or clickbait (the brand is 'AI automation without the hype'), no numbers unless they appear in the source, "
+              "no greeting, no emoji, no hashtag, no em dash. Front-load the interesting word and speak to the viewer ('you') where it fits.\n"
+              f"Hook rules:\n{regels}\n\nFormulas:\n{lijst}\n\n{bron_tekst(rij)}")
+    beste, gezien = None, []
+    for poging in range(2):
+        opties = vraag(conn, None, f"hook:{soort}", prompt, HOOK, max_tokens=4000)["opties"]
+        gescoord = [s for s in (score_hook(o, rij[3]) for o in opties) if s]
+        gezien += gescoord
+        beste = max(gezien, key=lambda s: s["score"], default=None)
+        if beste and beste["score"] >= HOOK_MIN:
+            break
+        prompt += ("\n\nThese options scored too low (weakest property in brackets), write 3 better ones:\n"
+                   + "\n".join(f"- {s['score']} \"{s['lijn']}\" ({s['zwakst']})" for s in gescoord))
+    if not beste:
+        raise RuntimeError("Geen bruikbare hook gevonden")
+    beste["alle"] = sorted(({"formule": s["formule"], "lijn": s["lijn"], "scherm": s["scherm"], "score": s["score"]} for s in gezien),
+                           key=lambda s: -s["score"])
+    return beste
+
+
+def hook_instructie(hook, soort):
+    plek = "the cover slide 'titel'" if soort in ("carrousel", "actualiteit") else "beat 1 'tekst'"
+    return (f"\nHOOK (already chosen and tested, use it exactly): {plek} = \"{hook['scherm']}\" (you may add *asterisks* around one key word); "
+            f"the caption starts with exactly this sentence: \"{hook['lijn']}\". Deliver what the hook promises before the halfway point.")
+
+
+def controleer_hook(spec, hook, soort):
+    eerste = spec["slides"][0]["titel"] if soort in ("carrousel", "actualiteit") else spec["beats"][0]["tekst"]
+    fouten = []
+    if eerste.replace("*", "").strip().lower() != hook["scherm"].replace("*", "").strip().lower():
+        fouten.append(f"the first {'slide titel' if 'slides' in spec else 'beat tekst'} must be exactly \"{hook['scherm']}\"")
+    if not (spec.get("caption") or "").strip().startswith(hook["lijn"].strip()):
+        fouten.append(f"the caption must start with exactly \"{hook['lijn']}\"")
+    return fouten
 
 
 # ---------- per soort ----------
@@ -288,6 +376,7 @@ def prompt_carrousel(rij, aantal, tags):
     serie = "MYTH CHECK" if rij[1] == "myth_check" else "AUTOMATION SIMPLIFIED"
     return (f"Turn this into an Instagram carousel (4 to 6 slides) for the series {serie}.\n{bron_tekst(rij)}\n\n"
             "Slides: first slide type 'cover' (or 'citaat' for a myth, with the myth as the title), then 'tekst' slides (label + short title + one or two short sentences), "
+            "slide 2 says in one sentence why this matters to the viewer and must make sense on its own (Instagram re-shows carousels starting at slide 2), "
             "optionally one 'cijfer' slide ONLY if the source contains a real number (with its source in 'bron'), last slide type 'slot' with a closing line and a short 'knop' "
             "(a varied follow-style call to action ending with ⚡). Mark the key word in titles with *asterisks*. One thought per slide, short. Leave unused fields empty. "
             f"'serie' must be '{serie}'.\n{taalregels(aantal, tags)}")
@@ -337,7 +426,7 @@ def prompt_stem_video(dienst, aantal, tags):
             "- dashboard (light): kop, items exactly 2 KPI tiles {a:LABEL, b:number as text, c:prefix like '$', d:suffix like '%'}, getallen (6-8 numbers for the line chart), resultaat (optional warning line).\n"
             "- checklist (light, tasks tick themselves off): kop, bedrijf, tekst (small tag), items max 4 {a:task}, resultaat.\n"
             "- notificaties (dark, phone notifications): kop, items max 3 {a:one symbol like ✓ $ ★, b:title, c:subtitle, d:time like '9:16'}.\n"
-            "- eind (dark, last beat): kop exactly 'Wanna *know more?*', knop 'Send me a DM ⚡', handle '@insightance.ai'. "
+            "- eind (dark, last beat): kop exactly 'Want to *know more?*' (on screen in correct written English, Eric still says 'wanna'), knop 'Send me a DM ⚡', handle '@insightance.ai'. "
             "Spoken text for eind: exactly 'You wanna know more? Send me a DM.' (zegt) and '[warm] You wanna know more? Send me a DM.' (uitspraak)\n"
             "Every number on screen must add up and match what is said. 'onderwerp' is a short Dutch description including the service name.\n"
             f"{taalregels(aantal, tags)}")
@@ -504,7 +593,10 @@ def maak(conn, soort=None, zonder_stem=False):
             pid = opslaan(conn, "kaart", spec, scene, map_, bron_id=rij[0])
         else:
             maker = prompt_carrousel if soort == "carrousel" else prompt_tekst_reel
-            spec = schrijf(conn, soort, maker(rij, aantal, tags), aantal, tags)
+            hook = kies_hook(conn, rij, soort) if HOOKSTAP_AAN else None
+            if hook:
+                print(f"Hook ({hook['formule']}, {hook['score']}): {hook['lijn']} | {hook['scherm']}")
+            spec = schrijf(conn, soort, maker(rij, aantal, tags) + (hook_instructie(hook, soort) if hook else ""), aantal, tags, hook=hook)
             if dienst:
                 spec["dienst"] = dienst["naam"]
             kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
