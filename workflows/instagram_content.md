@@ -42,6 +42,8 @@ Wat hij bouwt + uitnodiging voor een DM, op één regel. Sinds 22-11 korter (de 
 I build AI solutions for the problems that slow your business down. Curious what's possible for yours? Send me a DM ⚡
 ```
 
+Boven de afsluiter staat een scheidingslijn `------------` (12 streepjes, eigen regel), zodat men ziet wat bij de post hoort en wat standaard is (22-11). Wordt automatisch toegevoegd door `wachtrij.volledige_caption`.
+
 Video's met stem: het eindscherm toont "Want to know more?" (netjes geschreven), Eric zegt "You wanna know more? Send me a DM." (spreektaal mag in de stem, niet in beeld; 22-11).
 
 ## Hookstap (sinds 22-11, alle soorten posts)

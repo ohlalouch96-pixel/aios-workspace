@@ -86,7 +86,11 @@ def volledige_caption(caption, hashtags, soort):
     if soort in ("advertentie", "openbaar"):  # advertentie eindigt op "Follow for more", bouwen-in-het-openbaar op een vraag: geen DM-afsluiter
         return f"{caption.strip()}\n\n{' '.join(hashtags)}".strip()
     caption = caption.replace(AFSLUITER, "").replace(OUDE_AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
-    return f"{caption}\n\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
+    caption = caption.removesuffix(SCHEIDING).strip()
+    return f"{caption}\n\n{SCHEIDING}\n{AFSLUITER}\n\n{' '.join(hashtags)}".strip()
+
+
+SCHEIDING = "------------"  # lijn tussen de post en de vaste afsluiter, zodat men ziet wat standaard is (22-11)
 
 
 BLAUWIG = {NAVY, "blauw", "wit"}  # wit = logokleuren (navy/blauw) op wit: oogt ook blauw
