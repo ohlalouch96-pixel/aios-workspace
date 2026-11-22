@@ -12,7 +12,9 @@ Gebruik in een demo-spec (opname_demo.py), tijden in seconden van de video:
       {"s": "klok", "van": 0.5, "tot": 12.5, "elke": 1.0},
       {"s": "swoosh", "t": 2.2}, {"s": "plop", "t": 3.4}, {"s": "ding", "t": 4.1, "hz": 523},
       {"s": "klik", "t": 6.8}, {"s": "chime", "t": 7.2}, {"s": "check", "t": 11.8}, {"s": "riser", "t": 7.3, "duur": 5},
-      {"s": "klap", "t": 12.9}, {"s": "pad", "van": 0, "tot": 17.5}
+      {"s": "klap", "t": 12.9}, {"s": "pad", "van": 0, "tot": 17.5},
+      {"s": "kras", "t": 2.5}, {"s": "stempel", "t": 2.6},   # plaat-kras (beeld bevriest) en stempel-dreun
+      {"s": "kassa", "t": 10.7}   # ka-ching bij "Paid"
     ]
     optioneel per regel "vol" (1 = standaard).
 
@@ -116,6 +118,43 @@ def klap():
             + _laag(RNG.standard_normal(len(t)), 4) * np.exp(-t * 40) * 0.25).astype(np.float32)
 
 
+def kras():
+    """Plaat-kras (record scratch): ruis met een toonhoogte die snel heen en weer zwiept, zoals een plaat die wordt
+    tegengehouden; de toon zakt aan het eind weg (de muziek stopt). Gebruik: het beeld bevriest (robot-reel, 22-11)."""
+    duur = 0.42
+    t = _t(duur)
+    # snelheid van de 'plaat': vooruit, terug, vooruit, dan stilstand
+    v = np.interp(t, [0, 0.07, 0.16, 0.26, 0.34, duur], [1.0, 2.2, -1.6, 1.8, 0.4, 0.0])
+    fase = np.cumsum(np.abs(v)) / SR
+    toon = np.sign(np.sin(2 * np.pi * 420 * fase)) * 0.25 + np.sin(2 * np.pi * 840 * fase) * 0.3
+    ruis = RNG.standard_normal(len(t)) * (0.35 + 0.65 * np.abs(v) / 2.2)
+    ruis = ruis - _laag(ruis, 12)  # hoog doorlaten: krassend
+    omhul = np.minimum(1, t / 0.005) * np.minimum(1, (duur - t) / 0.05)
+    return (_laag(toon + ruis * 0.6, 2) * omhul * 0.5).astype(np.float32)
+
+
+def stempel():
+    """Stempel die op tafel knalt: diepe dreun + korte doffe tik (harder en korter dan klap)."""
+    t = _t(0.5)
+    dreun = np.sin(2 * np.pi * (48 + 70 * np.exp(-t * 30)) * t) * np.exp(-t * 9) * 0.9
+    tik = _laag(RNG.standard_normal(len(t)), 3) * np.exp(-t * 90) * 0.55
+    return (np.tanh((dreun + tik) * 1.6) * 0.75).astype(np.float32)
+
+
+def kassa():
+    """Ka-ching (betaald): korte mechanische klik ('ka'), dan een heldere belklank met metalen boventonen ('ching')."""
+    ka = np.zeros(int(0.08 * SR), dtype=np.float32)
+    tk = _t(0.03)
+    ka[:len(tk)] = (_laag(RNG.standard_normal(len(tk)), 2) * np.exp(-tk * 220) * 0.5).astype(np.float32)
+    t = _t(1.1)
+    bel = sum(g * np.sin(2 * np.pi * f * t) for f, g in ((2637, 1.0), (3520, 0.6), (5274, 0.25), (7040, 0.12)))
+    bel = bel * np.exp(-t * 4.5) * np.minimum(1, t / 0.003) * 0.22
+    uit = np.zeros(len(ka) + len(bel), dtype=np.float32)
+    uit[:len(ka)] += ka
+    uit[len(ka):] += bel.astype(np.float32)
+    return uit
+
+
 def pad(duur):
     """Rustig achtergrondtoontje (A-akkoord), heel zacht, langzaam golvend, in- en uitfaden."""
     t = _t(duur)
@@ -149,7 +188,7 @@ def maak(regels, duur, wav):
             leg(pad(r["tot"] - r["van"]), r["van"], vol)
         else:
             maker = {"swoosh": lambda: swoosh(klein=r.get("klein", False)), "plop": plop, "ding": lambda: ding(r.get("hz", 880)),
-                     "chime": chime, "check": check, "klik": klik, "riser": lambda: riser(r.get("duur", 4.0)), "klap": klap}[s]
+                     "chime": chime, "check": check, "klik": klik, "kras": kras, "stempel": stempel, "kassa": kassa, "riser": lambda: riser(r.get("duur", 4.0)), "klap": klap}[s]
             leg(maker(), r["t"], vol)
     spoor = spoor[: int(duur * SR)]
     piek = float(np.max(np.abs(spoor))) or 1.0

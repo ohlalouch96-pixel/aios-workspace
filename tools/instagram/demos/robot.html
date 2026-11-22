@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Reel: de robot (verwachting vs werkelijkheid), alleen tekst + effecten, versie 3</title>
+<style>
+/* Verticale reel 1080x1920 (v3, 22-11, tekst goedgekeurd door Oussama). Rustig begin (3,3 s): kleine robot typt op een
+   laptop (stockclip Pixabay 145864, Pixabay Content License) met de hook. Dan BAM: beeld bevriest, kras, stempel NOPE!,
+   de ommekeer, drie mini-verhalen (avond, strand, vroege ochtend) en het slot in navy.
+   Alle beweging wordt per frame gezet in zet(t) (opname_demo.py stuurt de klok): elk frame scherp, tempo altijd gelijk.
+   Robotbeelden: .tmp/instagram/robot_frames/r001..r094.jpg (zie robot.json, "voorbereiding").
+   Opmaak: alles gecentreerd op x=540 binnen de veilige zone x 230..850 en y 230..1440. */
+@font-face { font-family: Inter; font-weight: 100 900; src: url('../fonts/inter-latin.woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; background: #000; }
+em { font-style: normal; }
+.laag { position: absolute; inset: 0; }
+.kol { position: absolute; left: 230px; width: 620px; text-align: center; }   /* midden = 540 */
+.w { display: inline-block; }
+
+/* 1: robot + hook */
+#scene1 { background: linear-gradient(180deg, #DDEBF8 0%, #DFECF9 45%, #EBF7FF 100%); transform-origin: 540px 1000px; }
+#robotvak { position: absolute; left: 0; top: 540px; width: 1080px; height: 1100px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 110px, #000 960px, transparent 1100px); }
+#robotvak img { position: absolute; inset: 0; width: 1080px; height: 1100px; object-fit: cover; object-position: 42% 50%; display: none; }
+#robotvak img.zie { display: block; }
+#donker { background: #0B1220; opacity: 0; }
+#flits { background: #fff; opacity: 0; }
+/* v4: elke regel een eigen strak navy blok (zoals Instagram-tekstvakken), witte tekst, 'whole team.' in warm geel */
+#hook { top: 250px; font: 900 84px/1 Inter; letter-spacing: -.04em; }
+#hook .blok { display: inline-block; background: #17345F; color: #fff; padding: 10px 24px 16px; border-radius: 16px; margin: 0 0 12px;
+  box-shadow: 0 14px 30px rgba(11,18,32,.28); transform-origin: 50% 60%; }
+#hook em { color: #FFC93C; }
+#stempel { top: 900px; height: 300px; display: grid; place-items: center; opacity: 0; }
+#stempel span { display: inline-block; font: 900 150px/1 Inter; letter-spacing: -.02em; color: #E5322D; padding: 14px 40px 22px;
+  border: 14px solid #E5322D; border-radius: 24px; background: rgba(255,255,255,.12); }
+
+/* 2: ommekeer */
+#draai { background: #F6F3EC; opacity: 0; }
+#d1 { top: 560px; color: #101828; font: 900 104px/1.0 Inter; letter-spacing: -.045em; }
+#d2 { top: 820px; color: #1F5EFF; font: 900 84px/1.04 Inter; letter-spacing: -.04em; }
+#inbox { position: absolute; left: 470px; top: 1100px; width: 140px; height: 104px; opacity: 0; }
+
+/* 3: drie mini-verhalen */
+.sc { opacity: 0; }
+#sc1 { background: radial-gradient(ellipse at 50% 18%, rgba(255,170,80,.35), rgba(255,170,80,0) 55%), linear-gradient(180deg, #1B1740 0%, #33245C 60%, #4D3159 100%); }
+#sc2 { background: radial-gradient(circle at 78% 14%, rgba(255,244,190,.95) 0, rgba(255,244,190,0) 22%), linear-gradient(180deg, #4FC1FF 0%, #97DAFF 55%, #FFE3A3 100%); }
+#sc3 { background: radial-gradient(ellipse at 50% 100%, rgba(255,190,140,.55), rgba(255,190,140,0) 60%), linear-gradient(180deg, #CBD8F0 0%, #E7E2F4 55%, #F9D9CB 100%); }
+.tijd { top: 420px; font: 900 128px/1 Inter; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.wat { top: 570px; font: 800 64px/1.08 Inter; letter-spacing: -.035em; }
+#sc1 .tijd { color: #FFC56B; } #sc1 .wat { color: #fff; }
+#sc2 .tijd { color: #fff; text-shadow: 0 4px 24px rgba(0,80,140,.35); } #sc2 .wat { color: #0B2A4A; }
+#sc3 .tijd { color: #D9572B; font-size: 88px; padding-top: 24px; white-space: nowrap; } #sc3 .wat { color: #2B2540; }
+.kaart { position: absolute; left: 230px; width: 620px; top: 840px; background: #fff; border-radius: 40px; padding: 40px 38px 44px;
+  box-shadow: 0 40px 90px rgba(10,15,40,.30); opacity: 0; }
+.kaart .kop { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 700 31px Inter; color: #667085; white-space: nowrap; }
+.chip { font: 800 29px Inter; padding: 10px 22px; border-radius: 40px; white-space: nowrap; }
+.chip.donker { background: #101828; color: #fff; }
+.chip.groen { background: #DCFAE6; color: #067647; }
+.chip.rood { background: #FEE4E2; color: #D92D20; }
+.uitkomst { margin-top: 30px; display: flex; align-items: center; gap: 22px; text-align: left; font: 900 52px/1.08 Inter; letter-spacing: -.03em; color: #101828; }
+.uitkomst i { width: 92px; height: 92px; border-radius: 50%; background: #12B76A; color: #fff; display: grid; place-items: center; font: 900 52px Inter; font-style: normal; flex: none;
+  box-shadow: 0 10px 26px rgba(18,183,106,.45); }
+
+/* 4: slot */
+#eind { background: radial-gradient(ellipse at 50% 38%, #23497F, #0F2547 75%); opacity: 0; }
+#e1 { top: 470px; color: #fff; font: 900 90px/1.02 Inter; letter-spacing: -.045em; }
+#e2 { top: 690px; color: #9DBBE3; font: 900 90px/1.02 Inter; letter-spacing: -.045em; }
+#e2 em { color: #fff; }
+#e3 { top: 1030px; color: rgba(255,255,255,.9); font: 700 37px/1.2 Inter; letter-spacing: -.01em; white-space: nowrap; }
+#voet { top: 1200px; display: flex; justify-content: center; align-items: center; gap: 16px; font: 700 40px Inter; color: #fff; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
+
+<div class="laag" id="scene1"><div id="robotvak"></div></div>
+<div class="laag" id="donker"></div>
+<div class="kol" id="hook"><div><span class="blok" id="b1">He's about to</span></div><div><span class="blok" id="b2">replace your</span></div><div><span class="blok" id="b3"><em>whole team.</em></span></div></div>
+<div class="kol" id="stempel"><span>NOPE!</span></div>
+
+<div class="laag" id="draai">
+  <div class="kol" id="d1"></div>
+  <div class="kol" id="d2"></div>
+  <svg id="inbox" viewBox="0 0 70 52" fill="none"><rect x="3" y="3" width="64" height="46" rx="8" fill="#1F5EFF"/><path d="M7 9 L35 30 L63 9" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
+<div class="laag sc" id="sc1">
+  <div class="kol tijd" id="t1">9:04 PM.</div>
+  <div class="kol wat" id="w1">You're at dinner.</div>
+  <div class="kaart" id="k1">
+    <div class="kop"><span>📞 New customer</span><span class="chip donker" id="c1">Ringing…</span></div>
+    <div class="uitkomst" id="u1"><i>✓</i><span>AI answered.<br>Job booked.</span></div>
+  </div>
+</div>
+<div class="laag sc" id="sc2">
+  <div class="kol tijd" id="t2">Saturday.</div>
+  <div class="kol wat" id="w2">You're at the beach.</div>
+  <div class="kaart" id="k2">
+    <div class="kop"><span>📄 Quote · $4,860</span><span class="chip donker" id="c2">Sending…</span></div>
+    <div class="uitkomst" id="u2"><i>✓</i><span>Quote sent.<br>Client said yes.</span></div>
+  </div>
+</div>
+<div class="laag sc" id="sc3">
+  <div class="kol tijd" id="t3">Monday, 7 AM.</div>
+  <div class="kol wat" id="w3">You're still asleep.</div>
+  <div class="kaart" id="k3">
+    <div class="kop"><span>🧾 Invoice · $1,250</span><span class="chip rood" id="c3">Overdue</span></div>
+    <div class="uitkomst" id="u3"><i>✓</i><span>Invoice chased.<br>Paid.</span></div>
+  </div>
+</div>
+
+<div class="laag" id="eind">
+  <div class="kol" id="e1"></div>
+  <div class="kol" id="e2"></div>
+  <div class="kol" id="e3">Follow for AI without the hype ⚡</div>
+  <div class="kol" id="voet"><svg width="54" height="54" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+</div>
+<div class="laag" id="flits"></div>
+
+<script src="_demo.js"></script>
+<script>
+// Tijdlijn in seconden (t = 0 bij de hook; de hook staat er al vanaf het eerste beeld; video-seconde = t + 0,3).
+const N = 94, FPSR = 30, VRIES = 3.0;
+const $ = (id) => document.getElementById(id);
+const vak = $("robotvak");
+for (let i = 1; i <= N; i++) { const im = new Image(); im.src = `../../../.tmp/instagram/robot_frames/r${String(i).padStart(3, "0")}.jpg`; vak.appendChild(im); }
+const imgs = [...vak.children];
+const k = (t, a, d) => Math.min(1, Math.max(0, (t - a) / d));
+const uit = (p) => 1 - Math.pow(1 - p, 3);
+const veer = (p) => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p) * Math.cos(p * 9.5);
+const pop = (el, t, a, van = 0.55, d = 0.3) => { const p = veer(k(t, a, d)); el.style.opacity = t >= a ? 1 : 0; el.style.transform = `scale(${van + (1 - van) * p})`; };
+function woorden(el, html, t, start, stap) {
+  if (!el.dataset.klaar) { el.innerHTML = html.split(" ").map((w) => w === "<br>" ? "<br>" : `<span class="w">${w}</span>`).join(" "); el.dataset.klaar = 1; }
+  [...el.querySelectorAll(".w")].forEach((w, i) => pop(w, t, start + i * stap, 0.5, 0.28));
+}
+// een mini-verhaal: scherm schuift van onder in (wipe), tijd plopt, situatie, kaart, uitkomst met vinkje
+function verhaal(n, t, a, b, ring) {
+  const sc = $("sc" + n), pin = uit(k(t, a, 0.2));
+  sc.style.opacity = t >= a && t < b + 0.3 ? 1 : 0;   // blijft staan tot de volgende scène er helemaal overheen geschoven is
+  sc.style.clipPath = `inset(${(1 - pin) * 100}% 0 0 0)`;
+  pop($("t" + n), t, a + 0.05, 0.6);
+  $("t" + n).style.opacity = t >= a + 0.05 ? 1 : 0;
+  // tikkende-klok-gevoel: tijd tikt met kleine schokjes tot de kaart er is
+  if (t >= a + 0.3 && t < a + 0.65) $("t" + n).style.transform = `scale(${1 + (Math.floor((t - a) * 8) % 2 ? 0.03 : 0)})`;
+  pop($("w" + n), t, a + 0.3, 0.7, 0.26);
+  const kaart = $("k" + n), pk = veer(k(t, a + 0.62, 0.32));
+  kaart.style.opacity = t >= a + 0.62 ? 1 : 0;
+  kaart.style.transform = `translateY(${(1 - pk) * 160}px) scale(${0.8 + 0.2 * pk})`;
+  if (ring && t >= a + 0.62 && t < a + 1.0) kaart.style.transform += ` rotate(${Math.sin(t * 70) * 1.2}deg)`;
+  const u = $("u" + n);
+  pop(u, t, a + 1.0, 0.6, 0.3);
+  u.querySelector("i").style.transform = `scale(${t >= a + 1.0 ? 0.4 + 0.6 * veer(k(t, a + 1.05, 0.32)) : 0})`;
+}
+function zet(t) {
+  // 1. robot (rustig), bevriest op VRIES
+  const idx = Math.min(N - 1, Math.floor(Math.min(Math.max(t, 0), VRIES) * FPSR));
+  imgs.forEach((im, i) => im.classList.toggle("zie", i === idx));
+  const bev = t >= VRIES;
+  const schud = bev && t < VRIES + 0.32 ? Math.sin(t * 95) * 18 * (1 - (t - VRIES) / 0.32) : 0;
+  const zoomin = bev ? 1.05 + 0.03 * uit(k(t, VRIES, 1.3)) : 1 + 0.02 * Math.max(0, t) / VRIES;
+  $("scene1").style.transform = `translate(${schud}px, ${schud * 0.4}px) scale(${zoomin})`;
+  $("scene1").style.filter = bev ? "grayscale(.9) brightness(.62) contrast(1.15)" : "none";
+  $("donker").style.opacity = bev ? 0.25 : 0;
+  $("flits").style.opacity = t >= VRIES && t < VRIES + 0.1 ? 0.9 * (1 - (t - VRIES) / 0.1) : 0;
+  $("hook").style.transform = `translate(${schud * 0.6}px, 0)`;
+  // hook-blokken knallen er één voor één in binnen de eerste 0,5 s van de video (t = video - 0,3); blok 1 staat er al op beeld 1
+  [["b1", -0.3], ["b2", -0.13], ["b3", 0.04]].forEach(([id, a]) => {
+    const p = veer(k(t, a, 0.14));
+    $(id).style.opacity = t >= a ? 1 : 0;
+    $(id).style.transform = `scale(${1.35 - 0.35 * p})`;
+  });
+  const S = VRIES + 0.1, ps = k(t, S, 0.12);
+  const na = t >= S + 0.12 && t < S + 0.3 ? Math.sin((t - S - 0.12) * 60) * 0.03 * (1 - (t - S - 0.12) / 0.18) : 0;
+  $("stempel").style.opacity = ps > 0 ? 1 : 0;
+  $("stempel").style.transform = `rotate(-10deg) scale(${2.6 - 1.6 * uit(ps) + na})`;
+
+  // 2. ommekeer (vanaf 4,3 s): licht scherm groeit vanuit de stempel
+  const L = 4.3, pl = uit(k(t, L, 0.18));
+  $("draai").style.opacity = t >= L && t < 6.6 ? 1 : 0;
+  $("draai").style.clipPath = `circle(${pl * 1300}px at 540px 1040px)`;
+  woorden($("d1"), "Real AI has no arms.", t, L + 0.12, 0.09);
+  woorden($("d2"), "It lives in your inbox.", t, 5.15, 0.08);
+  pop($("inbox"), t, 5.6, 0.3, 0.34);
+
+  // 3. drie mini-verhalen, elk ±1,5 s
+  verhaal(1, t, 6.3, 7.85, true);
+  verhaal(2, t, 7.85, 9.4, false);
+  verhaal(3, t, 9.4, 11.0, false);
+  // status-chips in de kaarten
+  $("c1").textContent = t >= 7.3 ? "Answered" : "Ringing…"; $("c1").className = "chip " + (t >= 7.3 ? "groen" : "donker");
+  $("c2").textContent = t >= 8.85 ? "Approved ✓" : "Sending…"; $("c2").className = "chip " + (t >= 8.85 ? "groen" : "donker");
+  $("c3").textContent = t >= 10.4 ? "Paid ✓" : "Overdue"; $("c3").className = "chip " + (t >= 10.4 ? "groen" : "rood");
+
+  // 4. slot (vanaf 11,0 s): navy schuift van onder omhoog
+  const E = 11.0, pe = uit(k(t, E, 0.2));
+  $("eind").style.opacity = t >= E ? 1 : 0;
+  $("eind").style.clipPath = `inset(${(1 - pe) * 100}% 0 0 0)`;
+  woorden($("e1"), "The robots aren't coming.", t, E + 0.15, 0.09);
+  woorden($("e2"), "Your <em>free</em> <br> <em>time</em> is.", t, E + 0.95, 0.09);
+  const p3 = uit(k(t, E + 1.85, 0.3));
+  $("e3").style.opacity = p3; $("e3").style.transform = `translateY(${(1 - p3) * 30}px)`;
+  const pv = uit(k(t, E + 2.3, 0.3));
+  $("voet").style.opacity = pv; $("voet").style.transform = `translateY(${(1 - pv) * 30}px)`;
+}
+// v4: de klok loopt vanaf het laden (video-seconde 0), zodat de hook-blokken al in de eerste 0,3 s kunnen inknallen;
+// t = video - 0,3 houdt de rest van de tijdlijn gelijk aan v3. __hook (aangeroepen op 0,3 s) hoeft niets meer te doen.
+animeer(18000, () => zet(window.__klok / 1000 - 0.3));
+window.__hook = function () {};
+zet(-0.3);
+</script>
+</body></html>

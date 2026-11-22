@@ -1,0 +1,133 @@
+{
+"demo": "robot",
+"kleurenset": "navy",
+"hook": "He's about to replace your *whole team.*",
+"voorbereiding": "Robotbeelden eenmalig klaarzetten (.tmp is wegwerp): ffmpeg -ss 1.6 -t 3.1 -i .tmp/instagram/stock/pixabay-145864.mp4 -vf fps=30 -q:v 2 .tmp/instagram/robot_frames/r%03d.jpg (94 beelden). Bron: Pixabay video 145864, https://pixabay.com/videos/robot-cyborg-chat-artificial-145864/ (3D-render van een kleine robot die op een laptop typt), lokaal in .tmp/instagram/stock/pixabay-145864.mp4. Pixabay Content License: gratis, ook commercieel en in advertenties, geen naamsvermelding nodig.",
+"stappen": [
+{
+"doe": "wacht",
+"s": 14.6
+}
+],
+"geluid": [
+{
+"s": "klik",
+"t": 0.0,
+"vol": 0.45
+},
+{
+"s": "klik",
+"t": 0.17,
+"vol": 0.45
+},
+{
+"s": "klik",
+"t": 0.34,
+"vol": 0.45
+},
+{
+"s": "kras",
+"t": 3.3
+},
+{
+"s": "stempel",
+"t": 3.4
+},
+{
+"s": "swoosh",
+"t": 4.6
+},
+{
+"s": "plop",
+"t": 5.45,
+"vol": 0.5
+},
+{
+"s": "plop",
+"t": 5.9,
+"vol": 0.4
+},
+{
+"s": "swoosh",
+"t": 6.6,
+"klein": true
+},
+{
+"s": "klok",
+"van": 6.9,
+"tot": 7.2,
+"elke": 0.125,
+"vol": 0.8
+},
+{
+"s": "ding",
+"t": 7.22,
+"hz": 1319,
+"vol": 0.3
+},
+{
+"s": "ding",
+"t": 7.37,
+"hz": 1319,
+"vol": 0.3
+},
+{
+"s": "check",
+"t": 7.6,
+"vol": 0.6
+},
+{
+"s": "swoosh",
+"t": 8.15,
+"klein": true
+},
+{
+"s": "klok",
+"van": 8.45,
+"tot": 8.75,
+"elke": 0.125,
+"vol": 0.8
+},
+{
+"s": "plop",
+"t": 8.77,
+"vol": 0.55
+},
+{
+"s": "check",
+"t": 9.15,
+"vol": 0.6
+},
+{
+"s": "swoosh",
+"t": 9.7,
+"klein": true
+},
+{
+"s": "klok",
+"van": 10.0,
+"tot": 10.3,
+"elke": 0.125,
+"vol": 0.8
+},
+{
+"s": "plop",
+"t": 10.32,
+"vol": 0.55
+},
+{
+"s": "kassa",
+"t": 10.7,
+"vol": 0.8
+},
+{
+"s": "swoosh",
+"t": 11.3
+},
+{
+"s": "chime",
+"t": 12.3,
+"vol": 0.4
+}
+]
+}
