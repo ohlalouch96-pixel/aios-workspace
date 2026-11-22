@@ -64,6 +64,12 @@ Voorbeeld met KOR:
 - Digitaal mag (pdf of foto), als het maar leesbaar en terug te vinden is.
 - Tip: één map per jaar, met submappen "Verkoop" en "Inkoop".
 
+## Inkomstenbelasting (los van btw, geldt óók met KOR)
+
+- Je winst (omzet min kosten) telt mee in je gewone jaarlijkse aangifte inkomstenbelasting, bovenop je salaris van OLVG.
+- Aangifte over 2026: vóór **1 mei 2027**. Ook als je nog niets verdiend hebt: geef dan je kosten op.
+- Bedrijfskosten (Claude, ElevenLabs, Wispr Flow, server, domein, Workspace, KvK-inschrijving) zijn **aftrekbaar van je winst**, ook kosten van vóór de KvK-inschrijving. Daarom: alle facturen en bonnetjes van dit jaar bewaren.
+
 ## Geld apart zetten
 
 - Zakelijke rekening: openen zodra een klant ja zegt (eenmanszaak mag tot die tijd privé).
