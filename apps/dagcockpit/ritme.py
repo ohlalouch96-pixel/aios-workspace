@@ -77,6 +77,7 @@ SNELKOPPELINGEN = [
     ("Google Analytics", "https://analytics.google.com/"),
     ("Search Console", "https://search.google.com/search-console?resource_id=sc-domain:insightance.ai"),
     ("insightance.ai", "https://insightance.ai/"),
+    ("Administratie", "/administratie"),
 ]
 
 # Eenmalige herinneringen die bij de allereerste start worden ingeladen (daarna via "Taak toevoegen").

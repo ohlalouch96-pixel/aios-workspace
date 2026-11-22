@@ -395,6 +395,31 @@ def index():
     return html
 
 
+@app.route("/administratie")
+def administratie():
+    """Naslag 'Administratie en belasting' uit reference/; OB-nummer komt uit .env (repo is openbaar)."""
+    import markdown
+    tekst = (WORKSPACE_ROOT / "reference" / "administratie-en-belasting.md").read_text(encoding="utf-8")
+    tekst = tekst.replace("{{OB_NUMMER}}", get_env("OB_NUMMER") or "(nog invullen in .env: OB_NUMMER)")
+    inhoud = markdown.markdown(tekst, extensions=["tables"])
+    return render_template_string(ADMIN_PAGINA, inhoud=inhoud)
+
+
+ADMIN_PAGINA = """<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administratie en belasting</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3ED;color:#141B2B;font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:820px;margin:0 auto;padding:28px 16px 60px}
+a.terug{color:#A8823F;text-decoration:none;font-weight:600;font-size:14px}
+h1{font-family:'Playfair Display',serif;font-size:32px;margin:14px 0 4px}
+h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#0E1E38;padding:9px 14px;border-radius:10px;margin:28px 0 12px}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:10px;overflow:hidden;font-size:14px}
+th{background:#F4ECDD;text-align:left;padding:8px 12px}td{padding:8px 12px;border-top:1px solid #E6DFD2;vertical-align:top}
+li{margin:3px 0}code{background:#F4ECDD;padding:1px 5px;border-radius:4px}
+</style></head><body><div class="wrap"><a class="terug" href="/">&larr; Terug naar de cockpit</a>{{ inhoud|safe }}</div></body></html>"""
+
+
 @app.route("/vink", methods=["POST"])
 def vink():
     sleutel = request.form["sleutel"]
@@ -646,11 +671,14 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 /* Compacter bij 5+ tegels (19-11) */
 .takenrij.vol .takenlijst .taak label{font-size:12px;line-height:1.25}.takenrij.vol .takenlijst .taak{min-height:28px;padding:4px 8px}.takenrij.vol .takenlijst{gap:5px}
 .takenrij.vol section.kaart.nk > .kaartkop h2{font-size:13px;line-height:1.15}.takenrij.vol section.kaart.nk > .kaartkop{min-height:44px;padding:6px 10px}
+/* To-do in zijmenu op één regel per punt (22-11) */
+.menutodo li{white-space:nowrap;min-width:0}.menutodo li span{overflow:hidden;text-overflow:ellipsis}
+.menutodo ul{gap:4px}
 /* Agenda: zo hoog als de linkerkolom, lange lijst scrolt binnen de tegel (19-11) */
 .raster{align-items:stretch}.raster > :first-child{align-self:start}
 .zijkant{position:relative;min-height:0}
 /* Zijmenu compacter nu de to-do langer is (19-11) */
-nav.menu{gap:12px;padding:16px 14px}.menu .link{min-height:28px}.menuknop{min-height:32px}.menukop{margin-bottom:4px}
+nav.menu{gap:8px;padding:14px 14px}.menu .link{min-height:28px}.menuknop{min-height:32px}.menukop{margin-bottom:4px}
 .zijkant > .agenda{position:absolute;inset:0;display:flex;flex-direction:column}
 .agenda .agendalijst{flex:1;min-height:0;overflow-y:auto;padding:0 12px 10px;margin:0 !important}
 .agenda .agendalijst .takenlijst{gap:4px}
@@ -712,7 +740,7 @@ nav.menu{gap:12px;padding:16px 14px}.menu .link{min-height:28px}.menuknop{min-he
       </svg>
       <div class="leg">{% for c in todo_cirkel %}<span><i style="background:{{ c.kleur }}"></i>{{ c.label }}<b>{{ c.aantal }}</b></span>{% endfor %}</div>
     </div>
-    <ul>{% for t in todo if t.label != 'Geparkeerd' %}<li><i style="background:{{ '#5FD39A' if t.label == 'Loopt' else '#8FB2F7' }}"></i>{{ t.titel }}</li>{% endfor %}</ul>
+    <ul>{% for t in todo if t.label != 'Geparkeerd' %}<li><i style="background:{{ '#5FD39A' if t.label == 'Loopt' else '#8FB2F7' }}"></i><span title="{{ t.titel }}">{{ t.titel }}</span></li>{% endfor %}</ul>
     <button class="menuknop" type="button" onclick="document.getElementById('geparkeerd').showModal()">Geparkeerd bekijken<span aria-hidden="true">&rsaquo;</span></button>
   </div>
   <div class="doel">
