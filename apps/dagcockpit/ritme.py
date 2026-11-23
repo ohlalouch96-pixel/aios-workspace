@@ -29,9 +29,10 @@ CHATS = {
 # "toon_altijd": True = staat elke dag in de kaart; op dagen buiten "dagen" grijs, niet aan te vinken en telt niet mee.
 # "agenda": kortere titel voor de Agenda-tegel.
 TAKEN = [
-    {"id": "linkedin_verversen", "titel": "Dashboard verversen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "linkedin_connecties", "titel": "Connecties maken", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "linkedin_followups", "titel": "Follow-ups versturen", "chat": "LinkedIn", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    # linkedin_verversen/connecties/followups gepauzeerd 23-11: outreach (connectieverzoeken +
+    # berichten opvolgen) staat op een lager pitje, weinig reacties, focus nu op de accountants-
+    # /administratiekantoren-coldcaller. LinkedIn-posten (linkedin_check + LINKEDIN_WEKELIJKS)
+    # loopt gewoon door. Terugzetten zodra outreach weer wordt opgepakt.
     {"id": "linkedin_check", "titel": "Posts evalueren", "chat": "LinkedIn", "ritme": "Donderdag", "dagen": {3}, "kort": "LinkedIn-check", "agenda": "LinkedIn-posts evalueren"},
     {"id": "webshop_followups", "titel": "Follow-ups versturen", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_post", "titel": "Post plaatsen / plannen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
