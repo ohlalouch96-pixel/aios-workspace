@@ -182,63 +182,109 @@ def vrije_dagen(vandaag=None):
     return maandag, [maandag + timedelta(days=d) for d in range(5) if (maandag + timedelta(days=d)).isoformat() not in vol]
 
 
+def _thema(soort, map_):
+    """Soort onderwerp van een post: de serie uit spec.json (Myth Check, Automation Simplified, ...) of anders het soort."""
+    try:
+        serie = json.loads((Path(map_) / "spec.json").read_text(encoding="utf-8")).get("serie")
+    except (OSError, ValueError, TypeError):
+        serie = None
+    return (serie or soort or "").strip().upper()
+
+
 def weekplanning(conn, vandaag=None, bewaar=True):
-    """Voorstel voor de komende week (ma t/m vr, PER_DAG posts per dag: een beeldpost om TIJD_BEELD en een reel om
-    TIJD_REEL; ontbreekt een van beide, dan het andere soort). Alle klaarstaande posts die nog niet geplaatst zijn.
-    Bouwen in het openbaar en actualiteiten eerst (vers), een actualiteit op woensdag (besluit 20-11). Advertenties en
-    story-ideeën hebben geen vaste dag en staan apart. Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
+    """Voorstel voor de komende week (ma t/m vr, PER_DAG posts per dag: beeldpost om TIJD_BEELD, reel om TIJD_REEL).
+    Regels (Oussama 24-11), steeds tussen twee posts die direct na elkaar komen, ook over het weekend heen
+    (vrijdag 19:00 -> maandag 14:00) en met de vooraf vastgezette posts:
+      - nooit dezelfde kleur en nooit allebei blauwig;
+      - nooit hetzelfde soort onderwerp (serie/soort) of dezelfde dienst;
+      - nooit twee reels op één dag.
+    Actualiteit alleen op woensdag. Bouwen in het openbaar gaat voor; verder willekeurig door elkaar.
+    Vooraf op een dag (en eventueel tijd, TIJDEN_BESTAND) gezette posts blijven staan. Dagen in VOL_BESTAND slaat hij over.
+    Advertenties en story-ideeën hebben geen vaste dag en staan apart."""
+    import random
+    import wachtrij
     maandag, dagen = vrije_dagen(vandaag)
-    rijen = conn.execute("SELECT id, soort, status, onderwerp, gepland_op, kleurenset FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
-                         "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'openbaar') DESC, (soort = 'actualiteit') DESC, id").fetchall()
+    kol = "id, soort, status, onderwerp, gepland_op, kleurenset, dienst, map"
+    rijen = conn.execute(f"SELECT {kol} FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
+                         "AND soort NOT IN ('advertentie', 'story') ORDER BY id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
     vol, vaste = volle_dagen(), vaste_tijden()
-    over, regels = [r for r in rijen if r[4] not in vol], []  # door Oussama zelf op een volle dag gezet: blijft daar
-    week = {d.isoformat() for d in dagen}
-    vast = [r for r in over if r[4] in week]  # vooraf op een dag van deze week gezet (bv. robotvideo op di 1-12): blijft daar
-    over = [r for r in over if r not in vast]
-    woensdag = next((d for d in dagen if d.weekday() == 2), None)
-    actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
     is_reel = lambda r: r[1] in REELS  # noqa: E731
-    import wachtrij
+    std_tijd = lambda r: vaste.get(r[0]) or (TIJD_REEL if is_reel(r) else TIJD_BEELD)  # noqa: E731
+    over = [r for r in rijen if r[4] not in vol]  # door Oussama zelf op een volle dag gezet: blijft daar
+    week = {d.isoformat() for d in dagen}
+    vast = [r for r in over if r[4] in week]  # vooraf op een dag van deze week gezet (bv. robotvideo di 1-12 14:00)
+    over = [r for r in over if r not in vast]
+    random.shuffle(over)  # lekker door elkaar (24-11)
+    over.sort(key=lambda r: r[1] != "openbaar")  # bouwen in het openbaar (1x per week) gaat voor, verder willekeurig
 
-    def kleur_past(r, gekozen):  # twee posts op één dag nooit dezelfde kleur en nooit allebei blauwig (24-11)
-        if not gekozen:
+    # alle tijdstippen van de week op volgorde; vastgezette posts eerst op hun plek
+    woensdag = any(d.weekday() == 2 for d in dagen)
+    plekken = [(d, t) for d in dagen for t in sorted((TIJD_BEELD, TIJD_REEL))]
+    bezet = {}
+    for r in vast:
+        t = std_tijd(r)
+        if (date.fromisoformat(r[4]), t) in bezet:
+            t = TIJD_BEELD if t == TIJD_REEL else TIJD_REEL
+        bezet[(date.fromisoformat(r[4]), t)] = r
+
+    # de laatste post vóór deze week (meestal vrijdag 19:00): maandag 14:00 moet daar ook van verschillen
+    vorige = conn.execute(f"SELECT {kol} FROM instagram_posts WHERE gepland_op < ? AND status != 'overgeslagen' "
+                          "AND soort NOT IN ('advertentie', 'story') ORDER BY gepland_op DESC", (maandag.isoformat(),)).fetchall()
+    vorige = max((r for r in vorige if r[4] == vorige[0][4]), key=std_tijd) if vorige else None
+
+    def botst(a, b, zwaar=True):
+        if a is None or b is None:
+            return False
+        ka, kb = wachtrij.echte_kleur(a[5]), wachtrij.echte_kleur(b[5])
+        if ka == kb or (ka in wachtrij.BLAUWIG and kb in wachtrij.BLAUWIG):
             return True
-        a, b = wachtrij.echte_kleur(r[5]), wachtrij.echte_kleur(gekozen[0][5])
-        return a != b and not (a in wachtrij.BLAUWIG and b in wachtrij.BLAUWIG)
-    for dag in dagen:
-        kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
-        regels.append(f"<b>{kop}</b>")
-        gekozen = [r for r in vast if r[4] == dag.isoformat()]
-        for reel_plek in (False, True):
-            if len(gekozen) >= PER_DAG or any(is_reel(g) == reel_plek for g in gekozen):
-                continue
-            kies_uit = [r for r in over if r is not actualiteit or dag == woensdag or woensdag is None]
-            if not kies_uit:
-                continue
-            if dag == woensdag and actualiteit in kies_uit and not reel_plek:
-                keuze = actualiteit
-            else:  # past het soort niet, dan het andere soort, maar nooit twee reels op één dag als het anders kan
-                keuze = next((r for r in kies_uit if is_reel(r) == reel_plek and kleur_past(r, gekozen)), None) or \
-                        next((r for r in kies_uit if is_reel(r) == reel_plek), None) or \
-                        next((r for r in kies_uit if not (gekozen and is_reel(gekozen[0]) and is_reel(r))), kies_uit[0])
+        if zwaar and (a[1] == b[1] or _thema(a[1], a[7]) == _thema(b[1], b[7]) or (a[6] and a[6] == b[6])):
+            return True
+        return False
+
+    for i, (dag, tijd) in enumerate(plekken):
+        if (dag, tijd) in bezet:
+            continue
+        vorig = bezet.get(plekken[i - 1]) if i else vorige
+        volgend = bezet.get(plekken[i + 1]) if i + 1 < len(plekken) else None
+        ander = bezet.get((dag, TIJD_REEL if tijd == TIJD_BEELD else TIJD_BEELD))  # de andere post van dezelfde dag
+        wil_reel = (not is_reel(ander)) if ander else tijd == TIJD_REEL
+        kies_uit = [r for r in over if r[1] != "actualiteit" or dag.weekday() == 2 or not woensdag]  # actualiteit alleen op woensdag
+        if dag.weekday() == 2:  # woensdag: actualiteit eerst (besluit 20-11)
+            kies_uit.sort(key=lambda r: r[1] != "actualiteit")
+        geen_twee_reels = lambda r: not (ander and is_reel(ander) and is_reel(r))  # noqa: E731
+        keuze = None
+        for eis in (lambda r: is_reel(r) == wil_reel and not botst(r, vorig) and not botst(r, volgend),
+                    lambda r: is_reel(r) == wil_reel and not botst(r, vorig, False) and not botst(r, volgend, False),
+                    lambda r: geen_twee_reels(r) and not botst(r, vorig) and not botst(r, volgend),
+                    lambda r: is_reel(r) == wil_reel,
+                    geen_twee_reels):
+            keuze = next((r for r in kies_uit if eis(r)), None)
+            if keuze:
+                break
+        if keuze:
             over.remove(keuze)
-            gekozen.append(keuze)
-        gekozen.sort(key=is_reel)  # beeldpost eerst (12:00), reel daarna (19:00)
-        tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
-        eigen = next((g for g in gekozen if g[0] in vaste), None)  # eigen tijdstip (bv. robotvideo om 14:00): de ander krijgt de andere tijd
-        if eigen:
-            t = vaste[eigen[0]]
-            gekozen = [eigen] + [g for g in gekozen if g is not eigen]
-            tijden = [t, TIJD_REEL if t == TIJD_BEELD else TIJD_BEELD][:len(gekozen)]
-        leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
-        dag_regels = [(tijd, f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>") for tijd in leeg]
-        for tijd, (pid, soort, st, onderwerp, _, _k) in zip(tijden, gekozen):
+            bezet[(dag, tijd)] = keuze
+
+    nieuwe_tijden = dict(vaste)
+    regels = []
+    for dag in dagen:
+        regels.append(f"<b>{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}</b>")
+        for tijd in sorted((TIJD_BEELD, TIJD_REEL)):
+            r = bezet.get((dag, tijd))
+            if not r:
+                regels.append(f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
+                continue
+            pid, soort, st, onderwerp = r[:4]
             wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
-            dag_regels.append((tijd, f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}"))
-            if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
+            regels.append(f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}")
+            if bewaar:  # onthouden voor het automatisch afvinken om 20:00 en zodat 'planning' daarna hetzelfde laat zien
                 conn.execute("UPDATE instagram_posts SET gepland_op = ? WHERE id = ?", (dag.isoformat(), pid))
-        regels += [r for _, r in sorted(dag_regels)]
+                if tijd != std_tijd(r):
+                    nieuwe_tijden[pid] = tijd
+    if bewaar and nieuwe_tijden != vaste:
+        TIJDEN_BESTAND.write_text(json.dumps({str(k): v for k, v in nieuwe_tijden.items()}), encoding="utf-8")
     eind = maandag + timedelta(days=4)
     tekst = f"📅 <b>Weekplanning {maandag.day} {MAANDEN[maandag.month - 1]} t/m {eind.day} {MAANDEN[eind.month - 1]}</b>\n\n" + "\n".join(regels)
     if over:
