@@ -60,6 +60,8 @@ LINKEDIN_WEKELIJKS = [
 # Instagram: standaard aantal ingeplande posts per dag (per dag aan te passen in de cockpit).
 # Wekelijks op zaterdag klaargezet, eerste keer za 21-11-2026.
 INSTAGRAM_STANDAARD_AANTAL = 1
+# Dagen waarop Instagram post (ma-vr sinds 24-11). Andere dagen: grijs "geen post", niet aan te passen.
+INSTAGRAM_POSTDAGEN = {0, 1, 2, 3, 4}
 
 # Korte pijlernamen voor de contenttegel.
 PIJLER_KORT = {"Automation Simplified": "Automation", "The Other Shift": "Other Shift", "Myth Check": "Myth Check", "The Fork": "The Fork"}
