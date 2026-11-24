@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Reel: The 11 PM test</title>
+<style>
+/* Verticale reel 1080x1920 (24-11, proef goedgekeurd door Oussama). Kijker telt mee: 11:04 PM, vier taken worden
+   rood afgevinkt (1/4 .. 4/4), nacht wordt rood, 4/4 + "You're not running your business." / zwart "It's running you.",
+   dan zonsopgang 7:00 AM: zelfde lijst groen "Done while you slept", slot "Let AI take the night shift." in navy.
+   Alle beweging per frame in zet(t) (opname_demo.py stuurt de klok). Veilige zone: x 230..850, y 230..1440. */
+@font-face { font-family: Inter; font-weight: 100 900; src: url('../fonts/inter-latin.woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; background: #000; }
+em { font-style: normal; }
+.laag { position: absolute; inset: 0; }
+.kol { position: absolute; left: 230px; width: 620px; text-align: center; }
+.w { display: inline-block; }
+#nacht { background: radial-gradient(ellipse 60% 35% at 50% 62%, rgba(120,140,255,.28), rgba(120,140,255,0) 70%), linear-gradient(180deg, #0B0F24 0%, #141A3A 55%, #1C1440 100%); }
+#rood { background: radial-gradient(ellipse 60% 35% at 50% 62%, rgba(255,90,90,.30), rgba(255,90,90,0) 70%), linear-gradient(180deg, #12081A 0%, #2A0E22 60%, #3A0F1E 100%); opacity: 0; }
+#scene { transform-origin: 540px 900px; }
+#klok { position: absolute; left: 0; width: 1080px; top: 250px; text-align: center; font: 900 170px/1 Inter; letter-spacing: -.06em; color: #fff; font-variant-numeric: tabular-nums; }
+#klok b { font-weight: 900; }
+#vraag { top: 450px; left: 120px; width: 840px; font: 800 56px/1.12 Inter; letter-spacing: -.03em; color: #C9D3FF; }
+.lijst { position: absolute; left: 170px; width: 740px; top: 680px; }
+.it { display: flex; align-items: center; gap: 28px; padding: 28px 32px; border-radius: 30px; font: 800 46px/1.15 Inter; letter-spacing: -.02em; margin-bottom: 22px; opacity: 0;
+  background: rgba(255,255,255,.07); color: rgba(255,255,255,.38); border: 2px solid rgba(255,255,255,.08); }
+.it.aan { background: rgba(255,255,255,.97); color: #101828; border-color: #fff; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+.vak { width: 68px; height: 68px; border-radius: 18px; border: 5px solid rgba(255,255,255,.3); flex: none; display: grid; place-items: center; font: 900 46px Inter; color: #fff; }
+.vak span { display: inline-block; }
+.it.aan .vak { background: #E5322D; border-color: #E5322D; box-shadow: 0 8px 24px rgba(229,50,45,.5); }
+#teller { position: absolute; left: 0; width: 1080px; top: 1370px; text-align: center; opacity: 0; }
+#teller span { display: inline-block; font: 900 96px Inter; letter-spacing: -.04em; padding: 10px 34px 16px; border-radius: 60px; background: #E5322D; color: #fff; box-shadow: 0 0 50px rgba(229,50,45,.6); }
+#flits { background: #fff; opacity: 0; }
+/* 4/4 */
+#vier { opacity: 0; }
+#v1 { position: absolute; left: 0; width: 1080px; top: 330px; text-align: center; font: 900 260px/1 Inter; letter-spacing: -.06em; color: #E5322D; text-shadow: 0 0 60px rgba(229,50,45,.55); }
+#v2 { top: 680px; left: 110px; width: 860px; font: 900 108px/1.02 Inter; letter-spacing: -.05em; color: #fff; }
+#zwart { background: #000; opacity: 0; }
+#z1 { top: 760px; left: 110px; width: 860px; font: 900 112px/1.02 Inter; letter-spacing: -.05em; color: #fff; }
+#z1 em { color: #E5322D; }
+/* ochtend */
+#ochtend { background: radial-gradient(circle at 78% 12%, rgba(255,236,170,.95), rgba(255,236,170,0) 28%), linear-gradient(180deg, #FFE7C2 0%, #FFF4E2 50%, #F4F7FF 100%); opacity: 0; }
+#o-klok { position: absolute; left: 0; width: 1080px; top: 250px; text-align: center; font: 900 170px/1 Inter; letter-spacing: -.06em; color: #D9572B; }
+#o-vraag { top: 450px; left: 120px; width: 840px; font: 800 56px/1.12 Inter; letter-spacing: -.03em; color: #2B2540; }
+#ochtend .it { background: #fff; color: #101828; border: 0; box-shadow: 0 16px 40px rgba(16,24,40,.10); }
+#ochtend .vak { border-color: #D0D5DD; }
+#ochtend .it.aan .vak { background: #12B76A; border-color: #12B76A; box-shadow: 0 8px 22px rgba(18,183,106,.45); }
+#ochtend .it small { display: block; font: 700 28px Inter; color: #067647; margin-top: 4px; opacity: 0; }
+/* slot */
+#eind { background: radial-gradient(ellipse at 50% 38%, #23497F, #0F2547 75%); opacity: 0; }
+#e1 { top: 520px; color: #fff; font: 900 100px/1.02 Inter; letter-spacing: -.05em; }
+#e2 { top: 640px; color: #FFC93C; font: 900 100px/1.02 Inter; letter-spacing: -.05em; }
+#e3 { top: 1030px; color: rgba(255,255,255,.9); font: 700 37px/1.2 Inter; letter-spacing: -.01em; white-space: nowrap; }
+#voet { top: 1200px; display: flex; justify-content: center; align-items: center; gap: 16px; font: 700 40px Inter; color: #fff; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
+
+<div class="laag" id="scene">
+  <div class="laag" id="nacht"></div><div class="laag" id="rood"></div>
+  <div id="klok">11:04 PM</div>
+  <div class="kol" id="vraag"></div>
+  <div class="lijst" id="nl"></div>
+  <div id="teller"><span>0/4</span></div>
+</div>
+<div class="laag" id="vier"><div class="laag" style="background:radial-gradient(ellipse 70% 40% at 50% 40%, #3A0F1E, #12081A 80%)"></div><div id="v1">4/4</div><div class="kol" id="v2"></div></div>
+<div class="laag" id="zwart"><div class="kol" id="z1"></div></div>
+<div class="laag" id="ochtend">
+  <div id="o-klok">7:00 AM</div>
+  <div class="kol" id="o-vraag"></div>
+  <div class="lijst" id="ol"></div>
+</div>
+<div class="laag" id="eind">
+  <div class="kol" id="e1"></div>
+  <div class="kol" id="e2"></div>
+  <div class="kol" id="e3">Follow for AI without the hype ⚡</div>
+  <div class="kol" id="voet"><svg width="54" height="54" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+</div>
+<div class="laag" id="flits"></div>
+
+<script src="_demo.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const k = (t, a, d) => Math.min(1, Math.max(0, (t - a) / d));
+const uit = (p) => 1 - Math.pow(1 - p, 3);
+const veer = (p) => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p) * Math.cos(p * 9.5);
+const pop = (el, t, a, van = 0.55, d = 0.3) => { const p = veer(k(t, a, d)); el.style.opacity = t >= a ? 1 : 0; el.style.transform = `scale(${van + (1 - van) * p})`; };
+function woorden(el, html, t, start, stap) {
+  if (!el.dataset.klaar) { el.innerHTML = html.split(" ").map((w) => w === "<br>" ? "<br>" : `<span class="w">${w}</span>`).join(" "); el.dataset.klaar = 1; }
+  [...el.querySelectorAll(".w")].forEach((w, i) => pop(w, t, start + i * stap, 0.5, 0.28));
+}
+const ITEMS = ["Answering emails", "Writing a quote", "Chasing an invoice", "Replying “Yes, we're open tomorrow”"];
+const rij = (x, ochtend) => `<div class="it"><div class="vak"><span></span></div><div>${x}${ochtend ? "<small>Done while you slept</small>" : ""}</div></div>`;
+$("nl").innerHTML = ITEMS.map((x) => rij(x, false)).join("");
+$("ol").innerHTML = ITEMS.map((x) => rij(x, true)).join("");
+const NR = [...$("nl").children], OR = [...$("ol").children];
+const VINK = [1.5, 2.5, 3.5, 4.5], VIER = 5.7, ZWART = 7.1, OCHTEND = 8.4, EIND = 11.4;
+
+function zet(t) {
+  // 1. nacht: klok + vraag, rijen schuiven in, elke seconde een rood vinkje
+  const n = VINK.filter((a) => t >= a).length;
+  const duw = 1 + 0.05 * uit(k(t, 0, VIER));                       // camera kruipt langzaam naar voren
+  const tik = VINK.some((a) => t >= a && t < a + 0.12) ? 1.012 : 1;  // kleine schok bij elk vinkje
+  $("scene").style.transform = `scale(${duw * tik})`;
+  $("scene").style.opacity = t < VIER ? 1 : 0;
+  $("rood").style.opacity = Math.min(1, n / 4 + 0.25 * Math.max(0, n - 2)) * 0.95;
+  pop($("klok"), t, 0, 0.7, 0.25);
+  // klok knippert de dubbele punt, minuut springt naar 05 bij 4/4
+  $("klok").innerHTML = `11<b style="opacity:${Math.floor(t * 2) % 2 ? 0.35 : 1}">:</b>0${t >= 4.5 ? 5 : 4} PM`;
+  woorden($("vraag"), "Count how many of these <br> you're still doing.", t, 0.15, 0.06);
+  NR.forEach((r, i) => {
+    const a = 0.55 + i * 0.09, p = uit(k(t, a, 0.3));
+    r.style.opacity = t >= a ? 1 : 0;
+    const aan = t >= VINK[i];
+    r.classList.toggle("aan", aan);
+    const pv = veer(k(t, VINK[i], 0.3));
+    r.style.transform = `translateX(${(1 - p) * 80}px) scale(${aan ? 1 + 0.06 * (1 - pv) : 1})`;
+    const v = r.querySelector(".vak span");
+    v.textContent = aan ? "✓" : "";
+    v.style.transform = `scale(${aan ? 0.3 + 0.7 * pv : 0})`;
+  });
+  pop($("teller"), t, VINK[0], 0.4, 0.3);
+  $("teller").style.opacity = t >= VINK[0] && t < VIER ? 1 : 0;
+  $("teller").querySelector("span").textContent = `${n}/4`;
+  const lt = VINK.filter((a) => t >= a).pop();
+  if (lt !== undefined) $("teller").querySelector("span").style.transform = `scale(${1 + 0.25 * (1 - veer(k(t, lt, 0.3)))})`;
+
+  // 2. 4/4 (hard): flits, schud, zin
+  const sch = t >= VIER && t < VIER + 0.3 ? Math.sin(t * 95) * 20 * (1 - (t - VIER) / 0.3) : 0;
+  $("vier").style.opacity = t >= VIER && t < ZWART ? 1 : 0;
+  $("vier").style.transform = `translate(${sch}px, ${sch * 0.4}px)`;
+  $("v1").style.transform = `scale(${t >= VIER ? 1.6 - 0.6 * veer(k(t, VIER, 0.3)) : 1})`;
+  woorden($("v2"), "You're not running <br> your business.", t, VIER + 0.35, 0.1);
+  $("flits").style.opacity = t >= VIER && t < VIER + 0.1 ? 0.8 * (1 - (t - VIER) / 0.1) : 0;
+
+  // 3. zwart en stil
+  $("zwart").style.opacity = t >= ZWART && t < OCHTEND + 0.3 ? 1 : 0;
+  woorden($("z1"), "It's running <em>you.</em>", t, ZWART + 0.2, 0.2);
+
+  // 4. ochtend: zon komt op (schuift van onder in), lijst groen
+  const po = uit(k(t, OCHTEND, 0.25));
+  $("ochtend").style.opacity = t >= OCHTEND ? (t < EIND + 0.3 ? 1 : 0) : 0;
+  $("ochtend").style.clipPath = `inset(${(1 - po) * 100}% 0 0 0)`;
+  $("ochtend").style.transform = `scale(${1 + 0.03 * k(t, OCHTEND, 3)})`;
+  pop($("o-klok"), t, OCHTEND + 0.1, 0.6, 0.3);
+  woorden($("o-vraag"), "Same list. Next morning.", t, OCHTEND + 0.35, 0.07);
+  OR.forEach((r, i) => {
+    const a = OCHTEND + 0.55 + i * 0.07, p = uit(k(t, a, 0.3)), c = OCHTEND + 1.0 + i * 0.25;
+    r.style.opacity = t >= a ? 1 : 0;
+    r.style.transform = `translateY(${(1 - p) * 60}px)`;
+    const aan = t >= c, pv = veer(k(t, c, 0.3));
+    r.classList.toggle("aan", aan);
+    const v = r.querySelector(".vak span"); v.textContent = aan ? "✓" : ""; v.style.transform = `scale(${aan ? 0.3 + 0.7 * pv : 0})`;
+    r.querySelector("small").style.opacity = uit(k(t, c + 0.1, 0.25));
+  });
+
+  // 5. slot
+  const pe = uit(k(t, EIND, 0.2));
+  $("eind").style.opacity = t >= EIND ? 1 : 0;
+  $("eind").style.clipPath = `inset(${(1 - pe) * 100}% 0 0 0)`;
+  woorden($("e1"), "Let AI take", t, EIND + 0.15, 0.1);
+  woorden($("e2"), "the night shift.", t, EIND + 0.6, 0.1);
+  const p3 = uit(k(t, EIND + 1.3, 0.3));
+  $("e3").style.opacity = p3; $("e3").style.transform = `translateY(${(1 - p3) * 30}px)`;
+  const pv = uit(k(t, EIND + 1.6, 0.3));
+  $("voet").style.opacity = pv; $("voet").style.transform = `translateY(${(1 - pv) * 30}px)`;
+}
+animeer(18000, () => zet(window.__klok / 1000));
+window.__hook = function () {};
+zet(0);
+</script>
+</body></html>

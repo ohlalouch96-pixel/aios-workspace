@@ -1,0 +1,22 @@
+{
+"demo": "week",
+"kleurenset": "navy",
+"hook": "Two business owners. Same week. Only one gets *Friday off.*",
+"stappen": [{"doe": "wacht", "s": 11.4}],
+"muziek_mix": [
+ {"bron": "hype-603951.mp3", "van": 30.0, "op": 0.0, "tot": 6.0, "doel": -17},
+ {"bron": "smart-sparks.mp3", "van": 8.0, "op": 8.0, "tot": 12.4, "doel": -19, "fi": 0.02, "fo": 1.0}
+],
+"geluid": [
+ {"s": "klik", "t": 0.0, "vol": 0.45}, {"s": "klik", "t": 0.15, "vol": 0.45}, {"s": "klik", "t": 0.3, "vol": 0.45}, {"s": "plop", "t": 0.45, "vol": 0.5},
+ {"s": "swoosh", "t": 2.0, "klein": true}, {"s": "ding", "t": 2.2, "hz": 988, "vol": 0.3}, {"s": "check", "t": 2.45, "vol": 0.5},
+ {"s": "swoosh", "t": 3.0, "klein": true}, {"s": "ding", "t": 3.2, "hz": 988, "vol": 0.3}, {"s": "check", "t": 3.45, "vol": 0.5},
+ {"s": "swoosh", "t": 4.0, "klein": true}, {"s": "ding", "t": 4.2, "hz": 988, "vol": 0.3}, {"s": "check", "t": 4.45, "vol": 0.5},
+ {"s": "swoosh", "t": 5.0, "klein": true}, {"s": "ding", "t": 5.2, "hz": 988, "vol": 0.3}, {"s": "check", "t": 5.45, "vol": 0.5},
+ {"s": "klap", "t": 6.0},
+ {"s": "chime", "t": 6.6, "vol": 0.35},
+ {"s": "swoosh", "t": 8.0},
+ {"s": "swoosh", "t": 10.2},
+ {"s": "chime", "t": 10.9, "vol": 0.4}
+]
+}

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Reel: Two business owners, same week</title>
+<style>
+/* Verticale reel 1080x1920 (24-11, proef goedgekeurd door Oussama). Gesplitst scherm: boven Owner A (rood, chaos),
+   onder Owner B (licht, rust). MON-THU: boven loopt 'unread' op en vallen meldingen binnen, onder vinken taken zichzelf af.
+   FRI 5 PM: A achter de laptop, B in de sportschool. Dan "Same hours. Same skills. One automated the boring stuff." en
+   slot "Be Owner B." Onderste helft blijft binnen de veilige zone (tot y 1440). Alle beweging per frame in zet(t). */
+@font-face { font-family: Inter; font-weight: 100 900; src: url('../fonts/inter-latin.woff2'); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; background: #000; }
+em { font-style: normal; }
+.laag { position: absolute; inset: 0; }
+.kol { position: absolute; left: 230px; width: 620px; text-align: center; }
+.w { display: inline-block; }
+.helft { position: absolute; left: 0; width: 1080px; height: 960px; overflow: hidden; }
+#boven { top: 0; background: radial-gradient(ellipse at 50% 70%, rgba(229,50,45,.35), rgba(229,50,45,0) 65%), linear-gradient(180deg, #1A0B12 0%, #2E0F18 100%); color: #fff; }
+#onder { top: 960px; background: radial-gradient(circle at 80% 20%, rgba(255,240,190,.9), rgba(255,240,190,0) 30%), linear-gradient(180deg, #DDEFFF 0%, #F4F9FF 100%); color: #0B2A4A; }
+.wie { position: absolute; left: 70px; font: 800 30px Inter; letter-spacing: .14em; text-transform: uppercase; padding: 10px 20px; border-radius: 30px; opacity: 0; }
+#boven .wie { top: 250px; background: rgba(255,255,255,.12); }
+#onder .wie { top: 110px; background: #fff; box-shadow: 0 8px 20px rgba(16,24,40,.08); }
+.teller { position: absolute; right: 70px; font: 900 130px/1 Inter; letter-spacing: -.05em; text-align: right; opacity: 0; font-variant-numeric: tabular-nums; }
+.teller small { display: block; font: 800 30px Inter; letter-spacing: 0; opacity: .75; margin-top: 6px; }
+#boven .teller { top: 320px; color: #FF5A52; }
+#onder .teller { top: 80px; font-size: 104px; color: #12B76A; }
+.melding { position: absolute; left: 70px; width: 640px; display: flex; gap: 18px; align-items: center; padding: 16px 24px; border-radius: 22px; font: 700 31px Inter; opacity: 0; }
+#boven .melding { background: rgba(255,255,255,.96); color: #101828; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+#onder .melding { background: #fff; color: #101828; box-shadow: 0 12px 30px rgba(16,24,40,.10); }
+.melding i { font-style: normal; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; flex: none; font-size: 28px; font-weight: 900; }
+#onder .melding i { background: #12B76A; color: #fff; }
+#boven .melding i { background: #FEE4E2; }
+.vrij { position: absolute; left: 70px; right: 70px; text-align: center; font: 900 88px/1.04 Inter; letter-spacing: -.045em; opacity: 0; }
+#dag { position: absolute; left: 0; width: 1080px; top: 892px; height: 136px; display: grid; place-items: center; z-index: 5; opacity: 0; }
+#dag span { font: 900 78px Inter; letter-spacing: -.03em; background: #FFC93C; color: #1A1200; padding: 8px 44px 14px; border-radius: 70px; box-shadow: 0 16px 40px rgba(0,0,0,.4); white-space: nowrap; }
+#hook { position: absolute; left: 80px; width: 920px; top: 600px; text-align: center; z-index: 6; }
+#hook .blok { display: inline-block; background: #17345F; color: #fff; padding: 10px 26px 16px; border-radius: 16px; font: 900 76px/1 Inter; letter-spacing: -.04em; margin-bottom: 12px; box-shadow: 0 14px 30px rgba(0,0,0,.45); }
+#hook em { color: #FFC93C; }
+#flits { background: #fff; opacity: 0; z-index: 9; }
+#zin { background: #F6F3EC; opacity: 0; z-index: 7; }
+#z1 { top: 560px; font: 900 96px/1.04 Inter; letter-spacing: -.045em; color: #101828; }
+#z2 { top: 790px; font: 900 96px/1.04 Inter; letter-spacing: -.045em; color: #1F5EFF; }
+#eind { background: radial-gradient(ellipse at 50% 38%, #23497F, #0F2547 75%); opacity: 0; z-index: 8; }
+#e1 { top: 560px; color: #fff; font: 900 130px/1 Inter; letter-spacing: -.05em; }
+#e1 em { color: #FFC93C; }
+#e3 { top: 1030px; color: rgba(255,255,255,.9); font: 700 37px/1.2 Inter; letter-spacing: -.01em; white-space: nowrap; }
+#voet { top: 1200px; display: flex; justify-content: center; align-items: center; gap: 16px; font: 700 40px Inter; color: #fff; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="scherm" style="display:none"><div id="camera"><div id="desk"></div></div></div>
+
+<div class="helft" id="boven"><div class="wie">Owner A</div><div class="teller" id="ta">0<small>unread</small></div><div id="ma"></div>
+  <div class="vrij" id="va" style="top:420px">Still at the laptop. 💻<br><span style="color:#FF5A52;font-size:66px">203 unread.</span></div></div>
+<div class="helft" id="onder"><div class="wie">Owner B</div><div class="teller" id="tb">0<small>unread</small></div><div id="mb"></div>
+  <div class="vrij" id="vb" style="top:150px;color:#0B2A4A">At the gym. 🏋️<br><span style="color:#12B76A;font-size:66px">Phone on silent.</span></div></div>
+<div id="dag"><span></span></div>
+<div id="hook"><div><span class="blok" id="b1">Two business owners.</span></div><div><span class="blok" id="b2">Same week.</span></div><div><span class="blok" id="b3">Only one gets</span></div><div><span class="blok" id="b4"><em>Friday off.</em></span></div></div>
+<div class="laag" id="zin"><div class="kol" id="z1"></div><div class="kol" id="z2"></div></div>
+<div class="laag" id="eind">
+  <div class="kol" id="e1"></div>
+  <div class="kol" id="e3">Follow for AI without the hype ⚡</div>
+  <div class="kol" id="voet"><svg width="54" height="54" viewBox="0 0 44 44" fill="none"><rect x="19" y="6" width="6" height="32" rx="1" fill="#fff"/><path d="M8 36 Q14 28 22 22 Q30 16 36 8" stroke="#9DBBE3" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="8" cy="36" r="2.8" fill="#9DBBE3"/><circle cx="36" cy="8" r="2.8" fill="#9DBBE3"/></svg>@insightance.ai</div>
+</div>
+<div class="laag" id="flits"></div>
+
+<script src="_demo.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const k = (t, a, d) => Math.min(1, Math.max(0, (t - a) / d));
+const uit = (p) => 1 - Math.pow(1 - p, 3);
+const veer = (p) => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p) * Math.cos(p * 9.5);
+const pop = (el, t, a, van = 0.55, d = 0.3) => { const p = veer(k(t, a, d)); el.style.opacity = t >= a ? 1 : 0; el.style.transform = `scale(${van + (1 - van) * p})`; };
+function woorden(el, html, t, start, stap) {
+  if (!el.dataset.klaar) { el.innerHTML = html.split(" ").map((w) => w === "<br>" ? "<br>" : `<span class="w">${w}</span>`).join(" "); el.dataset.klaar = 1; }
+  [...el.querySelectorAll(".w")].forEach((w, i) => pop(w, t, start + i * stap, 0.5, 0.28));
+}
+const DAGEN = [["MON", 12], ["TUE", 47], ["WED", 93], ["THU", 140]];
+const ROOD = [["📧", "Where's my quote?? (3rd email)"], ["📞", "4 missed calls"], ["🧾", "Invoice #1031 · 30 days overdue"], ["💬", "Are you open tomorrow?"]];
+const GROEN = ["Quote sent automatically", "Calls answered, jobs booked", "Invoice reminder sent · paid", "Customer questions answered"];
+$("ma").innerHTML = ROOD.map(([ic, x], i) => `<div class="melding" style="top:${480 + i * 92}px"><i>${ic}</i>${x}</div>`).join("");
+$("mb").innerHTML = GROEN.map((x, i) => `<div class="melding" style="top:${200 + i * 82}px"><i>✓</i>${x}</div>`).join("");
+const MA = [...$("ma").children], MB = [...$("mb").children];
+const D0 = 2.0, VR = 6.0, ZIN = 8.0, EIND = 10.2;
+
+function zet(t) {
+  // hook (0-2 s)
+  [["b1", 0.0], ["b2", 0.15], ["b3", 0.3], ["b4", 0.45]].forEach(([id, a]) => {
+    const p = veer(k(t, a, 0.14)); $(id).style.opacity = t >= a && t < D0 ? 1 : 0; $(id).style.transform = `scale(${1.35 - 0.35 * p})`;
+  });
+  document.querySelectorAll(".wie").forEach((w) => { w.style.opacity = uit(k(t, D0 - 0.2, 0.3)); });
+  // dagen
+  const d = Math.min(3, Math.floor((t - D0) / 1.0));
+  const inWeek = t >= D0 && t < VR;
+  $("dag").style.opacity = t >= D0 && t < ZIN ? 1 : 0;
+  if (t >= D0) {
+    const a = t < VR ? D0 + d : VR;
+    $("dag").querySelector("span").textContent = t < VR ? DAGEN[d][0] : "FRI · 5 PM";
+    $("dag").style.transform = `scale(${0.5 + 0.5 * veer(k(t, a, 0.3))})`;
+  }
+  // boven: teller loopt op naar het getal van die dag, meldingen vallen binnen en trillen
+  const vanN = d > 0 ? DAGEN[d - 1][1] : 0, naarN = inWeek ? DAGEN[d][1] : 140;
+  const nA = Math.round(vanN + (naarN - vanN) * uit(k(t, D0 + Math.max(0, d), 0.6)));
+  $("ta").style.opacity = inWeek ? 1 : 0;
+  $("ta").firstChild.textContent = inWeek ? nA : 140;
+  $("ta").style.transform = `scale(${inWeek ? 1 + 0.12 * (1 - uit(k(t, D0 + d, 0.35))) : 1})`;
+  MA.forEach((m, i) => {
+    const a = D0 + i + 0.2, p = veer(k(t, a, 0.35));
+    m.style.opacity = t >= a && t < VR ? 1 : 0;
+    const schud = t >= a && t < a + 0.35 ? Math.sin(t * 80) * 8 * (1 - (t - a) / 0.35) : 0;
+    m.style.transform = `translate(${schud}px, ${(1 - p) * -80}px) rotate(${i % 2 ? 2 : -2}deg)`;
+  });
+  // onder: 0 blijft 0 (veert even), taken vinken zichzelf af
+  $("tb").style.opacity = inWeek ? 1 : 0;
+  $("tb").style.transform = `scale(${inWeek ? 1 + 0.08 * (1 - veer(k(t, D0 + d + 0.35, 0.3))) : 1})`;
+  MB.forEach((m, i) => {
+    const a = D0 + i + 0.35, p = uit(k(t, a, 0.3));
+    m.style.opacity = t >= a && t < VR ? 1 : 0;
+    m.style.transform = `translateX(${(1 - p) * 80}px)`;
+    m.querySelector("i").style.transform = `scale(${0.3 + 0.7 * veer(k(t, a + 0.1, 0.3))})`;
+  });
+  // vrijdag 17:00
+  pop($("va"), t, VR + 0.15, 0.7, 0.3); $("va").style.opacity = t >= VR + 0.15 && t < ZIN ? 1 : 0;
+  pop($("vb"), t, VR + 0.6, 0.7, 0.3); $("vb").style.opacity = t >= VR + 0.6 && t < ZIN ? 1 : 0;
+  $("flits").style.opacity = t >= VR && t < VR + 0.08 ? 0.6 * (1 - (t - VR) / 0.08) : 0;
+  // zin
+  const pz = uit(k(t, ZIN, 0.22));
+  $("zin").style.opacity = t >= ZIN && t < EIND + 0.3 ? 1 : 0;
+  $("zin").style.clipPath = `circle(${pz * 1400}px at 540px 960px)`;
+  $("zin").style.transform = `scale(${1 + 0.03 * k(t, ZIN, 2.2)})`;
+  woorden($("z1"), "Same hours. <br> Same skills.", t, ZIN + 0.15, 0.1);
+  woorden($("z2"), "One automated <br> the boring stuff.", t, ZIN + 0.9, 0.1);
+  // slot
+  const pe = uit(k(t, EIND, 0.2));
+  $("eind").style.opacity = t >= EIND ? 1 : 0;
+  $("eind").style.clipPath = `inset(${(1 - pe) * 100}% 0 0 0)`;
+  woorden($("e1"), "Be <br> <em>Owner</em> <em>B.</em>", t, EIND + 0.15, 0.13);
+  const p3 = uit(k(t, EIND + 0.9, 0.3));
+  $("e3").style.opacity = p3; $("e3").style.transform = `translateY(${(1 - p3) * 30}px)`;
+  const pv = uit(k(t, EIND + 1.2, 0.3));
+  $("voet").style.opacity = pv; $("voet").style.transform = `translateY(${(1 - pv) * 30}px)`;
+}
+animeer(18000, () => zet(window.__klok / 1000));
+window.__hook = function () {};
+zet(0);
+</script>
+</body></html>
