@@ -37,7 +37,7 @@ TAKEN = [
     {"id": "webshop_followups", "titel": "Follow-ups versturen", "chat": "Webshops", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_post", "titel": "Post plaatsen / plannen", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
     {"id": "instagram_kwartier", "titel": "Kwartiertje reageren", "chat": "Instagram", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
-    {"id": "ondernemers_followups", "titel": "Follow-ups versturen", "chat": "Installatiebedrijven en makelaars", "ritme": "Dagelijks", "dagen": ALLE_DAGEN},
+    # ondernemers_followups verwijderd 24-11: geen follow-ups meer naar installatiebedrijven/makelaars.
     {"id": "belronde", "titel": "Belronde", "chat": "Installatiebedrijven en makelaars", "ritme": "Ma t/m vr", "dagen": {0, 1, 2, 3, 4}, "kort": "Belronde", "toon_altijd": True},
     {"id": "accountants_belronde", "titel": "Belronde", "chat": "Accountants en administratiekantoren", "ritme": "Ma t/m vr", "dagen": {0, 1, 2, 3, 4}, "toon_altijd": True},
     {"id": "ga4", "titel": "Websitecijfers (GA4)", "chat": "Website", "ritme": "Maandag", "dagen": {0}, "kort": "Websitecijfers", "agenda": "Websitecijfers (GA4)"},

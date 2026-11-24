@@ -674,6 +674,8 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 /* To-do in zijmenu op één regel per punt (22-11) */
 .menutodo li{white-space:nowrap;min-width:0}.menutodo li span{overflow:hidden;text-overflow:ellipsis}
 .menutodo ul{gap:4px}
+/* Klaarzettaken in Content-tegel compact (24-11) */
+.kaart.content .takenlijst{gap:4px}.kaart.content .takenlijst .taak{min-height:26px;padding:2px 9px}
 /* Agenda: zo hoog als de linkerkolom, lange lijst scrolt binnen de tegel (19-11) */
 .raster{align-items:stretch}.raster > :first-child{align-self:start}
 .zijkant{position:relative;min-height:0}
