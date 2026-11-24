@@ -86,7 +86,7 @@ Oussama checkt de hook daarna zelf in Telegram. Bij een proef altijd vooraf zegg
 
 ## Contentmix (sinds 24-11: 10 posts per week, ma-vr twee per dag)
 
-Elke werkdag één beeldpost om 14:00 en één reel om 19:00, nooit twee reels op één dag. De twee posts van een dag hebben nooit dezelfde kleur en zijn nooit allebei blauwig (navy/blauw/wit), afspraak 24-11 (`kleur_past` in de weekplanning). De agent houdt de voorraad half reels, half beeldposts (`kies_soort`).
+Elke werkdag één beeldpost om 14:00 en één reel om 19:00, nooit twee reels op één dag. Variatieregel (Oussama 24-11): twee posts die direct na elkaar komen hebben nooit dezelfde kleur, zijn nooit allebei blauwig (navy/blauw/wit), en nooit hetzelfde soort onderwerp (serie, soort of dienst). Dat geldt ook over het weekend heen: vrijdag 19:00 en maandag 14:00 tellen als opeenvolgend. Actualiteit alleen op woensdag; verder kiest de weekplanning willekeurig door elkaar (`botst` in `weekplanning`). Een post die Oussama vooraf op een dag zet (`gepland_op`) blijft daar staan; een eigen tijdstip staat in `data/instagram_vaste_tijden.json` (bv. robotvideo #17 di 1-12 om 14:00). De agent houdt de voorraad half reels, half beeldposts (`kies_soort`).
 
 | Soort | Inhoud | Hoe vaak |
 |---|---|---|
