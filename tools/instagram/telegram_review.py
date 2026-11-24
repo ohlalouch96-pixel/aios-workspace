@@ -183,6 +183,9 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
     vol = volle_dagen()
     over, regels = [r for r in rijen if r[4] not in vol], []  # door Oussama zelf op een volle dag gezet: blijft daar
+    week = {d.isoformat() for d in dagen}
+    vast = [r for r in over if r[4] in week]  # vooraf op een dag van deze week gezet (bv. robotvideo op di 1-12): blijft daar
+    over = [r for r in over if r not in vast]
     woensdag = next((d for d in dagen if d.weekday() == 2), None)
     actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
     is_reel = lambda r: r[1] in REELS  # noqa: E731
@@ -196,8 +199,10 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     for dag in dagen:
         kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
         regels.append(f"<b>{kop}</b>")
-        gekozen = []
+        gekozen = [r for r in vast if r[4] == dag.isoformat()]
         for reel_plek in (False, True):
+            if len(gekozen) >= PER_DAG or any(is_reel(g) == reel_plek for g in gekozen):
+                continue
             kies_uit = [r for r in over if r is not actualiteit or dag == woensdag or woensdag is None]
             if not kies_uit:
                 continue
