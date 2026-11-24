@@ -24,6 +24,7 @@ Gebruik (CLI):
 import argparse
 import html
 import json
+import re
 import subprocess
 import sys
 import time
@@ -146,7 +147,8 @@ def stuur(bot, conn, post_id):
                                      {"text": "❌ Overslaan", "callback_data": f"skip:{post_id}"}]])
 
 
-POSTTIJD = "14:00"  # vaste tijd voor gewone posts (gekozen 20-11: na de lunch in NL, lunch in VK, ochtend in VS)
+PER_DAG = 2  # sinds 24-11 twee posts per werkdag (was 1 om 14:00): één beeldpost en één reel, nooit twee reels op een dag
+TIJD_BEELD, TIJD_REEL = "12:00", "19:00"  # beeld: lunch NL/VK; reel: avond NL/VK, ochtend/middag VS
 REELS = {"tekst_reel", "demo_reel", "stem_video"}
 DAGEN = ["ma", "di", "wo", "do", "vr", "za", "zo"]
 MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
@@ -167,36 +169,43 @@ def vrije_dagen(vandaag=None):
 
 
 def weekplanning(conn, vandaag=None, bewaar=True):
-    """Voorstel voor de komende week (ma t/m vr, 1 post per dag om POSTTIJD): alle klaarstaande posts die nog niet
-    geplaatst zijn. Actualiteiten eerst (nieuws veroudert), nooit twee reels of twee beeldposts op opeenvolgende dagen
-    als het anders kan. Advertenties en story-ideeën hebben geen vaste dag en staan apart. Een actualiteit komt op
-    woensdag (breekt de week mooi doormidden, besluit 20-11). Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
+    """Voorstel voor de komende week (ma t/m vr, PER_DAG posts per dag: een beeldpost om TIJD_BEELD en een reel om
+    TIJD_REEL; ontbreekt een van beide, dan het andere soort). Alle klaarstaande posts die nog niet geplaatst zijn.
+    Bouwen in het openbaar en actualiteiten eerst (vers), een actualiteit op woensdag (besluit 20-11). Advertenties en
+    story-ideeën hebben geen vaste dag en staan apart. Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
     maandag, dagen = vrije_dagen(vandaag)
     rijen = conn.execute("SELECT id, soort, status, onderwerp FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
-                         "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'actualiteit') DESC, id").fetchall()
+                         "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'openbaar') DESC, (soort = 'actualiteit') DESC, id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
-    over, vorige, regels = list(rijen), None, []
+    over, regels = list(rijen), []
     woensdag = next((d for d in dagen if d.weekday() == 2), None)
     actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
+    is_reel = lambda r: r[1] in REELS  # noqa: E731
     for dag in dagen:
         kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
-        if not over:
-            regels.append(f"{kop} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
-            continue
-        groep = lambda r: r[1] in REELS  # noqa: E731
-        if dag == woensdag and actualiteit in over:
-            keuze = actualiteit
-        else:
-            kies_uit = [r for r in over if r is not actualiteit or woensdag is None] or over
-            keuze = next((r for r in kies_uit if vorige is None or groep(r) != vorige), kies_uit[0])
-        over.remove(keuze)
-        vorige = groep(keuze)
-        pid, soort, st, onderwerp = keuze
-        label = SOORT_LABEL.get(soort, soort)
-        wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
-        regels.append(f"<b>{kop} · {POSTTIJD}</b> · #{pid} {html.escape(label)}{wacht}\n   {html.escape((onderwerp or '')[:70])}")
-        if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
-            conn.execute("UPDATE instagram_posts SET gepland_op = ? WHERE id = ?", (dag.isoformat(), pid))
+        regels.append(f"<b>{kop}</b>")
+        gekozen = []
+        for reel_plek in (False, True):
+            kies_uit = [r for r in over if r is not actualiteit or dag == woensdag or woensdag is None]
+            if not kies_uit:
+                continue
+            if dag == woensdag and actualiteit in kies_uit and not reel_plek:
+                keuze = actualiteit
+            else:  # past het soort niet, dan het andere soort, maar nooit twee reels op één dag als het anders kan
+                keuze = next((r for r in kies_uit if is_reel(r) == reel_plek), None) or \
+                        next((r for r in kies_uit if not (gekozen and is_reel(gekozen[0]) and is_reel(r))), kies_uit[0])
+            over.remove(keuze)
+            gekozen.append(keuze)
+        gekozen.sort(key=is_reel)  # beeldpost eerst (12:00), reel daarna (19:00)
+        tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
+        leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
+        for tijd, (pid, soort, st, onderwerp) in zip(tijden, gekozen):
+            wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
+            regels.append(f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}")
+            if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
+                conn.execute("UPDATE instagram_posts SET gepland_op = ? WHERE id = ?", (dag.isoformat(), pid))
+        for tijd in leeg:
+            regels.append(f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
     eind = maandag + timedelta(days=4)
     tekst = f"📅 <b>Weekplanning {maandag.day} {MAANDEN[maandag.month - 1]} t/m {eind.day} {MAANDEN[eind.month - 1]}</b>\n\n" + "\n".join(regels)
     if over:
@@ -294,7 +303,16 @@ def luister(bot, conn):
                     conn.commit()
                     continue
                 if wacht_op_feedback is None:
-                    bot.tekst("Druk eerst op ✏️ Aanpassen bij het concept waar je feedback op hebt.")
+                    tekst = msg.get("text") or (transcribeer(bot, msg["voice"]["file_id"]) if msg.get("voice") else None)
+                    treffer = re.match(r"^\W*(bouwen in het openbaar|openbaar)\b\W*", tekst or "", re.I)
+                    if treffer and len(tekst[treffer.end():].split()) >= 5:
+                        verhaal = tekst[treffer.end():].strip()
+                        bot.tekst(f"🏗️ Genoteerd voor <b>bouwen in het openbaar</b>:\n<i>{html.escape(verhaal)}</i>\n\nHet concept komt over een paar minuten hier binnen.")
+                        print(f"openbaar: {verhaal}")
+                        subprocess.Popen([sys.executable, str(WORKSPACE_ROOT / "apps" / "content" / "agent.py"), "openbaar", verhaal], cwd=str(WORKSPACE_ROOT))
+                        continue
+                    bot.tekst("Druk eerst op ✏️ Aanpassen bij het concept waar je feedback op hebt.\n\n"
+                              "Wil je een post voor <b>bouwen in het openbaar</b>? Begin je bericht (getypt of ingesproken) met het woord <b>openbaar</b> en vertel wat je deed en leerde.")
                     continue
                 tekst = msg.get("text") or (transcribeer(bot, msg["voice"]["file_id"]) if msg.get("voice") else None)
                 if not tekst:
@@ -334,6 +352,11 @@ def main():
         conn.commit()
     elif args.cmd == "afvinken":
         print("Op geplaatst gezet:", afvinken(bot, conn))
+        if date.today().weekday() == 3:  # donderdag 20:00: vraag om het verhaal voor de wekelijkse bouwen-in-het-openbaar-post (24-11)
+            bot.tekst("🏗️ <b>Bouwen in het openbaar</b>\n\nWat deed je deze week voor je bedrijf, en wat leerde je ervan? "
+                      "Spreek een minuutje in (of typ het) en begin met het woord <b>openbaar</b>. Bijvoorbeeld:\n"
+                      "<i>openbaar: deze week 40 kantoren gebeld, 3 gesprekken, geleerd dat ...</i>\n\n"
+                      "Het concept staat dan zaterdag klaar voor de weekplanning.")
         print("Weekplanning verstuurd.")
 
 

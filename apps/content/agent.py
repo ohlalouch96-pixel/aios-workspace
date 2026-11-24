@@ -184,9 +184,19 @@ def stem_tegoed():
         return 0
 
 
+REEL_SOORTEN = {"tekst_reel", "demo_reel", "stem_video"}
+VOORRAAD = 10  # sinds 24-11 twee posts per werkdag (5 x 2), was 5
+
+
 def kies_soort(conn):
+    """Soort volgens MIX, maar de voorraad blijft half reels, half beeldposts (24-11: per dag één reel en één beeldpost)."""
     laatste = [v["soort"] for v in vorige(conn, 2)]
     opties = {s: w for s, w in MIX.items() if not laatste or s != laatste[0]}
+    voorraad = [r[0] for r in conn.execute("SELECT soort FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')")]
+    reels = sum(s in REEL_SOORTEN for s in voorraad)
+    if reels != len(voorraad) - reels:  # het soort dat achterloopt krijgt voorrang
+        meer_reels = reels < len(voorraad) - reels
+        opties = {s: w for s, w in opties.items() if (s in REEL_SOORTEN) == meer_reels} or opties
     if "stem_video" in opties and stem_tegoed() < STEM_MIN_TEGOED:
         del opties["stem_video"]  # te weinig tegoed: dan een ander soort post
     return random.choices(list(opties), weights=list(opties.values()))[0]
@@ -509,7 +519,7 @@ def nieuwe_map(naam):
 
 
 def render(soort, spec, kleur, map_, extra=None):
-    if soort in ("carrousel", "actualiteit"):
+    if soort in ("carrousel", "actualiteit", "openbaar"):
         import render_carrousel
         render_carrousel.render({"serie": spec["serie"], "kleurenset": kleur, "slides": spec["slides"]}, map_)
     elif soort == "tekst_reel":
@@ -664,13 +674,38 @@ def maak(conn, soort=None, zonder_stem=False):
     return pid
 
 
+def maak_openbaar(conn, verhaal):
+    """Wekelijkse serie 'Building in public' (24-11): Oussama vertelt (Nederlands, vaak ingesproken) wat hij deed en
+    leerde; dat wordt een carrousel in de stijl van #10 (32 calls, de best lopende post). Alleen zijn eigen feiten."""
+    aantal, tags = hashtag_eisen(conn)
+    bron = f"Source: Oussama's own story of this week (Dutch, possibly a voice transcript; use ONLY these facts and numbers, invent nothing):\n\"\"\"\n{verhaal}\n\"\"\""
+    prompt = (f"Turn this into an Instagram carousel (3 to 5 slides) in the series 'BUILDING IN PUBLIC': an honest first-person update from Oussama, "
+              f"a solo founder building an AI automation business.\n{bron}\n\n"
+              "Model it on his best performing post: cover = the concrete thing he did (a real number from the story if there is one); then 'tekst' slides with "
+              "what happened and 2 or 3 short lessons, at least one where he was wrong or surprised; last slide type 'slot' with a question to the viewer in 'titel' "
+              "and an empty 'knop'. First person ('I'), plain and honest, no hype, no selling, no client or company names. Mark the key word in titles with *asterisks*. "
+              "'serie' must be 'BUILDING IN PUBLIC'. Leave unused fields empty.\n"
+              "Caption for THIS series (overrides the length rule below): first line = the hook, then what he did and the numbered lessons, max ~80 words, "
+              "ending with a short question to the reader (no 'send me a DM'). One hashtag must be #buildinpublic.\n"
+              f"{taalregels(aantal, [t for t in tags if t.lower() != '#buildinpublic'])}")
+    hook = kies_hook(conn, "carrousel", bron) if HOOKSTAP_AAN else None
+    spec = schrijf(conn, "carrousel", prompt + hook_instructie(hook, "carrousel"), aantal, [t for t in tags if t.lower() != "#buildinpublic"], hook=hook)
+    kleur, map_ = wachtrij.kies_kleur(conn), nieuwe_map(spec["onderwerp"])
+    (map_ / "verhaal.txt").write_text(verhaal, encoding="utf-8")  # herleidbaar: waar komen de feiten vandaan
+    render("carrousel", spec, kleur, map_)
+    pid = opslaan(conn, "openbaar", spec, kleur, map_)
+    telegram_review.stuur(telegram_review.Bot(), conn, pid)
+    print(f"Bouwen in het openbaar: concept #{pid} verstuurd naar Telegram.")
+    return pid
+
+
 # ---------- feedback ----------
 def verwerk(conn):
     for fid, pid, tekst in conn.execute("SELECT id, post_id, tekst FROM instagram_feedback WHERE verwerkt = 0 ORDER BY id").fetchall():
         rij = conn.execute("SELECT soort, kleurenset, map, hashtags FROM instagram_posts WHERE id = ?", (pid,)).fetchone()
         soort, kleur, map_ = rij[0], rij[1], Path(rij[2])
         oud = json.loads((map_ / "spec.json").read_text(encoding="utf-8"))
-        schema_soort = {"actualiteit": "carrousel", "fork": "kaart"}.get(soort, soort)
+        schema_soort = {"actualiteit": "carrousel", "openbaar": "carrousel", "fork": "kaart"}.get(soort, soort)
         aantal = len(json.loads(rij[3] or "[]"))
         print(f"Feedback #{fid} op concept #{pid}: {tekst}")
         prompt = (f"Revise this Instagram concept based on Oussama's feedback (he writes in Dutch). Change only what the feedback asks; keep everything else, "
@@ -720,7 +755,9 @@ def main():
     m.add_argument("--zonder-stem", action="store_true", help="stem_video als gratis proef zonder Eric, niet naar Telegram")
     sub.add_parser("verwerk")
     d = sub.add_parser("dagelijks")
-    d.add_argument("--vol", action="store_true", help="vul aan tot een hele week (5) zonder dagmaximum; zaterdag 07:00 vóór de weekplanning")
+    d.add_argument("--vol", action="store_true", help="vul aan tot een hele week (10) zonder dagmaximum; zaterdag 07:00 vóór de weekplanning")
+    o = sub.add_parser("openbaar", help="bouwen in het openbaar: concept uit Oussama's eigen verhaal (via de content-bot)")
+    o.add_argument("verhaal")
     sub.add_parser("kosten")
     args = ap.parse_args()
     conn = wachtrij.verbind()
@@ -729,11 +766,17 @@ def main():
         maak(conn, args.soort, args.zonder_stem)
     elif args.cmd == "verwerk":
         verwerk(conn)
+    elif args.cmd == "openbaar":
+        try:
+            maak_openbaar(conn, args.verhaal)
+        except Exception as fout:
+            telegram_review.Bot().tekst(f"⚠️ Het bouwen-in-het-openbaar-concept lukte niet ({html.escape(str(fout))[:300]}). Stuur je verhaal nog een keer?")
+            raise
     elif args.cmd == "dagelijks":
         # voorraad van 5 posts die een dag in de weekplanning vullen (advertenties en story-ideeën tellen niet mee);
         # normaal max 2 nieuwe per dag, zaterdag 07:00 (--vol) zoveel als nodig zodat de planning van 09:00 vol is
         telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')"
-        doel = len(telegram_review.vrije_dagen()[1]) if args.vol else 5  # zaterdag: precies de vrije dagen van volgende week
+        doel = len(telegram_review.vrije_dagen()[1]) * telegram_review.PER_DAG if args.vol else VOORRAAD  # zaterdag: precies de vrije plekken van volgende week
         nodig = max(0, doel - conn.execute(telling).fetchone()[0])
         for _ in range(nodig + 3 if args.vol else min(2, nodig)):  # +3 ruimte voor een story-idee of mislukte poging
             if conn.execute(telling).fetchone()[0] >= doel:

@@ -84,7 +84,9 @@ Oussama checkt de hook daarna zelf in Telegram. Bij een proef altijd vooraf zegg
 - Reels 1080×1920, geen muziek (Oussama voegt die zelf toe als hij wil). Tekst-reel: `tools/instagram/render_tekst_reel.py` (beats van 2-4 sec, 12-16 sec totaal, levert ook cover.jpg). Rendert ±1 min per reel; vereist imageio-ffmpeg.
 - **Tekst- en demo-reels: alleen tekst + muziek, geen stem (besluit 10-11, na het bekijken van de versies met Eric).** De tekst vertelt het verhaal al, veel mensen kijken zonder geluid, en muziek uit de Instagram-bibliotheek helpt het bereik. Muziekadvies dus voor een video zonder stem (mag wat voller). Eric blijft alleen voor de video's met voice-over over een dienst (`stem_video`), die om de stem heen zijn gebouwd. Test 2 à 3 weken: kijktijd, gedeeld/opgeslagen en DM's van beide soorten vergelijken. De tools kunnen nog wel met stem (`--stem`/`--zonder-stem`, afsluiter als eigen zin, controle op overgeslagen woorden), mocht dat terugkomen.
 
-## Contentmix (±5 posts per week, geen vaste dagen of tijden)
+## Contentmix (sinds 24-11: 10 posts per week, ma-vr twee per dag)
+
+Elke werkdag één beeldpost om 12:00 en één reel om 19:00, nooit twee reels op één dag. De agent houdt de voorraad half reels, half beeldposts (`kies_soort`).
 
 | Soort | Inhoud | Hoe vaak |
 |---|---|---|
@@ -93,6 +95,16 @@ Oussama checkt de hook daarna zelf in Telegram. Bij een proef altijd vooraf zegg
 | Actualiteit | AI-nieuws, dubbel gecheckt | ±1 per week |
 | Losse afbeelding | The Fork | af en toe |
 | Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
+| Bouwen in het openbaar | Oussama's eigen week: wat hij deed en leerde (serie BUILDING IN PUBLIC) | 1 per week, zie hieronder |
+
+### Bouwen in het openbaar (vaste serie sinds 24-11)
+
+Aanleiding: de post "I called 32 accounting firms in one day" (#10) deed het zonder promotie het best van alles (200+ views in 18 uur). Echt, herkenbaar, met een belofte in de eerste zin.
+
+- Donderdag 20:00 vraagt de bot in Telegram om het verhaal van de week (zit in `telegram_review.py afvinken`).
+- Oussama typt of spreekt in, beginnend met het woord **openbaar** (bijv. "openbaar: deze week 40 kantoren gebeld..."). Minimaal 5 woorden na het woord.
+- De bot start `agent.py openbaar "<verhaal>"`: carrousel 3-5 slides, serie BUILDING IN PUBLIC, eerste persoon, alleen zijn eigen feiten en cijfers, minstens één les waarin hij zich vergiste, slot = vraag aan de kijker. Caption mag hier tot ±80 woorden, eindigt op een vraag, geen DM-afsluiter (soort `openbaar`), altijd #buildinpublic. Verhaal bewaard als `verhaal.txt` in de conceptmap.
+- In de weekplanning gaat deze post als eerste mee (vers).
 
 ## Muziekadvies (bij elk concept met video)
 
@@ -163,6 +175,6 @@ Bij elke nieuwe versie:
 - **Stem bijstellen (09-11):** regie-tags [understated] en [softly] laten Eric omlaag gaan in toon; gebruik [confident] voor zinnen die even krachtig moeten blijven. Tempo/volume per zin gratis bijstellen via `"stem"` in de spec (toonhoogte kunstmatig verhogen NIET doen: verandert de klankkleur, klonk als een andere stem; een zinseinde gaat van nature iets omlaag en dat is goed), eerst `--alleen-stem` laten beluisteren, pas daarna de video (alleen nieuwe opnames kosten tegoed). Een zin mag uit een tweede opname van hetzelfde hele script komen (`"opname": "alt"`); toonhoogte per zin nameten.
 - **Voice-over (06-11):** zelf toegevoegde stilte was niet het probleem (ElevenLabs-pauzes zijn ook digitale stilte); wel het knippen door een ademhaling en een vlakkere opname. Hele script in één keer inspreken, niet per zin: per zin klonk elke beat als een herstart met een dode pauze ertussen. Tekst in beeld volgt exact de woordvolgorde van wat gezegd wordt (anders hoor je iets anders dan je leest). Animaties rustig (±0,7 s in) en op het gesproken woord, niet "tak tak tak". Scènes lopen in elkaar over (inhoud glijdt weg net voor de volgende zin).
 - **Bot reageerde niet op knoppen (15-11):** IPv6 van de server naar Telegram viel weg; Python probeerde eerst IPv6 en bleef hangen ("Read timed out" in data/instagram-bot.log). Opgelost met `precedence ::ffff:0:0/96  100` in /etc/gai.conf (IPv4 eerst, backup /etc/gai.conf.backup-2026-11-15). Een te oude knopklik laat de bot niet meer vastlopen. Check bij "knop doet niets": `curl -4/-6 .../getMe` en `getWebhookInfo` (pending_update_count).
-- **Weekplanning (20-11):** Oussama plant elk weekend de hele week in. De bot stuurt elke zondag 09:00 een voorstel (zaterdag: concepten om 07:00, goedkeuren en aanpassen op zaterdag; zondag: planning) (`telegram_review.py planning`, timer `instagram-planning.timer`): ma-vr, 1 post per dag om 14:00 (gekozen: na de lunch in NL, lunch VK, ochtend VS), actualiteiten zo vroeg mogelijk, niet twee reels of twee beeldposts op opeenvolgende dagen; advertenties en story-ideeën staan apart. "planning" typen in de bot geeft het voorstel ook. Voorraad daarom 5 in plaats van 3. **Afspraak (20-11): de week is vol vóór de planning komt**: zaterdag 07:00 vult de agent aan tot 5 posts zonder dagmaximum (`instagram-vullen.timer`, `--vol`); advertenties en story-ideeën tellen niet mee.
+- **Weekplanning (20-11):** Oussama plant elk weekend de hele week in. De bot stuurt elke zondag 09:00 een voorstel (zaterdag: concepten om 07:00, goedkeuren en aanpassen op zaterdag; zondag: planning) (`telegram_review.py planning`, timer `instagram-planning.timer`): ma-vr, sinds 24-11 twee posts per dag: beeldpost 12:00 en reel 19:00 (was 1 per dag om 14:00), bouwen in het openbaar en actualiteiten eerst, actualiteit op woensdag; advertenties en story-ideeën staan apart. "planning" typen in de bot geeft het voorstel ook. Voorraad daarom 10 (sinds 24-11, was 5). **Afspraak (20-11): de week is vol vóór de planning komt**: zaterdag 07:00 vult de agent aan tot 10 posts (2 per vrije dag) zonder dagmaximum (`instagram-vullen.timer`, `--vol`); advertenties en story-ideeën tellen niet mee.
 - **Planning en onderwerpen (20-11):** dagen die Oussama zelf al gevuld heeft staan in `data/instagram_planning_vol.json` (lijst met datums); de planning slaat ze over en de agent maakt zaterdag precies genoeg concepten voor de vrije dagen. Een actualiteit komt op woensdag. Onderwerpen worden willekeurig gekozen: uit de LinkedIn-serie (`outputs/linkedin-content-serie.md`, zowel geplaatste als nog geplande posts) en af en toe (±1 op 3 carrousels/tekst-reels) een van de 28 diensten van insightance.ai/automations. Geen vaste volgorde of rode lijn. Nooit concepten opnieuw sturen die al in Telegram staan.
 - **Automatisch afvinken (20-11):** de weekplanning bewaart per post de dag (`gepland_op`); elke dag om 20:00 (`instagram-afvinken.timer`, `telegram_review.py afvinken`) gaan posts van die dag of eerder stil (zonder bericht) automatisch op geplaatst. Oussama hoeft niet meer op 📤 te drukken; klopt het niet, dan meldt hij het en zetten we de status terug.
