@@ -48,7 +48,7 @@ KLEUREN = {
     "blauw": dict(cbg="#1F5EFF", cfg="#FFFFFF", acc="#FFD84D", ibg="#FFFFFF", ifg="#17345F", body="#3B5478", mark="#FFEFA8"),
     "groen": dict(cbg="#153B2E", cfg="#FFFFFF", acc="#B6F36B", ibg="#F2F6EE", ifg="#153B2E", body="#3F5A4C", mark="#DDF7BD"),
     "creme": dict(cbg="#F3EDE2", cfg="#17345F", acc="#E2572B", ibg="#FBF8F3", ifg="#17345F", body="#4A4A4A", mark="#FFD9C9"),
-    "rood":  dict(cbg="#C8372D", cfg="#FFFFFF", acc="#FFE1D6", ibg="#FFF7F3", ifg="#2A1512", body="#5A3A34", mark="#FFD2C4"),
+    "rood":  dict(cbg="#C8372D", cfg="#FFFFFF", acc="#FFD23F", ibg="#FFF7F3", ifg="#2A1512", body="#5A3A34", mark="#FFD2C4"),
     "paars": dict(cbg="#2D1B5A", cfg="#FFFFFF", acc="#F59BD0", ibg="#F7F4FD", ifg="#2D1B5A", body="#4E4470", mark="#F6CDE6"),
 }
 
