@@ -1,96 +1,139 @@
 # Belscript — koude acquisitie installatiebedrijven
 
-**Status:** Concept, wordt de komende dagen gefinetuned voor start maandag.
+**Status:** Herzien 10-11-2026, gebaseerd op de Chris Voss-methode ("Never Split the Difference").
 **Doelgroep:** Installatiebedrijven uit de ondernemerstrek (ondernemers-tracker).
+
+**Doel van het gesprek is niet verkopen.** Doel is een gesprek op gang brengen, aandacht trekken
+en nieuwsgierigheid wekken. Geen pitch, geen productvoorbeeld (facturatie, offertes als concreet
+voorbeeld eruit), geen vroege claims. Pas als de ander zelf iets prijsgeeft over waar tijd in gaat
+zitten, bouw je daarop door.
+
+---
+
+## De vier Voss-technieken die dit script gebruikt
+
+1. **Accusation audit** — benoem zelf wat de ander waarschijnlijk denkt ("u krijgt vast meer van
+   dit soort telefoontjes"), vóórdat die gedachte de ander laat afhaken. Ontwapent weerstand.
+2. **No-oriented question** — vraag zo dat "nee" het makkelijke, veilige antwoord is. Mensen
+   voelen zich bedreigd door een vraag die om een "ja" vraagt (voelt als instemming/verplichting),
+   maar ontspannen bij een vraag waar "nee" op past. "Is dit een slecht moment?" werkt beter dan
+   "heeft u een momentje?".
+3. **Calibrated questions ("Hoe" / "Wat")** — open vragen die de ander aan het woord zetten en
+   zelf de oplossing laten formuleren, in plaats van gesloten ja/nee-vragen. Nooit "waarom"
+   (voelt als een verwijt).
+4. **Labeling** — benoem wat je hoort/voelt bij de ander ("Het klinkt alsof...", "Het lijkt erop
+   dat..."), zonder oordeel. Bevestigt dat je luistert en nodigt uit tot verder praten.
 
 ---
 
 ## Het opener-script
 
-> "Goedemorgen, u spreekt met Oussama van Insightance."
+> "Goedemorgen, u spreekt met Oussama van Insightance. Is dit een slecht moment?"
 >
-> *(wacht op een reactie, bijvoorbeeld "goedemorgen")*
+> *(no-oriented question — "nee, is prima" komt makkelijker dan een "ja" op "heeft u een
+> momentje". Bij "ja, slecht moment": vraag wanneer het beter past, rond af.)*
 >
-> "Ik help installatiebedrijven met het automatiseren van tijdrovende klusjes, zoals offertes, planning of facturatie — ik heb inmiddels al meerdere bedrijven geholpen flink wat tijd per week terug te winnen, dus ik was benieuwd of automatisering al een rol speelt binnen jullie bedrijf."
+> "Mooi. Ik vermoed dat u vaker van dit soort telefoontjes krijgt van mensen die u iets willen
+> verkopen, dat is niet waar ik voor bel."
 >
-> *(wacht op antwoord)*
+> *(accusation audit — benoem de verwachte weerstand zelf, voordat de ander hem gebruikt)*
 >
-> - Antwoord "nee, nog niet" / "speelt geen rol": "Oké, en hoe pakken jullie offertes of planning dan nu aan?" → leidt naar scenario 2 hieronder (offertes met de hand).
-> - Antwoord "ja, we doen er al iets mee": ga naar scenario 3 hieronder ("We hebben daar al iets voor").
+> "Ik praat met installatiebedrijven om te horen hoe jullie de dingen aanpakken die veel tijd
+> opslokken. Hoe pakken jullie dat op dit moment aan?"
+>
+> *(calibrated "hoe"-vraag, breed en nieuwsgierig, geen enkel specifiek voorbeeld — laat de
+> ander zelf benoemen waar de tijd in zit)*
+>
+> *(wacht, laat stilte vallen, vul niet zelf in)*
 
-**Sinds 28-10**: afsluitvraag vervangen door een open, diagnostische vraag ("of automatisering al een rol speelt binnen jullie bedrijf") in plaats van een vraag die om instemming vraagt ("denk dat het de moeite waard is"). Verschil: een "nee" op de instemmingsvraag is een harde afwijzing van het gesprek, een "nee, speelt geen rol" op de diagnostische vraag is gewoon informatie, dus lichter voor de prospect om te beantwoorden en makkelijker voor Oussama om op door te vragen. Vervolgvraag bij "nee" toegevoegd die direct doorschakelt naar scenario 2.
-
-**Sinds 26-10**: geen specifiek klantvoorbeeld (bijv. MHL) meer in de opener — dat voelt bij een telefonisch eerste contact als een verkooppraatje en leidt af van de vraag. Een concreet voorbeeld komt pas ter sprake zodra iemand interesse toont (zie scenario 2 hieronder). In plaats daarvan: generiek, meervoudig bewijs ("meerdere bedrijven geholpen") voor wat gewicht zonder pitch-gevoel.
-
-**Sinds 20-10**: 3 zinnen i.p.v. 5 vóór de eerste vraag — te veel monoloog voordat de prospect weer aan het woord komt.
+Wat de ander noemt, bepaalt de vervolgroute. Ga niet zelf met een voorbeeld (offertes,
+facturatie) het gesprek binnen — dat is precies het "verkooppraatje"-gevoel dat de opener
+wil vermijden.
 
 ---
 
 ## Veelvoorkomende reacties en hoe te anticiperen
 
-### 1. "Nee dank je, geen interesse"
+### 1. "Dat gaat eigenlijk best wel goed / weinig tijdrovend"
 
-Niet meteen opgeven, maar ook niet doordrukken. Eén zachte vervolgvraag, dan accepteren.
+Niet meteen afhaken, benoem het gehoorde met een label en blijf nieuwsgierig.
 
-> "Geen probleem. Mag ik vragen waar dat 'm in zit, gaat het maken van offertes bij jullie al snel, of is het gewoon geen prioriteit op dit moment?"
+> "Het klinkt alsof dat aardig op orde is. Wat kost toch nog de meeste tijd in een gemiddelde
+> week, los van dat ene proces?"
 
-Blijft het nee:
+### 2. Noemt zelf een concreet knelpunt (offertes, planning, administratie, klantcontact, etc.)
 
-> "Helder, bedankt voor uw tijd. Fijne dag nog."
+Dit is de beste uitkomst. Label wat je hoort, laat de ander het probleem groter maken in
+zijn eigen woorden, pas dan een vervolgstap voorstellen. Geen productpitch.
 
-Noteer deze prospect meteen als "niet bellen" voor de toekomst.
-
-### 2. "Ja, wij maken offertes ook nog met de hand"
-
-Dit is de beste uitkomst, hier ga je op door.
-
-> "Herkenbaar, dat hoor ik vaker. Hoeveel tijd kost dat jullie ongeveer per offerte? ... Precies, bij MHL was dat ook zo, die zijn van twintig minuten naar één minuut gegaan. Zullen we een kort moment inplannen, puur om te kijken of zoiets ook bij jullie past? Kost u tien minuten, verder niks."
-
-Doel: een concrete vervolgafspraak, geen verkoop aan de telefoon zelf.
+> "Het lijkt erop dat dat best wat tijd en frustratie kost. Hoe zou het voor u zijn als dat
+> grotendeels vanzelf ging? Zullen we daar een kort, vrijblijvend moment voor inplannen, puur
+> om te kijken of dat ook bij jullie kan werken?"
 
 ### 3. "We hebben daar al iets voor / een systeem"
 
-Nieuwsgierig blijven, niet meteen afhaken, er zit vaak nog een gat.
+Nieuwsgierig blijven, niet meteen afhaken.
 
-> "Oké, mooi dat jullie daar al iets voor hebben. Hoe bevalt dat, is dat nog steeds wat omslachtig of werkt het eigenlijk prima?"
+> "Hoe bevalt dat, werkt het eigenlijk prima of zit er toch nog ergens rek in?"
 
-Blijkt er toch frictie: terug naar de case en een vrijblijvend gesprek voorstellen. Blijkt het echt goed te werken: eerst een bruggetje proberen naar een ander proces, pas daarna evt. toestemming vragen voor later.
+Blijkt frictie: terug naar punt 2. Blijkt het echt goed te werken:
 
-> "Mooi dat offertes al geregeld zijn. Even een andere hoek: hoe gaat het met facturatie, of met opvolging na een klus, denk aan onderhoudsherinneringen of klantcontact? Daar zit vaak nog net zoveel tijd in als in offertes."
+> "Wat zijn jullie nu zelf het meeste tijd aan kwijt, los van dat proces?"
 
-**Directe variant** (sneller, zonder de tussenstap "hoe bevalt dat?") — handig als iemand meteen kort "ja, al geregeld" zegt zonder verder uit te weiden:
+Landt geen van beide:
 
-> "Er valt vaak meer te automatiseren dan je zou denken. Denk bijvoorbeeld aan facturatie, klantcontact na een klus, of onderhoudsherinneringen. Zit daar nog handmatig werk in?"
+> "Is het een slecht idee als ik over een paar maanden nog eens bel, voor het geval er iets
+> verandert?"
+>
+> *(no-oriented question — "nee, is geen slecht idee" is voor de ander een lichter antwoord
+> dan "ja, bel maar terug")*
 
-Landt geen van beide bruggetjes:
+### 4. "Nee dank je, geen interesse"
 
-> "Fijn om te horen. Mocht er ooit iets veranderen, mag ik dan uw gegevens noteren om een andere keer nog eens te bellen?"
+Niet meteen opgeven, maar ook niet doordrukken. Eén zachte calibrated question, dan accepteren.
 
-### 4. "Stuur maar een mailtje"
+> "Helder. Mag ik vragen wat daar vooral achter zit, geen tijd, geen behoefte, of iets anders?"
 
-Dit is vaak een beleefde afwijzing, dus niet alleen akkoord gaan, probeer een concreet vervolgmoment vast te leggen.
+Blijft het nee:
 
-> "Doe ik, ik stuur u zo een mail met de MHL-case erbij. Zullen we gelijk een kort moment volgende week prikken om te bellen, mocht het u wat lijken? Dan hoeft u er zelf niet achteraan."
+> "Begrepen, bedankt voor uw tijd. Fijne dag nog."
 
-### 5. "Wat kost dat dan?"
+Noteer deze prospect meteen als "niet bellen" voor de toekomst.
 
-Nog geen hard bedrag noemen, eerst de situatie beter begrijpen. Dit is een goed teken (serieuze interesse), dus niet afschrikken met een te vroeg genoemd getal.
+### 5. "Stuur maar een mailtje"
 
-> "Dat hangt af van wat er bij jullie precies nodig is, dat verschilt per bedrijf. Laten we eerst kort kijken wat jullie proces is, dan kan ik daar een concreet voorstel op maken."
+Vaak een beleefde afwijzing. Niet alleen akkoord gaan, probeer een concreet vervolgmoment
+vast te leggen met een no-oriented question.
 
-**Let op:** er is nog geen vastgesteld prijspunt voor dit soort trajecten bij installatiebedrijven (anders dan de cart-recovery-flow voor webshops). Bepaal voor maandag zelf een richtprijs of bandbreedte waar je mee kunt werken, zodat je niet verrast wordt door deze vraag.
+> "Doe ik. Is het een slecht idee om gelijk een kort moment volgende week te prikken, voor
+> het geval de mail aanspreekt? Dan hoeft u er zelf niet achteraan."
 
-### 6. "Ik heb nu geen tijd"
+### 6. "Wat kost dat dan?"
 
-Respecteren, concreet maken wanneer het wel uitkomt.
+Goed teken (serieuze interesse), nog geen bedrag noemen.
 
-> "Begrijpelijk. Wanneer komt het u beter uit, zal ik u morgen of overmorgen rond dezelfde tijd terugbellen?"
+> "Dat hangt af van wat er bij jullie precies nodig is. Hoe ziet uw proces er nu precies uit,
+> dan kan ik daar iets concreets op maken."
+
+**Let op:** nog geen vastgesteld prijspunt voor dit soort trajecten bij installatiebedrijven.
+Bepaal zelf een richtprijs of bandbreedte waar je mee kunt werken, zodat deze vraag niet
+verrast.
+
+### 7. "Ik heb nu geen tijd"
+
+Respecteren, concreet maken wanneer het wel uitkomt met een calibrated question.
+
+> "Begrijpelijk. Wanneer komt het beter uit, morgen of overmorgen rond dezelfde tijd?"
 
 ---
 
 ## Algemene gesprekstips
 
-- Laat stiltes vallen na je vraag, niet zelf invullen, de ander moet praten.
+- Laat stiltes vallen na elke vraag, vul niet zelf in — de ander moet praten.
+- Geen "waarom"-vragen (voelt als een verwijt), altijd "hoe" of "wat".
 - Houd je eigen stukken kort, hoe langer je monoloogt, hoe sneller de aandacht wegzakt.
-- Eindig elk gesprek met een concrete volgende stap (bel-afspraak, mail + bel-moment, of expliciet "niet meer bellen"), nooit vaag.
-- Schrijf na elk gesprek twee regels op: wat er gezegd is en wat de vervolgstap is, scheelt chaos na tien telefoontjes.
+- Gebruik labels ("het klinkt alsof...") vaker dan beweringen — het houdt het gesprek bij de
+  ander in plaats van bij jouw aanname.
+- Eindig elk gesprek met een concrete volgende stap (bel-afspraak, mail + bel-moment, of
+  expliciet "niet meer bellen"), nooit vaag.
+- Schrijf na elk gesprek twee regels op: wat er gezegd is en wat de vervolgstap is.

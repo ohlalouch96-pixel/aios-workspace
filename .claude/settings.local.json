@@ -22,7 +22,8 @@
       "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); node --version; npm --version)",
       "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); npm install -g @anthropic-ai/claude-code 2>&1 | Select-Object -Last 5)",
       "Bash(git add *)",
-      "Bash(git commit -m *)"
+      "Bash(git commit -m *)",
+      "mcp__claude_ai_Gmail__reply"
     ]
   }
 }

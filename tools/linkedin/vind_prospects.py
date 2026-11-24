@@ -104,22 +104,38 @@ def _verdeel_zoekbudget(zoekbudget, niches):
     return verdeling
 
 
-def nieuwe_dag(niches=("installatiebedrijven", "makelaars")):
-    """Hoofdfunctie achter de "Nieuwe dag"-knop. Geeft een samenvatting terug."""
+def nieuwe_dag(niches=("installatiebedrijven", "makelaars"), zoekbudget_override=None, leesbudget_override=None):
+    """Hoofdfunctie achter de "Nieuwe dag"-knop. Geeft een samenvatting terug.
+
+    zoekbudget_override/leesbudget_override: alleen invullen na expliciete, bewuste
+    goedkeuring van Oussama om het dagbudget vandaag te overschrijden (bv. een kleine
+    extra ronde na een slechte eerste ronde). Negeert dan het normale daglimiet, maar
+    logt de acties gewoon (zie browser.py negeer_limiet), zodat latere dagen/ratio's
+    kloppen. Zonder deze parameters verandert er niets aan het normale gedrag."""
     conn = get_connection()
     samenvatting = {"gevonden": 0, "gelezen": 0, "ja": 0, "twijfel": 0, "nee": 0, "fout": None}
+    negeer_limiet = zoekbudget_override is not None or leesbudget_override is not None
 
     if limits.get_status(conn, "restricted"):
         samenvatting["fout"] = "Systeem staat gepauzeerd door een eerdere restrictiemelding."
         conn.close()
         return samenvatting
 
-    zoekbudget = limits.remaining_today(conn, "searches")
-    leesbudget = limits.remaining_today(conn, "profile_views")
-    if zoekbudget <= 0 or leesbudget <= 0:
-        samenvatting["fout"] = "Geen zoek- of profielbezoek-budget meer over vandaag."
-        conn.close()
-        return samenvatting
+    if negeer_limiet:
+        noodstop = limits.check_noodstop(conn)
+        if noodstop["pauzeren"]:
+            samenvatting["fout"] = noodstop["reden"]
+            conn.close()
+            return samenvatting
+        zoekbudget = zoekbudget_override if zoekbudget_override is not None else limits.remaining_today(conn, "searches")
+        leesbudget = leesbudget_override if leesbudget_override is not None else limits.remaining_today(conn, "profile_views")
+    else:
+        zoekbudget = limits.remaining_today(conn, "searches")
+        leesbudget = limits.remaining_today(conn, "profile_views")
+        if zoekbudget <= 0 or leesbudget <= 0:
+            samenvatting["fout"] = "Geen zoek- of profielbezoek-budget meer over vandaag."
+            conn.close()
+            return samenvatting
 
     bestaande_urls = {r["url"] for r in wachtrij.alle_records()}
 
@@ -132,7 +148,7 @@ def nieuwe_dag(niches=("installatiebedrijven", "makelaars")):
             if zoekbudget <= 0:
                 break
             try:
-                urls = browser.zoek(conn, titel, branche, "", aantal=10)
+                urls = browser.zoek(conn, titel, branche, "", aantal=10, negeer_limiet=negeer_limiet)
             except RuntimeError as e:
                 samenvatting["fout"] = str(e)
                 break
@@ -154,7 +170,7 @@ def nieuwe_dag(niches=("installatiebedrijven", "makelaars")):
         urls_te_lezen = urls[:leesbudget]
         if not urls_te_lezen:
             continue
-        resultaten = browser.lees_batch(conn, urls_te_lezen, stil=True)
+        resultaten = browser.lees_batch(conn, urls_te_lezen, stil=True, negeer_limiet=negeer_limiet)
         leesbudget -= len(resultaten)
         berichten_fn = berichten.PER_NICHE[niche]
 

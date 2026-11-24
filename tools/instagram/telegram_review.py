@@ -157,14 +157,18 @@ MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt",
 VOL_BESTAND = WORKSPACE_ROOT / "data" / "instagram_planning_vol.json"  # ["2026-11-23", ...] dagen die Oussama zelf al gevuld heeft
 
 
+def volle_dagen():
+    try:
+        return set(json.loads(VOL_BESTAND.read_text(encoding="utf-8")))
+    except (OSError, ValueError):
+        return set()
+
+
 def vrije_dagen(vandaag=None):
     """De werkdagen (ma-vr) van de komende week, zonder de dagen die al vol staan."""
     vandaag = vandaag or date.today()
     maandag = vandaag + timedelta(days=(7 - vandaag.weekday()) % 7 or 7)
-    try:
-        vol = set(json.loads(VOL_BESTAND.read_text(encoding="utf-8")))
-    except (OSError, ValueError):
-        vol = set()
+    vol = volle_dagen()
     return maandag, [maandag + timedelta(days=d) for d in range(5) if (maandag + timedelta(days=d)).isoformat() not in vol]
 
 
@@ -174,10 +178,11 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     Bouwen in het openbaar en actualiteiten eerst (vers), een actualiteit op woensdag (besluit 20-11). Advertenties en
     story-ideeën hebben geen vaste dag en staan apart. Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
     maandag, dagen = vrije_dagen(vandaag)
-    rijen = conn.execute("SELECT id, soort, status, onderwerp FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
+    rijen = conn.execute("SELECT id, soort, status, onderwerp, gepland_op FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
                          "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'openbaar') DESC, (soort = 'actualiteit') DESC, id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
-    over, regels = list(rijen), []
+    vol = volle_dagen()
+    over, regels = [r for r in rijen if r[4] not in vol], []  # door Oussama zelf op een volle dag gezet: blijft daar
     woensdag = next((d for d in dagen if d.weekday() == 2), None)
     actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
     is_reel = lambda r: r[1] in REELS  # noqa: E731
@@ -199,7 +204,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
         gekozen.sort(key=is_reel)  # beeldpost eerst (12:00), reel daarna (19:00)
         tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
         leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
-        for tijd, (pid, soort, st, onderwerp) in zip(tijden, gekozen):
+        for tijd, (pid, soort, st, onderwerp, _) in zip(tijden, gekozen):
             wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
             regels.append(f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}")
             if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag

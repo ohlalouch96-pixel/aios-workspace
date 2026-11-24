@@ -4,7 +4,10 @@
       "WebSearch",
       "WebFetch",
       "Bash(nslookup *)",
-      "Bash(curl -sI *)"
+      "Bash(curl -sI *)",
+      "Bash(python scripts/collect_outreach.py*)",
+      "Bash(python scripts/collect.py*)",
+      "Bash(python scripts/generate_metrics.py*)"
     ]
   },
   "hooks": {

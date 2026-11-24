@@ -145,13 +145,17 @@ def _zoek_url(titel, branche, regio, page_nr=1):
     return f"https://www.linkedin.com/search/results/people/?keywords={quote(keywords)}&origin=GLOBAL_SEARCH_HEADER&page={page_nr}"
 
 
-def zoek(conn, titel, branche, regio="", aantal=20):
+def zoek(conn, titel, branche, regio="", aantal=20, negeer_limiet=False):
     """Zoekt op LinkedIn's standaard people-search en geeft gevonden profiel-urls terug
     (zonder duplicaten). Logt 1 'search'-actie bij limits, ongeacht hoeveel pagina's er
-    intern doorlopen worden. Gooit RuntimeError als het daglimiet al bereikt is."""
-    toegestaan, reden = limits.can_act(conn, "searches")
-    if not toegestaan:
-        raise RuntimeError(reden)
+    intern doorlopen worden. Gooit RuntimeError als het daglimiet al bereikt is, tenzij
+    negeer_limiet=True (bewuste, expliciet door Oussama goedgekeurde overschrijding van
+    het dagbudget voor vandaag — zie vind_prospects.nieuwe_dag(..., negeer_limiet=True)).
+    De actie wordt ook dan gewoon gelogd, zodat de telling voor latere dagen/ratio's klopt."""
+    if not negeer_limiet:
+        toegestaan, reden = limits.can_act(conn, "searches")
+        if not toegestaan:
+            raise RuntimeError(reden)
 
     p, ctx = _context(headless=True)
     page = ctx.new_page()
@@ -231,10 +235,11 @@ def cmd_zoek(args):
 # ============================================================================
 # lees — profiel openen, ruwe tekst teruggeven (Claude kwalificeert, niet dit script)
 # ============================================================================
-def _lees_profiel(page, conn, url):
-    toegestaan, reden = limits.can_act(conn, "profile_views")
-    if not toegestaan:
-        return {"url": url, "fout": reden}
+def _lees_profiel(page, conn, url, negeer_limiet=False):
+    if not negeer_limiet:
+        toegestaan, reden = limits.can_act(conn, "profile_views")
+        if not toegestaan:
+            return {"url": url, "fout": reden}
 
     page.goto(url)
     _delay()
@@ -260,7 +265,7 @@ def _lees_profiel(page, conn, url):
     }
 
 
-def lees_batch(conn, urls, stil=False):
+def lees_batch(conn, urls, stil=False, negeer_limiet=False):
     """Leest een lijst profiel-urls uit, stopt bij een restrictie of een leeg daglimiet.
     Geeft de ruwe resultatenlijst terug (zie _lees_profiel: url/pagina_tekst of url/fout)."""
     p, ctx = _context(headless=True)
@@ -268,7 +273,7 @@ def lees_batch(conn, urls, stil=False):
     resultaten = []
     try:
         for url in urls:
-            resultaat = _lees_profiel(page, conn, url)
+            resultaat = _lees_profiel(page, conn, url, negeer_limiet=negeer_limiet)
             resultaten.append(resultaat)
             if not stil:
                 print(f"[{'OK' if 'fout' not in resultaat else 'FOUT'}] {url}")
