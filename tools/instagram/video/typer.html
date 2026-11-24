@@ -313,7 +313,7 @@ const SCENES = {
     const lijn = pts.map((v, i) => `${(i / (pts.length - 1) * w).toFixed(1)},${(h - 20 - (v - mn) / ((mx - mn) || 1) * (h - 40)).toFixed(1)}`).join(' ');
     return {kleur: 'licht', html: `
     <div class="kop klein" data-in="0">${mk(s.kop, d * .7)}</div>
-    <div class="tegels">${s.items.map((it, n) => `<div class="tegel" data-in="${tijd(s, n, d)}"><small>${esc(it.a)}</small><b data-count="${parseFloat(it.b)}" data-t0="${tijd(s, n, d)}" data-dur="1.0" data-pre="${esc(it.c || '')}" data-suf="${esc(it.d || '')}" data-dec="${(String(it.b).split('.')[1] || '').length}">0</b></div>`).join('')}</div>
+    <div class="tegels">${s.items.map((it, n) => `<div class="tegel" data-in="${tijd(s, n, d)}"><small>${esc(it.a)}</small><b data-count="${parseFloat(String(it.b).replace(/,/g, ''))}" data-t0="${tijd(s, n, d)}" data-dur="1.0" data-pre="${esc(it.c || '')}" data-suf="${esc(it.d || '')}" data-dec="${(String(it.b).split('.')[1] || '').length}">0</b></div>`).join('')}</div>
     <div class="grafiek" data-in="${tijd(s, 0, d)}"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${lijn}" fill="none" stroke="#1F5EFF" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" stroke-dasharray="1" data-teken="${tijd(s, 0, d)}"/></svg></div>
     ${s.resultaat ? `<div class="alert" data-in="${tijd(s, s.items.length, d)}">⚠ ${esc(s.resultaat)}</div>` : ''}`};
   },
