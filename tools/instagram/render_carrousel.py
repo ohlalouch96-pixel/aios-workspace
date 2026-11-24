@@ -112,6 +112,8 @@ def slide_html(sl, k, serie, i, n):
             mid += f'<p style="font-size:40px">{opmaak(sl["sub"])}</p>'
     elif t == "citaat":
         mid = f'<div class="q">“</div><h1 class="myth" style="font-size:{maat(sl["titel"], 104, 34, 70)}px">{opmaak(sl["titel"])}</h1>'
+        if sl.get("sub"):  # kort oordeel onder de mythe, bijv. "*Wrong.*" (24-11: quote als cover met hook)
+            mid += f'<h1 style="font-size:120px;margin-top:48px">{opmaak(sl["sub"])}</h1>'
     elif t == "tekst":
         mid = (f'<div class="lab">{html.escape(sl["label"])}</div>' if sl.get("label") else "")
         mid += f'<h2 style="font-size:{maat(sl["titel"], 84, 26, 60)}px">{opmaak(sl["titel"])}</h2>'
