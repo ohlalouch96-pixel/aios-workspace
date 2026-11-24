@@ -148,7 +148,7 @@ def stuur(bot, conn, post_id):
 
 
 PER_DAG = 2  # sinds 24-11 twee posts per werkdag (was 1 om 14:00): één beeldpost en één reel, nooit twee reels op een dag
-TIJD_BEELD, TIJD_REEL = "12:00", "19:00"  # beeld: lunch NL/VK; reel: avond NL/VK, ochtend/middag VS
+TIJD_BEELD, TIJD_REEL = "14:00", "19:00"  # 24-11: 14:00 = lunch VK + ochtend VS; 19:00 = avond NL/VK + lunch VS (11:00 mist de VS)
 REELS = {"tekst_reel", "demo_reel", "stem_video"}
 DAGEN = ["ma", "di", "wo", "do", "vr", "za", "zo"]
 MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
