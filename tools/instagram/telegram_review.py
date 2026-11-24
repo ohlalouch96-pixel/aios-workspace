@@ -204,13 +204,13 @@ def weekplanning(conn, vandaag=None, bewaar=True):
         gekozen.sort(key=is_reel)  # beeldpost eerst (12:00), reel daarna (19:00)
         tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
         leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
+        dag_regels = [(tijd, f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>") for tijd in leeg]
         for tijd, (pid, soort, st, onderwerp, _) in zip(tijden, gekozen):
             wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
-            regels.append(f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}")
+            dag_regels.append((tijd, f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}"))
             if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
                 conn.execute("UPDATE instagram_posts SET gepland_op = ? WHERE id = ?", (dag.isoformat(), pid))
-        for tijd in leeg:
-            regels.append(f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>")
+        regels += [r for _, r in sorted(dag_regels)]
     eind = maandag + timedelta(days=4)
     tekst = f"📅 <b>Weekplanning {maandag.day} {MAANDEN[maandag.month - 1]} t/m {eind.day} {MAANDEN[eind.month - 1]}</b>\n\n" + "\n".join(regels)
     if over:
