@@ -164,6 +164,16 @@ def volle_dagen():
         return set()
 
 
+TIJDEN_BESTAND = WORKSPACE_ROOT / "data" / "instagram_vaste_tijden.json"  # {"17": "14:00"}: post-id met een eigen tijdstip
+
+
+def vaste_tijden():
+    try:
+        return {int(k): v for k, v in json.loads(TIJDEN_BESTAND.read_text(encoding="utf-8")).items()}
+    except (OSError, ValueError):
+        return {}
+
+
 def vrije_dagen(vandaag=None):
     """De werkdagen (ma-vr) van de komende week, zonder de dagen die al vol staan."""
     vandaag = vandaag or date.today()
@@ -181,7 +191,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     rijen = conn.execute("SELECT id, soort, status, onderwerp, gepland_op, kleurenset FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
                          "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'openbaar') DESC, (soort = 'actualiteit') DESC, id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
-    vol = volle_dagen()
+    vol, vaste = volle_dagen(), vaste_tijden()
     over, regels = [r for r in rijen if r[4] not in vol], []  # door Oussama zelf op een volle dag gezet: blijft daar
     week = {d.isoformat() for d in dagen}
     vast = [r for r in over if r[4] in week]  # vooraf op een dag van deze week gezet (bv. robotvideo op di 1-12): blijft daar
@@ -216,6 +226,11 @@ def weekplanning(conn, vandaag=None, bewaar=True):
             gekozen.append(keuze)
         gekozen.sort(key=is_reel)  # beeldpost eerst (12:00), reel daarna (19:00)
         tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
+        eigen = next((g for g in gekozen if g[0] in vaste), None)  # eigen tijdstip (bv. robotvideo om 14:00): de ander krijgt de andere tijd
+        if eigen:
+            t = vaste[eigen[0]]
+            gekozen = [eigen] + [g for g in gekozen if g is not eigen]
+            tijden = [t, TIJD_REEL if t == TIJD_BEELD else TIJD_BEELD][:len(gekozen)]
         leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
         dag_regels = [(tijd, f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>") for tijd in leeg]
         for tijd, (pid, soort, st, onderwerp, _, _k) in zip(tijden, gekozen):
