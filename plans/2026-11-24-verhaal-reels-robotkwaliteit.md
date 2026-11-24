@@ -1,7 +1,7 @@
 # Plan: Verhaal-reels in robotkwaliteit (nieuw videosjabloon voor de contentagent)
 
 **Created:** 2026-11-24
-**Status:** Draft
+**Status:** Geparkeerd (24-11: Oussama kiest voor losse video's op idee, met de hand gebouwd)
 **Request:** Een videosjabloon in de stijl van de robotvideo (#17), zodat de agent zelfstandig per onderwerp zulke reels maakt (beeld en muziek kiezen) met goedkeuring in Telegram.
 
 ---
