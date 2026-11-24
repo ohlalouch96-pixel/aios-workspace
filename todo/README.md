@@ -170,6 +170,17 @@ Fase 1 af: agent maakt carrousels, kaarten, tekst-reels, demo-reels, actualiteit
 
 ---
 
+## Niche-idee: VvE-beheerders
+
+**Status:** Geparkeerd sinds 2026-11-24, geen trigger-datum
+**Waar komt het vandaan:** Een onderzoeksgesprek met een administratiekantoor (24-11) waarvan de eigenaar verder gaat in VvE-beheer.
+**Wat het is:** VvE-beheerders doen voor Verenigingen van Eigenaars (appartementengebouwen) het financiële werk (bijdragen innen, wanbetalers, boekhouding, begroting), het technische werk (storingen, aannemers, meerjarenonderhoudsplan) en het bestuurlijke werk (jaarvergadering, stukken, notulen, vragen van eigenaren).
+**Waarom mogelijk interessant:** veel terugkerend handwerk met veel mensen tegelijk (herinneringen, storingsmeldingen via veel kanalen, terugkerende vragen). Lijkt op de pijnpunten bij accountants.
+**Nog niet getoetst.** Als we het oppakken: eerst 20 onderzoeksgesprekken met beheerders, zelfde aanpak als accountants (vraag 1 breed, geen verkoop).
+**Trigger om op te pakken:** Geen. Alleen als Oussama ernaar vraagt of na afloop van de accountants-toets een nieuwe niche zoekt.
+
+---
+
 ## ElevenLabs voice agent
 
 **Status:** Geparkeerd sinds 2026-11-02, geen trigger-datum
