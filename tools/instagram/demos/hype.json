@@ -1,0 +1,209 @@
+{
+ "demo": "hype",
+ "kleurenset": "navy",
+ "hook": "Everyone's selling you an *AI agent.*",
+ "voorbereiding": "Clipbeelden eenmalig klaarzetten (.tmp is wegwerp): ffmpeg -ss 0.2 -t 2.6 -i .tmp/instagram/stock/pixabay-41957.mp4 -vf \"fps=30,crop=ih*9/16:ih:(iw-ih*9/16)*0.35:0,scale=1080:1920:flags=lanczos,unsharp=5:5:0.6\" -q:v 2 .tmp/instagram/hype_frames/a%03d.jpg (78) en ffmpeg -ss 1.0 -t 2.2 -i .tmp/instagram/stock/pixabay-24603.mp4 -vf \"fps=30,crop=ih*9/16:ih,scale=1080:1920:flags=lanczos\" -q:v 2 .tmp/instagram/hype_frames/b%03d.jpg (66). Bronnen: Pixabay 41957 (japan-street-night-posters) en 24603 (seoul-night-street), Pixabay Content License: gratis, ook commercieel en in advertenties.",
+ "stappen": [
+  {
+   "doe": "wacht",
+   "s": 14.0
+  }
+ ],
+ "geluid": [
+  {
+   "s": "klik",
+   "t": 0.0,
+   "vol": 0.45
+  },
+  {
+   "s": "klik",
+   "t": 0.12,
+   "vol": 0.45
+  },
+  {
+   "s": "klik",
+   "t": 0.26,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 0.55,
+   "vol": 0.6
+  },
+  {
+   "s": "plop",
+   "t": 0.9,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 1.15,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 1.4,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 1.65,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 1.95,
+   "vol": 0.45
+  },
+  {
+   "s": "plop",
+   "t": 2.2,
+   "vol": 0.45
+  },
+  {
+   "s": "swoosh",
+   "t": 2.45
+  },
+  {
+   "s": "riser",
+   "t": 2.6,
+   "duur": 1.9,
+   "vol": 0.7
+  },
+  {
+   "s": "plop",
+   "t": 2.6,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 2.8,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.0,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.2,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.4,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.55,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.7,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 3.85,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 4.0,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 4.12,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 4.24,
+   "vol": 0.4
+  },
+  {
+   "s": "plop",
+   "t": 4.34,
+   "vol": 0.4
+  },
+  {
+   "s": "kras",
+   "t": 4.5,
+   "vol": 0.8
+  },
+  {
+   "s": "swoosh",
+   "t": 4.55
+  },
+  {
+   "s": "plop",
+   "t": 5.45,
+   "vol": 0.35
+  },
+  {
+   "s": "klik",
+   "t": 5.55,
+   "vol": 0.4
+  },
+  {
+   "s": "klik",
+   "t": 5.8,
+   "vol": 0.4
+  },
+  {
+   "s": "check",
+   "t": 6.05,
+   "vol": 0.5
+  },
+  {
+   "s": "swoosh",
+   "t": 6.3,
+   "klein": true
+  },
+  {
+   "s": "plop",
+   "t": 7.25,
+   "vol": 0.4
+  },
+  {
+   "s": "kras",
+   "t": 7.75,
+   "vol": 0.4
+  },
+  {
+   "s": "swoosh",
+   "t": 8.6
+  },
+  {
+   "s": "check",
+   "t": 9.8,
+   "vol": 0.6
+  },
+  {
+   "s": "klok",
+   "van": 10.1,
+   "tot": 10.8,
+   "elke": 0.14,
+   "vol": 0.8
+  },
+  {
+   "s": "ding",
+   "t": 10.82,
+   "hz": 1319,
+   "vol": 0.3
+  },
+  {
+   "s": "swoosh",
+   "t": 11.5
+  },
+  {
+   "s": "chime",
+   "t": 13.5,
+   "vol": 0.4
+  }
+ ]
+}
