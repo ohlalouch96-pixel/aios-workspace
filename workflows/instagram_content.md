@@ -86,7 +86,7 @@ Oussama checkt de hook daarna zelf in Telegram. Bij een proef altijd vooraf zegg
 
 ## Contentmix (sinds 24-11: 10 posts per week, ma-vr twee per dag)
 
-Elke werkdag één beeldpost om 12:00 en één reel om 19:00, nooit twee reels op één dag. De agent houdt de voorraad half reels, half beeldposts (`kies_soort`).
+Elke werkdag één beeldpost om 12:00 en één reel om 19:00, nooit twee reels op één dag. De twee posts van een dag hebben nooit dezelfde kleur en zijn nooit allebei blauwig (navy/blauw/wit), afspraak 24-11 (`kleur_past` in de weekplanning). De agent houdt de voorraad half reels, half beeldposts (`kies_soort`).
 
 | Soort | Inhoud | Hoe vaak |
 |---|---|---|

@@ -178,7 +178,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     Bouwen in het openbaar en actualiteiten eerst (vers), een actualiteit op woensdag (besluit 20-11). Advertenties en
     story-ideeën hebben geen vaste dag en staan apart. Dagen in VOL_BESTAND heeft Oussama zelf al gevuld."""
     maandag, dagen = vrije_dagen(vandaag)
-    rijen = conn.execute("SELECT id, soort, status, onderwerp, gepland_op FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
+    rijen = conn.execute("SELECT id, soort, status, onderwerp, gepland_op, kleurenset FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
                          "AND soort NOT IN ('advertentie', 'story') ORDER BY (soort = 'openbaar') DESC, (soort = 'actualiteit') DESC, id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
     vol = volle_dagen()
@@ -186,6 +186,13 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     woensdag = next((d for d in dagen if d.weekday() == 2), None)
     actualiteit = next((r for r in over if r[1] == "actualiteit"), None) if woensdag else None
     is_reel = lambda r: r[1] in REELS  # noqa: E731
+    import wachtrij
+
+    def kleur_past(r, gekozen):  # twee posts op één dag nooit dezelfde kleur en nooit allebei blauwig (24-11)
+        if not gekozen:
+            return True
+        a, b = wachtrij.echte_kleur(r[5]), wachtrij.echte_kleur(gekozen[0][5])
+        return a != b and not (a in wachtrij.BLAUWIG and b in wachtrij.BLAUWIG)
     for dag in dagen:
         kop = f"{DAGEN[dag.weekday()]} {dag.day} {MAANDEN[dag.month - 1]}"
         regels.append(f"<b>{kop}</b>")
@@ -197,7 +204,8 @@ def weekplanning(conn, vandaag=None, bewaar=True):
             if dag == woensdag and actualiteit in kies_uit and not reel_plek:
                 keuze = actualiteit
             else:  # past het soort niet, dan het andere soort, maar nooit twee reels op één dag als het anders kan
-                keuze = next((r for r in kies_uit if is_reel(r) == reel_plek), None) or \
+                keuze = next((r for r in kies_uit if is_reel(r) == reel_plek and kleur_past(r, gekozen)), None) or \
+                        next((r for r in kies_uit if is_reel(r) == reel_plek), None) or \
                         next((r for r in kies_uit if not (gekozen and is_reel(gekozen[0]) and is_reel(r))), kies_uit[0])
             over.remove(keuze)
             gekozen.append(keuze)
@@ -205,7 +213,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
         tijden = [TIJD_BEELD, TIJD_REEL] if len(gekozen) == 2 else [TIJD_REEL if gekozen and is_reel(gekozen[0]) else TIJD_BEELD]
         leeg = [t for t in (TIJD_BEELD, TIJD_REEL) if t not in tijden[:len(gekozen)]]
         dag_regels = [(tijd, f"   {tijd} · <i>nog leeg: de agent stuurt deze week nog een concept</i>") for tijd in leeg]
-        for tijd, (pid, soort, st, onderwerp, _) in zip(tijden, gekozen):
+        for tijd, (pid, soort, st, onderwerp, _, _k) in zip(tijden, gekozen):
             wacht = " ⏳ <i>nog goedkeuren</i>" if st == "concept" else ""
             dag_regels.append((tijd, f"   <b>{tijd}</b> · #{pid} {html.escape(SOORT_LABEL.get(soort, soort))}{wacht}\n      {html.escape((onderwerp or '')[:70])}"))
             if bewaar:  # onthouden voor het automatisch afvinken om 20:00 op die dag
