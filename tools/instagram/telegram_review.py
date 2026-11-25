@@ -214,7 +214,8 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     over = [r for r in rijen if r[4] not in vol]  # door Oussama zelf op een volle dag gezet: blijft daar
     week = {d.isoformat() for d in dagen}
     vast = [r for r in over if r[4] in week]  # vooraf op een dag van deze week gezet (bv. robotvideo di 1-12 14:00)
-    over = [r for r in over if r not in vast]
+    later = max(week) if week else ""
+    over = [r for r in over if r not in vast and not (r[4] and r[4] > later)]  # al op een latere week gezet: daar laten (25-11)
     random.shuffle(over)  # lekker door elkaar (24-11)
     over.sort(key=lambda r: r[1] != "openbaar")  # bouwen in het openbaar (1x per week) gaat voor, verder willekeurig
 
