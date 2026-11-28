@@ -52,7 +52,7 @@ h1 em{{font-style:normal;color:#FFC93C}}
 .voet{{position:absolute;left:90px;right:90px;top:1440px;display:flex;justify-content:space-between;align-items:center;font:600 30px Inter;color:#9DBBE3}}
 .voet .h{{display:flex;align-items:center;gap:14px;color:#fff;font-weight:700}}
 </style></head><body>
-<div class="lab">⚡ AI FIND OF THE WEEK</div>
+<div class="lab"><svg width="22" height="30" viewBox="0 0 22 30"><path d="M13 0 L0 17 H9 L7 30 L22 11 H12 Z" fill="#0F2547"/></svg>AI FIND OF THE WEEK</div>
 <h1 id="t">{opmaak(spec["titel"])}</h1>
 <div class="uitleg" id="u">{opmaak(spec["uitleg"])}</div>
 <div class="stappen" id="s">{stappen}</div>
