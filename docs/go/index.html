@@ -1,14 +1,18 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Insightance</title>
-<!-- korte link voor de Instagram-merkpagina (bio): stuurt door naar de homepage met UTM-label, zie reference/utm-links.md -->
-<meta http-equiv="refresh" content="0; url=/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina">
+<!-- korte link voor de Instagram-merkpagina (bio "Free time calculator"): stuurt sinds 28-11 door naar de rekentool op de homepage,
+     altijd in het Engels (het Instagram-account is Engels; een eerder zelf gekozen taal blijft staan), met UTM-label, zie reference/utm-links.md -->
+<script>
+  try { if (!localStorage.getItem('lang')) localStorage.setItem('lang', 'en'); } catch (e) {}
+  location.replace('/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina&utm_content=rekentool#rekentool');
+</script>
+<meta http-equiv="refresh" content="0; url=/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina&utm_content=rekentool#rekentool">
 <link rel="canonical" href="https://insightance.ai/">
-<script>location.replace('/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina' + location.hash);</script>
 </head>
-<body><p><a href="/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina">insightance.ai</a></p></body>
+<body><p><a href="/?utm_source=instagram&utm_medium=bio&utm_campaign=merkpagina&utm_content=rekentool#rekentool">Free time calculator</a></p></body>
 </html>
