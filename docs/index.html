@@ -2288,6 +2288,13 @@
       t.addEventListener('keydown', e => { if (e.target.closest('.rt-own')) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
     });
     $('rt-rate').addEventListener('input', calc);
+    // urenteksten meteen in de juiste taal (calc() zelf wacht tot de uitkomst in beeld komt)
+    (function labels() {
+      let h = 0;
+      box.querySelectorAll('.rt-task').forEach(t => { t.querySelector('.stp span').textContent = hrs(+t.dataset.h); if (t.getAttribute('aria-pressed') === 'true') h += +t.dataset.h; });
+      $('rt-h').textContent = hrs(h);
+      $('rt-win-u').textContent = en() ? 'hours a week back' : 'uur per week terug';
+    })();
     // na een taalwissel opnieuw invullen (de vertaling van de pagina loopt eerst)
     new MutationObserver(calc).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
     // pas gaan tellen als de rekentool in beeld komt
