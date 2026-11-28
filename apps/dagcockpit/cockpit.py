@@ -151,7 +151,8 @@ def taken_van_vandaag(conn, vandaag):
         if d > vandaag:
             continue
         achter = d < vandaag
-        per_chat.setdefault(r["chat"], []).append({
+        # Losse afspraken (belafspraken e.d.) altijd in de Agenda, nooit in een tegel (wens 24-11).
+        per_chat.setdefault("Algemeen", []).append({
             "sleutel": f"t{r['id']}", "id": r["id"], "titel": r["titel"],
             "ritme": f"Van {kort(d)}" if achter else "Vandaag",
             "klaar": r["klaar_op"] is not None, "soort": "eenmalig", "achterstand": achter,
@@ -216,7 +217,9 @@ def content_week(conn, vandaag):
         ig = opgeslagen.get((iso, "instagram"))
         aantal = ig["aantal"] if ig and ig["aantal"] is not None else ritme.INSTAGRAM_STANDAARD_AANTAL
         postdag = d.weekday() in getattr(ritme, "INSTAGRAM_POSTDAGEN", set(range(7)))
-        instagram.append({"iso": iso, "aantal": aantal if postdag else 0, "klaar": bool(ig and ig["klaar"]) and postdag, "postdag": postdag})
+        # Buiten de postdagen (weekend): stories i.p.v. posts (sinds 28-11), aantal zelf te kiezen.
+        een, meer = ("post", "posts") if postdag else ("story", "stories")
+        instagram.append({"iso": iso, "aantal": aantal, "klaar": bool(ig and ig["klaar"]), "een": een, "meer": meer})
     return {"dagen": dagen, "linkedin": linkedin, "instagram": instagram}
 
 
@@ -675,6 +678,7 @@ h1{color:var(--tekst)}.quote{color:var(--blauw)}
 /* To-do in zijmenu op één regel per punt (22-11) */
 .menutodo li{white-space:nowrap;min-width:0}.menutodo li span{overflow:hidden;text-overflow:ellipsis}
 .menutodo ul{gap:4px}
+.doel{padding:10px 14px;gap:3px}.doel svg{width:22px;height:22px}
 /* Klaarzettaken in Content-tegel compact (24-11) */
 .kaart.content .takenlijst{gap:4px}.kaart.content .takenlijst .taak{min-height:26px;padding:2px 9px}
 /* Agenda: zo hoog als de linkerkolom, lange lijst scrolt binnen de tegel (19-11) */
@@ -804,16 +808,13 @@ nav.menu{gap:8px;padding:14px 14px}.menu .link{min-height:28px}.menuknop{min-hei
           <div class="klabel">Instagram</div>
           {% for c in cw.instagram %}
           <div class="cel{% if c.klaar %} klaar{% endif %}">
-            {% if not c.postdag %}<span class="bol leeg" aria-label="geen post">&ndash;</span><span class="aantal">geen post</span>
-            {% else %}
             {% if c.aantal %}
             <form method="post" action="/content"><input type="hidden" name="kanaal" value="instagram"><input type="hidden" name="datum" value="{{ c.iso }}"><input type="hidden" name="aan" value="{{ '0' if c.klaar else '1' }}">
               <button class="bol" type="submit" aria-pressed="{{ 'true' if c.klaar else 'false' }}">{% if c.klaar %}<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ c.aantal }}{% endif %}</button></form>
             {% else %}<span class="bol leeg" aria-label="geen post">&ndash;</span>{% endif %}
-            {% if c.klaar %}<span class="aantal">{{ c.aantal }} post{{ '' if c.aantal == 1 else 's' }}</span>
+            {% if c.klaar %}<span class="aantal">{{ c.aantal }} {{ c.een if c.aantal == 1 else c.meer }}</span>
             {% else %}<form method="post" action="/content"><input type="hidden" name="kanaal" value="instagram"><input type="hidden" name="datum" value="{{ c.iso }}">
-              <select class="aantal" name="aantal" aria-label="Aantal Instagram-posts op {{ c.iso }}" onchange="this.form.submit()">{% for n in range(0, 6) %}<option value="{{ n }}"{% if n == c.aantal %} selected{% endif %}>{{ n }} post{{ '' if n == 1 else 's' }}</option>{% endfor %}</select></form>{% endif %}
-            {% endif %}
+              <select class="aantal" name="aantal" aria-label="Aantal Instagram-{{ c.meer }} op {{ c.iso }}" onchange="this.form.submit()">{% for n in range(0, 6) %}<option value="{{ n }}"{% if n == c.aantal %} selected{% endif %}>{{ n }} {{ c.een if n == 1 else c.meer }}</option>{% endfor %}</select></form>{% endif %}
           </div>
           {% endfor %}
         </div>
