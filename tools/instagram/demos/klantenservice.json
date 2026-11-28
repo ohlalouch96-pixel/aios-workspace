@@ -1,4 +1,5 @@
-{"demo":"klantenservice","kleurenset":"rood","hook":"Answering *\"where's my order?\"* all day long?",
+{"demo":"klantenservice","kleurenset":"groen","bron_foto":"Pixabay 5727263 (chair-5727263, Pixabay Content License), lokaal in .tmp/instagram/stock/pixabay-fauteuil.jpg (ook op de server zetten)",
+"hook":"Answering *\"where's my order?\"* all day long?",
 "stappen":[
  {"doe":"wacht","s":0.8},
  {"doe":"ondertitel","tekst":"A customer has a question"},
@@ -13,7 +14,7 @@
  {"doe":"wacht","s":2.4},
  {"doe":"klik","sel":"#veld"},
  {"doe":"js","code":"focusVeld()"},
- {"doe":"typ_rest","id":"veld","tekst":"Can I still change it to espresso grind?"},
+ {"doe":"typ_rest","id":"veld","tekst":"Can I still change the color to grey?"},
  {"doe":"klik","sel":"#stuur"},
  {"doe":"wacht","s":2.4},
  {"doe":"ondertitel","tekst":"Tricky question? *A person takes over.*"},

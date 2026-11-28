@@ -706,7 +706,7 @@ def maak(conn, soort=None, zonder_stem=False):
         pid = opslaan(conn, "demo_reel", spec, demo, map_)
     else:
         if soort == "kaart":
-            pijler = random.choice(["the_fork", "automation_simplified"])
+            pijler = "automation_simplified"  # 28-11: The Fork gestopt (slechtst scorende serie, Oussama); #30 was de laatste
         else:
             laatste = [r[0] for r in conn.execute("SELECT b.pijler FROM instagram_posts p JOIN instagram_bron b ON b.id = p.bron_id ORDER BY p.id DESC LIMIT 1")]
             pijler = "myth_check" if laatste == ["automation_simplified"] else "automation_simplified"
@@ -818,6 +818,9 @@ def verwerk(conn):
         conn.commit()
         bot = telegram_review.Bot()
         bot.tekst(f"✏️ Aangepast op je feedback: <i>{html.escape(tekst)}</i>")
+        if soort == "demo_reel":  # 28-11: feedback op het beeld kwam niet aan zonder dat het gemeld werd
+            bot.tekst("ℹ️ Let op: bij een demo-reel pas ik hier alleen de tekst (caption) aan. Het beeld zelf (product, kleuren, scènes) "
+                      "staat vast in de demo. Wil je daar iets aan veranderen, geef het dan door in Claude Code.")
         if soort == "story":
             bot.tekst(f"<b>Story-idee #{pid}</b>\n\n<pre>{html.escape(spec['tekst'])}</pre>\n📸 Foto: {html.escape(spec['foto_idee'])}",
                       [[{"text": "✅ Goedkeuren", "callback_data": f"ok:{pid}"}, {"text": "✏️ Aanpassen", "callback_data": f"edit:{pid}"},

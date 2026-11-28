@@ -101,7 +101,7 @@ Elke werkdag één beeldpost om 14:00 en één reel om 19:00, nooit twee reels o
 | Carrousel | Automation Simplified, Myth Check, anonieme cases | 2 à 3 per week |
 | Reel | Fictieve demo-schermopname (bewijs) of bewegende tekst | samen ±2 à 3 per week, demo's vaker dan tekst |
 | Actualiteit | AI-nieuws, dubbel gecheckt | ±1 per week |
-| Losse afbeelding | The Fork | af en toe |
+| Losse afbeelding | The Fork | **GESTOPT sinds 28-11** (slechtst scorende serie, Oussama). #30 in de week van 30-11 was de laatste. Een losse afbeelding is nu altijd een schets (venn, lijst, voor/na, stappen, grafiek, loop). Vervanger nog te bedenken. |
 | Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
 | Bouwen in het openbaar | Oussama's eigen week: wat hij deed en leerde (serie BUILDING IN PUBLIC) | 1 per week, zie hieronder |
 
