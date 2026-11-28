@@ -43,7 +43,7 @@ from wachtrij import verbind, volledige_caption  # noqa: E402
 SOORT_LABEL = {"carrousel": "Carrousel", "kaart": "Losse afbeelding", "fork": "The Fork", "tekst_reel": "Reel · bewegende tekst",
                "demo_reel": "Reel · demo", "stem_video": "Reel · video met stem", "actualiteit": "Actualiteit",
                "story": "Story-tekst", "advertentie": "Advertentie · reel",
-               "openbaar": "Losse post · bouwen in het openbaar"}
+               "openbaar": "Losse post · bouwen in het openbaar", "vondst": "Weekendstory · AI find of the week"}
 
 
 class Bot:
@@ -191,6 +191,33 @@ def _thema(soort, map_):
     return (serie or soort or "").strip().upper()
 
 
+HANDGEMAAKT = {"robot", "hype", "elf", "week", "nooit"}  # demo's die met de hand in robotkwaliteit zijn gebouwd
+
+
+def terugblik(conn, maandag):
+    """Weekendstory zondag (28-11): 'Missed this one?'. De twee sterkste posts van de afgelopen werkweek om in de story te delen.
+    Zonder Insights-koppeling kiezen we: handgemaakt en bouwen in het openbaar eerst, dan de hoogste hookscore."""
+    van, tot = (maandag - timedelta(days=7)).isoformat(), (maandag - timedelta(days=3)).isoformat()
+    rijen = conn.execute("SELECT id, soort, kleurenset, onderwerp, gepland_op, map FROM instagram_posts WHERE gepland_op BETWEEN ? AND ? "
+                         "AND status != 'overgeslagen' AND soort NOT IN ('advertentie', 'story', 'vondst')", (van, tot)).fetchall()
+    if not rijen:
+        return ""
+
+    def kracht(r):
+        if r[1] == "openbaar" or (r[1] == "demo_reel" and r[2] in HANDGEMAAKT):
+            return 100
+        try:
+            return json.loads((Path(r[5]) / "spec.json").read_text(encoding="utf-8")).get("hook", {}).get("score", 0)
+        except (OSError, ValueError, TypeError, AttributeError):
+            return 0
+    beste = sorted(rijen, key=lambda r: (kracht(r), r[4]), reverse=True)[:2]
+    regels = "\n".join(f"   • #{r[0]} {html.escape(SOORT_LABEL.get(r[1], r[1]))} ({DAGEN[date.fromisoformat(r[4]).weekday()]})\n"
+                       f"      {html.escape((r[3] or '')[:70])}" for r in beste)
+    return ("\n\n📲 <b>Story vandaag: Missed this one?</b>\nDeel deze in je story (pijltje onder de post → Toevoegen aan story), "
+            "met de tekst <i>Missed this one? 👀</i>:\n" + regels +
+            "\n<i>Deed een andere post het in Insights duidelijk beter? Deel dan die.</i>")
+
+
 def weekplanning(conn, vandaag=None, bewaar=True):
     """Voorstel voor de komende week (ma t/m vr, PER_DAG posts per dag: beeldpost om TIJD_BEELD, reel om TIJD_REEL).
     Regels (Oussama 24-11), steeds tussen twee posts die direct na elkaar komen, ook over het weekend heen
@@ -206,7 +233,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
     maandag, dagen = vrije_dagen(vandaag)
     kol = "id, soort, status, onderwerp, gepland_op, kleurenset, dienst, map"
     rijen = conn.execute(f"SELECT {kol} FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') "
-                         "AND soort NOT IN ('advertentie', 'story') ORDER BY id").fetchall()
+                         "AND soort NOT IN ('advertentie', 'story', 'vondst') ORDER BY id").fetchall()
     stories = [r[0] for r in conn.execute("SELECT id FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort = 'story'")]
     vol, vaste = volle_dagen(), vaste_tijden()
     is_reel = lambda r: r[1] in REELS  # noqa: E731
@@ -231,7 +258,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
 
     # de laatste post vóór deze week (meestal vrijdag 19:00): maandag 14:00 moet daar ook van verschillen
     vorige = conn.execute(f"SELECT {kol} FROM instagram_posts WHERE gepland_op < ? AND status != 'overgeslagen' "
-                          "AND soort NOT IN ('advertentie', 'story') ORDER BY gepland_op DESC", (maandag.isoformat(),)).fetchall()
+                          "AND soort NOT IN ('advertentie', 'story', 'vondst') ORDER BY gepland_op DESC", (maandag.isoformat(),)).fetchall()
     vorige = max((r for r in vorige if r[4] == vorige[0][4]), key=std_tijd) if vorige else None
 
     def botst(a, b, zwaar=True):
@@ -292,6 +319,7 @@ def weekplanning(conn, vandaag=None, bewaar=True):
         tekst += "\n\n<b>Daarna:</b> " + ", ".join(f"#{r[0]}" for r in over) + " (volgende week)"
     if stories:
         tekst += "\n\n📸 <b>Story-ideeën</b> (elke dag mogelijk): " + ", ".join(f"#{s}" for s in stories)
+    tekst += terugblik(conn, maandag)
     return tekst + "\n\nDruk na het inplannen of plaatsen op 📤 Geplaatst, dan maakt de agent nieuwe concepten. Typ <b>planning</b> om dit opnieuw te zien."
 
 

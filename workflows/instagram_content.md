@@ -105,6 +105,22 @@ Elke werkdag één beeldpost om 14:00 en één reel om 19:00, nooit twee reels o
 | Story-tekst | The Other Shift, achter de schermen | voorstel, Oussama zet het op een eigen foto |
 | Bouwen in het openbaar | Oussama's eigen week: wat hij deed en leerde (serie BUILDING IN PUBLIC) | 1 per week, zie hieronder |
 
+### Weekendstories (sinds 28-11)
+
+In het weekend komt er niets in de feed, alleen stories. Die zijn voor iedereen die AI volgt, dus niet alleen voor ondernemers. Geen polls of quizzen (besluit Oussama).
+
+**Zaterdag: "AI find of the week"**
+- Wat het is: één echt AI-ding dat iedereen dit weekend kan proberen, zoals een nieuwe of onbekende functie in ChatGPT, Gemini, Copilot of een vergelijkbare tool.
+- Bron: alleen de eigen aankondiging of helppagina van het bedrijf, of een gevestigde nieuwssite, gelezen en nagekeken. Lukt dat niet, dan is er geen story.
+- Hoe hij gemaakt wordt: `agent.py vondst` maakt een staand beeld van 1080x1920 met `tools/instagram/render_story.py`, in de basiskleur. Het bevat een titel met kernwoord in geel, een uitleg van hooguit 22 woorden, 2 tot 3 stappen en de bron.
+- Wanneer: hij draait automatisch na het vullen van zaterdag 07:00 (`ExecStartPost` in `instagram-vullen.service`) en gaat naar Telegram met knoppen.
+- Opslag: soort `vondst`. Telt niet mee voor de voorraad, de kleurregel of de weekplanning.
+
+**Zondag: "Missed this one?"**
+- De weekplanning van 09:00 noemt onderaan de twee sterkste posts van de afgelopen werkweek. Eerst de handgemaakte posts en bouwen in het openbaar, daarna de hoogste hookscore (`terugblik` in `telegram_review.py`).
+- Oussama deelt ze in zijn story met de tekst "Missed this one? 👀".
+- Deed een andere post het in Insights duidelijk beter, dan deelt hij die.
+
 ### Bouwen in het openbaar (vaste serie sinds 24-11)
 
 Aanleiding: de post "I called 32 accounting firms in one day" (#10) deed het zonder promotie het best van alles (200+ views in 18 uur). Echt, herkenbaar, met een belofte in de eerste zin.

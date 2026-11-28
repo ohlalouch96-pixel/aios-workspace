@@ -167,6 +167,10 @@ SCHEMA = {
     "story": obj({"onderwerp": S, "tekst": S, "foto_idee": S}),
 }
 CONTROLE = obj({"bevestigd": {"type": "boolean"}, "kern": S, "bron_1": S, "bron_2": S, "datum": S, "toelichting": S})
+# weekendstory zaterdag (28-11): "AI find of the week", voor iedereen die AI volgt, niet alleen ondernemers
+VONDST = obj({"bevestigd": {"type": "boolean"}, "onderwerp": S, "titel": S, "uitleg": S, "stappen": A(S), "bron_naam": S, "bron_url": S,
+              "datum": S, "toelichting": S})
+SCHEMA["vondst"] = obj({"onderwerp": S, "titel": S, "uitleg": S, "stappen": A(S), "bron_naam": S, "bron_url": S})
 
 
 # ---------- keuzes ----------
@@ -192,7 +196,7 @@ def kies_soort(conn):
     """Soort volgens MIX, maar de voorraad blijft half reels, half beeldposts (24-11: per dag één reel en één beeldpost)."""
     laatste = [v["soort"] for v in vorige(conn, 2)]
     opties = {s: w for s, w in MIX.items() if not laatste or s != laatste[0]}
-    voorraad = [r[0] for r in conn.execute("SELECT soort FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')")]
+    voorraad = [r[0] for r in conn.execute("SELECT soort FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story', 'vondst')")]
     reels = sum(s in REEL_SOORTEN for s in voorraad)
     if reels != len(voorraad) - reels:  # het soort dat achterloopt krijgt voorrang
         meer_reels = reels < len(voorraad) - reels
@@ -521,6 +525,57 @@ def onderzoek_actualiteit(conn):
         schema=CONTROLE, zoeken=True)
 
 
+def maak_vondst(conn):
+    """Weekendstory zaterdag (28-11, Oussama): één echt, nagekeken AI-ding dat iedereen die AI volgt kan proberen.
+    Breed publiek (niet alleen ondernemers), geen verzonnen functies: alleen wat in de officiële bron staat."""
+    gebruikt = [r[0] for r in conn.execute("SELECT onderwerp FROM instagram_posts WHERE soort = 'vondst' ORDER BY id DESC LIMIT 20")]
+    for poging in range(2):
+        v = vraag(conn, None, "vondst:zoeken+check", (
+            f"Today is {date.today().isoformat()}. Find ONE practical AI thing a regular person who is curious about AI can try this weekend: "
+            "a feature in a widely available tool (ChatGPT, Claude, Gemini, Copilot, Google, Apple, Microsoft, Canva, Notion and similar) that is new "
+            "or updated in the last 30 days, or a genuinely useful feature most people don't know. Not aimed only at business owners. "
+            "It must be available to the public now (say it if it is paid-only or limited to some countries). Only use the company's own announcement, "
+            "help page or blog, or an established outlet (Reuters, The Verge, TechCrunch). Open the source and check every detail against it. "
+            f"Avoid these topics already covered: {gebruikt or 'none'}.\n"
+            "Write for an Instagram story (natural English, no hype, no em dash, no emoji):\n"
+            "- titel: 4 to 8 words, what you can now do, with *asterisks* around the 2 to 4 key words (e.g. 'ChatGPT can now *read your screen*');\n"
+            "- uitleg: max 22 words, what it does and why it is handy, plain language;\n"
+            "- stappen: 2 or 3 steps to try it, each max 8 words, only steps the source confirms;\n"
+            "- bron_naam: short source name (e.g. 'OpenAI blog'), bron_url: the URL you read, datum: publication date;\n"
+            "- onderwerp: one line in Dutch; toelichting: one line in Dutch.\n"
+            "bevestigd=true only if you read the source yourself and everything holds."), schema=VONDST, zoeken=True)
+        if v["bevestigd"]:
+            break
+        print("Vondst niet bevestigd:", v["toelichting"])
+    else:
+        return None
+    import render_story
+    map_ = nieuwe_map("vondst " + v["onderwerp"])
+    try:
+        render_story.render(v, map_)
+    except ValueError:  # te lang voor de veilige zone: één keer inkorten
+        v.update(vraag(conn, None, "vondst:inkorten", "Shorten this Instagram story text so it fits: titel max 7 words, uitleg max 16 words, "
+                       "stappen max 3 of max 6 words each. Keep the facts and the *asterisks*.\n" + json.dumps(v, ensure_ascii=False), SCHEMA["vondst"]))
+        render_story.render(v, map_)
+    (map_ / "spec.json").write_text(json.dumps({**v, "soort": "vondst"}, ensure_ascii=False, indent=2), encoding="utf-8")
+    cur = conn.execute("INSERT INTO instagram_posts (soort, onderwerp, kleurenset, hashtags, caption, bronnen, map, status) VALUES ('vondst', ?, NULL, '[]', ?, ?, ?, 'concept')",
+                       (v["onderwerp"], v["uitleg"], json.dumps([v["bron_url"]]), str(map_)))
+    conn.commit()
+    stuur_vondst(conn, cur.lastrowid)
+    return cur.lastrowid
+
+
+def stuur_vondst(conn, pid):
+    m, bronnen = conn.execute("SELECT map, bronnen FROM instagram_posts WHERE id = ?", (pid,)).fetchone()
+    bot = telegram_review.Bot()
+    bot.media([Path(m) / "story.png"])
+    bron = (json.loads(bronnen or "[]") or [""])[0]
+    bot.tekst(f"<b>Weekendstory #{pid} · zaterdag · AI find of the week</b>\nVoor iedereen die AI volgt. Plaats het beeld als story, "
+              f"en zet de bron eventueel als linksticker erbij.\n\n🔎 <b>Bron (zelf nog checken):</b> {html.escape(bron)}",
+              [[{"text": "✅ Goedkeuren", "callback_data": f"ok:{pid}"}, {"text": "✏️ Aanpassen", "callback_data": f"edit:{pid}"},
+                {"text": "❌ Overslaan", "callback_data": f"skip:{pid}"}]])
+
+
 # ---------- maken ----------
 def nieuwe_map(naam):
     pad = CONCEPTEN / f"{date.today().isoformat()}-{re.sub(r'[^a-z0-9]+', '-', naam.lower())[:40].strip('-')}-{random.randint(100, 999)}"
@@ -720,6 +775,18 @@ def verwerk(conn):
         schema_soort = {"actualiteit": "carrousel", "openbaar": "carrousel", "fork": "kaart"}.get(soort, soort)
         aantal = len(json.loads(rij[3] or "[]"))
         print(f"Feedback #{fid} op concept #{pid}: {tekst}")
+        if soort == "vondst":  # weekendstory: alleen de storytekst aanpassen, feiten blijven
+            import render_story
+            spec = vraag(conn, pid, "aanpassen:vondst", "Revise this Instagram story text based on Oussama's feedback (he writes in Dutch). Change only what "
+                         f"the feedback asks, keep the facts and the source.\nFEEDBACK: {tekst}\n\nCURRENT:\n" + json.dumps(oud, ensure_ascii=False), SCHEMA["vondst"])
+            render_story.render(spec, map_)
+            (map_ / "spec.json").write_text(json.dumps({**spec, "soort": "vondst"}, ensure_ascii=False, indent=2), encoding="utf-8")
+            conn.execute("UPDATE instagram_posts SET caption = ?, status = 'concept', bijgewerkt_op = datetime('now') WHERE id = ?", (spec["uitleg"], pid))
+            conn.execute("UPDATE instagram_feedback SET verwerkt = 1 WHERE id = ?", (fid,))
+            conn.commit()
+            telegram_review.Bot().tekst(f"✏️ Aangepast op je feedback: <i>{html.escape(tekst)}</i>")
+            stuur_vondst(conn, pid)
+            continue
         prompt = (f"Revise this Instagram concept based on Oussama's feedback (he writes in Dutch). Change only what the feedback asks; keep everything else, "
                   f"including the facts. Keep exactly {aantal} hashtags unless the feedback is about hashtags.\nFEEDBACK: {tekst}\n\nCURRENT CONCEPT:\n"
                   + json.dumps({k: v for k, v in oud.items() if k not in ("soort", "kleurenset")}, ensure_ascii=False))
@@ -771,6 +838,7 @@ def main():
     o = sub.add_parser("openbaar", help="bouwen in het openbaar: concept uit Oussama's eigen verhaal (via de content-bot)")
     o.add_argument("verhaal")
     sub.add_parser("kosten")
+    sub.add_parser("vondst", help="weekendstory zaterdag: AI find of the week (na het vullen van zaterdag)")
     args = ap.parse_args()
     conn = wachtrij.verbind()
     kosten_tabel(conn)
@@ -787,7 +855,7 @@ def main():
     elif args.cmd == "dagelijks":
         # voorraad van 5 posts die een dag in de weekplanning vullen (advertenties en story-ideeën tellen niet mee);
         # normaal max 2 nieuwe per dag, zaterdag 07:00 (--vol) zoveel als nodig zodat de planning van 09:00 vol is
-        telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story')"
+        telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story', 'vondst')"
         doel = len(telegram_review.vrije_dagen()[1]) * telegram_review.PER_DAG if args.vol else VOORRAAD  # zaterdag: precies de vrije plekken van volgende week
         nodig = max(0, doel - conn.execute(telling).fetchone()[0])
         for _ in range(nodig + 3 if args.vol else min(2, nodig)):  # +3 ruimte voor een story-idee of mislukte poging
@@ -797,6 +865,13 @@ def main():
                 maak(conn)
             except Exception as fout:  # één mislukt concept mag de rest niet tegenhouden
                 print("Concept mislukt:", fout)
+    elif args.cmd == "vondst":
+        try:
+            if not maak_vondst(conn):
+                telegram_review.Bot().tekst("ℹ️ Geen weekendstory deze zaterdag: ik vond geen AI-vondst die ik in de bron kon bevestigen.")
+        except Exception as fout:
+            telegram_review.Bot().tekst(f"⚠️ De weekendstory van zaterdag lukte niet ({html.escape(str(fout))[:300]}).")
+            raise
     elif args.cmd == "kosten":
         print(f"Uitgegeven in {maand()}: ${uitgegeven(conn):.2f} van ${LIMIET:.0f}")
         for stap, n, usd in conn.execute("SELECT stap, COUNT(*), SUM(usd) FROM instagram_kosten WHERE maand = ? GROUP BY stap", (maand(),)):

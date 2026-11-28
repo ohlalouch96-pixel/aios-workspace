@@ -83,6 +83,8 @@ def volledige_caption(caption, hashtags, soort):
     """Caption zoals hij op Instagram komt: tekst, vaste afsluiter, hashtags. The Fork: alleen de tekst."""
     if soort == "fork":
         return caption.strip()
+    if soort == "vondst":  # weekendstory: geen caption, alleen het beeld plaatsen
+        return "Story: geen caption nodig. Plaats het beeld en zet eventueel de bron als linksticker erbij."
     if soort in ("advertentie", "openbaar"):  # advertentie eindigt op "Follow for more", bouwen-in-het-openbaar op een vraag: geen DM-afsluiter
         return f"{caption.strip()}\n\n{' '.join(hashtags)}".strip()
     caption = caption.replace(AFSLUITER, "").replace(OUDE_AFSLUITER, "").strip()  # staat de afsluiter er al in, dan niet dubbel
