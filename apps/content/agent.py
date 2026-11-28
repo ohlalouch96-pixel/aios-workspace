@@ -26,7 +26,7 @@ import json
 import random
 import re
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import anthropic
@@ -855,7 +855,10 @@ def main():
     elif args.cmd == "dagelijks":
         # voorraad van 5 posts die een dag in de weekplanning vullen (advertenties en story-ideeën tellen niet mee);
         # normaal max 2 nieuwe per dag, zaterdag 07:00 (--vol) zoveel als nodig zodat de planning van 09:00 vol is
-        telling = "SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story', 'vondst')"
+        # posts die Oussama al op een latere week heeft gezet tellen niet mee (28-11: anders bleef volgende week half leeg)
+        eind_week = (telegram_review.vrije_dagen()[0] + timedelta(days=4)).isoformat()
+        telling = ("SELECT COUNT(*) FROM instagram_posts WHERE status IN ('concept', 'goedgekeurd') AND soort NOT IN ('advertentie', 'story', 'vondst') "
+                   f"AND (gepland_op IS NULL OR gepland_op <= '{eind_week}')")
         doel = len(telegram_review.vrije_dagen()[1]) * telegram_review.PER_DAG if args.vol else VOORRAAD  # zaterdag: precies de vrije plekken van volgende week
         nodig = max(0, doel - conn.execute(telling).fetchone()[0])
         for _ in range(nodig + 3 if args.vol else min(2, nodig)):  # +3 ruimte voor een story-idee of mislukte poging
