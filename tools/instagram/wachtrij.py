@@ -102,7 +102,7 @@ def echte_kleur(k):
     """Demo-reels en advertenties staan in de wachtrij met hun demonaam (bijv. 'calculatie'); vertaal naar hun kleurenset."""
     if k in ANDERE_KLEUREN + [NAVY, "wit"]:
         return k
-    if k in ("scherm", "servet"):  # The Fork: whiteboard/servet op lichtbruine tafel, niet blauw (Oussama 24-11)
+    if k in ("scherm", "servet", "ipad"):  # The Fork: whiteboard/servet/iPad op lichtbruine tafel, niet blauw (Oussama 24-11)
         return "hout"
     spec = Path(__file__).resolve().parent / "demos" / f"{k}.json"
     try:
