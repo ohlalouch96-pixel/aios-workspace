@@ -52,7 +52,15 @@ Bron: de open-source Instagram Agent Skill (MIT, Jake Schincariol). `tools/insta
 1. Claude bedenkt 3 hooks, elk met een andere formule uit `hooks.json`. Alleen de 17 formules die bij "without the hype" passen (`HOOK_FORMULES`), en niet de 3 die het laatst gebruikt zijn. Per hook een `lijn` (eerste zin van de caption; bij een video met Eric ook zijn eerste zin) en een `scherm` (max 6 woorden, in beeld vanaf frame 1).
 2. Er vallen hooks af met een cijfer dat niet in de bron staat, met meer dan 6 woorden in beeld, of met een gedachtestreepje.
 3. **Duidelijkheidscheck** (`duidelijk`): Claude leest de hook als een drukke ondernemer zonder context. Snapt die de tekst in beeld niet in één seconde, dan valt hij af. Aanleiding: "Dear customer is the robot" scoorde 80, maar niemand begreep hem. De score meet vorm, niet begrip.
-4. `hookscore.py` geeft elke hook een score van 0 tot 100. De hoogste wint. Onder de 60 komt er één nieuwe ronde.
+4. `hookscore.py` geeft elke hook een score van 0 tot 100. De hoogste wint. **Minimaal 75 (Oussama, 28-11)**: lager wil hij niet zien. Onder de 75 volgen tot twee nieuwe rondes; lukt het dan nog niet, dan komt er geen concept.
+   Waarom hooks bleven steken op ±50: zonder een concreet detail staat SPECIFICITY op 15. De prompt vraagt nu om vijf dingen:
+   - een concreet detail: een getal uit de bron, of een waar getalwoord als two/half/twice;
+   - twee spanningswoorden;
+   - een kernwoord in de eerste 3 woorden;
+   - 'you' of een gebiedende wijs;
+   - 5 tot 12 woorden.
+
+   Voorbeeld met score 80: "Stop typing the same welcome email twice."
 5. Hoofdletters: carrousel-covers in HOOFDLETTERS (A). Reels en schetsen in gewone zinsopbouw (B).
 6. Waar de hook komt:
    - carrousel: de cover;

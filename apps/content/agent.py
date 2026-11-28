@@ -296,7 +296,7 @@ def schrijf(conn, soort, prompt, aantal, verboden_tags, post_id=None, hook=None)
 # ---------- hook (besluit 21-11: 3 opties uit vaste formules, scoren, de sterkste wint) ----------
 # Formules uit tools/instagram/hooks.json die bij "without the hype" passen en geen eigen cijfers/klanten vereisen.
 HOOK_FORMULES = {2, 3, 5, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24}
-HOOK_MIN = 60
+HOOK_MIN = 75  # 28-11 (Oussama): lager wil hij niet zien; haalt geen optie dit, dan geen concept
 HOOKSTAP_AAN = True  # aan sinds 22-11 (Oussama), voor alle soorten posts
 HOOK = obj({"opties": A(obj({"formule": S, "lijn": S, "scherm": S}))})
 # waar de hook in beeld komt, per soort (22-11: carrousel-cover in HOOFDLETTERS, reels/schetsen gewone zinsopbouw)
@@ -377,9 +377,17 @@ def kies_hook(conn, soort, bron):
               "with *asterisks* around the one key word.\n"
               "Hard rules: true to the source, never hype or clickbait (the brand is 'AI automation without the hype'), no numbers unless they appear in the source, "
               "no greeting, no emoji, no hashtag, no em dash. Front-load the interesting word and speak to the viewer ('you') where it fits.\n"
+              "How 'lijn' is scored (aim for 75+), so build every option to hit all five:\n"
+              "1. CONCRETE: at least one concrete marker. A figure that appears in the source, or a number word that is simply true "
+              "(two, three, half, twice, zero, ten), or a money/time word (revenue, hours, minutes, days). Never invent a statistic.\n"
+              "2. STAKES: at least two tension words, e.g. stop, never, still, wrong, cost, lose, without, only, instead, not, don't.\n"
+              "3. FRONT-LOAD: a tension word or number within the first three words. Never open with 'your', 'this is', 'have you', 'do you'.\n"
+              "4. ADDRESS: 'you'/'your' in the line, or open with an imperative (Stop, Never, Steal, Try).\n"
+              "5. LENGTH: 5 to 12 words, at most 60 characters.\n"
+              "Example that scores 80: 'Stop typing the same welcome email twice.'\n"
               f"Hook rules:\n{regels}\n\nFormulas:\n{lijst}\n\n{bron}")
     beste, gezien = None, []
-    for _ in range(2):
+    for _ in range(3):
         opties = vraag(conn, None, f"hook:{soort}", prompt, HOOK, max_tokens=4000)["opties"]
         gescoord = duidelijk(conn, [s for s in (score_hook(o, bron, soort) for o in opties) if s], soort)
         gezien += gescoord
@@ -390,6 +398,8 @@ def kies_hook(conn, soort, bron):
                    + "\n".join(f"- {s['score']} \"{s['lijn']}\" ({s['zwakst']})" for s in gescoord))
     if not beste:
         raise RuntimeError("Geen bruikbare hook gevonden")
+    if beste["score"] < HOOK_MIN:  # 28-11: onder de grens geen concept (Oussama wil lager niet zien)
+        raise RuntimeError(f"Geen hook van {HOOK_MIN}+ gevonden (beste {beste['score']}: {beste['lijn']})")
     if soort in ("carrousel", "actualiteit"):
         beste["scherm"] = beste["scherm"].upper()  # A: carrousel-cover in hoofdletters (22-11)
     beste["alle"] = sorted(({"formule": s["formule"], "lijn": s["lijn"], "scherm": s["scherm"], "score": s["score"]} for s in gezien),
